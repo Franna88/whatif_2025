@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.10+1
   google_fonts: ^6.2.0
+  gauge_indicator: ^0.4.3
+  syncfusion_flutter_gauges: ^25.1.39
+  firebase_core: ^2.27.0
 
 dev_dependencies:
   flutter_test:

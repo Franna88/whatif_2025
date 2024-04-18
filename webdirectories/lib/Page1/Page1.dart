@@ -4,6 +4,8 @@ import 'package:webdirectories/Page1/AboutUS/AboutUs.dart';
 import 'package:webdirectories/Page1/AiCoDriver/AiCoDriver.dart';
 import 'package:webdirectories/Page1/Comments/Comments.dart';
 import 'package:webdirectories/Page1/JoinUs/JoinUs.dart';
+import 'package:webdirectories/Page1/LandingPage/LandingPageComponents/LandingPageDisplay.dart';
+import 'package:webdirectories/Page1/LandingPage/LandingPageComponents/categorySelect.dart';
 import 'package:webdirectories/Page1/PartnerWithUs/PartnerWithUs.dart';
 
 class Page1 extends StatefulWidget {
@@ -19,6 +21,8 @@ class _Page1State extends State<Page1> {
     return SingleChildScrollView(
       child: Column(
         children: [
+        //  CategorySelect(),
+          LandingPageDisPlay(),
           PartnerWithUs(),
           AboutUs(),
           JoinUs(),

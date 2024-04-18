@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/Mobile/MobilePage1/MobilePage1.dart';
+import 'package:webdirectories/Mobile/MobilePage2/MobilePage2.dart';
+import 'package:webdirectories/Mobile/MobilePage3/MobilePage3.dart';
+import 'package:webdirectories/Mobile/MobilePage4/MobilePage4.dart';
+import 'package:webdirectories/Mobile/MobilePage5/MobilePage5.dart';
 import 'package:webdirectories/myutility.dart';
 
 class MobileTopNavBar extends StatefulWidget {
@@ -35,11 +40,11 @@ class _MobileTopNavBarState extends State<MobileTopNavBar> {
           ),
           itemBuilder: (BuildContext context) {
             return [
-              buildPopupMenuItem('Home', 'option1'),
-              buildPopupMenuItem('Our Story', 'option2'),
-              buildPopupMenuItem('Watif', 'option3'),
-              buildPopupMenuItem('Articles', 'option4'),
-              buildPopupMenuItem('Get in Touch', 'option5'),
+              buildPopupMenuItem('Home', 'option1', MobilePage1()),
+              buildPopupMenuItem('Our Story', 'option2', MobilePage2()),
+              buildPopupMenuItem('Watif', 'option3', MobilePage3()),
+              buildPopupMenuItem('Articles', 'option4', MobilePage4()),
+              buildPopupMenuItem('Get in Touch', 'option5', MobilePage5()),
             ];
           },
           onSelected: (value) {
@@ -52,9 +57,18 @@ class _MobileTopNavBarState extends State<MobileTopNavBar> {
     );
   }
 
-  PopupMenuItem<String> buildPopupMenuItem(String text, String value) {
+  PopupMenuItem<String> buildPopupMenuItem(
+      String text, String value, Widget route) {
     final isSelected = selectedOption == value;
     return PopupMenuItem(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Material(
+                      child: route,
+                    )));
+      },
       value: value,
       child: Container(
         width: MyUtility(context).width,

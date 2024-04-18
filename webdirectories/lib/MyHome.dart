@@ -37,6 +37,7 @@ import 'package:webdirectories/Page3/WebDirectoriesWay/WebDirectoriesWay.dart';
 import 'package:webdirectories/Page5/RecentArticles/RecentAtricles.dart';
 import 'package:webdirectories/Page6/UltimateBuisnessTool/UltimateBuisnessTool.dart';
 import 'package:webdirectories/TopNavBar/TopNavBar.dart';
+import 'package:webdirectories/myutility.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -50,7 +51,7 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Page1(),
+        child: MyUtility(context).width < 600 ? MobilePage1() : Page1(),
       ),
     );
   }
