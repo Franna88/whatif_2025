@@ -20,8 +20,8 @@ class _LandingPageState extends State<LandingPage> {
       child: Stack(
         children: [
           Positioned(
-            left: 170, 
-            top: 150, 
+            left: 170,
+            top: 150,
             child: IconButton(
               icon: Image.asset(
                 'images/fuel9.png',
@@ -34,8 +34,8 @@ class _LandingPageState extends State<LandingPage> {
             ),
           ),
           Positioned(
-            left: 285, 
-            top: 200, 
+            left: 285,
+            top: 200,
             child: IconButton(
               icon: Image.asset(
                 'images/hammer9.png',
@@ -48,8 +48,8 @@ class _LandingPageState extends State<LandingPage> {
             ),
           ),
           Positioned(
-            left: 75, 
-            top: 200, 
+            left: 75,
+            top: 200,
             child: IconButton(
               icon: Image.asset(
                 'images/truck9.png',
@@ -62,8 +62,8 @@ class _LandingPageState extends State<LandingPage> {
             ),
           ),
           Positioned(
-            left: 75, 
-            top: 350, 
+            left: 75,
+            top: 350,
             child: IconButton(
               icon: Image.asset(
                 'images/cloud9.png',
@@ -76,8 +76,8 @@ class _LandingPageState extends State<LandingPage> {
             ),
           ),
           Positioned(
-            left: 285, 
-            top: 350, 
+            left: 285,
+            top: 350,
             child: IconButton(
               icon: Image.asset(
                 'images/tools9.png',
