@@ -27,30 +27,34 @@ class _AboutUsState extends State<AboutUs> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   "About us",
                   style: TextStyle(
                       fontSize: 18,
-                      fontFamily: 'raleway',
+                      fontFamily: 'ralewaysemi',
                       color: Color(0xFF65DAFF)),
                 ),
-                SizedBox(
-                  width: MyUtility(context).width / 3.5,
-                  child: Text(
-                    "Empowering informed decisions across Africa",
-                    style: TextStyle(
-                        fontSize: 46,
-                        fontFamily: 'raleway',
-                        color: Color(0xFFFBFBFB)),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12, bottom: 12),
+                  child: SizedBox(
+                    width: MyUtility(context).width / 3.5,
+                    child: const Text(
+                      "Empowering informed decisions across Africa",
+                      style: TextStyle(
+                          fontSize: 42,
+                          height: 1.2,
+                          fontFamily: 'ralewaysemi',
+                          color: Color(0xFFFBFBFB)),
+                    ),
                   ),
                 ),
                 SizedBox(
                   width: MyUtility(context).width / 3.5,
-                  child: Text(
-                    "Driven by passion and innovation, Web Directories emerged in 2013 to bridge the online information gap in South Africa, starting with comprehensive automotive directories and growing into a leading online business resource for businesses and the public.",
+                  child: const Text(
+                    "Driven by passion and innovation, Web Directories\nemerged in 2013 to bridge the online information gap in\nSouth Africa, starting with comprehensive automotive\ndirectories and growing into a leading online business\nresource for businesses and the public.",
                     style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFFFBFBFB),
+                      fontSize: 14.5,
+                      color: Color(0xFFF4F4F4),
                       fontFamily: 'raleway',
                     ),
                   ),
@@ -61,21 +65,21 @@ class _AboutUsState extends State<AboutUs> {
                     children: [
                       SizedBox(
                         width: MyUtility(context).width / 7,
-                        child: Column(
+                        child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "11 200+",
                               style: TextStyle(
-                                  fontSize: 26,
-                                  fontFamily: 'raleway',
+                                  fontSize: 32,
+                                  fontFamily: 'ralewaysemi',
                                   color: Color(0xFF65DAFF)),
                             ),
                             Text(
                               "Profiles",
                               style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFFFBFBFB),
+                                fontSize: 14.5,
+                                color: Color(0xFFF4F4F4),
                                 fontFamily: 'raleway',
                               ),
                             ),
@@ -84,21 +88,21 @@ class _AboutUsState extends State<AboutUs> {
                       ),
                       SizedBox(
                         width: MyUtility(context).width / 7,
-                        child: Column(
+                        child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "10+",
                               style: TextStyle(
-                                  fontSize: 26,
-                                  fontFamily: 'raleway',
+                                  fontSize: 32,
+                                  fontFamily: 'ralewaysemi',
                                   color: Color(0xFF65DAFF)),
                             ),
                             Text(
                               "Years in Service",
                               style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFFFBFBFB),
+                                fontSize: 14.5,
+                                color: Color(0xFFF4F4F4),
                                 fontFamily: 'raleway',
                               ),
                             ),
@@ -109,9 +113,9 @@ class _AboutUsState extends State<AboutUs> {
                   ),
                 ),
                 SizedBox(
-                  height: MyUtility(context).height * 0.01,
+                  height: MyUtility(context).height * 0.02,
                 ),
-                AboutUsButton(buttontext: 'Contact Us', onpress: () {})
+                AboutUsButton(buttonText: 'Contact Us', onPressed: () {}),
               ],
             ),
           ),

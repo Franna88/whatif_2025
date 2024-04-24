@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/Page4/DownloadWatif/DownloadWatif.dart';
-import 'package:webdirectories/TopNavBar/TopNavBar.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/Page4/Watif/WatifDropdown.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -12,6 +11,18 @@ class Watif extends StatefulWidget {
 }
 
 class _WatifState extends State<Watif> {
+  int? currentOpenDropdown;
+
+  void toggleDropdown(int index) {
+    setState(() {
+      if (currentOpenDropdown == index) {
+        currentOpenDropdown = null;
+      } else {
+        currentOpenDropdown = index;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -25,47 +36,59 @@ class _WatifState extends State<Watif> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 100),
+                  padding: EdgeInsets.only(left: 150),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        child: SizedBox(
-                          height: 60,
-                          child: Text(
-                            "Hello, my name is",
-                            style: TextStyle(
-                              fontSize: 48,
-                              fontFamily: 'ralewaysemi',
-                              color: Colors.black,
-                            ),
-                          ),
+                      Text(
+                        "Hello, my name is",
+                        style: TextStyle(
+                          fontSize: 48,
+                          fontFamily: 'ralewaysemi',
+                          color: Colors.black,
                         ),
                       ),
-                      Container(
-                        height: 130,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Text(
-                            "WATIF",
-                            style: TextStyle(
-                              fontSize: 120,
-                              fontFamily: 'ralewaysemi',
-                              color: Colors.black,
+                      Stack(
+                        alignment:
+                            Alignment.topCenter, // Center align the stack
+                        children: [
+                          // Row containing the text
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "WATIF ",
+                                style: TextStyle(
+                                  fontSize: 115,
+                                  fontFamily: 'ralewaysemi',
+                                  color: Colors.black,
+                                  height: 1.1,
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: SvgPicture.asset(
+                              'images/tm.svg',
+                              height: 20,
+                              width: 20,
                             ),
                           ),
-                        ),
+                        ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
                         child: Text.rich(
                           TextSpan(
                             children: [
                               TextSpan(
                                 text: "Your ",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   fontFamily: 'raleway',
                                   color: Colors.black,
                                 ),
@@ -73,17 +96,16 @@ class _WatifState extends State<Watif> {
                               TextSpan(
                                 text: "FREE ",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   fontFamily: 'ralewaybold',
                                   color: Colors.black,
-                                  // Make the text bold
                                 ),
                               ),
                               TextSpan(
                                 text:
                                     "cloud based, voice controlled, assistance App, available 24/7",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   fontFamily: 'raleway',
                                   color: Colors.black,
                                 ),
@@ -96,47 +118,64 @@ class _WatifState extends State<Watif> {
                         dropdownText: "Watif you need fuel fast?",
                         dropdownContent:
                             "I will help you find the nearest and cheapest fuel brands in any area. View, select and navigate there instantly. Get updated info on available fuel loyalty rewards to maximize your fuel rewards.",
+                        isOpen: currentOpenDropdown == 0,
+                        onToggle: () => toggleDropdown(0),
                       ),
                       WatifDropdown(
                         dropdownText: "Watif you need Coffee? Food?",
                         dropdownContent:
-                            "Feed your travel taste buds with coffee, food and convenience shopping. I have all the answers and specials! ",
+                            "Feed your travel taste buds with coffee, food, and convenience shopping. I have all the answers and specials!",
+                        isOpen: currentOpenDropdown == 1,
+                        onToggle: () => toggleDropdown(1),
                       ),
                       WatifDropdown(
-                        dropdownText: "Watif you need a restroom??",
+                        dropdownText: "Watif you need a restroom?",
                         dropdownContent:
-                            "I will guide you to clean, accessible restrooms, pet and child friendly spaces.",
+                            "I will guide you to clean, accessible restrooms, pet, and child-friendly spaces.",
+                        isOpen: currentOpenDropdown == 2,
+                        onToggle: () => toggleDropdown(2),
                       ),
                       WatifDropdown(
                         dropdownText: "Watif you need more convenience?",
                         dropdownContent:
-                            "I will find you ATM’s, car washes, pharmacies, courier depots, trailer hire, bus & truck stops and many more! ",
+                            "I will find you ATMs, car washes, pharmacies, courier depots, trailer hire, bus & truck stops, and many more!",
+                        isOpen: currentOpenDropdown == 3,
+                        onToggle: () => toggleDropdown(3),
                       ),
                       WatifDropdown(
                         dropdownText: "Watif you get car trouble?",
                         dropdownContent:
-                            "I will link you to reputable roadside assistance-, towing-, auto repair-, and panel beating services nationwide. ",
+                            "I will link you to reputable roadside assistance, towing, auto repair, and panel beating services nationwide.",
+                        isOpen: currentOpenDropdown == 4,
+                        onToggle: () => toggleDropdown(4),
                       ),
                       WatifDropdown(
                         dropdownText: "Watif an accident happens?",
                         dropdownContent:
-                            "Help is a tap away! Get reputable roadside- and towing assistance near you. Access emergency contacts on call, get your medical and insurance information, and share your location to your nominated contacts.",
+                            "Help is a tap away! Get reputable roadside and towing assistance near you. Access emergency contacts on call, get your medical and insurance information, and share your location with your nominated contacts.",
+                        isOpen: currentOpenDropdown == 5,
+                        onToggle: () => toggleDropdown(5),
                       ),
                       WatifDropdown(
                         dropdownText: "Watif you need your travel info?",
                         dropdownContent:
-                            "Upload your Driver Profile that includes emergency contacts, vehicle registration and licensing, medical aid, insurance policy details and vehicle tracking information.",
+                            "Upload your Driver Profile that includes emergency contacts, vehicle registration and licensing, medical aid, insurance policy details, and vehicle tracking information.",
+                        isOpen: currentOpenDropdown == 6,
+                        onToggle: () => toggleDropdown(6),
                       ),
                       WatifDropdown(
                         dropdownText: "Watif you need infotainment?",
                         dropdownContent:
-                            "Access your favourite tunes, podcasts, audio books, messaging and map apps through my portal. ",
+                            "Access your favorite tunes, podcasts, audiobooks, messaging, and map apps through my portal.",
+                        isOpen: currentOpenDropdown == 7,
+                        onToggle: () => toggleDropdown(7),
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  height: MyUtility(context).height / 1.2,
+                // Right side image
+                SizedBox(
+                  height: MyUtility(context).height / 1.0,
                   child: Image.asset('images/phone.png'),
                 )
               ],

@@ -30,7 +30,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             ),
           ),
           SizedBox(
-            width: MyUtility(context).width * 0.16,
+            width: MyUtility(context).width * 0.19,
             child: TextFormField(
               controller: details,
               decoration: InputDecoration(

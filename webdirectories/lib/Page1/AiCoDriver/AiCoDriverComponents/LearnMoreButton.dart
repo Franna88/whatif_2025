@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:webdirectories/myutility.dart';
 
 class LearnMoreButton extends StatefulWidget {
-  final String buttontext;
-  final VoidCallback onpress;
+  final String buttonText;
+  final VoidCallback onPressed;
 
-  const LearnMoreButton(
-      {super.key, required this.buttontext, required this.onpress});
+  const LearnMoreButton({
+    Key? key,
+    required this.buttonText,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   State<LearnMoreButton> createState() => _LearnMoreButtonState();
@@ -16,36 +18,34 @@ class LearnMoreButton extends StatefulWidget {
 class _LearnMoreButtonState extends State<LearnMoreButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width * 0.1,
-      height: MyUtility(context).height * 0.05,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(MyUtility(context).height * 0.025),
-      ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.085,
+      height: MediaQuery.of(context).size.height * 0.045,
       child: ElevatedButton(
-        onPressed: widget.onpress,
+        onPressed: widget.onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.black,
           shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(MyUtility(context).height * 0.025),
+            borderRadius: BorderRadius.circular(20),
           ),
+          padding: EdgeInsets.zero,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             SvgPicture.asset(
               'images/arroww.svg',
-              width: 25.0,
-              height: 25.0,
+              width: 23.5,
+              height: 23.5,
             ),
-            SizedBox(
-              width: 5,
-            ),
+            const SizedBox(width: 8),
             Text(
-              widget.buttontext,
+              widget.buttonText,
               style: TextStyle(
-                  color: Colors.white, fontSize: 14.0, fontFamily: 'raleway'),
+                color: Color(0xFFFFFFFF).withOpacity(0.9),
+                fontSize: 14,
+                fontFamily: 'Raleway',
+              ),
             ),
           ],
         ),

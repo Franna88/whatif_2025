@@ -13,7 +13,7 @@ class _LandingPageState extends State<LandingPage> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/mainbackground.png"),
+          image: AssetImage("images/Glasses.png"),
           fit: BoxFit.cover,
         ),
       ),

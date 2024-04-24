@@ -21,7 +21,7 @@ class _OurStoryTextButtonState extends State<OurStoryTextButton> {
         child: Text(
           widget.text,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 16.5,
             fontFamily: 'raleway',
             color: Colors.black,
           ),

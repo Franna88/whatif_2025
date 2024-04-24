@@ -15,13 +15,13 @@ List directoriesInfo = [
     "1title": "Download ",
     "2title": "WATIF",
     "description":
-        "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide."
+        "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide."
   },
   {
     "1title": "TOWING",
     "2title": "Directory",
     "description":
-        "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide.  Read Reviews"
+        "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide.  Read Reviews"
   },
   {
     "1title": "Fuel",
@@ -33,7 +33,7 @@ List directoriesInfo = [
     "1title": "PANEL BEATER",
     "2title": "Directory",
     "description":
-        "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews."
+        "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews."
   },
   {
     "1title": "AUTO REPAIR",
@@ -69,7 +69,7 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/Glasses.png"),
+          image: AssetImage("images/glasses.gif"),
           fit: BoxFit.cover,
         ),
       ),
@@ -78,16 +78,16 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 50),
                 child: Image.asset(
                   'images/logo.png',
-                  width: 200,
+                  width: 250,
                   height: 120,
                 ),
               ),
               Spacer(),
               Padding(
-                padding: const EdgeInsets.only(right: 20.0),
+                padding: const EdgeInsets.only(right: 50.0),
                 child: SizedBox(
                   width: MyUtility(context).width * 0.3,
                   child: Row(
@@ -114,8 +114,15 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                           },
                           text: 'Articles'),
                       Spacer(),
-                      LandingPageTextButton(
-                          onpress: () {}, text: 'Get in Touch'),
+                      Container(
+                        height: MyUtility(context).height * 0.05,
+                        width: MyUtility(context).width * 0.08,
+                        decoration: BoxDecoration(
+                            color: Color(0xFF0E1013),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: LandingPageTextButton(
+                            onpress: () {}, text: 'Get in Touch'),
+                      ),
                     ],
                   ),
                 ),

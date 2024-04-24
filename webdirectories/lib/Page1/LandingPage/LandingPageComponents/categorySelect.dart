@@ -87,7 +87,7 @@ class _CategorySelectState extends State<CategorySelect>
               left: 33,
               child: Container(
                 child: SvgPicture.asset(
-                  'images/centerGauge.svg',
+                  'images/centerGauge2.svg',
                   width: 500,
                   height: 500,
                 ),
@@ -105,8 +105,8 @@ class _CategorySelectState extends State<CategorySelect>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 2
-                        ? 'images/topWhite.svg'
-                        : 'images/top.svg',
+                        ? 'images/topWhite1.svg'
+                        : 'images/topb1.svg',
                     width: 1,
                     height: 202,
                   ),
@@ -126,7 +126,7 @@ class _CategorySelectState extends State<CategorySelect>
                   child: SvgPicture.asset(
                     widget.menuIndex == 1
                         ? 'images/leftWhite.svg'
-                        : 'images/left.svg',
+                        : 'images/leftb.svg',
                     width: 1,
                     height: 202,
                   ),
@@ -165,8 +165,8 @@ class _CategorySelectState extends State<CategorySelect>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 3
-                        ? 'images/rightWhite.svg'
-                        : 'images/right.svg',
+                        ? 'images/rightWhite1.svg'
+                        : 'images/rightb.svg',
                     width: 1,
                     height: 165,
                   ),
@@ -186,8 +186,8 @@ class _CategorySelectState extends State<CategorySelect>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 4
-                        ? 'images/rightDownWhite.svg'
-                        : 'images/rightDown.svg',
+                        ? 'images/rightDownWhite1.svg'
+                        : 'images/rightDownb.svg',
                     width: 190,
                     height: 200,
                   ),

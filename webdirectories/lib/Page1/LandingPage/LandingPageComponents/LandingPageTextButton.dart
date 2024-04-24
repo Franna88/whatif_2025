@@ -21,7 +21,7 @@ class _LandingPageTextButtonState extends State<LandingPageTextButton> {
         child: Text(
           widget.text,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 16.5,
             fontFamily: 'raleway',
             color: Colors.white,
           ),

@@ -14,15 +14,15 @@ class _OurMissionIconTextState extends State<OurMissionIconText> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 7),
       child: SizedBox(
         width: MyUtility(context).width / 5.5,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 24,
-              height: 24,
+              width: 18,
+              height: 18,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Color(0xFF292556),
@@ -30,8 +30,8 @@ class _OurMissionIconTextState extends State<OurMissionIconText> {
               child: Center(
                 child: SvgPicture.asset(
                   'images/circlecheck.svg',
-                  width: 28,
-                  height: 28,
+                  width: 25,
+                  height: 25,
                   color: Color(0xFF65DAFF),
                 ),
               ),
@@ -41,6 +41,7 @@ class _OurMissionIconTextState extends State<OurMissionIconText> {
               child: Text(
                 widget.text,
                 style: TextStyle(
+                  fontFamily: 'raleway',
                   fontSize: 14,
                   color: Color(0xFFFBFBFB),
                 ),

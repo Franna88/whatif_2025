@@ -16,49 +16,79 @@ class _AiCoDriverState extends State<AiCoDriver> {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              width: MyUtility(context).width / 2.5,
-              height: MyUtility(context).height * 0.8,
-              child: Image.asset(
-                'images/phone1.png',
-                fit: BoxFit.cover,
-              ),
+            Column(
+              children: [
+                SizedBox(
+                  height: MyUtility(context).height * 0.1,
+                ),
+                SizedBox(
+                  width: MyUtility(context).width / 3.5,
+                  height: MyUtility(context).height * 0.6,
+                  child: Image.asset(
+                    'images/watif1.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
             ),
             SizedBox(
-              width: MyUtility(context).width / 2.8,
+              width: MyUtility(context).width / 2.75,
               height: MyUtility(context).height * 0.7,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: MyUtility(context).height * 0.06,
+                    height: MyUtility(context).height * 0.1,
                   ),
-                  Text(
+                  const Text(
                     "Your AI Co-driver",
                     style: TextStyle(
                         fontSize: 48,
-                        fontFamily: 'ralewaybold',
+                        fontFamily: 'ralewaysemi',
                         color: Colors.black),
                   ),
-                  Text(
+                  const Text(
                     "Download your WATIF App today!",
                     style: TextStyle(
                         fontSize: 24,
-                        fontFamily: 'ralewayDownload your WATIF App today!',
+                        fontFamily: 'ralewaymedium',
                         color: Colors.black),
                   ),
                   SizedBox(
                     height: MyUtility(context).height * 0.01,
                   ),
-                  Text(
-                    "Hit the road with confidence and ditch the stress! WATIF is your free, all-in-one automotive app that empowers you with everything you need.",
-                    style: TextStyle(
+                  Text.rich(
+                    TextSpan(
+                      text:
+                          'Hit the road with confidence and ditch the stress! ',
+                      style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'raleway',
-                        color: Colors.black),
+                        color: Colors.black,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'WATIF',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'ralewaysemi',
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              ' is your free, all-in-one automotive app that empowers you with everything you need.',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'raleway',
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: MyUtility(context).height * 0.04,
@@ -76,14 +106,14 @@ class _AiCoDriverState extends State<AiCoDriver> {
                   SizedBox(
                     height: MyUtility(context).height * 0.02,
                   ),
-                  LearnMoreButton(buttontext: 'Learn More', onpress: () {}),
+                  LearnMoreButton(buttonText: 'Learn More', onPressed: () {}),
                   SizedBox(
                     height: MyUtility(context).height * 0.01,
                   ),
                   Container(
-                    width: MyUtility(context).width * 0.1,
-                    height: 40,
-                    decoration: BoxDecoration(
+                    width: MyUtility(context).width * 0.08,
+                    height: 30,
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('images/stars.png'),
                       ),

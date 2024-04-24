@@ -15,13 +15,16 @@ class AiCoDriverButton extends StatefulWidget {
 class _AiCoDriverButtonState extends State<AiCoDriverButton> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: widget.onpress,
-      child: Image.asset(
-        widget.image,
-        width: MyUtility(context).width * 0.1,
-        height: 40,
-        fit: BoxFit.contain,
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: InkWell(
+        onTap: widget.onpress,
+        child: Image.asset(
+          widget.image,
+          width: MyUtility(context).width * 0.1,
+          height: 45,
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }

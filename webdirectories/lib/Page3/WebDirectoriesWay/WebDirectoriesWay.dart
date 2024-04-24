@@ -14,34 +14,34 @@ class _WebDirectoriesWayState extends State<WebDirectoriesWay> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 50),
+        const Padding(
+          padding: EdgeInsets.only(top: 50),
           child: Text(
             "Our “Web Directories Way”",
             style: TextStyle(
-                fontSize: 48, fontFamily: 'ralewaybold', color: Colors.black),
+                fontSize: 48, fontFamily: 'ralewaysemi', color: Colors.black),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 20),
+        const Padding(
+          padding: EdgeInsets.only(bottom: 20),
           child: Text(
             "We are Websmiths & Web Librarians",
             style: TextStyle(
-                fontSize: 24, fontFamily: 'ralewaybold', color: Colors.black),
+                fontSize: 24, fontFamily: 'ralewaysemi', color: Colors.black),
           ),
         ),
         Container(
-          width: MediaQuery.of(context).size.width / 1.2,
-          height: MediaQuery.of(context).size.height * 0.27,
+          width: MediaQuery.of(context).size.width / 1.45,
+          height: MediaQuery.of(context).size.height * 0.3,
           decoration: BoxDecoration(
-            color: Color(0xFFF1F3F4),
+            color: const Color(0xFFF1F3F4),
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 0,
                 blurRadius: 5,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
               ),
             ],
           ),
@@ -49,9 +49,9 @@ class _WebDirectoriesWayState extends State<WebDirectoriesWay> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 child: RichText(
-                  text: TextSpan(
+                  text: const TextSpan(
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,
@@ -98,7 +98,7 @@ class _WebDirectoriesWayState extends State<WebDirectoriesWay> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: RichText(
-                  text: TextSpan(
+                  text: const TextSpan(
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
@@ -152,8 +152,8 @@ class _WebDirectoriesWayState extends State<WebDirectoriesWay> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -170,9 +170,12 @@ class _WebDirectoriesWayState extends State<WebDirectoriesWay> {
           ),
         ),
         SizedBox(
-          height: MyUtility(context).height * 0.075,
+          height: MyUtility(context).height * 0.07,
         ),
-        StackImageContainer()
+        const StackImageContainer(),
+        SizedBox(
+          height: MyUtility(context).height * 0.05,
+        ),
       ],
     );
   }

@@ -16,7 +16,7 @@ class _Page5State extends State<Page5> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: [TopNavBar(), Productivity(), RecentAtricles(), Footer()],
+        children: [TopNavBar(), Productivity(), RecentArticles(), Footer()],
       ),
     );
   }

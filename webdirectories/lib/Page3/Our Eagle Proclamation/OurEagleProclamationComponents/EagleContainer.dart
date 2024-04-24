@@ -43,7 +43,7 @@ class EagleProclamation extends StatelessWidget {
                   headlinetext,
                   style: TextStyle(
                       fontSize: 22,
-                      fontFamily: 'ralewaybold',
+                      fontFamily: 'ralewaysemi',
                       color: Colors.black),
                   textAlign: TextAlign.center,
                 ),

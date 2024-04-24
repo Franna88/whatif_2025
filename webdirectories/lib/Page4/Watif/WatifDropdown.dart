@@ -1,40 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
-class WatifDropdown extends StatefulWidget {
+// WatifDropdown widget that uses external open/close state
+class WatifDropdown extends StatelessWidget {
   final String dropdownText;
   final String dropdownContent;
+  final bool isOpen;
+  final Function() onToggle;
 
   const WatifDropdown({
     Key? key,
     required this.dropdownText,
     required this.dropdownContent,
+    required this.isOpen,
+    required this.onToggle,
   }) : super(key: key);
-
-  @override
-  _WatifDropdownState createState() => _WatifDropdownState();
-}
-
-class _WatifDropdownState extends State<WatifDropdown> {
-  bool isDropdownOpen = false;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 2.5),
+      padding: const EdgeInsets.only(bottom: 6.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Row(
             children: [
               GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isDropdownOpen = !isDropdownOpen;
-                  });
-                },
+                onTap: onToggle,
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.22,
+                  width: MediaQuery.of(context).size.width * 0.27,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.black,
@@ -44,8 +38,11 @@ class _WatifDropdownState extends State<WatifDropdown> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.dropdownText,
-                        style: TextStyle(color: Colors.white),
+                        dropdownText,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'raleway',
+                        ),
                       ),
                       Container(
                         width: 24,
@@ -55,7 +52,7 @@ class _WatifDropdownState extends State<WatifDropdown> {
                           color: Colors.white,
                         ),
                         child: Icon(
-                          isDropdownOpen
+                          isOpen
                               ? Icons.keyboard_arrow_up
                               : Icons.keyboard_arrow_down,
                           color: Colors.black,
@@ -67,33 +64,41 @@ class _WatifDropdownState extends State<WatifDropdown> {
               ),
               SizedBox(
                 width: MyUtility(context).width * 0.2,
-              )
+              ),
             ],
           ),
-          if (isDropdownOpen) ...[
-            SizedBox(height: 8),
-            Container(
-              width: MyUtility(context).width * 0.4,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
+          if (isOpen)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 8),
+                Container(
+                  width: MyUtility(context).width * 0.4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 0,
+                        blurRadius: 5,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: ListTile(
                     title: Text(
-                      widget.dropdownContent,
+                      dropdownContent,
                       style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'raleway',
-                          color: Colors.black),
+                        fontSize: 16,
+                        fontFamily: 'raleway',
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
         ],
       ),
     );

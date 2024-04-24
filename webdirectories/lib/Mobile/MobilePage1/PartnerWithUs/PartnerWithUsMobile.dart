@@ -70,10 +70,10 @@ class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
                     "With a proven decade-long track record and a commitment to customer satisfaction, we foster trustworthy relationships with businesses and industry leaders, offering stability, valuable connections, and unwavering support for your success.",
               ),
               PartnerMobileContainer(
-                image: 'images/key.svg',
+                image: 'images/keyss.svg',
                 header: 'Owners Portal',
                 description:
-                    "Our scaleable platform empowers you to manage your business profile anytime, anywhere through our 24/7 accessible cloud platform, ensuring consistent and accurate information across over 11,200 profiles in 8 countries, helping you connect with a wider audience.",
+                    "Our scalable platform empowers you to manage your business profile anytime, anywhere through our 24/7 accessible cloud platform, ensuring consistent and accurate information across over 11,200 profiles in 8 countries, helping you connect with a wider audience.",
               ),
               PartnerMobileContainer(
                 image: 'images/search.svg',

@@ -13,19 +13,18 @@ class OvalTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 125, // Adjust width as needed
-      height: 40, // Adjust height as needed
+      width: 125,
+      height: 40,
       decoration: BoxDecoration(
-        borderRadius:
-            BorderRadius.circular(25), // Half of the height for an oval shape
-        color: Color(0xFF0E1013), // Black color
+        borderRadius: BorderRadius.circular(25),
+        color: Color(0xFF0E1013),
       ),
       child: TextButton(
         onPressed: onPressed,
         child: Text(
           text,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 16,
             fontFamily: 'raleway',
             color: Colors.white,
           ),

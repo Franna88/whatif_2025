@@ -25,9 +25,9 @@ class _SEOContainerState extends State<SEOContainer> {
             child: Text(
               widget.text,
               style: TextStyle(
-                fontSize: 8,
+                fontSize: 9,
                 color: Colors.white,
-                fontFamily: 'raleway',
+                fontFamily: 'ralewaysemi',
               ),
             ),
           ),

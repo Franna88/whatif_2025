@@ -12,7 +12,7 @@ class _MapsState extends State<Maps> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MyUtility(context).height * 0.4,
+      height: MyUtility(context).height * 0.5,
       decoration: BoxDecoration(
         color: Color(0xFFD9D9D9),
       ),

@@ -15,8 +15,8 @@ class _FooterTextButtonState extends State<FooterTextButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.06,
-      height: 25,
+      width: MyUtility(context).width * 0.065,
+      height: 20,
       child: TextButton(
         onPressed: widget.onpress,
         child: Align(

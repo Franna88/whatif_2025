@@ -17,15 +17,15 @@ class _OurEagleProclamationState extends State<OurEagleProclamation> {
         Text(
           "Our Eagle Proclamation",
           style: TextStyle(
-              fontSize: 48, fontFamily: 'ralewaybold', color: Colors.black),
+              fontSize: 48, fontFamily: 'ralewaysemi', color: Colors.black),
         ),
         Text(
           "The first step to attain a set goal, is to write it down",
           style: TextStyle(
-              fontSize: 24, fontFamily: 'ralewaybold', color: Colors.black),
+              fontSize: 24, fontFamily: 'ralewaysemi', color: Colors.black),
         ),
         SizedBox(
-          height: MyUtility(context).height * 0.025,
+          height: MyUtility(context).height * 0.04,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -53,7 +53,7 @@ class _OurEagleProclamationState extends State<OurEagleProclamation> {
           ],
         ),
         SizedBox(
-          height: MyUtility(context).height * 0.05,
+          height: MyUtility(context).height * 0.1,
         )
       ],
     );

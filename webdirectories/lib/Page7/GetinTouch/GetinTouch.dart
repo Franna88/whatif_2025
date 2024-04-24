@@ -25,7 +25,7 @@ class _GetinTouchState extends State<GetinTouch> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Get in touch",
                   style: TextStyle(
                       fontSize: 46,
@@ -34,7 +34,7 @@ class _GetinTouchState extends State<GetinTouch> {
                 ),
                 SizedBox(
                   width: MyUtility(context).width / 2.6,
-                  child: Text.rich(
+                  child: const Text.rich(
                     TextSpan(
                       children: [
                         TextSpan(
@@ -67,7 +67,10 @@ class _GetinTouchState extends State<GetinTouch> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
+                  height: MyUtility(context).height * 0.05,
+                ),
+                SizedBox(
                   width: MyUtility(context).width / 2.2,
                   height: MyUtility(context).height * 0.15,
                   child: Row(
@@ -104,7 +107,7 @@ class _GetinTouchState extends State<GetinTouch> {
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: MyUtility(context).width / 2.2,
                   height: MyUtility(context).height * 0.15,
                   child: Row(
@@ -116,7 +119,7 @@ class _GetinTouchState extends State<GetinTouch> {
                       SizedBox(
                         width: MyUtility(context).width * 0.015,
                       ),
-                      Column(
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -141,7 +144,7 @@ class _GetinTouchState extends State<GetinTouch> {
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: MyUtility(context).width / 2.2,
                   height: MyUtility(context).height * 0.15,
                   child: Row(
@@ -149,11 +152,11 @@ class _GetinTouchState extends State<GetinTouch> {
                       SizedBox(
                           width: 60,
                           height: 60,
-                          child: SvgPicture.asset('images/buisnesshours.svg')),
+                          child: SvgPicture.asset('images/address.svg')),
                       SizedBox(
                         width: MyUtility(context).width * 0.015,
                       ),
-                      Column(
+                      const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -184,19 +187,22 @@ class _GetinTouchState extends State<GetinTouch> {
               padding: const EdgeInsets.only(bottom: 8),
               child: Column(
                 children: [
+                  SizedBox(
+                    height: MyUtility(context).height * 0.1,
+                  ),
                   Container(
-                    width: MyUtility(context).width / 2.8,
-                    height: MyUtility(context).height / 1.8,
+                    width: MyUtility(context).width / 2.45,
+                    height: MyUtility(context).height / 1.7,
                     decoration: BoxDecoration(
-                        color: Color(0xFFF4F4F4),
+                        color: const Color(0xFFF4F4F4),
                         borderRadius: BorderRadius.circular(20)),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -205,8 +211,8 @@ class _GetinTouchState extends State<GetinTouch> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -216,11 +222,11 @@ class _GetinTouchState extends State<GetinTouch> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 15),
+                            padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Message * ',
                                   style: TextStyle(
                                     fontFamily: 'raleway',
@@ -231,10 +237,10 @@ class _GetinTouchState extends State<GetinTouch> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: MyUtility(context).width * 0.315,
+                                  width: MyUtility(context).width * 0.4,
                                   child: TextFormField(
                                     controller: details,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       // Remove labelText and labelStyle
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -258,9 +264,9 @@ class _GetinTouchState extends State<GetinTouch> {
                             child: Container(
                               width: MyUtility(context).width * 0.16,
                               height: MyUtility(context).height * 0.07,
-                              padding: EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
-                                color: Color(0xFFFAFAFA),
+                                color: const Color(0xFFFAFAFA),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Row(
@@ -277,7 +283,7 @@ class _GetinTouchState extends State<GetinTouch> {
                                           });
                                         },
                                       ),
-                                      Text(
+                                      const Text(
                                         "I'm not a robot",
                                         style: TextStyle(
                                             fontSize: 18.0,
@@ -304,13 +310,14 @@ class _GetinTouchState extends State<GetinTouch> {
                                 text: 'Submit Now ', onPressed: () {}),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 15),
+                            padding: const EdgeInsets.only(left: 15, top: 15),
                             child: Text(
                               '*Please fill in required fields',
                               style: TextStyle(
                                 fontFamily: 'raleway',
                                 fontSize: 13,
-                                color: Color(0xFF000000).withOpacity(0.35),
+                                color:
+                                    const Color(0xFF000000).withOpacity(0.35),
                                 fontWeight: FontWeight
                                     .bold, // You can adjust the fontWeight as needed
                               ),

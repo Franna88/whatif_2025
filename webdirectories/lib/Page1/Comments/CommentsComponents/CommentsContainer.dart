@@ -36,7 +36,9 @@ class _CommentsContainerState extends State<CommentsContainer> {
             child: Text(
               widget.comment,
               style: TextStyle(
-                  fontSize: 16, fontFamily: 'raleway', color: Colors.white),
+                  fontSize: 15.5,
+                  fontFamily: 'raleway',
+                  color: Color(0xFFFFFFFF)),
               textAlign: TextAlign.center,
             ),
           ),
@@ -45,7 +47,9 @@ class _CommentsContainerState extends State<CommentsContainer> {
             child: Text(
               widget.username,
               style: TextStyle(
-                  fontSize: 16, fontFamily: 'raleway', color: Colors.white),
+                  fontSize: 16,
+                  fontFamily: 'ralewaysemi',
+                  color: Color(0xFFFFFFFF)),
               textAlign: TextAlign.center,
             ),
           ),

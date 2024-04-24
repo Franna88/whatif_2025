@@ -22,19 +22,19 @@ class _StackImageContainerState extends State<StackImageContainer> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(-2, 2), // Adjust offset for left shading
+            offset: Offset(-2, 2),
           ),
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(2, 2), // Adjust offset for right shading
+            offset: Offset(2, 2),
           ),
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, 2), // Adjust offset for bottom shading
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -44,14 +44,13 @@ class _StackImageContainerState extends State<StackImageContainer> {
           Text(
             "The Eagle Team",
             style: TextStyle(
-                fontSize: 16, fontFamily: 'raleway', color: Colors.black),
+                fontSize: 20, fontFamily: 'raleway', color: Colors.black),
           ),
-          SizedBox(height: 20), // Added for spacing
+          SizedBox(height: 20),
           Stack(
             alignment: Alignment.center,
             children: [
               Container(
-                // Added a container to give background color
                 width: MyUtility(context).width * 0.2,
                 height: 60,
                 color: Colors.white,
@@ -119,71 +118,3 @@ class _StackImageContainerState extends State<StackImageContainer> {
     );
   }
 }
-
-/*Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                // Added a container to give background color
-                width: 200,
-                height: 40,
-                color: Colors.white,
-              ),
-              Positioned(
-                top: 0,
-                left: 150,
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('images/avitar7.png'),
-                  radius: 20,
-                ),
-              ),
-              Positioned(
-                top: 0,
-                left: 125,
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('images/avitar6.png'),
-                  radius: 20,
-                ),
-              ),
-              Positioned(
-                top: 0,
-                left: 100,
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('images/avitar5.png'),
-                  radius: 20,
-                ),
-              ),
-              Positioned(
-                top: 0,
-                left: 75,
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('images/avitar5.png'),
-                  radius: 20,
-                ),
-              ),
-              Positioned(
-                top: 0,
-                left: 50,
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('images/avitar3.png'),
-                  radius: 20,
-                ),
-              ),
-              Positioned(
-                top: 0,
-                left: 25,
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('images/avitar2.png'),
-                  radius: 20,
-                ),
-              ),
-              Positioned(
-                top: 0,
-                left: 0,
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('images/avitar1.png'),
-                  radius: 20,
-                ),
-              )
-            ],
-          )*/

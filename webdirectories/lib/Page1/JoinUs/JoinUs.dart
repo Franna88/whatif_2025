@@ -24,15 +24,41 @@ class _JoinUsState extends State<JoinUs> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(
+              height: MyUtility(context).height * 0.04,
+            ),
             Text(
               "Want to join us?",
               style: TextStyle(
                   fontSize: 48, fontFamily: 'ralewaybold', color: Colors.black),
             ),
-            Text(
-              "Follow these 4 easy steps",
-              style: TextStyle(
-                  fontSize: 24, fontFamily: 'ralewaybold', color: Colors.black),
+            Text.rich(
+              TextSpan(
+                text: 'Follow these ',
+                style: TextStyle(
+                  fontSize: 26.5,
+                  fontFamily: 'ralewaysemi',
+                  color: Colors.black,
+                ),
+                children: [
+                  TextSpan(
+                    text: '4',
+                    style: TextStyle(
+                        fontSize: 24.5,
+                        fontFamily: '',
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  TextSpan(
+                    text: ' easy steps',
+                    style: TextStyle(
+                      fontSize: 26.5,
+                      fontFamily: 'ralewaysemi',
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: MyUtility(context).height * 0.05,

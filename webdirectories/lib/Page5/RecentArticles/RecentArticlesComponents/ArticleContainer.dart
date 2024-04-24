@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/Page5/RecentArticles/RecentArticlesComponents/SEOContainer.dart';
@@ -5,19 +7,19 @@ import 'package:webdirectories/myutility.dart';
 
 class ArticlesContainer extends StatefulWidget {
   final String image;
-  final String catagory;
+  final String category;
   final String headline;
   final String writer;
-  final String discription;
+  final String description;
   final VoidCallback onpress;
 
   const ArticlesContainer(
       {Key? key,
       required this.image,
-      required this.catagory,
+      required this.category,
       required this.headline,
       required this.writer,
-      required this.discription,
+      required this.description,
       required this.onpress})
       : super(key: key);
 
@@ -43,8 +45,8 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 200),
-        width: MyUtility(context).width / 4.6,
-        height: MyUtility(context).height / 1.8,
+        width: MyUtility(context).width / 3.9,
+        height: MyUtility(context).height / 1.55,
         decoration: BoxDecoration(
           color: isHovered ? Color(0xFF0E1013) : Color(0xFFF4F4F4),
           borderRadius: BorderRadius.circular(10.0),
@@ -58,28 +60,29 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
           ],
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(widget.image),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+              padding: const EdgeInsets.fromLTRB(16, 2, 16, 2),
               child: Text(
-                widget.catagory,
+                widget.category,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontFamily: 'ralewaybold',
                   color: Color(0xFF65DAFF),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+              padding: const EdgeInsets.fromLTRB(16, 2, 16, 2),
               child: SizedBox(
                 height: MyUtility(context).height * 0.075,
                 child: Text(
                   widget.headline,
                   style: TextStyle(
-                    fontSize: 19,
+                    fontSize: 21,
                     fontFamily: 'ralewaysemi',
                     color: isHovered ? Colors.white : Colors.black,
                   ),
@@ -87,11 +90,11 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
               child: RichText(
                 text: TextSpan(
                   style: TextStyle(
-                    fontSize: 12.0,
+                    fontSize: 14.0,
                     color: Color(0xFF616161),
                   ),
                   children: <TextSpan>[
@@ -112,13 +115,13 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 2, 8, 0),
+              padding: const EdgeInsets.fromLTRB(16, 2, 16, 0),
               child: SizedBox(
-                height: MyUtility(context).height * 0.08,
+                height: MyUtility(context).height * 0.09,
                 child: Text(
-                  widget.discription,
+                  widget.description,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 16,
                     fontFamily: 'raleway',
                     color: isHovered ? Colors.white : Colors.black,
                   ),
@@ -126,7 +129,7 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 16),
               child: SizedBox(
                 height: MyUtility(context).height * 0.05,
                 child: Row(
@@ -136,23 +139,20 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
                     SEOContainer(text: 'EchoMBR'),
                     SEOContainer(text: 'KAI Results'),
                     SEOContainer(text: 'Panelbeaters'),
-                    SizedBox(width: 10),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: widget.onpress,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: isHovered ? Colors.white : Colors.black,
-                            ),
-                            padding: EdgeInsets.all(4),
-                            child: Icon(
-                              Icons.keyboard_arrow_right,
-                              color: isHovered ? Colors.black : Colors.white,
-                            ),
+                    SizedBox(width: MyUtility(context).width * 0.04),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: widget.onpress,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: isHovered ? Colors.white : Colors.black,
+                          ),
+                          padding: EdgeInsets.all(4),
+                          child: Icon(
+                            Icons.keyboard_arrow_right,
+                            color: isHovered ? Colors.black : Colors.white,
                           ),
                         ),
                       ),

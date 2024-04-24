@@ -22,81 +22,135 @@ class _CircleTextBoxState extends State<CircleTextBox> {
   Widget build(BuildContext context) {
     double width = MyUtility(context).width;
 
-    return Container(
-      width: MyUtility(context).width / 3.5,
-      height: MyUtility(context).height / 2,
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 2, 27, 43),
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: Colors.white,
-          width: 2.0,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20, right: 50),
+      child: Container(
+        width: MyUtility(context).width / 3.2,
+        height: MyUtility(context).height / 1.3,
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 2, 27, 43),
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: Colors.white,
+            width: 2.0,
+          ),
         ),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "<  ",
-                  style: TextStyle(
-                      fontSize: 22,
-                      fontFamily: 'ralewaybold',
-                      color: const Color.fromARGB(255, 255, 255, 255)),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "<  ",
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'raleway',
+                        color: const Color.fromARGB(255, 255, 255, 255)),
+                  ),
+                  Text(
+                    "${widget.menuIndex + 1} / 5 ",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: const Color.fromARGB(255, 255, 255, 255)),
+                  ),
+                  Text(
+                    "  >",
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'raleway',
+                        color: const Color.fromARGB(255, 255, 255, 255)),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.Title1,
+                      style: TextStyle(
+                          fontSize: 32,
+                          fontFamily: 'ralewaybold',
+                          color: const Color.fromARGB(255, 255, 255, 255)),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      widget.Title2,
+                      style: TextStyle(
+                          fontSize: 32,
+                          fontFamily: 'raleway',
+                          color: const Color.fromARGB(255, 255, 255, 255)),
+                    ),
+                  ],
                 ),
-                Text(
-                  "${widget.menuIndex + 1} / 5 ",
+              ),
+              SizedBox(
+                width: MyUtility(context).width / 4.5,
+                height: MyUtility(context).height * 0.15,
+                child: Text(
+                  widget.description,
                   style: TextStyle(
                       fontSize: 18,
+                      fontFamily: 'raleway',
                       color: const Color.fromARGB(255, 255, 255, 255)),
+                  textAlign: TextAlign.center,
                 ),
-                Text(
-                  "  >",
-                  style: TextStyle(
-                      fontSize: 22,
-                      fontFamily: 'ralewaybold',
-                      color: const Color.fromARGB(255, 255, 255, 255)),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  widget.Title1,
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontFamily: 'ralewaybold',
-                      color: const Color.fromARGB(255, 255, 255, 255)),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  widget.Title2,
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: const Color.fromARGB(255, 255, 255, 255)),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: MyUtility(context).width / 4.5,
-              child: Text(
-                widget.description,
-                style: TextStyle(
-                    fontSize: 17,
-                    color: const Color.fromARGB(255, 255, 255, 255)),
-                textAlign: TextAlign.center,
               ),
-            ),
-          ],
+              SizedBox(
+                height: MyUtility(context).height * 0.05,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.12,
+                height: MediaQuery.of(context).size.height * 0.055,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: EdgeInsets.zero,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 25,
+                        height: 25,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                        ),
+                        padding: EdgeInsets.zero,
+                        child: Icon(
+                          Icons.keyboard_arrow_right_outlined,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Text(
+                        'View Directory',
+                        style: TextStyle(
+                          color: Color(0xFF0C0C0C).withOpacity(0.9),
+                          fontSize: 15,
+                          fontFamily: 'Raleway',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

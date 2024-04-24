@@ -16,7 +16,7 @@ class _Page4State extends State<Page4> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: [TopNavBar(), Watif(), DownloadWatif()],
+        children: [TopNavBar(), Watif(), DownloadWatif(), Footer()],
       ),
     );
   }

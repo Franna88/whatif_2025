@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:webdirectories/myutility.dart';
 
 class AboutUsButton extends StatefulWidget {
-  final String buttontext;
-  final VoidCallback onpress;
+  final String buttonText;
+  final VoidCallback onPressed;
 
-  const AboutUsButton(
-      {super.key, required this.buttontext, required this.onpress});
+  const AboutUsButton({
+    Key? key,
+    required this.buttonText,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   State<AboutUsButton> createState() => _AboutUsButtonState();
@@ -16,36 +17,43 @@ class AboutUsButton extends StatefulWidget {
 class _AboutUsButtonState extends State<AboutUsButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width * 0.1,
-      height: MyUtility(context).height * 0.045,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(MyUtility(context).height * 0.025),
-      ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.085,
+      height: MediaQuery.of(context).size.height * 0.05,
       child: ElevatedButton(
-        onPressed: widget.onpress,
+        onPressed: widget.onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(MyUtility(context).height * 0.025),
+            borderRadius: BorderRadius.circular(20),
           ),
+          padding: EdgeInsets.zero,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SvgPicture.asset(
-              'images/arrow.svg',
-              width: 25.0,
-              height: 25.0,
+            Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                shape: BoxShape.circle,
+              ),
+              padding: EdgeInsets.zero,
+              child: Icon(
+                Icons.keyboard_arrow_right_outlined,
+                color: Colors.white,
+                size: 16,
+              ),
             ),
-            SizedBox(
-              width: 5,
-            ),
+            SizedBox(width: 4),
             Text(
-              widget.buttontext,
+              widget.buttonText,
               style: TextStyle(
-                  color: Colors.black, fontSize: 14.0, fontFamily: 'raleway'),
+                color: Color(0xFF0C0C0C).withOpacity(0.9),
+                fontSize: 15,
+                fontFamily: 'Raleway',
+              ),
             ),
           ],
         ),

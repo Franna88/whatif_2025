@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/Page1/AiCoDriver/AiCoDriverComponents/AiCoDriverButton.dart';
-import 'package:webdirectories/Page1/AiCoDriver/AiCoDriverComponents/LearnMoreButton.dart';
-import 'package:webdirectories/Page4/DownloadWatif/DownloadWatifComponents/WatifLearnMoreButton.dart';
+import 'package:webdirectories/Page4/DownloadWatif/DownloadWatifComponents/WatifContactUs.dart';
 import 'package:webdirectories/myutility.dart';
 
 class DownloadWatif extends StatefulWidget {
@@ -16,7 +15,11 @@ class _DownloadWatifState extends State<DownloadWatif> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF0E1013),
+      decoration: BoxDecoration(
+          color: const Color(0xFF0E1013),
+          border: Border(
+              bottom: BorderSide(
+                  color: Colors.white.withOpacity(0.38), width: 0.5))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -26,12 +29,12 @@ class _DownloadWatifState extends State<DownloadWatif> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
+              SizedBox(
                 width: MyUtility(context).width / 3.0,
                 height: MyUtility(context).height * 0.7,
                 child: Image.asset(
                   'images/coffeegirl.png',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
               SizedBox(
@@ -44,15 +47,36 @@ class _DownloadWatifState extends State<DownloadWatif> {
                     SizedBox(
                       height: MyUtility(context).height * 0.06,
                     ),
-                    Text(
-                      "Download WATIF ™",
-                      style: TextStyle(
-                        fontSize: 48,
-                        fontFamily: 'ralewaysemi',
-                        color: Colors.white,
-                      ),
+                    Stack(
+                      alignment: Alignment.topCenter, // Center align the stack
+                      children: [
+                        // Row containing the text
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Download WATIF",
+                              style: TextStyle(
+                                fontSize: 48,
+                                fontFamily: 'ralewaysemi',
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        Positioned(
+                          top: 0,
+                          right: 125,
+                          child: SvgPicture.asset(
+                            'images/tmw.svg',
+                            height: 20,
+                            width: 20,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
+                    const Text(
                       "for mahala, free, verniet...",
                       style: TextStyle(
                           fontSize: 38,
@@ -62,7 +86,7 @@ class _DownloadWatifState extends State<DownloadWatif> {
                     SizedBox(
                       height: MyUtility(context).height * 0.01,
                     ),
-                    Text(
+                    const Text(
                       "Hit the road with confidence and ditch the stress! WATIF is your free, all-in-one automotive app that empowers you with everything you need.",
                       style: TextStyle(
                           fontSize: 16,
@@ -78,18 +102,19 @@ class _DownloadWatifState extends State<DownloadWatif> {
                             image: 'images/AppleStore.png', onpress: () {}),
                         AiCoDriverButton(
                             image: 'images/Google Play.png', onpress: () {}),
+                        AiCoDriverButton(
+                            image: 'images/WindowsStore.png', onpress: () {}),
                       ],
                     ),
                     SizedBox(
                       height: MyUtility(context).height * 0.01,
                     ),
-                    AiCoDriverButton(
-                        image: 'images/WindowsStore.png', onpress: () {}),
+                    /* AiCoDriverButton(
+                        image: 'images/WindowsStore.png', onpress: () {}),*/
                     SizedBox(
                       height: MyUtility(context).height * 0.02,
                     ),
-                    WatifLearnMoreButton(
-                        buttontext: 'Learn More', onpress: () {}),
+                    WatifContactUs(buttonText: 'Contact Us', onPressed: () {}),
                     SizedBox(
                       height: MyUtility(context).height * 0.01,
                     ),
@@ -98,13 +123,13 @@ class _DownloadWatifState extends State<DownloadWatif> {
                         Container(
                           width: MyUtility(context).width * 0.1,
                           height: 40,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage('images/stars.png'),
                             ),
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           height: 22.5,
                           child: SvgPicture.asset(
                             'images/profileicon.svg',

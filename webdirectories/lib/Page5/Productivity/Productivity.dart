@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/Page5/Productivity/WorkspaceComponents/Clearbutton.dart';
+// ignore: unused_import
 import 'package:webdirectories/TopNavBar/TopNavBar.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -24,7 +25,7 @@ class _ProductivityState extends State<Productivity> {
               image: AssetImage(
                 'images/workspace2.jpg',
               ),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           child: Padding(
@@ -75,14 +76,20 @@ class _ProductivityState extends State<Productivity> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(
-                      width: MyUtility(context).width / 2.1,
+                      width: MyUtility(context).width / 2.5,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          SizedBox(
+                            width: MyUtility(context).width * 0.01,
+                          ),
                           ClearButton(Text: 'Productivity'),
                           ClearButton(Text: 'Businesses'),
                           ClearButton(Text: 'Team Work'),
                           ClearButton(Text: 'Workplace'),
+                          SizedBox(
+                            width: MyUtility(context).width * 0.01,
+                          ),
                         ],
                       ),
                     ),
