@@ -136,7 +136,7 @@ class _FooterMobileState extends State<FooterMobile> {
                     height: 14,
                   ),
                   Text(
-                    ' 2024 Copy',
+                    ' 2024 Copyright',
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: 'raleway',
