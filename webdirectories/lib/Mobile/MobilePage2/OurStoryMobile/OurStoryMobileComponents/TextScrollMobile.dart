@@ -17,7 +17,7 @@ class _TextScrollMobileState extends State<TextScrollMobile> {
     return Column(
       children: [
         SizedBox(
-          height: MyUtility(context).height * 0.35,
+          height: MyUtility(context).height * 0.385,
           child: PageView(
             controller: widget.controller,
             children: [
@@ -44,6 +44,7 @@ class _TextScrollMobileState extends State<TextScrollMobile> {
           fontFamily: 'raleway',
           color: Color(0xFFF4F4F4),
         ),
+        textAlign: TextAlign.justify,
       ),
     );
   }

@@ -15,33 +15,39 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MyUtility(context).height / 1.6,
+      height: MyUtility(context).height / 1.45,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "A tale of passion, innovation and perseverance...",
               style: TextStyle(
-                fontSize: 22,
-                fontFamily: 'raleway',
+                fontSize: 20,
+                fontFamily: 'ralewaybold',
                 color: Color(0xFF65DAFF),
               ),
             ),
-            Text(
-              'Our Story',
-              style: TextStyle(
-                fontSize: 42,
-                fontFamily: 'ralewaysemi',
-                color: Colors.white,
+            Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Text(
+                'Our Story',
+                style: TextStyle(
+                  fontSize: 42,
+                  fontFamily: 'ralewaysemi',
+                  color: Colors.white,
+                ),
               ),
             ),
             TextScrollMobile(controller: _controller),
+            SizedBox(
+              height: MyUtility(context).height * 0.025,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -55,11 +61,11 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
                     }
                   },
                   child: Container(
-                    width: 45,
-                    height: 45,
+                    width: 40,
+                    height: 40,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2),
+                      border: Border.all(color: Colors.white, width: 1.0),
                       color: Colors.black,
                     ),
                     child: Icon(Icons.keyboard_arrow_left, color: Colors.white),
@@ -78,8 +84,8 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
                     }
                   },
                   child: Container(
-                    width: 45,
-                    height: 45,
+                    width: 40,
+                    height: 40,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,

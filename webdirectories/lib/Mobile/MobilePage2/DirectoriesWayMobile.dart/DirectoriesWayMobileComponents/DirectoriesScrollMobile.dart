@@ -39,7 +39,7 @@ class _DirectoriesScrollMobileState extends State<DirectoriesScrollMobile> {
               switch (containerIndex) {
                 case 0:
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
                       width: MyUtility(context).width / 1.2,
                       height: MyUtility(context).height / 2.8,
@@ -60,7 +60,7 @@ class _DirectoriesScrollMobileState extends State<DirectoriesScrollMobile> {
                   );
                 case 1:
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
                       width: MyUtility(context).width / 1.2,
                       height: MyUtility(context).height / 2.8,
@@ -81,7 +81,7 @@ class _DirectoriesScrollMobileState extends State<DirectoriesScrollMobile> {
                   );
                 case 2:
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
                       width: MyUtility(context).width / 1.2,
                       height: MyUtility(context).height / 2.8,

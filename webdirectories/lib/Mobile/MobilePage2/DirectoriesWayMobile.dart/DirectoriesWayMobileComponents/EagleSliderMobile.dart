@@ -33,9 +33,13 @@ class _EagleSliderMobileState extends State<EagleSliderMobile> {
     return Column(
       children: [
         SizedBox(
-          height: MyUtility(context).height * 0.35, // Adjust height as needed
+          height: MyUtility(context).height * 0.025,
+        ),
+        SizedBox(
+          height: MyUtility(context).height * 0.37,
+          width: MyUtility(context).width / 1.15,
           child: PageView.builder(
-            itemCount: 5, // Total number of containers
+            itemCount: 5,
             controller: _pageController,
             onPageChanged: (int index) {
               setState(() {
@@ -71,7 +75,7 @@ class _EagleSliderMobileState extends State<EagleSliderMobile> {
                 );
               },
               child: Container(
-                width: 45,
+                width: 40,
                 height: 45,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -92,8 +96,8 @@ class _EagleSliderMobileState extends State<EagleSliderMobile> {
                 );
               },
               child: Container(
-                width: 45,
-                height: 45,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.black,
@@ -107,7 +111,6 @@ class _EagleSliderMobileState extends State<EagleSliderMobile> {
     );
   }
 
-  // Helper method to get headline text based on index
   String _getHeadlineText(int index) {
     switch (index) {
       case 0:
@@ -125,7 +128,6 @@ class _EagleSliderMobileState extends State<EagleSliderMobile> {
     }
   }
 
-  // Helper method to get text based on index
   String _getText(int index) {
     switch (index) {
       case 0:

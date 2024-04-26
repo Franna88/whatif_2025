@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/Mobile/MobilePage1/DirectoryContainer/DirectoryContainer.dart';
+import 'package:webdirectories/myutility.dart';
 
 class DirectoryScroll extends StatefulWidget {
   const DirectoryScroll({Key? key}) : super(key: key);
@@ -17,11 +18,11 @@ class _DirectoryScrollState extends State<DirectoryScroll> {
       children: [
         SizedBox(
           width: MediaQuery.of(context).size.width / 1.0,
-          height: MediaQuery.of(context).size.height * 0.55,
+          height: MediaQuery.of(context).size.height * 0.6,
           child: PageView(
             controller: _pageController,
             children: [
-              DirectoryContainer(
+              /* DirectoryContainer(
                 page: '1/5',
                 headlinebold: 'Download ',
                 headline: 'WATIF',
@@ -65,10 +66,13 @@ class _DirectoryScrollState extends State<DirectoryScroll> {
                     "Locate & navigate to the Nearest-, Cheapest- or a specific Fuel brand. Get Fuel Prices and Rewards, Coffee, Food, Toilets, Shops, ATMs, and all other services nationwide. ",
                 onpress: () {},
                 pageController: _pageController,
-              ),
+              ),*/
             ],
           ),
         ),
+        SizedBox(
+          height: MyUtility(context).height * 0.051,
+        )
       ],
     );
   }

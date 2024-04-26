@@ -50,13 +50,23 @@ class _ArticlesSmallImageContainerState
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                width: 125,
-                height: 125,
-                child: Image.asset(widget.image),
+              Container(
+                width: MyUtility(context).width * 0.3,
+                height: MyUtility(context).height * 0.125,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(
+                    widget.image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               SizedBox(
-                width: MyUtility(context).width / 2.0,
+                width: MyUtility(context).width / 1.8,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,14 +82,14 @@ class _ArticlesSmallImageContainerState
                     Text(
                       widget.headline,
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.0,
                           fontFamily: 'ralewaybold',
                           color: Colors.black),
                     ),
                     RichText(
                       text: TextSpan(
                         style: TextStyle(
-                          fontSize: 12.0,
+                          fontSize: 13.0,
                           color: Color(0xFF616161),
                         ),
                         children: <TextSpan>[

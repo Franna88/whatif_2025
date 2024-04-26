@@ -232,8 +232,7 @@ class _GetinTouchState extends State<GetinTouch> {
                                     fontFamily: 'raleway',
                                     fontSize: 16,
                                     color: Colors.black,
-                                    fontWeight: FontWeight
-                                        .bold, // You can adjust the fontWeight as needed
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 SizedBox(
@@ -241,7 +240,6 @@ class _GetinTouchState extends State<GetinTouch> {
                                   child: TextFormField(
                                     controller: details,
                                     decoration: const InputDecoration(
-                                      // Remove labelText and labelStyle
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Color(0xFFDFDFDF)),
@@ -318,8 +316,7 @@ class _GetinTouchState extends State<GetinTouch> {
                                 fontSize: 13,
                                 color:
                                     const Color(0xFF000000).withOpacity(0.35),
-                                fontWeight: FontWeight
-                                    .bold, // You can adjust the fontWeight as needed
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),

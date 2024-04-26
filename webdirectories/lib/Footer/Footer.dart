@@ -12,7 +12,6 @@ class Footer extends StatefulWidget {
 }
 
 class _FooterState extends State<Footer> {
-  // Text controller for the email input field
   final TextEditingController emailController = TextEditingController();
 
   @override

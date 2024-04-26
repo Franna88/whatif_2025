@@ -50,7 +50,8 @@ class _OurMissionMobileState extends State<OurMissionMobile> {
                       "1765",
                       style: TextStyle(
                           fontSize: 32,
-                          fontFamily: 'ralewaybold',
+                          fontWeight: FontWeight.bold,
+                          /*fontFamily: 'ralewaybold',*/
                           color: Color(0xFFFBFBFB)),
                     ),
                     Text(
@@ -64,13 +65,14 @@ class _OurMissionMobileState extends State<OurMissionMobile> {
                   ],
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       "65M",
                       style: TextStyle(
                           fontSize: 32,
-                          fontFamily: 'ralewaybold',
+                          /*fontFamily: 'ralewaybold',*/
+                          fontWeight: FontWeight.bold,
                           color: Color(0xFFFBFBFB)),
                     ),
                     Text(
@@ -85,7 +87,13 @@ class _OurMissionMobileState extends State<OurMissionMobile> {
                 ),
               ],
             ),
+            SizedBox(
+              height: MyUtility(context).height * 0.015,
+            ),
             Image.asset('images/buisnessm.png'),
+            SizedBox(
+              height: MyUtility(context).height * 0.015,
+            ),
             Text(
               "Our Mission & Vision",
               style: TextStyle(
@@ -105,7 +113,7 @@ class _OurMissionMobileState extends State<OurMissionMobile> {
             Text(
               "Our Mission is to lower the barrier of entry and empower businesses across Africa, to succeed and subsequently grow the African economy",
               style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 17,
                   fontFamily: 'raleway',
                   color: Color(0xFFF4F4F4)),
               textAlign: TextAlign.left,

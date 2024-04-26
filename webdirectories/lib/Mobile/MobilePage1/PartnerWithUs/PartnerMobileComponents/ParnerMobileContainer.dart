@@ -23,7 +23,7 @@ class _PartnerMobileContainerState extends State<PartnerMobileContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 1.15,
-      height: MyUtility(context).height * 0.47,
+      height: MyUtility(context).height * 0.5,
       decoration: BoxDecoration(
         color: Color(0xFFF1F3F4),
         borderRadius: BorderRadius.circular(20.0),
@@ -67,7 +67,8 @@ class _PartnerMobileContainerState extends State<PartnerMobileContainer> {
               width: MyUtility(context).width / 1.3,
               child: Text(
                 widget.description,
-                style: TextStyle(fontSize: 19, fontFamily: 'raleway'),
+                style: TextStyle(fontSize: 18, fontFamily: 'raleway'),
+                textAlign: TextAlign.justify,
               ),
             ),
           ),

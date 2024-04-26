@@ -24,7 +24,7 @@ class _FooterMobileTextButtonState extends State<FooterMobileTextButton> {
           child: Text(
             widget.text,
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontFamily: 'raleway',
               color: Color(0xFFF4F4F4),
             ),

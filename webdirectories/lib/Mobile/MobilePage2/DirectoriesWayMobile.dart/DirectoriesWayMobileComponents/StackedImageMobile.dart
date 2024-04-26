@@ -22,19 +22,19 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(-2, 2), // Adjust offset for left shading
+            offset: Offset(-2, 2),
           ),
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(2, 2), // Adjust offset for right shading
+            offset: Offset(2, 2),
           ),
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, 2), // Adjust offset for bottom shading
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -46,12 +46,11 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
             style: TextStyle(
                 fontSize: 16, fontFamily: 'raleway', color: Colors.black),
           ),
-          SizedBox(height: 20), // Added for spacing
+          SizedBox(height: 20),
           Stack(
             alignment: Alignment.center,
             children: [
               Container(
-                // Added a container to give background color
                 width: MyUtility(context).width / 1.2,
                 height: 60,
                 color: Colors.white,

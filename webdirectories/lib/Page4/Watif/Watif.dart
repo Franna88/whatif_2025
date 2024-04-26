@@ -50,10 +50,8 @@ class _WatifState extends State<Watif> {
                         ),
                       ),
                       Stack(
-                        alignment:
-                            Alignment.topCenter, // Center align the stack
+                        alignment: Alignment.topCenter,
                         children: [
-                          // Row containing the text
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -68,7 +66,6 @@ class _WatifState extends State<Watif> {
                               ),
                             ],
                           ),
-
                           Positioned(
                             top: 0,
                             right: 0,

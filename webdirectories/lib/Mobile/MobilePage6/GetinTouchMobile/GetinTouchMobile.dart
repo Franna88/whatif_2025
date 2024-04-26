@@ -57,8 +57,8 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
           ),
         ),
         Container(
-          width: MyUtility(context).width / 1.2,
-          height: MyUtility(context).height * 0.15,
+          width: MyUtility(context).width / 1.3,
+          height: MyUtility(context).height * 0.2,
           child: Row(
             children: [
               SizedBox(
@@ -81,7 +81,7 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
                     ),
                   ),
                   Text(
-                    "Mon-Fri | 08:00AM – 16:00PM\nSat-Sun & Public Holidays | Closed",
+                    "Mon-Fri | 08:00AM – 16:00PM\nSat-Sun & Public Holidays |\nClosed",
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'raleway',
@@ -94,7 +94,7 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
           ),
         ),
         Container(
-          width: MyUtility(context).width / 1.2,
+          width: MyUtility(context).width / 1.3,
           height: MyUtility(context).height * 0.12,
           child: Row(
             children: [
@@ -131,14 +131,14 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
           ),
         ),
         Container(
-          width: MyUtility(context).width / 1.2,
+          width: MyUtility(context).width / 1.3,
           height: MyUtility(context).height * 0.11,
           child: Row(
             children: [
               SizedBox(
                   width: 60,
                   height: 60,
-                  child: SvgPicture.asset('images/buisnesshours.svg')),
+                  child: SvgPicture.asset('images/address.svg')),
               SizedBox(
                 width: MyUtility(context).width * 0.015,
               ),

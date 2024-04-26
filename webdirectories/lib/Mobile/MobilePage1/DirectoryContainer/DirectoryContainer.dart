@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
 class DirectoryContainer extends StatefulWidget {
-  final String page;
-  final String headlinebold;
-  final String headline;
-  final String discription;
+  String Title1;
+  String Title2;
+  String description;
+  int menuIndex;
   final VoidCallback onpress;
   final PageController pageController;
 
-  const DirectoryContainer({
+  DirectoryContainer({
     Key? key,
-    required this.page,
-    required this.headlinebold,
-    required this.headline,
-    required this.discription,
+    required this.menuIndex,
+    required this.Title1,
+    required this.Title2,
+    required this.description,
     required this.onpress,
     required this.pageController,
   }) : super(key: key);
@@ -27,7 +27,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MyUtility(context).height / 1.8,
+      height: MyUtility(context).height / 1.65,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
         borderRadius: BorderRadius.circular(20.0),
@@ -71,7 +71,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  widget.page,
+                  "${widget.menuIndex + 1} / 5 ",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -117,23 +117,23 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                 text: TextSpan(
                   style: TextStyle(
                     fontFamily: 'raleway',
-                    fontSize: 48,
+                    fontSize: 46,
                     color: Colors.white,
                   ),
                   children: [
                     TextSpan(
-                      text: widget.headlinebold,
+                      text: widget.Title1,
                       style: TextStyle(
                         fontFamily: 'ralewaybold',
-                        fontSize: 48,
+                        fontSize: 46,
                         color: Colors.white,
                       ),
                     ),
                     TextSpan(
-                      text: widget.headline,
+                      text: widget.Title2,
                       style: TextStyle(
                         fontFamily: 'raleway',
-                        fontSize: 48,
+                        fontSize: 46,
                         color: Colors.white,
                       ),
                     ),
@@ -143,21 +143,27 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
             ),
           ),
           SizedBox(
-            width: MyUtility(context).width / 1.15,
+            height: MyUtility(context).height * 0.015,
+          ),
+          SizedBox(
+            width: MyUtility(context).width / 1.25,
             height: MyUtility(context).height * 0.25,
             child: Text(
-              widget.discription,
+              widget.description,
               style: TextStyle(
                 fontFamily: 'raleway',
-                fontSize: 23,
+                fontSize: 22,
                 color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
+            height: MyUtility(context).height * 0.03,
+          ),
+          SizedBox(
             width: MyUtility(context).width * 0.5,
-            height: 50,
+            height: MyUtility(context).height * 0.06,
             child: ElevatedButton(
               onPressed: widget.onpress,
               style: ElevatedButton.styleFrom(
@@ -182,7 +188,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                     'Learn More',
                     style: TextStyle(
                       fontFamily: 'raleway',
-                      fontSize: 20,
+                      fontSize: 18,
                       color: Colors.black,
                     ),
                   ),

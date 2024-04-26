@@ -17,22 +17,24 @@ class _RightMobileTextIconState extends State<RightMobileTextIcon> {
       padding: const EdgeInsets.only(bottom: 10),
       child: SizedBox(
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Flexible(
               child: Text(
                 widget.text,
                 style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFFFBFBFB),
-                ),
+                    fontSize: 18,
+                    color: Color(0xFFFBFBFB),
+                    height: 1.1,
+                    fontFamily: 'raleway'),
                 textAlign: TextAlign.right,
               ),
             ),
             SizedBox(width: 8),
             Container(
-              width: 24,
-              height: 24,
+              width: 22,
+              height: 22,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Color(0xFF292556),
@@ -40,8 +42,8 @@ class _RightMobileTextIconState extends State<RightMobileTextIcon> {
               child: Center(
                 child: SvgPicture.asset(
                   'images/circlecheck.svg',
-                  width: 28,
-                  height: 28,
+                  width: 14,
+                  height: 24,
                   color: Color(0xFF65DAFF),
                 ),
               ),

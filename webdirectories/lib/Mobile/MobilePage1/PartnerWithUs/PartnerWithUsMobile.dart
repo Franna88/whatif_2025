@@ -11,7 +11,7 @@ class PartnerWithUsMobile extends StatefulWidget {
 
 class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
   final PageController _pageController = PageController();
-  int _currentPageIndex = 0; // Variable to track the current page index
+  int _currentPageIndex = 0;
 
   @override
   void dispose() {
@@ -24,7 +24,10 @@ class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
     return Column(
       children: [
         SizedBox(
-          width: MyUtility(context).width / 1.6,
+          height: MyUtility(context).height * 0.025,
+        ),
+        SizedBox(
+          width: MyUtility(context).width / 1.5,
           child: Text(
             'Why partner with us?',
             style: TextStyle(fontSize: 42, fontFamily: 'ralewaysemi'),
@@ -32,16 +35,16 @@ class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
           ),
         ),
         SizedBox(
-          height: MyUtility(context).height * 0.015,
+          height: MyUtility(context).height * 0.02,
         ),
         SizedBox(
           width: MediaQuery.of(context).size.width / 1.15,
-          height: MediaQuery.of(context).size.height * 0.47,
+          height: MediaQuery.of(context).size.height * 0.5,
           child: PageView(
             controller: _pageController,
             onPageChanged: (int index) {
               setState(() {
-                _currentPageIndex = index; // Update the current page index
+                _currentPageIndex = index;
               });
             },
             children: const [
@@ -58,7 +61,7 @@ class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
                     "Leverage our data-driven insights to optimize your listing, track key metrics (clicks, leads, conversions), and refine your marketing strategy for continuous growth, brand awareness, and maximized ROI.",
               ),
               PartnerMobileContainer(
-                image: 'images/gear.svg',
+                image: 'images/review.svg',
                 header: 'Trustworthy Reviews',
                 description:
                     "Stand out from the competition with trusted reviews and industry ratings that build confidence in potential customers. Real-time feedback from these reviews also helps you improve your services and build lasting relationships, giving you a clear competitive edge.",
@@ -114,7 +117,7 @@ class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
               ),
             ),
             Text(
-              '${_currentPageIndex + 1}/6', // Displaying current page index
+              '${_currentPageIndex + 1}/6',
               style: TextStyle(fontSize: 22, fontFamily: 'ralewaysemi'),
             ),
             Padding(
@@ -141,7 +144,10 @@ class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
               ),
             ),
           ],
-        )
+        ),
+        SizedBox(
+          height: MyUtility(context).height * 0.02,
+        ),
       ],
     );
   }

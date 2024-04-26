@@ -92,7 +92,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               left: 25,
               child: Container(
                 child: SvgPicture.asset(
-                  'images/centerGauge.svg',
+                  'images/centergauge2.svg',
                   width: 300,
                   height: 300,
                 ),
@@ -109,8 +109,8 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 2
-                        ? 'images/topWhite.svg'
-                        : 'images/top.svg',
+                        ? 'images/topWhite1.svg'
+                        : 'images/topb1.svg',
                     width: 1,
                     height: 125,
                   ),
@@ -129,7 +129,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                   child: SvgPicture.asset(
                     widget.menuIndex == 1
                         ? 'images/leftWhite.svg'
-                        : 'images/left.svg',
+                        : 'images/leftb.svg',
                     width: 1,
                     height: 130,
                   ),
@@ -166,8 +166,8 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 3
-                        ? 'images/rightWhite.svg'
-                        : 'images/right.svg',
+                        ? 'images/rightWhite1.svg'
+                        : 'images/rightb.svg',
                     width: 1,
                     height: 100,
                   ),
@@ -185,8 +185,8 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 4
-                        ? 'images/rightDownWhite.svg'
-                        : 'images/rightDown.svg',
+                        ? 'images/rightDownWhite1.svg'
+                        : 'images/rightDownb.svg',
                     width: 1,
                     height: 118,
                   ),

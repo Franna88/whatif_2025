@@ -27,7 +27,7 @@ class _MessageUsTextFieldMobileState extends State<MessageUsTextFieldMobile> {
             style: TextStyle(
               fontFamily: 'raleway',
               fontSize: 16,
-              color: Color(0xFF0C0C0C).withOpacity(0.9),
+              color: Color(0xFF0C0C0C).withOpacity(0.55),
               fontWeight: FontWeight.bold,
             ),
           ),

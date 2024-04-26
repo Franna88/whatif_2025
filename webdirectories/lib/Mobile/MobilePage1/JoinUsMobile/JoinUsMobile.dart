@@ -14,6 +14,9 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
     return Center(
       child: Column(
         children: [
+          SizedBox(
+            height: MyUtility(context).height * 0.03,
+          ),
           Text(
             'Want to join us?',
             style: TextStyle(fontSize: 42, fontFamily: 'ralewaysemi'),
@@ -21,7 +24,7 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
           ),
           Container(
             width: MyUtility(context).width,
-            height: MyUtility(context).height / 1.15,
+            height: MyUtility(context).height / 1.1,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('images/join.png'),
@@ -29,6 +32,7 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
               ),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
                   height: MyUtility(context).height * 0.07,
@@ -50,7 +54,7 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
                   ),
                 ),
                 SizedBox(
-                  height: MyUtility(context).height * 0.068,
+                  height: MyUtility(context).height * 0.051,
                 ),
                 Text(
                   'Step 2',
@@ -69,7 +73,7 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
                   ),
                 ),
                 SizedBox(
-                  height: MyUtility(context).height * 0.07,
+                  height: MyUtility(context).height * 0.04,
                 ),
                 Text(
                   'Step 3',
@@ -88,7 +92,7 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
                   ),
                 ),
                 SizedBox(
-                  height: MyUtility(context).height * 0.067,
+                  height: MyUtility(context).height * 0.05,
                 ),
                 Text(
                   'Step 4',
@@ -107,7 +111,7 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
                   ),
                 ),
                 SizedBox(
-                  height: MyUtility(context).height * 0.06,
+                  height: MyUtility(context).height * 0.055,
                 ),
               ],
             ),

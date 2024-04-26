@@ -20,8 +20,8 @@ class _MissionMobileIconTextState extends State<MissionMobileIconText> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 24,
-              height: 24,
+              width: 22,
+              height: 22,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Color(0xFF292556),
@@ -29,8 +29,8 @@ class _MissionMobileIconTextState extends State<MissionMobileIconText> {
               child: Center(
                 child: SvgPicture.asset(
                   'images/circlecheck.svg',
-                  width: 28,
-                  height: 28,
+                  width: 24,
+                  height: 24,
                   color: Color(0xFF65DAFF),
                 ),
               ),
@@ -42,6 +42,8 @@ class _MissionMobileIconTextState extends State<MissionMobileIconText> {
                 style: TextStyle(
                   fontSize: 18,
                   color: Color(0xFFFBFBFB),
+                  fontFamily: 'raleway',
+                  height: 1.1,
                 ),
               ),
             ),

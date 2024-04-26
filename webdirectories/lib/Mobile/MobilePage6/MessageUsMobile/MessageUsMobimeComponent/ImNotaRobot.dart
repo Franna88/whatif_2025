@@ -35,7 +35,10 @@ class _NotARobotContainerState extends State<NotARobotContainer> {
               ),
               Text(
                 "I'm not a robot",
-                style: TextStyle(fontSize: 18.0, color: Colors.black),
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Color(0xFF0C0C0C).withOpacity(0.55),
+                ),
               ),
             ],
           ),

@@ -13,7 +13,6 @@ class DirectoriesWayMobile extends StatefulWidget {
 }
 
 class _DirectoriesWayMobileState extends State<DirectoriesWayMobile> {
-  // Create a PageController to control the PageView
   late PageController _pageController;
 
   @override
@@ -26,16 +25,23 @@ class _DirectoriesWayMobileState extends State<DirectoriesWayMobile> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: MyUtility(context).height * 0.02,
+        ),
         Text(
           'Our “Web Directories Way”',
-          style: TextStyle(fontSize: 46, fontFamily: 'ralewaysemi'),
+          style: TextStyle(
+            fontSize: 44,
+            fontFamily: 'ralewaysemi',
+            height: 1.1,
+          ),
           textAlign: TextAlign.center,
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.only(bottom: 15, top: 15),
           child: Text(
             'We are Websmiths & Web Librarians',
-            style: TextStyle(fontSize: 24, fontFamily: 'ralewaysemi'),
+            style: TextStyle(fontSize: 19, fontFamily: 'ralewaysemi'),
             textAlign: TextAlign.center,
           ),
         ),
@@ -94,16 +100,20 @@ class _DirectoriesWayMobileState extends State<DirectoriesWayMobile> {
         ),
         Text(
           'Our Eagle Proclamation',
-          style: TextStyle(fontSize: 46, fontFamily: 'ralewaysemi'),
+          style: TextStyle(
+            fontSize: 44,
+            fontFamily: 'ralewaysemi',
+            height: 1.1,
+          ),
           textAlign: TextAlign.center,
         ),
         SizedBox(
           width: MyUtility(context).width / 1.2,
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 15, top: 15),
             child: Text(
               'The first step to attain a set goal, is to write it down',
-              style: TextStyle(fontSize: 24, fontFamily: 'ralewaysemi'),
+              style: TextStyle(fontSize: 22, fontFamily: 'ralewaysemi'),
               textAlign: TextAlign.center,
             ),
           ),

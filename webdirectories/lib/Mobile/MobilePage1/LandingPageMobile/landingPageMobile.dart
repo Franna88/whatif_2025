@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/Mobile/MobilePage1/DirectoryContainer/DirectoryContainer.dart';
 import 'package:webdirectories/Mobile/MobilePage1/LandingPageMobile/categorySelectMobile.dart';
 import 'package:webdirectories/Mobile/MobilePage1/LandingPageMobile/circleTextBoxMobile.dart';
 
@@ -10,13 +11,13 @@ List directoriesInfo = [
         "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide."
   },
   {
-    "1title": "TOWING",
+    "1title": "TOWING\n",
     "2title": "Directory",
     "description":
         "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide.  Read Reviews"
   },
   {
-    "1title": "Fuel",
+    "1title": "Fuel\n",
     "2title": "Directory",
     "description":
         "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM’s and all other services nationwide. Read Reviews."
@@ -28,7 +29,7 @@ List directoriesInfo = [
         "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews."
   },
   {
-    "1title": "AUTO REPAIR",
+    "1title": "AUTO REPAIR\n",
     "2title": "Directory",
     "description":
         "Locate qualified services nearby or nationwide, for service, spares, or specialist repairs. Read Reviews."
@@ -51,6 +52,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
     });
   }
 
+  final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,12 +64,20 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
         SizedBox(
           height: 15,
         ),
-        CircleTextboxMobile(
+        DirectoryContainer(
           Title1: directoriesInfo[menuIndex]['1title'],
           Title2: directoriesInfo[menuIndex]['2title'],
           description: directoriesInfo[menuIndex]['description'],
           menuIndex: menuIndex,
+          onpress: () {},
+          pageController: _pageController,
         ),
+        /* CircleTextboxMobile(
+          Title1: directoriesInfo[menuIndex]['1title'],
+          Title2: directoriesInfo[menuIndex]['2title'],
+          description: directoriesInfo[menuIndex]['description'],
+          menuIndex: menuIndex,
+        ),*/
         SizedBox(
           height: 15,
         ),

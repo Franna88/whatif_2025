@@ -23,7 +23,7 @@ class _MessageUsMobileState extends State<MessageUsMobile> {
               fontFamily: 'ralewaysemi'),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 2),
+          padding: const EdgeInsets.only(bottom: 10),
           child: Text(
             '*Please fill in required fields',
             style: TextStyle(
@@ -34,7 +34,7 @@ class _MessageUsMobileState extends State<MessageUsMobile> {
         ),
         Container(
           width: MyUtility(context).width / 1.2,
-          height: MyUtility(context).height * 0.51,
+          height: MyUtility(context).height * 0.65,
           decoration: BoxDecoration(
               color: Color(0xFFF4F4F4),
               boxShadow: [
@@ -47,6 +47,7 @@ class _MessageUsMobileState extends State<MessageUsMobile> {
               ],
               borderRadius: BorderRadius.circular(10.0)),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               MessageUsTextFieldMobile(text: 'First Name*'),
               MessageUsTextFieldMobile(text: 'Last Name*'),

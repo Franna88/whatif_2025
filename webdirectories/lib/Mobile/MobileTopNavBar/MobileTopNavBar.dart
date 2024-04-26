@@ -4,6 +4,7 @@ import 'package:webdirectories/Mobile/MobilePage2/MobilePage2.dart';
 import 'package:webdirectories/Mobile/MobilePage3/MobilePage3.dart';
 import 'package:webdirectories/Mobile/MobilePage4/MobilePage4.dart';
 import 'package:webdirectories/Mobile/MobilePage5/MobilePage5.dart';
+import 'package:webdirectories/Mobile/MobilePage6/MobilePage6.dart';
 import 'package:webdirectories/myutility.dart';
 
 class MobileTopNavBar extends StatefulWidget {
@@ -44,7 +45,7 @@ class _MobileTopNavBarState extends State<MobileTopNavBar> {
               buildPopupMenuItem('Our Story', 'option2', MobilePage2()),
               buildPopupMenuItem('Watif', 'option3', MobilePage3()),
               buildPopupMenuItem('Articles', 'option4', MobilePage4()),
-              buildPopupMenuItem('Get in Touch', 'option5', MobilePage5()),
+              buildPopupMenuItem('Get in Touch', 'option5', MobilePage6()),
             ];
           },
           onSelected: (value) {

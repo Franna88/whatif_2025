@@ -23,8 +23,8 @@ class _ArticlesSliderMobileState extends State<ArticlesSliderMobile> {
     return Column(
       children: [
         SizedBox(
-          width: MyUtility(context).width / 1.15,
-          height: MyUtility(context).height / 2.05,
+          width: MyUtility(context).width / 1.05,
+          height: MyUtility(context).height / 1.85,
           child: PageView(
             controller: _pageController,
             children: [
@@ -39,16 +39,47 @@ class _ArticlesSliderMobileState extends State<ArticlesSliderMobile> {
                 onpress: () {},
               ),
               ArticlesContainerMobile(
-                image: 'images/drive.png',
-                catagory: 'Panel Beater Directory',
-                headline:
-                    "See your Lightstone EchoMBR Results for February 2024",
-                writer: 'Wena Cronje',
-                discription:
-                    "Your CSI success contributes to your business success and assists both prospects and industry users.",
-                onpress: () {},
-              ),
-              // Add more ArticlesContainerMobile widgets as needed
+                  image: 'images/turbine.png',
+                  catagory: 'Fuel Directory',
+                  headline:
+                      "What Would Happen If You Put Jet Fuel in Your Car?",
+                  writer: 'Wena Cronje',
+                  discription:
+                      "Will jet fuel provide a performance boost or lead to disastrous results?",
+                  onpress: () {}),
+              ArticlesContainerMobile(
+                  image: 'images/drive1.png',
+                  catagory: 'Towing Directory',
+                  headline: "Why Compare Car Insurance quotes?",
+                  writer: 'Wena Cronje',
+                  discription:
+                      "Let us explore how you could save big on your premiums.",
+                  onpress: () {}),
+              ArticlesContainerMobile(
+                  image: 'images/buisness.png',
+                  catagory: 'Web Directories',
+                  headline: "How to Create a Killer Web Directories Listing",
+                  writer: 'Wena Cronje',
+                  discription:
+                      "Today, we'll share 7 tips to drive your online presence and revenue to new heights.",
+                  onpress: () {}),
+              ArticlesContainerMobile(
+                  image: 'images/confrance.png',
+                  catagory: 'Web Directories',
+                  headline: "Is Hybrid Work spaces the Future?",
+                  writer: 'Wena Cronje',
+                  discription:
+                      "Let’s explore hybrid working models that combines home and office work.",
+                  onpress: () {}),
+              ArticlesContainerMobile(
+                  image: 'images/crime.png',
+                  catagory: 'Auto Repair Directory',
+                  headline:
+                      "Hijacking and Carjacking: What to do in such events",
+                  writer: 'Wena Cronje',
+                  discription:
+                      "Hijacking in South Africa is one of those scary facts we do not like to think about. Prevention is better than cure.",
+                  onpress: () {}),
             ],
           ),
         ),
@@ -66,11 +97,11 @@ class _ArticlesSliderMobileState extends State<ArticlesSliderMobile> {
                 );
               },
               child: Container(
-                width: 45,
-                height: 45,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.black, width: 2),
+                  border: Border.all(color: Colors.black, width: 1.5),
                   color: Colors.white,
                 ),
                 child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
@@ -87,8 +118,8 @@ class _ArticlesSliderMobileState extends State<ArticlesSliderMobile> {
                 );
               },
               child: Container(
-                width: 45,
-                height: 45,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.black,

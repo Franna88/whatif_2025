@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/Mobile/FooterMobile/FooterMobileComponents/FooterMobileTextButton.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -12,6 +13,17 @@ class FooterMobile extends StatefulWidget {
 
 class _FooterMobileState extends State<FooterMobile> {
   final email = TextEditingController();
+
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not launch $url')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,11 +37,12 @@ class _FooterMobileState extends State<FooterMobile> {
             height: MyUtility(context).height * 0.02,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 250,
-                height: 100,
+                width: MyUtility(context).width / 2.2,
+                height: MyUtility(context).height * 0.1,
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Image.asset(
@@ -46,10 +59,10 @@ class _FooterMobileState extends State<FooterMobile> {
                     child: Text(
                       'Pages',
                       style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'ralewaysemi',
-                          color: Colors.white),
-                      textAlign: TextAlign.left,
+                        fontSize: 18,
+                        fontFamily: 'ralewaysemi',
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   FooterMobileTextButton(text: 'Home', onpress: () {}),
@@ -68,8 +81,10 @@ class _FooterMobileState extends State<FooterMobile> {
           Text(
             'Subscribe to Newsletter',
             style: TextStyle(
-                fontSize: 20, fontFamily: 'ralewaysemi', color: Colors.white),
-            textAlign: TextAlign.left,
+              fontSize: 20,
+              fontFamily: 'ralewaysemi',
+              color: Colors.white,
+            ),
           ),
           SizedBox(
             height: MyUtility(context).height * 0.01,
@@ -80,7 +95,7 @@ class _FooterMobileState extends State<FooterMobile> {
             child: TextFormField(
               controller: email,
               style: TextStyle(
-                color: Colors.black,
+                color: Color(0xFF0C0C0C).withOpacity(0.55),
               ),
               decoration: InputDecoration(
                 filled: true,
@@ -91,9 +106,10 @@ class _FooterMobileState extends State<FooterMobile> {
                 labelText: 'Enter your email here',
                 labelStyle: TextStyle(
                   fontSize: 16,
-                  fontFamily: 'raleway',
+                  fontFamily: 'Raleway',
                   color: Colors.black,
                 ),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
                 suffixIcon: IconButton(
                   icon: Icon(Icons.send),
                   onPressed: () {},
@@ -105,8 +121,8 @@ class _FooterMobileState extends State<FooterMobile> {
             padding: const EdgeInsets.only(top: 10, bottom: 20),
             child: Container(
               width: MyUtility(context).width - 20,
-              height: 1,
-              color: Colors.white,
+              height: 1.0,
+              color: Colors.white.withOpacity(0.5),
             ),
           ),
           Row(
@@ -120,7 +136,7 @@ class _FooterMobileState extends State<FooterMobile> {
                     height: 14,
                   ),
                   Text(
-                    ' 2024 Copy ',
+                    ' 2024 Copy',
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: 'raleway',
@@ -128,7 +144,7 @@ class _FooterMobileState extends State<FooterMobile> {
                     ),
                   ),
                   Text(
-                    'Web Directoriess',
+                    'Web Directories',
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: 'ralewaysemi',
@@ -143,31 +159,38 @@ class _FooterMobileState extends State<FooterMobile> {
                   IconButton(
                     icon: Image.asset(
                       'images/logos_facebook.png',
-                      height: 45,
-                      width: 45,
+                      height: 35,
+                      width: 35,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _launchURL('https://www.facebook.com/WDirectories/');
+                    },
                   ),
                   IconButton(
                     icon: Image.asset(
                       'images/Group.png',
-                      height: 45,
-                      width: 45,
+                      height: 35,
+                      width: 35,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _launchURL(
+                          'https://www.linkedin.com/company/web-directories/about/');
+                    },
                   ),
                   IconButton(
                     icon: Image.asset(
                       'images/skill-icons_instagram.png',
-                      height: 45,
-                      width: 45,
+                      height: 35,
+                      width: 35,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _launchURL('https://www.instagram.com/webdirectories/');
+                    },
                   ),
                 ],
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

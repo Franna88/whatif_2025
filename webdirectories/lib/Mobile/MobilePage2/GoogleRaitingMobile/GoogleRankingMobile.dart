@@ -13,6 +13,9 @@ class _GoogleRankingMobileState extends State<GoogleRankingMobile> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: MyUtility(context).height * 0.02,
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(

@@ -16,7 +16,7 @@ class EagleContainerMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 1.2,
-      height: MyUtility(context).height * 0.33,
+      height: MyUtility(context).height * 0.35,
       decoration: BoxDecoration(
         color: Color(0xFFF4F4F4),
         borderRadius: BorderRadius.circular(10),

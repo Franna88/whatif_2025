@@ -42,109 +42,114 @@ class _ArticlesContainerMobileState extends State<ArticlesContainerMobile> {
           isHovered = false;
         });
       },
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 200),
-        width: MyUtility(context).width / 1.15,
-        height: MyUtility(context).height / 2.05,
-        decoration: BoxDecoration(
-          color: Color(0xFF0E1013),
-          borderRadius: BorderRadius.circular(10.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 0,
-              blurRadius: 5,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(widget.image),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-              child: Text(
-                widget.catagory,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'ralewaybold',
-                  color: Color(0xFF65DAFF),
-                ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 200),
+          width: MyUtility(context).width / 1.15,
+          height: MyUtility(context).height / 2.05,
+          decoration: BoxDecoration(
+            color: Color(0xFF0E1013),
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 0,
+                blurRadius: 5,
+                offset: Offset(0, 2),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-              child: SizedBox(
-                height: MyUtility(context).height * 0.075,
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(widget.image),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                 child: Text(
-                  widget.headline,
+                  widget.catagory,
                   style: TextStyle(
-                      fontSize: 19,
-                      fontFamily: 'ralewaysemi',
-                      color: Colors.white),
+                    fontSize: 16,
+                    fontFamily: 'ralewaybold',
+                    color: Color(0xFF65DAFF),
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    fontSize: 12.0,
-                    color: Color(0xFF616161),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                child: SizedBox(
+                  height: MyUtility(context).height * 0.075,
+                  child: Text(
+                    widget.headline,
+                    style: TextStyle(
+                        fontSize: 19,
+                        fontFamily: 'ralewaysemi',
+                        color: Colors.white),
                   ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'By ',
-                      style: TextStyle(
-                        fontFamily: 'ralewaybold',
-                      ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Color(0xFF616161),
                     ),
-                    TextSpan(
-                      text: widget.writer,
-                      style: TextStyle(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'By ',
+                        style: TextStyle(
+                          fontFamily: 'ralewaybold',
+                        ),
+                      ),
+                      TextSpan(
+                        text: widget.writer,
+                        style: TextStyle(
+                          fontFamily: 'raleway',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 2, 8, 0),
+                child: SizedBox(
+                  height: MyUtility(context).height * 0.08,
+                  child: Text(
+                    widget.discription,
+                    style: TextStyle(
+                        fontSize: 15,
                         fontFamily: 'raleway',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 2, 8, 0),
-              child: SizedBox(
-                height: MyUtility(context).height * 0.08,
-                child: Text(
-                  widget.discription,
-                  style: TextStyle(
-                      fontSize: 15, fontFamily: 'raleway', color: Colors.white),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  onPressed: () {
-                    // Add your onPressed function here
-                  },
-                  icon: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    padding: EdgeInsets.all(8),
-                    child: Icon(
-                      Icons.keyboard_arrow_right,
-                      color: Colors.black,
-                    ),
+                        color: Colors.white),
                   ),
                 ),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    onPressed: () {
+                      // Add your onPressed function here
+                    },
+                    icon: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      padding: EdgeInsets.all(8),
+                      child: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

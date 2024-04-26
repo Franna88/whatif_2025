@@ -12,7 +12,7 @@ class _AboutUsMobileState extends State<AboutUsMobile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MyUtility(context).height / 1.6,
+      height: MyUtility(context).height / 1.5,
       width: MyUtility(context).width,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
@@ -37,9 +37,9 @@ class _AboutUsMobileState extends State<AboutUsMobile> {
           Padding(
             padding: const EdgeInsets.only(right: 10, bottom: 10),
             child: Text(
-              "Empowering informed decisions across Africa",
+              "Empowering informed\ndecisions across Africa",
               style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 39,
                   fontFamily: 'ralewaysemi',
                   color: Color(0xFFFBFBFB)),
               textAlign: TextAlign.right,
@@ -50,7 +50,7 @@ class _AboutUsMobileState extends State<AboutUsMobile> {
             child: Text(
               "Driven by passion and innovation, Web Directories emerged in 2013 to bridge the information gap in South Africa, starting with comprehensive automotive directories and growing into a leading online business resource for businesses and the public.",
               style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 17,
                   fontFamily: 'raleway',
                   color: Color(0xFFF4F4F4)),
               textAlign: TextAlign.right,

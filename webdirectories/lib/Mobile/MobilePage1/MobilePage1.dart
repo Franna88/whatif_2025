@@ -30,11 +30,13 @@ class _MobilePage1State extends State<MobilePage1> {
         children: [
           MobileTopNavBar(),
           LandingPageMobile(),
-          DirectoryScroll(),
           Image.asset('images/mobileglasses.png'),
           PartnerWithUsMobile(),
           AboutUsMobile(),
           JoinUsMobile(),
+          SizedBox(
+            height: MyUtility(context).height * 0.03,
+          ),
           Image.asset('images/Watif.png'),
           AiCoDriverMobile(),
           CommentsSliderMobile(),
