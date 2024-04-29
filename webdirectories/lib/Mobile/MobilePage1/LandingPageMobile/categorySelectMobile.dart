@@ -16,7 +16,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-  double top = 80;
+  double top = 100;
   double right = 130;
   double number = 0;
   @override
@@ -39,36 +39,37 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
     setState(() {
       switch (numberVal) {
         case 0.0:
-          top = 80;
-          right = 10;
+          //    top = 80;
+          //     right = 10;
 
           break;
         case 0.2:
-          top = 90;
-          right = 100;
+          //    top = 90;
+          //     right = 100;
           _controller.animateTo(0.2);
           break;
         case 0.4:
-          top = 125;
-          right = 100;
+          //    top = 125;
+          //    right = 100;
           _controller.animateTo(0.4);
           break;
         case 0.7:
-          top = 110;
-          right = 160;
+          //   top = 110;
+          //   right = 160;
           _controller.animateTo(0.7);
           break;
         case 0.8:
-          top = 95;
-          right = 165;
+          //   top = 95;
+          //   right = 165;
           _controller.animateTo(0.8);
           break;
         case 1.0:
-          top = 80;
-          right = 135;
+          //   top = 80;
+          //right = 135;
           _controller.animateTo(1.0);
           break;
       }
+      /* */
     });
   }
 
@@ -201,11 +202,11 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                     alignment: Alignment.center,
                     turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
                     child: Container(
-                      height: 120.0,
+                      height: 150.0,
                       width: 50.0,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('images/arrow.png'),
+                          image: AssetImage('images/red1.png'),
                           fit: BoxFit.cover,
                         ),
                       ),

@@ -18,7 +18,7 @@ class _CategorySelectState extends State<CategorySelect>
   late AnimationController _controller;
 
   double top = 145;
-  double right = 235;
+  double right = 185;
   double number = 0;
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _CategorySelectState extends State<CategorySelect>
 //change position of needle
   updateValue(numberVal) {
     setState(() {
-      switch (numberVal) {
+      /*  switch (numberVal) {
         case 0.0:
           top = 120;
           right = 235;
@@ -64,6 +64,7 @@ class _CategorySelectState extends State<CategorySelect>
           right = 300;
           break;
       }
+  */
     });
   }
 
@@ -202,11 +203,11 @@ class _CategorySelectState extends State<CategorySelect>
                     alignment: Alignment.center,
                     turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
                     child: Container(
-                      height: 180.0,
-                      width: 50.0,
+                      height: 230.0,
+                      width: 150.0,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('images/arrow.png'),
+                          image: AssetImage('images/red1.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
