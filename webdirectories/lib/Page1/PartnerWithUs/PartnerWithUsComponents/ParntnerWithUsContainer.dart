@@ -36,7 +36,7 @@ class _PartnerWithUsContainerState extends State<PartnerWithUsContainer> {
         padding: const EdgeInsets.only(bottom: 16),
         child: Container(
           width: MediaQuery.of(context).size.width / 4.2,
-          height: MediaQuery.of(context).size.height / 2.8,
+          height: MediaQuery.of(context).size.height / 2.5,
           decoration: BoxDecoration(
             color: isHovered ? Colors.black : Color(0xFFF1F3F4),
             borderRadius: BorderRadius.circular(10.0),

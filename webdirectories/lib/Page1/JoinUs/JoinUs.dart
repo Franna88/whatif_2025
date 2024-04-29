@@ -30,7 +30,7 @@ class _JoinUsState extends State<JoinUs> {
             Text(
               "Want to join us?",
               style: TextStyle(
-                  fontSize: 48, fontFamily: 'ralewaybold', color: Colors.black),
+                  fontSize: 48, fontFamily: 'ralewaysemi', color: Colors.black),
             ),
             Text.rich(
               TextSpan(

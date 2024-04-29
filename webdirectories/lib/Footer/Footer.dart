@@ -55,7 +55,7 @@ class _FooterState extends State<Footer> {
             'Our passionate team guides users towards informed choices through user-friendly interfaces, clear data sources, and innovative tools.',
             style: TextStyle(
               fontSize: 15.5,
-              fontFamily: 'Raleway',
+              fontFamily: 'raleway',
               color: Colors.white,
             ),
             textAlign: TextAlign.left,
@@ -165,6 +165,7 @@ class _FooterState extends State<Footer> {
 
   Widget _buildSocialMediaIcons() {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildIconButton(
           imagePath: 'images/facebook1.png',

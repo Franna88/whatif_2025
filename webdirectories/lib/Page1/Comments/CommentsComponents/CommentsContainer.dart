@@ -21,7 +21,7 @@ class _CommentsContainerState extends State<CommentsContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 1.2,
-      height: MyUtility(context).height * 0.32,
+      height: MyUtility(context).height * 0.4,
       decoration: BoxDecoration(
           color: Colors.black, borderRadius: BorderRadius.circular(10.0)),
       child: Column(

@@ -28,7 +28,7 @@ class _AboutUsMobileState extends State<AboutUsMobile> {
             child: Text(
               "About us",
               style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 22,
                   fontFamily: 'ralewaysemi',
                   color: Color(0xFF65DAFF)),
               textAlign: TextAlign.right,
@@ -41,6 +41,7 @@ class _AboutUsMobileState extends State<AboutUsMobile> {
               style: TextStyle(
                   fontSize: 39,
                   fontFamily: 'ralewaysemi',
+                  height: 1.2,
                   color: Color(0xFFFBFBFB)),
               textAlign: TextAlign.right,
             ),

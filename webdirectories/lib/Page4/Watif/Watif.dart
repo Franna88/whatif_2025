@@ -78,7 +78,7 @@ class _WatifState extends State<Watif> {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
+                        padding: EdgeInsets.only(bottom: 10, left: 10),
                         child: Text.rich(
                           TextSpan(
                             children: [

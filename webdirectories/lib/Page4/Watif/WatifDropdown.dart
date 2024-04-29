@@ -28,7 +28,7 @@ class WatifDropdown extends StatelessWidget {
               GestureDetector(
                 onTap: onToggle,
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.27,
+                  width: MediaQuery.of(context).size.width * 0.32,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.black,
@@ -40,9 +40,9 @@ class WatifDropdown extends StatelessWidget {
                       Text(
                         dropdownText,
                         style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'raleway',
-                        ),
+                            color: Colors.white,
+                            fontFamily: 'raleway',
+                            fontSize: 18),
                       ),
                       Container(
                         width: 24,
@@ -72,27 +72,30 @@ class WatifDropdown extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 8),
-                Container(
-                  width: MyUtility(context).width * 0.4,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 0,
-                        blurRadius: 5,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: ListTile(
-                    title: Text(
-                      dropdownContent,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'raleway',
-                        color: Colors.black,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Container(
+                    width: MyUtility(context).width * 0.4,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF1F3F4),
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 0,
+                          blurRadius: 5,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        dropdownContent,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'raleway',
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),

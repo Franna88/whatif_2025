@@ -120,8 +120,8 @@ class _AboutUsState extends State<AboutUs> {
             ),
           ),
           Container(
-            width: MyUtility(context).width / 3.5,
-            height: MyUtility(context).height * 0.7,
+            width: MyUtility(context).width / 2.5,
+            height: MyUtility(context).height * 0.9,
             child: Image.asset('images/stackimage.png'),
           )
         ],

@@ -25,8 +25,8 @@ class _CircleTextBoxState extends State<CircleTextBox> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20, right: 50),
       child: Container(
-        width: MyUtility(context).width / 3.2,
-        height: MyUtility(context).height / 1.3,
+        width: 500,
+        height: 500,
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 2, 27, 43),
           shape: BoxShape.circle,
@@ -108,8 +108,8 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                 height: MyUtility(context).height * 0.05,
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.12,
-                height: MediaQuery.of(context).size.height * 0.055,
+                width: MediaQuery.of(context).size.width * 0.1,
+                height: MediaQuery.of(context).size.height * 0.05,
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -141,7 +141,7 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                         'View Directory',
                         style: TextStyle(
                           color: Color(0xFF0C0C0C).withOpacity(0.9),
-                          fontSize: 15,
+                          fontSize: 16.5,
                           fontFamily: 'Raleway',
                         ),
                       ),

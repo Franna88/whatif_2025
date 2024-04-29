@@ -53,8 +53,8 @@ class _AiCoDriverState extends State<AiCoDriver> {
                   const Text(
                     "Download your WATIF App today!",
                     style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: 'ralewaymedium',
+                        fontSize: 28,
+                        fontFamily: 'ralewaysemi',
                         color: Colors.black),
                   ),
                   SizedBox(

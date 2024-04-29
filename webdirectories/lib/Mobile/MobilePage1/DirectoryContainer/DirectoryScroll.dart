@@ -17,7 +17,7 @@ class _DirectoryScrollState extends State<DirectoryScroll> {
     return Column(
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width / 1.0,
+          width: MediaQuery.of(context).size.width / 1.2,
           height: MediaQuery.of(context).size.height * 0.6,
           child: PageView(
             controller: _pageController,

@@ -19,7 +19,7 @@ class _CommentsState extends State<Comments> {
       children: [
         SizedBox(
           width: MyUtility(context).width / 1.2,
-          height: MyUtility(context).height * 0.32,
+          height: MyUtility(context).height * 0.35,
           child: PageView(
             controller: _pageController,
             children: const [
@@ -39,7 +39,7 @@ class _CommentsState extends State<Comments> {
                 profileimage: 'images/pfp3.png',
                 comment:
                     "“ I was in a car accident and my car was completely totaled. i had no idea how I was going to get it towed and what to do next. A quick Google search led me to your Towing Directory. The tow truck driver I contacted was very understanding and helpful. He towed my car to a nearby garage and even helped me to file a claim from my insurance company. I was so impressed with the service I received, and I’m really glad I found them on your website! Thanks. “",
-                username: '',
+                username: 'Chris Stevens',
               ),
             ],
           ),

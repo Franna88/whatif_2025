@@ -12,8 +12,8 @@ class _EagleTeamState extends State<EagleTeam> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.140,
-      height: MyUtility(context).height * 0.145,
+      width: 215,
+      height: 100,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.0),

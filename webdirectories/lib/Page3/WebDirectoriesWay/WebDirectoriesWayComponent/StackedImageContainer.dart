@@ -12,8 +12,8 @@ class _StackImageContainerState extends State<StackImageContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.2,
-      height: MyUtility(context).height * 0.2,
+      width: 310,
+      height: 150,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),

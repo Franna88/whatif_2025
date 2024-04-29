@@ -129,6 +129,9 @@ class _OurStoryState extends State<OurStory> {
                           ],
                         ),
                       ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.03,
+                      )
                     ],
                   ),
                 ),

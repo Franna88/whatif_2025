@@ -39,7 +39,7 @@ class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
         ),
         SizedBox(
           width: MediaQuery.of(context).size.width / 1.15,
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.525,
           child: PageView(
             controller: _pageController,
             onPageChanged: (int index) {
@@ -118,7 +118,7 @@ class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
             ),
             Text(
               '${_currentPageIndex + 1}/6',
-              style: TextStyle(fontSize: 22, fontFamily: 'ralewaysemi'),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

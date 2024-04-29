@@ -27,7 +27,8 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MyUtility(context).height / 1.65,
+      width: MyUtility(context).width / 1.15,
+      height: MyUtility(context).height / 1.63,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
         borderRadius: BorderRadius.circular(20.0),
@@ -111,13 +112,13 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
           Center(
             child: SizedBox(
               width: MyUtility(context).width / 1.15,
-              height: MyUtility(context).height * 0.13,
+              height: MyUtility(context).height * 0.14,
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   style: TextStyle(
                     fontFamily: 'raleway',
-                    fontSize: 46,
+                    fontSize: 42,
                     color: Colors.white,
                   ),
                   children: [
@@ -125,7 +126,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                       text: widget.Title1,
                       style: TextStyle(
                         fontFamily: 'ralewaybold',
-                        fontSize: 46,
+                        fontSize: 42,
                         color: Colors.white,
                       ),
                     ),
@@ -133,7 +134,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                       text: widget.Title2,
                       style: TextStyle(
                         fontFamily: 'raleway',
-                        fontSize: 46,
+                        fontSize: 42,
                         color: Colors.white,
                       ),
                     ),
@@ -143,23 +144,23 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
             ),
           ),
           SizedBox(
-            height: MyUtility(context).height * 0.015,
+            height: MyUtility(context).height * 0.01,
           ),
           SizedBox(
             width: MyUtility(context).width / 1.25,
-            height: MyUtility(context).height * 0.25,
+            height: MyUtility(context).height * 0.265,
             child: Text(
               widget.description,
               style: TextStyle(
                 fontFamily: 'raleway',
-                fontSize: 22,
+                fontSize: 20,
                 color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
-            height: MyUtility(context).height * 0.03,
+            height: MyUtility(context).height * 0.02,
           ),
           SizedBox(
             width: MyUtility(context).width * 0.5,
@@ -180,7 +181,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                       shape: BoxShape.circle,
                       color: Colors.black,
                     ),
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(2),
                     child: Icon(Icons.keyboard_arrow_right),
                   ),
                   SizedBox(width: 8),

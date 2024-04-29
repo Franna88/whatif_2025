@@ -89,19 +89,19 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               height: 335,
             ),
             Positioned(
-              top: 25,
-              left: 25,
+              top: 10,
+              left: 0,
               child: Container(
                 child: SvgPicture.asset(
                   'images/centergauge2.svg',
-                  width: 300,
-                  height: 300,
+                  width: 325,
+                  height: 325,
                 ),
               ),
             ),
             Positioned(
               top: 18,
-              left: 107,
+              left: 107 - 10,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(2);
@@ -120,7 +120,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
             ),
             Positioned(
               top: 65,
-              left: 28,
+              left: 28 - 10,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(1);
@@ -139,7 +139,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
             ),
             Positioned(
               top: 170,
-              left: 55,
+              left: 55 - 10,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(0);
@@ -158,7 +158,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
             ),
             Positioned(
               top: 68,
-              right: 38,
+              right: 38 + 10,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(3);
@@ -177,7 +177,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
             ),
             Positioned(
               top: 145,
-              right: 15,
+              right: 15 + 10,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(4);
@@ -195,8 +195,8 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               ),
             ),
             Positioned(
-              top: top,
-              right: right,
+              top: top - 10,
+              right: right + 10,
               child: Container(
                 child: RotationTransition(
                     alignment: Alignment.center,

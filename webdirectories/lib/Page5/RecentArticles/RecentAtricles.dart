@@ -25,11 +25,14 @@ class _RecentArticlesState extends State<RecentArticles> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Recent articles",
-                    style: TextStyle(
-                      fontSize: 42,
-                      fontFamily: 'ralewaysemi',
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25),
+                    child: Text(
+                      "Recent articles",
+                      style: TextStyle(
+                        fontSize: 42,
+                        fontFamily: 'ralewaysemi',
+                      ),
                     ),
                   ),
                   Container(

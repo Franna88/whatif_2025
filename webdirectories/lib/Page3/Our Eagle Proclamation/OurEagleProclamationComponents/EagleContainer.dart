@@ -15,8 +15,8 @@ class EagleProclamation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.16,
-      height: MyUtility(context).height * 0.4,
+      width: MyUtility(context).width * 0.17,
+      height: MyUtility(context).height * 0.45,
       decoration: BoxDecoration(
         color: Color(0xFFF4F4F4),
         borderRadius: BorderRadius.circular(10),

@@ -5,9 +5,11 @@ import 'package:webdirectories/Page1/LandingPage/LandingPageComponents/categoryS
 import 'package:webdirectories/Page1/LandingPage/LandingPageComponents/circleTextBox.dart';
 import 'package:webdirectories/Page1/Page1.dart';
 import 'package:webdirectories/Page2/Page2.dart';
+import 'package:webdirectories/Page3/OurStory/OurSotryComponents/OvalTextButton.dart';
 import 'package:webdirectories/Page3/Page3.dart';
 import 'package:webdirectories/Page4/Page4.dart';
 import 'package:webdirectories/Page5/Page5.dart';
+import 'package:webdirectories/Page7/Page7.dart';
 import 'package:webdirectories/myutility.dart';
 
 List directoriesInfo = [
@@ -114,15 +116,11 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                           },
                           text: 'Articles'),
                       Spacer(),
-                      Container(
-                        height: MyUtility(context).height * 0.05,
-                        width: MyUtility(context).width * 0.08,
-                        decoration: BoxDecoration(
-                            color: Color(0xFF0E1013),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: LandingPageTextButton(
-                            onpress: () {}, text: 'Get in Touch'),
-                      ),
+                      OvalTextButton(
+                          text: 'Get in Touch',
+                          onPressed: () {
+                            navigateToDifrentPage(Material(child: Page7()));
+                          }),
                     ],
                   ),
                 ),
