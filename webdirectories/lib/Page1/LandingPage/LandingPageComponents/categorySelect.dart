@@ -19,53 +19,22 @@ class _CategorySelectState extends State<CategorySelect>
 
   double top = 145;
   double right = 185;
-  double number = 0;
   @override
   void initState() {
     _controller = AnimationController(
+      lowerBound: -0.6,
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
+    _controller.animateTo(0.0);
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    super.dispose();
-  }
 
-//change position of needle
-  updateValue(numberVal) {
-    setState(() {
-      /*  switch (numberVal) {
-        case 0.0:
-          top = 120;
-          right = 235;
-          break;
-        case 0.2:
-          top = 145;
-          right = 190;
-          break;
-        case 0.4:
-          top = 195;
-          right = 210;
-          break;
-        case 0.7:
-          top = 165;
-          right = 275;
-          break;
-        case 0.8:
-          top = 145;
-          right = 265;
-          break;
-        case 1.0:
-          top = 145;
-          right = 300;
-          break;
-      }
-  */
-    });
+    super.dispose();
   }
 
   @override
@@ -101,7 +70,6 @@ class _CategorySelectState extends State<CategorySelect>
                 onTap: () {
                   widget.changeMenu(2);
                   _controller.animateTo(0.0);
-                  updateValue(0.0);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -120,8 +88,7 @@ class _CategorySelectState extends State<CategorySelect>
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(1);
-                  _controller.animateTo(0.8);
-                  updateValue(0.8);
+                  _controller.animateTo(-0.15);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -140,8 +107,7 @@ class _CategorySelectState extends State<CategorySelect>
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(0);
-                  _controller.animateTo(0.7);
-                  updateValue(0.7);
+                  _controller.animateTo(-0.35);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -160,8 +126,7 @@ class _CategorySelectState extends State<CategorySelect>
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(3);
-                  _controller.animateTo(0.2);
-                  updateValue(0.2);
+                  _controller.animateTo(0.17);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -181,8 +146,7 @@ class _CategorySelectState extends State<CategorySelect>
                 onTap: () {
                   widget.changeMenu(4);
 
-                  _controller.animateTo(0.4);
-                  updateValue(0.4);
+                  _controller.animateTo(0.325);
                 },
                 child: Container(
                   child: SvgPicture.asset(
