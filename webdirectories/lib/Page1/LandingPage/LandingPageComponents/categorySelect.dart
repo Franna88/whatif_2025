@@ -151,8 +151,8 @@ class _CategorySelectState extends State<CategorySelect>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 4
-                        ? 'images/rightDownWhite1.svg'
-                        : 'images/rightDownb.svg',
+                        ? 'images/rightdownwhite1.svg'
+                        : 'images/rightdownb.svg',
                     width: 190,
                     height: 200,
                   ),
