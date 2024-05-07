@@ -42,13 +42,11 @@ class _CircleTextBoxState extends State<CircleTextBox> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "<  ",
                     style: TextStyle(
                         fontSize: 22,
-                        fontFamily: 'raleway',
                         color: const Color.fromARGB(255, 255, 255, 255)),
                   ),
                   Text(
@@ -61,8 +59,8 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                     "  >",
                     style: TextStyle(
                         fontSize: 22,
-                        fontFamily: 'raleway',
                         color: const Color.fromARGB(255, 255, 255, 255)),
+                    textAlign: TextAlign.start,
                   ),
                 ],
               ),
@@ -94,7 +92,7 @@ class _CircleTextBoxState extends State<CircleTextBox> {
               ),
               SizedBox(
                 width: MyUtility(context).width / 4.5,
-                height: MyUtility(context).height * 0.15,
+                height: MyUtility(context).height * 0.2,
                 child: Text(
                   widget.description,
                   style: TextStyle(

@@ -6,14 +6,16 @@ class WatifDropDownMobile extends StatefulWidget {
   final String dropdownContent;
   final bool isOpen;
   final Function() onToggle;
+  final Color textColor;
 
-  const WatifDropDownMobile({
-    Key? key,
-    required this.dropdownText,
-    required this.dropdownContent,
-    required this.isOpen,
-    required this.onToggle,
-  }) : super(key: key);
+  const WatifDropDownMobile(
+      {Key? key,
+      required this.dropdownText,
+      required this.dropdownContent,
+      required this.isOpen,
+      required this.onToggle,
+      required this.textColor})
+      : super(key: key);
 
   @override
   _WatifDropDownMobileState createState() => _WatifDropDownMobileState();
@@ -28,12 +30,12 @@ class _WatifDropDownMobileState extends State<WatifDropDownMobile> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           GestureDetector(
-            onTap: widget.onToggle, // Call the parent's onToggle function
+            onTap: widget.onToggle,
             child: Container(
-              width: MyUtility(context).width / 1.2,
+              width: 320,
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: Colors.black,
+                color: widget.textColor,
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Row(
@@ -68,25 +70,36 @@ class _WatifDropDownMobileState extends State<WatifDropDownMobile> {
           ),
           if (widget.isOpen) ...[
             SizedBox(height: 8),
-            Container(
-              width: MyUtility(context).width / 1.1,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text(
-                      widget.dropdownContent,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'raleway',
-                        color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: Container(
+                width: MyUtility(context).width / 1.1,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        widget.dropdownContent,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'raleway',
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

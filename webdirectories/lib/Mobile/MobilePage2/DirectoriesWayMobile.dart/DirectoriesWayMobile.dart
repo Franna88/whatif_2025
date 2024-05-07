@@ -45,9 +45,7 @@ class _DirectoriesWayMobileState extends State<DirectoriesWayMobile> {
             textAlign: TextAlign.center,
           ),
         ),
-        DirectoriesScrollMobile(
-            controller:
-                _pageController), // Pass the PageController to DirectoriesScrollMobile
+        DirectoriesScrollMobile(controller: _pageController),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

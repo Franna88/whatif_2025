@@ -39,7 +39,7 @@ class _StackedArticleMobileState extends State<StackedArticleMobile> {
                 "Today, we'll share 7 tips to drive your online presence and revenue to new heights.",
             onpress: () {}),
         SizedBox(
-          height: 40,
+          height: 45,
           child: ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
@@ -62,8 +62,8 @@ class _StackedArticleMobileState extends State<StackedArticleMobile> {
             GestureDetector(
               onTap: () {},
               child: Container(
-                width: 45,
-                height: 45,
+                width: 35,
+                height: 35,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.black, width: 2),
@@ -78,8 +78,8 @@ class _StackedArticleMobileState extends State<StackedArticleMobile> {
             GestureDetector(
               onTap: () {},
               child: Container(
-                width: 45,
-                height: 45,
+                width: 35,
+                height: 35,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.black,

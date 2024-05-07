@@ -24,7 +24,7 @@ class _DirectoriesScrollMobileState extends State<DirectoriesScrollMobile> {
       children: [
         Container(
           width: MyUtility(context).width / 1.1,
-          height: MyUtility(context).height / 2.6,
+          height: 350,
           margin: EdgeInsets.symmetric(vertical: 16.0),
           child: PageView.builder(
             itemCount: 1000,

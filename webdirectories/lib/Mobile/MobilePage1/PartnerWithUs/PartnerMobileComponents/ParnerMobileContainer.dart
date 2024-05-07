@@ -21,58 +21,69 @@ class PartnerMobileContainer extends StatefulWidget {
 class _PartnerMobileContainerState extends State<PartnerMobileContainer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width / 1.15,
-      height: MyUtility(context).height * 0.5,
-      decoration: BoxDecoration(
-        color: Color(0xFFF1F3F4),
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      child: Column(
-        children: [
-          SizedBox(
-            height: MyUtility(context).height * 0.015,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.black,
-              ),
-              child: Center(
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  child: SvgPicture.asset(
-                    widget.image,
-                    color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: MyUtility(context).width / 1.15,
+        height: MyUtility(context).height * 0.5,
+        decoration: BoxDecoration(
+          color: Color(0xFFebebeb).withOpacity(0.8),
+          borderRadius: BorderRadius.circular(20.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              offset: Offset(0, 4),
+              blurRadius: 8,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: MyUtility(context).height * 0.015,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black,
+                ),
+                child: Center(
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    child: SvgPicture.asset(
+                      widget.image,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            width: MyUtility(context).width / 1.3,
-            child: Text(
-              widget.header,
-              style: TextStyle(fontSize: 24, fontFamily: 'ralewaysemi'),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SizedBox(
+            SizedBox(
               width: MyUtility(context).width / 1.3,
               child: Text(
-                widget.description,
-                style: TextStyle(fontSize: 18, fontFamily: 'raleway'),
-                textAlign: TextAlign.justify,
+                widget.header,
+                style: TextStyle(fontSize: 24, fontFamily: 'ralewaysemi'),
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                width: MyUtility(context).width / 1.3,
+                child: Text(
+                  widget.description,
+                  style: TextStyle(fontSize: 18, fontFamily: 'raleway'),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

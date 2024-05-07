@@ -44,7 +44,7 @@ class _LearnMoreButtonState extends State<LearnMoreButton> {
               style: TextStyle(
                 color: Color(0xFFFFFFFF).withOpacity(0.9),
                 fontSize: 14,
-                fontFamily: 'Raleway',
+                fontFamily: 'raleway',
               ),
             ),
           ],

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/Mobile/MobilePage1/DirectoryContainer/DirectoryContainer.dart';
 import 'package:webdirectories/Mobile/MobilePage1/LandingPageMobile/categorySelectMobile.dart';
+import 'package:webdirectories/Mobile/MobileTopNavBar/MobileTopNavBar.dart';
+import 'package:webdirectories/Mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/myutility.dart';
 // Uncomment the import below if CircleTextBoxMobile is needed
 // import 'package:webdirectories/Mobile/MobilePage1/LandingPageMobile/circleTextBoxMobile.dart';
 
 List directoriesInfo = [
   {
-    "1title": "Download ",
+    "1title": "Download\n",
     "2title": "WATIF",
     "description":
         "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide."
@@ -19,10 +21,10 @@ List directoriesInfo = [
         "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide. Read Reviews"
   },
   {
-    "1title": "Fuel\n",
+    "1title": "FUEL\n",
     "2title": "Directory",
     "description":
-        "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM’s and all other services nationwide. Read Reviews."
+        "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM’s and all other services nationwide."
   },
   {
     "1title": "PANEL BEATER\n",
@@ -69,6 +71,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
       ),
       child: Column(
         children: [
+          MobileTopNavBarhome(),
           CategorySelectMobile(
             menuIndex: menuIndex,
             changeMenu: changeMenu,

@@ -12,7 +12,7 @@ class _AboutUsMobileState extends State<AboutUsMobile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MyUtility(context).height / 1.5,
+      height: 550,
       width: MyUtility(context).width,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),

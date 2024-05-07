@@ -30,7 +30,7 @@ class _ScrollContainer2State extends State<ScrollContainer2> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: RichText(
-            textAlign: TextAlign.center, // Align text to the center
+            textAlign: TextAlign.center,
             text: TextSpan(
               children: [
                 TextSpan(
@@ -88,7 +88,7 @@ class _ScrollContainer2State extends State<ScrollContainer2> {
                 ),
                 TextSpan(
                   text:
-                      "harnessing the web’s power to provide access to library sources. We focus on enhancing ",
+                      "harnessing the web’s power to provide access to library sources.",
                   style: TextStyle(
                     fontSize: 19,
                     fontFamily: 'raleway',
@@ -97,23 +97,6 @@ class _ScrollContainer2State extends State<ScrollContainer2> {
                 ),
                 TextSpan(
                   text: "user-centered experiences ",
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontFamily: 'ralewaysemi',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                TextSpan(
-                  text: "that efficiently access entire economic markets, ",
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontFamily: 'raleway',
-                    color: Colors.black,
-                  ),
-                ),
-                TextSpan(
-                  text: "lowering barriers to SME’s online presence.",
                   style: TextStyle(
                     fontSize: 19,
                     fontFamily: 'ralewaysemi',

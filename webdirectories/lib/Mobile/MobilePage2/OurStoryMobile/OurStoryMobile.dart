@@ -15,7 +15,7 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MyUtility(context).height / 1.45,
+      height: 630,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
       ),
@@ -45,9 +45,6 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
               ),
             ),
             TextScrollMobile(controller: _controller),
-            SizedBox(
-              height: MyUtility(context).height * 0.025,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

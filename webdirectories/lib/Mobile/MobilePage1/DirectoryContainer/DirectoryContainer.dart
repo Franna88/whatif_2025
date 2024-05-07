@@ -62,8 +62,8 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                       );
                     },
                     color: Colors.black,
-                    iconSize: 20,
-                    padding: EdgeInsets.all(8),
+                    iconSize: 30,
+                    padding: EdgeInsets.all(0),
                     splashRadius: 20,
                     constraints: BoxConstraints(),
                   ),
@@ -100,8 +100,8 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                       );
                     },
                     color: Colors.black,
-                    iconSize: 20,
-                    padding: EdgeInsets.all(8),
+                    iconSize: 30,
+                    padding: EdgeInsets.all(0),
                     splashRadius: 20,
                     constraints: BoxConstraints(),
                   ),
@@ -163,7 +163,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
             height: MyUtility(context).height * 0.02,
           ),
           SizedBox(
-            width: MyUtility(context).width * 0.5,
+            width: 200,
             height: MyUtility(context).height * 0.06,
             child: ElevatedButton(
               onPressed: widget.onpress,
@@ -171,25 +171,32 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(25),
                 ),
+                padding: EdgeInsets.symmetric(horizontal: 0),
               ),
               child: Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.center, // Center the content
                 children: [
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.black,
                     ),
-                    padding: EdgeInsets.all(2),
-                    child: Icon(Icons.keyboard_arrow_right),
+                    padding:
+                        EdgeInsets.all(1), // Reduce padding around the icon
+                    child: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.white,
+                    ),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 8), // Adjust space between the icon and text
                   Text(
-                    'Learn More',
+                    'View Directory',
                     style: TextStyle(
                       fontFamily: 'raleway',
-                      fontSize: 18,
+                      fontSize: 20,
                       color: Colors.black,
                     ),
                   ),

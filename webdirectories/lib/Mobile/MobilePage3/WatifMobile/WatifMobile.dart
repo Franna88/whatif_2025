@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/Mobile/MobilePage3/WatifMobile/WatifMobileComponents/WatifDropDownMobile.dart';
@@ -54,7 +55,7 @@ class _WatifMobileState extends State<WatifMobile> {
               ),
               Positioned(
                 top: 0,
-                right: MyUtility(context).width * 0.13,
+                right: 40,
                 child: SvgPicture.asset(
                   'images/tm.svg',
                   height: 20,
@@ -107,6 +108,7 @@ class _WatifMobileState extends State<WatifMobile> {
                 "I will help you find the nearest and cheapest fuel brands in any area. View, select and navigate there instantly. Get updated info on available fuel loyalty rewards to maximize your fuel rewards.",
             isOpen: currentOpenDropdown == 0,
             onToggle: () => toggleDropdown(0),
+            textColor: Color(0xFF0E1013),
           ),
           WatifDropDownMobile(
             dropdownText: "Watif you need Coffee? Food?",
@@ -114,6 +116,7 @@ class _WatifMobileState extends State<WatifMobile> {
                 "Feed your travel taste buds with coffee, food and convenience shopping. I have all the answers and specials! ",
             isOpen: currentOpenDropdown == 1,
             onToggle: () => toggleDropdown(1),
+            textColor: Color(0xFF0E1013),
           ),
           WatifDropDownMobile(
             dropdownText: "Watif you need a restroom??",
@@ -121,6 +124,7 @@ class _WatifMobileState extends State<WatifMobile> {
                 "I will guide you to clean, accessible restrooms, pet and child friendly spaces.",
             isOpen: currentOpenDropdown == 2,
             onToggle: () => toggleDropdown(2),
+            textColor: Color(0xFF0E1013),
           ),
           WatifDropDownMobile(
             dropdownText: "Watif you need more convenience?",
@@ -128,6 +132,7 @@ class _WatifMobileState extends State<WatifMobile> {
                 "I will find you ATM’s, car washes, pharmacies, courier depots, trailer hire, bus & truck stops and many more! ",
             isOpen: currentOpenDropdown == 3,
             onToggle: () => toggleDropdown(3),
+            textColor: Color(0xFF0E1013),
           ),
           WatifDropDownMobile(
             dropdownText: "Watif you get car trouble?",
@@ -135,6 +140,7 @@ class _WatifMobileState extends State<WatifMobile> {
                 "I will link you to reputable roadside assistance-, towing-, auto repair-, and panel beating services nationwide. ",
             isOpen: currentOpenDropdown == 4,
             onToggle: () => toggleDropdown(4),
+            textColor: Color(0xFF0E1013),
           ),
           WatifDropDownMobile(
             dropdownText: "Watif an accident happens?",
@@ -142,6 +148,7 @@ class _WatifMobileState extends State<WatifMobile> {
                 "Help is a tap away! Get reputable roadside- and towing assistance near you. Access emergency contacts on call, get your medical and insurance information, and share your location to your nominated contacts.",
             isOpen: currentOpenDropdown == 5,
             onToggle: () => toggleDropdown(5),
+            textColor: Color(0xFF0E1013),
           ),
           WatifDropDownMobile(
             dropdownText: "Watif you need your travel info?",
@@ -149,6 +156,7 @@ class _WatifMobileState extends State<WatifMobile> {
                 "Upload your Driver Profile that includes emergency contacts, vehicle registration and licensing, medical aid, insurance policy details and vehicle tracking information.",
             isOpen: currentOpenDropdown == 6,
             onToggle: () => toggleDropdown(6),
+            textColor: Color(0xFF0E1013),
           ),
           WatifDropDownMobile(
             dropdownText: "Watif you need infotainment?",
@@ -156,6 +164,7 @@ class _WatifMobileState extends State<WatifMobile> {
                 "Access your favourite tunes, podcasts, audio books, messaging and map apps through my portal. ",
             isOpen: currentOpenDropdown == 7,
             onToggle: () => toggleDropdown(7),
+            textColor: Color(0xFF5F6368).withOpacity(0.47),
           ),
           SizedBox(
             height: MyUtility(context).height * 0.025,
@@ -169,12 +178,22 @@ class _WatifMobileState extends State<WatifMobile> {
           Stack(
             alignment: Alignment.topCenter,
             children: [
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Download WATIF ",
+                    "Download",
+                    style: TextStyle(
+                      fontSize: 42,
+                      fontFamily: 'ralewaysemi',
+                      color: Colors.black,
+                      height: 1.1,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "WATIF ",
                     style: TextStyle(
                       fontSize: 42,
                       fontFamily: 'ralewaysemi',
@@ -186,7 +205,7 @@ class _WatifMobileState extends State<WatifMobile> {
                 ],
               ),
               Positioned(
-                top: 0,
+                top: 50,
                 right: MyUtility(context).width * 0.023,
                 child: SvgPicture.asset(
                   'images/tm.svg',
@@ -223,8 +242,8 @@ class _WatifMobileState extends State<WatifMobile> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                height: MyUtility(context).height * 0.04,
-                width: MyUtility(context).width * 0.3,
+                height: 40,
+                width: 110,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('images/appmobile.png'),
@@ -233,8 +252,8 @@ class _WatifMobileState extends State<WatifMobile> {
                 ),
               ),
               Container(
-                height: MyUtility(context).height * 0.04,
-                width: MyUtility(context).width * 0.3,
+                height: 40,
+                width: 110,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('images/googlemobile.png'),
@@ -243,8 +262,8 @@ class _WatifMobileState extends State<WatifMobile> {
                 ),
               ),
               Container(
-                height: MyUtility(context).height * 0.04,
-                width: MyUtility(context).width * 0.3,
+                height: 40,
+                width: 110,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('images/windowsmobile.png'),
@@ -258,8 +277,8 @@ class _WatifMobileState extends State<WatifMobile> {
             height: MyUtility(context).height * 0.02,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.4,
-            height: MediaQuery.of(context).size.height * 0.045,
+            width: 150,
+            height: 40,
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(

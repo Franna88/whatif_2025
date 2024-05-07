@@ -154,9 +154,7 @@ class _FooterState extends State<Footer> {
           ),
           suffixIcon: IconButton(
             icon: const Icon(Icons.send),
-            onPressed: () {
-              // Define the behavior for the send button here
-            },
+            onPressed: () {},
           ),
         ),
       ),

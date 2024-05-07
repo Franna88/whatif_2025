@@ -33,7 +33,6 @@ class _OurStoryState extends State<OurStory> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // Text and PageView container
                 SizedBox(
                   width: MyUtility(context).width / 3.5,
                   height: MyUtility(context).height * 0.80,
@@ -61,7 +60,7 @@ class _OurStoryState extends State<OurStory> {
                           ),
                         ),
                       ),
-                      // PageView for scrolling text content
+
                       Expanded(
                         child: PageView(
                           controller: _pageController,

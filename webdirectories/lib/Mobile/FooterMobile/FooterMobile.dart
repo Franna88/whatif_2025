@@ -27,7 +27,7 @@ class _FooterMobileState extends State<FooterMobile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MyUtility(context).height / 2.0,
+      height: 410,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
       ),
@@ -138,7 +138,7 @@ class _FooterMobileState extends State<FooterMobile> {
                   Text(
                     ' 2024 Copyright',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontFamily: 'raleway',
                       color: Color(0xFFF4F4F4),
                     ),
@@ -146,7 +146,7 @@ class _FooterMobileState extends State<FooterMobile> {
                   Text(
                     'Web Directories',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontFamily: 'ralewaysemi',
                       color: Color(0xFFF4F4F4),
                     ),

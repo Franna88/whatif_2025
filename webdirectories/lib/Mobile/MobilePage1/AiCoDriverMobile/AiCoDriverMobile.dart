@@ -60,7 +60,7 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
               width: MyUtility(context).width * 0.28,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('images/appmobile.png'),
+                  image: AssetImage('images/AppleStore.png'),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -70,17 +70,17 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
               width: MyUtility(context).width * 0.28,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('images/googlemobile.png'),
+                  image: AssetImage('images/Google Play.png'),
                   fit: BoxFit.fill,
                 ),
               ),
             ),
             Container(
-              height: MyUtility(context).height * 0.045,
-              width: MyUtility(context).width * 0.28,
+              height: MyUtility(context).height * 0.05,
+              width: MyUtility(context).width * 0.29,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('images/windowsmobile.png'),
+                  image: AssetImage('images/WindowsStore.png'),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -143,6 +143,9 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
             ),
           ),
         ),
+        SizedBox(
+          height: 25,
+        )
       ],
     );
   }

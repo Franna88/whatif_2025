@@ -70,14 +70,17 @@ class _ArticleMobileState extends State<ArticleMobile> {
                 child: GestureDetector(
                   onTap: () {},
                   child: Container(
+                    width: 5,
+                    height: 5,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Color(0xFF88888C),
                     ),
-                    padding: EdgeInsets.all(4),
+                    padding: EdgeInsets.all(0),
                     child: Icon(
                       Icons.close,
                       color: Colors.white,
+                      size: 16,
                     ),
                   ),
                 ),

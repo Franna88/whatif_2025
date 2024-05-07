@@ -27,11 +27,11 @@ class _TopNavBarState extends State<TopNavBar> {
     return Row(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 50),
+          padding: const EdgeInsets.only(left: 50, top: 15),
           child: Image.asset(
             'images/logow.png',
-            width: 250,
-            height: 120,
+            width: 225,
+            height: 110,
           ),
         ),
         Spacer(),

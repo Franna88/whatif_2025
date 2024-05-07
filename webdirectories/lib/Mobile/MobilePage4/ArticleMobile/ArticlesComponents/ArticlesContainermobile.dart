@@ -78,7 +78,7 @@ class _ArticlesContainerMobileState extends State<ArticlesContainerMobile> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                 child: SizedBox(
-                  height: MyUtility(context).height * 0.075,
+                  height: 60,
                   child: Text(
                     widget.headline,
                     style: TextStyle(
@@ -116,7 +116,7 @@ class _ArticlesContainerMobileState extends State<ArticlesContainerMobile> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 2, 8, 0),
                 child: SizedBox(
-                  height: MyUtility(context).height * 0.08,
+                  height: 75,
                   child: Text(
                     widget.discription,
                     style: TextStyle(
@@ -131,9 +131,7 @@ class _ArticlesContainerMobileState extends State<ArticlesContainerMobile> {
                 child: Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
-                    onPressed: () {
-                      // Add your onPressed function here
-                    },
+                    onPressed: () {},
                     icon: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,

@@ -26,18 +26,18 @@ class _CommentsMobileState extends State<CommentsMobile> {
           clipBehavior: Clip.none,
           children: [
             Positioned(
-              top: MyUtility(context).height * 0.1,
+              top: 85,
               left: MyUtility(context).width * 0.1,
               right: MyUtility(context).width * 0.1,
               child: Container(
-                width: MyUtility(context).width / 1.2,
+                width: MyUtility(context).width / 1.15,
                 decoration: BoxDecoration(
                   color: Color(0xFF0E1013),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: MyUtility(context).height * 0.05),
+                    SizedBox(height: 45),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(

@@ -38,8 +38,17 @@ class _PartnerWithUsContainerState extends State<PartnerWithUsContainer> {
           width: MediaQuery.of(context).size.width / 4.2,
           height: MediaQuery.of(context).size.height / 2.5,
           decoration: BoxDecoration(
-            color: isHovered ? Colors.black : Color(0xFFF1F3F4),
+            color:
+                isHovered ? Colors.black : Color(0xFFebebeb).withOpacity(0.9),
             borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3),
+                offset: Offset(0, 4),
+                blurRadius: 8,
+                spreadRadius: 0,
+              ),
+            ],
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),

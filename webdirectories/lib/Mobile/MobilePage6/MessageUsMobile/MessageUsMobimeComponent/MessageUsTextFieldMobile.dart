@@ -20,7 +20,7 @@ class _MessageUsTextFieldMobileState extends State<MessageUsTextFieldMobile> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             widget.text,

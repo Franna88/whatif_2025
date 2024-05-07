@@ -27,9 +27,9 @@ class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
           height: MyUtility(context).height * 0.025,
         ),
         SizedBox(
-          width: MyUtility(context).width / 1.5,
+          width: MyUtility(context).width / 1.2,
           child: Text(
-            'Why partner with us?',
+            'Why partner\nwith us?',
             style: TextStyle(fontSize: 42, fontFamily: 'ralewaysemi'),
             textAlign: TextAlign.center,
           ),
@@ -39,7 +39,7 @@ class _PartnerWithUsMobileState extends State<PartnerWithUsMobile> {
         ),
         SizedBox(
           width: MediaQuery.of(context).size.width / 1.15,
-          height: MediaQuery.of(context).size.height * 0.525,
+          height: 450,
           child: PageView(
             controller: _pageController,
             onPageChanged: (int index) {

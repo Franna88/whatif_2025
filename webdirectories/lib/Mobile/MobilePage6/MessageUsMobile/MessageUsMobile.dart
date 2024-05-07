@@ -16,7 +16,7 @@ class _MessageUsMobileState extends State<MessageUsMobile> {
     return Column(
       children: [
         Text(
-          'Mesage Us',
+          'Message Us',
           style: TextStyle(
               fontSize: 24,
               color: Color(0xFF0E1013),
@@ -34,14 +34,14 @@ class _MessageUsMobileState extends State<MessageUsMobile> {
         ),
         Container(
           width: MyUtility(context).width / 1.2,
-          height: MyUtility(context).height * 0.65,
+          height: 600,
           decoration: BoxDecoration(
-              color: Color(0xFFF4F4F4),
+              color: Color(0xFFebebeb).withOpacity(0.08),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withOpacity(0.09),
                   spreadRadius: 0,
-                  blurRadius: 5,
+                  blurRadius: 1,
                   offset: Offset(0, 2),
                 ),
               ],

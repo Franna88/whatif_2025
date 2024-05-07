@@ -13,6 +13,7 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Get in touch',
@@ -20,6 +21,15 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
               fontSize: 46,
               fontFamily: 'ralewaysemi',
               color: Color(0xFF0E1013)),
+          textAlign: TextAlign.left,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 25),
+          child: Container(
+            width: 95,
+            height: 1,
+            decoration: BoxDecoration(color: Color(0xFFD6D6D6)),
+          ),
         ),
         SizedBox(
           width: MyUtility(context).width / 1.2,
@@ -57,8 +67,8 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
           ),
         ),
         Container(
-          width: MyUtility(context).width / 1.3,
-          height: MyUtility(context).height * 0.2,
+          width: MyUtility(context).width / 1.2,
+          height: 125,
           child: Row(
             children: [
               SizedBox(
@@ -81,7 +91,7 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
                     ),
                   ),
                   Text(
-                    "Mon-Fri | 08:00AM – 16:00PM\nSat-Sun & Public Holidays |\nClosed",
+                    "Mon-Fri | 08:00AM – 5:00PM\nSat-Sun & Public Holidays |\nClosed",
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'raleway',
@@ -94,8 +104,8 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
           ),
         ),
         Container(
-          width: MyUtility(context).width / 1.3,
-          height: MyUtility(context).height * 0.12,
+          width: MyUtility(context).width / 1.2,
+          height: 125,
           child: Row(
             children: [
               SizedBox(
@@ -131,8 +141,8 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
           ),
         ),
         Container(
-          width: MyUtility(context).width / 1.3,
-          height: MyUtility(context).height * 0.11,
+          width: MyUtility(context).width / 1.2,
+          height: 125,
           child: Row(
             children: [
               SizedBox(

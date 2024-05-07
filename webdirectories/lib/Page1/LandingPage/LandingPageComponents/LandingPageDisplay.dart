@@ -23,7 +23,7 @@ List directoriesInfo = [
     "1title": "TOWING",
     "2title": "Directory",
     "description":
-        "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide.  Read Reviews"
+        "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide.  Read Reviews."
   },
   {
     "1title": "Fuel",
@@ -80,11 +80,11 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 50),
+                padding: const EdgeInsets.only(left: 50, top: 15),
                 child: Image.asset(
                   'images/logo.png',
-                  width: 250,
-                  height: 120,
+                  width: 225,
+                  height: 110,
                 ),
               ),
               Spacer(),
@@ -126,9 +126,6 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                 ),
               )
             ],
-          ),
-          SizedBox(
-            height: MyUtility(context).height * 0.05,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

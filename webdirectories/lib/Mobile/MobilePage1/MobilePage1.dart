@@ -28,7 +28,6 @@ class _MobilePage1State extends State<MobilePage1> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          MobileTopNavBar(),
           LandingPageMobile(),
           Image.asset('images/mobileglasses.png'),
           PartnerWithUsMobile(),

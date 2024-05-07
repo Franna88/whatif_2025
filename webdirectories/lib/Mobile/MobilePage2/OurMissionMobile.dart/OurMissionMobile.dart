@@ -44,7 +44,7 @@ class _OurMissionMobileState extends State<OurMissionMobile> {
                   ],
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       "1765",
@@ -55,7 +55,7 @@ class _OurMissionMobileState extends State<OurMissionMobile> {
                           color: Color(0xFFFBFBFB)),
                     ),
                     Text(
-                      "Cities &\nSuburbs",
+                      " Cities &\nSuburbs",
                       style: TextStyle(
                         fontSize: 17,
                         color: Color(0xFFFBFBFB),

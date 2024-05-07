@@ -28,12 +28,54 @@ class _ScrollContainer3State extends State<ScrollContainer3> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Text(
-          'We are technology builders that continuously design, develop, and evaluate our data-driven services.',
-          style: TextStyle(
-            fontSize: 19,
-            fontFamily: 'raleway',
-            color: Colors.black,
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "We focus on enhancing ",
+                style: TextStyle(
+                  fontSize: 19,
+                  fontFamily: 'raleway',
+                  color: Colors.black,
+                ),
+              ),
+              TextSpan(
+                text: "user-centered experiences ",
+                style: TextStyle(
+                  fontSize: 19,
+                  fontFamily: 'ralewaysemi',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              TextSpan(
+                text: "that efficiently access entire economic markets, ",
+                style: TextStyle(
+                  fontSize: 19,
+                  fontFamily: 'raleway',
+                  color: Colors.black,
+                ),
+              ),
+              TextSpan(
+                text: "lowering barriers to SME’s online presence.",
+                style: TextStyle(
+                  fontSize: 19,
+                  fontFamily: 'ralewaysemi',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              TextSpan(
+                text:
+                    "\n\nWe are technology builders that continuously design, develop, and evaluate our data-driven services.",
+                style: TextStyle(
+                  fontSize: 19,
+                  fontFamily: 'raleway',
+                  color: Colors.black,
+                ),
+              ),
+            ],
           ),
         ),
       ),

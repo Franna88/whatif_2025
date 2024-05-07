@@ -36,7 +36,7 @@ class _EagleSliderMobileState extends State<EagleSliderMobile> {
           height: MyUtility(context).height * 0.025,
         ),
         SizedBox(
-          height: MyUtility(context).height * 0.37,
+          height: 325,
           width: MyUtility(context).width / 1.15,
           child: PageView.builder(
             itemCount: 5,

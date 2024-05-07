@@ -24,7 +24,7 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
           ),
           Container(
             width: MyUtility(context).width,
-            height: MyUtility(context).height / 1.1,
+            height: MyUtility(context).height * 1.1,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('images/join.png'),

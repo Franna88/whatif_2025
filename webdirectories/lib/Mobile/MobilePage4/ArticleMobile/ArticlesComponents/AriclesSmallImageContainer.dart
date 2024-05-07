@@ -34,7 +34,7 @@ class _ArticlesSmallImageContainerState
         ),
         Container(
           width: MyUtility(context).width / 1.1,
-          height: MyUtility(context).height / 3.3,
+          height: 285,
           decoration: BoxDecoration(
             color: Color(0xFFF4F4F4),
             borderRadius: BorderRadius.circular(15.0),

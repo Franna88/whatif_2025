@@ -14,11 +14,10 @@ class _CommentsSliderMobileState extends State<CommentsSliderMobile> {
 
   @override
   Widget build(BuildContext context) {
-    // Wrap the Column in a Container with explicit height
     return Container(
-      height: MyUtility(context).height * 0.7, // Adjust height as needed
+      height: 600,
       child: Column(
-        mainAxisSize: MainAxisSize.min, // Set mainAxisSize to min
+        mainAxisSize: MainAxisSize.min,
         children: [
           Expanded(
             child: PageView(

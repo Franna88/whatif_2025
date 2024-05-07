@@ -24,7 +24,7 @@ class _ArticlesSliderMobileState extends State<ArticlesSliderMobile> {
       children: [
         SizedBox(
           width: MyUtility(context).width / 1.05,
-          height: MyUtility(context).height / 1.85,
+          height: 470,
           child: PageView(
             controller: _pageController,
             children: [

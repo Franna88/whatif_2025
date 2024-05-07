@@ -12,8 +12,8 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width / 1.2,
-      height: MyUtility(context).height * 0.15,
+      width: 300,
+      height: 125,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
@@ -44,9 +44,9 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
           Text(
             "The Eagle Team",
             style: TextStyle(
-                fontSize: 16, fontFamily: 'raleway', color: Colors.black),
+                fontSize: 20, fontFamily: 'raleway', color: Colors.black),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 15),
           Stack(
             alignment: Alignment.center,
             children: [
@@ -57,7 +57,7 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
               ),
               Positioned(
                 top: 0,
-                left: 256,
+                left: 235,
                 child: CircleAvatar(
                   backgroundImage: AssetImage('images/avitar7.png'),
                   radius: 30,
@@ -65,7 +65,7 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
               ),
               Positioned(
                 top: 0,
-                left: 216,
+                left: 197,
                 child: CircleAvatar(
                   backgroundImage: AssetImage('images/avitar6.png'),
                   radius: 30,
@@ -73,7 +73,7 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
               ),
               Positioned(
                 top: 0,
-                left: 176,
+                left: 159,
                 child: CircleAvatar(
                   backgroundImage: AssetImage('images/avitar5.png'),
                   radius: 30,
@@ -81,7 +81,7 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
               ),
               Positioned(
                 top: 0,
-                left: 136,
+                left: 121,
                 child: CircleAvatar(
                   backgroundImage: AssetImage('images/avitar4.png'),
                   radius: 30,
@@ -89,7 +89,7 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
               ),
               Positioned(
                 top: 0,
-                left: 96,
+                left: 83,
                 child: CircleAvatar(
                   backgroundImage: AssetImage('images/avitar3.png'),
                   radius: 30,
@@ -97,7 +97,7 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
               ),
               Positioned(
                 top: 0,
-                left: 56,
+                left: 45,
                 child: CircleAvatar(
                   backgroundImage: AssetImage('images/avitar2.png'),
                   radius: 30,
@@ -105,7 +105,7 @@ class _StackedImageMobileState extends State<StackedImageMobile> {
               ),
               Positioned(
                 top: 0,
-                left: 20,
+                left: 7,
                 child: CircleAvatar(
                   backgroundImage: AssetImage('images/avitar1.png'),
                   radius: 30,
