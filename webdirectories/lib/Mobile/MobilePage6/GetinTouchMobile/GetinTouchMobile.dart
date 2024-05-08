@@ -128,7 +128,7 @@ class _GetinTouchMobileState extends State<GetinTouchMobile> {
                     ),
                   ),
                   Text(
-                    "(+27) 12 403 1020\n(+27) 12 346 4690\ninfo@webdirectories.co.za",
+                    "(+27) 12 403 1020\ninfo@webdirectories.co.za",
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'raleway',

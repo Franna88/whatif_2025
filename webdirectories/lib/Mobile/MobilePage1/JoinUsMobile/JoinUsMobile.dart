@@ -24,14 +24,14 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
           ),
           Container(
             width: MyUtility(context).width,
-            height: MyUtility(context).height * 1.1,
+            height: MyUtility(context).height,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('images/join.png'),
+                image: AssetImage('images/joinus2.png'),
                 fit: BoxFit.fill,
               ),
             ),
-            child: Column(
+            /* child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
@@ -114,7 +114,7 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
                   height: MyUtility(context).height * 0.055,
                 ),
               ],
-            ),
+            ),*/
           )
         ],
       ),

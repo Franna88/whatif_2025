@@ -27,7 +27,7 @@ class _FooterMobileState extends State<FooterMobile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 410,
+      height: 450,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
       ),
@@ -136,7 +136,7 @@ class _FooterMobileState extends State<FooterMobile> {
                     height: 14,
                   ),
                   Text(
-                    ' 2024 Copyright',
+                    ' 2024 Copyright ',
                     style: TextStyle(
                       fontSize: 12,
                       fontFamily: 'raleway',
@@ -154,13 +154,14 @@ class _FooterMobileState extends State<FooterMobile> {
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   IconButton(
                     icon: Image.asset(
-                      'images/logos_facebook.png',
-                      height: 35,
-                      width: 35,
+                      'images/facebook1.png',
+                      height: 37.5,
+                      width: 37.5,
                     ),
                     onPressed: () {
                       _launchURL('https://www.facebook.com/WDirectories/');

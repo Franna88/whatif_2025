@@ -15,21 +15,18 @@ class FooterMobileTextButton extends StatefulWidget {
 class _FooterMobileTextButtonState extends State<FooterMobileTextButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 25,
-      child: TextButton(
-        onPressed: widget.onpress,
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            widget.text,
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'raleway',
-              color: Color(0xFFF4F4F4),
-            ),
-            textAlign: TextAlign.left,
+    return TextButton(
+      onPressed: widget.onpress,
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          widget.text,
+          style: TextStyle(
+            fontSize: 16,
+            fontFamily: 'raleway',
+            color: Color(0xFFF4F4F4),
           ),
+          textAlign: TextAlign.left,
         ),
       ),
     );

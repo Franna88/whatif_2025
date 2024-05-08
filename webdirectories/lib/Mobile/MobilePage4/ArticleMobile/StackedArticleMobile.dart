@@ -15,7 +15,6 @@ class _StackedArticleMobileState extends State<StackedArticleMobile> {
     return Column(
       children: [
         ArticlesSmallImageContainer(
-            image: 'images/turbine.png',
             catagory: 'Fuel Directory',
             headline: "What Would Happen If You Put Jet Fuel in Your Car?",
             writer: 'Wena Cronje',
@@ -23,7 +22,6 @@ class _StackedArticleMobileState extends State<StackedArticleMobile> {
                 "Will jet fuel provide a performance boost or lead to disastrous results?",
             onpress: () {}),
         ArticlesSmallImageContainer(
-            image: 'images/drive1.png',
             catagory: 'Towing Directory',
             headline: "Why Compare Car Insurance quotes?",
             writer: 'Wena Cronje',
@@ -31,7 +29,6 @@ class _StackedArticleMobileState extends State<StackedArticleMobile> {
                 "Let us explore how you could save big on your premiums.",
             onpress: () {}),
         ArticlesSmallImageContainer(
-            image: 'images/buisness.png',
             catagory: 'Web Directories',
             headline: "How to Create a Killer Web Directories Listing",
             writer: 'Wena Cronje',
@@ -46,7 +43,7 @@ class _StackedArticleMobileState extends State<StackedArticleMobile> {
               backgroundColor:
                   Color(0xFF0E1013), // Setting the background color
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(25),
               ),
             ),
             child: Text(

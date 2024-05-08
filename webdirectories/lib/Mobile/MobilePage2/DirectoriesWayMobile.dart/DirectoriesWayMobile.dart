@@ -41,7 +41,7 @@ class _DirectoriesWayMobileState extends State<DirectoriesWayMobile> {
           padding: const EdgeInsets.only(bottom: 15, top: 15),
           child: Text(
             'We are Websmiths & Web Librarians',
-            style: TextStyle(fontSize: 19, fontFamily: 'ralewaysemi'),
+            style: TextStyle(fontSize: 22, fontFamily: 'ralewaymedium'),
             textAlign: TextAlign.center,
           ),
         ),
@@ -111,7 +111,7 @@ class _DirectoriesWayMobileState extends State<DirectoriesWayMobile> {
             padding: const EdgeInsets.only(bottom: 15, top: 15),
             child: Text(
               'The first step to attain a set goal, is to write it down',
-              style: TextStyle(fontSize: 22, fontFamily: 'ralewaysemi'),
+              style: TextStyle(fontSize: 22, fontFamily: 'ralewaymedium'),
               textAlign: TextAlign.center,
             ),
           ),

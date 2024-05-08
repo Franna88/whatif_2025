@@ -14,8 +14,8 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
     return Column(
       children: [
         Text(
-          'Your AI Co-pilot',
-          style: TextStyle(fontSize: 44, fontFamily: 'ralewaybold'),
+          'Your AI Co-driver',
+          style: TextStyle(fontSize: 44, fontFamily: 'ralewaysemi'),
           textAlign: TextAlign.center,
         ),
         Padding(
@@ -76,8 +76,8 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
               ),
             ),
             Container(
-              height: MyUtility(context).height * 0.05,
-              width: MyUtility(context).width * 0.29,
+              height: MyUtility(context).height * 0.045,
+              width: MyUtility(context).width * 0.28,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('images/WindowsStore.png'),

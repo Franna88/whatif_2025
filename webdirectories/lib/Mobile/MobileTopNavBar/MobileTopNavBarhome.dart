@@ -22,14 +22,17 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Container(
-          width: 250,
-          height: 100,
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Image.asset(
-              'images/logo.png',
-              fit: BoxFit.fill,
+        Padding(
+          padding: const EdgeInsets.only(top: 20, right: 20),
+          child: Container(
+            width: 200,
+            height: 100,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Image.asset(
+                'images/logo.png',
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         ),

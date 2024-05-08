@@ -26,7 +26,7 @@ List directoriesInfo = [
         "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide.  Read Reviews."
   },
   {
-    "1title": "Fuel",
+    "1title": "FUEL",
     "2title": "Directory",
     "description":
         "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM’s and all other services nationwide. Read Reviews."

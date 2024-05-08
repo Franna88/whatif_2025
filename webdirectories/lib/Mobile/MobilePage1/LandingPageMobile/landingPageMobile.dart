@@ -12,31 +12,36 @@ List directoriesInfo = [
     "1title": "Download\n",
     "2title": "WATIF",
     "description":
-        "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide."
+        "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide.",
+    "buttonText": "Learn More"
   },
   {
     "1title": "TOWING\n",
     "2title": "Directory",
     "description":
-        "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide. Read Reviews"
+        "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide. Read Reviews",
+    "buttonText": "View Directory"
   },
   {
     "1title": "FUEL\n",
     "2title": "Directory",
     "description":
-        "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM’s and all other services nationwide."
+        "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM’s and all other services nationwide.",
+    "buttonText": "View Directory"
   },
   {
     "1title": "PANEL BEATER\n",
     "2title": "Directory",
     "description":
-        "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews."
+        "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews.",
+    "buttonText": "View Directory"
   },
   {
     "1title": "AUTO REPAIR\n",
     "2title": "Directory",
     "description":
-        "Locate qualified services nearby or nationwide, for service, spares, or specialist repairs. Read Reviews."
+        "Locate qualified services nearby or nationwide, for service, spares, or specialist repairs. Read Reviews.",
+    "buttonText": "View Directory"
   },
 ];
 
@@ -87,6 +92,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
             Title1: directoriesInfo[menuIndex]['1title'],
             Title2: directoriesInfo[menuIndex]['2title'],
             description: directoriesInfo[menuIndex]['description'],
+            viewdirctoriesbutton: directoriesInfo[menuIndex]['buttonText'],
             menuIndex: menuIndex,
             changeMenu: changeMenu,
             onpress: () {

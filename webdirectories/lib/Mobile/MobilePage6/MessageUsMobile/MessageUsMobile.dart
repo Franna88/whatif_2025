@@ -36,12 +36,12 @@ class _MessageUsMobileState extends State<MessageUsMobile> {
           width: MyUtility(context).width / 1.2,
           height: 600,
           decoration: BoxDecoration(
-              color: Color(0xFFebebeb).withOpacity(0.08),
+              color: Color(0x14ebebeb),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.09),
                   spreadRadius: 0,
-                  blurRadius: 1,
+                  blurRadius: 0,
                   offset: Offset(0, 2),
                 ),
               ],

@@ -9,17 +9,19 @@ class DirectoryContainer extends StatefulWidget {
   Function(int) changeMenu;
   final VoidCallback onpress;
   final PageController pageController;
+  String viewdirctoriesbutton;
 
-  DirectoryContainer({
-    Key? key,
-    required this.menuIndex,
-    required this.Title1,
-    required this.Title2,
-    required this.description,
-    required this.changeMenu,
-    required this.onpress,
-    required this.pageController,
-  }) : super(key: key);
+  DirectoryContainer(
+      {Key? key,
+      required this.menuIndex,
+      required this.Title1,
+      required this.Title2,
+      required this.description,
+      required this.changeMenu,
+      required this.onpress,
+      required this.pageController,
+      required this.viewdirctoriesbutton})
+      : super(key: key);
 
   @override
   State<DirectoryContainer> createState() => _DirectoryContainerState();
@@ -30,7 +32,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 1.15,
-      height: MyUtility(context).height / 1.63,
+      height: 500,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
         borderRadius: BorderRadius.circular(20.0),
@@ -152,7 +154,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
           ),
           SizedBox(
             width: MyUtility(context).width / 1.25,
-            height: MyUtility(context).height * 0.265,
+            height: 200,
             child: Text(
               widget.description,
               style: TextStyle(
@@ -197,7 +199,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                   ),
                   SizedBox(width: 8), // Adjust space between the icon and text
                   Text(
-                    'View Directory',
+                    widget.viewdirctoriesbutton,
                     style: TextStyle(
                       fontFamily: 'raleway',
                       fontSize: 20,

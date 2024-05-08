@@ -205,8 +205,8 @@ class _WatifMobileState extends State<WatifMobile> {
                 ],
               ),
               Positioned(
-                top: 50,
-                right: MyUtility(context).width * 0.023,
+                top: 45,
+                right: 17,
                 child: SvgPicture.asset(
                   'images/tm.svg',
                   height: 15,
@@ -242,32 +242,32 @@ class _WatifMobileState extends State<WatifMobile> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                height: 40,
+                height: 45,
                 width: 110,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('images/appmobile.png'),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
               Container(
-                height: 40,
+                height: 45,
                 width: 110,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('images/googlemobile.png'),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
               Container(
-                height: 40,
+                height: 45,
                 width: 110,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('images/windowsmobile.png'),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),

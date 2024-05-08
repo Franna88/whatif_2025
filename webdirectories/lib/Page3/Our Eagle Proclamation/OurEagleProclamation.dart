@@ -32,7 +32,7 @@ class _OurEagleProclamationState extends State<OurEagleProclamation> {
           Text(
             "The first step to attain a set goal, is to write it down",
             style: TextStyle(
-                fontSize: 24, fontFamily: 'ralewaysemi', color: Colors.white),
+                fontSize: 24, fontFamily: 'ralewaymedium', color: Colors.white),
           ),
           SizedBox(
             height: MyUtility(context).height * 0.04,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/Mobile/MobilePage4/ArticleMobile/ArticlesComponents/ArticlesContainermobile.dart';
 import 'package:webdirectories/Mobile/MobilePage4/ArticleMobile/ArticlesComponents/ArticlesSliderMobile.dart';
 import 'package:webdirectories/myutility.dart';
@@ -67,20 +68,23 @@ class _ArticleMobileState extends State<ArticleMobile> {
                 padding: EdgeInsets.only(
                   right: 8,
                 ),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 5,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFF88888C),
-                    ),
-                    padding: EdgeInsets.all(0),
-                    child: Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 16,
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      // Define your onTap action here
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      padding: EdgeInsets.all(0),
+                      child: SvgPicture.asset(
+                        'images/x.svg',
+                        width: 5,
+                        height: 5,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 ),
