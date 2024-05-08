@@ -20,63 +20,61 @@ class CommentsMobile extends StatefulWidget {
 class _CommentsMobileState extends State<CommentsMobile> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Positioned(
-              top: 85,
-              left: MyUtility(context).width * 0.1,
-              right: MyUtility(context).width * 0.1,
-              child: Container(
-                width: MyUtility(context).width / 1.15,
-                decoration: BoxDecoration(
-                  color: Color(0xFF0E1013),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(height: 45),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        widget.comment,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Raleway',
-                            color: Colors.white),
-                        textAlign: TextAlign.center,
-                      ),
+    return Center(
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+            top: 85,
+            left: MyUtility(context).width * 0.1,
+            right: MyUtility(context).width * 0.1,
+            child: Container(
+              width: MyUtility(context).width / 1.15,
+              decoration: BoxDecoration(
+                color: Color(0xFF0E1013),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: 45),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.comment,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Raleway',
+                          color: Colors.white),
+                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: MyUtility(context).height * 0.02),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        widget.username,
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'RalewaySemi',
-                            color: Colors.white),
-                        textAlign: TextAlign.center,
-                      ),
+                  ),
+                  SizedBox(height: MyUtility(context).height * 0.02),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.username,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'RalewaySemi',
+                          color: Colors.white),
+                      textAlign: TextAlign.center,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            Positioned(
-              top: MyUtility(context).height * 0.05,
-              left: MyUtility(context).width * 0.4,
-              child: CircleAvatar(
-                radius: 45,
-                backgroundImage: AssetImage(
-                  widget.profileImage,
-                ),
+          ),
+          Positioned(
+            top: MyUtility(context).height * 0.05,
+            left: MyUtility(context).width * 0.4,
+            child: CircleAvatar(
+              radius: 45,
+              backgroundImage: AssetImage(
+                widget.profileImage,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

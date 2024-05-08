@@ -26,7 +26,7 @@ class _CategorySelectState extends State<CategorySelect>
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
-    _controller.animateTo(0.0);
+    _controller.animateTo(-0.32);
     super.initState();
   }
 
@@ -43,9 +43,6 @@ class _CategorySelectState extends State<CategorySelect>
 
     return Column(
       children: [
-        SizedBox(
-          height: 100,
-        ),
         Stack(
           children: [
             Container(
@@ -74,8 +71,8 @@ class _CategorySelectState extends State<CategorySelect>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 2
-                        ? 'images/topWhite1.svg'
-                        : 'images/topb1.svg',
+                        ? 'images/fuelSvg.svg'
+                        : 'images/top1.svg',
                     width: 1,
                     height: 202,
                   ),
@@ -102,7 +99,7 @@ class _CategorySelectState extends State<CategorySelect>
               ),
             ),
             Positioned(
-              top: 255,
+              top: 253,
               left: 95,
               child: GestureDetector(
                 onTap: () {
@@ -131,7 +128,7 @@ class _CategorySelectState extends State<CategorySelect>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 3
-                        ? 'images/rightWhite1.svg'
+                        ? 'images/hammerSvg.svg'
                         : 'images/rightb.svg',
                     width: 1,
                     height: 165,

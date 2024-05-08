@@ -52,9 +52,15 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
 
   // Update menu index
   void changeMenu(int value) {
-    setState(() {
-      menuIndex = value;
-    });
+    if (value == -1) {
+      setState(() {
+        menuIndex = 5;
+      });
+    } else {
+      setState(() {
+        menuIndex = value;
+      });
+    }
   }
 
   final PageController _pageController = PageController();
@@ -73,7 +79,7 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
         children: [
           MobileTopNavBarhome(),
           CategorySelectMobile(
-            menuIndex: menuIndex,
+            menuIndex: menuIndex < 0 ? 5 : menuIndex,
             changeMenu: changeMenu,
           ),
           SizedBox(height: 15),
@@ -82,8 +88,9 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
             Title2: directoriesInfo[menuIndex]['2title'],
             description: directoriesInfo[menuIndex]['description'],
             menuIndex: menuIndex,
+            changeMenu: changeMenu,
             onpress: () {
-              // Add your onPress action here
+              ;
             },
             pageController: _pageController,
           ),

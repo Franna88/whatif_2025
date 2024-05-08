@@ -55,7 +55,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               left: 0,
               child: Container(
                 child: SvgPicture.asset(
-                  'images/centergauge2.svg',
+                  'images/centerGauge2.svg',
                   width: 325,
                   height: 325,
                 ),
@@ -72,8 +72,8 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 2
-                        ? 'images/topWhite1.svg'
-                        : 'images/topb1.svg',
+                        ? 'images/fuelSvg.svg'
+                        : 'images/top1.svg',
                     width: 1,
                     height: 125,
                   ),
@@ -129,7 +129,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 3
-                        ? 'images/rightWhite1.svg'
+                        ? 'images/hammerSvg.svg'
                         : 'images/rightb.svg',
                     width: 1,
                     height: 100,
@@ -149,7 +149,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                   child: SvgPicture.asset(
                     widget.menuIndex == 4
                         ? 'images/rightDownWhite1.svg'
-                        : 'images/rightDownb.svg',
+                        : 'images/rightDown.svg',
                     width: 1,
                     height: 118,
                   ),

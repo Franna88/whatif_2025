@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:webdirectories/myutility.dart';
 
 class CircleTextBox extends StatefulWidget {
@@ -6,12 +7,14 @@ class CircleTextBox extends StatefulWidget {
   String Title2;
   String description;
   int menuIndex;
+  Function(int) changeMenu;
   CircleTextBox(
       {super.key,
       required this.Title1,
       required this.Title2,
       required this.description,
-      required this.menuIndex});
+      required this.menuIndex,
+      required this.changeMenu});
 
   @override
   State<CircleTextBox> createState() => _CircleTextBoxState();
@@ -21,6 +24,13 @@ class _CircleTextBoxState extends State<CircleTextBox> {
   @override
   Widget build(BuildContext context) {
     double width = MyUtility(context).width;
+
+    changeIndex() {
+      setState(() {
+        var value = widget.menuIndex + 1;
+        widget.changeMenu(value);
+      });
+    }
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 20, right: 50),
@@ -32,122 +42,136 @@ class _CircleTextBoxState extends State<CircleTextBox> {
           shape: BoxShape.circle,
           border: Border.all(
             color: Colors.white,
-            width: 2.0,
+            width: 4.0,
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "<  ",
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: const Color.fromARGB(255, 255, 255, 255)),
-                  ),
-                  Text(
-                    "${widget.menuIndex + 1} / 5 ",
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: const Color.fromARGB(255, 255, 255, 255)),
-                  ),
-                  Text(
-                    "  >",
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: const Color.fromARGB(255, 255, 255, 255)),
-                    textAlign: TextAlign.start,
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
+        child: Container(
+          width: 500,
+          height: 500,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: const Color.fromARGB(255, 14, 16, 19),
+              width: 25.0,
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      widget.Title1,
+                      "<  ",
                       style: TextStyle(
-                          fontSize: 32,
-                          fontFamily: 'ralewaybold',
+                          fontSize: 22,
                           color: const Color.fromARGB(255, 255, 255, 255)),
-                    ),
-                    SizedBox(
-                      width: 8,
                     ),
                     Text(
-                      widget.Title2,
+                      "${widget.menuIndex + 1} / 5 ",
                       style: TextStyle(
-                          fontSize: 32,
-                          fontFamily: 'raleway',
+                          fontSize: 18,
                           color: const Color.fromARGB(255, 255, 255, 255)),
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        "  >",
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: const Color.fromARGB(255, 255, 255, 255)),
+                        textAlign: TextAlign.start,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
-                width: MyUtility(context).width / 4.5,
-                height: MyUtility(context).height * 0.2,
-                child: Text(
-                  widget.description,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'raleway',
-                      color: const Color.fromARGB(255, 255, 255, 255)),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(
-                height: MyUtility(context).height * 0.05,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.1,
-                height: MediaQuery.of(context).size.height * 0.05,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: EdgeInsets.zero,
-                  ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 25,
-                        height: 25,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          shape: BoxShape.circle,
-                        ),
-                        padding: EdgeInsets.zero,
-                        child: Icon(
-                          Icons.keyboard_arrow_right_outlined,
-                          color: Colors.white,
-                          size: 16,
-                        ),
-                      ),
-                      SizedBox(width: 4),
                       Text(
-                        'View Directory',
+                        widget.Title1,
                         style: TextStyle(
-                          color: Color(0xFF0C0C0C).withOpacity(0.9),
-                          fontSize: 16.5,
-                          fontFamily: 'Raleway',
-                        ),
+                            fontSize: 32,
+                            fontFamily: 'ralewaybold',
+                            color: const Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        widget.Title2,
+                        style: TextStyle(
+                            fontSize: 32,
+                            fontFamily: 'raleway',
+                            color: const Color.fromARGB(255, 255, 255, 255)),
                       ),
                     ],
                   ),
                 ),
-              )
-            ],
+                SizedBox(
+                  width: MyUtility(context).width / 4.5,
+                  height: MyUtility(context).height * 0.2,
+                  child: Text(
+                    widget.description,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'raleway',
+                        color: const Color.fromARGB(255, 255, 255, 255)),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(
+                  height: MyUtility(context).height * 0.05,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 25,
+                          height: 25,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.circle,
+                          ),
+                          padding: EdgeInsets.zero,
+                          child: Icon(
+                            Icons.keyboard_arrow_right_outlined,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                        ),
+                        SizedBox(width: 4),
+                        Text(
+                          'View Directory',
+                          style: TextStyle(
+                            color: Color(0xFF0C0C0C).withOpacity(0.9),
+                            fontSize: 16.5,
+                            fontFamily: 'Raleway',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

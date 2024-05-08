@@ -12,7 +12,7 @@ class Comments extends StatefulWidget {
 
 class _CommentsState extends State<Comments> {
   final PageController _pageController = PageController();
-
+  var index = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -52,26 +52,32 @@ class _CommentsState extends State<Comments> {
           children: [
             IconButton(
               onPressed: () {
+                setState(() {
+                  index = 1;
+                });
                 _pageController.previousPage(
                   duration: Duration(milliseconds: 300),
                   curve: Curves.ease,
                 );
               },
               icon: SvgPicture.asset(
-                'images/arrowr.svg',
+                index == 0 ? 'images/leftArrow.svg' : 'images/arrowr.svg',
                 width: 30,
                 height: 30,
               ),
             ),
             IconButton(
               onPressed: () {
+                setState(() {
+                  index = 0;
+                });
                 _pageController.nextPage(
                   duration: Duration(milliseconds: 300),
                   curve: Curves.ease,
                 );
               },
               icon: SvgPicture.asset(
-                'images/arrowc.svg',
+                index == 1 ? 'images/arrowc.svg' : 'images/rightArrow.svg',
                 width: 30,
                 height: 30,
               ),

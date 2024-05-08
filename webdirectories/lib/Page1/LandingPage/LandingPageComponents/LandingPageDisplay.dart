@@ -53,7 +53,7 @@ class LandingPageDisPlay extends StatefulWidget {
 }
 
 class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
-  int menuIndex = 2;
+  int menuIndex = 0;
 //update menu index
   changeMenu(value) {
     setState(() {
@@ -129,6 +129,7 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CategorySelect(
                 menuIndex: menuIndex,
@@ -143,6 +144,7 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                 Title1: directoriesInfo[menuIndex]['1title'],
                 Title2: directoriesInfo[menuIndex]['2title'],
                 description: directoriesInfo[menuIndex]['description'],
+                changeMenu: changeMenu,
                 menuIndex: menuIndex,
               ),
               /* Image.asset(

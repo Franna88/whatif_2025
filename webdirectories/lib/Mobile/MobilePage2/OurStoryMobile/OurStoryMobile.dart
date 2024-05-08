@@ -11,7 +11,7 @@ class OurStoryMobile extends StatefulWidget {
 
 class _OurStoryMobileState extends State<OurStoryMobile> {
   final PageController _controller = PageController();
-
+  var index = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,6 +50,9 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
               children: [
                 GestureDetector(
                   onTap: () {
+                    setState(() {
+                      index = 0;
+                    });
                     if (_controller.hasClients) {
                       _controller.previousPage(
                         duration: Duration(milliseconds: 300),
@@ -62,10 +65,15 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
                     height: 40,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 1.0),
+                      border: Border.all(
+                          color: index == 0 ? Colors.black : Colors.white,
+                          width: 1.0),
                       color: Colors.black,
                     ),
-                    child: Icon(Icons.keyboard_arrow_left, color: Colors.white),
+                    child: Icon(
+                      Icons.keyboard_arrow_left,
+                      color: index == 0 ? Colors.black : Colors.white,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -73,6 +81,9 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    setState(() {
+                      index = 1;
+                    });
                     if (_controller.hasClients) {
                       _controller.nextPage(
                         duration: Duration(milliseconds: 300),
@@ -85,10 +96,12 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
                     height: 40,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.white,
+                      color: index == 1 ? Colors.black : Colors.white,
                     ),
-                    child:
-                        Icon(Icons.keyboard_arrow_right, color: Colors.black),
+                    child: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: index == 1 ? Colors.black : Colors.white,
+                    ),
                   ),
                 )
               ],

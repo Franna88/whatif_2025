@@ -6,6 +6,7 @@ class DirectoryContainer extends StatefulWidget {
   String Title2;
   String description;
   int menuIndex;
+  Function(int) changeMenu;
   final VoidCallback onpress;
   final PageController pageController;
 
@@ -15,6 +16,7 @@ class DirectoryContainer extends StatefulWidget {
     required this.Title1,
     required this.Title2,
     required this.description,
+    required this.changeMenu,
     required this.onpress,
     required this.pageController,
   }) : super(key: key);
@@ -56,6 +58,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                   child: IconButton(
                     icon: Icon(Icons.keyboard_arrow_left),
                     onPressed: () {
+                      widget.changeMenu(widget.menuIndex - 1);
                       widget.pageController.previousPage(
                         duration: Duration(milliseconds: 300),
                         curve: Curves.ease,
@@ -94,6 +97,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                   child: IconButton(
                     icon: Icon(Icons.keyboard_arrow_right),
                     onPressed: () {
+                      widget.changeMenu(widget.menuIndex + 1);
                       widget.pageController.nextPage(
                         duration: Duration(milliseconds: 300),
                         curve: Curves.ease,

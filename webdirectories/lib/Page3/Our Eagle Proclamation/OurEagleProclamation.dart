@@ -42,11 +42,11 @@ class _OurEagleProclamationState extends State<OurEagleProclamation> {
             children: [
               EagleProclamation(
                   image: "images/eagle1.png",
-                  headlinetext: "Our Actions:\nRak Chazak Amatz",
+                  headlinetext: "Our Actions:\nRak Chazak Amatz\n",
                   text: "Joshua 1:7"),
               EagleProclamation(
                   image: "images/eagle2.png",
-                  headlinetext: " Without Vision\nPeople Perish ",
+                  headlinetext: " Without Vision\nPeople Perish \n",
                   text: "Proverbs 29:18"),
               EagleProclamation(
                   image: "images/eagle3.png",
@@ -58,7 +58,7 @@ class _OurEagleProclamationState extends State<OurEagleProclamation> {
                   text: "Philippians 4:13"),
               EagleProclamation(
                   image: "images/eagle5.png",
-                  headlinetext: "Our Creed: Raptare!Seize the Moment!",
+                  headlinetext: "Our Creed: Raptare!Seize the Moment!\n",
                   text: "Luke 9:62"),
             ],
           ),

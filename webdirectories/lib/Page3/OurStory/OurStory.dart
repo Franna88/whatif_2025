@@ -10,7 +10,7 @@ class OurStory extends StatefulWidget {
 
 class _OurStoryState extends State<OurStory> {
   final PageController _pageController = PageController();
-
+  var index = 0;
   @override
   void dispose() {
     _pageController.dispose();
@@ -88,6 +88,9 @@ class _OurStoryState extends State<OurStory> {
                           children: [
                             IconButton(
                               onPressed: () {
+                                setState(() {
+                                  index = 0;
+                                });
                                 _pageController.previousPage(
                                   duration: Duration(milliseconds: 300),
                                   curve: Curves.ease,
@@ -97,17 +100,24 @@ class _OurStoryState extends State<OurStory> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                      color: Colors.white, width: 0.5),
+                                      color: index == 0
+                                          ? Colors.black
+                                          : Colors.white,
+                                      width: 0.5),
                                 ),
-                                child: const Icon(
+                                child: Icon(
                                   Icons.keyboard_arrow_left,
-                                  color: Colors.white,
+                                  color:
+                                      index == 0 ? Colors.black : Colors.white,
                                   size: 24,
                                 ),
                               ),
                             ),
                             IconButton(
                               onPressed: () {
+                                setState(() {
+                                  index = 1;
+                                });
                                 _pageController.nextPage(
                                   duration: Duration(milliseconds: 300),
                                   curve: Curves.ease,
@@ -116,11 +126,13 @@ class _OurStoryState extends State<OurStory> {
                               icon: Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.white,
+                                  color:
+                                      index == 1 ? Colors.black : Colors.white,
                                 ),
-                                child: const Icon(
+                                child: Icon(
                                   Icons.keyboard_arrow_right,
-                                  color: Colors.black,
+                                  color:
+                                      index == 1 ? Colors.white : Colors.black,
                                   size: 24,
                                 ),
                               ),
