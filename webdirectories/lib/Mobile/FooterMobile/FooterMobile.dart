@@ -27,7 +27,7 @@ class _FooterMobileState extends State<FooterMobile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
+      height: 550,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
       ),

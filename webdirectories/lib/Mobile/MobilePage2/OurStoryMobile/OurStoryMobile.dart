@@ -72,7 +72,7 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
                     ),
                     child: Icon(
                       Icons.keyboard_arrow_left,
-                      color: index == 0 ? Colors.black : Colors.white,
+                      color: index == 0 ? Colors.white : Colors.white,
                     ),
                   ),
                 ),
@@ -100,7 +100,7 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
                     ),
                     child: Icon(
                       Icons.keyboard_arrow_right,
-                      color: index == 1 ? Colors.black : Colors.white,
+                      color: index == 1 ? Colors.white : Colors.black,
                     ),
                   ),
                 )
