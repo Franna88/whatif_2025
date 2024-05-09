@@ -21,6 +21,7 @@ class _CategorySelectState extends State<CategorySelect>
   double right = 185;
   @override
   void initState() {
+    //animation start
     _controller = AnimationController(
       lowerBound: -0.6,
       duration: const Duration(milliseconds: 2000),
@@ -32,6 +33,7 @@ class _CategorySelectState extends State<CategorySelect>
 
   @override
   void dispose() {
+    //end animation
     _controller.dispose();
 
     super.dispose();

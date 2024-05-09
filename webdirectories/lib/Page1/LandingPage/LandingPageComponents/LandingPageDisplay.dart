@@ -128,6 +128,8 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
               )
             ],
           ),
+
+          //TODO JACO Start here
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,11 +138,6 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                 menuIndex: menuIndex,
                 changeMenu: changeMenu,
               ),
-              /*  Image.asset(
-                'images/gauge.png',
-                width: 450,
-                height: 450,
-              ),*/
               CircleTextBox(
                 Title1: directoriesInfo[menuIndex]['1title'],
                 Title2: directoriesInfo[menuIndex]['2title'],
@@ -148,11 +145,6 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                 changeMenu: changeMenu,
                 menuIndex: menuIndex,
               ),
-              /* Image.asset(
-                'images/textbox.png',
-                width: 450,
-                height: 450,
-              ),*/
             ],
           )
         ],
