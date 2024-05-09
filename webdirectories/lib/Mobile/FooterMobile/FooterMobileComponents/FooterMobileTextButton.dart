@@ -16,7 +16,7 @@ class _FooterMobileTextButtonState extends State<FooterMobileTextButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 25,
+      height: 40,
       child: TextButton(
         onPressed: widget.onpress,
         child: Align(

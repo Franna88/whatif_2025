@@ -54,6 +54,7 @@ class LandingPageDisPlay extends StatefulWidget {
 
 class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
   int menuIndex = 0;
+
 //update menu index
   changeMenu(value) {
     setState(() {

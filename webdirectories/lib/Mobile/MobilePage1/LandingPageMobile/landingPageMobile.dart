@@ -44,6 +44,7 @@ List directoriesInfo = [
     "buttonText": "View Directory"
   },
 ];
+double dialIndex = -0.35;
 
 class LandingPageMobile extends StatefulWidget {
   const LandingPageMobile({super.key});
@@ -52,23 +53,75 @@ class LandingPageMobile extends StatefulWidget {
   State<LandingPageMobile> createState() => _LandingPageMobileState();
 }
 
-class _LandingPageMobileState extends State<LandingPageMobile> {
+class _LandingPageMobileState extends State<LandingPageMobile>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
   int menuIndex = 0;
 
+  final PageController _pageController = PageController();
   // Update menu index
-  void changeMenu(int value) {
-    if (value == -1) {
-      setState(() {
-        menuIndex = 5;
-      });
-    } else {
+  changeMenu(int value) {
+    print(value);
+    if (value > -1 && value < 5) {
       setState(() {
         menuIndex = value;
       });
     }
+
+    if (value == 0) {
+      setState(() {
+        dialIndex = -0.35;
+      });
+    }
+
+    switch (value) {
+      case 0:
+        _controller.animateTo(-0.35);
+        break;
+      case 1:
+        _controller.animateTo(-0.15);
+        break;
+
+      case 2:
+        setState(() {
+          dialIndex = 0.0;
+          _controller.animateTo(0.0);
+        });
+        break;
+
+      case 3:
+        setState(() {
+          dialIndex = 0.17;
+          _controller.animateTo(0.17);
+        });
+        break;
+
+      case 4:
+        setState(() {
+          dialIndex = 0.325;
+          _controller.animateTo(0.325);
+        });
+        break;
+    }
+    /* */
   }
 
-  final PageController _pageController = PageController();
+  @override
+  void initState() {
+    _controller = AnimationController(
+      lowerBound: -0.6,
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
+    _controller.animateTo(-0.35);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +139,8 @@ class _LandingPageMobileState extends State<LandingPageMobile> {
           CategorySelectMobile(
             menuIndex: menuIndex < 0 ? 5 : menuIndex,
             changeMenu: changeMenu,
+            dialIndex: dialIndex,
+            animateController: _controller,
           ),
           SizedBox(height: 15),
           DirectoryContainer(

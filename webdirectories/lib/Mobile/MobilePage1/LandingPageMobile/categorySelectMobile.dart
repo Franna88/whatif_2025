@@ -5,8 +5,14 @@ import 'package:webdirectories/myutility.dart';
 class CategorySelectMobile extends StatefulWidget {
   int menuIndex;
   Function(int) changeMenu;
+  double dialIndex;
+  AnimationController animateController;
   CategorySelectMobile(
-      {super.key, required this.menuIndex, required this.changeMenu});
+      {super.key,
+      required this.menuIndex,
+      required this.changeMenu,
+      required this.dialIndex,
+      required this.animateController});
 
   @override
   State<CategorySelectMobile> createState() => _CategorySelectMobileState();
@@ -67,7 +73,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(2);
-                  _controller.animateTo(0.0);
+                  widget.animateController.animateTo(0.0);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -86,7 +92,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(1);
-                  _controller.animateTo(-0.15);
+                  widget.animateController.animateTo(-0.15);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -100,12 +106,12 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               ),
             ),
             Positioned(
-              top: 170,
+              top: 168,
               left: 55 - 10,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(0);
-                  _controller.animateTo(-0.35);
+                  widget.animateController.animateTo(-0.35);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -113,7 +119,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                         ? 'images/leftDownWhite.svg'
                         : 'images/leftDown.svg',
                     width: 1,
-                    height: 100,
+                    height: 105,
                   ),
                 ),
               ),
@@ -124,7 +130,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(3);
-                  _controller.animateTo(0.17);
+                  widget.animateController.animateTo(0.17);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -138,20 +144,20 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               ),
             ),
             Positioned(
-              top: 145,
-              right: 15 + 10,
+              top: 142,
+              right: 20,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(4);
-                  _controller.animateTo(0.325);
+                  widget.animateController.animateTo(0.325);
                 },
                 child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 4
-                        ? 'images/rightDownWhite1.svg'
+                        ? 'images/rightDownWhite.svg'
                         : 'images/rightDown.svg',
                     width: 1,
-                    height: 118,
+                    height: 125,
                   ),
                 ),
               ),
@@ -162,7 +168,8 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               child: Container(
                 child: RotationTransition(
                     alignment: Alignment.center,
-                    turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+                    turns: Tween(begin: 0.0, end: 1.0)
+                        .animate(widget.animateController),
                     child: Container(
                       height: 150.0,
                       width: 50.0,

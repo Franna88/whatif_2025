@@ -50,7 +50,7 @@ class _CategorySelectState extends State<CategorySelect>
               height: 555,
             ),
             Positioned(
-              top: 15,
+              top: 8,
               left: 33,
               child: Container(
                 child: SvgPicture.asset(
@@ -61,7 +61,7 @@ class _CategorySelectState extends State<CategorySelect>
               ),
             ),
             Positioned(
-              top: 12,
+              top: 14,
               left: 180,
               child: GestureDetector(
                 onTap: () {
@@ -99,7 +99,7 @@ class _CategorySelectState extends State<CategorySelect>
               ),
             ),
             Positioned(
-              top: 253,
+              top: 251,
               left: 95,
               child: GestureDetector(
                 onTap: () {
@@ -137,7 +137,7 @@ class _CategorySelectState extends State<CategorySelect>
               ),
             ),
             Positioned(
-              top: 220,
+              top: 218,
               right: 25,
               child: GestureDetector(
                 onTap: () {
