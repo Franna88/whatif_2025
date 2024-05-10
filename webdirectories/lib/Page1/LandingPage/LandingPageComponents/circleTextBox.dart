@@ -33,16 +33,16 @@ class _CircleTextBoxState extends State<CircleTextBox> {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20, right: 50),
+      padding: const EdgeInsets.only(bottom: 0, right: 50),
       child: Container(
         width: 500,
-        height: 500,
+        height: 550,
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 2, 27, 43),
           shape: BoxShape.circle,
           border: Border.all(
             color: Colors.white,
-            width: 4.0,
+            width: 2.5,
           ),
         ),
         child: Container(
@@ -52,7 +52,7 @@ class _CircleTextBoxState extends State<CircleTextBox> {
             shape: BoxShape.circle,
             border: Border.all(
               color: const Color.fromARGB(255, 14, 16, 19),
-              width: 25.0,
+              width: 38.0,
             ),
           ),
           child: Center(
@@ -87,35 +87,66 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.Title1,
-                        style: TextStyle(
-                            fontSize: 32,
-                            fontFamily: 'ralewaybold',
-                            color: const Color.fromARGB(255, 255, 255, 255)),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        widget.Title2,
-                        style: TextStyle(
-                            fontSize: 32,
-                            fontFamily: 'raleway',
-                            color: const Color.fromARGB(255, 255, 255, 255)),
-                      ),
-                    ],
+                SizedBox(
+                  width: MyUtility(context).width / 5.5,
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      text: '',
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: widget.Title1,
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontFamily: 'ralewaybold',
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                            )),
+                        TextSpan(
+                          text: widget.Title2,
+                          style: TextStyle(
+                              fontSize: 32,
+                              fontFamily: 'raleway',
+                              color: const Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+
+                /*     SizedBox(
+                  width: MyUtility(context).width / 5.2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.Title1,
+                          style: TextStyle(
+                              fontSize: 32,
+                              fontFamily: 'ralewaybold',
+                              color: const Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          widget.Title2,
+                          style: TextStyle(
+                              fontSize: 32,
+                              fontFamily: 'raleway',
+                              color: const Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+           */
                 SizedBox(
-                  width: MyUtility(context).width / 4.5,
-                  height: MyUtility(context).height * 0.2,
+                  width: MyUtility(context).width / 4.8,
+                  height: MyUtility(context).height * 0.1,
                   child: Text(
                     widget.description,
                     style: TextStyle(
@@ -159,7 +190,9 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                         ),
                         SizedBox(width: 4),
                         Text(
-                          'View Directory',
+                          widget.Title2 == "WATIF"
+                              ? 'Learn More'
+                              : 'View Directory',
                           style: TextStyle(
                             color: Color(0xFF0C0C0C).withOpacity(0.9),
                             fontSize: 16.5,

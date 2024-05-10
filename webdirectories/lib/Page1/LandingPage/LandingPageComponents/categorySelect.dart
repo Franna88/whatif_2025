@@ -17,7 +17,7 @@ class _CategorySelectState extends State<CategorySelect>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-  double top = 145;
+  double top = 120;
   double right = 185;
   @override
   void initState() {
@@ -63,8 +63,8 @@ class _CategorySelectState extends State<CategorySelect>
               ),
             ),
             Positioned(
-              top: 14,
-              left: 180,
+              top: -10,
+              left: 168,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(2);
@@ -76,14 +76,14 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/fuelSvg.svg'
                         : 'images/top1.svg',
                     width: 1,
-                    height: 202,
+                    height: 218,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 90,
-              left: 58,
+              top: 74,
+              left: 39,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(1);
@@ -95,14 +95,14 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/leftWhite.svg'
                         : 'images/leftb.svg',
                     width: 1,
-                    height: 202,
+                    height: 215,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 251,
-              left: 95,
+              top: 247,
+              left: 80,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(0);
@@ -120,8 +120,8 @@ class _CategorySelectState extends State<CategorySelect>
               ),
             ),
             Positioned(
-              top: 95,
-              right: 65,
+              top: 78,
+              right: 54,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(3);
@@ -133,14 +133,14 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/hammerSvg.svg'
                         : 'images/rightb.svg',
                     width: 1,
-                    height: 165,
+                    height: 177,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 218,
-              right: 25,
+              top: 212,
+              right: 8,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(4);
@@ -153,11 +153,12 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/rightdownwhite1.svg'
                         : 'images/rightdownb.svg',
                     width: 190,
-                    height: 200,
+                    height: 215,
                   ),
                 ),
               ),
             ),
+            /**/
             Positioned(
               top: top,
               right: right,
@@ -166,7 +167,7 @@ class _CategorySelectState extends State<CategorySelect>
                     alignment: Alignment.center,
                     turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
                     child: Container(
-                      height: 230.0,
+                      height: 265.0,
                       width: 150.0,
                       decoration: BoxDecoration(
                         image: DecorationImage(
