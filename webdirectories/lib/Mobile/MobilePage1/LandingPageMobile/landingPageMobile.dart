@@ -13,35 +13,40 @@ List directoriesInfo = [
     "2title": "WATIF",
     "description":
         "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide.",
-    "buttonText": "Learn More"
+    "buttonText": "Learn More",
+    "url": ""
   },
   {
     "1title": "TOWING\n",
     "2title": "Directory",
     "description":
         "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide. Read Reviews",
-    "buttonText": "View Directory"
+    "buttonText": "View Directory",
+    "url": "https://www.towingdirectory.co.za/"
   },
   {
     "1title": "FUEL\n",
     "2title": "Directory",
     "description":
         "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM’s and all other services nationwide.",
-    "buttonText": "View Directory"
+    "buttonText": "View Directory",
+    "url": "https://www.fueldirectory.co.za/"
   },
   {
     "1title": "PANEL BEATER\n",
     "2title": "Directory",
     "description":
         "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews.",
-    "buttonText": "View Directory"
+    "buttonText": "View Directory",
+    "url": "https://panelbeatersdirectory.co.za/"
   },
   {
     "1title": "AUTO REPAIR\n",
     "2title": "Directory",
     "description":
         "Locate qualified services nearby or nationwide, for service, spares, or specialist repairs. Read Reviews.",
-    "buttonText": "View Directory"
+    "buttonText": "View Directory",
+    "url": "https://autorepairdirectory.co.za/"
   },
 ];
 double dialIndex = -0.31;
@@ -150,6 +155,7 @@ class _LandingPageMobileState extends State<LandingPageMobile>
             viewdirctoriesbutton: directoriesInfo[menuIndex]['buttonText'],
             menuIndex: menuIndex,
             changeMenu: changeMenu,
+            url: directoriesInfo[menuIndex]['url'],
             onpress: () {
               ;
             },

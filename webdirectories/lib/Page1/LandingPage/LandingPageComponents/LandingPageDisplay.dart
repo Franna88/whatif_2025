@@ -17,31 +17,36 @@ List directoriesInfo = [
     "1title": "Download ",
     "2title": "WATIF",
     "description":
-        "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide."
+        "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide.",
+    "url": ""
   },
   {
     "1title": "TOWING ",
     "2title": "Directory",
     "description":
-        "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide.  Read Reviews."
+        "Professional help and roadside assistance in an emergency. Or find any specialist service nationwide.  Read Reviews.",
+    "url": "https://www.towingdirectory.co.za/"
   },
   {
     "1title": "FUEL ",
     "2title": "Directory",
     "description":
-        "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM’s and all other services nationwide. Read Reviews."
+        "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM’s and all other services nationwide. Read Reviews.",
+    "url": "https://www.fueldirectory.co.za/"
   },
   {
     "1title": "PANEL BEATER ",
     "2title": "Directory",
     "description":
-        "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews."
+        "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews.",
+    "url": "https://panelbeatersdirectory.co.za/"
   },
   {
     "1title": "AUTO REPAIR ",
     "2title": "Directory",
     "description":
-        "Locate qualified services nearby or nationwide, for service, spares, or specialist repairs. Read Reviews."
+        "Locate qualified services nearby or nationwide, for service, spares, or specialist repairs. Read Reviews.",
+    "url": "https://autorepairdirectory.co.za/"
   },
 ];
 
@@ -146,6 +151,7 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                   CircleTextBox(
                     Title1: directoriesInfo[menuIndex]['1title'],
                     Title2: directoriesInfo[menuIndex]['2title'],
+                    url: directoriesInfo[menuIndex]['url'],
                     description: directoriesInfo[menuIndex]['description'],
                     changeMenu: changeMenu,
                     menuIndex: menuIndex,

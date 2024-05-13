@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/myutility.dart';
 
 class CircleTextBox extends StatefulWidget {
   String Title1;
   String Title2;
   String description;
+  String url;
   int menuIndex;
   Function(int) changeMenu;
   CircleTextBox(
@@ -13,6 +16,7 @@ class CircleTextBox extends StatefulWidget {
       required this.Title1,
       required this.Title2,
       required this.description,
+      required this.url,
       required this.menuIndex,
       required this.changeMenu});
 
@@ -30,6 +34,15 @@ class _CircleTextBoxState extends State<CircleTextBox> {
         var value = widget.menuIndex + 1;
         widget.changeMenu(value);
       });
+    }
+
+    goToLink(url) async {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        // Handle error if URL cannot be launched
+        print('Could not launch $url');
+      }
     }
 
     return Padding(
@@ -163,7 +176,9 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                   width: MediaQuery.of(context).size.width * 0.1,
                   height: MediaQuery.of(context).size.height * 0.05,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      goToLink(widget.url);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -174,18 +189,21 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(
-                          width: 25,
-                          height: 25,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            shape: BoxShape.circle,
-                          ),
-                          padding: EdgeInsets.zero,
-                          child: Icon(
-                            Icons.keyboard_arrow_right_outlined,
-                            color: Colors.white,
-                            size: 16,
+                        GestureDetector(
+                          onTap: () async {},
+                          child: Container(
+                            width: 25,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              shape: BoxShape.circle,
+                            ),
+                            padding: EdgeInsets.zero,
+                            child: Icon(
+                              Icons.keyboard_arrow_right_outlined,
+                              color: Colors.white,
+                              size: 16,
+                            ),
                           ),
                         ),
                         SizedBox(width: 4),

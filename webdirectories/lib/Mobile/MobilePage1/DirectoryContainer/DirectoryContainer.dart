@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/myutility.dart';
 
 class DirectoryContainer extends StatefulWidget {
@@ -7,6 +8,7 @@ class DirectoryContainer extends StatefulWidget {
   String description;
   int menuIndex;
   Function(int) changeMenu;
+  String url;
   final VoidCallback onpress;
   final PageController pageController;
   String viewdirctoriesbutton;
@@ -20,6 +22,7 @@ class DirectoryContainer extends StatefulWidget {
       required this.changeMenu,
       required this.onpress,
       required this.pageController,
+      required this.url,
       required this.viewdirctoriesbutton})
       : super(key: key);
 
@@ -28,6 +31,15 @@ class DirectoryContainer extends StatefulWidget {
 }
 
 class _DirectoryContainerState extends State<DirectoryContainer> {
+  goToLink(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      // Handle error if URL cannot be launched
+      print('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -172,7 +184,9 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
             width: 200,
             height: MyUtility(context).height * 0.06,
             child: ElevatedButton(
-              onPressed: widget.onpress,
+              onPressed: () {
+                goToLink(widget.url);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.white,
