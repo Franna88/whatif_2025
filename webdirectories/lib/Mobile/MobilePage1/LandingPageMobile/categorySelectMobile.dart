@@ -31,7 +31,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
-    _controller.animateTo(-0.35);
+    _controller.animateTo(-0.31);
     super.initState();
   }
 
@@ -111,7 +111,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(0);
-                  widget.animateController.animateTo(-0.35);
+                  widget.animateController.animateTo(-0.31);
                 },
                 child: Container(
                   child: SvgPicture.asset(

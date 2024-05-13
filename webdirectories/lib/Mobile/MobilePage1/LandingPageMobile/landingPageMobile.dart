@@ -44,7 +44,7 @@ List directoriesInfo = [
     "buttonText": "View Directory"
   },
 ];
-double dialIndex = -0.35;
+double dialIndex = -0.31;
 
 class LandingPageMobile extends StatefulWidget {
   const LandingPageMobile({super.key});
@@ -70,13 +70,13 @@ class _LandingPageMobileState extends State<LandingPageMobile>
 
     if (value == 0) {
       setState(() {
-        dialIndex = -0.35;
+        dialIndex = -0.31;
       });
     }
 
     switch (value) {
       case 0:
-        _controller.animateTo(-0.35);
+        _controller.animateTo(-0.31);
         break;
       case 1:
         _controller.animateTo(-0.15);

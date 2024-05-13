@@ -63,12 +63,12 @@ class _CategorySelectState extends State<CategorySelect>
               ),
             ),
             Positioned(
-              top: -10,
-              left: 168,
+              top: -11.6,
+              left: 161.6,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(2);
-                  _controller.animateTo(0.0);
+                  _controller.animateTo(0.005);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -76,18 +76,18 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/fuelSvg.svg'
                         : 'images/top1.svg',
                     width: 1,
-                    height: 218,
+                    height: 222,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 74,
-              left: 39,
+              top: 72,
+              left: 27,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(1);
-                  _controller.animateTo(-0.15);
+                  _controller.animateTo(-0.165);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -95,18 +95,18 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/leftWhite.svg'
                         : 'images/leftb.svg',
                     width: 1,
-                    height: 215,
+                    height: 224,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 247,
-              left: 80,
+              top: 251,
+              left: 72,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(0);
-                  _controller.animateTo(-0.35);
+                  _controller.animateTo(-0.33);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -114,18 +114,18 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/leftDownWhite.svg'
                         : 'images/leftDown.svg',
                     width: 1,
-                    height: 175,
+                    height: 185,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 78,
-              right: 54,
+              top: 76,
+              right: 52,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(3);
-                  _controller.animateTo(0.17);
+                  _controller.animateTo(0.1755);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -133,19 +133,19 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/hammerSvg.svg'
                         : 'images/rightb.svg',
                     width: 1,
-                    height: 177,
+                    height: 183,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 212,
-              right: 8,
+              top: 213,
+              right: 4,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(4);
 
-                  _controller.animateTo(0.325);
+                  _controller.animateTo(0.337);
                 },
                 child: Container(
                   child: SvgPicture.asset(
@@ -153,7 +153,7 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/rightdownwhite1.svg'
                         : 'images/rightdownb.svg',
                     width: 190,
-                    height: 215,
+                    height: 223.5,
                   ),
                 ),
               ),
@@ -161,7 +161,7 @@ class _CategorySelectState extends State<CategorySelect>
             /**/
             Positioned(
               top: top,
-              right: right,
+              right: 191,
               child: Container(
                 child: RotationTransition(
                     alignment: Alignment.center,
