@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webdirectories/Mobile/MobilePage4/MobilePage4.dart';
 import 'package:webdirectories/myutility.dart';
 
 class DirectoryContainer extends StatefulWidget {
@@ -185,7 +186,14 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
             height: MyUtility(context).height * 0.06,
             child: ElevatedButton(
               onPressed: () {
-                goToLink(widget.url);
+                widget.Title2 == "WATIF"
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Material(
+                                  child: MobilePage4(),
+                                )))
+                    : goToLink(widget.url);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,

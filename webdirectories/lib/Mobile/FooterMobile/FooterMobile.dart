@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/Mobile/FooterMobile/FooterMobileComponents/FooterMobileTextButton.dart';
+import 'package:webdirectories/Page1/Page1.dart';
+import 'package:webdirectories/Page2/Page2.dart';
+import 'package:webdirectories/Page3/Page3.dart';
+import 'package:webdirectories/Page4/Page4.dart';
+import 'package:webdirectories/Page5/Page5.dart';
+import 'package:webdirectories/Page7/Page7.dart';
 import 'package:webdirectories/myutility.dart';
 
 class FooterMobile extends StatefulWidget {
@@ -65,12 +71,66 @@ class _FooterMobileState extends State<FooterMobile> {
                       ),
                     ),
                   ),
-                  FooterMobileTextButton(text: 'Home', onpress: () {}),
-                  FooterMobileTextButton(text: 'Our Story', onpress: () {}),
-                  FooterMobileTextButton(text: 'Watif', onpress: () {}),
-                  FooterMobileTextButton(text: 'Articles', onpress: () {}),
-                  FooterMobileTextButton(text: 'Contact Us', onpress: () {}),
-                  FooterMobileTextButton(text: 'Disclaimer', onpress: () {}),
+                  FooterMobileTextButton(
+                      text: 'Home',
+                      onpress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Material(
+                                      child: Page1(),
+                                    )));
+                      }),
+                  FooterMobileTextButton(
+                      text: 'Our Story',
+                      onpress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Material(
+                                      child: Page3(),
+                                    )));
+                      }),
+                  FooterMobileTextButton(
+                      text: 'Watif',
+                      onpress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Material(
+                                      child: Page4(),
+                                    )));
+                      }),
+                  FooterMobileTextButton(
+                      text: 'Articles',
+                      onpress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Material(
+                                      child: Page5(),
+                                    )));
+                      }),
+                  FooterMobileTextButton(
+                      text: 'Contact Us',
+                      onpress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Material(
+                                      child: Page7(),
+                                    )));
+                      }),
+                  FooterMobileTextButton(
+                      text: 'Disclaimer',
+                      onpress: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Material(
+                                      child: Page2(),
+                                    )));
+                      }),
                 ],
               ),
             ],

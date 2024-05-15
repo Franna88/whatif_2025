@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webdirectories/Page4/Page4.dart';
 import 'package:webdirectories/myutility.dart';
 
 class CircleTextBox extends StatefulWidget {
@@ -159,7 +160,7 @@ class _CircleTextBoxState extends State<CircleTextBox> {
            */
                 SizedBox(
                   width: MyUtility(context).width / 4.8,
-                  height: MyUtility(context).height * 0.1,
+                  height: MyUtility(context).height * 0.18,
                   child: Text(
                     widget.description,
                     style: TextStyle(
@@ -177,7 +178,14 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                   height: MediaQuery.of(context).size.height * 0.05,
                   child: ElevatedButton(
                     onPressed: () {
-                      goToLink(widget.url);
+                      widget.Title2 == "WATIF"
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Material(
+                                        child: Page4(),
+                                      )))
+                          : goToLink(widget.url);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,

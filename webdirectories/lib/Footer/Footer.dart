@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/Footer/FooterComponents/FooterTextButton.dart';
+import 'package:webdirectories/Page1/Page1.dart';
+import 'package:webdirectories/Page2/Page2.dart';
+import 'package:webdirectories/Page3/Page3.dart';
+import 'package:webdirectories/Page4/Page4.dart';
+import 'package:webdirectories/Page5/Page5.dart';
+import 'package:webdirectories/Page7/Page7.dart';
 import 'package:webdirectories/myutility.dart';
 
 class Footer extends StatefulWidget {
@@ -94,12 +100,66 @@ class _FooterState extends State<Footer> {
   Widget _buildFooterButtons() {
     return Column(
       children: [
-        FooterTextButton(text: 'Home', onpress: () {}),
-        FooterTextButton(text: 'Our Story', onpress: () {}),
-        FooterTextButton(text: 'Watif', onpress: () {}),
-        FooterTextButton(text: 'Articles', onpress: () {}),
-        FooterTextButton(text: 'Contact Us', onpress: () {}),
-        FooterTextButton(text: 'Disclaimer', onpress: () {}),
+        FooterTextButton(
+            text: 'Home',
+            onpress: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(
+                            child: Page1(),
+                          )));
+            }),
+        FooterTextButton(
+            text: 'Our Story',
+            onpress: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(
+                            child: Page3(),
+                          )));
+            }),
+        FooterTextButton(
+            text: 'Watif',
+            onpress: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(
+                            child: Page4(),
+                          )));
+            }),
+        FooterTextButton(
+            text: 'Articles',
+            onpress: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(
+                            child: Page5(),
+                          )));
+            }),
+        FooterTextButton(
+            text: 'Contact Us',
+            onpress: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(
+                            child: Page7(),
+                          )));
+            }),
+        FooterTextButton(
+            text: 'Disclaimer',
+            onpress: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(
+                            child: Page2(),
+                          )));
+            }),
       ],
     );
   }
