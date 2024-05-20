@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/Page1/AiCoDriver/AiCoDriverComponents/AiCoDriverButton.dart';
 import 'package:webdirectories/Page4/DownloadWatif/DownloadWatifComponents/WatifContactUs.dart';
+import 'package:webdirectories/Page4/Page4.dart';
+import 'package:webdirectories/Page5/Page5.dart';
+import 'package:webdirectories/Page6/Page6.dart';
+import 'package:webdirectories/Page7/Page7.dart';
 import 'package:webdirectories/myutility.dart';
 
 class DownloadWatif extends StatefulWidget {
@@ -114,7 +118,16 @@ class _DownloadWatifState extends State<DownloadWatif> {
                     SizedBox(
                       height: MyUtility(context).height * 0.02,
                     ),
-                    WatifContactUs(buttonText: 'Contact Us', onPressed: () {}),
+                    WatifContactUs(
+                        buttonText: 'Contact Us',
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Material(
+                                        child: Page7(),
+                                      )));
+                        }),
                     SizedBox(
                       height: MyUtility(context).height * 0.01,
                     ),

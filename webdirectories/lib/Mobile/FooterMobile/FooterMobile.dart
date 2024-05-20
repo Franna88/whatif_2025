@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/Mobile/FooterMobile/FooterMobileComponents/FooterMobileTextButton.dart';
+import 'package:webdirectories/Mobile/MobilePage1/MobilePage1.dart';
+import 'package:webdirectories/Mobile/MobilePage2/MobilePage2.dart';
+import 'package:webdirectories/Mobile/MobilePage3/MobilePage3.dart';
+import 'package:webdirectories/Mobile/MobilePage4/MobilePage4.dart';
+import 'package:webdirectories/Mobile/MobilePage6/MobilePage6.dart';
+import 'package:webdirectories/Mobile/mobileDisclaimer/mobileDisclaimer.dart';
 import 'package:webdirectories/Page1/Page1.dart';
 import 'package:webdirectories/Page2/Page2.dart';
 import 'package:webdirectories/Page3/Page3.dart';
@@ -78,7 +84,7 @@ class _FooterMobileState extends State<FooterMobile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Material(
-                                      child: Page1(),
+                                      child: MobilePage1(),
                                     )));
                       }),
                   FooterMobileTextButton(
@@ -88,7 +94,7 @@ class _FooterMobileState extends State<FooterMobile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Material(
-                                      child: Page3(),
+                                      child: MobilePage2(),
                                     )));
                       }),
                   FooterMobileTextButton(
@@ -98,7 +104,7 @@ class _FooterMobileState extends State<FooterMobile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Material(
-                                      child: Page4(),
+                                      child: MobilePage3(),
                                     )));
                       }),
                   FooterMobileTextButton(
@@ -108,7 +114,7 @@ class _FooterMobileState extends State<FooterMobile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Material(
-                                      child: Page5(),
+                                      child: MobilePage4(),
                                     )));
                       }),
                   FooterMobileTextButton(
@@ -118,7 +124,7 @@ class _FooterMobileState extends State<FooterMobile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Material(
-                                      child: Page7(),
+                                      child: MobilePage6(),
                                     )));
                       }),
                   FooterMobileTextButton(
@@ -128,7 +134,7 @@ class _FooterMobileState extends State<FooterMobile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Material(
-                                      child: Page2(),
+                                      child: MobileDisclaimer(),
                                     )));
                       }),
                 ],

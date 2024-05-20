@@ -57,7 +57,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               height: 335,
             ),
             Positioned(
-              top: 10,
+              top: 4,
               left: 0,
               child: Container(
                 child: SvgPicture.asset(

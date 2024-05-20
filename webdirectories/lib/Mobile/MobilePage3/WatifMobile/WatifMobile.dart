@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/Mobile/MobilePage3/WatifMobile/WatifMobileComponents/WatifDropDownMobile.dart';
+import 'package:webdirectories/Mobile/MobilePage6/MobilePage6.dart';
+import 'package:webdirectories/Page3/Page3.dart';
 import 'package:webdirectories/myutility.dart';
 
 class WatifMobile extends StatefulWidget {
@@ -291,18 +293,26 @@ class _WatifMobileState extends State<WatifMobile> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 25,
-                    height: 25,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    padding: EdgeInsets.zero,
-                    child: Icon(
-                      Icons.keyboard_arrow_right_outlined,
-                      color: Colors.black,
-                      size: 16,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MobilePage6()));
+                    },
+                    child: Container(
+                      width: 25,
+                      height: 25,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      padding: EdgeInsets.zero,
+                      child: Icon(
+                        Icons.keyboard_arrow_right_outlined,
+                        color: Colors.black,
+                        size: 16,
+                      ),
                     ),
                   ),
                   SizedBox(

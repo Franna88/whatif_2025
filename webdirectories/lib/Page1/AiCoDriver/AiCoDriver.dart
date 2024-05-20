@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/Page1/AiCoDriver/AiCoDriverComponents/AiCoDriverButton.dart';
 import 'package:webdirectories/Page1/AiCoDriver/AiCoDriverComponents/LearnMoreButton.dart';
+import 'package:webdirectories/Page5/Page5.dart';
 import 'package:webdirectories/myutility.dart';
 
 class AiCoDriver extends StatefulWidget {
@@ -106,7 +107,16 @@ class _AiCoDriverState extends State<AiCoDriver> {
                   SizedBox(
                     height: MyUtility(context).height * 0.02,
                   ),
-                  LearnMoreButton(buttonText: 'Learn More', onPressed: () {}),
+                  LearnMoreButton(
+                      buttonText: 'Learn More',
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Material(
+                                      child: Page5(),
+                                    )));
+                      }),
                   SizedBox(
                     height: MyUtility(context).height * 0.01,
                   ),

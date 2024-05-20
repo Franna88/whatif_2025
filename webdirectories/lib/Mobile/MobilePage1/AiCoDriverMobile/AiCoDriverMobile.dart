@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/Mobile/MobilePage3/MobilePage3.dart';
 import 'package:webdirectories/myutility.dart';
 
 class AiCoDriverMobile extends StatefulWidget {
@@ -111,7 +112,14 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
             borderRadius: BorderRadius.circular(25.0),
           ),
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(
+                            child: MobilePage3(),
+                          )));
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
