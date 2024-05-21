@@ -159,10 +159,13 @@ class _FooterMobileState extends State<FooterMobile> {
             width: MyUtility(context).width / 1.5,
             height: 50,
             child: TextFormField(
+              maxLines: null,
               controller: email,
               style: TextStyle(
+                height: 1,
                 color: Color(0xFF0C0C0C).withOpacity(0.55),
               ),
+              textAlign: TextAlign.center,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
