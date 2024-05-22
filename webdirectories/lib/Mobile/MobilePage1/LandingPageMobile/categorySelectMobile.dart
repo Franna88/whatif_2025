@@ -68,8 +68,8 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               ),
             ),
             Positioned(
-              top: 4,
-              left: 94,
+              top: -8,
+              left: 87,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(2);
@@ -81,14 +81,14 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                         ? 'images/fuelSvg.svg'
                         : 'images/top1.svg',
                     width: 1,
-                    height: 130,
+                    height: 145,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 53,
-              left: 14,
+              top: 48,
+              left: 3,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(1);
@@ -100,14 +100,14 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                         ? 'images/leftWhite.svg'
                         : 'images/leftb.svg',
                     width: 1,
-                    height: 130,
+                    height: 140,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 158,
-              left: 40,
+              top: 161,
+              left: 32,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(0);
@@ -119,14 +119,14 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                         ? 'images/leftDownWhite.svg'
                         : 'images/leftDown.svg',
                     width: 1,
-                    height: 105,
+                    height: 113,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 58,
-              right: 43,
+              top: 51,
+              right: 28,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(3);
@@ -138,14 +138,14 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                         ? 'images/hammerSvg.svg'
                         : 'images/rightb.svg',
                     width: 1,
-                    height: 105,
+                    height: 115,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 138,
-              right: 18,
+              top: 139,
+              right: 1,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(4);
@@ -157,7 +157,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                         ? 'images/rightDownWhite.svg'
                         : 'images/rightDown.svg',
                     width: 1,
-                    height: 125,
+                    height: 135,
                   ),
                 ),
               ),
