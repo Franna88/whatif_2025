@@ -1,0 +1,1218 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/glassContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/agreementBallPoint.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/agreementTextField.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/blackIconButton.dart';
+
+class Agreement extends StatelessWidget {
+  Function closeDialog;
+  Agreement({super.key, required this.closeDialog});
+
+  @override
+  Widget build(BuildContext context) {
+    var heightDevice = MediaQuery.of(context).size.height;
+    var widthDevice = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: GlassEffect(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+            child: Container(
+              height: 50,
+              color: Colors.black,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Stack(
+                    children: [
+                      Container(
+                        width: 30,
+                        height: 30,
+                        decoration: ShapeDecoration(
+                          shape: OvalBorder(
+                            side: BorderSide(width: 0.94, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 4,
+                        top: 5,
+                        child: Icon(
+                          Icons.keyboard_arrow_left,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Go Back',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                ),
+                child: Container(
+                  width: widthDevice * 0.90,
+                  height: heightDevice * 0.68,
+                  decoration: ShapeDecoration(
+                    color: Color(0xFF181B1D),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        width: 0.64,
+                        strokeAlign: BorderSide.strokeAlignOutside,
+                        color: Colors.white,
+                      ),
+                      borderRadius: BorderRadius.circular(9.57),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Agreement \n',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 40,
+                                    fontFamily: 'ralewaybold',
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.5,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'between\n',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontStyle: FontStyle.italic,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.5,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      'SMASH-PRO WEB DIRECTORIES (Pty) Ltd • Regno: 2013/005016/07 • VAT No: 4200267682\n63 Bokmakierie Street, Eden, George, Western Cape, 6529\n',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.5,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      '+27 (0) 12 403 0120  • finance@webdirectories.co.za\n',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.5,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'and',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontStyle: FontStyle.italic,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '*Business Trading Name',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          AgreementTextField(
+                              hintText: 'Enter Business Trading Name',
+                              width: 1110),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'hereafter called ‘the client’',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                              fontFamily: 'raleway',
+                              fontWeight: FontWeight.w400,
+                              height: 1,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Welcome to The Web Directories!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'We\'ll help you get more customers online by boosting your online presence and attracting new leads through our directory network. To enable us to deliver accurate and swift service, we ask that you please help us conclude this easy registration process – it is also required by SA Bank rules.\n',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'raleway',
+                                  height: 1.5,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Web Directories agrees to:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          AgreementBallText(
+                              boldText: '',
+                              ballText:
+                                  'Implement this agreement and setup, publish and host the Client’s business profile Information on the applicable individual business page in \nthe agreed Directory.'),
+                          AgreementBallText(
+                              boldText: '',
+                              ballText:
+                                  'Continuously promote the client’s profile online through Search Engine Optimization (SEO) & Search Engine Marketing (SEM)'),
+                          AgreementBallText(
+                              boldText: '',
+                              ballText:
+                                  'Provide the client access to the ‘Owners Portal’ and all functionality thereof.'),
+                          AgreementBallText(
+                              boldText: '',
+                              ballText:
+                                  'Assist the Client to update such information when requested.'),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'The Client agrees to:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          AgreementBallText(
+                              boldText: '',
+                              ballText:
+                                  'Complete this mandate and submit online.'),
+                          AgreementBallText(
+                              boldText: '',
+                              ballText:
+                                  'Supply & record accurate and true information, both when communicating with Web Directories and updating the Owners Portal.'),
+                          AgreementBallText(
+                              boldText: '',
+                              ballText:
+                                  'Accept full responsibility for information displayed, specifically relating to Insurance & OEM Industry Contracts & Endorsements.'),
+                          AgreementBallText(
+                              boldText: '',
+                              ballText:
+                                  'Grant Web Directories permission to obtain and display (CSI) Consumer Survey Rating results, in the client’s Business Profile and Owners \nPortal sections. CSI Services Providers in general, and Lightstone EchoMBR, specifically is authorized to release the applicable information \nto Web Directories for publication. The related Owners Portal will also have functionality to empower the client to enable or disable the \npublic display of said information.'),
+                          AgreementBallText(
+                              boldText: '',
+                              ballText:
+                                  'Pay the agreed Membership fees monthly- or annually in advance.'),
+                          AgreementBallText(
+                              boldText: '',
+                              ballText:
+                                  'Pay the Once Off Activation fee with the first monthly/annual payment'),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Your selected Membership:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          AgreementTextField(hintText: '', width: 1110),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Payment Options:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          AgreementTextField(hintText: '', width: 1110),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Payment Change, Renewal & Cancellation:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          AgreementBallText(
+                              ballText:
+                                  'Monthly agreements - automatic renewed monthly, on a continuous basis. Option changes with a calendar month’s notice..',
+                              boldText: ''),
+                          AgreementBallText(
+                              ballText:
+                                  'Annual agreements - deemed to automatically renew annually on anniversary date. Please cancel before renewal date to avoid charges.',
+                              boldText: ''),
+                          AgreementBallText(
+                              ballText:
+                                  'Cancellation: Provide one (1) calendar month’s written notice for all agreements, via email to: finance@webdirectories.co.za',
+                              boldText: ''),
+                          AgreementBallText(
+                              ballText:
+                                  'EFT payment to the following Company bank account:',
+                              boldText: ''),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Smashpro FNB Cheque Account.\nBranch Code: 250016\nAccount No: 62393019396',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'raleway',
+                                  height: 1.5,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          AgreementBallText(
+                              ballText:
+                                  'Reference: Client membership number (available on invoices)',
+                              boldText: ''),
+                          AgreementBallText(
+                              ballText:
+                                  'Proof of Payment: to finance@webdirectories.co.za.',
+                              boldText: ''),
+                          AgreementBallText(
+                              ballText:
+                                  'Banking details also available on Invoice documentation',
+                              boldText: ''),
+                          AgreementBallText(
+                              ballText:
+                                  'Change in membership fees (if any) will be communicated to the client’s nominated e-mail address',
+                              boldText: ''),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'The individual payment instructions so authorised, must be issued and delivered as follows:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          AgreementBallText(
+                              ballText:
+                                  'This Authority and Mandate refers to our contract as dated as on submission and/or signature hereof (‘the Agreement’). I / We hereby \nauthorise you to issue and deliver payment instructions to the bank for collection against my / our above mentioned account \nat my / our above mentioned bank (or any other bank or branch to which I / We may transfer my / our account) on condition that the sum \nof such payment instructions will never exceed my / our obligations as agreed to in the Agreement, and commencing on the \ncommencement date and continuing until this Authority and Mandate is terminated by me / us by giving you notice in writing of no less than \n20 ordinary working days, and sent by prepaid registered post or delivered to your e-mail address indicated above.',
+                              boldText: ''),
+                          AgreementBallText(
+                              ballText:
+                                  ' on or after the dates when the obligation in terms of the Agreement is due and the amount of each individual payment instruction \nmay not be more or less that the obligation due; In the event that the payment day falls on a Saturday, Sunday or recognized South \nAfrican public holiday, the payment day will automatically be the very previous ordinary business day. Further, if there are insufficient \nfunds in the nominated account to meet the obligation, you are entitled to track my account and re-present the instruction for \npayment as soon as enough funds are available in my account.',
+                              boldText: 'Monthly:'),
+                          AgreementBallText(
+                              ballText:
+                                  ' on or after the dates when the obligation in terms of the Agreement is due and the amount of each individual payment instruction \nmay not be more than the obligation due.',
+                              boldText: 'Annually:'),
+                          AgreementBallText(
+                              ballText:
+                                  ' that the withdrawals hereby authorised will be processed through a computerized system provided by the South African \nBanks and I also understand that details of each withdrawal will be printed on my bank statement. Each transaction will contain a number, \nwhich must be included in the said payment instruction and if provided to you should enable you to identify the Agreement. A payment \nreference is added to this form before the issuing of any payment instruction. I / We shall not be entitled to any refund of amounts which \nyou have withdrawn while this authority was in force, if such amounts were legally owing to you.',
+                              boldText: 'I/WE understand'),
+                          AgreementBallText(
+                              ballText:
+                                  ' I / We acknowledge that all payment instructions issued by you shall be treated by my/our above-mentioned bank as if the \ninstructions had been issued by me / us personally.',
+                              boldText: 'Mandate:'),
+                          AgreementBallText(
+                              ballText:
+                                  ' I / We agree that although this Authority and Mandate may be cancelled by me/us, such cancellation will not cancel the \nAgreement. I / We shall not be entitled to any refund of amounts which you have withdrawn while this authority was in force, if such amounts \nwere legally owing to you.',
+                              boldText: 'Cancellation:'),
+                          AgreementBallText(
+                              ballText:
+                                  ' I /We acknowledge that this Authority may be ceded to or assigned to a third party if the agreement is also ceded or assigned \nto that third party, but in the absence of such assignment of the Agreement, this Authority and Mandate cannot be assigned to any third party.',
+                              boldText: 'Assignment:'),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            height: 2,
+                            width: 1110,
+                            child: new Center(
+                              child: new Container(
+                                margin: new EdgeInsetsDirectional.only(
+                                    start: 1.0, end: 1.0),
+                                height: 2,
+                                color: Color.fromARGB(193, 114, 113, 113),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Bisiness Information:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Address:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 540,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '*Street Name & Number',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '*City',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Country',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              SizedBox(
+                                width: 540,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '*Suburb',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 40,
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          'Province',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 40,
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          'Postal Code',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 40,
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Contact:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 540,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '*Customer Care Number',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Customer Care Number 2',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'WhatsApp Number',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              SizedBox(
+                                width: 540,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          'After Hours',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 40,
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          'Towing',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 40,
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '*General Business Email',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 40,
+                                        ),
+                                        AgreementTextField(
+                                            hintText: '', width: 300),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Business Registration:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '*Registered Name',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(hintText: '', width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '*Registration Number',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(hintText: '', width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '*VAT Number',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(hintText: '', width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Franchise Membership',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(
+                                    hintText: 'Enter if applicable',
+                                    width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Management Authority & Signature',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w400,
+                                  height: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 1110,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'By submitting this Agreement electronically (through the ‘SUBMIT’ button), and/or signing and submitting it per hand or through e-mail, I confirm that I am duly authorised, and in agreement with the terms hereof:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'raleway',
+                                  height: 1.5,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Date',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(
+                                    hintText: '2024/04/15', width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '*Initails & Surname',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(hintText: '', width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '*Designation',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(hintText: '', width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '*Management Email',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(hintText: '', width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Management Email',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(hintText: '', width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '*Management Tell/Cell',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(hintText: '', width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            width: 1110,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'IP Address',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1,
+                                  ),
+                                ),
+                                Spacer(),
+                                AgreementTextField(
+                                    hintText: '102.222.243.185', width: 870),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+
+                          //SUBMIT BUTTON
+
+                          Container(
+                            padding: const EdgeInsets.only(
+                                top: 5, bottom: 5, left: 20, right: 20),
+                            decoration: ShapeDecoration(
+                              color: Color(0xFFE2822B),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(230),
+                              ),
+                              shadows: [
+                                BoxShadow(
+                                  color: Color(0x3F000000),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 4),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Submit',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          BlackIconButton(
+                            backgroundColor1: Colors.black,
+                            circleColor1: Colors.green,
+                            iconColor1: Colors.white,
+                            text1: 'Application Submitted',
+                            textColor1: Colors.white,
+                            icon: Icons.check,
+                            onPress: () {},
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                // AGREEMENT END
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(top: 20, right: 20),
+                child: Container(
+                  width: 32,
+                  height: heightDevice / 1.5,
+                  decoration: ShapeDecoration(
+                    color: Color(0xFFCECDCD),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(34.17),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
+      )),
+    );
+  }
+}
+//\n\n\n\n\n\n\n\n\n\n\n
