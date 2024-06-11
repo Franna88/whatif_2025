@@ -63,8 +63,8 @@ class _ButtonInfoContainerState extends State<ButtonInfoContainer> {
               widget.paragraph,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: MyUtility(context).width * 0.01,
-                fontFamily: 'Raleway',
+                fontSize: MyUtility(context).width * 0.011,
+                fontFamily: 'raleway',
                 fontWeight: FontWeight.w400,
               ),
             ),
