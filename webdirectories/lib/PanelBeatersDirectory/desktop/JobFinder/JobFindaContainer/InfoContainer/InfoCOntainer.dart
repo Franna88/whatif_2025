@@ -27,30 +27,37 @@ class _InfoContainerState extends State<InfoContainer> {
                 "Submit your details and we promise to publish it to our exclusive employer's database. You will be contacted by interested employers directly as we have no influence in the application and interview process.",
             buttonText: 'Submit CV here',
             onPressed: () {}),
-        ButtonInfoContainer(
-            headlineText: 'Employer Platform ',
-            paragraph:
-                'Want to have quick access to a pool of qualified candidates? Register your business on the Panel Beater Directory via our easy sign up process. ',
-            buttonText: 'Learn More',
-            onPressed: () {}),
-        SizedBox(
-          width: MyUtility(context).width * 0.45,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                'Please note that this is a free information service only. We have no financial interest or influence in the process.',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: MyUtility(context).width * 0.0075,
-                  fontFamily: 'raleway',
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
+        Column(
+          children: [
+            ButtonInfoContainer(
+                headlineText: 'Employer Platform ',
+                paragraph:
+                    'Want to have quick access to a pool of qualified candidates? Register your business on the Panel Beater Directory via our easy sign up process. ',
+                buttonText: 'Register your business here',
+                onPressed: () {}),
+            SizedBox(
+              width: MyUtility(context).width * 0.45,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      'Please note that this is a free information service only. We have no financial interest or influence in the process.',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: MyUtility(context).width * 0.0075,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        )
+            )
+          ],
+        ),
       ],
     );
   }

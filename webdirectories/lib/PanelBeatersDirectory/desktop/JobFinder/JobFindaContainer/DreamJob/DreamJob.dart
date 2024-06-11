@@ -24,7 +24,7 @@ class _DreamJobState extends State<DreamJob> {
               fit: BoxFit.fill,
             ),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(22),
+              borderRadius: BorderRadius.circular(10),
             ),
             shadows: [
               BoxShadow(
@@ -61,13 +61,16 @@ class _DreamJobState extends State<DreamJob> {
         ),
         SizedBox(
           width: MyUtility(context).width * 0.35,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ReUseableText(percentage: '384+', cv: 'Current CVs'),
-              ReUseableText(percentage: '2109', cv: 'Shops'),
-              ReUseableText(percentage: '100%', cv: 'Free Service'),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ReUseableText(percentage: '384+', cv: 'Current CVs'),
+                ReUseableText(percentage: '2109', cv: 'Shops'),
+                ReUseableText(percentage: '100%', cv: 'Free Service'),
+              ],
+            ),
           ),
         )
       ],

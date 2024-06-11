@@ -22,62 +22,68 @@ class ButtonInfoContainer extends StatefulWidget {
 class _ButtonInfoContainerState extends State<ButtonInfoContainer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width * 0.45,
-      height: MyUtility(context).height * 0.22,
-      decoration: ShapeDecoration(
-        color: Color(0xFF3C4043),
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            width: 1,
-            strokeAlign: BorderSide.strokeAlignOutside,
-            color: Colors.white,
+    return Stack(
+      children: [
+        Container(
+          width: MyUtility(context).width * 0.45,
+          height: MyUtility(context).height * 0.2,
+          decoration: ShapeDecoration(
+            color: Color(0xFF3C4043),
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                width: 1,
+                strokeAlign: BorderSide.strokeAlignOutside,
+                color: Colors.white,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            shadows: [
+              BoxShadow(
+                color: Color(0x3F000000),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+                spreadRadius: 0,
+              )
+            ],
           ),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        shadows: [
-          BoxShadow(
-            color: Color(0x3F000000),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.headlineText,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: MyUtility(context).width * 0.015,
-                fontFamily: 'ralewaysemi',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(
-              widget.paragraph,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: MyUtility(context).width * 0.011,
-                fontFamily: 'raleway',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CommonButtonR(
-                    buttonText: widget.buttonText, onPress: widget.onPressed)
+                Padding(
+                  padding: const EdgeInsets.only(top: 5, bottom: 5),
+                  child: Text(
+                    widget.headlineText,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: MyUtility(context).width * 0.0144,
+                      fontFamily: 'ralewaysemi',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Text(
+                  widget.paragraph,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: MyUtility(context).width * 0.011,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ],
-            )
-          ],
+            ),
+          ),
         ),
-      ),
+        Positioned(
+          bottom: 10,
+          right: 16,
+          child: CommonButtonR(
+              buttonText: widget.buttonText, onPress: widget.onPressed),
+        )
+      ],
     );
   }
 }

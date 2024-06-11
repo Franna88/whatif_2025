@@ -14,8 +14,8 @@ class _JobFinderContainerState extends State<JobFinderContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.86,
-      height: MyUtility(context).height * 0.77,
+      width: MyUtility(context).width * 0.845,
+      height: MyUtility(context).height * 0.73,
       decoration: ShapeDecoration(
         color: Color(0xFF181B1D),
         shape: RoundedRectangleBorder(
