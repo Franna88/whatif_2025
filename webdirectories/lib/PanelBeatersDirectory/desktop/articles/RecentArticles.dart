@@ -13,6 +13,10 @@ class RecentArticles extends StatefulWidget {
 
 class _RecentArticlesState extends State<RecentArticles> {
   final search = TextEditingController();
+
+  dummyFunction() {
+    //This is a tset
+  }
   @override
   Widget build(BuildContext context) {
     return Material(
