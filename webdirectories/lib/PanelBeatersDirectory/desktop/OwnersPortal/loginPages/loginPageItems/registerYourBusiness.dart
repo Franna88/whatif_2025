@@ -98,7 +98,7 @@ class RegisterYourBusiness extends StatelessWidget {
           children: [
             SmallTextBox(hintText: 'Name', keyText: 'First Name'),
             SizedBox(
-              width: 20,
+              width: 30,
             ),
             SmallTextBox(hintText: 'Surname', keyText: 'Last Name'),
           ],
@@ -115,7 +115,7 @@ class RegisterYourBusiness extends StatelessWidget {
           children: [
             SmallTextBox(hintText: 'Cell', keyText: 'Phone'),
             SizedBox(
-              width: 20,
+              width: 30,
             ),
             SmallTextBox(hintText: 'Email', keyText: 'Email'),
           ],
@@ -123,8 +123,8 @@ class RegisterYourBusiness extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Wrap(
+          
           children: [
             SmallCheckBox(
                 description: 'By creating an account, you agree to our',
@@ -144,6 +144,7 @@ class RegisterYourBusiness extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     decoration: TextDecoration.underline,
                     decorationColor: Color(0xFFEF9040),
+                    height: 0.0
                   ),
                 ),
               ),

@@ -21,7 +21,7 @@ class GlassContainer extends StatelessWidget {
                   child: new BackdropFilter(
                     filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                     child: new Container(
-                      width: widthDevice / 2.5,
+                      width: widthDevice * 0.30,
                       //height: heightDevice * 0.69,
                       decoration: new BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),

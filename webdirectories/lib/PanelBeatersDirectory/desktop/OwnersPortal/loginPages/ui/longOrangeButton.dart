@@ -15,12 +15,13 @@ class _OrangeButtonState extends State<LongOrangeButton> {
   bool isHovered = false;
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
         widget.onPressed();
       },
       child: Container(
-        width: 450,
+        width: widthDevice * 0.24,
         height: 40,
         padding: const EdgeInsets.all(5),
         decoration: ShapeDecoration(
@@ -48,7 +49,7 @@ class _OrangeButtonState extends State<LongOrangeButton> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,
-                fontFamily: 'ralewaybold',
+                fontFamily: 'raleway',
               ),
             ),
             const SizedBox(width: 10.60),

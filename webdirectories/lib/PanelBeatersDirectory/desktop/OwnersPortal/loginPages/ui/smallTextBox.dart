@@ -7,6 +7,7 @@ class SmallTextBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,7 +41,7 @@ class SmallTextBox extends StatelessWidget {
           height: 5,
         ),
         Container(
-          width: 215,
+          width: widthDevice * 0.11,
           height: 45,
           decoration: ShapeDecoration(
             color: Colors.white,
@@ -50,6 +51,8 @@ class SmallTextBox extends StatelessWidget {
             ),
           ),
           child: TextField(
+            style: TextStyle(fontSize: 18,
+                fontFamily: 'raleway',),
             cursorColor: Colors.black,
             decoration: InputDecoration(
               contentPadding:

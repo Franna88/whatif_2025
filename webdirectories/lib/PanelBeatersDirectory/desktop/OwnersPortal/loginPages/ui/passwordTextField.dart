@@ -64,6 +64,8 @@ class _PasswordFieldState extends State<PasswordField> {
             ),
           ),
           child: TextField(
+            style: TextStyle(fontSize: 18,
+                fontFamily: 'raleway',),
             keyboardType: TextInputType.visiblePassword,
             obscureText: _obscured,
             cursorColor: Colors.black,
@@ -79,6 +81,7 @@ class _PasswordFieldState extends State<PasswordField> {
               floatingLabelBehavior: FloatingLabelBehavior
                   .never, 
               hintText: widget.hintText,
+              
               filled: true, 
               fillColor: Colors.white,
               isDense: true, 

@@ -17,14 +17,14 @@ class OwnersPortalLogin extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: heightDevice / 25,
+          height: heightDevice * 0.08,
         ),
         Text(
           'Owners Portal Login',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 40,
+            fontSize: widthDevice * 0.02,
             fontFamily: 'ralewaybold',
           ),
         ),
@@ -41,7 +41,7 @@ class OwnersPortalLogin extends StatelessWidget {
         PasswordField(
           hintText: 'Enter Password',
           keyText: 'Password',
-          widthContainer: 450,
+          widthContainer: widthDevice * 0.24,
         ),
         SizedBox(
           height: 10,
@@ -51,14 +51,20 @@ class OwnersPortalLogin extends StatelessWidget {
             //ADD LOGIC HERE
           },
           child: SizedBox(
-            width: 450,
-            child: Text(
-              'Forgot Password ?',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                color: Color(0xFFEF9040),
-                fontSize: 16,
-                fontFamily: 'ralewaymedium',
+            //width: 450,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding:  EdgeInsets.only(right: widthDevice * 0.03),
+                child: Text(
+                  'Forgot Password?',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    color: Color(0xFFEF9040),
+                    fontSize: 16,
+                    fontFamily: 'ralewaymedium',
+                  ),
+                ),
               ),
             ),
           ),
@@ -157,7 +163,7 @@ class OwnersPortalLogin extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: heightDevice / 25,
+          height: heightDevice * 0.05,
         ),
       ],
     );
