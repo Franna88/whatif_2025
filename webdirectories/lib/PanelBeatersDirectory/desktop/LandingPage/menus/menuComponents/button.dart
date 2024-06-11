@@ -52,7 +52,7 @@ class Button extends StatelessWidget {
                 style: TextStyle(
                   color: textColor,
                   fontSize: 16.5,
-                  fontFamily: 'Raleway',
+                  fontFamily: 'raleway',
                 ),
               ),
             ],

@@ -9,6 +9,7 @@ class TextfieldButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.2,
+      height: 38,
       decoration: BoxDecoration(
         color: Color.fromARGB(255, 247, 246, 246),
         borderRadius: BorderRadius.circular(25.0),
@@ -26,21 +27,19 @@ class TextfieldButton extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Container(
-              height: 35,
-              width: 35,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.black,
-              ),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.keyboard_arrow_right,
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  shape: BoxShape.circle,
+                ),
+                padding: EdgeInsets.zero,
+                child: Icon(
+                  Icons.keyboard_arrow_right_outlined,
                   color: Colors.white,
-                  size: 20,
+                  size: 16,
                 ),
               ),
-            ),
           ),
           Expanded(
             child: TextFormField(
@@ -58,7 +57,7 @@ class TextfieldButton extends StatelessWidget {
                 filled: true,
                 fillColor: Colors.transparent,
                 contentPadding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
               ),
             ),
           ),

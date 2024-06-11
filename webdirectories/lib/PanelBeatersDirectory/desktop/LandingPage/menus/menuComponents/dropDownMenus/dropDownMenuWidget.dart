@@ -22,7 +22,7 @@ class DropDownMenuWidget extends StatelessWidget {
             style: const TextStyle(
               color: Color.fromARGB(255, 206, 205, 205),
               fontSize: 16,
-              fontFamily: 'Raleway',
+              fontFamily: 'raleway',
               fontWeight: FontWeight.w400,
               height: 0,
             ),
@@ -32,7 +32,7 @@ class DropDownMenuWidget extends StatelessWidget {
           ),
           widget1,
           const SizedBox(
-            height: 10,
+            height: 15,
           ),
           widget2,
           const SizedBox(

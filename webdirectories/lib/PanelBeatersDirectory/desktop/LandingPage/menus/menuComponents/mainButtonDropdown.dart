@@ -49,8 +49,8 @@ class MainButton extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 25,
-                    fontFamily: 'Raleway',
-                    fontWeight: FontWeight.w500,
+                    fontFamily: 'ralewaymedium',
+                    fontWeight: FontWeight.w600,
                     letterSpacing: 1,
                     height: 0,
                   ),

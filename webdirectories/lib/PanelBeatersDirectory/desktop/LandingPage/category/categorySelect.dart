@@ -194,7 +194,7 @@ class _CategorySelectState extends State<CategorySelect>
                 left: 176,
                 child: CategoryText(
                   text1: 'Body Shop',
-                  text2: 'Near Me',
+                  text2: 'NEAR ME',
                 ),
               )
             else if (widget.menuIndex == 2)
@@ -203,7 +203,7 @@ class _CategorySelectState extends State<CategorySelect>
                 left: 176,
                 child: CategoryText(
                   text1: 'Panel Shop',
-                  text2: 'Services',
+                  text2: 'SERVICES',
                 ),
               )
             else if (widget.menuIndex == 3)
@@ -212,7 +212,7 @@ class _CategorySelectState extends State<CategorySelect>
                 left: 176,
                 child: CategoryText(
                   text1: 'News &',
-                  text2: 'Articles',
+                  text2: 'ARTICLES',
                 ),
               )
             else if (widget.menuIndex == 4)
@@ -221,14 +221,12 @@ class _CategorySelectState extends State<CategorySelect>
                 left: 176,
                 child: CategoryText(
                   text1: 'More',
-                  text2: 'Services',
+                  text2: 'SERVICES',
                 ),
               )
           ],
         ),
-        SizedBox(
-          height: 100,
-        ),
+        
       ],
     );
   }

@@ -26,7 +26,7 @@ class _ApprovalsServicesState extends State<ApprovalsServicesDark> {
   Widget build(BuildContext context) {
     return Column(children: [
       const SizedBox(
-        height: 25,
+        height: 20,
       ),
       const Text(
         'Approvals & Services',

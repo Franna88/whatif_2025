@@ -12,7 +12,7 @@ class WatifMenu extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 25,
+          height: 20,
         ),
         MenuIndexWidget(menuIndex: menuIndex),
         const Text(
@@ -35,7 +35,7 @@ class WatifMenu extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
-                    fontFamily: 'Raleway',
+                    fontFamily: 'raleway',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -44,8 +44,8 @@ class WatifMenu extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
-                    fontFamily: 'Raleway',
-                    fontWeight: FontWeight.w600,
+                    fontFamily: 'ralewaymeduim',
+                    fontWeight: FontWeight.bold
                   ),
                 ),
                 TextSpan(
@@ -54,7 +54,7 @@ class WatifMenu extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
-                    fontFamily: 'Raleway',
+                    fontFamily: 'raleway',
                     fontWeight: FontWeight.w400,
                   ),
                 ),

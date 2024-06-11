@@ -18,8 +18,8 @@ class CategoryText extends StatelessWidget {
           style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
-            fontFamily: 'Raleway',
-            fontWeight: FontWeight.w100 ,
+            fontFamily: 'raleway',
+            
             height: 0,
           ),
         ),
@@ -28,8 +28,8 @@ class CategoryText extends StatelessWidget {
           style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
-            fontFamily: 'Raleway',
-            fontWeight: FontWeight.w700,
+            fontFamily: 'ralewaymedium',
+            fontWeight: FontWeight.bold,
             height: 0,
           ),
         ),

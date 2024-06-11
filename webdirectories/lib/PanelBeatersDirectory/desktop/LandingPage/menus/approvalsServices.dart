@@ -33,7 +33,7 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
     return Column(
       children: [
         const SizedBox(
-          height: 30,
+          height: 20,
         ),
         MenuIndexWidget(menuIndex: menuIndex),
         const Text(

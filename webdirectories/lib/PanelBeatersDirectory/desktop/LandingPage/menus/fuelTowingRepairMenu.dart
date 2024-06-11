@@ -11,7 +11,7 @@ class FuelTowingRepairMenu extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 25,
+          height: 20,
         ),
         MenuIndexWidget(menuIndex: menuIndex),
         const Text(
@@ -29,7 +29,7 @@ class FuelTowingRepairMenu extends StatelessWidget {
             style: TextStyle(
               color: Color.fromARGB(255, 206, 205, 205),
               fontSize: 16,
-              fontFamily: 'Raleway',
+              fontFamily: 'raleway',
               fontWeight: FontWeight.w400,
               height: 0,
             ),

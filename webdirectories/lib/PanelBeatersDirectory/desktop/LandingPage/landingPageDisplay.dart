@@ -38,6 +38,8 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
 
   @override
   Widget build(BuildContext context) {
+     var heightDevice = MediaQuery.of(context).size.height;
+    var widthDevice = MediaQuery.of(context).size.width;
     return Material(
       child: Container(
         height: MyUtility(context).height,
@@ -49,7 +51,7 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 50, top: 50),
@@ -59,6 +61,7 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                   height: 110,
                 ),
               ),
+              
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,12 +71,14 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                     changeMenu: changeMenu,
                   ),
                   SizedBox(
-                      width: 500,
-                      height: 440,
-                      child: GlassEffect(
-                          child: Center(
+                    width: 500,
+                    //height: 440,
+                    child: GlassEffect(
+                      child: Center(
                         child: infoContainers[menuIndex],
-                      )))
+                      ),
+                    ),
+                  )
                 ],
               )
             ],
