@@ -18,44 +18,48 @@ class BuisnessImageContainer extends StatefulWidget {
 class _BuisnessImageContainerState extends State<BuisnessImageContainer> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MyUtility(context).height * 0.4,
-      child: Stack(
-        children: [
-          Positioned(
-            bottom: 20,
-            child: Container(
-              width: MyUtility(context).width * 0.18,
-              height: MyUtility(context).width * 0.13,
-              decoration: ShapeDecoration(
-                image: DecorationImage(
-                  image: AssetImage(widget.bottomImage),
+    return Container(
+      width: MyUtility(context).width * 0.16,
+      height: MyUtility(context).height * 0.38,
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      child: SizedBox(
+        height: MyUtility(context).height * 0.36,
+        width: MyUtility(context).width * 0.17,
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              child: AspectRatio(
+                aspectRatio: 2.2 / 1,
+                child: Image.asset(
+                  widget.topImage,
                   fit: BoxFit.cover,
                 ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
               ),
             ),
-          ),
-          Positioned(
-            child: Container(
-              width: MyUtility(context).width * 0.18,
-              height: MyUtility(context).height * 0.165,
-              decoration: ShapeDecoration(
-                image: DecorationImage(
-                  image: AssetImage(widget.topImage),
-                  fit: BoxFit.cover,
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
+                child: AspectRatio(
+                  aspectRatio: 2.2 / 1,
+                  child: Image.asset(
+                    widget.bottomImage,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-            ),
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

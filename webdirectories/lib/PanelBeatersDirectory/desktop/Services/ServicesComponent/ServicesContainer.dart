@@ -29,198 +29,184 @@ class ServiceFeaturedContainer extends StatefulWidget {
 class _ServiceFeaturedContainerState extends State<ServiceFeaturedContainer> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MyUtility(context).height * 0.4,
-      child: Stack(
+    return Container(
+      width: MyUtility(context).width * 0.16,
+      height: MyUtility(context).height * 0.38,
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Positioned(
-            bottom: 20,
-            child: Container(
-              width: 250,
-              height: 225,
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+            child: AspectRatio(
+              aspectRatio: 2.2 / 1,
+              child: Image.asset(
+                widget.businessImage,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Text(
+              widget.businessName,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: MyUtility(context).width * 0.0085,
+                fontFamily: 'ralewaysemi',
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: SizedBox(
+              width: 208.08,
+              child: Text(
+                widget.businessAddress,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: MyUtility(context).width * 0.006,
+                  fontFamily: 'ralewaymedium',
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: MyUtility(context).height * 0.1,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Container(
+                height: 17.5,
+                width: 157.76,
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.OnPressed();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    padding: EdgeInsets.all(0),
+                    backgroundColor: Color(0xFFFF8728),
                   ),
-                  Text(
-                    widget.businessName,
+                  child: Text(
+                    'View Profile',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 11.56,
-                      fontFamily: 'ralewaysemi',
+                      fontSize: MyUtility(context).width * 0.006,
+                      fontFamily: 'ralewayMedium',
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: SizedBox(
-                      width: 208.08,
-                      child: Text(
-                        widget.businessAddress,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 9,
-                          fontFamily: 'ralewaymedium',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 5, bottom: 5),
+            child: Container(
+              height: 18,
+              width: 157.76,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Container(
-                        height: 20.5,
-                        width: 157.76,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            widget.OnPressed();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            padding: EdgeInsets.all(0),
-                            backgroundColor: Color(0xFFFF8728),
-                          ),
-                          child: Text(
-                            'View Profile',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 10,
-                              fontFamily: 'ralewayMedium',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  padding: EdgeInsets.all(0),
+                  backgroundColor: Color(0xFF0E1013),
+                ),
+                child: Text(
+                  'Navigate me',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: MyUtility(context).width * 0.006,
+                    fontFamily: 'ralewayMedium',
+                    fontWeight: FontWeight.w500,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Container(
-                      height: 20,
-                      width: 157.76,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          padding: EdgeInsets.all(0),
-                          backgroundColor: Color(0xFF0E1013),
-                        ),
-                        child: Text(
-                          'Navigate me',
-                          textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: MyUtility(context).width * 0.05,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Views:',
+                          textAlign: TextAlign.start,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontFamily: 'ralewayMedium',
-                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                            fontSize: MyUtility(context).width * 0.0093,
+                            fontFamily: 'ralewaybold',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
                           ),
                         ),
-                      ),
+                        Text(
+                          'Distance:',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: MyUtility(context).width * 0.0093,
+                            fontFamily: 'ralewaybold',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            width: MyUtility(context).width * 0.035,
-                            child: Text(
-                              'Views:',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 13,
-                                fontFamily: 'ralewaybold',
-                                fontWeight: FontWeight.w700,
-                                height: 0,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            widget.views,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        widget.views,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: MyUtility(context).width * 0.0093,
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            width: MyUtility(context).width * 0.04,
-                            child: Text(
-                              'Distance:',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 13,
-                                fontFamily: 'ralewaybold',
-                                fontWeight: FontWeight.w700,
-                                height: 0,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            widget.distance,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          ),
-                        ],
-                      )
+                      Text(
+                        widget.distance,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: MyUtility(context).width * 0.0093,
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
+                      ),
                     ],
                   ),
                 ],
               ),
-            ),
-          ),
-          Positioned(
-            child: Container(
-              width: 250,
-              height: 115.48,
-              decoration: ShapeDecoration(
-                image: DecorationImage(
-                  image: AssetImage(widget.businessImage),
-                  fit: BoxFit.fill,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                  ),
-                ),
-              ),
-            ),
+            ],
           ),
         ],
       ),

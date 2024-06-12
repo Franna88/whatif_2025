@@ -94,112 +94,121 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                 textAlign: TextAlign.left,
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  height: MyUtility(context).height * 0.025,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ServiceFeaturedContainer(
-                      businessImage: 'images/williespan.png',
-                      businessName: 'Willies Panelbeaters',
-                      businessAddress:
-                          '26 Foundry Street, George Industria, Western Cape, 6530',
-                      OnPressed: () {
-                        widget.viewServiceDetails();
-                      },
-                      views: '16 133',
-                      distance: '12km',
-                    ),
-                    ServiceFeaturedContainer(
-                      businessImage: 'images/southcity.jpeg',
-                      businessName: 'South City Motors Auto Body Repair',
-                      businessAddress:
-                          '6 Lances Street, Cannon Hill, Kariega, Eastern Cape, 6229',
-                      OnPressed: () {
-                        widget.viewServiceDetails();
-                      },
-                      views: '16 133',
-                      distance: '12km',
-                    ),
-                    BuisnessImageContainer(
-                      topImage: 'images/hurricane.png',
-                      bottomImage: 'images/hurricane2.png',
-                    ),
-                    ServiceFeaturedContainer(
-                      businessImage: 'images/williespannal.png',
-                      businessName: 'Star Panelbeaters',
-                      businessAddress:
-                          'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                      OnPressed: () {
-                        widget.viewServiceDetails();
-                      },
-                      views: '16 133',
-                      distance: '12km',
-                    ),
-                    ServiceFeaturedContainer(
-                      businessImage: 'images/edencoach.png',
-                      businessName: 'Eden Coachworks',
-                      businessAddress:
-                          '6 Luven Street, George Industria, George, Western Cape, 6530',
-                      OnPressed: () {
-                        widget.viewServiceDetails();
-                      },
-                      views: '16 133',
-                      distance: '12km',
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    BuisnessImageContainer(
-                      topImage: 'images/Bulldog.png',
-                      bottomImage: 'images/Bulldog2.png',
-                    ),
-                    ServiceFeaturedContainer(
-                      businessImage: 'images/autotechpan.png',
-                      businessName: 'Autotech Panelbeaters',
-                      businessAddress:
-                          'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                      OnPressed: () {
-                        widget.viewServiceDetails();
-                      },
-                      views: '16 133',
-                      distance: '12km',
-                    ),
-                    ServiceFeaturedContainer(
-                      businessImage: 'images/denys.png',
-                      businessName: 'Denys Edwardes',
-                      businessAddress:
-                          'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                      OnPressed: () {
-                        widget.viewServiceDetails();
-                      },
-                      views: '16 133',
-                      distance: '12km',
-                    ),
-                    BuisnessImageContainer(
-                      topImage: 'images/glasurit.png',
-                      bottomImage: 'images/glasurit2.png',
-                    ),
-                    ServiceFeaturedContainer(
-                      businessImage: 'images/denys.png',
-                      businessName: 'JF Autobody Services',
-                      businessAddress:
-                          'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                      OnPressed: () {
-                        widget.viewServiceDetails();
-                      },
-                      views: '16 133',
-                      distance: '12km',
-                    ),
-                  ],
-                ),
-              ],
+            SizedBox(
+              height: MyUtility(context).height * 0.85,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    height: MyUtility(context).height * 0.025,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ServiceFeaturedContainer(
+                        businessImage: 'images/williespan.png',
+                        businessName: 'Willies Panelbeaters',
+                        businessAddress:
+                            '26 Foundry Street, George Industria, Western Cape, 6530',
+                        OnPressed: () {
+                          widget.viewServiceDetails();
+                        },
+                        views: '16 133',
+                        distance: '12km',
+                      ),
+                      ServiceFeaturedContainer(
+                        businessImage: 'images/southcity.jpeg',
+                        businessName: 'South City Motors Auto Body Repair',
+                        businessAddress:
+                            '6 Lances Street, Cannon Hill, Kariega, Eastern Cape, 6229',
+                        OnPressed: () {
+                          widget.viewServiceDetails();
+                        },
+                        views: '16 133',
+                        distance: '12km',
+                      ),
+                      BuisnessImageContainer(
+                        topImage: 'images/hurricane.png',
+                        bottomImage: 'images/hurricane2.png',
+                      ),
+                      ServiceFeaturedContainer(
+                        businessImage: 'images/williespannal.png',
+                        businessName: 'Star Panelbeaters',
+                        businessAddress:
+                            'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
+                        OnPressed: () {
+                          widget.viewServiceDetails();
+                        },
+                        views: '16 133',
+                        distance: '12km',
+                      ),
+                      ServiceFeaturedContainer(
+                        businessImage: 'images/edencoach.png',
+                        businessName: 'Eden Coachworks',
+                        businessAddress:
+                            '6 Luven Street, George Industria, George, Western Cape, 6530',
+                        OnPressed: () {
+                          widget.viewServiceDetails();
+                        },
+                        views: '16 133',
+                        distance: '12km',
+                      ),
+                      SizedBox(
+                        width: MyUtility(context).width * 0.02,
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      BuisnessImageContainer(
+                        topImage: 'images/Bulldog.png',
+                        bottomImage: 'images/Bulldog2.png',
+                      ),
+                      ServiceFeaturedContainer(
+                        businessImage: 'images/autotechpan.png',
+                        businessName: 'Autotech Panelbeaters',
+                        businessAddress:
+                            'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
+                        OnPressed: () {
+                          widget.viewServiceDetails();
+                        },
+                        views: '16 133',
+                        distance: '12km',
+                      ),
+                      ServiceFeaturedContainer(
+                        businessImage: 'images/denys.png',
+                        businessName: 'Denys Edwardes',
+                        businessAddress:
+                            'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
+                        OnPressed: () {
+                          widget.viewServiceDetails();
+                        },
+                        views: '16 133',
+                        distance: '12km',
+                      ),
+                      BuisnessImageContainer(
+                        topImage: 'images/glasurit.png',
+                        bottomImage: 'images/glasurit2.png',
+                      ),
+                      ServiceFeaturedContainer(
+                        businessImage: 'images/denys.png',
+                        businessName: 'JF Autobody Services',
+                        businessAddress:
+                            'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
+                        OnPressed: () {
+                          widget.viewServiceDetails();
+                        },
+                        views: '16 133',
+                        distance: '12km',
+                      ),
+                      SizedBox(
+                        width: MyUtility(context).width * 0.02,
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

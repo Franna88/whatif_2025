@@ -93,116 +93,128 @@ class _ServicesOtherState extends State<ServicesOther> {
                 textAlign: TextAlign.left,
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  height: MyUtility(context).height * 0.025,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ServicesOtherContainer(
-                      businessImage: 'images/pending.png',
-                      businessName: 'Ramcom Trucks & Load Bodies',
-                      businessAddress:
-                          'Pacaltsville, George, Western Cape, 6530',
-                      OnPressed: () {},
-                      views: '16 133',
-                    ),
-                    ServicesOtherContainer(
-                      businessImage: 'images/pending.png',
-                      businessName: 'Ramcom Trucks & Load Bodies',
-                      businessAddress:
-                          'Pacaltsville, George, Western Cape, 6530',
-                      OnPressed: () {},
-                      views: '16 133',
-                    ),
-                    ImageContainer(image: 'images/hippo.png'),
-                    ServicesOtherContainer(
-                      businessImage: 'images/pending.png',
-                      businessName: 'Ramcom Trucks & Load Bodies',
-                      businessAddress:
-                          'Pacaltsville, George, Western Cape, 6530',
-                      OnPressed: () {},
-                      views: '16 133',
-                    ),
-                    ServicesOtherContainer(
-                      businessImage: 'images/pending.png',
-                      businessName: 'Ramcom Trucks & Load Bodies',
-                      businessAddress:
-                          'Pacaltsville, George, Western Cape, 6530',
-                      OnPressed: () {},
-                      views: '16 133',
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ImageContainer(image: 'images/hurricane2.png'),
-                    ServicesOtherContainer(
-                      businessImage: 'images/pending.png',
-                      businessName: 'Ramcom Trucks & Load Bodies',
-                      businessAddress:
-                          'Pacaltsville, George, Western Cape, 6530',
-                      OnPressed: () {},
-                      views: '16 133',
-                    ),
-                    ServicesOtherContainer(
-                      businessImage: 'images/pending.png',
-                      businessName: 'Ramcom Trucks & Load Bodies',
-                      businessAddress:
-                          'Pacaltsville, George, Western Cape, 6530',
-                      OnPressed: () {},
-                      views: '16 133',
-                    ),
-                    ImageContainer(image: 'images/glasurit2.png'),
-                    ServicesOtherContainer(
-                      businessImage: 'images/pending.png',
-                      businessName: 'Ramcom Trucks & Load Bodies',
-                      businessAddress:
-                          'Pacaltsville, George, Western Cape, 6530',
-                      OnPressed: () {},
-                      views: '16 133',
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ServicesOtherContainer(
-                      businessImage: 'images/pending.png',
-                      businessName: 'Ramcom Trucks & Load Bodies',
-                      businessAddress:
-                          'Pacaltsville, George, Western Cape, 6530',
-                      OnPressed: () {},
-                      views: '16 133',
-                    ),
-                    ImageContainer(image: 'images/celette.png'),
-                    ServicesOtherContainer(
-                      businessImage: 'images/pending.png',
-                      businessName: 'Ramcom Trucks & Load Bodies',
-                      businessAddress:
-                          'Pacaltsville, George, Western Cape, 6530',
-                      OnPressed: () {},
-                      views: '16 133',
-                    ),
-                    ServicesOtherContainer(
-                      businessImage: 'images/pending.png',
-                      businessName: 'Ramcom Trucks & Load Bodies',
-                      businessAddress:
-                          'Pacaltsville, George, Western Cape, 6530',
-                      OnPressed: () {},
-                      views: '16 133',
-                    ),
-                    ImageContainer(image: 'images/hippo.png'),
-                  ],
-                ),
-              ],
+            SizedBox(
+              height: MyUtility(context).height * 0.85,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: MyUtility(context).height * 0.02,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ServicesOtherContainer(
+                        businessImage: 'images/pending.png',
+                        businessName: 'Ramcom Trucks & Load Bodies',
+                        businessAddress:
+                            'Pacaltsville, George, Western Cape, 6530',
+                        OnPressed: () {},
+                        views: '16 133',
+                      ),
+                      ServicesOtherContainer(
+                        businessImage: 'images/pending.png',
+                        businessName: 'Ramcom Trucks & Load Bodies',
+                        businessAddress:
+                            'Pacaltsville, George, Western Cape, 6530',
+                        OnPressed: () {},
+                        views: '16 133',
+                      ),
+                      ImageContainer(image: 'images/hippo.png'),
+                      ServicesOtherContainer(
+                        businessImage: 'images/pending.png',
+                        businessName: 'Ramcom Trucks & Load Bodies',
+                        businessAddress:
+                            'Pacaltsville, George, Western Cape, 6530',
+                        OnPressed: () {},
+                        views: '16 133',
+                      ),
+                      ServicesOtherContainer(
+                        businessImage: 'images/pending.png',
+                        businessName: 'Ramcom Trucks & Load Bodies',
+                        businessAddress:
+                            'Pacaltsville, George, Western Cape, 6530',
+                        OnPressed: () {},
+                        views: '16 133',
+                      ),
+                      SizedBox(
+                        width: MyUtility(context).width * 0.02,
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ImageContainer(image: 'images/hurricane2.png'),
+                      ServicesOtherContainer(
+                        businessImage: 'images/pending.png',
+                        businessName: 'Ramcom Trucks & Load Bodies',
+                        businessAddress:
+                            'Pacaltsville, George, Western Cape, 6530',
+                        OnPressed: () {},
+                        views: '16 133',
+                      ),
+                      ServicesOtherContainer(
+                        businessImage: 'images/pending.png',
+                        businessName: 'Ramcom Trucks & Load Bodies',
+                        businessAddress:
+                            'Pacaltsville, George, Western Cape, 6530',
+                        OnPressed: () {},
+                        views: '16 133',
+                      ),
+                      ImageContainer(image: 'images/glasurit2.png'),
+                      ServicesOtherContainer(
+                        businessImage: 'images/pending.png',
+                        businessName: 'Ramcom Trucks & Load Bodies',
+                        businessAddress:
+                            'Pacaltsville, George, Western Cape, 6530',
+                        OnPressed: () {},
+                        views: '16 133',
+                      ),
+                      SizedBox(
+                        width: MyUtility(context).width * 0.02,
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ServicesOtherContainer(
+                        businessImage: 'images/pending.png',
+                        businessName: 'Ramcom Trucks & Load Bodies',
+                        businessAddress:
+                            'Pacaltsville, George, Western Cape, 6530',
+                        OnPressed: () {},
+                        views: '16 133',
+                      ),
+                      ImageContainer(image: 'images/celette.png'),
+                      ServicesOtherContainer(
+                        businessImage: 'images/pending.png',
+                        businessName: 'Ramcom Trucks & Load Bodies',
+                        businessAddress:
+                            'Pacaltsville, George, Western Cape, 6530',
+                        OnPressed: () {},
+                        views: '16 133',
+                      ),
+                      ServicesOtherContainer(
+                        businessImage: 'images/pending.png',
+                        businessName: 'Ramcom Trucks & Load Bodies',
+                        businessAddress:
+                            'Pacaltsville, George, Western Cape, 6530',
+                        OnPressed: () {},
+                        views: '16 133',
+                      ),
+                      ImageContainer(image: 'images/hippo.png'),
+                      SizedBox(
+                        width: MyUtility(context).width * 0.02,
+                      )
+                    ],
+                  ),
+                ],
+              ),
             )
           ],
         ),

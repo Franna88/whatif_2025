@@ -35,7 +35,7 @@ class _LocationContainerState extends State<LocationContainer> {
           Positioned(
             bottom: 20,
             child: Container(
-              width: MyUtility(context).width * 0.18,
+              width: MyUtility(context).width * 0.16,
               height: MyUtility(context).height * 0.3,
               decoration: ShapeDecoration(
                 color: Colors.white,

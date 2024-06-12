@@ -14,7 +14,7 @@ class _ImageContainerState extends State<ImageContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.18,
+      width: MyUtility(context).width * 0.16,
       height: MyUtility(context).height * 0.267,
       decoration: ShapeDecoration(
         image: DecorationImage(
