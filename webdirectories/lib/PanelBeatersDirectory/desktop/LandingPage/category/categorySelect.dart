@@ -49,8 +49,8 @@ class _CategorySelectState extends State<CategorySelect>
         Stack(
           children: [
             Container(
-              width: 555,
-              height: 555,
+              width: 655,
+              height: 655,
             ),
             Positioned(
               top: 8,
@@ -58,14 +58,14 @@ class _CategorySelectState extends State<CategorySelect>
               child: Container(
                 child: SvgPicture.asset(
                   'images/gauge.svg',
-                  width: 500,
-                  height: 500,
+                  width: 600,
+                  height: 600,
                 ),
               ),
             ),
             Positioned(
-              top: 254,
-              left: 79,
+              top: 306,
+              left: 84,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(0);
@@ -77,14 +77,14 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/cloud2.svg'
                         : 'images/cloud1.svg',
                     width: 1,
-                    height: 173,
+                    height: 212,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 87,
-              left: 38,
+              top: 101,
+              left: 33,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(1);
@@ -96,14 +96,14 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/local2.svg'
                         : 'images/local1.svg',
                     width: 1,
-                    height: 208,
+                    height: 257,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 8,
-              left: 160,
+              top: 4,
+              left: 183,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(2);
@@ -115,14 +115,14 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/car2.svg'
                         : 'images/car1.svg',
                     width: 1,
-                    height: 210,
+                    height: 259,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 89,
-              right: 80,
+              top: 103,
+              right: 85,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(3);
@@ -134,14 +134,14 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/stack2.svg'
                         : 'images/stack1.svg',
                     width: 1,
-                    height: 171,
+                    height: 210,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 217,
-              right: 34,
+              top: 259,
+              right: 30,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(4);
@@ -154,21 +154,21 @@ class _CategorySelectState extends State<CategorySelect>
                         ? 'images/tow2.svg'
                         : 'images/tow1.svg',
                     width: 1,
-                    height: 212,
+                    height: 258,
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 130,
-              right: 200,
+              top: 150,
+              right: 238,
               child: Container(
                 child: RotationTransition(
                   alignment: Alignment.center,
                   turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
                   child: Container(
-                    height: 260.0,
-                    width: 150.0,
+                    height: 325.0,
+                    width: 170.0,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('images/red1.png'),
@@ -181,8 +181,8 @@ class _CategorySelectState extends State<CategorySelect>
             ),
             if (widget.menuIndex == 0)
               Positioned(
-                bottom: 90,
-                left: 176,
+                bottom:130,
+                left: 228,
                 child: CategoryText(
                   text1: 'Download',
                   text2: 'WATIF',
@@ -190,8 +190,8 @@ class _CategorySelectState extends State<CategorySelect>
               )
             else if (widget.menuIndex == 1)
               Positioned(
-                bottom: 90,
-                left: 176,
+                bottom:130,
+                left: 228,
                 child: CategoryText(
                   text1: 'Body Shop',
                   text2: 'NEAR ME',
@@ -199,8 +199,8 @@ class _CategorySelectState extends State<CategorySelect>
               )
             else if (widget.menuIndex == 2)
               Positioned(
-                bottom: 90,
-                left: 176,
+                bottom:130,
+                left: 228,
                 child: CategoryText(
                   text1: 'Panel Shop',
                   text2: 'SERVICES',
@@ -208,17 +208,17 @@ class _CategorySelectState extends State<CategorySelect>
               )
             else if (widget.menuIndex == 3)
               Positioned(
-                bottom: 90,
-                left: 176,
+                bottom:130,
+                left: 228,
                 child: CategoryText(
-                  text1: 'News &',
-                  text2: 'ARTICLES',
+                  text1: 'Info &',
+                  text2: 'FINANCE',
                 ),
               )
             else if (widget.menuIndex == 4)
               Positioned(
-                bottom: 90,
-                left: 176,
+                bottom:130,
+                left: 228,
                 child: CategoryText(
                   text1: 'More',
                   text2: 'SERVICES',

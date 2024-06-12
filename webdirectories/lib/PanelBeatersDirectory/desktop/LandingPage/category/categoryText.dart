@@ -17,7 +17,7 @@ class CategoryText extends StatelessWidget {
           text: '$text1\n',
           style: const TextStyle(
             color: Colors.white,
-            fontSize: 20,
+            fontSize: 30,
             fontFamily: 'raleway',
             
             height: 0,
@@ -27,7 +27,7 @@ class CategoryText extends StatelessWidget {
           text: text2,
           style: const TextStyle(
             color: Colors.white,
-            fontSize: 20,
+            fontSize: 30,
             fontFamily: 'ralewaymedium',
             fontWeight: FontWeight.bold,
             height: 0,

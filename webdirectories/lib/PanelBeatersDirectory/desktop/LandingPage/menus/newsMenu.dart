@@ -15,22 +15,25 @@ class NewsMenu extends StatelessWidget {
         ),
         MenuIndexWidget(menuIndex: menuIndex),
         const Text(
-          'News',
+          'Info & Finance',
           style: TextStyle(
               fontSize: 34,
               fontFamily: 'ralewaybold',
-              color: Color.fromARGB(255, 255, 255, 255)),
+              color: Color.fromARGB(255, 255, 255, 255),),
         ),
         const SizedBox(
           width: 430,
-          child: Text(
-            'Discover the latest updates in the Auto Body Repair industry. Stay informed with our informative articles.',
-            style: TextStyle(
-              color: Color.fromARGB(255, 206, 205, 205),
-              fontSize: 16,
-              fontFamily: 'raleway',
-              fontWeight: FontWeight.w400,
-              height: 0,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25),
+            child: Text(
+              'Discover the latest updates in the Auto Body Repair industry. Stay informed with our informative articles.',
+              style: TextStyle(
+                color: Color.fromARGB(255, 206, 205, 205),
+                fontSize: 16,
+                fontFamily: 'raleway',
+                fontWeight: FontWeight.w400,
+                height: 0,
+              ),
             ),
           ),
         ),

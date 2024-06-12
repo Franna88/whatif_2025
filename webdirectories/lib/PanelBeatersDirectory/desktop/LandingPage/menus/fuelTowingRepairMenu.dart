@@ -7,6 +7,7 @@ class FuelTowingRepairMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     int menuIndex = 5;
     return Column(
       children: [
@@ -22,16 +23,19 @@ class FuelTowingRepairMenu extends StatelessWidget {
             color: Color.fromARGB(255, 255, 255, 255),
           ),
         ),
-        const SizedBox(
-          width: 430,
-          child: Text(
-            'Locate and navigate to other service directories.',
-            style: TextStyle(
-              color: Color.fromARGB(255, 206, 205, 205),
-              fontSize: 16,
-              fontFamily: 'raleway',
-              fontWeight: FontWeight.w400,
-              height: 0,
+        Padding(
+          padding: EdgeInsets.only(left: widthDevice * 0.03),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Locate and navigate to other service directories.',
+              style: TextStyle(
+                color: Color.fromARGB(255, 206, 205, 205),
+                fontSize: 16,
+                fontFamily: 'raleway',
+                fontWeight: FontWeight.w400,
+                height: 0,
+              ),
             ),
           ),
         ),

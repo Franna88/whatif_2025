@@ -15,12 +15,16 @@ class WatifMenu extends StatelessWidget {
           height: 20,
         ),
         MenuIndexWidget(menuIndex: menuIndex),
-        const Text(
-          'Download your WATIF App',
-          style: TextStyle(
-              fontSize: 34,
-              fontFamily: 'ralewaybold',
-              color: Color.fromARGB(255, 255, 255, 255)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: const Text(
+            'Download your WATIF App',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 34,
+                fontFamily: 'ralewaybold',
+                color: Color.fromARGB(255, 255, 255, 255)),
+          ),
         ),
         const SizedBox(
           height: 10,
