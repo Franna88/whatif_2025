@@ -6,6 +6,7 @@ class MainButtonDirect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Column(
       children: [
         GestureDetector(
@@ -39,14 +40,21 @@ class MainButtonDirect extends StatelessWidget {
               children: [
                 Text(
                   buttonTitle,
-                  style: const TextStyle(
+                  style: widthDevice < 1500 ? TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontFamily: 'ralewaymedium',
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1,
+                    height: 0,
+                  ) : TextStyle(
                     color: Colors.black,
                     fontSize: 25,
                     fontFamily: 'ralewaymedium',
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1,
                     height: 0,
-                  ),
+                  ) ,
                 ),
                 Container(
                   width: 35,
