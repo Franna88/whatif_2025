@@ -48,9 +48,9 @@ class MobileTextfield extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: const TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'ralewaysemi',
-                  color: Color.fromARGB(255, 51, 51, 51),
+                  fontSize: 14.7,
+                  fontFamily: 'raleway',
+                  color: Color(0xFF0E1013),
                 ),
                 border: const OutlineInputBorder(
                   borderSide: BorderSide.none,

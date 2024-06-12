@@ -94,7 +94,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
         MobileOrangeButton(
           buttonTitle: 'Keyword Search',
           dropdownContent: const MobileDropDown(
-              topText: 'Search by keywords within Panel Beater Directory',
+              topText: 'Find a Panel Beater by street',
               widget1:
                   MobileTextfield(hintText: 'Type any street address here'),
               widget2: MobileSearchButton()),

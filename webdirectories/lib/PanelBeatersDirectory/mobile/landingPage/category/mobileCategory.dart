@@ -55,7 +55,8 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
             ),
             Positioned(
               top: 8,
-              left: 33,
+              left: 0,
+              right: 0,
               child: Container(
                 child: SvgPicture.asset(
                   'images/gauge.svg',
@@ -65,8 +66,9 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
               ),
             ),
             Positioned(
-              top: 182,
-              left: 61,
+              top: 181.5,
+              left: 0,
+              right: 175,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(0);
@@ -85,7 +87,8 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
             ),
             Positioned(
               top: 62,
-              left: 32,
+              left: 0,
+              right: 189,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(1);
@@ -97,14 +100,15 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
                         ? 'images/local2.svg'
                         : 'images/local1.svg',
                     width: 1,
-                    height: 149,
+                    height: 150,
                   ),
                 ),
               ),
             ),
             Positioned(
               top: 6,
-              left: 119,
+              left: 0,
+              right: 8.5,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(2);
@@ -123,7 +127,8 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
             ),
             Positioned(
               top: 64,
-              right: 56,
+              left: 174.5,
+              right: 0,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(3);
@@ -142,7 +147,8 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
             ),
             Positioned(
               top: 156,
-              right: 25,
+              left: 193,
+              right: 0,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(4);
@@ -162,7 +168,7 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
             ),
             Positioned(
               top: 95,
-              right: 112,
+              right: 107,
               child: Container(
                 child: RotationTransition(
                   alignment: Alignment.center,
@@ -183,7 +189,8 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
             if (widget.menuIndex == 0)
               Positioned(
                 bottom: 50,
-                left: 105,
+                left: 0,
+                right: 0,
                 child: Mobilecategorytext(
                   text1: 'Download',
                   text2: 'WATIF',
@@ -192,37 +199,41 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
             else if (widget.menuIndex == 1)
               Positioned(
                 bottom: 50,
-                left: 105,
+                left: 0,
+                right: 0,
                 child: Mobilecategorytext(
                   text1: 'Body Shop',
-                  text2: 'Near Me',
+                  text2: 'NEAR ME',
                 ),
               )
             else if (widget.menuIndex == 2)
               Positioned(
                 bottom: 50,
-                left: 105,
+                left: 0,
+                right: 0,
                 child: Mobilecategorytext(
                   text1: 'Panel Shop',
-                  text2: 'Services',
+                  text2: 'SERVICES',
                 ),
               )
             else if (widget.menuIndex == 3)
               Positioned(
                 bottom: 50,
-                left: 105,
+                left: 0,
+                right: 0,
                 child: Mobilecategorytext(
                   text1: 'News &',
-                  text2: 'Articles',
+                  text2: 'ARTICLES',
                 ),
               )
             else if (widget.menuIndex == 4)
               Positioned(
                 bottom: 50,
-                left: 105,
+                left: 0,
+                right: 0,
                 child: Mobilecategorytext(
                   text1: 'More',
-                  text2: 'Services',
+                  text2: 'SERVICES  ',
                 ),
               )
           ],

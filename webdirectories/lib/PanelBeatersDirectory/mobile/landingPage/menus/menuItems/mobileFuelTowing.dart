@@ -40,10 +40,9 @@ class MobileFuelTowing extends StatelessWidget {
             'Locate and navigate to other service directories.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color.fromARGB(255, 206, 205, 205),
-              fontSize: 14,
+              color: Colors.white,
+              fontSize: 19.0,
               fontFamily: 'raleway',
-              height: 1,
             ),
           ),
         ),
