@@ -11,7 +11,7 @@ class DirectOrangeButton extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: (){
+          onTap: () {
             // add logic here
           },
           child: Container(
@@ -43,11 +43,8 @@ class DirectOrangeButton extends StatelessWidget {
                   buttonTitle,
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 17,
-                    fontFamily: 'ralewaybold',
-                    
-                    
-                    height: 1,
+                    fontSize: 18.4,
+                    fontFamily: 'ralewaymedium',
                   ),
                 ),
                 Container(
@@ -67,6 +64,8 @@ class DirectOrangeButton extends StatelessWidget {
               ],
             ),
           ),
-        ),],);
+        ),
+      ],
+    );
   }
 }
