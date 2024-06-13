@@ -23,7 +23,7 @@ class _MobileJobFinderState extends State<MobileJobFinder> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('images/mainbackgroundPanel.png'),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             ),
           ),
           child: SingleChildScrollView(
@@ -32,23 +32,25 @@ class _MobileJobFinderState extends State<MobileJobFinder> {
               Text(
                 'Job Finder:',
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 34,
                   fontFamily: 'ralewaybold',
                   color: Colors.white,
                 ),
               ),
-              Text(
-                'Connect with top employers for free',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17,
-                  fontFamily: 'ralewaymedium',
-                  fontWeight: FontWeight.w500,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(
+                  'Connect with top employers for free',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.64,
+                    fontFamily: 'ralewaymedium',
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               Container(
                   width: MyUtility(context).width * 0.87,
-                  height: MyUtility(context).height * 0.8,
                   decoration: ShapeDecoration(
                     gradient: LinearGradient(
                       begin: Alignment(0.56, -0.83),
@@ -71,27 +73,43 @@ class _MobileJobFinderState extends State<MobileJobFinder> {
                     ],
                   ),
                   child: Center(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          DreamJobMobile(),
-                          SizedBox(
-                            height: 15,
+                    child: Column(
+                      children: [
+                        DreamJobMobile(),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        WhatIsJobFinderMobile(),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        EmployeePlatform(),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        EmployerPlatform(),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          width: MyUtility(context).width / 1.2,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Text(
+                              'Please note that this is a free information service only. We have no financial interest or influence in the process.',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10.2,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
                           ),
-                          WhatIsJobFinderMobile(),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          EmployeePlatform(),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          EmployerPlatform(),
-                          SizedBox(
-                            height: 15,
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                      ],
                     ),
                   )),
             ]),

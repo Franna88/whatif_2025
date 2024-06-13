@@ -17,7 +17,6 @@ class Generalbutton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      
       child: ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
@@ -28,7 +27,8 @@ class Generalbutton extends StatelessWidget {
           padding: EdgeInsets.zero,
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 6,bottom: 6,left: 10,right: 15),
+          padding:
+              const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 15),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -43,7 +43,7 @@ class Generalbutton extends StatelessWidget {
                 child: Icon(
                   Icons.keyboard_arrow_right_outlined,
                   color: iconColor,
-                  size: 16,
+                  size: 22,
                 ),
               ),
               const SizedBox(width: 6),

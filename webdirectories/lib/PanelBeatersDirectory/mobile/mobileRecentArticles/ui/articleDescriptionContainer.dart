@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlescomponents/Seo.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/ui/MobileSeo.dart';
 import 'package:webdirectories/myutility.dart';
 
 class ArticleDescriptionContainer extends StatefulWidget {
@@ -38,7 +37,7 @@ class _ArticleDescriptionContainerState
           width: MyUtility(context).width * 1.1,
           decoration: BoxDecoration(
             color: Color(0xFF0E1013),
-            borderRadius: BorderRadius.circular(23.12),
+            borderRadius: BorderRadius.circular(15.12),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.2),
@@ -58,15 +57,15 @@ class _ArticleDescriptionContainerState
                 decoration: ShapeDecoration(
                   image: DecorationImage(
                     image: AssetImage(widget.image),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(23.12),
+                    borderRadius: BorderRadius.circular(15.12),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 2, 16, 2),
+                padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
                 child: Text(
                   widget.category,
                   style: TextStyle(
@@ -77,7 +76,7 @@ class _ArticleDescriptionContainerState
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 2, 16, 2),
+                padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
                 child: SizedBox(
                   height: MyUtility(context).height * 0.075,
                   child: Text(
@@ -91,7 +90,7 @@ class _ArticleDescriptionContainerState
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
                 child: RichText(
                   text: TextSpan(
                     style: TextStyle(
@@ -116,7 +115,7 @@ class _ArticleDescriptionContainerState
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 2, 16, 0),
+                padding: const EdgeInsets.fromLTRB(10, 2, 10, 0),
                 child: SizedBox(
                   child: Text(
                     widget.description,
@@ -135,11 +134,11 @@ class _ArticleDescriptionContainerState
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      SEOContainer(text: 'Lightstone'),
-                      SEOContainer(text: 'EchoMBR'),
-                      SEOContainer(text: 'KAI Results'),
-                      SEOContainer(text: 'Panelbeaters'),
-                      SizedBox(width: MyUtility(context).width * 0.04),
+                      MobileSeo(text: 'Lightstone'),
+                      MobileSeo(text: 'EchoMBR'),
+                      MobileSeo(text: 'KAI Results'),
+                      MobileSeo(text: 'Panelbeaters'),
+                      Spacer(),
                       MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(

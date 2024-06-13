@@ -21,11 +21,9 @@ class _MobileglasscontainerState extends State<Mobileglasscontainer> {
           child: new BackdropFilter(
             filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
             child: new Container(
-              width: widthDevice * 0.80,
+              width: widthDevice * 0.85,
               //height: heightDevice * 0.40,
-              
-              
-              
+
               decoration: new BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   color: Colors.grey.shade200.withOpacity(0.3)),

@@ -20,7 +20,7 @@ class _BuisnessImageContainerState extends State<BuisnessImageContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.16,
-      height: MyUtility(context).height * 0.38,
+      height: MyUtility(context).height * 0.36,
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/category/mobileCategory.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/menus/menuItems/approvalsServices/mobileApprovalsServices.dart';
@@ -54,7 +55,10 @@ class _MobilelandingpageState extends State<Mobilelandingpage> {
                 menuIndex: menuIndex,
                 changeMenu: changeMenu,
               ),
-              Mobileglasscontainer(child: menuContainers[menuIndex])
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Mobileglasscontainer(child: menuContainers[menuIndex]),
+              ),
             ],
           ),
         ),

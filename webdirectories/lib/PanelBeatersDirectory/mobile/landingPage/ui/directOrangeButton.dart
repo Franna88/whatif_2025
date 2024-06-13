@@ -15,8 +15,8 @@ class DirectOrangeButton extends StatelessWidget {
             // add logic here
           },
           child: Container(
-            width: widthDevice * 0.80,
-            margin: const EdgeInsets.symmetric(horizontal: 15),
+            width: widthDevice * 0.85,
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             padding: const EdgeInsets.only(
               top: 5,
               left: 15,
@@ -43,7 +43,7 @@ class DirectOrangeButton extends StatelessWidget {
                   buttonTitle,
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 18.4,
+                    fontSize: 20.4,
                     fontFamily: 'ralewaymedium',
                   ),
                 ),

@@ -32,67 +32,85 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
               height: MyUtility(context).height * 0.025,
             ),
             SizedBox(
-              width: MyUtility(context).width / 1.1,
+              width: MyUtility(context).width / 1.06,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [ServicesStackedButton(), IconButtons()],
-              ),
-            ),
-            Container(
-              width: MyUtility(context).width / 1.1,
-              height: 34.68,
-              padding: const EdgeInsets.only(
-                top: 10.80,
-                left: 10.80,
-                right: 21.59,
-                bottom: 10.80,
-              ),
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24.83),
-                ),
-                shadows: [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
+                children: [
+                  ServicesStackedButton(),
+                  Row(
+                    children: [
+                      IconButtons(),
+                      SizedBox(
+                        width: MyUtility(context).width * 0.03,
+                      )
+                    ],
                   ),
                 ],
               ),
-              child: TextField(
-                controller: TextEditingController(),
-                decoration: InputDecoration(
-                  hintText: 'Search Featured',
-                  hintStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.6812,
-                    fontFamily: 'raleway',
-                    fontWeight: FontWeight.w400,
-                    height: 1.0,
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.only(
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: MyUtility(context).width / 1.1,
+                  height: 34.68,
+                  padding: const EdgeInsets.only(
                     top: 10.80,
                     left: 10.80,
                     right: 21.59,
                     bottom: 10.80,
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24.83),
-                    borderSide: BorderSide.none,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24.83),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: TextEditingController(),
+                    decoration: InputDecoration(
+                      hintText: 'Search Featured',
+                      hintStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.6812,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w400,
+                        height: 1.0,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: const EdgeInsets.only(
+                        top: 10.80,
+                        left: 10.80,
+                        right: 21.59,
+                        bottom: 10.80,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24.83),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.6812,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.left,
                   ),
                 ),
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14.6812,
-                  fontFamily: 'raleway',
-                  fontWeight: FontWeight.w400,
-                ),
-                textAlign: TextAlign.left,
-              ),
+                SizedBox(
+                  width: MyUtility(context).width * 0.01,
+                )
+              ],
             ),
             SizedBox(
               height: MyUtility(context).height * 0.85,
