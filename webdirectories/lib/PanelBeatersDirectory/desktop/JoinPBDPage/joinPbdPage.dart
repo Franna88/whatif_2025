@@ -47,6 +47,7 @@ class _JoinPbdState extends State<JoinPbd> {
 
   @override
   Widget build(BuildContext context) {
+    var heightDevice = MediaQuery.of(context).size.height;
     final List<Widget> infoContainers = [
       WhyMotoristsPage(nextContainer: nextContainer),
       WhyJoinPage(
@@ -84,10 +85,11 @@ class _JoinPbdState extends State<JoinPbd> {
                     padding: const EdgeInsets.only(left: 50, top: 50),
                     child: Image.asset(
                       'images/logoPanel.png',
-                      width: 190,
-                      height: 100,
+                      //width: 190,
+                      height: 60,
                     ),
                   ),
+                  SizedBox(height: heightDevice * 0.07 ,),
                   infoContainers[containerIndex]
                 ]))));
   }

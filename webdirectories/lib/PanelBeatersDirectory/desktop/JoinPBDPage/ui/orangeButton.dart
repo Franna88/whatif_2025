@@ -65,7 +65,7 @@ class _OrangeButtonState extends State<OrangeButton> {
                             width: 8,
                           ),
                           Icon(
-                            Icons.keyboard_arrow_right_outlined,
+                            Icons.east,
                             color: isHovered ? Colors.white : Colors.black,
                             size: 22,
                           )
@@ -128,7 +128,7 @@ class _OrangeButtonState extends State<OrangeButton> {
                             width: 8,
                           ),
                           Icon(
-                            Icons.keyboard_arrow_right_outlined,
+                            Icons.east,
                             color: isHovered ? Colors.white : Colors.black,
                             size: 18,
                           )

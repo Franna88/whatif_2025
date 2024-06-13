@@ -17,118 +17,195 @@ class WhyMotoristsPage extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left: 25, ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox(height: heightDevice * 0.04,),
                   Text.rich(
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Why motorists use \nthe ',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: widthDevice / 40,
-                            fontFamily: 'ralewaybold',
-                            fontWeight: FontWeight.w700,
-                            height: 1,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(1, 1),
-                                blurRadius: 1,
-                                color: const Color.fromARGB(255, 53, 53, 53),
-                              ),
-                            ],
-                          ),
+                          text: 'Why motorists \nuse the ',
+                          style: widthDevice < 1500
+                              ? const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 65,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w700,
+                                  height: 1,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(1, 1),
+                                      blurRadius: 1,
+                                      color: Color.fromARGB(255, 53, 53, 53),
+                                    ),
+                                  ],
+                                )
+                              : const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 85,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w700,
+                                  height: 1,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(1, 1),
+                                      blurRadius: 1,
+                                      color: Color.fromARGB(255, 53, 53, 53),
+                                    ),
+                                  ],
+                                ),
                         ),
                         TextSpan(
                           text: 'PBD',
-                          style: TextStyle(
-                            color: Color(0xFFEF9040),
-                            fontSize: widthDevice / 38,
-                            fontFamily: 'ralewaybold',
-                            fontWeight: FontWeight.w700,
-                            height: 1,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(1, 1),
-                                blurRadius: 1,
-                                color: const Color.fromARGB(255, 53, 53, 53),
-                              ),
-                            ],
-                          ),
+                          style: widthDevice < 1500
+                              ? const TextStyle(
+                                  color: Color(0xFFEF9040),
+                                  fontSize: 65,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w700,
+                                  height: 1,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(1, 1),
+                                      blurRadius: 1,
+                                      color: Color.fromARGB(255, 53, 53, 53),
+                                    ),
+                                  ],
+                                )
+                              : const TextStyle(
+                                  color: Color(0xFFEF9040),
+                                  fontSize: 85,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w700,
+                                  height: 1,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(1, 1),
+                                      blurRadius: 1,
+                                      color: Color.fromARGB(255, 53, 53, 53),
+                                    ),
+                                  ],
+                                ),
                         ),
                         TextSpan(
                           text: '?',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: widthDevice / 25,
-                            fontFamily: 'ralewaybold',
-                            fontWeight: FontWeight.w700,
-                            height: 1,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(1, 1),
-                                blurRadius: 1,
-                                color: const Color.fromARGB(255, 53, 53, 53),
-                              ),
-                            ],
-                          ),
-                        ),
-                        TextSpan(
-                          text:
-                              '\n\nWe are a proudly South African information service that \nempowers the motoring public and industry professionals to find \ntrusted and skilled auto body repairers instantly.  ',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: widthDevice / 85,
-                            fontFamily: 'raleway',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        TextSpan(
-                          text:
-                              '\n\nOur transparent, user friendly platform helps customers find and \ncompare relevant options, read real reviews, see industry ratings \nand make informed decisions, saving both time and money.\n',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: widthDevice / 85,
-                            fontFamily: 'raleway',
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: widthDevice < 1500
+                              ? const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 65,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w700,
+                                  height: 1,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(1, 1),
+                                      blurRadius: 1,
+                                      color: Color.fromARGB(255, 53, 53, 53),
+                                    ),
+                                  ],
+                                )
+                              : const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 85,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w700,
+                                  height: 1,
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(1, 1),
+                                      blurRadius: 1,
+                                      color: Color.fromARGB(255, 53, 53, 53),
+                                    ),
+                                  ],
+                                ),
                         ),
                       ],
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Coming soon, the WATIF App.',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: widthDevice / 85,
-                          fontFamily: 'raleway',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Your AI Co-Driver ',
-                          style: TextStyle(
-                            color: Color(0xFFEF9040),
-                            fontSize: widthDevice / 85,
-                            fontFamily: 'Raleway',
-                            fontWeight: FontWeight.w400,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Color(0xFFEF9040),
-                          ),
-                        ),
-                      )
-                    ],
+                  SizedBox(
+                    width: widthDevice * 0.40,
+                    child: Text(
+                        '\nWe are a proudly South African information service that empowers the motoring public and industry professionals to find trusted and skilled auto body repairers instantly.  ',
+                        style: widthDevice < 1500
+                            ? TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                              )
+                            : TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                              )),
                   ),
-                  const SizedBox(
-                    height: 40,
+                  SizedBox(width: widthDevice * 0.40,
+                    child: Text(
+                        '\nOur transparent, user friendly platform helps customers find and compare relevant options, read real reviews, see industry ratings and make informed decisions, saving both time and money.\n',
+                        style: widthDevice < 1500
+                            ? TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                              )
+                            : TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                              )),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('Coming soon, the WATIF App.',
+                            style: widthDevice < 1500
+                                ? TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                  )
+                                : TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                  )),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text('Your AI Co-Driver ',
+                              style: widthDevice < 1500
+                                  ? TextStyle(
+                                      color: Color(0xFFEF9040),
+                                      fontSize: 18,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: Color(0xFFEF9040),
+                                    )
+                                  : TextStyle(
+                                      color: Color(0xFFEF9040),
+                                      fontSize: 22,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: Color(0xFFEF9040),
+                                    )),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: heightDevice * 0.02,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

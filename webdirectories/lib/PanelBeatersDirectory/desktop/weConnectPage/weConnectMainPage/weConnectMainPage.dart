@@ -30,8 +30,8 @@ class WeConnectMainPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      height: 75,
-                      width: 155,
+                      height: 60,
+                      width: 300,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage('images/logoPanel.png'),
