@@ -22,6 +22,7 @@ class BlackIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Container(
       /*width: MediaQuery.of(context).size.width * 0.08,*/
       /*height: MediaQuery.of(context).size.height * 0.05,*/
@@ -37,14 +38,16 @@ class BlackIconButton extends StatelessWidget {
           padding: EdgeInsets.zero,
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 5, bottom: 5, left: 6, right: 15),
+          padding: widthDevice < 1500
+              ? const EdgeInsets.only(top: 2, bottom: 2, left: 6, right: 15)
+              : const EdgeInsets.only(top: 5, bottom: 5, left: 6, right: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 25,
-                height: 25,
+                width: widthDevice < 1500 ? 20 : 25,
+                height: widthDevice < 1500 ? 20 : 25,
                 decoration: BoxDecoration(
                   color: circleColor1,
                   shape: BoxShape.circle,
@@ -53,7 +56,7 @@ class BlackIconButton extends StatelessWidget {
                 child: Icon(
                   icon,
                   color: iconColor1,
-                  size: 16,
+                  size: widthDevice < 1500 ? 14 : 16,
                 ),
               ),
               const SizedBox(width: 8),
@@ -61,7 +64,7 @@ class BlackIconButton extends StatelessWidget {
                 text1,
                 style: TextStyle(
                   color: textColor1,
-                  fontSize: 15,
+                  fontSize: widthDevice < 1500 ? 14 : 15,
                   fontFamily: 'raleway',
                 ),
               ),

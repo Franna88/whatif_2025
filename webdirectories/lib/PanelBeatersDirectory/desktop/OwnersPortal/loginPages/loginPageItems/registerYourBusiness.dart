@@ -37,11 +37,15 @@ class RegisterYourBusiness extends StatelessWidget {
         Text(
           'Register your Business!',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: widthDevice < 1500 ? TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+            fontFamily: 'ralewaybold',
+          ) : TextStyle(
             color: Colors.white,
             fontSize: 40,
             fontFamily: 'ralewaybold',
-          ),
+          )
         ),
         SizedBox(
           height: 10,
@@ -49,28 +53,39 @@ class RegisterYourBusiness extends StatelessWidget {
         Text(
           'Join the Panel Beater Directory to connect with new \ncustomers and showcase your expertise to drivers in need.',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: widthDevice < 1500 ? TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontFamily: 'raleway',
+            
+            height: 1,
+          ) : TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontFamily: 'raleway',
-            fontWeight: FontWeight.w400,
+            
             height: 1,
-          ),
+          )
         ),
         SizedBox(
-          height: 10,
+          height: 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Already have an account? ',
-              style: TextStyle(
+              style: widthDevice < 1500 ? TextStyle(
                 color: Colors.white,
-                fontSize: 14,
+                fontSize: 13,
                 fontFamily: 'raleway',
-                fontWeight: FontWeight.w400,
-              ),
+                
+              ) : TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontFamily: 'raleway',
+                
+              )
             ),
             TextButton(
               onPressed: () {
@@ -78,11 +93,18 @@ class RegisterYourBusiness extends StatelessWidget {
               },
               child: Text(
                 'Log in',
-                style: TextStyle(
+                style: widthDevice < 1500 ? TextStyle(
                   color: Color(0xFFEF9040),
-                  fontSize: 14,
+                  fontSize: 13,
                   fontFamily: 'raleway',
-                  fontWeight: FontWeight.w500,
+                  
+                  decoration: TextDecoration.underline,
+                  decorationColor: Color(0xFFEF9040),
+                ) : TextStyle(
+                  color: Color(0xFFEF9040),
+                  fontSize: 15,
+                  fontFamily: 'raleway',
+                  
                   decoration: TextDecoration.underline,
                   decorationColor: Color(0xFFEF9040),
                 ),
@@ -91,14 +113,15 @@ class RegisterYourBusiness extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 10,
+          height: 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SmallTextBox(hintText: 'Name', keyText: 'First Name'),
-            SizedBox(
-              width: 30,
+
+            SizedBox( 
+              width: widthDevice < 1500 ? 23 : 30,
             ),
             SmallTextBox(hintText: 'Surname', keyText: 'Last Name'),
           ],
@@ -114,8 +137,8 @@ class RegisterYourBusiness extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SmallTextBox(hintText: 'Cell', keyText: 'Phone'),
-            SizedBox(
-              width: 30,
+            SizedBox( 
+              width: widthDevice < 1500 ? 23 : 30,
             ),
             SmallTextBox(hintText: 'Email', keyText: 'Email'),
           ],
@@ -123,36 +146,49 @@ class RegisterYourBusiness extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Wrap(
-          
-          children: [
-            SmallCheckBox(
-                description: 'By creating an account, you agree to our',
-                checkboxValue: false),
-            TextButton(
-              onPressed: () {
-                //ADD LOGIC HERE
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 14, left: 0),
-                child: Text(
-                  'Terms & Conditions',
-                  style: TextStyle(
-                    color: Color(0xFFEF9040),
-                    fontSize: 14,
-                    fontFamily: 'raleway',
-                    fontWeight: FontWeight.w500,
-                    decoration: TextDecoration.underline,
-                    decorationColor: Color(0xFFEF9040),
-                    height: 0.0
+        Align(
+          alignment: widthDevice < 1500 ?  Alignment.centerLeft : Alignment.center,
+          child: Wrap(
+            
+            children: [
+              SmallCheckBox(
+                  description: 'By creating an account, you agree to our',
+                  checkboxValue: false),
+              TextButton(
+                
+                onPressed: () {
+                  //ADD LOGIC HERE
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 14, left: 0),
+                  child: Text(
+                    'Terms & Conditions',
+                    style: widthDevice < 1500 ?  TextStyle(
+                      color: Color(0xFFEF9040),
+                      fontSize: 11,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w500,
+                      
+                      decoration: TextDecoration.underline,
+                      decorationColor: Color(0xFFEF9040),
+                      height: 0.0
+                    ): TextStyle(
+                      color: Color(0xFFEF9040),
+                      fontSize: 14,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Color(0xFFEF9040),
+                      height: 0.0
+                    )
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
         SizedBox(
-          height: 10,
+          height: widthDevice < 1500 ? 15 : 25,
         ),
         LongOrangeButton(
             onPressed: () {
@@ -160,7 +196,7 @@ class RegisterYourBusiness extends StatelessWidget {
             },
             buttonText: 'Start Sign Up Process'),
         SizedBox(
-          height: heightDevice / 50,
+          height: heightDevice * 0.05,
         ),
       ],
     );

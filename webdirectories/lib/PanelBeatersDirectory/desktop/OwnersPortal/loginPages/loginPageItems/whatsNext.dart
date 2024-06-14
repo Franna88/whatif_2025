@@ -35,17 +35,21 @@ class WhatsNext extends StatelessWidget {
         Text(
           'What\'s next?',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: widthDevice < 1500 ? TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+            fontFamily: 'ralewaybold',
+          ) : TextStyle(
             color: Colors.white,
             fontSize: 40,
             fontFamily: 'ralewaybold',
-          ),
+          )
         ),
         SizedBox(
           height: 10,
         ),
         Container(
-          height: 225,
+          height: widthDevice < 1500 ? 190 : 225,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('images/watsnext.png'),
@@ -58,13 +62,19 @@ class WhatsNext extends StatelessWidget {
         Text(
           'Thank you for choosing to be part of the Panel \nBeater Directory family! Your success is our \nsuccess and we can’t wait to grow with you.',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: widthDevice < 1500 ? TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontFamily: 'raleway',
+            
+            height: 1,
+          ) : TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontFamily: 'raleway',
-            fontWeight: FontWeight.w400,
+            
             height: 1,
-          ),
+          )
         ),
         SizedBox(
           height: 15,
@@ -72,13 +82,19 @@ class WhatsNext extends StatelessWidget {
         Text(
           'Your application is now being processed and you \nwill receive an email confirmation with your \nOwners Portal login code shortly.',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: widthDevice < 1500 ? TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontFamily: 'raleway',
+            
+            height: 1,
+          ) : TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontFamily: 'raleway',
-            fontWeight: FontWeight.w400,
+            
             height: 1,
-          ),
+          )
         ),
         SizedBox(
           height: heightDevice / 20,

@@ -40,11 +40,15 @@ class CompleteAgreement extends StatelessWidget {
         Text(
           'Complete Agreement',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: widthDevice < 1500 ? TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+            fontFamily: 'ralewaybold',
+          ) : TextStyle(
             color: Colors.white,
             fontSize: 40,
             fontFamily: 'ralewaybold',
-          ),
+          )
         ),
         SizedBox(
           height: 10,
@@ -52,19 +56,25 @@ class CompleteAgreement extends StatelessWidget {
         Text(
           'Please complete the following online application form. \nYour completed contract will be available to view and \ndownload in your Owners Portal.',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: widthDevice < 1500 ? TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontFamily: 'raleway',
+            
+            height: 1,
+          ) : TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontFamily: 'raleway',
-            fontWeight: FontWeight.w400,
+            
             height: 1,
-          ),
+          )
         ),
         SizedBox(
           height: 15,
         ),
         Container(
-          height: 225,
+          height: widthDevice < 1500 ? 200 : 225,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('images/completeagreement.png'),
@@ -80,7 +90,7 @@ class CompleteAgreement extends StatelessWidget {
             },
             buttonText: 'Click here to complete Agreement'),
         SizedBox(
-          height: heightDevice / 30,
+          height: heightDevice / 25,
         ),
       ],
     );

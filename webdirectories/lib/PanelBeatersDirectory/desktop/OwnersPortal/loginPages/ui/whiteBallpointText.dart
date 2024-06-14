@@ -7,6 +7,7 @@ class WhiteBallpointText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(top: 4),
       child: SizedBox(
@@ -26,13 +27,19 @@ class WhiteBallpointText extends StatelessWidget {
                   const SizedBox(width: 5,),
                   Text(
                     ballText,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: 'raleway',
-                      
-                      height: 1
-                    ),
+                    style: widthDevice < 1500
+                ? TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontFamily: 'raleway',
+                    height: 1,
+                  )
+                : TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontFamily: 'raleway',
+                    height: 1,
+                  )
                   ),
                   
                 ],

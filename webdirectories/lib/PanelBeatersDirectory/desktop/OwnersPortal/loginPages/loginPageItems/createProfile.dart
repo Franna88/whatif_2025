@@ -40,74 +40,94 @@ class CreateProfile extends StatelessWidget {
         Text(
           'Create Profile',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 40,
-            fontFamily: 'ralewaybold',
-          ),
+          style: widthDevice < 1500
+              ? TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontFamily: 'ralewaybold',
+                )
+              : TextStyle(
+                  color: Colors.white,
+                  fontSize: 40,
+                  fontFamily: 'ralewaybold',
+                ),
         ),
         SizedBox(
-          height: 10,
+          height: widthDevice < 1500 ? 10 : 15,
         ),
-        Text(
-          'Choose a strong password and username for your \naccount. This will allow you to access \nyour Owner\'s Portal later.',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontFamily: 'raleway',
-            fontWeight: FontWeight.w400,
-            height: 1,
-          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+              'Choose a strong password and username for your account. This will allow you to access your Owner\'s Portal later.',
+              textAlign: TextAlign.center,
+              style: widthDevice < 1500
+                  ? TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontFamily: 'raleway',
+                      height: 1,
+                    )
+                  : TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'raleway',
+                      height: 1,
+                    )),
         ),
         SizedBox(
-          height: 10,
+          height: widthDevice < 1500 ?  10 : 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SmallTextBox(hintText: 'Name', keyText: 'Username'),
             SizedBox(
-              width: 230,
+              width: widthDevice < 1500 ? 200 : 230,
             )
           ],
         ),
         SizedBox(
-          height: 10,
+          height: widthDevice < 1500 ?  10 : 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             PasswordField(
-                hintText: 'Password', keyText: 'Password', widthContainer: 215),
+                hintText: 'Password',
+                keyText: 'Password',
+                widthContainer: widthDevice < 1500 ? widthDevice * 0.14 : 215),
             SizedBox(
               width: 20,
             ),
             PasswordField(
                 hintText: 'Password',
                 keyText: 'Confirm Password',
-                widthContainer: 215),
+                widthContainer: widthDevice < 1500 ? widthDevice * 0.14 : 215),
           ],
         ),
         SizedBox(
-          height: 15,
+          height: widthDevice < 1500 ? 15 : 25,
         ),
         SizedBox(
           width: 400,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Your password needs to have:',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontFamily: 'raleway',
-                  fontWeight: FontWeight.w400,
-                  height: 1,
-                ),
-              ),
+              Text('Your password needs to have:',
+                  textAlign: TextAlign.center,
+                  style: widthDevice < 1500
+                      ? TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'raleway',
+                          height: 1,
+                        )
+                      : TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontFamily: 'raleway',
+                          height: 1,
+                        )),
               WhiteBallpointText(ballText: 'At least 1 uppercase character'),
               WhiteBallpointText(ballText: 'At least 1 lowercase character'),
               WhiteBallpointText(ballText: 'At least 1 special character'),
@@ -129,7 +149,7 @@ class CreateProfile extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 15,
+          height:  widthDevice < 1500 ? 15 : 25,
         ),
         LongOrangeButton(
             onPressed: () {

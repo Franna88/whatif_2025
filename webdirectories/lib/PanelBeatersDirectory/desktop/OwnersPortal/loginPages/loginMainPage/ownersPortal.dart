@@ -64,8 +64,8 @@ class _OwnersPortalState extends State<OwnersPortal> {
               padding: const EdgeInsets.only(left: 50, top: 30),
               child: Image.asset(
                 'images/logoPanel.png',
-                width: 225,
-                height: 110,
+                //width: 225,
+                height: 60,
               ),
             ),
             Row(
@@ -101,9 +101,10 @@ class _OwnersPortalState extends State<OwnersPortal> {
                     ),
                   ),
                 ),
-                SizedBox(width: widthDevice * 0.10),
-                Column(
+                SizedBox(width: widthDevice * 0.15),
+                Column(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                      SizedBox( height: widthDevice < 1500 ? heightDevice * 0.05 :  heightDevice * 0.10),
                     //SizedBox(width: heightDevice / 5),
                     GlassContainer(child: pages[pageIndex]
                         //MembershipOptions()

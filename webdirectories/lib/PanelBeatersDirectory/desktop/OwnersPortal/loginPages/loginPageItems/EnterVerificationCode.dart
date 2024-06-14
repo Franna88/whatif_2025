@@ -28,8 +28,8 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
             Stack(
               children: [
                 Container(
-                  width: 30,
-                  height: 30,
+                  width: widthDevice < 1500 ? 25 : 30,
+                  height: widthDevice < 1500 ? 25 : 30,
                   decoration: ShapeDecoration(
                     shape: OvalBorder(
                       side: BorderSide(width: 0.94, color: Colors.white),
@@ -37,12 +37,12 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
                   ),
                 ),
                 Positioned(
-                  left: 4,
-                  top: 5,
+                  left: 3,
+                  top: 4,
                   child: Icon(
                     Icons.keyboard_arrow_left,
                     color: Colors.white,
-                    size: 20,
+                    size: widthDevice < 1500 ? 18 : 20,
                   ),
                 ),
               ],
@@ -53,39 +53,58 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
             Text(
               'Go Back',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontFamily: 'raleway',
-                fontWeight: FontWeight.w400,
-              ),
+              style: widthDevice < 1500
+                  ? TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'ralewaymedium',
+                    )
+                  : TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: 'ralewaymedium',
+                    ),
             ),
             SizedBox(
               width: widthDevice / 18,
             ),
-            Text(
-              'Already have an account?',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontFamily: 'raleway',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
+            Text('Already have an account?',
+                style: widthDevice < 1500
+                    ? TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontFamily: 'raleway',
+                        height: 1,
+                      )
+                    : TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontFamily: 'raleway',
+                        height: 1,
+                      )),
             TextButton(
               onPressed: () {
                 //ADD LOGIC HERE
               },
               child: Text(
                 'Log in',
-                style: TextStyle(
-                  color: Color(0xFFEF9040),
-                  fontSize: 14,
-                  fontFamily: 'raleway',
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.underline,
-                  decorationColor: Color(0xFFEF9040),
-                ),
+                style: widthDevice < 1500
+                    ? TextStyle(
+                        color: Color(0xFFEF9040),
+                        fontSize: 12,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Color(0xFFEF9040),
+                      )
+                    : TextStyle(
+                        color: Color(0xFFEF9040),
+                        fontSize: 14,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Color(0xFFEF9040),
+                      ),
               ),
             ),
           ],
@@ -96,40 +115,60 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
         Text(
           'Enter Verification Code',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 40,
-            fontFamily: 'ralewaybold',
-          ),
+          style: widthDevice < 1500
+              ? TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontFamily: 'ralewaybold',
+                )
+              : TextStyle(
+                  color: Colors.white,
+                  fontSize: 40,
+                  fontFamily: 'ralewaybold',
+                ),
         ),
         SizedBox(
           height: 10,
         ),
         Text(
-          'To ensure the security of our platform and provide the \nbest experience for all users, we require account \nverification. A verification email has been sent to',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontFamily: 'raleway',
-            fontWeight: FontWeight.w400,
-            height: 1,
-          ),
-        ),
+            'To ensure the security of our platform and provide the \nbest experience for all users, we require account \nverification. A verification email has been sent to',
+            textAlign: TextAlign.center,
+            style: widthDevice < 1500
+                ? TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontFamily: 'raleway',
+                    height: 1,
+                  )
+                : TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontFamily: 'raleway',
+                    height: 1,
+                  )),
         TextButton(
           onPressed: () {
             //ADD LOGIC HERE
           },
           child: Text(
             'admin@actionpanel.co.za',
-            style: TextStyle(
-                color: Color(0xFFEF9040),
-                fontSize: 18,
-                fontFamily: 'raleway',
-                fontWeight: FontWeight.w500,
-                decoration: TextDecoration.underline,
-                decorationColor: Color(0xFFEF9040),
-                height: 1),
+            style: widthDevice < 1500
+                ? TextStyle(
+                    color: Color(0xFFEF9040),
+                    fontSize: 14,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color(0xFFEF9040),
+                    height: 1)
+                : TextStyle(
+                    color: Color(0xFFEF9040),
+                    fontSize: 18,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color(0xFFEF9040),
+                    height: 1),
           ),
         ),
         SizedBox(
@@ -155,29 +194,43 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Didn\'t receive an email?',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontFamily: 'raleway',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
+            Text('Didn\'t receive an email?',
+                style: widthDevice < 1500
+                    ? TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontFamily: 'raleway',
+                        height: 1,
+                      )
+                    : TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: 'raleway',
+                        height: 1,
+                      )),
             TextButton(
               onPressed: () {
                 //ADD LOGIC HERE
               },
               child: Text(
                 'Send OTP to phone',
-                style: TextStyle(
-                  color: Color(0xFFEF9040),
-                  fontSize: 14,
-                  fontFamily: 'raleway',
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.underline,
-                  decorationColor: Color(0xFFEF9040),
-                ),
+                style: widthDevice < 1500
+                    ? TextStyle(
+                        color: Color(0xFFEF9040),
+                        fontSize: 14,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Color(0xFFEF9040),
+                        height: 1)
+                    : TextStyle(
+                        color: Color(0xFFEF9040),
+                        fontSize: 18,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Color(0xFFEF9040),
+                        height: 1),
               ),
             )
           ],

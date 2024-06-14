@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class RadioButton<T> extends StatelessWidget {
+class SmallScreenRadioButton<T> extends StatelessWidget {
   final T value;
   final T? groupValue;
   final String text;
   final ValueChanged<T?> onChanged;
 
-  const RadioButton(
+  const SmallScreenRadioButton(
       {super.key,
       required this.groupValue,
       required this.onChanged,
@@ -20,8 +20,8 @@ class RadioButton<T> extends StatelessWidget {
     
     return Container(
       
-        width:  20,
-        height: 20,
+        width:  15,
+        height: 15,
         decoration: BoxDecoration(
           color: isSelected ? Colors.green : Colors.white,
           shape: BoxShape.circle,
@@ -30,7 +30,7 @@ class RadioButton<T> extends StatelessWidget {
         child: Icon(
           Icons.check,
           color: Colors.white,
-          size: 14,
+          size: 10,
         ));
   }
 
@@ -41,7 +41,7 @@ class RadioButton<T> extends StatelessWidget {
       textAlign: TextAlign.center,
       style: TextStyle(
         color: isSelected ? Color(0xFFE2822B) : Colors.white,
-        fontSize: 16,
+        fontSize: 14,
         //fontFamily: 'raleway',
         height: 1,
       ),

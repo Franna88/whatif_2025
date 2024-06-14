@@ -17,6 +17,7 @@ class _OTPWidgetState extends State<OTPWidget> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Row(mainAxisAlignment: MainAxisAlignment.center,
       children: [
         myInputBox(context, text1),
@@ -36,41 +37,44 @@ class _OTPWidgetState extends State<OTPWidget> {
 }
 
 Widget myInputBox(BuildContext context, TextEditingController controller) {
+  var widthDevice = MediaQuery.of(context).size.width;
   return Container(
-    height: 70,
-    width: 60,
+    height: widthDevice <1500 ? 60 : 70,
+    width: widthDevice <1500 ? 50 : 60,
     decoration: ShapeDecoration(
       color: Color(0xFFD9D9D9),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
     ),
-    child: TextField(
-      cursorColor: Colors.black,
-      cursorHeight: 30,
-      //showCursor: false,
-      controller: controller,
-      keyboardType: TextInputType.number,
-      style: TextStyle(
-                color:  Colors.black,
-                fontSize: 30,
-                fontFamily: 'raleway',
-                
-              ),
-      
-      maxLength: 1,
-      decoration: InputDecoration(
+    child: Center(
+      child: TextField(
+        cursorColor: Colors.black,
+        cursorHeight: widthDevice <1500 ? 25 : 30,
+        //showCursor: false,
+        controller: controller,
+        keyboardType: TextInputType.number,
+        style: TextStyle(
+                  color:  Colors.black,
+                  fontSize: widthDevice <1500 ? 25 : 30,
+                  fontFamily: 'raleway',
+                  
+                ),
         
-        border: InputBorder.none,
-        counterText: '',
-        contentPadding: EdgeInsets.only(left: 20)
+        maxLength: 1,
+        decoration: InputDecoration(
+          
+          border: InputBorder.none,
+          counterText: '',
+          contentPadding: EdgeInsets.only(left: 20)
+        ),
+        
+        onChanged: (value) {
+          if (value.length ==1){
+            FocusScope.of(context).nextFocus();
+          }
+        },
       ),
-      
-      onChanged: (value) {
-        if (value.length ==1){
-          FocusScope.of(context).nextFocus();
-        }
-      },
     ),
   );
 }

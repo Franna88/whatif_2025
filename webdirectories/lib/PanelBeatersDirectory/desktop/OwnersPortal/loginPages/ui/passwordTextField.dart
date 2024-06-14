@@ -21,7 +21,97 @@ class _PasswordFieldState extends State<PasswordField> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    var widthDevice = MediaQuery.of(context).size.width;
+    return widthDevice <1500 ?  Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: widget.keyText,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontFamily: 'raleway',
+
+                  //height: 0.06,
+                ),
+              ),
+              TextSpan(
+                text: ' *',
+                style: TextStyle(
+                  color: Color(0xFFEF9040),
+                  fontSize: 18,
+                  fontFamily: 'raleway',
+
+                  //height: 0.06,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Container(
+          width: widget.widthContainer,//450 //215
+          height: 35,
+          decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(width: 1.99, color: Color(0xFFEAEBEC)),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          child: TextField(
+            style: TextStyle(fontSize: 14,
+                fontFamily: 'raleway',),
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: _obscured,
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              
+              contentPadding:
+                  EdgeInsets.only(bottom: 15, left: 15, right: 15),
+              hintStyle: TextStyle(
+                color: const Color.fromARGB(255, 124, 124, 124),
+                fontSize: 14,
+                fontFamily: 'raleway',
+              ),
+              floatingLabelBehavior: FloatingLabelBehavior
+                  .never, 
+              hintText: widget.hintText,
+              
+              filled: true, 
+              fillColor: Colors.white,
+              isDense: true, 
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none, 
+                borderRadius: BorderRadius.circular(10),
+              ),
+
+              suffixIcon: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                child: GestureDetector(
+                  onTap: _toggleObscured,
+                  child: Icon(
+                    _obscured
+                        ? Icons.visibility_rounded
+                        : Icons.visibility_off_rounded,
+                    size: 20,
+                    color: const Color.fromARGB(255, 124, 124, 124),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ) : 
+    //------------------
+    //BIGGER SCREEN
+    Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text.rich(

@@ -25,45 +25,207 @@ class NumberProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    var widthDevice = MediaQuery.of(context).size.width;
+    return widthDevice < 1500 ? Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 20,
+          height: 20,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(
+                      side: BorderSide(width: 0.5, color: Color(0xFF5F6368)),
+                    ),
+                  ),
+                ),
+              ),
+              number1
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 3,
+          width: 45,
+          child: new Center(
+            child: new Container(
+                margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                height: 3,
+                color: color1 //const Color.fromARGB(255, 114, 113, 113),
+                ),
+          ),
+        ),
+        Container(
+          width: 20,
+          height: 20,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(
+                      side: BorderSide(width: 0.5, color: Color(0xFF5F6368)),
+                    ),
+                  ),
+                ),
+              ),
+              number2
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 3,
+          width: 45,
+          child: new Center(
+            child: new Container(
+                margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                height: 3,
+                color: color2 //const Color.fromARGB(255, 114, 113, 113),
+                ),
+          ),
+        ),
+        Container(
+          width: 20,
+          height: 20,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(
+                      side: BorderSide(width: 0.5, color: Color(0xFF5F6368)),
+                    ),
+                  ),
+                ),
+              ),
+              number3
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 3,
+          width: 45,
+          child: new Center(
+            child: new Container(
+                margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                height: 3,
+                color: color3 //const Color.fromARGB(255, 114, 113, 113),
+                ),
+          ),
+        ),
+        Container(
+          width: 20,
+          height: 20,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(
+                      side: BorderSide(width: 0.5, color: Color(0xFF5F6368)),
+                    ),
+                  ),
+                ),
+              ),
+              number4
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 3,
+          width: 45,
+          child: new Center(
+            child: new Container(
+                margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                height: 3,
+                color: color4 //const Color.fromARGB(255, 114, 113, 113),
+                ),
+          ),
+        ),
+        Container(
+          width: 20,
+          height: 20,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(
+                      side: BorderSide(width: 0.5, color: Color(0xFF5F6368)),
+                    ),
+                  ),
+                ),
+              ),
+              number5
+            ],
+          ),
+        ),
+      ],
+    ) :
+    //BIGGER SCREEN
+    Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: 25,
           height: 25,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(),
           child: Stack(
             children: [
-              Positioned(left: 0, top: 0, child: Container()),
               Positioned(
                 left: 0,
                 top: 0,
                 child: Container(
                   width: 25,
                   height: 25,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                          width: 25,
-                          height: 25,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: OvalBorder(
-                              side: BorderSide(
-                                  width: 0.5, color: Color(0xFF5F6368)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      number1
-                    ],
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(
+                      side: BorderSide(width: 0.5, color: Color(0xFF5F6368)),
+                    ),
                   ),
                 ),
               ),
+              number1
             ],
           ),
         ),
@@ -81,39 +243,25 @@ class NumberProgressBar extends StatelessWidget {
         Container(
           width: 25,
           height: 25,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(),
           child: Stack(
             children: [
-              Positioned(left: 0, top: 0, child: Container()),
               Positioned(
                 left: 0,
                 top: 0,
                 child: Container(
                   width: 25,
                   height: 25,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                          width: 25,
-                          height: 25,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: OvalBorder(
-                              side: BorderSide(
-                                  width: 0.5, color: Color(0xFF5F6368)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      number2
-                    ],
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(
+                      side: BorderSide(width: 0.5, color: Color(0xFF5F6368)),
+                    ),
                   ),
                 ),
               ),
+              number2
             ],
           ),
         ),
@@ -122,48 +270,34 @@ class NumberProgressBar extends StatelessWidget {
           width: 60,
           child: new Center(
             child: new Container(
-              margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
-              height: 3,
-              color: color2,
-            ),
+                margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                height: 3,
+                color: color2 //const Color.fromARGB(255, 114, 113, 113),
+                ),
           ),
         ),
         Container(
           width: 25,
           height: 25,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(),
           child: Stack(
             children: [
-              Positioned(left: 0, top: 0, child: Container()),
               Positioned(
                 left: 0,
                 top: 0,
                 child: Container(
                   width: 25,
                   height: 25,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                          width: 25,
-                          height: 25,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: OvalBorder(
-                              side: BorderSide(
-                                  width: 0.5, color: Color(0xFF5F6368)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      number3
-                    ],
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(
+                      side: BorderSide(width: 0.5, color: Color(0xFF5F6368)),
+                    ),
                   ),
                 ),
               ),
+              number3
             ],
           ),
         ),
@@ -172,48 +306,34 @@ class NumberProgressBar extends StatelessWidget {
           width: 60,
           child: new Center(
             child: new Container(
-              margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
-              height: 3,
-              color: color3,
-            ),
+                margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                height: 3,
+                color: color3 //const Color.fromARGB(255, 114, 113, 113),
+                ),
           ),
         ),
         Container(
           width: 25,
           height: 25,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(),
           child: Stack(
             children: [
-              Positioned(left: 0, top: 0, child: Container()),
               Positioned(
                 left: 0,
                 top: 0,
                 child: Container(
                   width: 25,
                   height: 25,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                          width: 25,
-                          height: 25,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: OvalBorder(
-                              side: BorderSide(
-                                  width: 0.5, color: Color(0xFF5F6368)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      number4
-                    ],
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(
+                      side: BorderSide(width: 0.5, color: Color(0xFF5F6368)),
+                    ),
                   ),
                 ),
               ),
+              number4
             ],
           ),
         ),
@@ -222,48 +342,34 @@ class NumberProgressBar extends StatelessWidget {
           width: 60,
           child: new Center(
             child: new Container(
-              margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
-              height: 3,
-              color: color4,
-            ),
+                margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                height: 3,
+                color: color4 //const Color.fromARGB(255, 114, 113, 113),
+                ),
           ),
         ),
         Container(
           width: 25,
           height: 25,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(),
           child: Stack(
             children: [
-              Positioned(left: 0, top: 0, child: Container()),
               Positioned(
                 left: 0,
                 top: 0,
                 child: Container(
                   width: 25,
                   height: 25,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                          width: 25,
-                          height: 25,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: OvalBorder(
-                              side: BorderSide(
-                                  width: 0.5, color: Color(0xFF5F6368)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      number5
-                    ],
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: OvalBorder(
+                      side: BorderSide(width: 0.5, color: Color(0xFF5F6368)),
+                    ),
                   ),
                 ),
               ),
+              number5
             ],
           ),
         ),

@@ -22,11 +22,15 @@ class OwnersPortalLogin extends StatelessWidget {
         Text(
           'Owners Portal Login',
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: widthDevice < 1500 ? TextStyle(
             color: Colors.white,
-            fontSize: widthDevice * 0.02,
+            fontSize: 30,
             fontFamily: 'ralewaybold',
-          ),
+          ) : TextStyle(
+            color: Colors.white,
+            fontSize: 40,
+            fontFamily: 'ralewaybold',
+          )
         ),
         SizedBox(
           height: 10,
@@ -41,7 +45,7 @@ class OwnersPortalLogin extends StatelessWidget {
         PasswordField(
           hintText: 'Enter Password',
           keyText: 'Password',
-          widthContainer: widthDevice * 0.24,
+          widthContainer: widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
         ),
         SizedBox(
           height: 10,
@@ -59,7 +63,11 @@ class OwnersPortalLogin extends StatelessWidget {
                 child: Text(
                   'Forgot Password?',
                   textAlign: TextAlign.right,
-                  style: TextStyle(
+                  style: widthDevice < 1500 ? TextStyle(
+                    color: Color(0xFFEF9040),
+                    fontSize: 14,
+                    fontFamily: 'ralewaymedium',
+                  ) : TextStyle(
                     color: Color(0xFFEF9040),
                     fontSize: 16,
                     fontFamily: 'ralewaymedium',
@@ -136,7 +144,12 @@ class OwnersPortalLogin extends StatelessWidget {
               },
               child: Text(
                 'Not Registered Yet? ',
-                style: TextStyle(
+                style: widthDevice < 1500 ? TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontFamily: 'raleway',
+                  fontWeight: FontWeight.w400,
+                ) :  TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                   fontFamily: 'raleway',
@@ -150,7 +163,14 @@ class OwnersPortalLogin extends StatelessWidget {
               },
               child: Text(
                 'Click here',
-                style: TextStyle(
+                style: widthDevice < 1500 ? TextStyle(
+                  color: Color(0xFFEF9040),
+                  fontSize: 14,
+                  fontFamily: 'raleway',
+                  fontWeight: FontWeight.w500,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Color(0xFFEF9040),
+                ) : TextStyle(
                   color: Color(0xFFEF9040),
                   fontSize: 16,
                   fontFamily: 'raleway',
