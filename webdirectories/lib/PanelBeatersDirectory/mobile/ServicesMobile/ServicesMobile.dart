@@ -19,7 +19,7 @@ class ServicesMobile extends StatefulWidget {
 }
 
 class _ServicesMobileState extends State<ServicesMobile> {
-  var pageIndex = 6;
+  var pageIndex = 0;
 
   ///change page
   updatePageIndex(value) {
@@ -47,7 +47,7 @@ class _ServicesMobileState extends State<ServicesMobile> {
           width: MyUtility(context).width,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('images/mainbackground.png'),
+              image: AssetImage('images/mainBackgroundpan.png'),
               fit: BoxFit.fill,
             ),
           ),

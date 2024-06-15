@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LightStone/LightStone/LightStoneEcho/LightStoneComp/PercentageText.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/LightStoneMobile/LightStoneMobile/LightStoneEcho/LightStoneCompMobile/PercentageTextMobile.dart';
 import 'package:webdirectories/myutility.dart';
 
 class LightStoneEchoMobile extends StatefulWidget {
@@ -26,7 +28,7 @@ class _LightStoneEchoMobileState extends State<LightStoneEchoMobile> {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 20.4,
+            fontSize: MyUtility(context).width * 0.045,
             fontFamily: 'raleway',
             fontWeight: FontWeight.w400,
           ),
@@ -43,7 +45,7 @@ class _LightStoneEchoMobileState extends State<LightStoneEchoMobile> {
                 bottom: MyUtility(context).height * 0.075,
                 left: 0,
                 right: 0,
-                child: PercentageText(percentage: '98')),
+                child: PercentageTextMobile(percentage: '98')),
           ],
         )
       ],

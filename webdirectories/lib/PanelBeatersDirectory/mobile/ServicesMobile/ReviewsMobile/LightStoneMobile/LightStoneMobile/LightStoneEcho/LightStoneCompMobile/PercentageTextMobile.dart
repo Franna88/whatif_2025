@@ -16,14 +16,14 @@ class PercentageTextMobile extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-            fontSize: MyUtility(context).width * 0.021,
+            fontSize: 16.0684,
             fontFamily: 'ralewaysemi',
             fontWeight: FontWeight.w600,
           ),
         ),
         Container(
-          width: MyUtility(context).width * 0.07,
-          height: MyUtility(context).height * 0.07,
+          width: MyUtility(context).width * 0.14,
+          height: MyUtility(context).height * 0.04,
           decoration: ShapeDecoration(
             color: Color(0xFFC40D0D),
             shape: RoundedRectangleBorder(
@@ -43,7 +43,7 @@ class PercentageTextMobile extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: MyUtility(context).width * 0.026,
+              fontSize: 21.42,
               fontWeight: FontWeight.w600,
             ),
           ),

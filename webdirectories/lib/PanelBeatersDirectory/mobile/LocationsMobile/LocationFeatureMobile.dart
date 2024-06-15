@@ -22,7 +22,7 @@ class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
         width: MyUtility(context).width,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/mainbackground.png'),
+            image: AssetImage('images/mainBackgroundpan.png'),
             fit: BoxFit.fill,
           ),
         ),
