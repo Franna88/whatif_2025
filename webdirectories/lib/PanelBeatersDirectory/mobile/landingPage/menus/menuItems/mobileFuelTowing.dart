@@ -24,8 +24,8 @@ class MobileFuelTowing extends StatelessWidget {
             'Fuel, Towing & Repair',
             textAlign: TextAlign.center,
             style: TextStyle(
-              height: 1,
-              fontSize: 31,
+              height: 1.15,
+              fontSize: 34,
               fontFamily: 'ralewaybold',
               color: Color.fromARGB(255, 255, 255, 255),
             ),
@@ -42,6 +42,7 @@ class MobileFuelTowing extends StatelessWidget {
             style: TextStyle(
               color: Colors.white,
               fontSize: 19.0,
+              height: 1.1,
               fontFamily: 'raleway',
             ),
           ),

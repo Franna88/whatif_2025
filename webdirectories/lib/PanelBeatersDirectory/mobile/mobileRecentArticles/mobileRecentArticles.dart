@@ -77,8 +77,8 @@ class _MobileRecentArticlesState extends State<MobileRecentArticles> {
                           Stack(
                             children: [
                               Container(
-                                width: 25,
-                                height: 25,
+                                width: 35,
+                                height: 35,
                                 decoration: ShapeDecoration(
                                   shape: CircleBorder(
                                     side: BorderSide(
@@ -94,15 +94,15 @@ class _MobileRecentArticlesState extends State<MobileRecentArticles> {
                                 child: Icon(
                                   Icons.keyboard_arrow_left,
                                   color: Colors.black,
-                                  size: 16,
+                                  size: 25,
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(width: 10),
                           Container(
-                            width: 25,
-                            height: 25,
+                            width: 35,
+                            height: 35,
                             decoration: BoxDecoration(
                               color: Colors.black,
                               shape: BoxShape.circle,
@@ -111,7 +111,7 @@ class _MobileRecentArticlesState extends State<MobileRecentArticles> {
                             child: Icon(
                               Icons.keyboard_arrow_right_outlined,
                               color: Colors.white,
-                              size: 16,
+                              size: 25,
                             ),
                           ),
                         ],

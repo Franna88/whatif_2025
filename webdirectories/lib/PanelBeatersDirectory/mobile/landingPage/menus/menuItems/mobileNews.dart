@@ -23,7 +23,7 @@ class MobileNews extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
               height: 1,
-              fontSize: 31,
+              fontSize: 34,
               fontFamily: 'ralewaybold',
               color: Color.fromARGB(255, 255, 255, 255)),
         ),
@@ -33,13 +33,13 @@ class MobileNews extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
-            'Discover the latest updates in the Auto Body Repair industry. Stay informed with our informative articles.',
+            'Discover the latest updates in the world of Auto Body\nRepair. Stay informed with our informative articles.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color.fromARGB(255, 206, 205, 205),
-              fontSize: 14,
+              color: Colors.white,
+              fontSize: 19.72,
               fontFamily: 'raleway',
-              height: 1,
+              height: 1.15,
             ),
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/dividers.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ui/longOrangeMobileButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ui/mobileTextFields.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ui/ownersLoginContainer.dart';
@@ -25,29 +26,7 @@ class OwnersloginMain extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: 75,
-                      width: 155,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('images/logoPanel.png'),
-                            fit: BoxFit.fill),
-                      ),
-                    ),
-                    Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                      size: 25,
-                    )
-                  ],
-                ),
-              ),
+              MobileTopNavBarhome(),
               const SizedBox(
                 height: 10,
               ),
@@ -56,23 +35,25 @@ class OwnersloginMain extends StatelessWidget {
                 child: Text(
                   'Effortless Management',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 50,
-                    fontFamily: 'ralewaybold',
-                    height: 1.1,
-                  ),
+                      color: Colors.white,
+                      fontSize: 54.4,
+                      fontFamily: 'ralewaybold',
+                      height: 0.96),
                 ),
+              ),
+              SizedBox(
+                height: heightDevice * 0.01,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                 child: Text(
                   'More time for repairs, less time on admin. Customize and manage your online profile anytime, anywhere!',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 15.64,
                     fontFamily: 'raleway',
-                    height: 1.1,
+                    height: 1.01,
                   ),
                 ),
               ),
@@ -92,7 +73,7 @@ class OwnersloginMain extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 35,
+                            fontSize: 34,
                             fontFamily: 'ralewaybold',
                             height: 1,
                           ),
@@ -127,7 +108,6 @@ class OwnersloginMain extends StatelessWidget {
                                 color: Color(0xFFEF9040),
                                 fontSize: 14,
                                 fontFamily: 'raleway',
-                                height: 1,
                               ),
                             ),
                           ],
@@ -153,7 +133,7 @@ class OwnersloginMain extends StatelessWidget {
                                 'or',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 16,
+                                  fontSize: 15.64,
                                   fontFamily: 'raleway',
                                 ),
                               ),
@@ -179,7 +159,7 @@ class OwnersloginMain extends StatelessWidget {
                               'Sign in with Google',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: 15.64,
                                 fontFamily: 'raleway',
 
                                 //height: 0.05,
@@ -210,7 +190,7 @@ class OwnersloginMain extends StatelessWidget {
                                 style: TextStyle(
                                   color: Color(0xFFEF9040),
                                   fontSize: 14,
-                                  fontFamily: 'raleway',
+                                  fontFamily: 'ralewaymedium',
                                   decoration: TextDecoration.underline,
                                   decorationColor: Color(0xFFEF9040),
                                 ),

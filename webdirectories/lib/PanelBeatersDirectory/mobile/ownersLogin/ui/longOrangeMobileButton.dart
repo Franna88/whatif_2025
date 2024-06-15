@@ -49,7 +49,7 @@ class _LongOrangeMobileButtonState extends State<LongOrangeMobileButton> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 16,
+                fontSize: 15.64,
                 fontFamily: 'ralewaybold',
               ),
             ),

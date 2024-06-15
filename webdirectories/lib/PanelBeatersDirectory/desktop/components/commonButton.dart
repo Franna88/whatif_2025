@@ -32,7 +32,7 @@ class CommonButton extends StatelessWidget {
               ),
               child: Center(
                 child: Icon(
-                  Icons.keyboard_arrow_left,
+                  Icons.keyboard_arrow_right,
                   size: 24,
                   color: Colors.white,
                 ),

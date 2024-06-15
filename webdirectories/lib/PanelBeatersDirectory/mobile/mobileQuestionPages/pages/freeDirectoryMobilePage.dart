@@ -29,10 +29,10 @@ class _FreeDirectoryMobileState extends State<FreeDirectoryMobile> {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'It is FREE* to be in he ',
+                      text: 'It is FREE* to be in the ',
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 50,
+                          fontSize: 54.4,
                           fontFamily: 'ralewaybold',
                           height: 1,
                           shadows: <Shadow>[
@@ -47,7 +47,7 @@ class _FreeDirectoryMobileState extends State<FreeDirectoryMobile> {
                       text: 'Directory',
                       style: TextStyle(
                         color: Color(0xFFEF9040),
-                        fontSize: 50,
+                        fontSize: 54.4,
                         fontFamily: 'ralewaybold',
                         height: 1,
                         shadows: <Shadow>[
@@ -66,7 +66,7 @@ class _FreeDirectoryMobileState extends State<FreeDirectoryMobile> {
                 height: 15,
               ),
               ClipRRect(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
                 child: Container(
                   height: heightDevice * 0.22,
                   width: widthDevice * 0.78,

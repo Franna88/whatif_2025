@@ -7,7 +7,7 @@ class Dividers extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 2,
-      width: 100,
+      width: 75,
       child: new Center(
         child: new Container(
           margin: new EdgeInsetsDirectional.only(start: 1.0, end: 1.0),

@@ -4,14 +4,20 @@ class MobileTextFields extends StatelessWidget {
   String keyText;
   String hintText;
   double widthContainer;
-  MobileTextFields({super.key, required this.hintText, required this.keyText, required this.widthContainer});
+  MobileTextFields(
+      {super.key,
+      required this.hintText,
+      required this.keyText,
+      required this.widthContainer});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 5,),
+        const SizedBox(
+          height: 5,
+        ),
         Text.rich(
           TextSpan(
             children: [
@@ -19,7 +25,7 @@ class MobileTextFields extends StatelessWidget {
                 text: keyText,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 15.64,
                   fontFamily: 'raleway',
 
                   //height: 0.06,
@@ -60,7 +66,7 @@ class MobileTextFields extends StatelessWidget {
               hintText: hintText,
               hintStyle: TextStyle(
                 color: const Color.fromARGB(255, 124, 124, 124),
-                fontSize: 16,
+                fontSize: 15.64,
                 fontFamily: 'raleway',
               ),
             ),

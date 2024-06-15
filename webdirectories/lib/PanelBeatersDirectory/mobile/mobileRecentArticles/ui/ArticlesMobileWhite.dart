@@ -44,7 +44,7 @@ class _ArticlesmobilewhiteState extends State<Articlesmobilewhite> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 2, 5, 2),
+            padding: const EdgeInsets.fromLTRB(10, 8, 5, 2),
             child: Text(
               widget.category,
               style: TextStyle(

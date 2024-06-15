@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeatureMobile.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ServicesMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/mobileLandingPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileJobFinder/mobileJobFinder.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileQuestionPages/mobileQuestionLanding.dart';
@@ -21,12 +23,13 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 20, right: 20),
+          padding: const EdgeInsets.only(top: 50, right: 20),
           child: Container(
-            width: 200,
-            height: 100,
+            width: 250,
+            height: 80,
             child: Align(
               alignment: Alignment.topLeft,
               child: Image.asset(
@@ -53,7 +56,8 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
                   'News & Articles', 'option4', MobileRecentArticles()),
               buildPopupMenuItem(
                   'Get Listed Today', 'option5', MobileQuestionLanding()),
-              buildPopupMenuItem('Owners Portal', 'option6', OwnersloginMain()),
+              buildPopupMenuItem('Owners Portal', 'option6',
+                  /*OwnersloginMain()*/ ServicesMobile()),
             ];
           },
           onSelected: (value) {

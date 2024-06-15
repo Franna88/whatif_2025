@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeatureMobile.dart';
 
 class DirectOrangeButton extends StatelessWidget {
   final String buttonTitle;
@@ -12,7 +13,11 @@ class DirectOrangeButton extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            // add logic here
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const LocationFeatureMobile()),
+            );
           },
           child: Container(
             width: widthDevice * 0.85,
