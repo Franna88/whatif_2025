@@ -20,7 +20,7 @@ class _WhoIsLightStoneMobileState extends State<WhoIsLightStoneMobile> {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-            fontSize: MyUtility(context).width * 0.05,
+            fontSize: 20.4,
             fontFamily: 'raleway',
             fontWeight: FontWeight.w400,
           ),
@@ -36,7 +36,7 @@ class _WhoIsLightStoneMobileState extends State<WhoIsLightStoneMobile> {
                       'The Lightstone EchoMBR Rankings are informed by data collected through actual customer feedback. Lightstone identifies auto body repairers that perform well. These results give the South African consumer trustworthy choices during an inherently difficult period after a motor accident.',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: MyUtility(context).width * 0.038,
+                    fontSize: 15.64,
                     fontFamily: 'raleway',
                     fontWeight: FontWeight.w400,
                   ),
@@ -45,7 +45,7 @@ class _WhoIsLightStoneMobileState extends State<WhoIsLightStoneMobile> {
                   text: ' ',
                   style: TextStyle(
                     color: Color(0xFF0BA3F9),
-                    fontSize: MyUtility(context).width * 0.038,
+                    fontSize: 15.64,
                     fontFamily: 'raleway',
                     fontWeight: FontWeight.w400,
                   ),
@@ -54,7 +54,7 @@ class _WhoIsLightStoneMobileState extends State<WhoIsLightStoneMobile> {
                   text: '(Read More).',
                   style: TextStyle(
                     color: Color(0xFFFF8728),
-                    fontSize: MyUtility(context).width * 0.038,
+                    fontSize: 15.64,
                     fontFamily: 'raleway',
                     fontWeight: FontWeight.w400,
                     decoration: TextDecoration.underline,

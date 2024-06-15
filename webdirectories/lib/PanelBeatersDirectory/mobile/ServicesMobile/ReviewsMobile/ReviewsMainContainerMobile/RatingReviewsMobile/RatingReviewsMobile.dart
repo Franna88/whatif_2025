@@ -19,52 +19,51 @@ class _RatingReviewsMobileState extends State<RatingReviewsMobile> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Loved your experience?',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MyUtility(context).width * 0.035,
-                    fontFamily: 'ralewaybold',
-                    fontWeight: FontWeight.w700,
+            padding: const EdgeInsets.fromLTRB(10, 12, 0, 12),
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: '• Loved your experience?',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.64,
+                      fontFamily: 'ralewaybold',
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text:
-                      " Tell us about it! We appreciate positive feedback that helps us recognize and reward our amazing staff.\n",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MyUtility(context).width * 0.035,
-                    fontFamily: 'raleway',
-                    fontWeight: FontWeight.w400,
+                  TextSpan(
+                    text:
+                        " Tell us about it! We appreciate positive feedback that helps us recognize and reward our amazing staff.\n",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.64,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text: "Didn't meet your expectations?",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MyUtility(context).width * 0.035,
-                    fontFamily: 'ralewaybold',
-                    fontWeight: FontWeight.w700,
+                  TextSpan(
+                    text: "• Didn't meet your expectations?",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.64,
+                      fontFamily: 'ralewaybold',
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text:
-                      " We want to hear why.  Your feedback is crucial to help us improve and ensure we deliver the best service possible.",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MyUtility(context).width * 0.035,
-                    fontFamily: 'raleway',
-                    fontWeight: FontWeight.w400,
+                  TextSpan(
+                    text:
+                        " We want to hear why.  Your feedback is crucial to help us improve and ensure we deliver the best service possible.",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.64,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
+                ],
+              ),
+            )),
         SizedBox(
           height: MyUtility(context).height * 0.01,
         ),
@@ -85,7 +84,7 @@ class _RatingReviewsMobileState extends State<RatingReviewsMobile> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: MyUtility(context).width * 0.045,
+                  fontSize: 14.7152,
                   fontFamily: 'raleway',
                   fontWeight: FontWeight.w400,
                 ),
@@ -183,7 +182,7 @@ class _RatingReviewsMobileState extends State<RatingReviewsMobile> {
                 ),
               ),
               SizedBox(
-                width: MyUtility(context).width * 0.8,
+                width: MyUtility(context).width * 0.85,
                 child: Text.rich(
                   TextSpan(
                     children: [
@@ -192,7 +191,7 @@ class _RatingReviewsMobileState extends State<RatingReviewsMobile> {
                             'By submitting a Review, you consent to us publishing the results online and/or sending it to the management team of ',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: MyUtility(context).width * 0.0289,
+                          fontSize: 11.64,
                           fontFamily: 'raleway',
                           fontWeight: FontWeight.w400,
                         ),
@@ -201,7 +200,7 @@ class _RatingReviewsMobileState extends State<RatingReviewsMobile> {
                         text: 'N4 Autocraft Panelbeaters - Pretoria East.',
                         style: TextStyle(
                           color: Color(0xFF64DAFF),
-                          fontSize: MyUtility(context).width * 0.035,
+                          fontSize: 11.64,
                           fontFamily: 'raleway',
                           fontWeight: FontWeight.w400,
                         ),

@@ -29,9 +29,9 @@ class _ColumnContainerMobileState extends State<ColumnContainerMobile> {
       ),
       child: Row(
         children: [
-          _buildSection(widget.section1Texts, 1),
-          _buildSection(widget.section2Texts, 2),
-          _buildSection(widget.section3Texts, 1),
+          _buildSection(widget.section1Texts, 3),
+          _buildSection(widget.section2Texts, 6),
+          _buildSection(widget.section3Texts, 2),
         ],
       ),
     );
@@ -67,7 +67,7 @@ class _ColumnContainerMobileState extends State<ColumnContainerMobile> {
           textAlign: TextAlign.start,
           style: TextStyle(
             color: Colors.white,
-            fontSize: MyUtility(context).width * 0.035,
+            fontSize: 15.64,
             fontFamily: 'raleway',
             fontWeight: FontWeight.w400,
           ),

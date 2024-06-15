@@ -27,7 +27,7 @@ class _CommentContainerMobileState extends State<CommentContainerMobile> {
       padding: const EdgeInsets.only(bottom: 12),
       child: Container(
         width: MyUtility(context).width * 0.8,
-        height: MyUtility(context).height * 0.21,
+        height: MyUtility(context).height * 0.22,
         decoration: ShapeDecoration(
           color: Color(0xFF3C4043),
           shape: RoundedRectangleBorder(
@@ -54,7 +54,7 @@ class _CommentContainerMobileState extends State<CommentContainerMobile> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: MyUtility(context).width * 0.035,
+                      fontSize: 15.64,
                       fontFamily: 'raleway',
                       fontWeight: FontWeight.w400,
                     ),
@@ -65,7 +65,7 @@ class _CommentContainerMobileState extends State<CommentContainerMobile> {
                 '${widget.reviewName} - ${widget.reviewDate}',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: MyUtility(context).width * 0.035,
+                  fontSize: 15.64,
                   fontFamily: 'ralewaysemi',
                   fontWeight: FontWeight.w600,
                 ),
@@ -74,7 +74,7 @@ class _CommentContainerMobileState extends State<CommentContainerMobile> {
                 widget.review,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: MyUtility(context).width * 0.035,
+                  fontSize: 15.64,
                   fontFamily: 'raleway',
                   fontWeight: FontWeight.w400,
                 ),

@@ -26,7 +26,7 @@ class _LightStoneEchoMobileState extends State<LightStoneEchoMobile> {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-            fontSize: MyUtility(context).width * 0.045,
+            fontSize: 20.4,
             fontFamily: 'raleway',
             fontWeight: FontWeight.w400,
           ),
@@ -41,7 +41,8 @@ class _LightStoneEchoMobileState extends State<LightStoneEchoMobile> {
             ),
             Positioned(
                 bottom: MyUtility(context).height * 0.075,
-                left: MyUtility(context).width * 0.25,
+                left: 0,
+                right: 0,
                 child: PercentageText(percentage: '98')),
           ],
         )

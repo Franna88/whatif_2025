@@ -39,7 +39,7 @@ class _LeaveReviewFormFieldMobileState
           textAlignVertical: TextAlignVertical.top,
           style: TextStyle(
             color: Colors.white.withOpacity(0.7),
-            fontSize: MyUtility(context).width * 0.035,
+            fontSize: 13.022,
             fontFamily: 'raleway',
             fontWeight: FontWeight.w400,
           ),
@@ -47,7 +47,7 @@ class _LeaveReviewFormFieldMobileState
             hintText: '* ${widget.reviewInfo}',
             hintStyle: TextStyle(
               color: Colors.white.withOpacity(0.7),
-              fontSize: MyUtility(context).width * 0.035,
+              fontSize: 13.022,
               fontFamily: 'raleway',
               fontWeight: FontWeight.w400,
             ),

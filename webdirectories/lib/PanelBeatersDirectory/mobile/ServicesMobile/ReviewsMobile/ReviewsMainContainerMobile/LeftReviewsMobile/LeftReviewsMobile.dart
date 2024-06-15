@@ -87,7 +87,7 @@ class _LeftReviewsMobileState extends State<LeftReviewsMobile> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MyUtility(context).width * 0.85,
-      height: MyUtility(context).height * 0.8,
+      height: MyUtility(context).height * 0.83,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

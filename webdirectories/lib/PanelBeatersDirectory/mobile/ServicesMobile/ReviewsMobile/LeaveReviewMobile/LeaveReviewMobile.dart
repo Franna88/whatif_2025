@@ -51,7 +51,7 @@ class _LeaveReviewMobileState extends State<LeaveReviewMobile> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: MyUtility(context).width * 0.04,
+                            fontSize: 19.5364,
                             fontFamily: 'raleway',
                             fontWeight: FontWeight.w400,
                           ),
@@ -84,7 +84,7 @@ class _LeaveReviewMobileState extends State<LeaveReviewMobile> {
                           '*Score',
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.699999988079071),
-                            fontSize: MyUtility(context).width * 0.045,
+                            fontSize: 13.022,
                             fontFamily: 'raleway',
                             fontWeight: FontWeight.w400,
                           ),
@@ -124,7 +124,7 @@ class _LeaveReviewMobileState extends State<LeaveReviewMobile> {
                               'Post Review',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: MyUtility(context).width * 0.04,
+                                fontSize: 12.0632,
                                 fontFamily: 'raleway',
                                 fontWeight: FontWeight.w400,
                               ),
