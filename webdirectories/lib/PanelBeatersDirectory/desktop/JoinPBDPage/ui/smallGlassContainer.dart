@@ -44,7 +44,7 @@ class _GlassEffectState extends State<SmallGlassContainer> {
                       decoration: new BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
                           color: Colors.grey.shade200.withOpacity(0.3)),
-                      child: new Center(child: widget.child),
+                      child:  widget.child,
                     ),
                   ),
                 ),

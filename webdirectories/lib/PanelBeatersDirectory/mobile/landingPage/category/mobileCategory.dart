@@ -235,7 +235,7 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
                   text1: 'More',
                   text2: 'SERVICES  ',
                 ),
-              )
+              ),
           ],
         ),
       ],

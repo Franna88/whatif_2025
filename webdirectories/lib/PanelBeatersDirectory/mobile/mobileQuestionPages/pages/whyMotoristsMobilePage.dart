@@ -131,33 +131,29 @@ class _WhyMotoristsMobilePageState extends State<WhyMotoristsMobilePage> {
                   ],
                 ),
               ),
-              Row(
-                children: [
-                  Text(
-                    'Coming soon, the WATIF App.',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: 'raleway',
-                    ),
-                  ),
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Your AI Co-Driver ',
-                        maxLines: 2,
-                        style: TextStyle(
-                          color: Color(0xFFEF9040),
-                          fontSize: 16,
-                          fontFamily: 'raleway',
-                          decoration: TextDecoration.underline,
-                          decorationColor: Color(0xFFEF9040),
-                        ),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Coming soon, the WATIF App.',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'raleway',
                       ),
                     ),
-                  )
-                ],
+                    TextSpan(
+                      text: ' Your AI Co-Driver ',
+                      style: TextStyle(
+                        color: Color(0xFFEF9040),
+                        fontSize: 16,
+                        fontFamily: 'raleway',
+                        decoration: TextDecoration.underline,
+                        decorationColor: Color(0xFFEF9040),
+                      ),
+                    )
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 15,

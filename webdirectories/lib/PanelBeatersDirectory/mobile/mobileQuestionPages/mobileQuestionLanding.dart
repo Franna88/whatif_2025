@@ -60,7 +60,7 @@ class _MobileQuestionLandingState extends State<MobileQuestionLanding> {
         width: widthDevice,
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('images/mobileLanding.png'), fit: BoxFit.cover),
+              image: AssetImage('images/mobileLanding.png' , ), fit: BoxFit.cover, ),
         ),
         child: SafeArea(
           child: SingleChildScrollView(

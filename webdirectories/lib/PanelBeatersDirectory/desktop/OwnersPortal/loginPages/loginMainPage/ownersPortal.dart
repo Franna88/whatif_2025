@@ -104,7 +104,7 @@ class _OwnersPortalState extends State<OwnersPortal> {
                 SizedBox(width: widthDevice * 0.15),
                 Column(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                      SizedBox( height: widthDevice < 1500 ? heightDevice * 0.05 :  heightDevice * 0.10),
+                      SizedBox( height: widthDevice < 1500 ? heightDevice * 0.03 :  heightDevice * 0.10),
                     //SizedBox(width: heightDevice / 5),
                     GlassContainer(child: pages[pageIndex]
                         //MembershipOptions()

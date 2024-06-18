@@ -18,7 +18,7 @@ class WhyJoinPage extends StatelessWidget {
         nextContainer: nextContainer,
         child: Padding(
           padding:
-              const EdgeInsets.only(left: 25, top: 25, bottom: 30, right: 15),
+              EdgeInsets.only(left: 25, top: widthDevice < 1500 ? 20 : 25, bottom: widthDevice < 1500 ? 20 : 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -30,7 +30,7 @@ class WhyJoinPage extends StatelessWidget {
                         style: widthDevice < 1500
                             ? const TextStyle(
                                 color: Colors.white,
-                                fontSize: 65,
+                                fontSize: 60,
                                 fontFamily: 'ralewaybold',
                                 fontWeight: FontWeight.w700,
                                 height: 1,
@@ -61,7 +61,7 @@ class WhyJoinPage extends StatelessWidget {
                         style: widthDevice < 1500
                             ? const TextStyle(
                                 color: Color(0xFFEF9040),
-                                fontSize: 65,
+                                fontSize: 60,
                                 fontFamily: 'ralewaybold',
                                 fontWeight: FontWeight.w700,
                                 height: 1,
@@ -75,7 +75,7 @@ class WhyJoinPage extends StatelessWidget {
                               )
                             : const TextStyle(
                                 color: Color(0xFFEF9040),
-                                fontSize: 65,
+                                fontSize: 85,
                                 fontFamily: 'ralewaybold',
                                 fontWeight: FontWeight.w700,
                                 height: 1,
@@ -92,7 +92,7 @@ class WhyJoinPage extends StatelessWidget {
                         style: widthDevice < 1500
                             ? const TextStyle(
                                 color: Colors.white,
-                                fontSize: 65,
+                                fontSize: 60,
                                 fontFamily: 'ralewaybold',
                                 fontWeight: FontWeight.w700,
                                 height: 1,
@@ -106,7 +106,7 @@ class WhyJoinPage extends StatelessWidget {
                               )
                             : const TextStyle(
                                 color: Colors.white,
-                                fontSize: 65,
+                                fontSize: 85,
                                 fontFamily: 'ralewaybold',
                                 fontWeight: FontWeight.w700,
                                 height: 1,
@@ -133,7 +133,7 @@ class WhyJoinPage extends StatelessWidget {
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontFamily: 'raleway',
-                                  
+                                  height: 1.2
                                 ) :  
                                TextStyle(
                                   color: Colors.white,

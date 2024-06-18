@@ -21,9 +21,9 @@ class _FreeDirectoryState extends State<FreeDirectory> {
     return SmallGlassContainer(
       nextContainer: widget.nextContainer,
       child: Padding(
-        padding: const EdgeInsets.only(left: 25, top: 25, bottom: 30),
+        padding:  EdgeInsets.only(left: 25, top: widthDevice < 1500 ? 20 : 25, bottom: widthDevice < 1500 ? 20 : 30),
         child: SingleChildScrollView(
-          child: Column(
+          child: Column(mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text.rich(
@@ -34,7 +34,7 @@ class _FreeDirectoryState extends State<FreeDirectory> {
                         style: widthDevice < 1500
                             ? const TextStyle(
                                 color: Colors.white,
-                                fontSize: 65,
+                                fontSize: 60,
                                 fontFamily: 'ralewaybold',
                                 fontWeight: FontWeight.w700,
                                 height: 1,
@@ -65,7 +65,7 @@ class _FreeDirectoryState extends State<FreeDirectory> {
                         style: widthDevice < 1500
                             ? const TextStyle(
                                 color: Color(0xFFEF9040),
-                                fontSize: 65,
+                                fontSize: 60,
                                 fontFamily: 'ralewaybold',
                                 fontWeight: FontWeight.w700,
                                 height: 1,
@@ -94,8 +94,8 @@ class _FreeDirectoryState extends State<FreeDirectory> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: widthDevice < 1500 ? 18 : 30,
               ),
               CheckMarkText(text: 'Connect with more customers'),
               CheckMarkText(text: 'Boosts your online brand visibility'),

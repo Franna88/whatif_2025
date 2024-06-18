@@ -44,379 +44,376 @@ class _CategorySelectState extends State<CategorySelect>
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
 
-    return LayoutBuilder(builder: (constraints , context) {
-      if (widthDevice < 1500) {
-        return Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: 555,
-                  height: 555,
-                ),
-                Positioned(
-                  top: 8,
-                  left: 33,
-                  child: Container(
-                    child: SvgPicture.asset(
-                      'images/gauge.svg',
-                      width: 500,
-                      height: 500,
-                    ),
+    return widthDevice < 1500
+        ? Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    width: 555,
+                    height: 555,
                   ),
-                ),
-                Positioned(
-                  top: 254,
-                  left: 79,
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.changeMenu(0);
-                      _controller.animateTo(-0.32);
-                    },
+                  Positioned(
+                    top: 8,
+                    left: 33,
                     child: Container(
                       child: SvgPicture.asset(
-                        widget.menuIndex == 0
-                            ? 'images/cloud2.svg'
-                            : 'images/cloud1.svg',
-                        width: 1,
-                        height: 173,
+                        'images/gauge.svg',
+                        width: 500,
+                        height: 500,
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 87,
-                  left: 38,
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.changeMenu(1);
-                      _controller.animateTo(-0.16);
-                    },
-                    child: Container(
-                      child: SvgPicture.asset(
-                        widget.menuIndex == 1
-                            ? 'images/local2.svg'
-                            : 'images/local1.svg',
-                        width: 1,
-                        height: 208,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 8,
-                  left: 160,
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.changeMenu(2);
-                      _controller.animateTo(0.0);
-                    },
-                    child: Container(
-                      child: SvgPicture.asset(
-                        widget.menuIndex == 2
-                            ? 'images/car2.svg'
-                            : 'images/car1.svg',
-                        width: 1,
-                        height: 210,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 89,
-                  right: 80,
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.changeMenu(3);
-                      _controller.animateTo(0.17);
-                    },
-                    child: Container(
-                      child: SvgPicture.asset(
-                        widget.menuIndex == 3
-                            ? 'images/stack2.svg'
-                            : 'images/stack1.svg',
-                        width: 1,
-                        height: 171,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 217,
-                  right: 34,
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.changeMenu(4);
-
-                      _controller.animateTo(0.325);
-                    },
-                    child: Container(
-                      child: SvgPicture.asset(
-                        widget.menuIndex == 4
-                            ? 'images/tow2.svg'
-                            : 'images/tow1.svg',
-                        width: 1,
-                        height: 212,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 130,
-                  right: 200,
-                  child: Container(
-                    child: RotationTransition(
-                      alignment: Alignment.center,
-                      turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+                  Positioned(
+                    top: 254,
+                    left: 79,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(0);
+                        _controller.animateTo(-0.32);
+                      },
                       child: Container(
-                        height: 260.0,
-                        width: 150.0,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/red1.png'),
-                            fit: BoxFit.cover,
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 0
+                              ? 'images/cloud2.svg'
+                              : 'images/cloud1.svg',
+                          width: 1,
+                          height: 173,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 87,
+                    left: 38,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(1);
+                        _controller.animateTo(-0.16);
+                      },
+                      child: Container(
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 1
+                              ? 'images/local2.svg'
+                              : 'images/local1.svg',
+                          width: 1,
+                          height: 208,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 8,
+                    left: 160,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(2);
+                        _controller.animateTo(0.0);
+                      },
+                      child: Container(
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 2
+                              ? 'images/car2.svg'
+                              : 'images/car1.svg',
+                          width: 1,
+                          height: 210,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 89,
+                    right: 80,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(3);
+                        _controller.animateTo(0.17);
+                      },
+                      child: Container(
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 3
+                              ? 'images/stack2.svg'
+                              : 'images/stack1.svg',
+                          width: 1,
+                          height: 171,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 217,
+                    right: 34,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(4);
+
+                        _controller.animateTo(0.325);
+                      },
+                      child: Container(
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 4
+                              ? 'images/tow2.svg'
+                              : 'images/tow1.svg',
+                          width: 1,
+                          height: 212,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 130,
+                    right: 200,
+                    child: Container(
+                      child: RotationTransition(
+                        alignment: Alignment.center,
+                        turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+                        child: Container(
+                          height: 260.0,
+                          width: 150.0,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('images/red1.png'),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                if (widget.menuIndex == 0)
-                  Positioned(
-                    bottom: 90,
-                    left: 176,
-                    child: CategoryText(
-                      text1: 'Download',
-                      text2: 'WATIF',
-                    ),
-                  )
-                else if (widget.menuIndex == 1)
-                  Positioned(
-                    bottom: 90,
-                    left: 176,
-                    child: CategoryText(
-                      text1: 'Body Shop',
-                      text2: 'Near Me',
-                    ),
-                  )
-                else if (widget.menuIndex == 2)
-                  Positioned(
-                    bottom: 90,
-                    left: 176,
-                    child: CategoryText(
-                      text1: 'Panel Shop',
-                      text2: 'Services',
-                    ),
-                  )
-                else if (widget.menuIndex == 3)
-                  Positioned(
-                    bottom: 90,
-                    left: 176,
-                    child: CategoryText(
-                      text1: 'News &',
-                      text2: 'Articles',
-                    ),
-                  )
-                else if (widget.menuIndex == 4)
-                  Positioned(
-                    bottom: 90,
-                    left: 176,
-                    child: CategoryText(
-                      text1: 'More',
-                      text2: 'Services',
-                    ),
-                  )
-              ],
-            ),
-            
-          ],
-        );
-      } else {
-        return Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: 655,
-                  height: 655,
-                ),
-                Positioned(
-                  top: 8,
-                  left: 33,
-                  child: Container(
-                    child: SvgPicture.asset(
-                      'images/gauge.svg',
-                      width: 600,
-                      height: 600,
-                    ),
+                  if (widget.menuIndex == 0)
+                    Positioned(
+                      bottom: 90,
+                      left: 176,
+                      child: CategoryText(
+                        text1: 'Download',
+                        text2: 'WATIF',
+                      ),
+                    )
+                  else if (widget.menuIndex == 1)
+                    Positioned(
+                      bottom: 90,
+                      left: 176,
+                      child: CategoryText(
+                        text1: 'Body Shop',
+                        text2: 'Near Me',
+                      ),
+                    )
+                  else if (widget.menuIndex == 2)
+                    Positioned(
+                      bottom: 90,
+                      left: 176,
+                      child: CategoryText(
+                        text1: 'Panel Shop',
+                        text2: 'Services',
+                      ),
+                    )
+                  else if (widget.menuIndex == 3)
+                    Positioned(
+                      bottom: 90,
+                      left: 176,
+                      child: CategoryText(
+                        text1: 'News &',
+                        text2: 'Articles',
+                      ),
+                    )
+                  else if (widget.menuIndex == 4)
+                    Positioned(
+                      bottom: 90,
+                      left: 176,
+                      child: CategoryText(
+                        text1: 'More',
+                        text2: 'Services',
+                      ),
+                    )
+                ],
+              ),
+            ],
+          )
+          //==============
+          //Bigger screen
+        : Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    width: 655,
+                    height: 655,
                   ),
-                ),
-                Positioned(
-                  top: 306,
-                  left: 84,
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.changeMenu(0);
-                      _controller.animateTo(-0.32);
-                    },
+                  Positioned(
+                    top: 8,
+                    left: 33,
                     child: Container(
                       child: SvgPicture.asset(
-                        widget.menuIndex == 0
-                            ? 'images/cloud2.svg'
-                            : 'images/cloud1.svg',
-                        width: 1,
-                        height: 212,
+                        'images/gauge.svg',
+                        width: 600,
+                        height: 600,
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 101,
-                  left: 33,
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.changeMenu(1);
-                      _controller.animateTo(-0.16);
-                    },
-                    child: Container(
-                      child: SvgPicture.asset(
-                        widget.menuIndex == 1
-                            ? 'images/local2.svg'
-                            : 'images/local1.svg',
-                        width: 1,
-                        height: 257,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 4,
-                  left: 183,
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.changeMenu(2);
-                      _controller.animateTo(0.0);
-                    },
-                    child: Container(
-                      child: SvgPicture.asset(
-                        widget.menuIndex == 2
-                            ? 'images/car2.svg'
-                            : 'images/car1.svg',
-                        width: 1,
-                        height: 259,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 103,
-                  right: 85,
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.changeMenu(3);
-                      _controller.animateTo(0.17);
-                    },
-                    child: Container(
-                      child: SvgPicture.asset(
-                        widget.menuIndex == 3
-                            ? 'images/stack2.svg'
-                            : 'images/stack1.svg',
-                        width: 1,
-                        height: 210,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 259,
-                  right: 30,
-                  child: GestureDetector(
-                    onTap: () {
-                      widget.changeMenu(4);
-
-                      _controller.animateTo(0.325);
-                    },
-                    child: Container(
-                      child: SvgPicture.asset(
-                        widget.menuIndex == 4
-                            ? 'images/tow2.svg'
-                            : 'images/tow1.svg',
-                        width: 1,
-                        height: 258,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 150,
-                  right: 238,
-                  child: Container(
-                    child: RotationTransition(
-                      alignment: Alignment.center,
-                      turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+                  Positioned(
+                    top: 306,
+                    left: 84,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(0);
+                        _controller.animateTo(-0.32);
+                      },
                       child: Container(
-                        height: 325.0,
-                        width: 170.0,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/red1.png'),
-                            fit: BoxFit.cover,
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 0
+                              ? 'images/cloud2.svg'
+                              : 'images/cloud1.svg',
+                          width: 1,
+                          height: 212,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 101,
+                    left: 33,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(1);
+                        _controller.animateTo(-0.16);
+                      },
+                      child: Container(
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 1
+                              ? 'images/local2.svg'
+                              : 'images/local1.svg',
+                          width: 1,
+                          height: 257,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 4,
+                    left: 183,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(2);
+                        _controller.animateTo(0.0);
+                      },
+                      child: Container(
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 2
+                              ? 'images/car2.svg'
+                              : 'images/car1.svg',
+                          width: 1,
+                          height: 259,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 103,
+                    right: 85,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(3);
+                        _controller.animateTo(0.17);
+                      },
+                      child: Container(
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 3
+                              ? 'images/stack2.svg'
+                              : 'images/stack1.svg',
+                          width: 1,
+                          height: 210,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 259,
+                    right: 30,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(4);
+
+                        _controller.animateTo(0.325);
+                      },
+                      child: Container(
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 4
+                              ? 'images/tow2.svg'
+                              : 'images/tow1.svg',
+                          width: 1,
+                          height: 258,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 150,
+                    right: 238,
+                    child: Container(
+                      child: RotationTransition(
+                        alignment: Alignment.center,
+                        turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+                        child: Container(
+                          height: 325.0,
+                          width: 170.0,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('images/red1.png'),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                if (widget.menuIndex == 0)
-                  Positioned(
-                    bottom: 130,
-                    left: 228,
-                    child: CategoryText(
-                      text1: 'Download',
-                      text2: 'WATIF',
-                    ),
-                  )
-                else if (widget.menuIndex == 1)
-                  Positioned(
-                    bottom: 130,
-                    left: 228,
-                    child: CategoryText(
-                      text1: 'Body Shop',
-                      text2: 'NEAR ME',
-                    ),
-                  )
-                else if (widget.menuIndex == 2)
-                  Positioned(
-                    bottom: 130,
-                    left: 228,
-                    child: CategoryText(
-                      text1: 'Panel Shop',
-                      text2: 'SERVICES',
-                    ),
-                  )
-                else if (widget.menuIndex == 3)
-                  Positioned(
-                    bottom: 130,
-                    left: 228,
-                    child: CategoryText(
-                      text1: 'Info &',
-                      text2: 'FINANCE',
-                    ),
-                  )
-                else if (widget.menuIndex == 4)
-                  Positioned(
-                    bottom: 130,
-                    left: 228,
-                    child: CategoryText(
-                      text1: 'More',
-                      text2: 'SERVICES',
-                    ),
-                  )
-              ],
-            ),
-          ],
-        );
-      }
-    });
+                  if (widget.menuIndex == 0)
+                    Positioned(
+                      bottom: 130,
+                      left: 228,
+                      child: CategoryText(
+                        text1: 'Download',
+                        text2: 'WATIF',
+                      ),
+                    )
+                  else if (widget.menuIndex == 1)
+                    Positioned(
+                      bottom: 130,
+                      left: 228,
+                      child: CategoryText(
+                        text1: 'Body Shop',
+                        text2: 'NEAR ME',
+                      ),
+                    )
+                  else if (widget.menuIndex == 2)
+                    Positioned(
+                      bottom: 130,
+                      left: 228,
+                      child: CategoryText(
+                        text1: 'Panel Shop',
+                        text2: 'SERVICES',
+                      ),
+                    )
+                  else if (widget.menuIndex == 3)
+                    Positioned(
+                      bottom: 130,
+                      left: 228,
+                      child: CategoryText(
+                        text1: 'Info &',
+                        text2: 'FINANCE',
+                      ),
+                    )
+                  else if (widget.menuIndex == 4)
+                    Positioned(
+                      bottom: 130,
+                      left: 228,
+                      child: CategoryText(
+                        text1: 'More',
+                        text2: 'SERVICES',
+                      ),
+                    )
+                ],
+              ),
+            ],
+          );
   }
 }

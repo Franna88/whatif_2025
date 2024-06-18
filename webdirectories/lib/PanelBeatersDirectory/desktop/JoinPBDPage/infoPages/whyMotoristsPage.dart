@@ -17,13 +17,13 @@ class WhyMotoristsPage extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 25, ),
+              padding: const EdgeInsets.only(left: 25, top: 25 ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(height: heightDevice * 0.04,),
+                  //SizedBox(height: heightDevice * 0.04,),
                   Text.rich(
                     TextSpan(
                       children: [
@@ -32,7 +32,7 @@ class WhyMotoristsPage extends StatelessWidget {
                           style: widthDevice < 1500
                               ? const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 65,
+                                  fontSize: 60,
                                   fontFamily: 'ralewaybold',
                                   fontWeight: FontWeight.w700,
                                   height: 1,
@@ -64,7 +64,7 @@ class WhyMotoristsPage extends StatelessWidget {
                           style: widthDevice < 1500
                               ? const TextStyle(
                                   color: Color(0xFFEF9040),
-                                  fontSize: 65,
+                                  fontSize: 60,
                                   fontFamily: 'ralewaybold',
                                   fontWeight: FontWeight.w700,
                                   height: 1,
@@ -96,7 +96,7 @@ class WhyMotoristsPage extends StatelessWidget {
                           style: widthDevice < 1500
                               ? const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 65,
+                                  fontSize: 60,
                                   fontFamily: 'ralewaybold',
                                   fontWeight: FontWeight.w700,
                                   height: 1,
@@ -136,12 +136,14 @@ class WhyMotoristsPage extends StatelessWidget {
                                 fontSize: 18,
                                 fontFamily: 'raleway',
                                 fontWeight: FontWeight.w400,
+                                height: 1.2
                               )
                             : TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
                                 fontFamily: 'raleway',
                                 fontWeight: FontWeight.w400,
+                                height: 1.2
                               )),
                   ),
                   SizedBox(width: widthDevice * 0.40,
@@ -153,12 +155,14 @@ class WhyMotoristsPage extends StatelessWidget {
                                 fontSize: 18,
                                 fontFamily: 'raleway',
                                 fontWeight: FontWeight.w400,
+                                height: 1.2
                               )
                             : TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
                                 fontFamily: 'raleway',
                                 fontWeight: FontWeight.w400,
+                                height: 1.2
                               )),
                   ),
                   Align(
@@ -173,12 +177,14 @@ class WhyMotoristsPage extends StatelessWidget {
                                     fontSize: 18,
                                     fontFamily: 'raleway',
                                     fontWeight: FontWeight.w400,
+                                    height: 1.2
                                   )
                                 : TextStyle(
                                     color: Colors.white,
                                     fontSize: 22,
                                     fontFamily: 'raleway',
                                     fontWeight: FontWeight.w400,
+                                    height: 1.2
                                   )),
                         TextButton(
                           onPressed: () {},
@@ -191,6 +197,7 @@ class WhyMotoristsPage extends StatelessWidget {
                                       fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.underline,
                                       decorationColor: Color(0xFFEF9040),
+                                      height: 1.2
                                     )
                                   : TextStyle(
                                       color: Color(0xFFEF9040),
@@ -199,6 +206,7 @@ class WhyMotoristsPage extends StatelessWidget {
                                       fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.underline,
                                       decorationColor: Color(0xFFEF9040),
+                                      height: 1.2
                                     )),
                         )
                       ],
