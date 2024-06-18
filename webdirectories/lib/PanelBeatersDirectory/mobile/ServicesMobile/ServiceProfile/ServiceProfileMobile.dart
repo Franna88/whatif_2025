@@ -19,12 +19,15 @@ class _ServiceProfileMobileState extends State<ServiceProfileMobile> {
           height: 20,
         ),
         ImageScrollContainerMobile(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Center(child: ProfileSocialsMobile()),
-            ProfileTextContainerMobile(),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(child: ProfileSocialsMobile()),
+              ProfileTextContainerMobile(),
+            ],
+          ),
         )
       ],
     );

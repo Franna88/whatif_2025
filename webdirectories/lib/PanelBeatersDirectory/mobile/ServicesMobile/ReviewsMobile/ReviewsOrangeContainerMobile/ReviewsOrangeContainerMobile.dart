@@ -38,7 +38,6 @@ class _ReviewsOrangeContainerMobileState
             ),
             Container(
               width: MyUtility(context).width * 0.91,
-              height: MyUtility(context).height * 0.81,
               decoration: ShapeDecoration(
                 color: Color(0xFFFF8828),
                 shape: RoundedRectangleBorder(

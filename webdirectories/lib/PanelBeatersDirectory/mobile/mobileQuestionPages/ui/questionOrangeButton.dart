@@ -48,8 +48,8 @@ class _QuestionOrangeButtonState extends State<QuestionOrangeButton> {
                     widget.buttonText,
                     style: TextStyle(
                       color: isPressed ? Colors.white : Colors.black,
-                      fontSize: 14,
-                      fontFamily: 'raleway',
+                      fontSize: 15.64,
+                      fontFamily: 'ralewaymedium',
                     ),
                   ),
                   const SizedBox(

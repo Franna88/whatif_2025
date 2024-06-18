@@ -51,41 +51,50 @@ class _ServicesMobileState extends State<ServicesMobile> {
               fit: BoxFit.fill,
             ),
           ),
-          child: Center(
-              child: Container(
-                  width: MyUtility(context).width * 0.95,
-                  height: MyUtility(context).height * 0.95,
-                  decoration: ShapeDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment(0.56, -0.83),
-                      end: Alignment(-0.56, 0.83),
-                      colors: [
-                        Colors.white.withOpacity(0.10000000149011612),
-                        Colors.white.withOpacity(0.4000000059604645)
-                      ],
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0xBF000000),
-                        blurRadius: 24,
-                        offset: Offset(0, 4),
-                        spreadRadius: -1,
-                      )
-                    ],
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(children: [
-                      MobileTopNavBarhome(),
-                      SizedBox(
-                        height: 20,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                MobileTopNavBarhome(),
+                Center(
+                    child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Container(
+                      width: MyUtility(context).width * 0.95,
+                      decoration: ShapeDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment(0.56, -0.83),
+                          end: Alignment(-0.56, 0.83),
+                          colors: [
+                            Colors.white.withOpacity(0.10000000149011612),
+                            Colors.white.withOpacity(0.4000000059604645)
+                          ],
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0xBF000000),
+                            blurRadius: 24,
+                            offset: Offset(0, 4),
+                            spreadRadius: -1,
+                          )
+                        ],
                       ),
-                      ServicesNavButtonMobile(updatePageIndex: updatePageIndex),
-                      servicesPages[pageIndex]
-                    ]),
-                  )))),
+                      child: SingleChildScrollView(
+                        child: Column(children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          ServicesNavButtonMobile(
+                              updatePageIndex: updatePageIndex),
+                          servicesPages[pageIndex]
+                        ]),
+                      )),
+                )),
+              ],
+            ),
+          )),
     );
   }
 }

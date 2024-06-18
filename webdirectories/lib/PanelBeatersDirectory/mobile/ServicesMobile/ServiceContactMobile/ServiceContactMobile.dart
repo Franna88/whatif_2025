@@ -53,7 +53,7 @@ class _ServiceContactMobileState extends State<ServiceContactMobile> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 8),
+          padding: const EdgeInsets.only(left: 8, bottom: 20),
           child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: ServiceContactContainer2Mobile()),

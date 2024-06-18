@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/customPlanMobilePages/customPlan.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileQuestionPages/ui/questionOrangeButton.dart';
@@ -28,7 +29,9 @@ class _WhyMotoristsMobilePageState extends State<WhyMotoristsMobilePage> {
     var widthDevice = MediaQuery.of(context).size.width;
     return QuestionPageContainer(
       child: Padding(
-        padding: const EdgeInsets.only(left: 15, top: 15, right: 15),
+        padding: const EdgeInsets.only(
+          top: 15,
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,12 +41,12 @@ class _WhyMotoristsMobilePageState extends State<WhyMotoristsMobilePage> {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Why motorists use the ',
+                      text: 'Why motorists\nuse the ',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 50,
+                        fontSize: 52,
                         fontFamily: 'ralewaybold',
-                        height: 1,
+                        height: 1.01,
                         shadows: <Shadow>[
                           Shadow(
                             offset: Offset(1, 1),
@@ -57,9 +60,9 @@ class _WhyMotoristsMobilePageState extends State<WhyMotoristsMobilePage> {
                       text: 'PBD',
                       style: TextStyle(
                         color: Color(0xFFEF9040),
-                        fontSize: 50,
+                        fontSize: 52,
                         fontFamily: 'ralewaybold',
-                        height: 1,
+                        height: 1.01,
                         shadows: <Shadow>[
                           Shadow(
                             offset: Offset(1, 1),
@@ -73,9 +76,9 @@ class _WhyMotoristsMobilePageState extends State<WhyMotoristsMobilePage> {
                       text: '?',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 50,
+                        fontSize: 52,
                         fontFamily: 'ralewaybold',
-                        height: 1,
+                        height: 1.01,
                         shadows: <Shadow>[
                           Shadow(
                             offset: Offset(1, 1),
@@ -106,52 +109,65 @@ class _WhyMotoristsMobilePageState extends State<WhyMotoristsMobilePage> {
               const SizedBox(
                 height: 15,
               ),
-              Text.rich(
-                textAlign: TextAlign.start,
-                TextSpan(
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Column(
                   children: [
-                    TextSpan(
-                      text:
-                          'We are a proudly South African information service that empowers the motoring public and industry professionals to find trusted and skilled auto body repairers instantly.\n\n',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'raleway',
-                          height: 1.2),
-                    ),
-                    TextSpan(
-                      text:
-                          'Our transparent, user friendly platform helps customers find and compare relevant options, read real reviews, see industry ratings and make informed decisions, saving both time and money.',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'raleway',
-                          height: 1.2),
-                    ),
-                  ],
-                ),
-              ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Coming soon, the WATIF App.',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'raleway',
+                    Text.rich(
+                      textAlign: TextAlign.start,
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text:
+                                'We are a proudly South African information service that empowers the motoring public and industry professionals to find trusted and skilled auto body repairers instantly.\n\n',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.64,
+                                fontFamily: 'raleway',
+                                height: 1.2),
+                          ),
+                          TextSpan(
+                            text:
+                                'Our transparent, user friendly platform helps customers find and compare relevant options, read real reviews, see industry ratings and make informed decisions, saving both time and money.',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.64,
+                                fontFamily: 'raleway',
+                                height: 1.2),
+                          ),
+                        ],
                       ),
                     ),
-                    TextSpan(
-                      text: ' Your AI Co-Driver ',
-                      style: TextStyle(
-                        color: Color(0xFFEF9040),
-                        fontSize: 16,
-                        fontFamily: 'raleway',
-                        decoration: TextDecoration.underline,
-                        decorationColor: Color(0xFFEF9040),
-                      ),
-                    )
+                    Row(
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Coming soon, the WATIF App. ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.64,
+                                  fontFamily: 'Raleway',
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Your AI Co-\nDriver',
+                                style: TextStyle(
+                                  color: Color(0xFFEF9040),
+                                  fontSize: 15.64,
+                                  fontFamily: 'Raleway',
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Color(0xFFEF9040),
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {},
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),

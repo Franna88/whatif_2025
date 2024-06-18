@@ -18,7 +18,7 @@ class _AccreditationServiceMobileState
         SizedBox(
           height: 20,
         ),
-        AccreditationfilterMobile(),
+        Container(child: AccreditationfilterMobile()),
       ],
     );
   }

@@ -15,7 +15,6 @@ class _LightStoneMobileState extends State<LightStoneMobile> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.85,
-      height: MyUtility(context).height * 0.7,
       decoration: ShapeDecoration(
         color: Color(0xFF181B1D),
         shape: RoundedRectangleBorder(

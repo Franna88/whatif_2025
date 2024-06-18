@@ -40,9 +40,9 @@ class _WhyJoinPBDmobileState extends State<WhyJoinPBDmobile> {
                     text: 'Why join the ',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 50,
+                      fontSize: 54.4,
                       fontFamily: 'ralewaybold',
-                      height: 1,
+                      height: 1.01,
                       shadows: <Shadow>[
                         Shadow(
                           offset: Offset(1, 1),
@@ -56,13 +56,13 @@ class _WhyJoinPBDmobileState extends State<WhyJoinPBDmobile> {
                     text: 'PBD',
                     style: TextStyle(
                       color: Color(0xFFEF9040),
-                      fontSize: 50,
+                      fontSize: 54.4,
                       fontFamily: 'ralewaybold',
                       height: 1,
                       shadows: <Shadow>[
                         Shadow(
                           offset: Offset(1, 1),
-                          blurRadius: 1,
+                          blurRadius: 1.01,
                           color: const Color.fromARGB(255, 53, 53, 53),
                         ),
                       ],
@@ -72,9 +72,9 @@ class _WhyJoinPBDmobileState extends State<WhyJoinPBDmobile> {
                     text: '?',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 50,
+                      fontSize: 54.4,
                       fontFamily: 'ralewaybold',
-                      height: 1,
+                      height: 1.01,
                       shadows: <Shadow>[
                         Shadow(
                           offset: Offset(1, 1),
@@ -109,7 +109,7 @@ class _WhyJoinPBDmobileState extends State<WhyJoinPBDmobile> {
               'Join our network of 2 100+ shops and benefit from our decade-long customer support and industry partnerships. \n\nGet seen by more qualified leads thanks to trusted reviews, targeted advertisement opportunities, and first-page Google rankings. Leverage clicks, leads and conversions to maximize your Return on Investment. \n\nManage your profile 24/7 anywhere and reach a wider audience across 8 African countries. Choose features that best suit your budget and target audience.\n\nPartner with us and grow your business!',
               style: TextStyle(
                   color: Color(0xFFF4F4F4),
-                  fontSize: 16,
+                  fontSize: 15.64,
                   fontFamily: 'raleway',
                   height: 1.2),
             ),

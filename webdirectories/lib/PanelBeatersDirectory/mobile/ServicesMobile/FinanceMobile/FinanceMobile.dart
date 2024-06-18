@@ -12,22 +12,25 @@ class FinanceMobile extends StatefulWidget {
 class _FinanceMobileState extends State<FinanceMobile> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 20,
-        ),
-        Container(
-          width: MyUtility(context).width * 0.9,
-          height: MyUtility(context).height * 0.04,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("images/finance.png"),
-              fit: BoxFit.fill,
-            ),
+    return Container(
+      height: MyUtility(context).height * 0.8,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 20,
           ),
-        )
-      ],
+          Container(
+            width: MyUtility(context).width * 0.9,
+            height: MyUtility(context).height * 0.04,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("images/finance.png"),
+                fit: BoxFit.fill,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -34,7 +34,6 @@ class _ViewDocumentsMobileState extends State<ViewDocumentsMobile> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.9,
-      height: MyUtility(context).height * 0.76,
       decoration: BoxDecoration(
         color: const Color(0xFF181B1D),
         borderRadius: BorderRadius.circular(15),

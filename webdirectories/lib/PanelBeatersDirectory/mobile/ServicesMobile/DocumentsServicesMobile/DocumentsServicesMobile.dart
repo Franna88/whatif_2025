@@ -18,9 +18,9 @@ class _DocumentsServicesMobileState extends State<DocumentsServicesMobile> {
         SizedBox(
           height: 20,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [ViewDocumentsMobile()],
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: ViewDocumentsMobile(),
         ),
       ],
     );

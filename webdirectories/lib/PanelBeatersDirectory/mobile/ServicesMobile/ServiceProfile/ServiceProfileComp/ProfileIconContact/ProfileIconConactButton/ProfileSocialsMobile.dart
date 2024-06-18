@@ -27,7 +27,7 @@ class _ProfileSocialsMobileState extends State<ProfileSocialsMobile> {
             socialdescription: 'Email',
             onPress: () {}),
         ProfileSocialIconContactMobile(
-            profileIcon: 'images/Contact3.svg',
+            profileIcon: 'images/GetQuote.svg',
             socialdescription: 'Get\nQuote',
             onPress: () {}),
         ProfileSocialIconContactMobile(
