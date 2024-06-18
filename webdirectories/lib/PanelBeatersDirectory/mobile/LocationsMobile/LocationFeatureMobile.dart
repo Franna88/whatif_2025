@@ -3,17 +3,20 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButt
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/BuisnessImageContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/LocationMobileContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/stackedMobilebutton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationMobileOther.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/myutility.dart';
 
 class LocationFeatureMobile extends StatefulWidget {
-  const LocationFeatureMobile({super.key});
+  const LocationFeatureMobile({Key? key}) : super(key: key);
 
   @override
   State<LocationFeatureMobile> createState() => _LocationFeatureMobileState();
 }
 
 class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
+  int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,15 +33,29 @@ class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
           child: Column(
             children: [
               MobileTopNavBarhome(),
-              SizedBox(
-                height: MyUtility(context).height * 0.025,
-              ),
+              SizedBox(height: MyUtility(context).height * 0.025),
               SizedBox(
                 width: MyUtility(context).width * 0.9,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    StackedMobileButtons(),
+                    StackedMobileButtons(
+                      selectedIndex: selectedIndex,
+                      onButtonPressed: (index) {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+
+                        if (index == 1) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LocationMobileOther(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -107,9 +124,7 @@ class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SizedBox(
-                      height: MyUtility(context).height * 0.025,
-                    ),
+                    SizedBox(height: MyUtility(context).height * 0.025),
                     LocationMobileContainer(
                       businessImage: 'images/southcity.jpeg',
                       businessName: 'South City Motors Auto Body Repair',

@@ -5,7 +5,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArti
 import 'package:webdirectories/myutility.dart';
 
 class RecentArticles extends StatefulWidget {
-  const RecentArticles({super.key});
+  const RecentArticles({Key? key}) : super(key: key);
 
   @override
   State<RecentArticles> createState() => _RecentArticlesState();
@@ -14,9 +14,6 @@ class RecentArticles extends StatefulWidget {
 class _RecentArticlesState extends State<RecentArticles> {
   final search = TextEditingController();
 
-  dummyFunction() {
-    //This is a tset
-  }
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -29,20 +26,25 @@ class _RecentArticlesState extends State<RecentArticles> {
             fit: BoxFit.fill,
           ),
         ),
-        child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 10),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 50, top: 0),
+                padding: const EdgeInsets.only(left: 50, top: 25),
                 child: SizedBox(
                   width: MyUtility(context).width / 1.15,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                          width: 223.72,
-                          height: 113.56,
-                          child: Image.asset('images/panLogo.png')),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 25),
+                        child: Image.asset(
+                          'images/logoPanel.png',
+                          //width: 225,
+                          height: 60,
+                        ),
+                      ),
                       Text(
                         'Recent Articles:',
                         style: TextStyle(
@@ -57,7 +59,7 @@ class _RecentArticlesState extends State<RecentArticles> {
               ),
               Container(
                 width: MyUtility(context).width / 1.1,
-                height: MyUtility(context).height * 0.83,
+                height: MyUtility(context).height * 0.82,
                 decoration: ShapeDecoration(
                   gradient: LinearGradient(
                     begin: Alignment(0.56, -0.83),
@@ -79,8 +81,10 @@ class _RecentArticlesState extends State<RecentArticles> {
                     ),
                   ],
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
+                child: Scrollbar(
+                  thumbVisibility: true,
+                  controller: ScrollController(),
+                  child: ListView(
                     children: [
                       Container(
                         width: MyUtility(context).width / 1.1,
@@ -270,13 +274,12 @@ class _RecentArticlesState extends State<RecentArticles> {
                                   onPress: () {}),
                             ],
                           ),
-                          SideScrollBar()
                         ],
                       ),
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

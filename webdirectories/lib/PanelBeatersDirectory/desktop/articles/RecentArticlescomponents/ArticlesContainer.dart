@@ -34,7 +34,7 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
         child: AnimatedContainer(
           duration: Duration(milliseconds: 200),
           width: MyUtility(context).width * 0.312,
-          height: MyUtility(context).width * 0.3745,
+          height: MyUtility(context).height * 0.741,
           decoration: BoxDecoration(
             color: Color(0xFF0E1013),
             borderRadius: BorderRadius.circular(23.12),

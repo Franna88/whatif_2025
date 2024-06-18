@@ -31,7 +31,7 @@ class _JobFinderState extends State<JobFinder> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                        const EdgeInsets.only(left: 10, top: 25, bottom: 10),
                     child: SizedBox(
                       width: MyUtility(context).width * 0.84,
                       child: Row(
@@ -39,11 +39,11 @@ class _JobFinderState extends State<JobFinder> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10, top: 10),
+                            padding: const EdgeInsets.only(bottom: 10),
                             child: Image.asset(
                               'images/logoPanel.png',
-                              width: 225,
-                              height: 110,
+                              //width: 225,
+                              height: 60,
                             ),
                           ),
                           Column(

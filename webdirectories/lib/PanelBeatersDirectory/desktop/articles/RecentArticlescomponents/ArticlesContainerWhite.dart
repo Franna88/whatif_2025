@@ -51,8 +51,7 @@ class _ArticlesContainerWhiteState extends State<ArticlesContainerWhite> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 300,
-                height: 122,
+                height: MyUtility(context).height * 0.15,
                 decoration: ShapeDecoration(
                   image: DecorationImage(
                     image: AssetImage(widget.image),

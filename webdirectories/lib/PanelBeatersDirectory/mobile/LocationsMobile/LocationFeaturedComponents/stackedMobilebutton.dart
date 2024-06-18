@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeatureMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationMobileOther.dart';
 import 'package:webdirectories/myutility.dart';
 
-class StackedMobileButtons extends StatefulWidget {
-  const StackedMobileButtons({super.key});
+class StackedMobileButtons extends StatelessWidget {
+  final Function(int) onButtonPressed;
+  final int selectedIndex;
 
-  @override
-  State<StackedMobileButtons> createState() => _StackedMobileButtonsState();
-}
+  const StackedMobileButtons({
+    Key? key,
+    required this.selectedIndex,
+    required this.onButtonPressed,
+  }) : super(key: key);
 
-class _StackedMobileButtonsState extends State<StackedMobileButtons> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -23,15 +22,10 @@ class _StackedMobileButtonsState extends State<StackedMobileButtons> {
             top: 15,
             left: 90,
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LocationMobileOther()),
-                );
-              },
+              onPressed: () => onButtonPressed(1),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
+                backgroundColor:
+                    selectedIndex == 1 ? Color(0xFFFF8728) : Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
@@ -40,7 +34,7 @@ class _StackedMobileButtonsState extends State<StackedMobileButtons> {
               child: Text(
                 'Other',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: selectedIndex == 1 ? Colors.black : Colors.white,
                   fontSize: 20.4,
                   fontFamily: 'raleway',
                   fontWeight: FontWeight.w400,
@@ -53,15 +47,10 @@ class _StackedMobileButtonsState extends State<StackedMobileButtons> {
             top: 15,
             left: 0,
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LocationFeatureMobile()),
-                );
-              },
+              onPressed: () => onButtonPressed(0),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF8728),
+                backgroundColor:
+                    selectedIndex == 0 ? Color(0xFFFF8728) : Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
@@ -76,7 +65,7 @@ class _StackedMobileButtonsState extends State<StackedMobileButtons> {
               child: Text(
                 'Featured',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: selectedIndex == 0 ? Colors.black : Colors.white,
                   fontSize: 20.4,
                   fontFamily: 'raleway',
                   fontWeight: FontWeight.w400,
