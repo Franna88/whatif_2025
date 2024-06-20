@@ -33,7 +33,7 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
       child: MouseRegion(
         child: AnimatedContainer(
           duration: Duration(milliseconds: 200),
-          width: MyUtility(context).width * 0.312,
+          width: MyUtility(context).width * 0.3,
           height: MyUtility(context).height * 0.741,
           decoration: BoxDecoration(
             color: Color(0xFF0E1013),
@@ -53,7 +53,7 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
             children: [
               Container(
                 width: 600,
-                height: 200,
+                height: MyUtility(context).height * 0.3,
                 decoration: ShapeDecoration(
                   image: DecorationImage(
                     image: AssetImage(widget.image),
@@ -139,19 +139,22 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
                       SEOContainer(text: 'KAI Results'),
                       SEOContainer(text: 'Panelbeaters'),
                       SizedBox(width: MyUtility(context).width * 0.04),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: widget.onpress,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                            padding: EdgeInsets.all(4),
-                            child: Icon(
-                              Icons.keyboard_arrow_right,
-                              color: Colors.black,
+                      Visibility(
+                        visible: false,
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: widget.onpress,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              padding: EdgeInsets.all(4),
+                              child: Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),

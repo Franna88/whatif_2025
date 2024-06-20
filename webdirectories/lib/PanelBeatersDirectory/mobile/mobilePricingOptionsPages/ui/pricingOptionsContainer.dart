@@ -7,7 +7,8 @@ class PricingOptionsContainer extends StatefulWidget {
   PricingOptionsContainer({super.key, required this.child});
 
   @override
-  State<PricingOptionsContainer> createState() => _PricingOptionsContainerState();
+  State<PricingOptionsContainer> createState() =>
+      _PricingOptionsContainerState();
 }
 
 class _PricingOptionsContainerState extends State<PricingOptionsContainer> {
@@ -22,10 +23,6 @@ class _PricingOptionsContainerState extends State<PricingOptionsContainer> {
             filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
             child: new Container(
               width: widthDevice * 0.80,
-              height: heightDevice * 0.69,
-              
-              
-              
               decoration: new BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   color: Colors.grey.shade200.withOpacity(0.3)),

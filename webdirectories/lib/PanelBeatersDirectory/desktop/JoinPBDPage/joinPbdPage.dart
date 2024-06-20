@@ -14,83 +14,94 @@ class JoinPbd extends StatefulWidget {
 }
 
 class _JoinPbdState extends State<JoinPbd> {
-  //var
+  // Variables
   int containerIndex = 0;
   String packageType = "";
 
-//update containerIndex
+  // List of containers
+  final List<Widget> infoContainers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    infoContainers.addAll([
+      WhyMotoristsPage(nextContainer: nextContainer),
+      WhyJoinPage(
+          nextContainer: nextContainer,
+          updateContainerIndex: updateContainerIndex),
+      FreeDirectory(nextContainer: nextContainer),
+    ]);
+  }
+
+  // Update containerIndex
   updateContainerIndex(value) {
     setState(() {
       containerIndex = value;
     });
   }
 
-  //update package type var
+  // Update package type var
   updatePackageType(value) {
     setState(() {
       packageType = value;
     });
   }
 
-//update container index
+  // Update container index
   nextContainer(value) {
-    if (containerIndex > -1 && containerIndex < 2) {
-      setState(() {
-        if (value == '+') {
-          containerIndex = containerIndex + 1;
-        } else {
-          containerIndex = containerIndex - 1;
-        }
-      });
-    }
+    setState(() {
+      if (value == '+' && containerIndex < infoContainers.length - 1) {
+        containerIndex = containerIndex + 1;
+      } else if (value == '-' && containerIndex > 0) {
+        containerIndex = containerIndex - 1;
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
-    final List<Widget> infoContainers = [
-      WhyMotoristsPage(nextContainer: nextContainer),
-      WhyJoinPage(
-          nextContainer: nextContainer,
-          updateContainerIndex: updateContainerIndex),
-      FreeDirectory(nextContainer: nextContainer),
-      PricingOptionsPage(
+    return Material(
+      child: Container(
+        height: MyUtility(context).height,
+        width: MyUtility(context).width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/joinBackground.png'),
+            fit: BoxFit.fill,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.2),
+              BlendMode.darken,
+            ),
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 50, top: 50),
+                child: Image.asset(
+                  'images/logoPanel.png',
+                  height: 60,
+                ),
+              ),
+              SizedBox(
+                height: heightDevice * 0.07,
+              ),
+              infoContainers[containerIndex],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+/*PricingOptionsPage(
         updateContainerIndex: updateContainerIndex,
         updatePackageType: updatePackageType,
       ),
       PackagePage(
         packageType: packageType,
-      ),
-    ];
-    return Material(
-        child: Container(
-            height: MyUtility(context).height,
-            width: MyUtility(context).width,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('images/joinBackground.png'),
-                fit: BoxFit.fill,
-                colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.2),
-                  BlendMode.darken,
-                ),
-              ),
-            ),
-            child: SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 50, top: 50),
-                    child: Image.asset(
-                      'images/logoPanel.png',
-                      //width: 190,
-                      height: 60,
-                    ),
-                  ),
-                  SizedBox(height: heightDevice * 0.07 ,),
-                  infoContainers[containerIndex]
-                ]))));
-  }
-}
+      ),*/

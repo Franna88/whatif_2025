@@ -89,7 +89,7 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                       ),
                     ),
                   ),
-                  if (widthDevice > 1477 )
+                  if (widthDevice > 1477)
                     SizedBox(
                       width: widthDevice * 0.06,
                     ),

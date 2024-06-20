@@ -16,12 +16,20 @@ class _WhyMotoristsMobilePageState extends State<WhyMotoristsMobilePage> {
   bool isPressed = false;
 
   //Open popup custom plan
-  Future openRegistrationProcess() => showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-            child: CustomPlanMobile(closeDialog: () => Navigator.pop(context)));
-      });
+  Future openRegistrationProcess() => showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionDuration: Duration(milliseconds: 200),
+        pageBuilder: (context, _, __) {
+          return Dialog(
+            backgroundColor: Colors.transparent,
+            child: CustomPlanMobile(closeDialog: () => Navigator.pop(context)),
+          );
+        },
+      );
 
   @override
   Widget build(BuildContext context) {

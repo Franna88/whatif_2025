@@ -17,8 +17,10 @@ class WhyJoinPage extends StatelessWidget {
     return SmallGlassContainer(
         nextContainer: nextContainer,
         child: Padding(
-          padding:
-              EdgeInsets.only(left: 25, top: widthDevice < 1500 ? 20 : 25, bottom: widthDevice < 1500 ? 20 : 30),
+          padding: EdgeInsets.only(
+              left: 25,
+              top: widthDevice < 1500 ? 20 : 25,
+              bottom: widthDevice < 1500 ? 20 : 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -121,27 +123,21 @@ class WhyJoinPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
               SizedBox(
                 width: widthDevice * 0.40,
                 child: Text(
-                  '\nJoin our network of 2 100+ shops and benefit from our decade-long customer support and industry partnerships. \n\nGet seen by more qualified leads thanks to trusted reviews, targeted advertisement opportunities, and first-page Google rankings. Leverage clicks, leads and conversions to maximize your Return on Investment. \n\nManage your profile 24/7 anywhere and reach a wider audience across 8 African countries. Choose features that best suit your budget and target audience.\n\nPartner with us and grow your business!\n',
-                  style:  widthDevice < 1500
-                              ? TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontFamily: 'raleway',
-                                  height: 1.2
-                                ) :  
-                               TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontFamily: 'raleway',
-                                  
-                                )
-                ),
+                    '\nJoin our network of 2 100+ shops and benefit from our decade-long customer support and industry partnerships. \n\nGet seen by more qualified leads thanks to trusted reviews, targeted advertisement opportunities, and first-page Google rankings. Leverage clicks, leads and conversions to maximize your Return on Investment. \n\nManage your profile 24/7 anywhere and reach a wider audience across 8 African countries. Choose features that best suit your budget and target audience.\n\nPartner with us and grow your business!\n',
+                    style: widthDevice < 1500
+                        ? TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontFamily: 'raleway',
+                            height: 1.2)
+                        : TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.4,
+                            fontFamily: 'raleway',
+                          )),
               ),
               SizedBox(
                 width: widthDevice / 2,

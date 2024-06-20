@@ -35,10 +35,15 @@ class MobileProgressBar extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           padding: EdgeInsets.zero,
-          child: Icon(
-            Icons.close,
-            color: Colors.white,
-            size: 14,
+          child: IconButton(
+            icon: Icon(
+              Icons.close,
+              color: Colors.white,
+              size: 14,
+            ),
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog when button is pressed
+            },
           ),
         ),
       ],

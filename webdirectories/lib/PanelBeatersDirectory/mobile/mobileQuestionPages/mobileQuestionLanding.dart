@@ -16,7 +16,7 @@ class _MobileQuestionLandingState extends State<MobileQuestionLanding> {
   int containerIndex = 0;
   String packageType = "";
 
-//update containerIndex
+  //update containerIndex
   updateContainerIndex(value) {
     setState(() {
       containerIndex = value;
@@ -30,17 +30,19 @@ class _MobileQuestionLandingState extends State<MobileQuestionLanding> {
     });
   }
 
-//update container index
-  nextContainer(value) {
-    if (containerIndex > -1 && containerIndex < 2) {
-      setState(() {
-        if (value == '+') {
-          containerIndex = containerIndex + 1;
-        } else {
-          containerIndex = containerIndex - 1;
+  //update container index
+  nextContainer(String direction) {
+    setState(() {
+      if (direction == '+') {
+        if (containerIndex < 2) {
+          containerIndex++;
         }
-      });
-    }
+      } else {
+        if (containerIndex > 0) {
+          containerIndex--;
+        }
+      }
+    });
   }
 
   @override
@@ -60,7 +62,7 @@ class _MobileQuestionLandingState extends State<MobileQuestionLanding> {
         width: widthDevice,
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('images/mobileLanding.png' , ), fit: BoxFit.cover, ),
+              image: AssetImage('images/mobileLanding.png'), fit: BoxFit.cover),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
@@ -73,17 +75,6 @@ class _MobileQuestionLandingState extends State<MobileQuestionLanding> {
                   height: 25,
                 ),
                 infoContainers[containerIndex]
-                //   WeAreDoneMobile()
-                //AdvancedFeaturesMobile()
-                //ClientManagementMobile()
-                //BusinessOperationsMobile()
-                //OnlinePresenceMobile()
-                // ClientCommunicationMobile()
-                //LetsFindYourPlanMobile()
-
-                //WhyMotoristsMobilePage()
-                //FreeDirectoryMobile()
-                //WhyJoinPBDmobile(),
               ],
             ),
           ),

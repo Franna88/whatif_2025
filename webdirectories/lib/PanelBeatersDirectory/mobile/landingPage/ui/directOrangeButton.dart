@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeatureMobile.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/mobileRecentArticles.dart';
 
 class DirectOrangeButton extends StatelessWidget {
   final String buttonTitle;
@@ -16,7 +17,7 @@ class DirectOrangeButton extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const LocationFeatureMobile()),
+                  builder: (context) => const MobileRecentArticles()),
             );
           },
           child: Container(

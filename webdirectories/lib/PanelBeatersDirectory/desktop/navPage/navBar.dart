@@ -54,7 +54,6 @@ class _NavBarState extends State<NavBar> {
         ),
         shape: RoundedRectangleBorder(
           side: BorderSide(
-              
               width: 1,
               strokeAlign: BorderSide.strokeAlignOutside,
               color: Colors.white),
@@ -105,12 +104,9 @@ class _NavBarState extends State<NavBar> {
             padding: const EdgeInsets.symmetric(vertical: 0.0),
             child: Tooltip(
               message: widget.menuTooltips[5],
-              
-                  textStyle: TextStyle(
-                      color: Color(0xFFEF9040), fontFamily: 'raleway'),
-
+              textStyle:
+                  TextStyle(color: Color(0xFFEF9040), fontFamily: 'raleway'),
               child: IconButton(
-                
                 icon: SvgPicture.asset(
                   widget.iconPaths[5],
                   width: 50,
@@ -121,7 +117,7 @@ class _NavBarState extends State<NavBar> {
                   setState(() {
                     selectedIndex = 5;
                   });
-              
+
                   widget.onIconTapped(5);
                 },
               ),
@@ -131,10 +127,9 @@ class _NavBarState extends State<NavBar> {
             padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: Tooltip(
               message: widget.menuTooltips[6],
-                  textStyle: TextStyle(
-                      color: Color(0xFFEF9040), fontFamily: 'raleway'),
+              textStyle:
+                  TextStyle(color: Color(0xFFEF9040), fontFamily: 'raleway'),
               child: IconButton(
-                
                 icon: SvgPicture.asset(
                   widget.iconPaths[6],
                   width: 50,
@@ -145,7 +140,7 @@ class _NavBarState extends State<NavBar> {
                   setState(() {
                     selectedIndex = 6;
                   });
-              
+
                   widget.onIconTapped(6);
                 },
               ),

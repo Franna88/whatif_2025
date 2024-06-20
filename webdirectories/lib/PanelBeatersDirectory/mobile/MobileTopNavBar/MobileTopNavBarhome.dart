@@ -29,7 +29,7 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
           padding: const EdgeInsets.only(top: 50, right: 20),
           child: Container(
             width: 250,
-            height: 80,
+            height: 50,
             child: Align(
               alignment: Alignment.topLeft,
               child: Image.asset(
@@ -40,30 +40,34 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
           ),
         ),
         SizedBox(width: 10),
-        PopupMenuButton(
-          icon: Icon(
-            Icons.menu,
-            size: 40,
-            color: Colors.white,
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: PopupMenuButton(
+            icon: Icon(
+              Icons.menu,
+              size: 40,
+              color: Colors.white,
+            ),
+            itemBuilder: (BuildContext context) {
+              return [
+                buildPopupMenuItem('Home', 'option1', Mobilelandingpage()),
+                buildPopupMenuItem('Job Finder', 'option2', MobileJobFinder()),
+                buildPopupMenuItem(
+                    'More Service', 'option3', Mobilelandingpage()),
+                buildPopupMenuItem(
+                    'News & Articles', 'option4', MobileRecentArticles()),
+                buildPopupMenuItem(
+                    'Get Listed Today', 'option5', MobileQuestionLanding()),
+                buildPopupMenuItem(
+                    'Owners Portal', 'option6', OwnersloginMain()),
+              ];
+            },
+            onSelected: (value) {
+              setState(() {
+                selectedOption = value as String?;
+              });
+            },
           ),
-          itemBuilder: (BuildContext context) {
-            return [
-              buildPopupMenuItem('Home', 'option1', Mobilelandingpage()),
-              buildPopupMenuItem('Job Finder', 'option2', MobileJobFinder()),
-              buildPopupMenuItem(
-                  'More Service', 'option3', Mobilelandingpage()),
-              buildPopupMenuItem(
-                  'News & Articles', 'option4', MobileRecentArticles()),
-              buildPopupMenuItem(
-                  'Get Listed Today', 'option5', MobileQuestionLanding()),
-              buildPopupMenuItem('Owners Portal', 'option6', OwnersloginMain()),
-            ];
-          },
-          onSelected: (value) {
-            setState(() {
-              selectedOption = value as String?;
-            });
-          },
         ),
       ],
     );

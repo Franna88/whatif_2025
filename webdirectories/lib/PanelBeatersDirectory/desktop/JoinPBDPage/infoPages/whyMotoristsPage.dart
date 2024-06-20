@@ -17,7 +17,7 @@ class WhyMotoristsPage extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 25, top: 25 ),
+              padding: const EdgeInsets.only(left: 25, top: 25),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,17 +136,16 @@ class WhyMotoristsPage extends StatelessWidget {
                                 fontSize: 18,
                                 fontFamily: 'raleway',
                                 fontWeight: FontWeight.w400,
-                                height: 1.2
-                              )
+                                height: 1.2)
                             : TextStyle(
                                 color: Colors.white,
-                                fontSize: 22,
+                                fontSize: 21.0,
                                 fontFamily: 'raleway',
                                 fontWeight: FontWeight.w400,
-                                height: 1.2
-                              )),
+                                height: 1.2)),
                   ),
-                  SizedBox(width: widthDevice * 0.40,
+                  SizedBox(
+                    width: widthDevice * 0.40,
                     child: Text(
                         '\nOur transparent, user friendly platform helps customers find and compare relevant options, read real reviews, see industry ratings and make informed decisions, saving both time and money.\n',
                         style: widthDevice < 1500
@@ -155,15 +154,13 @@ class WhyMotoristsPage extends StatelessWidget {
                                 fontSize: 18,
                                 fontFamily: 'raleway',
                                 fontWeight: FontWeight.w400,
-                                height: 1.2
-                              )
+                                height: 1.2)
                             : TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
                                 fontFamily: 'raleway',
                                 fontWeight: FontWeight.w400,
-                                height: 1.2
-                              )),
+                                height: 1.2)),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -177,15 +174,13 @@ class WhyMotoristsPage extends StatelessWidget {
                                     fontSize: 18,
                                     fontFamily: 'raleway',
                                     fontWeight: FontWeight.w400,
-                                    height: 1.2
-                                  )
+                                    height: 1.2)
                                 : TextStyle(
                                     color: Colors.white,
                                     fontSize: 22,
                                     fontFamily: 'raleway',
                                     fontWeight: FontWeight.w400,
-                                    height: 1.2
-                                  )),
+                                    height: 1.2)),
                         TextButton(
                           onPressed: () {},
                           child: Text('Your AI Co-Driver ',
@@ -197,8 +192,7 @@ class WhyMotoristsPage extends StatelessWidget {
                                       fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.underline,
                                       decorationColor: Color(0xFFEF9040),
-                                      height: 1.2
-                                    )
+                                      height: 1.2)
                                   : TextStyle(
                                       color: Color(0xFFEF9040),
                                       fontSize: 22,
@@ -206,8 +200,7 @@ class WhyMotoristsPage extends StatelessWidget {
                                       fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.underline,
                                       decorationColor: Color(0xFFEF9040),
-                                      height: 1.2
-                                    )),
+                                      height: 1.2)),
                         )
                       ],
                     ),
