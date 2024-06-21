@@ -218,7 +218,7 @@ class _RecentArticlesState extends State<RecentArticles> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             ArticlesContainer(
-                              image: 'Images/mainbackgroundPanel.png',
+                              image: 'images/mainbackgroundPanel.png',
                               category: 'Panel Beater Directory',
                               headline:
                                   'See your Lightstone EchoMBR Results for February 2024',
@@ -231,7 +231,7 @@ class _RecentArticlesState extends State<RecentArticles> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 ArticlesContainerWhite(
-                                  image: 'Images/articles1.png',
+                                  image: 'images/articles1.png',
                                   category: 'Panel Beater Directory',
                                   headline:
                                       "How to Replace Your Car's Air Filter",
@@ -241,7 +241,7 @@ class _RecentArticlesState extends State<RecentArticles> {
                                   onPress: () {},
                                 ),
                                 ArticlesContainerWhite(
-                                  image: 'Images/articles2.png',
+                                  image: 'images/articles2.png',
                                   category: 'Panel Beater Directory',
                                   headline:
                                       'A Technical Look at Paintless Dent Removal',
@@ -256,7 +256,7 @@ class _RecentArticlesState extends State<RecentArticles> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 ArticlesContainerWhite(
-                                  image: 'Images/articles3.png',
+                                  image: 'images/articles3.png',
                                   category: 'Panel Beater Directory',
                                   headline:
                                       "The Lightstone EchoMBR Rankings Awards",
@@ -266,7 +266,7 @@ class _RecentArticlesState extends State<RecentArticles> {
                                   onPress: () {},
                                 ),
                                 ArticlesContainerWhite(
-                                  image: 'Images/articles4.png',
+                                  image: 'images/articles4.png',
                                   category: 'Panel Beater Directory',
                                   headline:
                                       'The Future of Panel Beating in South Africa',
@@ -281,7 +281,7 @@ class _RecentArticlesState extends State<RecentArticles> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 ArticlesContainerWhite(
-                                  image: 'Images/articles5.png',
+                                  image: 'images/articles5.png',
                                   category: 'Panel Beater Directory',
                                   headline:
                                       "What do different car colours mean?",
@@ -291,7 +291,7 @@ class _RecentArticlesState extends State<RecentArticles> {
                                   onPress: () {},
                                 ),
                                 ArticlesContainerWhite(
-                                  image: 'Images/articles6.png',
+                                  image: 'images/articles6.png',
                                   category: 'Panel Beater Directory',
                                   headline:
                                       "How to Replace Your Car's Windscreen Wiper Blades",
