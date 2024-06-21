@@ -61,7 +61,7 @@ class _MobileRecentArticlesState extends State<MobileRecentArticles> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ArticleDescriptionContainer(
-                          image: 'Images/nightdrive1.png',
+                          image: 'images/nightdrive1.png',
                           category: 'Panel Beater Directory',
                           headline:
                               'See your Lightstone EchoMBR Results for February 2024',
