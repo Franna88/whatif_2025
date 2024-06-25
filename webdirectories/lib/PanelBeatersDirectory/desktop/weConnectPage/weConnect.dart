@@ -11,6 +11,8 @@ class WeConnect extends StatefulWidget {
 class _WeConnectState extends State<WeConnect> {
   @override
   Widget build(BuildContext context) {
-    return const WeConnectMainPage();
+    return WeConnectMainPage(
+      goToLandingPageDisplay: () {},
+    );
   }
 }

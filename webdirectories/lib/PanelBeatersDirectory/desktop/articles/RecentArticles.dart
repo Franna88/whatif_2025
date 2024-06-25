@@ -38,7 +38,7 @@ class _RecentArticlesState extends State<RecentArticles> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 50, top: 25),
+                padding: const EdgeInsets.only(left: 25, top: 25),
                 child: SizedBox(
                   width: MyUtility(context).width / 1.15,
                   child: Row(
@@ -49,7 +49,7 @@ class _RecentArticlesState extends State<RecentArticles> {
                         child: Image.asset(
                           'images/logoPanel.png',
                           //width: 225,
-                          height: 60,
+                          height: 70,
                         ),
                       ),
                       Text(

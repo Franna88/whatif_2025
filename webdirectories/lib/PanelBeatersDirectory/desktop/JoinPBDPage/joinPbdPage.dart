@@ -84,7 +84,7 @@ class _JoinPbdState extends State<JoinPbd> {
                 padding: const EdgeInsets.only(left: 50, top: 50),
                 child: Image.asset(
                   'images/logoPanel.png',
-                  height: 60,
+                  height: 70,
                 ),
               ),
               SizedBox(

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/landingPageDisplay.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/ui/checkMarkedText.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/ui/stackedInfo.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/ui/weConnectText.dart';
-import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPage.dart';
 
 class WeConnectMainPage extends StatelessWidget {
-  const WeConnectMainPage({super.key});
+  final VoidCallback goToLandingPageDisplay;
+
+  const WeConnectMainPage({super.key, required this.goToLandingPageDisplay});
 
   @override
   Widget build(BuildContext context) {
@@ -31,25 +31,26 @@ class WeConnectMainPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 25, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
+                    child: SizedBox(
+                      width: widthDevice * 0.82,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
                           padding: const EdgeInsets.only(left: 50, top: 50),
                           child: Image.asset(
                             'images/logoPanel.png',
-                            height: 60,
+                            height: 70,
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Container(
-                    width: widthDevice * 0.90,
-                    height: heightDevice * 0.80,
+                    width: widthDevice * 0.82,
+                    height: heightDevice * 0.72,
                     decoration: ShapeDecoration(
                       color: Color(0xFF181B1D),
                       shape: RoundedRectangleBorder(
@@ -69,7 +70,7 @@ class WeConnectMainPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            width: widthDevice / 2.2,
+                            width: widthDevice / 2.8,
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,34 +87,44 @@ class WeConnectMainPage extends StatelessWidget {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Text(
-                                    '#WeConnect',
-                                    style: TextStyle(
-                                      color: Color(0xFFFAFAFA),
-                                      fontSize: 45,
-                                      fontFamily: 'ralewaybold',
-                                      height: 1,
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 15, top: 10),
+                                    child: Text(
+                                      '#WeConnect',
+                                      style: TextStyle(
+                                        color: Color(0xFFFAFAFA),
+                                        fontSize: 45,
+                                        fontFamily: 'ralewaybold',
+                                        height: 1,
+                                      ),
                                     ),
                                   ),
-                                  Text(
-                                    WeConnectText().description1,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontFamily: 'raleway',
-                                      height: 1.2,
+                                  SizedBox(
+                                    width: widthDevice * 0.3,
+                                    child: Text(
+                                      WeConnectText().description1,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontFamily: 'raleway',
+                                        height: 1.2,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  Text(
-                                    WeConnectText().description2,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontFamily: 'raleway',
-                                      height: 1.2,
+                                  SizedBox(
+                                    width: widthDevice * 0.3,
+                                    child: Text(
+                                      WeConnectText().description2,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontFamily: 'raleway',
+                                        height: 1.2,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
@@ -127,21 +138,38 @@ class WeConnectMainPage extends StatelessWidget {
                                   ),
                                   CheckMarkedText(
                                     text:
-                                        'Make informed decisions based on accurate information',
+                                        'Make informed decisions\nbased on accurate\ninformation',
                                   ),
                                 ]),
                           ),
                           Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              StackedInfo(),
-                              Container(
-                                height: heightDevice / 2.2,
-                                width: widthDevice / 2.4,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage('images/WeConnect.png'),
-                                      fit: BoxFit.contain),
-                                ),
+                              Stack(
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 30),
+                                    child: Container(
+                                      height: heightDevice * 0.63,
+                                      width: widthDevice * 0.35,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'images/WeConnect.png'),
+                                            fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: 350,
+                                    top: 0,
+                                    child: StackedInfo(),
+                                  )
+                                ],
                               ),
                             ],
                           ),
@@ -162,13 +190,11 @@ class WeConnectMainPage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+                  onTap: goToLandingPageDisplay,
                   child: Icon(
                     Icons.keyboard_arrow_right_rounded,
                     size: heightDevice * 0.12,
-                    color: Color(0xFFF19A40),
+                    color: Color(0xFFFF8828),
                   ),
                 ),
               ),

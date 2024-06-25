@@ -229,8 +229,8 @@ class _CategorySelectState extends State<CategorySelect>
               ),
             ],
           )
-          //==============
-          //Bigger screen
+        //==============
+        //Bigger screen
         : Column(
             children: [
               Stack(

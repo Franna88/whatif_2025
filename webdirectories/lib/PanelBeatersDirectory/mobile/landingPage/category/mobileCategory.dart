@@ -222,8 +222,8 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
                 left: 0,
                 right: 0,
                 child: Mobilecategorytext(
-                  text1: 'News &',
-                  text2: 'ARTICLES',
+                  text1: 'Info &',
+                  text2: 'Finance',
                 ),
               )
             else if (widget.menuIndex == 4)

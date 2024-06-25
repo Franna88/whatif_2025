@@ -17,11 +17,19 @@ class FuelTowingRepairMenu extends StatelessWidget {
         MenuIndexWidget(menuIndex: menuIndex),
         const Text(
           'Fuel, Towing & Repair',
+          textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 34,
-            fontFamily: 'ralewaybold',
-            color: Color.fromARGB(255, 255, 255, 255),
-          ),
+              shadows: [
+                Shadow(
+                  blurRadius: 5.0,
+                  color: Color.fromARGB(166, 0, 0, 0),
+                  offset: Offset(1.0, 1.0),
+                ),
+              ],
+              fontSize: 34,
+              height: 1.15,
+              fontFamily: 'ralewaybold',
+              color: Color.fromARGB(255, 255, 255, 255)),
         ),
         Padding(
           padding: EdgeInsets.only(left: widthDevice * 0.03),

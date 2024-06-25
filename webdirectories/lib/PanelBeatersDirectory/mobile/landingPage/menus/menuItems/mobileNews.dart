@@ -19,11 +19,18 @@ class MobileNews extends StatelessWidget {
           height: 15,
         ),
         const Text(
-          'News',
+          'Info & Finance',
           textAlign: TextAlign.center,
           style: TextStyle(
-              height: 1,
+              shadows: [
+                Shadow(
+                  blurRadius: 5.0,
+                  color: Color.fromARGB(166, 0, 0, 0),
+                  offset: Offset(1.0, 1.0),
+                ),
+              ],
               fontSize: 34,
+              height: 1.15,
               fontFamily: 'ralewaybold',
               color: Color.fromARGB(255, 255, 255, 255)),
         ),
@@ -46,7 +53,7 @@ class MobileNews extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        const DirectOrangeButton(buttonTitle: 'Articles'),
+        const DirectOrangeButton(buttonTitle: 'News & Articles'),
         const SizedBox(
           height: 15,
         ),

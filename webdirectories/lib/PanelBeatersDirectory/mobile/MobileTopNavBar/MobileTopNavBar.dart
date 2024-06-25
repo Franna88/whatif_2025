@@ -71,8 +71,8 @@ class _MobileTopNavBarState extends State<MobileTopNavBar> {
       child: Container(
         width: MyUtility(context).width,
         color: isSelected
-            ? Color(0xFFebebeb).withOpacity(0.05)
-            : Color(0xFFebebeb).withOpacity(0.05),
+            ? Color(0xE5D9D9D9).withOpacity(0.05)
+            : Color(0xFFF1F3F4).withOpacity(0.05),
         child: ListTile(
           title: Text(
             text,

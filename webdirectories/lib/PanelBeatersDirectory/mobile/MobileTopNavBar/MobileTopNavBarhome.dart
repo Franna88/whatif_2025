@@ -42,29 +42,31 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
         SizedBox(width: 10),
         Padding(
           padding: const EdgeInsets.only(top: 20),
-          child: PopupMenuButton(
+          child: PopupMenuButton<String>(
             icon: Icon(
               Icons.menu,
               size: 40,
               color: Colors.white,
             ),
-            itemBuilder: (BuildContext context) {
-              return [
-                buildPopupMenuItem('Home', 'option1', Mobilelandingpage()),
-                buildPopupMenuItem('Job Finder', 'option2', MobileJobFinder()),
-                buildPopupMenuItem(
-                    'More Service', 'option3', Mobilelandingpage()),
-                buildPopupMenuItem(
-                    'News & Articles', 'option4', MobileRecentArticles()),
-                buildPopupMenuItem(
-                    'Get Listed Today', 'option5', MobileQuestionLanding()),
-                buildPopupMenuItem(
-                    'Owners Portal', 'option6', OwnersloginMain()),
-              ];
-            },
-            onSelected: (value) {
+            itemBuilder: (BuildContext context) => [
+              buildPopupMenuItem('Home', 'option1', Mobilelandingpage()),
+              PopupMenuDivider(), // Grey divider
+              buildPopupMenuItem('Job Finder', 'option2', MobileJobFinder()),
+              PopupMenuDivider(), // Grey divider
+              buildPopupMenuItem(
+                  'More Services', 'option3', Mobilelandingpage()),
+              PopupMenuDivider(), // Grey divider
+              buildPopupMenuItem(
+                  'News & Articles', 'option4', MobileRecentArticles()),
+              PopupMenuDivider(), // Grey divider
+              buildPopupMenuItem(
+                  'Get Listed Today!', 'option5', MobileQuestionLanding()),
+              PopupMenuDivider(), // Grey divider
+              buildPopupMenuItem('Owners Portal', 'option6', OwnersloginMain()),
+            ],
+            onSelected: (String value) {
               setState(() {
-                selectedOption = value as String?;
+                selectedOption = value;
               });
             },
           ),
@@ -76,27 +78,28 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
   PopupMenuItem<String> buildPopupMenuItem(
       String text, String value, Widget route) {
     final isSelected = selectedOption == value;
-    return PopupMenuItem(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Material(
-                      child: route,
-                    )));
-      },
+    return PopupMenuItem<String>(
       value: value,
       child: Container(
-        width: MyUtility(context).width,
         color: isSelected
-            ? Color(0xFFebebeb).withOpacity(0.05)
-            : Color(0xFFebebeb).withOpacity(0.05),
+            ? Color(0xE5D9D9D9).withOpacity(0.05)
+            : Color(0xFFF1F3F4).withOpacity(0.05),
         child: ListTile(
+          contentPadding: EdgeInsets.zero,
           title: Text(
             text,
             style: TextStyle(
-                color: Colors.black, fontFamily: 'raleway', fontSize: 18),
+              color: Colors.black,
+              fontFamily: 'raleway',
+              fontSize: 18,
+            ),
           ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Material(child: route)),
+            );
+          },
         ),
       ),
     );

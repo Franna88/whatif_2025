@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/weConnectPage/weConnectMainPage/weConnectMainPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/category/mobileCategory.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/menus/menuItems/approvalsServices/mobileApprovalsServices.dart';
@@ -8,6 +9,7 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/menus/me
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/menus/menuItems/mobileNews.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/menus/menuItems/mobileWatifMenu.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileGlassContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/weConnectMainPage/weConnectMainPage.dart';
 
 class Mobilelandingpage extends StatefulWidget {
   const Mobilelandingpage({super.key});
@@ -19,7 +21,7 @@ class Mobilelandingpage extends StatefulWidget {
 class _MobilelandingpageState extends State<Mobilelandingpage> {
   int menuIndex = 0;
 
-  List menuContainers = [
+  List<Widget> menuContainers = [
     const Mobilewatifmenu(),
     const MobileFindAllPanelBeaters(),
     const MobileApprovalsServices(),
@@ -27,11 +29,7 @@ class _MobilelandingpageState extends State<Mobilelandingpage> {
     const MobileFuelTowing()
   ];
 
-  changeMenu(value) {
-    setState(() {
-      menuIndex = value;
-    });
-  }
+  PageController _pageController = PageController(initialPage: 1);
 
   @override
   Widget build(BuildContext context) {
@@ -45,22 +43,34 @@ class _MobilelandingpageState extends State<Mobilelandingpage> {
           image: DecorationImage(
               image: AssetImage('images/mobileLanding.png'), fit: BoxFit.cover),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              MobileTopNavBarhome(),
-              MobileCategorySelect(
-                menuIndex: menuIndex,
-                changeMenu: changeMenu,
+        child: PageView(
+          controller: _pageController,
+          children: [
+            // Add the WeConnectMainPage here
+            WeConnectMainPageMobile(),
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  MobileTopNavBarhome(),
+                  MobileCategorySelect(
+                    menuIndex: menuIndex,
+                    changeMenu: (value) {
+                      setState(() {
+                        menuIndex = value;
+                      });
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child:
+                        Mobileglasscontainer(child: menuContainers[menuIndex]),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Mobileglasscontainer(child: menuContainers[menuIndex]),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

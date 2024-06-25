@@ -14,23 +14,23 @@ class _ProfileSocialsState extends State<ProfileSocials> {
     return Row(
       children: [
         ProfileSocialIconContact(
-            profileIcon: 'images/call1.svg',
+            profileIcon: 'images/Contact1.svg',
             socialdescription: 'Call',
             onPress: () {}),
         ProfileSocialIconContact(
-            profileIcon: 'images/call1.svg',
+            profileIcon: 'images/Contact6.svg',
             socialdescription: 'WhatsApp',
             onPress: () {}),
         ProfileSocialIconContact(
-            profileIcon: 'images/call1.svg',
+            profileIcon: 'images/Contact7.svg',
             socialdescription: 'Email',
             onPress: () {}),
         ProfileSocialIconContact(
-            profileIcon: 'images/call1.svg',
+            profileIcon: 'images/GetQuote.svg',
             socialdescription: 'Get Quote',
             onPress: () {}),
         ProfileSocialIconContact(
-            profileIcon: 'images/call1.svg',
+            profileIcon: 'images/Contact5.svg',
             socialdescription: 'Leave Review',
             onPress: () {}),
       ],

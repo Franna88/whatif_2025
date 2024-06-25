@@ -21,11 +21,11 @@ class NavBar extends StatefulWidget {
 
   final List<String> menuTooltips = [
     'PBD Home',
-    'Featured',
+    'Find',
     'Job Finder',
-    '#WeConnect',
-    'Articles',
-    'Shop',
+    'More Services',
+    'Info & Articles',
+    'Get Listed Today',
     'Owners Login'
   ];
 

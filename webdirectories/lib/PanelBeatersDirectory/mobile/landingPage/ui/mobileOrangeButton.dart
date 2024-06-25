@@ -49,10 +49,10 @@ class MobileOrangeButton extends StatelessWidget {
                 Text(
                   buttonTitle,
                   style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.4,
-                    fontFamily: 'ralewaymedium',
-                  ),
+                      color: Colors.black,
+                      fontSize: 20.4,
+                      fontFamily: 'ralewaymedium',
+                      letterSpacing: -0.3),
                 ),
                 Container(
                   width: 25,

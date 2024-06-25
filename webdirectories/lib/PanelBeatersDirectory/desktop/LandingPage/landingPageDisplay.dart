@@ -1,27 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/category/categorySelect.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/approvalsServices.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/findAllPanelBeatersmenu.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/fuelTowingRepairMenu.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/glassContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/newsMenu.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/watifMenu.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/glassContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/weConnectPage/weConnect.dart';
 import 'package:webdirectories/myutility.dart';
 
 class LandingPageDisplay extends StatefulWidget {
-  const LandingPageDisplay({super.key});
+  final VoidCallback goToWeConnectMainPage;
+
+  const LandingPageDisplay({super.key, required this.goToWeConnectMainPage});
 
   @override
   State<LandingPageDisplay> createState() => _LandingPageDisplayState();
 }
 
 class _LandingPageDisplayState extends State<LandingPageDisplay> {
-  // var
   int menuIndex = 0;
-  //Container options
+
   List infoContainers = [
     WatifMenu(),
     FindAllPanelBeaters(),
@@ -30,7 +30,6 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
     FuelTowingRepairMenu()
   ];
 
-//update menu index
   changeMenu(value) {
     setState(() {
       menuIndex = value;
@@ -38,6 +37,8 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
   }
 
   @override
+  bool _isHovered = false;
+
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
@@ -58,8 +59,7 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                 padding: const EdgeInsets.only(left: 50, top: 50),
                 child: Image.asset(
                   'images/logoPanel.png',
-                  //width: 225,
-                  height: 60,
+                  height: 70,
                 ),
               ),
               SizedBox(
@@ -73,18 +73,21 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                     padding: const EdgeInsets.only(left: 15),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const WeConnect()),
-                          );
-                        },
-                        child: Icon(
-                          Icons.keyboard_arrow_left_rounded,
-                          size: heightDevice * 0.12,
-                          color: Color(0xFFF19A40),
+                      child: MouseRegion(
+                        onEnter: (_) => setState(() {
+                          _isHovered = true;
+                        }),
+                        onExit: (_) => setState(() {
+                          _isHovered = false;
+                        }),
+                        child: GestureDetector(
+                          onTap: widget.goToWeConnectMainPage,
+                          child: Icon(
+                            Icons.keyboard_arrow_left_rounded,
+                            size: heightDevice * 0.12,
+                            color:
+                                _isHovered ? Colors.white : Color(0xFFFF8828),
+                          ),
                         ),
                       ),
                     ),
@@ -104,9 +107,9 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                     child: Center(
                       child: infoContainers[menuIndex],
                     ),
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),
