@@ -22,7 +22,7 @@ class _MobileJobFinderState extends State<MobileJobFinder> {
           width: MyUtility(context).width,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('images/mainbackgroundPanel.png'),
+              image: AssetImage('images/Mechanic1.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -91,20 +91,22 @@ class _MobileJobFinderState extends State<MobileJobFinder> {
                         SizedBox(
                           height: 15,
                         ),
-                        SizedBox(
-                          width: MyUtility(context).width / 1.2,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Text(
-                              'Please note that this is a free information service only. We have no financial interest or influence in the process.',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 10.2,
-                                fontFamily: 'raleway',
-                                fontWeight: FontWeight.w400,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: MyUtility(context).width / 1.3,
+                              child: Text(
+                                'Please note that this is a free information service only. We have no financial interest or influence in the process.',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10.2,
+                                  fontFamily: 'raleway',
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                         SizedBox(
                           height: 15,

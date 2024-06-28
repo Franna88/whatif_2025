@@ -16,9 +16,8 @@ class _MobileCheckBoxState extends State<MobileCheckBox> {
     return Padding(
       padding: const EdgeInsets.only(top: 2),
       child: SizedBox(
-        height: 20,
+        height: 23,
         child: CheckboxListTile(
-          
           controlAffinity: ListTileControlAffinity.leading,
           fillColor: MaterialStateProperty.resolveWith((states) {
             if (!states.contains(MaterialState.selected)) {
@@ -43,12 +42,11 @@ class _MobileCheckBoxState extends State<MobileCheckBox> {
           },
           title: Text(
             widget.description,
-            maxLines: 1,
             style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontFamily: 'raleway',
-                ),
+              color: Colors.black,
+              fontSize: 16,
+              fontFamily: 'raleway',
+            ),
           ),
         ),
       ),

@@ -104,7 +104,7 @@ class _AdvancedFeaturesMobileState extends State<AdvancedFeaturesMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Would you utilize a Job Finder platform to connect with industry talent?',
@@ -128,7 +128,7 @@ class _AdvancedFeaturesMobileState extends State<AdvancedFeaturesMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Would you be interested in a professional photo and/or video shoot?',
@@ -152,7 +152,7 @@ class _AdvancedFeaturesMobileState extends State<AdvancedFeaturesMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Would additional advertising opportunities within our platform be of interest to you?',

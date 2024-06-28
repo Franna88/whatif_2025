@@ -12,37 +12,37 @@ class MobileQuestionLanding extends StatefulWidget {
 }
 
 class _MobileQuestionLandingState extends State<MobileQuestionLanding> {
-  //var
-  int containerIndex = 0;
-  String packageType = "";
+  final PageController _pageController = PageController();
 
-  //update containerIndex
-  updateContainerIndex(value) {
+  // Index to keep track of the current page in PageView
+  int _currentPageIndex = 0;
+
+  // Function to handle page changes
+  void onPageChanged(int index) {
     setState(() {
-      containerIndex = value;
+      _currentPageIndex = index;
     });
   }
 
-  //update package type var
-  updatePackageType(value) {
-    setState(() {
-      packageType = value;
-    });
+  // Function to navigate to the next or previous page
+  void nextContainer(String direction) {
+    if (direction == '+') {
+      _pageController.nextPage(
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      );
+    } else {
+      _pageController.previousPage(
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      );
+    }
   }
 
-  //update container index
-  nextContainer(String direction) {
-    setState(() {
-      if (direction == '+') {
-        if (containerIndex < 2) {
-          containerIndex++;
-        }
-      } else {
-        if (containerIndex > 0) {
-          containerIndex--;
-        }
-      }
-    });
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,32 +52,40 @@ class _MobileQuestionLandingState extends State<MobileQuestionLanding> {
 
     final List<Widget> infoContainers = [
       FreeDirectoryMobile(nextContainer: nextContainer),
+      WhyMotoristsMobilePage(nextContainer: nextContainer),
       WhyJoinPBDmobile(nextContainer: nextContainer),
-      WhyMotoristsMobilePage(nextContainer: nextContainer)
     ];
 
     return Scaffold(
-      body: Container(
-        height: heightDevice,
-        width: widthDevice,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('images/mobileLanding.png'), fit: BoxFit.cover),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                MobileTopNavBarhome(),
-                const SizedBox(
-                  height: 25,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              height: heightDevice,
+              width: widthDevice,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/pbdimage.png'),
+                  fit: BoxFit.cover,
                 ),
-                infoContainers[containerIndex]
-              ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  MobileTopNavBarhome(),
+                  const SizedBox(height: 25),
+                  Expanded(
+                    child: PageView(
+                      controller: _pageController,
+                      onPageChanged: onPageChanged,
+                      children: infoContainers,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

@@ -60,7 +60,7 @@ class _ClientCommunicationMobileState extends State<ClientCommunicationMobile> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 35,
+                      fontSize: 34,
                       fontFamily: 'ralewaybold',
                       height: 1),
                 ),
@@ -110,7 +110,7 @@ class _ClientCommunicationMobileState extends State<ClientCommunicationMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Do you offer after hours support or towing services?',
@@ -134,7 +134,7 @@ class _ClientCommunicationMobileState extends State<ClientCommunicationMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Would features like Whatsapp integration be valuable to you?',
@@ -146,7 +146,7 @@ class _ClientCommunicationMobileState extends State<ClientCommunicationMobile> {
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 15,
               ),
               SizedBox(
                 width: 180,

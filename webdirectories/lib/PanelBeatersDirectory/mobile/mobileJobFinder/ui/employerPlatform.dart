@@ -41,7 +41,7 @@ class _EmployerPlatformState extends State<EmployerPlatform> {
               height: 15,
             ),
             Text(
-              'Employee Platform',
+              'Employer Platform',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20.4,
@@ -53,7 +53,7 @@ class _EmployerPlatformState extends State<EmployerPlatform> {
               height: 15,
             ),
             Text(
-              'Want to have quick access to a pool of qualified candidates? Register your business on the Auto Body Repair Directory via our easy sign up process. ',
+              'Want to have quick access to a pool of qualified candidates? Register your business on the Panel Beater Directory via our easy sign up process. ',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,

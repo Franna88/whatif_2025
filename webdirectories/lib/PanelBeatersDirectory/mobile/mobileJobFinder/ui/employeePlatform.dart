@@ -53,7 +53,7 @@ class _EmployeePlatformState extends State<EmployeePlatform> {
               height: 15,
             ),
             Text(
-              'Submit your details and we promise to publish it to our exclusive employers database. You will be contacted by interested employers directly as we have no influence in the application and interview process.',
+              'Submit your details and we promise to publish it to our exclusive employer\'s database. You will be contacted by interested employers directly as we have no influence in the application and interview process.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,

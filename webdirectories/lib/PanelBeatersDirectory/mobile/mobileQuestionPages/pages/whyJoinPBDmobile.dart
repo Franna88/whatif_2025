@@ -17,11 +17,11 @@ class _WhyJoinPBDmobileState extends State<WhyJoinPBDmobile> {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
 
-    return QuestionPageContainer(
-      child: Padding(
-        padding:
-            const EdgeInsets.only(left: 15, top: 25, bottom: 25, right: 15),
-        child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: QuestionPageContainer(
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 15, top: 25, bottom: 25, right: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -29,51 +29,22 @@ class _WhyJoinPBDmobileState extends State<WhyJoinPBDmobile> {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Why join the ',
+                      text: 'Why join the\n',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 54.4,
+                        fontSize: 27.6,
                         fontFamily: 'ralewaybold',
-                        height: 1.01,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1, 1),
-                            blurRadius: 1,
-                            color: const Color.fromARGB(255, 53, 53, 53),
-                          ),
-                        ],
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     TextSpan(
-                      text: 'PBD',
+                      text: 'Panel Beater Directory?',
                       style: TextStyle(
-                        color: Color(0xFFEF9040),
-                        fontSize: 54.4,
+                        color: Color(0xFFE5882F),
+                        fontSize: 47.6,
                         fontFamily: 'ralewaybold',
-                        height: 1,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1, 1),
-                            blurRadius: 1.01,
-                            color: const Color.fromARGB(255, 53, 53, 53),
-                          ),
-                        ],
-                      ),
-                    ),
-                    TextSpan(
-                      text: '?',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 54.4,
-                        fontFamily: 'ralewaybold',
-                        height: 1.01,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1, 1),
-                            blurRadius: 1,
-                            color: const Color.fromARGB(255, 53, 53, 53),
-                          ),
-                        ],
+                        fontWeight: FontWeight.w700,
+                        height: 1.1,
                       ),
                     ),
                   ],
@@ -85,7 +56,7 @@ class _WhyJoinPBDmobileState extends State<WhyJoinPBDmobile> {
                 borderRadius: BorderRadius.circular(15),
                 child: Container(
                   height: heightDevice * 0.22,
-                  width: widthDevice * 0.78,
+                  width: widthDevice * 0.8,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('images/questionsHero.png'),
@@ -103,7 +74,7 @@ class _WhyJoinPBDmobileState extends State<WhyJoinPBDmobile> {
                   fontFamily: 'raleway',
                   height: 1.2,
                 ),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.start,
               ),
               const SizedBox(height: 15),
               QuestionOrangeButton(

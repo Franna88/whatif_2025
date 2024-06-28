@@ -17,7 +17,7 @@ class DirectOrangeButton extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const MobileRecentArticles()),
+                  builder: (context) => const LocationFeatureMobile()),
             );
           },
           child: Container(

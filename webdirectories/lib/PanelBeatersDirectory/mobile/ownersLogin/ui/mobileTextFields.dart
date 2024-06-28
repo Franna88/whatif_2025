@@ -59,6 +59,8 @@ class MobileTextFields extends StatelessWidget {
           ),
           child: TextField(
             cursorColor: Colors.black,
+            style: TextStyle(
+                color: Colors.black, fontSize: 15.64, fontFamily: 'raleway'),
             decoration: InputDecoration(
               contentPadding:
                   EdgeInsets.only(top: 13, bottom: 15, left: 20, right: 20),

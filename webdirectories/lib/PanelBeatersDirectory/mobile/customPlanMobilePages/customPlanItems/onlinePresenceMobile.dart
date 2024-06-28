@@ -104,7 +104,7 @@ class _OnlinePresenceMobileState extends State<OnlinePresenceMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Do you have a website or social media presence you\'d like to link to?',
@@ -128,7 +128,7 @@ class _OnlinePresenceMobileState extends State<OnlinePresenceMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Are you interested in showcasing positive client reviews, ratings and feedback on your profile?',

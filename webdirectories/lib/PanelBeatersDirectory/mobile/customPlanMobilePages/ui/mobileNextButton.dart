@@ -49,7 +49,7 @@ class _MobileNextButtonState extends State<MobileNextButton> {
                     style: TextStyle(
                       color: isPressed ? Colors.white : Colors.black,
                       fontSize: 14,
-                      fontFamily: 'ralewaybold',
+                      fontFamily: 'raleway',
                     ),
                   ),
                   const SizedBox(

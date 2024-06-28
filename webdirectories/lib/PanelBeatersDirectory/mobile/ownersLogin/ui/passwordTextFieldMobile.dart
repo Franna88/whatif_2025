@@ -4,10 +4,15 @@ class PasswordTextFieldMobile extends StatefulWidget {
   double widthContainer;
   String hintText;
   String keyText;
-  PasswordTextFieldMobile({super.key, required this.hintText, required this.keyText,required this.widthContainer});
+  PasswordTextFieldMobile(
+      {super.key,
+      required this.hintText,
+      required this.keyText,
+      required this.widthContainer});
 
   @override
-  _PasswordTextFieldMobileState createState() => _PasswordTextFieldMobileState();
+  _PasswordTextFieldMobileState createState() =>
+      _PasswordTextFieldMobileState();
 }
 
 class _PasswordTextFieldMobileState extends State<PasswordTextFieldMobile> {
@@ -54,7 +59,7 @@ class _PasswordTextFieldMobileState extends State<PasswordTextFieldMobile> {
           height: 5,
         ),
         Container(
-          width: widget.widthContainer,//450 //215
+          width: widget.widthContainer, //450 //215
           height: 45,
           decoration: ShapeDecoration(
             color: Colors.white,
@@ -63,40 +68,42 @@ class _PasswordTextFieldMobileState extends State<PasswordTextFieldMobile> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: TextField(
-            keyboardType: TextInputType.visiblePassword,
-            obscureText: _obscured,
-            cursorColor: Colors.black,
-            decoration: InputDecoration(
-              
-              contentPadding:
-                  EdgeInsets.only(top: 13, bottom: 15, left: 20, right: 20),
-              hintStyle: TextStyle(
-                color: const Color.fromARGB(255, 124, 124, 124),
-                fontSize: 16,
-                fontFamily: 'raleway',
-              ),
-              floatingLabelBehavior: FloatingLabelBehavior
-                  .never, 
-              hintText: widget.hintText,
-              filled: true, 
-              fillColor: Colors.white,
-              isDense: true, 
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none, 
-                borderRadius: BorderRadius.circular(15),
-              ),
-
-              suffixIcon: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                child: GestureDetector(
-                  onTap: _toggleObscured,
-                  child: Icon(
-                    _obscured
-                        ? Icons.visibility_rounded
-                        : Icons.visibility_off_rounded,
-                    size: 20,
-                    color: const Color.fromARGB(255, 124, 124, 124),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: TextField(
+              keyboardType: TextInputType.visiblePassword,
+              style: TextStyle(
+                  color: Colors.black, fontSize: 15.64, fontFamily: 'raleway'),
+              obscureText: _obscured,
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                contentPadding:
+                    EdgeInsets.only(top: 13, bottom: 15, left: 20, right: 20),
+                hintStyle: TextStyle(
+                  color: const Color.fromARGB(255, 124, 124, 124),
+                  fontSize: 16,
+                  fontFamily: 'raleway',
+                ),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                hintText: widget.hintText,
+                filled: true,
+                fillColor: Colors.white,
+                isDense: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                  child: GestureDetector(
+                    onTap: _toggleObscured,
+                    child: Icon(
+                      _obscured
+                          ? Icons.visibility_rounded
+                          : Icons.visibility_off_rounded,
+                      size: 20,
+                      color: const Color.fromARGB(255, 124, 124, 124),
+                    ),
                   ),
                 ),
               ),

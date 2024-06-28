@@ -105,7 +105,7 @@ class _BusinessOperationsMobileState extends State<BusinessOperationsMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Does your customers have access to your updated business hours and other essential information?',
@@ -129,7 +129,7 @@ class _BusinessOperationsMobileState extends State<BusinessOperationsMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Center(
                 child: Text(

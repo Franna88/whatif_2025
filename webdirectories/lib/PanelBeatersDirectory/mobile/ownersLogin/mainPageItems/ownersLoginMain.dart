@@ -5,6 +5,7 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ui/longO
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ui/mobileTextFields.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ui/ownersLoginContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ui/passwordTextFieldMobile.dart';
+import 'package:webdirectories/myutility.dart';
 
 class OwnersloginMain extends StatelessWidget {
   const OwnersloginMain({super.key});
@@ -19,7 +20,8 @@ class OwnersloginMain extends StatelessWidget {
         width: widthDevice,
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('images/mobileLanding.png'), fit: BoxFit.cover),
+              image: AssetImage('images/effortlessManagement.png'),
+              fit: BoxFit.cover),
         ),
         child: SafeArea(
           child: Column(
@@ -39,6 +41,7 @@ class OwnersloginMain extends StatelessWidget {
                       fontSize: 54.4,
                       fontFamily: 'ralewaybold',
                       height: 0.96),
+                  textAlign: TextAlign.center,
                 ),
               ),
               SizedBox(
@@ -53,8 +56,8 @@ class OwnersloginMain extends StatelessWidget {
                     color: Colors.white,
                     fontSize: 15.64,
                     fontFamily: 'raleway',
-                    height: 1.01,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               SizedBox(
@@ -68,6 +71,11 @@ class OwnersloginMain extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        SizedBox(
+                          width: MyUtility(context).width * 0.75,
+                          height: MyUtility(context).height * 0.2,
+                          child: Image.asset("images/OpLogin.png"),
+                        ),
                         Text(
                           'Owners Portal Login',
                           textAlign: TextAlign.center,

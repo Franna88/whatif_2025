@@ -102,7 +102,7 @@ class _ClientManagementMobileState extends State<ClientManagementMobile> {
                         checkboxValue: false,
                         description: 'We manage it manually'),
                     const SizedBox(
-                      height: 8,
+                      height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -110,14 +110,12 @@ class _ClientManagementMobileState extends State<ClientManagementMobile> {
                         SizedBox(
                           width: 40,
                         ),
-                        Text(
-                          '(calendar/appointment book).',
-                          style: TextStyle(
+                        Text('(calendar/appointment book).',
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
                               fontFamily: 'raleway',
-                              height: 1.5),
-                        ),
+                            )),
                       ],
                     ),
                     MobileCheckBox(
@@ -130,7 +128,7 @@ class _ClientManagementMobileState extends State<ClientManagementMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Does your customers have access to your updated business hours and other essential information?',
@@ -154,7 +152,7 @@ class _ClientManagementMobileState extends State<ClientManagementMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Should customers be able to request a quotation online?',
@@ -178,7 +176,7 @@ class _ClientManagementMobileState extends State<ClientManagementMobile> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Text(
                 'Should customers be able to submit car photos for estimates?',

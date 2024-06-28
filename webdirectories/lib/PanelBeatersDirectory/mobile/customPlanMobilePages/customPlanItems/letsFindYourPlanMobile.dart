@@ -55,7 +55,7 @@ class _LetsFindYourPlanMobileState extends State<LetsFindYourPlanMobile> {
                 ),
               ),
               Text(
-                'We understand that every panel beating business is unique and we want to help you find the perfect plan for your needs,To do that, we need to ask you a few quick questions.Are you ready?',
+                'We understand that every panel beating business is unique and we want to help you find the perfect plan for your needs, To do that, we need to ask you a few quick questions. Are you ready?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.black,
@@ -107,9 +107,23 @@ class _LetsFindYourPlanMobileState extends State<LetsFindYourPlanMobile> {
                 height: 10,
               ),
               Container(
+                decoration: ShapeDecoration(
+                  color: Color(0xFF5B5B5B),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(230),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
                 child: ElevatedButton(
                   onPressed: () {
-                    //ADD LOGIC
+                    // Add your logic here
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromARGB(255, 92, 92, 92),

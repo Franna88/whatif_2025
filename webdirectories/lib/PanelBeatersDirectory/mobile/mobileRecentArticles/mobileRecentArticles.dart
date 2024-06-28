@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/ui/ArticlesMobileWhite.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/ui/ArticlesSearchbarMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/ui/articleDescriptionContainer.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -32,6 +33,18 @@ class _MobileRecentArticlesState extends State<MobileRecentArticles> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               MobileTopNavBarhome(),
+              Text(
+                'Recent Articles:',
+                style: TextStyle(
+                  fontSize: 34,
+                  fontFamily: 'ralewaybold',
+                  color: Colors.white,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10, top: 5),
+                child: ArticlesSearchbarMobile(),
+              ),
               SingleChildScrollView(
                 child: Container(
                   width: MyUtility(context).width * 0.87,

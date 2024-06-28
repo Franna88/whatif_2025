@@ -30,7 +30,7 @@ class _WeAreDoneMobileState extends State<WeAreDoneMobile> {
             children: [
               MobileProgressBar(
                 orangeBar: Container(
-                  width: widthDevice * 0.68,
+                  width: widthDevice * 0.63,
                   height: 5,
                   decoration: ShapeDecoration(
                     color: Color(0xFFEF9040),

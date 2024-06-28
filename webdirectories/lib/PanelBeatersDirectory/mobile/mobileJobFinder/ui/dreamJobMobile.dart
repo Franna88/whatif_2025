@@ -12,14 +12,14 @@ class _DreamJobMobileState extends State<DreamJobMobile> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.only(top: 10),
       child: Container(
-        width: MyUtility(context).width * 0.9,
+        width: MyUtility(context).width / 1.2,
         decoration: ShapeDecoration(
           color: Color(0xFF181B1D),
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              width: 0.64,
+              width: 1,
               strokeAlign: BorderSide.strokeAlignOutside,
               color: Colors.white,
             ),
@@ -29,7 +29,7 @@ class _DreamJobMobileState extends State<DreamJobMobile> {
         child: Column(
           children: [
             Container(
-              width: MyUtility(context).width * 0.9,
+              width: MyUtility(context).width / 1.2,
               height: MyUtility(context).height * 0.3,
               decoration: ShapeDecoration(
                 image: DecorationImage(
@@ -61,7 +61,7 @@ class _DreamJobMobileState extends State<DreamJobMobile> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'Let’s get you your dream job!',
+                    'Let’s get you your\ndream job!',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.4,

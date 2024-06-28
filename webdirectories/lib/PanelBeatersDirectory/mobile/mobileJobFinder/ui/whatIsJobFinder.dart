@@ -53,7 +53,7 @@ class _WhatIsJobFinderMobileState extends State<WhatIsJobFinderMobile> {
               height: 15,
             ),
             Text(
-              'Job Finder is a free service for both job seekers and featured businesses within the auto body repair industry in Southern Africa.',
+              'Job Finder is a free service for both job seekers and featured businesses within the Auto Body Repair industry in Southern Africa.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,

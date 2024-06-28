@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GoBackButtonMobile extends StatefulWidget {
-  Function onPressed;
+  final VoidCallback onPressed;
   String buttonText;
   GoBackButtonMobile(
       {super.key, required this.buttonText, required this.onPressed});
@@ -11,7 +11,6 @@ class GoBackButtonMobile extends StatefulWidget {
 }
 
 class _GoBackButtonMobileState extends State<GoBackButtonMobile> {
-  
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
@@ -24,9 +23,7 @@ class _GoBackButtonMobileState extends State<GoBackButtonMobile> {
           /*width: MediaQuery.of(context).size.width * 0.08,*/
           /*height: MediaQuery.of(context).size.height * 0.05,*/
           child: ElevatedButton(
-            onPressed: (){
-              
-            },
+            onPressed: widget.onPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: Color.fromARGB(255, 92, 92, 92),
               shape: RoundedRectangleBorder(
