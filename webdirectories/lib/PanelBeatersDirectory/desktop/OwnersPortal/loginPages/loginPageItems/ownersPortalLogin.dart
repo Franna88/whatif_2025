@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPortal.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/ownersPortal.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/dividers.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/longOrangeButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/mediumTextBox.dart';
@@ -19,19 +21,19 @@ class OwnersPortalLogin extends StatelessWidget {
         SizedBox(
           height: heightDevice * 0.08,
         ),
-        Text(
-          'Owners Portal Login',
-          textAlign: TextAlign.center,
-          style: widthDevice < 1500 ? TextStyle(
-            color: Colors.white,
-            fontSize: 30,
-            fontFamily: 'ralewaybold',
-          ) : TextStyle(
-            color: Colors.white,
-            fontSize: 40,
-            fontFamily: 'ralewaybold',
-          )
-        ),
+        Text('Owners Portal Login',
+            textAlign: TextAlign.center,
+            style: widthDevice < 1500
+                ? TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontFamily: 'ralewaybold',
+                  )
+                : TextStyle(
+                    color: Colors.white,
+                    fontSize: 40,
+                    fontFamily: 'ralewaybold',
+                  )),
         SizedBox(
           height: 10,
         ),
@@ -45,7 +47,8 @@ class OwnersPortalLogin extends StatelessWidget {
         PasswordField(
           hintText: 'Enter Password',
           keyText: 'Password',
-          widthContainer: widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
+          widthContainer:
+              widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
         ),
         SizedBox(
           height: 10,
@@ -59,19 +62,21 @@ class OwnersPortalLogin extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                padding:  EdgeInsets.only(right: widthDevice * 0.03),
+                padding: EdgeInsets.only(right: widthDevice * 0.03),
                 child: Text(
                   'Forgot Password?',
                   textAlign: TextAlign.right,
-                  style: widthDevice < 1500 ? TextStyle(
-                    color: Color(0xFFEF9040),
-                    fontSize: 14,
-                    fontFamily: 'ralewaymedium',
-                  ) : TextStyle(
-                    color: Color(0xFFEF9040),
-                    fontSize: 16,
-                    fontFamily: 'ralewaymedium',
-                  ),
+                  style: widthDevice < 1500
+                      ? TextStyle(
+                          color: Color(0xFFEF9040),
+                          fontSize: 14,
+                          fontFamily: 'ralewaymedium',
+                        )
+                      : TextStyle(
+                          color: Color(0xFFEF9040),
+                          fontSize: 16,
+                          fontFamily: 'ralewaymedium',
+                        ),
                 ),
               ),
             ),
@@ -82,7 +87,10 @@ class OwnersPortalLogin extends StatelessWidget {
         ),
         LongOrangeButton(
             onPressed: () {
-              //ADD LOGIC HERE
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AdminPortal()),
+              );
             },
             buttonText: 'Login'),
         SizedBox(
@@ -144,17 +152,19 @@ class OwnersPortalLogin extends StatelessWidget {
               },
               child: Text(
                 'Not Registered Yet? ',
-                style: widthDevice < 1500 ? TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontFamily: 'raleway',
-                  fontWeight: FontWeight.w400,
-                ) :  TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontFamily: 'raleway',
-                  fontWeight: FontWeight.w400,
-                ),
+                style: widthDevice < 1500
+                    ? TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w400,
+                      )
+                    : TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w400,
+                      ),
               ),
             ),
             TextButton(
@@ -163,21 +173,23 @@ class OwnersPortalLogin extends StatelessWidget {
               },
               child: Text(
                 'Click here',
-                style: widthDevice < 1500 ? TextStyle(
-                  color: Color(0xFFEF9040),
-                  fontSize: 14,
-                  fontFamily: 'raleway',
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.underline,
-                  decorationColor: Color(0xFFEF9040),
-                ) : TextStyle(
-                  color: Color(0xFFEF9040),
-                  fontSize: 16,
-                  fontFamily: 'raleway',
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.underline,
-                  decorationColor: Color(0xFFEF9040),
-                ),
+                style: widthDevice < 1500
+                    ? TextStyle(
+                        color: Color(0xFFEF9040),
+                        fontSize: 14,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Color(0xFFEF9040),
+                      )
+                    : TextStyle(
+                        color: Color(0xFFEF9040),
+                        fontSize: 16,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Color(0xFFEF9040),
+                      ),
               ),
             )
           ],
