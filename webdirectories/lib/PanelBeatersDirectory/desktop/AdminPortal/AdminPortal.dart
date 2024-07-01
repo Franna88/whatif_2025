@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/SideNavBar/SideNavBar.dart';
 
 class AdminPortal extends StatefulWidget {
   const AdminPortal({super.key});
@@ -10,6 +11,8 @@ class AdminPortal extends StatefulWidget {
 class _AdminPortalState extends State<AdminPortal> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Material(
+      child: SideNavBar(),
+    );
   }
 }
