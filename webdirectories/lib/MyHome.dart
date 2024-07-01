@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlesPage/RecentArticlesPage.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage1/MobilePage1.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage2/MobilePage2.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage3/MobilePage3.dart';
@@ -51,7 +52,9 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: MyUtility(context).width < 600 ? MobilePage1() : Page1(),
+        child: MyUtility(context).width < 600
+            ? MobilePage1()
+            : /*Page1()*/ RecentArticlesPage(),
       ),
     );
   }

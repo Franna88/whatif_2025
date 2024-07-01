@@ -30,7 +30,7 @@ class _ArticlesContainerWhiteState extends State<ArticlesContainerWhite> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
       child: MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
         onExit: (_) => setState(() => _isHovered = false),
@@ -41,7 +41,7 @@ class _ArticlesContainerWhiteState extends State<ArticlesContainerWhite> {
               : MyUtility(context).width * 0.17,
           height: _isHovered
               ? MyUtility(context).height * 0.372
-              : MyUtility(context).height * 0.362,
+              : MyUtility(context).height * 0.355,
           decoration: BoxDecoration(
             color: Color(0xFFF4F4F4),
             borderRadius: BorderRadius.circular(11.52),
