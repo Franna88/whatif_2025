@@ -20,6 +20,7 @@ class TeamProfile extends StatefulWidget {
 class _TeamProfileState extends State<TeamProfile> {
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Container(
       width: MyUtility(context).width * 0.15,
       height: MyUtility(context).height * 0.4,
@@ -67,7 +68,7 @@ class _TeamProfileState extends State<TeamProfile> {
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 13.6,
+                          fontSize: widthDevice < 1500 ? 13.6 : 18,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                         ),
@@ -80,7 +81,7 @@ class _TeamProfileState extends State<TeamProfile> {
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 13.6,
+                          fontSize: widthDevice < 1500 ? 13.6 : 18,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                         ),

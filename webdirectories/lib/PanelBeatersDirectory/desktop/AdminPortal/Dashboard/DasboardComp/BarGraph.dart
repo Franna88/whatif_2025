@@ -3,26 +3,56 @@ import 'package:flutter/material.dart';
 class CustomBarGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 175,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CustomBar(height: 140),
-          CustomBar(height: 120),
-          CustomBar(height: 100),
-          CustomBar(height: 80),
-          CustomBar(height: 80),
-          CustomBar(height: 90),
-          CustomBar(height: 95),
-          CustomBar(height: 60),
-          CustomBar(height: 40),
-          CustomBar(height: 90),
-          CustomBar(height: 120),
-          CustomBar(height: 100),
-        ],
-      ),
+    return Column(mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(
+                    'Views',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13.6,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                      height: 1,
+                    ),
+                  ),
+                ),
+        Container(
+          
+          width: 175,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomBar(height: 140),
+              CustomBar(height: 120),
+              CustomBar(height: 100),
+              CustomBar(height: 80),
+              CustomBar(height: 80),
+              CustomBar(height: 90),
+              CustomBar(height: 95),
+              CustomBar(height: 60),
+              CustomBar(height: 40),
+              CustomBar(height: 90),
+              CustomBar(height: 120),
+              CustomBar(height: 100),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10,),
+         Text(
+                  'Months',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 13.6,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                    height: 1,
+                  ),
+                )
+      ],
     );
   }
 }
@@ -35,6 +65,7 @@ class CustomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform(
+      
       transform: Matrix4.identity()
         ..translate(0.0, 0.0)
         ..rotateZ(0.0),

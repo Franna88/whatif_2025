@@ -14,49 +14,52 @@ class _BusinessContactState extends State<BusinessContact> {
   final TextEditingController _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: [
-                ProfileTextField(
-                    controller: _textController,
-                    headline: 'Customer Care Number'),
-                ProfileTextField(
-                    controller: _textController, headline: 'WhatsApp Number '),
-              ],
-            ),
-            Column(
-              children: [
-                ProfileTextField(
-                    controller: _textController,
-                    headline: 'Business Alternative Number'),
-                ProfileTextField(
-                    controller: _textController,
-                    headline: 'Business Fax Number'),
-              ],
-            ),
-            ProfileShortTextField(
-                controller: _textController, headline: 'After hours Number'),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+    return Padding(
+      padding: const EdgeInsets.only(left: 20),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                width: MyUtility(context).width * 0.775,
-                height: 1,
-                decoration: BoxDecoration(color: Color(0xFF0F253A)),
-              )
+              Column(
+                children: [
+                  ProfileTextField(
+                      controller: _textController,
+                      headline: 'Customer Care Number'),
+                  ProfileTextField(
+                      controller: _textController, headline: 'WhatsApp Number '),
+                ],
+              ),
+              Column(
+                children: [
+                  ProfileTextField(
+                      controller: _textController,
+                      headline: 'Business Alternative Number'),
+                  ProfileTextField(
+                      controller: _textController,
+                      headline: 'Business Fax Number'),
+                ],
+              ),
+              ProfileShortTextField(
+                  controller: _textController, headline: 'After hours Number'),
             ],
           ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30, top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: MyUtility(context).width ,
+                  height: 1,
+                  decoration: BoxDecoration(color: Color(0xFF0F253A)),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

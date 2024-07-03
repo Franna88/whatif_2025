@@ -115,6 +115,7 @@ class _AdminProfileState extends State<AdminProfile> {
                   ),
                 ],
               ),
+              
               Center(
                 child: pages[pageIndex],
               )
@@ -125,37 +126,7 @@ class _AdminProfileState extends State<AdminProfile> {
     );
   }
 
-  void _navigateToPage(String page) {
-    switch (page) {
-      case 'BUSINESS INFO':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AdminProfile()),
-        );
-        break;
-      case 'REGISTRATION NUMBERS':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => RegistrationNumbers()),
-        );
-        break;
-      case 'DOCUMENTS':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Documents()),
-        );
-        break;
-      case 'CONTACTS':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AdminContact()),
-        );
-      case 'GALLERY':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Gallery()),
-        );
-        break;
-    }
-  }
+ 
+    
+  
 }

@@ -20,6 +20,7 @@ class Advertcontainer extends StatefulWidget {
 class _AdvertcontainerState extends State<Advertcontainer> {
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Container(
       width: MyUtility(context).width * 0.15,
       height: MyUtility(context).height * 0.4,
@@ -41,7 +42,7 @@ class _AdvertcontainerState extends State<Advertcontainer> {
               ),
               child: Image.asset(
                 widget.memberImage,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           ),
@@ -68,7 +69,7 @@ class _AdvertcontainerState extends State<Advertcontainer> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 13.6,
+                          fontSize: widthDevice < 1500 ? 13.6 : 16,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                         ),

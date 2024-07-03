@@ -66,7 +66,7 @@ class _RegistrationContainerState extends State<RegistrationContainer> {
                 ),
               ),
               SizedBox(
-                width: MyUtility(context).width * 0.26,
+                width: MyUtility(context).width * 0.17,
                 child: Text(
                   widget.displayProfile,
                   style: TextStyle(

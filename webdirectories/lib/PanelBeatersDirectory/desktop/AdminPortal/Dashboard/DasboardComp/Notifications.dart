@@ -15,10 +15,12 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
+    var heightDevice = MediaQuery.of(context).size.height;
+    var widthDevice = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(bottom: 7.5),
       child: Container(
-        width: 503.88,
+        width: widthDevice,
         height: 40.8,
         decoration: ShapeDecoration(
           color: Color(0xFF0F253A),
@@ -35,7 +37,7 @@ class _NotificationsState extends State<Notifications> {
                 widget.notification,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 10.88,
+                  fontSize: widthDevice < 1500 ?  10.88 : 12,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w700,
                   height: 0,
@@ -45,7 +47,7 @@ class _NotificationsState extends State<Notifications> {
                 widget.date,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 10.88,
+                  fontSize: widthDevice < 1500 ?  10.88 : 12,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w700,
                   height: 0,
@@ -53,7 +55,7 @@ class _NotificationsState extends State<Notifications> {
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: SvgPicture.asset('images/right.svg'),
+                child: SvgPicture.asset('images/dasharrow.svg'),
               )
             ],
           ),

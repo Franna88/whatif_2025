@@ -33,7 +33,7 @@ class _ProfileDropDownState extends State<ProfileDropDown> {
             fontSize: 20.4,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w700,
-            height: 0,
+            height: 1,
           ),
         ),
         SizedBox(height: 8),
@@ -48,33 +48,31 @@ class _ProfileDropDownState extends State<ProfileDropDown> {
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-            child: DropdownButtonFormField<String>(
-              value: widget.value,
-              onChanged: widget.onChanged,
-              items: widget.items.map((String item) {
-                return DropdownMenuItem<String>(
-                  value: item,
-                  child: Row(
-                    children: [
-                      Text(
-                        item,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.fromLTRB(20, 15, 15, 15),
-                border: InputBorder.none,
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: 22,
-                    height: 22,
-                    child: SvgPicture.asset(
-                      'images/ArrowDown.svg',
+            child: Center(
+              child: DropdownButtonFormField<String>(
+                iconSize: 50,
+                icon: Icon(Icons.keyboard_arrow_down, color: Color(0xFF0F253A),) ,
+                value: widget.value,
+                onChanged: widget.onChanged,
+                items: widget.items.map((String item) {
+                  return DropdownMenuItem<String>(
+                    value: item,
+                    child: Row(
+                      children: [
+                        Text(
+                          item,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
                     ),
+                  );
+                }).toList(),
+               decoration: InputDecoration(
+                  contentPadding: EdgeInsets.fromLTRB(20, 15, 15, 15),
+                  border: InputBorder.none,
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    
                   ),
                 ),
               ),

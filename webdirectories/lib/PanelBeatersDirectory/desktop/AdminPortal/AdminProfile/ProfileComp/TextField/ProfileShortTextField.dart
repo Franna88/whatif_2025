@@ -19,7 +19,7 @@ class _ProfileShortTextFieldState extends State<ProfileShortTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 20, right: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +30,7 @@ class _ProfileShortTextFieldState extends State<ProfileShortTextField> {
               fontSize: 20.4,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w700,
-              height: 0,
+              height: 1,
             ),
           ),
           SizedBox(height: 8),

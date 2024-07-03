@@ -37,10 +37,11 @@ class _DocumentsState extends State<Documents> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    var heightDevice = MediaQuery.of(context).size.height;
+    return 
+      Center(
         child: SizedBox(
-          width: MyUtility(context).width * 0.9,
+         // width: MyUtility(context).width * 0.9,
           child: Column(
             children: [
               SizedBox(
@@ -142,7 +143,8 @@ class _DocumentsState extends State<Documents> {
                   ),
                 ),
               ),
-              Expanded(
+              SizedBox(
+                height: heightDevice,
                 child: ListView.builder(
                   itemCount: registrationInfo.length,
                   itemBuilder: (context, index) {
@@ -160,7 +162,7 @@ class _DocumentsState extends State<Documents> {
             ],
           ),
         ),
-      ),
+      
     );
   }
 }

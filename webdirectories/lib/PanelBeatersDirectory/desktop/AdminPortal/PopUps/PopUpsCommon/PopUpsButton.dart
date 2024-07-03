@@ -34,7 +34,7 @@ class _PopUpsButtonState extends State<PopUpsButton> {
             widget.text,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 16.32,
+              fontSize: 18,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w700,
               height: 0,

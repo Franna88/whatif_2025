@@ -38,6 +38,7 @@ class _IconSearchBoxState extends State<IconSearchBox> {
                 child: SvgPicture.asset('images/searchicon.svg')),
             Expanded(
               child: TextField(
+                cursorColor: Colors.black,
                 decoration: InputDecoration(
                   hintText: 'Search here...',
                   hintStyle: TextStyle(
@@ -45,7 +46,7 @@ class _IconSearchBoxState extends State<IconSearchBox> {
                     fontSize: 16.32,
                     fontFamily: 'Kanit',
                     fontWeight: FontWeight.w400,
-                    height: 0,
+                    height: 1,
                   ),
                   border: InputBorder.none,
                 ),

@@ -57,6 +57,7 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AttachmentPopupButton(text: 'Attach File', onTap: () {}),
+                  const SizedBox(height: 15,),
                   PopUpsButton(
                     text: 'save',
                     onTap: () {},

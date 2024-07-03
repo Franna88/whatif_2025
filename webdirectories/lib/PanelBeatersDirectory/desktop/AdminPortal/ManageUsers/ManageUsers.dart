@@ -95,7 +95,7 @@ class _ManageUsersState extends State<ManageUsers> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 10),
                     child: Container(
-                      width: MyUtility(context).width * 0.725,
+                      width: MyUtility(context).width * 0.73,
                       height: MyUtility(context).height * 0.06,
                       decoration: ShapeDecoration(
                         color: Color(0xFF00437B),

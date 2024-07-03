@@ -75,7 +75,7 @@ class _AdminNotificationsState extends State<AdminNotifications> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 10),
                     child: Container(
-                      width: MyUtility(context).width * 0.725,
+                      width: MyUtility(context).width * 0.73,
                       height: MyUtility(context).height * 0.06,
                       decoration: ShapeDecoration(
                         color: Color(0xFF00437B),
@@ -84,12 +84,12 @@ class _AdminNotificationsState extends State<AdminNotifications> {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 8, right: 16),
+                        padding: const EdgeInsets.only(left: 8, right: 14),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: MyUtility(context).width * 0.65,
+                              width: MyUtility(context).width * 0.64,
                               child: Text(
                                 'Notification Title',
                                 style: TextStyle(

@@ -19,8 +19,9 @@ class GalleryContainer extends StatefulWidget {
 class _GalleryContainerState extends State<GalleryContainer> {
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Container(
-      width: MyUtility(context).width * 0.15,
+      width:  MyUtility(context).width * 0.15,
       height: MyUtility(context).height * 0.35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -89,7 +90,7 @@ class _GalleryContainerState extends State<GalleryContainer> {
                           widget.description,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 13.6,
+                            fontSize: widthDevice <1500 ? 13.6 : 16,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
                           ),

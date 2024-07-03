@@ -17,6 +17,7 @@ class SideNavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: onTap,
       child: Padding(
@@ -29,11 +30,11 @@ class SideNavButton extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: MyUtility(context).width * 0.11,
+                  width: 200,
                   child: Row(
                     children: [
                       SizedBox(
@@ -41,8 +42,8 @@ class SideNavButton extends StatelessWidget {
                         height: MyUtility(context).height * 0.035,
                         child: SvgPicture.asset(
                           icon,
-                          width: 24,
-                          height: 24,
+                          width: widthDevice < 1500 ? 18 : 24,
+                          height: widthDevice < 1500 ? 18 : 24,
                           color: isSelected ? Color(0xFFEF9040) : Colors.white,
                         ),
                       ),
@@ -50,7 +51,7 @@ class SideNavButton extends StatelessWidget {
                       Text(
                         label,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: widthDevice < 1500 ? 18 : 20,
                           color: isSelected ? Color(0xFFEF9040) : Colors.white,
                         ),
                       ),

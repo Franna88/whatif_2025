@@ -14,56 +14,51 @@ class _BusinessDetailsState extends State<BusinessDetails> {
   final TextEditingController _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: MyUtility(context).height * 0.075,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              width: MyUtility(context).width * 0.125,
-              child: Column(
+    var widthDevice = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: const EdgeInsets.only(left: 15),
+      child: Column(
+        children: [
+          SizedBox(
+            height: MyUtility(context).height * 0.075,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ProfileImage(
+                imageText: 'Display Image',
+              ),
+              SizedBox(width: 25,),
+              Column(mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ProfileImage(
-                    imageText: 'Display Image',
-                  )
+                  ProfileTextField(
+                      controller: _textController, headline: 'Trading Name'),
+                  ProfileTextField(
+                      controller: _textController,
+                      headline: 'Registered Business name'),
                 ],
               ),
-            ),
-            Column(
-              children: [
-                ProfileTextField(
-                    controller: _textController, headline: 'Trading Name'),
-                ProfileTextField(
-                    controller: _textController,
-                    headline: 'Registered Business name'),
-              ],
-            ),
-            Column(
-              children: [
-                ProfileTextField(
-                    controller: _textController, headline: 'B-BBEE Level'),
-              ],
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: Container(
-                width: MyUtility(context).width * 0.61,
-                height: 1,
-                decoration: BoxDecoration(color: Color(0xFF0F253A)),
-              ),
-            )
-          ],
-        ),
-      ],
+              SizedBox(width: 20,),
+              ProfileTextField(
+                  controller: _textController, headline: 'B-BBEE Level'),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 40, top: 20),
+                child: Container(
+                  width: widthDevice < 1500 ? MyUtility(context).width * 0.64 : MyUtility(context).width * 0.71,
+                  height: 1,
+                  decoration: BoxDecoration(color: Color(0xFF0F253A)),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

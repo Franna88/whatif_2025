@@ -13,9 +13,13 @@ class GraphContaier extends StatefulWidget {
 class _GraphContaierState extends State<GraphContaier> {
   @override
   Widget build(BuildContext context) {
+    var heightDevice = MediaQuery.of(context).size.height;
+    var widthDevice = MediaQuery.of(context).size.width;
     return Container(
-      width: 452.88,
-      height: 226.44,
+      height: widthDevice < 1500 ? 226.44 : heightDevice * 0.25,
+      width: widthDevice < 1500 ? 452.88 : widthDevice * 0.35,
+      // width: ,
+      //height: ,
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(
@@ -78,30 +82,12 @@ class _GraphContaierState extends State<GraphContaier> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 5),
-                  child: Text(
-                    'Views',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 13.6,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
-                    ),
-                  ),
-                ),
-                CustomBarGraph(),
-                Text(
-                  'Months',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 13.6,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                )
+                
+                Transform.scale(scale: widthDevice < 1500 ? 1 : 1.3,
+                  child: CustomBarGraph()),
+                
+                 
+               
               ],
             ),
             Column(

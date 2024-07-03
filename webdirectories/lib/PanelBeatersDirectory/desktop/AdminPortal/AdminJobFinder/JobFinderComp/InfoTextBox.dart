@@ -8,6 +8,7 @@ class InfoTextBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(top: 5, bottom: 15),
       child: Container(
@@ -34,12 +35,13 @@ class InfoTextBox extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 2.0, right: 10.0),
                   child: SvgPicture.asset(
-                    'images/info.svg',
+                    'images/info2.svg',
                     width: MyUtility(context).width * 0.12,
                     height: MyUtility(context).height * 0.12,
                   ),
                 ),
               ),
+              const SizedBox(width: 20,),
               Expanded(
                 child: ListView(
                   physics: NeverScrollableScrollPhysics(),
@@ -66,6 +68,7 @@ class InfoTextBox extends StatelessWidget {
   }
 
   Widget _buildBulletPointText(String text) {
+    
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: Row(
@@ -84,7 +87,7 @@ class InfoTextBox extends StatelessWidget {
               text,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 12.24,
+                fontSize:   13,
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w700,
               ),
