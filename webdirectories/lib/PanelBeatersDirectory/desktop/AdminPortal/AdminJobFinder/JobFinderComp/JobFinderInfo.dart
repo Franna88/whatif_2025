@@ -29,6 +29,7 @@ class JobFinderInfo extends StatefulWidget {
 class _JobFinderInfoState extends State<JobFinderInfo> {
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
@@ -41,7 +42,7 @@ class _JobFinderInfoState extends State<JobFinderInfo> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 8, right: 16),
+          padding: const EdgeInsets.only(left: 8, right:  10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -107,7 +108,7 @@ class _JobFinderInfoState extends State<JobFinderInfo> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
-                child: SvgPicture.asset('images/right.svg'),
+                child: SvgPicture.asset('images/dashboard.svg'),
               )
             ],
           ),

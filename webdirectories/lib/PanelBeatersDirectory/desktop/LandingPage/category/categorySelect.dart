@@ -84,27 +84,8 @@ class _CategorySelectState extends State<CategorySelect>
                     ),
                   ),
                   Positioned(
-                    top: 87,
-                    left: 38,
-                    child: GestureDetector(
-                      onTap: () {
-                        widget.changeMenu(1);
-                        _controller.animateTo(-0.16);
-                      },
-                      child: Container(
-                        child: SvgPicture.asset(
-                          widget.menuIndex == 1
-                              ? 'images/local2.svg'
-                              : 'images/local1.svg',
-                          width: 1,
-                          height: 208,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 8,
-                    left: 160,
+                    top: 62,
+                    left: 182,
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(2);
@@ -116,7 +97,26 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/car2.svg'
                               : 'images/car1.svg',
                           width: 1,
-                          height: 210,
+                          height: 128,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 87,
+                    left: 79,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(1);
+                        _controller.animateTo(-0.16);
+                      },
+                      child: Container(
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 1
+                              ? 'images/local2.svg'
+                              : 'images/local1.svg',
+                          width: 1,
+                          height: 168,
                         ),
                       ),
                     ),
@@ -141,8 +141,8 @@ class _CategorySelectState extends State<CategorySelect>
                     ),
                   ),
                   Positioned(
-                    top: 217,
-                    right: 34,
+                    top: 259,
+                    right: 80,
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(4);
@@ -151,11 +151,11 @@ class _CategorySelectState extends State<CategorySelect>
                       },
                       child: Container(
                         child: SvgPicture.asset(
+                          width: 1,
+                          height: 168,
                           widget.menuIndex == 4
                               ? 'images/tow2.svg'
                               : 'images/tow1.svg',
-                          width: 1,
-                          height: 212,
                         ),
                       ),
                     ),
@@ -270,27 +270,8 @@ class _CategorySelectState extends State<CategorySelect>
                     ),
                   ),
                   Positioned(
-                    top: 101,
-                    left: 33,
-                    child: GestureDetector(
-                      onTap: () {
-                        widget.changeMenu(1);
-                        _controller.animateTo(-0.16);
-                      },
-                      child: Container(
-                        child: SvgPicture.asset(
-                          widget.menuIndex == 1
-                              ? 'images/local2.svg'
-                              : 'images/local1.svg',
-                          width: 1,
-                          height: 257,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 4,
-                    left: 183,
+                    top: 71,
+                    left: 211,
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(2);
@@ -302,14 +283,33 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/car2.svg'
                               : 'images/car1.svg',
                           width: 1,
-                          height: 259,
+                          height: 156,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 102,
+                    left: 84,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.changeMenu(1);
+                        _controller.animateTo(-0.16);
+                      },
+                      child: Container(
+                        child: SvgPicture.asset(
+                          widget.menuIndex == 1
+                              ? 'images/local2.svg'
+                              : 'images/local1.svg',
+                          width: 1,
+                          height: 206,
                         ),
                       ),
                     ),
                   ),
                   Positioned(
                     top: 103,
-                    right: 85,
+                    right: 86,
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(3);
@@ -321,14 +321,14 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/stack2.svg'
                               : 'images/stack1.svg',
                           width: 1,
-                          height: 210,
+                          height: 209,
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 259,
-                    right: 30,
+                    top: 311,
+                    right: 85,
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(4);
@@ -341,7 +341,7 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/tow2.svg'
                               : 'images/tow1.svg',
                           width: 1,
-                          height: 258,
+                          height: 207,
                         ),
                       ),
                     ),

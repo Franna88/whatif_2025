@@ -27,7 +27,7 @@ class _MoreBusinessInfoState extends State<MoreBusinessInfo> {
               fontSize: 20.4,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w700,
-              height: 0,
+              height: 1,
             ),
           ),
           SizedBox(height: 8),
@@ -56,12 +56,12 @@ class _MoreBusinessInfoState extends State<MoreBusinessInfo> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 30, bottom: 30, left: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  width: MyUtility(context).width * 0.775,
+                  width: MyUtility(context).width ,
                   height: 1,
                   decoration: BoxDecoration(color: Color(0xFF0F253A)),
                 )

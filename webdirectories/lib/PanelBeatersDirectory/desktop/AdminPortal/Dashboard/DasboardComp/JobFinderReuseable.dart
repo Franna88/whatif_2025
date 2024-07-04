@@ -21,12 +21,13 @@ class JobFinderReuseable extends StatefulWidget {
 class _JobFinderReuseableState extends State<JobFinderReuseable> {
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: widget.onPress,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 7.5),
         child: Container(
-          width: 495.04,
+          width: widthDevice,
           height: 40.8,
           decoration: ShapeDecoration(
             color: Color(0xFFA1A1A1),
@@ -77,7 +78,7 @@ class _JobFinderReuseableState extends State<JobFinderReuseable> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: SvgPicture.asset('images/right.svg'),
+                  child: SvgPicture.asset('images/dasharrow.svg'),
                 )
               ],
             ),

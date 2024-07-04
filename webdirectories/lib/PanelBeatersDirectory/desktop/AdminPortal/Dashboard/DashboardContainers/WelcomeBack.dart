@@ -11,9 +11,13 @@ class WelcomeBack extends StatefulWidget {
 class _WelcomeBackState extends State<WelcomeBack> {
   @override
   Widget build(BuildContext context) {
+    var heightDevice = MediaQuery.of(context).size.height;
+    var widthDevice = MediaQuery.of(context).size.width;
     return Container(
-      width: 558.28,
-      height: 225.08,
+      height: widthDevice < 1500 ? 225.8 : heightDevice * 0.25,
+      width: widthDevice < 1500 ? 558.28 : widthDevice * 0.35,
+      //width: ,
+      //height: 225.08,
       decoration: ShapeDecoration(
         color: Color(0x3FEF9040),
         shape: RoundedRectangleBorder(

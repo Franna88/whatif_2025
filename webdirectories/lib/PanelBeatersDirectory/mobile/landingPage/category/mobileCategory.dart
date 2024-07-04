@@ -86,28 +86,8 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
               ),
             ),
             Positioned(
-              top: 62,
-              left: 0,
-              right: 189,
-              child: GestureDetector(
-                onTap: () {
-                  widget.changeMenu(1);
-                  _controller.animateTo(-0.16);
-                },
-                child: Container(
-                  child: SvgPicture.asset(
-                    widget.menuIndex == 1
-                        ? 'images/local2.svg'
-                        : 'images/local1.svg',
-                    width: 1,
-                    height: 150,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 6,
-              left: 0,
+              top: 45,
+              left: 16,
               right: 8.5,
               child: GestureDetector(
                 onTap: () {
@@ -120,7 +100,27 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
                         ? 'images/car2.svg'
                         : 'images/car1.svg',
                     width: 1,
-                    height: 150,
+                    height: 90,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 62,
+              left: 18,
+              right: 189,
+              child: GestureDetector(
+                onTap: () {
+                  widget.changeMenu(1);
+                  _controller.animateTo(-0.16);
+                },
+                child: Container(
+                  child: SvgPicture.asset(
+                    widget.menuIndex == 1
+                        ? 'images/local2.svg'
+                        : 'images/local1.svg',
+                    width: 1,
+                    height: 120,
                   ),
                 ),
               ),
@@ -146,8 +146,8 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
               ),
             ),
             Positioned(
-              top: 156,
-              left: 193,
+              top: 185,
+              left: 174,
               right: 0,
               child: GestureDetector(
                 onTap: () {
@@ -161,14 +161,15 @@ class _MobileCategorySelectState extends State<MobileCategorySelect>
                         ? 'images/tow2.svg'
                         : 'images/tow1.svg',
                     width: 1,
-                    height: 148,
+                    height: 120,
                   ),
                 ),
               ),
             ),
             Positioned(
               top: 95,
-              right: 107,
+                
+              left: width > 400 ? width * 0.28 :  width * 0.27,
               child: Container(
                 child: RotationTransition(
                   alignment: Alignment.center,

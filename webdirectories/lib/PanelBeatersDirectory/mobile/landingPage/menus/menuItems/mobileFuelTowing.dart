@@ -7,6 +7,7 @@ class MobileFuelTowing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     int menuIndex = 5;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -20,7 +21,7 @@ class MobileFuelTowing extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: const Text(
+          child:  Text(
             'Fuel, Towing & Repair',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -32,7 +33,7 @@ class MobileFuelTowing extends StatelessWidget {
                 ),
               ],
               height: 1.15,
-              fontSize: 34,
+              fontSize: widthDevice < 400 ? 30 : 34,
               fontFamily: 'ralewaybold',
               color: Color.fromARGB(255, 255, 255, 255),
             ),
@@ -48,7 +49,7 @@ class MobileFuelTowing extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 19.0,
+              fontSize: widthDevice < 400 ? 16 : 19.0,
               height: 1.1,
               fontFamily: 'raleway',
             ),

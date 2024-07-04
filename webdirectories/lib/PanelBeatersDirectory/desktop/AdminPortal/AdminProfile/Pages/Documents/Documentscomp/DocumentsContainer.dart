@@ -66,7 +66,7 @@ class _DocumentsContainerState extends State<DocumentsContainer> {
                 ),
               ),
               SizedBox(
-                width: MyUtility(context).width * 0.26,
+                width: MyUtility(context).width * 0.17,
                 child: Text(
                   widget.subCategory,
                   style: TextStyle(

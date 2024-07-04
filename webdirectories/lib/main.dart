@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Web Directories', home: PanelBeatersHome() //const MyHome(),
+        title: 'Web Directories', home:  PanelBeatersHome() //const MyHome(),
         );
   }
 }

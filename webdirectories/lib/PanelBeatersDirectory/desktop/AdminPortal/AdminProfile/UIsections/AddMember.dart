@@ -97,12 +97,12 @@ class _AddMemberState extends State<AddMember> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20, left: 16, right: 0),
+              padding: const EdgeInsets.only(top: 20, left: 20, bottom: 30 ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    width: MyUtility(context).width * 0.775,
+                    width: MyUtility(context).width ,
                     height: 1,
                     color: Color(0xFF0F253A),
                   ),

@@ -44,6 +44,7 @@ class _AdminJobFinderState extends State<AdminJobFinder> {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         width: MyUtility(context).width,
@@ -90,7 +91,7 @@ class _AdminJobFinderState extends State<AdminJobFinder> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 10),
                     child: Container(
-                      width: MyUtility(context).width * 0.725,
+                      width: MyUtility(context).width * 0.73,
                       height: MyUtility(context).height * 0.06,
                       decoration: ShapeDecoration(
                         color: Color(0xFF0F253A),

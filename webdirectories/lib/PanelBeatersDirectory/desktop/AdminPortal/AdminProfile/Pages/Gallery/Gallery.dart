@@ -22,11 +22,13 @@ class _GalleryState extends State<Gallery> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    var heightDevice = MediaQuery.of(context).size.height;
+    return 
+       Center(
         child: SizedBox(
+          height: heightDevice,
           width: MyUtility(context).width * 0.9,
-          child: Column(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: MyUtility(context).height * 0.05,
@@ -35,7 +37,7 @@ class _GalleryState extends State<Gallery> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Documents',
+                    'Galery',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 24.48,
@@ -91,14 +93,14 @@ class _GalleryState extends State<Gallery> {
                 ),
               ),
               SizedBox(
-                height: MyUtility(context).height * 0.1,
+                height: 25,
               ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: galleryItems.map((item) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: GalleryContainer(
                         galleryImage: item['image']!,
                         description: item['description']!,
@@ -110,7 +112,7 @@ class _GalleryState extends State<Gallery> {
             ],
           ),
         ),
-      ),
+      
     );
   }
 }

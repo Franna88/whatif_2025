@@ -37,7 +37,7 @@ class _AttachmentPopupButtonState extends State<AttachmentPopupButton> {
                 child: SvgPicture.asset('images/attachment.svg'),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 8),
+                padding: const EdgeInsets.only(right: 25),
                 child: Text(
                   widget.text,
                   style: TextStyle(
@@ -45,7 +45,7 @@ class _AttachmentPopupButtonState extends State<AttachmentPopupButton> {
                     fontSize: 16.32,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w700,
-                    height: 0,
+                    height: 1,
                   ),
                 ),
               ),

@@ -15,28 +15,27 @@ class _BusinessAddressState extends State<BusinessAddress> {
   final TextEditingController _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              width: MyUtility(context).width * 0.13,
-              child: Column(
+    var widthDevice = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: const EdgeInsets.only(left: 15),
+      child: Column(mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   ProfileImage(
                     imageText: 'Logo',
                   )
                 ],
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                SizedBox(
-                  width: MyUtility(context).width * 0.58,
-                  child: Row(
+              SizedBox(width: 25,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ProfileShortTextField(
@@ -47,11 +46,8 @@ class _BusinessAddressState extends State<BusinessAddress> {
                           controller: _textController, headline: 'City'),
                     ],
                   ),
-                ),
-                SizedBox(
-                  width: MyUtility(context).width * 0.58,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ProfileShortTextField(
                           controller: _textController, headline: 'Suburb'),
@@ -60,25 +56,25 @@ class _BusinessAddressState extends State<BusinessAddress> {
                           headline: 'Street Address')
                     ],
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                width: MyUtility(context).width * 0.61,
-                height: 1,
-                decoration: BoxDecoration(color: Color(0xFF0F253A)),
-              )
+                ],
+              ),
             ],
           ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30, top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: widthDevice < 1500 ? MyUtility(context).width * 0.64 : MyUtility(context).width * 0.71,
+                  height: 1,
+                  decoration: BoxDecoration(color: Color(0xFF0F253A)),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

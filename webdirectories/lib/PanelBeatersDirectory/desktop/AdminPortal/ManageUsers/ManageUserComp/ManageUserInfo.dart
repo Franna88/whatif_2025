@@ -94,7 +94,7 @@ class _ManageUserInfoState extends State<ManageUserInfo> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
-                child: SvgPicture.asset('images/right.svg'),
+                child: SvgPicture.asset('images/dashboard.svg'),
               )
             ],
           ),

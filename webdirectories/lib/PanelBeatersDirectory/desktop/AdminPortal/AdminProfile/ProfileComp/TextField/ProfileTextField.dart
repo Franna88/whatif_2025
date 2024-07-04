@@ -19,7 +19,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 20, right: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +30,7 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
               fontSize: 20.4,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w700,
-              height: 0,
+              height: 1,
             ),
           ),
           SizedBox(height: 8),
@@ -43,17 +43,20 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: TextFormField(
-                controller: widget.controller,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.zero,
-                ),
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Inter',
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: TextFormField(
+                  cursorColor: Colors.black,
+                  controller: widget.controller,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontFamily: 'Inter',
+                  ),
                 ),
               ),
             ),

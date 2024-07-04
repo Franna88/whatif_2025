@@ -22,6 +22,7 @@ class _PageChangeButtonState extends State<PageChangeButton> {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return TextButton(
       onPressed: () {
         _toggleSelection();
@@ -46,7 +47,7 @@ class _PageChangeButtonState extends State<PageChangeButton> {
         widget.text,
         style: TextStyle(
           color: Colors.white,
-          fontSize: 27.2,
+          fontSize: widthDevice < 1500 ? 20 : 27.2,
           fontFamily: 'Koulen',
           fontWeight: FontWeight.w400,
         ),

@@ -28,41 +28,40 @@ class _BusinessDropDownState extends State<BusinessDropDown> {
             ),
           ),
         ),
-        SizedBox(
-          width: MyUtility(context).width * 0.75,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ProfileDropDown(
-                headline: 'Select a Category',
-                items: items,
-                value: dropdownValue,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownValue = newValue;
-                  });
-                },
-              ),
-              ProfileDropDown(
-                headline: 'Specialist Service',
-                items: items,
-                value: dropdownValue,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownValue = newValue;
-                  });
-                },
-              ),
-            ],
-          ),
+        const SizedBox(height: 10,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ProfileDropDown(
+              headline: 'Select a Category',
+              items: items,
+              value: dropdownValue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue;
+                });
+              },
+            ),
+           SizedBox(width: MyUtility(context).width * 0.10,),
+            ProfileDropDown(
+              headline: 'Specialist Service',
+              items: items,
+              value: dropdownValue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue;
+                });
+              },
+            ),
+          ],
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 15),
+          padding: const EdgeInsets.only(bottom: 30, top: 20, left: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                width: MyUtility(context).width * 0.775,
+                width: MyUtility(context).width ,
                 height: 1,
                 decoration: BoxDecoration(color: Color(0xFF0F253A)),
               )
