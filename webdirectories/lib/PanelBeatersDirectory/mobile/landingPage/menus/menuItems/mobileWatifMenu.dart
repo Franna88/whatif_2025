@@ -7,6 +7,7 @@ class Mobilewatifmenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     int menuIndex = 1;
 
     return Padding(
@@ -15,7 +16,7 @@ class Mobilewatifmenu extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           MobileMenuIndex(menuIndex: menuIndex),
-          const Text(
+          Text(
             'Download your WATIF App',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -27,7 +28,7 @@ class Mobilewatifmenu extends StatelessWidget {
                 ),
               ],
               height: 1.15,
-              fontSize: 34,
+              fontSize: widthDevice < 400 ? 30 :  34,
               fontFamily: 'ralewaybold',
               color: Color.fromARGB(255, 255, 255, 255),
             ),
@@ -35,7 +36,7 @@ class Mobilewatifmenu extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          const SizedBox(
+           SizedBox(
             width: 400,
             child: Text.rich(
               TextSpan(
@@ -44,7 +45,7 @@ class Mobilewatifmenu extends StatelessWidget {
                     text: 'Hit the road with confidence and ditch the stress! ',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 19,
+                      fontSize: widthDevice < 400 ? 16 :  19,
                       fontFamily: 'raleway',
                     ),
                   ),
@@ -52,7 +53,7 @@ class Mobilewatifmenu extends StatelessWidget {
                     text: 'WATIF',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 19,
+                      fontSize: widthDevice < 400 ? 16 :  19,
                       fontFamily: 'ralewaymedium',
                     ),
                   ),
@@ -61,7 +62,7 @@ class Mobilewatifmenu extends StatelessWidget {
                         ' is your free, all-in-one automotive app that empowers you with everything you need.',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 19,
+                      fontSize: widthDevice < 400 ? 16 :  19,
                       fontFamily: 'raleway',
                     ),
                   ),

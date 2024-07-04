@@ -31,6 +31,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     bool locationSet = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,7 +45,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: const Text(
+          child:  Text(
             'Find All Panel Beaters',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -56,7 +57,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
                 ),
               ],
               height: 1.15,
-              fontSize: 34,
+              fontSize: widthDevice < 400 ? 30 : 34,
               fontFamily: 'ralewaybold',
               color: Color.fromARGB(255, 255, 255, 255),
             ),

@@ -48,9 +48,9 @@ class MobileOrangeButton extends StatelessWidget {
               children: [
                 Text(
                   buttonTitle,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20.4,
+                      fontSize: widthDevice < 400 ? 18 : 20.4,
                       fontFamily: 'ralewaymedium',
                       letterSpacing: -0.3),
                 ),

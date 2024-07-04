@@ -7,6 +7,7 @@ class MobileNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     int menuIndex = 4;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -18,7 +19,7 @@ class MobileNews extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        const Text(
+         Text(
           'Info & Finance',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -29,7 +30,7 @@ class MobileNews extends StatelessWidget {
                   offset: Offset(1.0, 1.0),
                 ),
               ],
-              fontSize: 34,
+              fontSize: widthDevice <400 ? 30 : 34,
               height: 1.15,
               fontFamily: 'ralewaybold',
               color: Color.fromARGB(255, 255, 255, 255)),
@@ -44,7 +45,7 @@ class MobileNews extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 19.72,
+              fontSize: widthDevice < 400 ? 16 : 19.72,
               fontFamily: 'raleway',
               height: 1.15,
             ),

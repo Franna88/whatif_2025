@@ -31,6 +31,7 @@ class _MobileApprovalsServicesState extends State<MobileApprovalsServices> {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -43,7 +44,7 @@ class _MobileApprovalsServicesState extends State<MobileApprovalsServices> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: const Text(
+          child:  Text(
             'Approvals & Services',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -54,7 +55,7 @@ class _MobileApprovalsServicesState extends State<MobileApprovalsServices> {
                     offset: Offset(1.0, 1.0),
                   ),
                 ],
-                fontSize: 34,
+                fontSize: widthDevice < 400 ? 30 : 34,
                 height: 1.15,
                 fontFamily: 'ralewaybold',
                 color: Color.fromARGB(255, 255, 255, 255)),
