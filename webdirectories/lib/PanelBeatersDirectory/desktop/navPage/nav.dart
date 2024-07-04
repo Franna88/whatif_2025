@@ -43,7 +43,7 @@ class _NavState extends State<Nav> {
       LandingPageDisplay(goToWeConnectMainPage: goToWeConnectMainPage),
       ServicesFeatured(viewServiceDetails: viewServiceDetails),
       JobFinder(),
-      WeConnectMainPage(goToLandingPageDisplay: goToLandingPageDisplay),
+      LandingPageDisplay(goToWeConnectMainPage: goToWeConnectMainPage),
       RecentArticles(),
       JoinPbd(),
       OwnersPortal(),

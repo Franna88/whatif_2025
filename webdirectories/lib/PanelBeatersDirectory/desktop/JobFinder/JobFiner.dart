@@ -23,89 +23,92 @@ class _JobFinderState extends State<JobFinder> {
             fit: BoxFit.cover,
           ),
         ),
-        child: SizedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 10, top: 25, bottom: 10),
-                    child: SizedBox(
-                      width: MyUtility(context).width / 1.15,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Image.asset(
-                              'images/logoPanel.png',
-                              //width: 225,
-                              height: 70,
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                'Job Finder:',
-                                style: TextStyle(
-                                  fontSize: MyUtility(context).width * 0.02,
-                                  fontFamily: 'ralewaybold',
-                                  color: Colors.white,
-                                ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: SizedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 10, top: 25, bottom: 10),
+                      child: SizedBox(
+                        width: MyUtility(context).width / 1.15,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: Image.asset(
+                                'images/logoPanel.png',
+                                //width: 225,
+                                height: 70,
                               ),
-                              Text(
-                                'Connect with top employers for free',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: MyUtility(context).width * 0.015,
-                                  fontFamily: 'ralewaymedium',
-                                  fontWeight: FontWeight.w500,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Job Finder:',
+                                  style: TextStyle(
+                                    fontSize: MyUtility(context).width * 0.02,
+                                    fontFamily: 'ralewaybold',
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MyUtility(context).width * 0.865,
-                    height: MyUtility(context).height * 0.767,
-                    decoration: ShapeDecoration(
-                      gradient: LinearGradient(
-                        end: Alignment(0.56, 0.83),
-                        begin: Alignment(0.56, -0.83),
-                        colors: [
-                          Colors.white.withOpacity(0.200000000149012),
-                          Colors.white.withOpacity(0.4000000059604645)
-                        ],
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      shadows: [
-                        BoxShadow(
-                          color: Color(0xBF000000),
-                          blurRadius: 24,
-                          offset: Offset(0, 6),
-                          spreadRadius: -3,
+                                Text(
+                                  'Connect with top employers for free',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: MyUtility(context).width * 0.015,
+                                    fontFamily: 'ralewaymedium',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                    child: Center(
-                      child: JobFinderContainer(),
+                    Container(
+                      width: MyUtility(context).width * 0.865,
+                      height: MyUtility(context).height * 0.767,
+                      decoration: ShapeDecoration(
+                        gradient: LinearGradient(
+                          end: Alignment(0.56, 0.83),
+                          begin: Alignment(0.56, -0.83),
+                          colors: [
+                            Colors.white.withOpacity(0.200000000149012),
+                            Colors.white.withOpacity(0.4000000059604645)
+                          ],
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0xBF000000),
+                            blurRadius: 24,
+                            offset: Offset(0, 6),
+                            spreadRadius: -3,
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: JobFinderContainer(),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: MyUtility(context).width * 0.04,
-              )
-            ],
+                  ],
+                ),
+                SizedBox(
+                  width: MyUtility(context).width * 0.04,
+                )
+              ],
+            ),
           ),
         ),
       ),

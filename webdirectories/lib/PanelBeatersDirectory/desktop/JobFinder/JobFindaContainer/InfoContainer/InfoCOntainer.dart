@@ -18,7 +18,7 @@ class _InfoContainerState extends State<InfoContainer> {
         ButtonInfoContainer(
             headlineText: 'What is Job Finder?',
             paragraph:
-                'Job Finder is a free service for both job seekers and featured businesses within the auto body repair industry in Southern Africa. ',
+                'Job Finder is a free service for both job seekers and featured businesses within the Auto Body Repair industry in Southern Africa. ',
             buttonText: 'Learn More',
             onPressed: () {}),
         ButtonInfoContainer(
