@@ -33,7 +33,7 @@ class _ArticlesPostCommentState extends State<ArticlesPostComment> {
           padding: const EdgeInsets.only(bottom: 20),
           child: Container(
             width: 770.8,
-            height: MyUtility(context).height * 0.365,
+            //height: MyUtility(context).height * 0.365,
             decoration: ShapeDecoration(
               color: Color(0xFFEFECEC),
               shape: RoundedRectangleBorder(
@@ -44,6 +44,7 @@ class _ArticlesPostCommentState extends State<ArticlesPostComment> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(height: 8,),
                 Text(
                   'Join the conversation!',
                   textAlign: TextAlign.center,

@@ -31,8 +31,11 @@ class _SeoTagsArticleState extends State<SeoTagsArticle> {
         Row(
           children: [
             SeoTags(seoTag: 'Lightstone'),
+            const SizedBox(width: 5,),
             SeoTags(seoTag: 'EchoMBR'),
+            const SizedBox(width: 5,),
             SeoTags(seoTag: 'KAI Results'),
+            const SizedBox(width: 5,),
             SeoTags(seoTag: 'Panelbeaters'),
           ],
         )

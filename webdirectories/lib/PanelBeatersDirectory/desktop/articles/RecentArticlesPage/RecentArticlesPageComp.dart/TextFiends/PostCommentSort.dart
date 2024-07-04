@@ -17,8 +17,10 @@ class Postcommentsort extends StatefulWidget {
 class _PostcommentsortState extends State<Postcommentsort> {
   @override
   Widget build(BuildContext context) {
+    
+var widthDevice = MediaQuery.of(context).size.width;
     return Container(
-      width: 341.36,
+      width: widthDevice * 0.20,
       height: 36,
       decoration: ShapeDecoration(
         color: Colors.black.withOpacity(0),

@@ -31,9 +31,13 @@ class _SeoTagsArticleMobileState extends State<SeoTagsArticleMobile> {
         ),
         Row(
           children: [
+            const SizedBox(width: 5,),
             SeoTagsMobile(seoTag: 'Lightstone'),
+            const SizedBox(width: 5,),
             SeoTagsMobile(seoTag: 'EchoMBR'),
+            const SizedBox(width: 5,),
             SeoTagsMobile(seoTag: 'KAI Results'),
+            const SizedBox(width: 5,),
             SeoTagsMobile(seoTag: 'Panelbeaters'),
           ],
         )

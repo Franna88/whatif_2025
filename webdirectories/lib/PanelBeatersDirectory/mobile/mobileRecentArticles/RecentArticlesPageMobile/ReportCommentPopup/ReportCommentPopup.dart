@@ -10,6 +10,8 @@ class ReportCommentPopupMobile extends StatefulWidget {
 }
 
 class _ReportCommentPopupMobileState extends State<ReportCommentPopupMobile> {
+  List<bool> isSelectedList = List.generate(9, (index) => false);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,26 +66,35 @@ class _ReportCommentPopupMobileState extends State<ReportCommentPopupMobile> {
                 spacing: 10.0, // Adjusted spacing between buttons
                 runSpacing: 10.0, // Adjusted run spacing
                 children: [
-                  'Nudity ',
+                  'Nudity',
                   'Violence',
                   'Harassment',
                   'Terrorism',
                   'Suicide or Self-injury',
                   'Spam',
-                  'Something Else'
-                      'Unauthorized Sales',
+                  'Something Else',
+                  'Unauthorized Sales',
                   'Hate Speech',
-                ].map((label) {
+                ].asMap().entries.map((entry) {
+                  int index = entry.key;
+                  String label = entry.value;
                   return SizedBox(
                     height: 25,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey,
+                        backgroundColor:
+                            isSelectedList[index] ? Colors.orange : Colors.grey,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          for (int i = 0; i < isSelectedList.length; i++) {
+                            isSelectedList[i] = i == index;
+                          }
+                        });
+                      },
                       child: Text(
                         label,
                         textAlign: TextAlign.center,

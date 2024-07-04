@@ -140,7 +140,7 @@ class _ArticlesContainerState extends State<ArticlesContainer> {
                       SEOContainer(text: 'Panelbeaters'),
                       SizedBox(width: MyUtility(context).width * 0.04),
                       Visibility(
-                        visible: false,
+                        visible: true,
                         child: MouseRegion(
                           cursor: SystemMouseCursors.click,
                           child: GestureDetector(

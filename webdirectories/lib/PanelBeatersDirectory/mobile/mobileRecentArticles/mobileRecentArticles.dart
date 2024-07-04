@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/RecentArticlesPageMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/ui/ArticlesMobileWhite.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/ui/ArticlesSearchbarMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/ui/articleDescriptionContainer.dart';
@@ -81,7 +82,14 @@ class _MobileRecentArticlesState extends State<MobileRecentArticles> {
                           writer: 'By Wena Cronje',
                           description:
                               'Your CSI success contributes to your business success and assists both prospects and industry users.',
-                          onpress: () {},
+                          onpress: () {
+                            Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const RecentArticlesPageMobile()),
+                                          );
+                          },
                         ),
                       ),
                       Row(

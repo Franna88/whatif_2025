@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlesPage/RecentArticlesPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlescomponents/ArticlesContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlescomponents/ArticlesContainerWhite.dart';
 import 'package:webdirectories/myutility.dart';
@@ -238,7 +239,14 @@ class _RecentArticlesState extends State<RecentArticles> {
                                         writer: 'Wena Cronje',
                                         description:
                                             'Your CSI success contributes to your business success and assists both prospects and industry users.',
-                                        onpress: () {},
+                                        onpress: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const RecentArticlesPage()),
+                                          );
+                                        },
                                       ),
                                       ArticlesContainer(
                                         image: 'images/drive.png',

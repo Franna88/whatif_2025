@@ -36,10 +36,10 @@ class _ArticlesPostCommentMobileState extends State<ArticlesPostCommentMobile> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 20,),
           child: Container(
             width: 770.8,
-            height: MyUtility(context).height * 0.46,
+            //height: MyUtility(context).height * 0.46,
             decoration: ShapeDecoration(
               color: Color(0xFFEFECEC),
               shape: RoundedRectangleBorder(
@@ -52,6 +52,7 @@ class _ArticlesPostCommentMobileState extends State<ArticlesPostCommentMobile> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 8,),
                   Text(
                     'Join the conversation!',
                     textAlign: TextAlign.center,
@@ -82,11 +83,14 @@ class _ArticlesPostCommentMobileState extends State<ArticlesPostCommentMobile> {
                     children: [
                       PostcommentsortMobile(
                           hintText: 'First Name', controller: firstName),
+                      
                       PostcommentsortMobile(
                           hintText: 'Last Name', controller: lastName),
                     ],
                   ),
+                  const SizedBox(height: 8,),
                   PostCommentEmailMobile(controller: emailAddress),
+                  const SizedBox(height: 8,),
                   PostCommentTextFieldMobile(controller: message),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),

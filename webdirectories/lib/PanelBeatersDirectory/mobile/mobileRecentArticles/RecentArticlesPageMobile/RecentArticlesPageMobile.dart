@@ -23,6 +23,7 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Material(
       child: Container(
         height: MyUtility(context).height,
@@ -42,7 +43,7 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Container(
                   width: MyUtility(context).width * 0.95,
-                  height: MyUtility(context).height * 4.62,
+                  height: widthDevice < 400 ?  MyUtility(context).height * 5.29 : MyUtility(context).height * 4.12,
                   decoration: ShapeDecoration(
                     gradient: LinearGradient(
                       begin: Alignment(0.56, -0.83),
@@ -73,74 +74,51 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                           color: Color(0xFF0E1013),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              width: MyUtility(context).width * 0.25,
-                              height: 45,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(25.0),
-                              ),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Container(
-                                      height: 35,
-                                      width: 35,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.black,
-                                      ),
-                                      child: IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.search,
-                                          color: Colors.white,
-                                          size: 20,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Stack(
+                                  children: [
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: ShapeDecoration(
+                                        shape: OvalBorder(
+                                          side: BorderSide(
+                                              width: 0.94, color: Colors.white),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: search,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontFamily: 'ralewaysemi',
-                                      ),
-                                      decoration: InputDecoration(
-                                        hintText: 'Search Keywords',
-                                        hintStyle: TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: 'ralewaysemi',
-                                          color: Color(0xFF717375),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        filled: true,
-                                        fillColor: Colors.transparent,
-                                        contentPadding: EdgeInsets.symmetric(
-                                          vertical: 10,
-                                          horizontal: 10,
-                                        ),
+                                    Positioned(
+                                      left: 4,
+                                      top: 5,
+                                      child: Icon(
+                                        Icons.keyboard_arrow_left,
+                                        color: Colors.white,
+                                        size: 20,
                                       ),
                                     ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Go Back',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
                                   ),
-                                  IconButton(
-                                    onPressed: () {
-                                      search.clear();
-                                    },
-                                    icon: Icon(
-                                      Icons.close,
-                                      color: Color(0xFF717375),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -196,7 +174,7 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                                             textAlign: TextAlign.start,
                                             style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 27.2,
+                                              fontSize: widthDevice < 400 ? 24 : 27.2,
                                               fontFamily: 'ralewaybold',
                                             ),
                                           ),
@@ -212,6 +190,18 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
+                                              Text(
+                                                      'Your CSI success contributes to your business success and assists\nboth prospects and industry users.',
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xFFE5882F),
+                                                        fontSize: 14,
+                                                        fontStyle:
+                                                            FontStyle.italic,
+                                                        fontFamily:
+                                                            'ralewaymedium',
+                                                      ),
+                                                    ),
                                               ArticlesTextMobile(
                                                 headline:
                                                     'Your Ultimate Business Tool',

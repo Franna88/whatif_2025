@@ -28,6 +28,7 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Material(
       child: Container(
         height: MyUtility(context).height,
@@ -223,15 +224,19 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                                         ),
                                       ),
                                       SizedBox(height: 10),
-                                      SizedBox(
-                                        width: MyUtility(context).width * 0.7,
-                                        child: Text(
-                                          'See your Lightstone EchoMBR Results for\nFebruary 2024',
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 34,
-                                            fontFamily: 'ralewaybold',
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding:  EdgeInsets.only(left: widthDevice < 1500 ? 20 :  widthDevice * 0.08),
+                                          child: Text(
+                                            
+                                            'See your Lightstone EchoMBR Results for\nFebruary 2024',
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 34,
+                                              fontFamily: 'ralewaybold',
+                                            ),
                                           ),
                                         ),
                                       ),

@@ -9,6 +9,7 @@ class ArticlesText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return SizedBox(
       width: 770.8,
       child: Text.rich(
@@ -27,7 +28,7 @@ class ArticlesText extends StatelessWidget {
               text: '${paragraphText} \n\n',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 20.4,
+                fontSize: widthDevice < 1500 ? 18 : 20.4,
                 fontFamily: 'raleway',
                 fontWeight: FontWeight.w400,
               ),

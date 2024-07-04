@@ -37,6 +37,7 @@ class _ArticlesUserCommentsMobileState
 
   @override
   Widget build(BuildContext context) {
+    var widthDevice = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -75,7 +76,7 @@ class _ArticlesUserCommentsMobileState
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 14.96,
+                  fontSize: widthDevice < 400 ? 12  : 14.96,
                   fontFamily: 'ralewaymedium',
                 ),
               ),
