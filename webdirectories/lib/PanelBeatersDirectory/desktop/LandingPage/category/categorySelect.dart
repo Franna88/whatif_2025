@@ -20,9 +20,10 @@ class _CategorySelectState extends State<CategorySelect>
 
   double top = 145;
   double right = 185;
+
   @override
   void initState() {
-    //animation start
+    // Animation start
     _controller = AnimationController(
       lowerBound: -0.6,
       duration: const Duration(milliseconds: 2000),
@@ -34,15 +35,17 @@ class _CategorySelectState extends State<CategorySelect>
 
   @override
   void dispose() {
-    //end animation
+    // End animation
     _controller.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
+    var devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+
+    bool isScaled125 = devicePixelRatio == 1.25;
 
     return widthDevice < 1500
         ? Column(
@@ -50,8 +53,8 @@ class _CategorySelectState extends State<CategorySelect>
               Stack(
                 children: [
                   Container(
-                    width: 555,
-                    height: 555,
+                    width: isScaled125 ? 455 : 555,
+                    height: isScaled125 ? 455 : 555,
                   ),
                   Positioned(
                     top: 8,
@@ -59,8 +62,8 @@ class _CategorySelectState extends State<CategorySelect>
                     child: Container(
                       child: SvgPicture.asset(
                         'images/gauge.svg',
-                        width: 500,
-                        height: 500,
+                        width: isScaled125 ? 400 : 500,
+                        height: isScaled125 ? 400 : 500,
                       ),
                     ),
                   ),
@@ -78,7 +81,7 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/cloud2.svg'
                               : 'images/cloud1.svg',
                           width: 1,
-                          height: 173,
+                          height: isScaled125 ? 138 : 173,
                         ),
                       ),
                     ),
@@ -97,7 +100,7 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/car2.svg'
                               : 'images/car1.svg',
                           width: 1,
-                          height: 128,
+                          height: isScaled125 ? 102 : 128,
                         ),
                       ),
                     ),
@@ -116,7 +119,7 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/local2.svg'
                               : 'images/local1.svg',
                           width: 1,
-                          height: 168,
+                          height: isScaled125 ? 134 : 168,
                         ),
                       ),
                     ),
@@ -135,7 +138,7 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/stack2.svg'
                               : 'images/stack1.svg',
                           width: 1,
-                          height: 171,
+                          height: isScaled125 ? 137 : 171,
                         ),
                       ),
                     ),
@@ -146,13 +149,12 @@ class _CategorySelectState extends State<CategorySelect>
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(4);
-
                         _controller.animateTo(0.325);
                       },
                       child: Container(
                         child: SvgPicture.asset(
                           width: 1,
-                          height: 168,
+                          height: isScaled125 ? 134 : 168,
                           widget.menuIndex == 4
                               ? 'images/tow2.svg'
                               : 'images/tow1.svg',
@@ -168,8 +170,8 @@ class _CategorySelectState extends State<CategorySelect>
                         alignment: Alignment.center,
                         turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
                         child: Container(
-                          height: 260.0,
-                          width: 150.0,
+                          height: isScaled125 ? 208.0 : 260.0,
+                          width: isScaled125 ? 120.0 : 150.0,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage('images/red1.png'),
@@ -230,7 +232,7 @@ class _CategorySelectState extends State<CategorySelect>
             ],
           )
         //==============
-        //Bigger screen
+        // Bigger screen
         : Column(
             children: [
               Stack(
@@ -332,7 +334,6 @@ class _CategorySelectState extends State<CategorySelect>
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(4);
-
                         _controller.animateTo(0.325);
                       },
                       child: Container(
