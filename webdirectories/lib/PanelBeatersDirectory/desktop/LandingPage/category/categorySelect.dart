@@ -46,6 +46,9 @@ class _CategorySelectState extends State<CategorySelect>
     var devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
 
     bool isScaled125 = devicePixelRatio == 1.25;
+    double scaleFactor = isScaled125
+        ? 0.94
+        : 1.0; 
 
     return widthDevice < 1500
         ? Column(
@@ -53,23 +56,23 @@ class _CategorySelectState extends State<CategorySelect>
               Stack(
                 children: [
                   Container(
-                    width: isScaled125 ? 455 : 555,
-                    height: isScaled125 ? 455 : 555,
+                    width: 555 * scaleFactor,
+                    height: 555 * scaleFactor,
                   ),
                   Positioned(
-                    top: 8,
-                    left: 33,
+                    top: 8 * scaleFactor,
+                    left: 33 * scaleFactor,
                     child: Container(
                       child: SvgPicture.asset(
                         'images/gauge.svg',
-                        width: isScaled125 ? 400 : 500,
-                        height: isScaled125 ? 400 : 500,
+                        width: 500 * scaleFactor,
+                        height: 500 * scaleFactor,
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 254,
-                    left: 79,
+                    top: 254 * scaleFactor,
+                    left: 79 * scaleFactor,
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(0);
@@ -81,14 +84,14 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/cloud2.svg'
                               : 'images/cloud1.svg',
                           width: 1,
-                          height: isScaled125 ? 138 : 173,
+                          height: 173 * scaleFactor,
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 62,
-                    left: 182,
+                    top: 62 * scaleFactor,
+                    left: 182 * scaleFactor,
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(2);
@@ -100,14 +103,14 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/car2.svg'
                               : 'images/car1.svg',
                           width: 1,
-                          height: isScaled125 ? 102 : 128,
+                          height: 128 * scaleFactor,
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 87,
-                    left: 79,
+                    top: 87 * scaleFactor,
+                    left: 79 * scaleFactor,
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(1);
@@ -119,14 +122,14 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/local2.svg'
                               : 'images/local1.svg',
                           width: 1,
-                          height: isScaled125 ? 134 : 168,
+                          height: 168 * scaleFactor,
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 89,
-                    right: 80,
+                    top: 89 * scaleFactor,
+                    right: 80 * scaleFactor,
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(3);
@@ -138,14 +141,14 @@ class _CategorySelectState extends State<CategorySelect>
                               ? 'images/stack2.svg'
                               : 'images/stack1.svg',
                           width: 1,
-                          height: isScaled125 ? 137 : 171,
+                          height: 171 * scaleFactor,
                         ),
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 259,
-                    right: 80,
+                    top: 259 * scaleFactor,
+                    right: 80 * scaleFactor,
                     child: GestureDetector(
                       onTap: () {
                         widget.changeMenu(4);
@@ -154,7 +157,7 @@ class _CategorySelectState extends State<CategorySelect>
                       child: Container(
                         child: SvgPicture.asset(
                           width: 1,
-                          height: isScaled125 ? 134 : 168,
+                          height: 168 * scaleFactor,
                           widget.menuIndex == 4
                               ? 'images/tow2.svg'
                               : 'images/tow1.svg',
@@ -163,15 +166,15 @@ class _CategorySelectState extends State<CategorySelect>
                     ),
                   ),
                   Positioned(
-                    top: 130,
-                    right: 200,
+                    top: 130 * scaleFactor,
+                    right: 200 * scaleFactor,
                     child: Container(
                       child: RotationTransition(
                         alignment: Alignment.center,
                         turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
                         child: Container(
-                          height: isScaled125 ? 208.0 : 260.0,
-                          width: isScaled125 ? 120.0 : 150.0,
+                          height: 260.0 * scaleFactor,
+                          width: 150.0 * scaleFactor,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage('images/red1.png'),
@@ -184,8 +187,8 @@ class _CategorySelectState extends State<CategorySelect>
                   ),
                   if (widget.menuIndex == 0)
                     Positioned(
-                      bottom: 90,
-                      left: 176,
+                      bottom: 90 * scaleFactor,
+                      left: 176 * scaleFactor,
                       child: CategoryText(
                         text1: 'Download',
                         text2: 'WATIF',
@@ -193,8 +196,8 @@ class _CategorySelectState extends State<CategorySelect>
                     )
                   else if (widget.menuIndex == 1)
                     Positioned(
-                      bottom: 90,
-                      left: 176,
+                      bottom: 90 * scaleFactor,
+                      left: 176 * scaleFactor,
                       child: CategoryText(
                         text1: 'Body Shop',
                         text2: 'Near Me',
@@ -202,8 +205,8 @@ class _CategorySelectState extends State<CategorySelect>
                     )
                   else if (widget.menuIndex == 2)
                     Positioned(
-                      bottom: 90,
-                      left: 176,
+                      bottom: 90 * scaleFactor,
+                      left: 176 * scaleFactor,
                       child: CategoryText(
                         text1: 'Panel Shop',
                         text2: 'Services',
@@ -211,8 +214,8 @@ class _CategorySelectState extends State<CategorySelect>
                     )
                   else if (widget.menuIndex == 3)
                     Positioned(
-                      bottom: 90,
-                      left: 176,
+                      bottom: 90 * scaleFactor,
+                      left: 176 * scaleFactor,
                       child: CategoryText(
                         text1: 'News &',
                         text2: 'Articles',
@@ -220,8 +223,8 @@ class _CategorySelectState extends State<CategorySelect>
                     )
                   else if (widget.menuIndex == 4)
                     Positioned(
-                      bottom: 90,
-                      left: 176,
+                      bottom: 90 * scaleFactor,
+                      left: 176 * scaleFactor,
                       child: CategoryText(
                         text1: 'More',
                         text2: 'Services',

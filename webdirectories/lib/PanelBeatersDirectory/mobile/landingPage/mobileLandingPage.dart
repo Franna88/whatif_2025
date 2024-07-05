@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/weConnectPage/weConnectMainPage/weConnectMainPage.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/FooterMobile/PanFooterMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/category/mobileCategory.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/menus/menuItems/approvalsServices/mobileApprovalsServices.dart';
@@ -36,40 +37,47 @@ class _MobilelandingpageState extends State<Mobilelandingpage> {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Container(
-        height: heightDevice,
-        width: widthDevice,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('images/mobileLanding.png'), fit: BoxFit.cover),
-        ),
-        child: PageView(
-          controller: _pageController,
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            // Add the WeConnectMainPage here
-            WeConnectMainPageMobile(),
-            SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+            Container(
+              height: heightDevice,
+              width: widthDevice,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('images/mobileLanding.png'), fit: BoxFit.cover),
+              ),
+              child: PageView(
+                controller: _pageController,
                 children: [
-                  MobileTopNavBarhome(),
-                  MobileCategorySelect(
-                    menuIndex: menuIndex,
-                    changeMenu: (value) {
-                      setState(() {
-                        menuIndex = value;
-                      });
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child:
-                        Mobileglasscontainer(child: menuContainers[menuIndex]),
+                  // Add the WeConnectMainPage here
+                  WeConnectMainPageMobile(),
+                  SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        MobileTopNavBarhome(),
+                        MobileCategorySelect(
+                          menuIndex: menuIndex,
+                          changeMenu: (value) {
+                            setState(() {
+                              menuIndex = value;
+                            });
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child:
+                              Mobileglasscontainer(child: menuContainers[menuIndex]),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
+            PanFooterMobile()
           ],
         ),
       ),

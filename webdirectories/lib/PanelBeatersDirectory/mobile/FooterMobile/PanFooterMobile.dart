@@ -11,14 +11,14 @@ import 'package:webdirectories/WebDirectories/Mobile/mobileDisclaimer/mobileDisc
 
 import 'package:webdirectories/myutility.dart';
 
-class FooterMobile extends StatefulWidget {
-  const FooterMobile({super.key});
+class PanFooterMobile extends StatefulWidget {
+  const PanFooterMobile({super.key});
 
   @override
-  State<FooterMobile> createState() => _FooterMobileState();
+  State<PanFooterMobile> createState() => _PanFooterMobileState();
 }
 
-class _FooterMobileState extends State<FooterMobile> {
+class _PanFooterMobileState extends State<PanFooterMobile> {
   final email = TextEditingController();
 
   void _launchURL(String url) async {
@@ -47,14 +47,17 @@ class _FooterMobileState extends State<FooterMobile> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: MyUtility(context).width / 2.2,
-                height: MyUtility(context).height * 0.1,
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Image.asset(
-                    'images/logo.png',
-                    fit: BoxFit.fill,
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Container(
+                  //width: MyUtility(context).width / 2.2,
+                  height: MyUtility(context).height * 0.04,
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Image.asset(
+                      'images/logoPanel.png',
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               ),
@@ -174,9 +177,26 @@ class _FooterMobileState extends State<FooterMobile> {
                   color: Colors.black,
                 ),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {},
+                suffixIcon: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                  child: Container(
+                    //height: 25,
+                    width: 85,
+                    decoration: BoxDecoration(
+                      color: Color(0xE50C0C0C),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Subscribe',
+                        style: TextStyle(
+                            color: Color(0xFFFAFAFA),
+                            fontFamily: 'raleway',
+                            fontSize: 14),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
