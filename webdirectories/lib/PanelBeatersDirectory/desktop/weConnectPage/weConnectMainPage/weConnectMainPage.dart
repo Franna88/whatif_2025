@@ -94,19 +94,19 @@ class WeConnectMainPage extends StatelessWidget {
                                       '#WeConnect',
                                       style: TextStyle(
                                         color: Color(0xFFFAFAFA),
-                                        fontSize: 45,
+                                        fontSize: widthDevice < 1600 ?  45 : 55,
                                         fontFamily: 'ralewaybold',
                                         height: 1,
                                       ),
                                     ),
                                   ),
                                   SizedBox(
-                                    width: widthDevice * 0.3,
+                                    width: widthDevice * 0.38,
                                     child: Text(
                                       WeConnectText().description1,
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                         color: Colors.white,
-                                        fontSize: 16,
+                                        fontSize: widthDevice < 1600 ?  16 : 20,
                                         fontFamily: 'raleway',
                                         height: 1.2,
                                       ),
@@ -116,12 +116,12 @@ class WeConnectMainPage extends StatelessWidget {
                                     height: 20,
                                   ),
                                   SizedBox(
-                                    width: widthDevice * 0.3,
+                                    width: widthDevice * 0.38,
                                     child: Text(
                                       WeConnectText().description2,
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                         color: Colors.white,
-                                        fontSize: 16,
+                                        fontSize: widthDevice < 1600 ?  16 : 20,
                                         fontFamily: 'raleway',
                                         height: 1.2,
                                       ),
@@ -138,7 +138,7 @@ class WeConnectMainPage extends StatelessWidget {
                                   ),
                                   CheckMarkedText(
                                     text:
-                                        'Make informed decisions\nbased on accurate\ninformation',
+                                        'Make informed decisions based on accurate information',
                                   ),
                                 ]),
                           ),
@@ -152,7 +152,7 @@ class WeConnectMainPage extends StatelessWidget {
                                     height: 20,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 30),
+                                    padding:  EdgeInsets.only(top: widthDevice < 1600 ? 30 : 50, left: 30),
                                     child: Container(
                                       height: heightDevice * 0.63,
                                       width: widthDevice * 0.35,
@@ -165,7 +165,7 @@ class WeConnectMainPage extends StatelessWidget {
                                     ),
                                   ),
                                   Positioned(
-                                    right: 350,
+                                    right:  250,
                                     top: 0,
                                     child: StackedInfo(),
                                   )
@@ -184,7 +184,7 @@ class WeConnectMainPage extends StatelessWidget {
           Positioned(
             top: 0,
             bottom: 0,
-            right: 150,
+            right: widthDevice < 1600 ? 40 :  150,
             child: Padding(
               padding: const EdgeInsets.only(left: 0),
               child: Align(

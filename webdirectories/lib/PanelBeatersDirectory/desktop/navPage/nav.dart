@@ -21,13 +21,13 @@ class _NavState extends State<Nav> {
 
   void goToWeConnectMainPage() {
     setState(() {
-      _currentIndex = 3; // Assuming 3 is the index of WeConnectMainPage
+      _currentIndex = 3; 
     });
   }
 
   void goToLandingPageDisplay() {
     setState(() {
-      _currentIndex = 0; // Assuming 0 is the index of LandingPageDisplay
+      _currentIndex = 0; 
     });
   }
 
@@ -43,7 +43,7 @@ class _NavState extends State<Nav> {
       LandingPageDisplay(goToWeConnectMainPage: goToWeConnectMainPage),
       ServicesFeatured(viewServiceDetails: viewServiceDetails),
       JobFinder(),
-      LandingPageDisplay(goToWeConnectMainPage: goToWeConnectMainPage),
+      WeConnectMainPage(goToLandingPageDisplay: goToLandingPageDisplay),
       RecentArticles(),
       JoinPbd(),
       OwnersPortal(),

@@ -12,13 +12,13 @@ class CheckMarkedText extends StatelessWidget {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.only(top: 15, left: 10),
+      padding:  EdgeInsets.only(top: widthDevice < 1600 ? 12 :  15, left: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 20,
-            height: 20,
+            width: widthDevice < 1600 ? 15 : 20,
+            height: widthDevice < 1600 ? 15 : 20,
             decoration: BoxDecoration(
               color: Color(0xFFE2822B),
               shape: BoxShape.circle,
@@ -38,8 +38,9 @@ class CheckMarkedText extends StatelessWidget {
               text,
               style: TextStyle(
                 color: Color(0xFFF4F4F4),
-                fontSize: 16,
+                fontSize: widthDevice < 1600 ? 15 : 20,
                 fontFamily: 'raleway',
+                height: 1
               ),
             ),
           )

@@ -47,7 +47,7 @@ class _CategorySelectState extends State<CategorySelect>
 
     bool isScaled125 = devicePixelRatio == 1.25;
     double scaleFactor = isScaled125
-        ? 0.94
+        ? 0.90
         : 1.0; 
 
     return widthDevice < 1500

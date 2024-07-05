@@ -84,7 +84,7 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                               _isHovered = false;
                             }),
                             child: GestureDetector(
-                              onTap: widget.goToWeConnectMainPage,
+                              onTap: (){widget.goToWeConnectMainPage();},
                               child: Icon(
                                 Icons.keyboard_arrow_left_rounded,
                                 size: heightDevice * 0.12,
