@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/AccreditationServiceMobile/AccreditationImageContainerMobile/AccreditationImageCompMobile/ImageBoxMobile.dart';
 import 'package:webdirectories/myutility.dart';
+
+import 'AccreditationImageCompMobile/ImageBoxMobile.dart';
 
 class AccreditationImageContainerMobile extends StatelessWidget {
   const AccreditationImageContainerMobile({super.key});

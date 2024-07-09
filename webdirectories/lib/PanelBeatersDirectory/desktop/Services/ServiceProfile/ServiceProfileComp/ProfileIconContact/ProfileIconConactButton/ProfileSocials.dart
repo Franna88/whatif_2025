@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceProfile/ServiceProfileComp/ProfileIconContact/ProfileIconContact.dart';
+
+import '../ProfileIconContact.dart';
 
 class ProfileSocials extends StatefulWidget {
   const ProfileSocials({super.key});

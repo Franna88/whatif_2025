@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AccreditationService/AccreditationImageContainer/AccreditationImageComp/ImageBox.dart';
 import 'package:webdirectories/myutility.dart';
+
+import 'AccreditationImageComp/ImageBox.dart';
 
 class AccreditationImageContainer extends StatefulWidget {
   const AccreditationImageContainer({super.key});

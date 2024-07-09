@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/packageInfoPages/packagesPage.dart';
+
+import '../packagesPage.dart';
 
 class PremiumPackagePage extends StatelessWidget {
   const PremiumPackagePage({super.key});

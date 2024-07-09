@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceContact/ServiceContactContainer/ServiceContactContainer2comp/ServiceContactContainer2top.dart';
 import 'package:webdirectories/myutility.dart';
+
+import 'ServiceContactContainer2comp/ServiceContactContainer2top.dart';
 
 class ServiceContactContainer2 extends StatefulWidget {
   const ServiceContactContainer2({

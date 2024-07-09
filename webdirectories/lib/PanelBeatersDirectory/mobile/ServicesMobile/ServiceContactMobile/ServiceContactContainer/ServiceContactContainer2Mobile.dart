@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ServiceContactMobile/ServiceContactContainer/ServiceContactContainer2comp/ServiceContainer2topMobile.dart';
+
+import 'ServiceContactContainer2comp/ServiceContainer2topMobile.dart';
 
 class ServiceContactContainer2Mobile extends StatefulWidget {
   const ServiceContactContainer2Mobile({
