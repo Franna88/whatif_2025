@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceProfile/ServiceProfileComp/ImageScrollContainer.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceProfile/ServiceProfileComp/ProfileIconContact/ProfileIconConactButton/ProfileSocials.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceProfile/ServiceProfileComp/ProfileTextContainer.dart';
 import 'package:webdirectories/myutility.dart';
+
+import 'ServiceProfileComp/ImageScrollContainer.dart';
+import 'ServiceProfileComp/ProfileIconContact/ProfileIconConactButton/ProfileSocials.dart';
+import 'ServiceProfileComp/ProfileTextContainer.dart';
 
 class ServiceProfile extends StatefulWidget {
   const ServiceProfile({super.key});

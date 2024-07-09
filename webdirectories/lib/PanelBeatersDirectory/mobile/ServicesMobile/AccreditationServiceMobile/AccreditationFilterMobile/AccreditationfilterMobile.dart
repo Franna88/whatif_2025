@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/AccreditationServiceMobile/AccreditationFilterMobile/AccreditationFilterCompMobile/FilterButtonMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/AccreditationServiceMobile/AccreditationImageContainerMobile/AccreditationImageContainerMobile.dart';
 import 'package:webdirectories/myutility.dart';
+
+import '../AccreditationImageContainerMobile/AccreditationImageContainerMobile.dart';
+import 'AccreditationFilterCompMobile/FilterButtonMobile.dart';
 
 class AccreditationfilterMobile extends StatefulWidget {
   const AccreditationfilterMobile({super.key});

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/FooterMobile/PanFooterMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/AriclesCommentContainerMobile/ArticlesCommentContainerMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/RecentArticlesPageComp.dart/ArticlesPostaCommentMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/RecentArticlesPageComp.dart/ArticlesShareMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/RecentArticlesPageComp.dart/ArticlesTextMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/RecentArticlesPageComp.dart/AuthorMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/RecentArticlesPageComp.dart/SeoTagsArticle.dart';
-
 import 'package:webdirectories/myutility.dart';
+
+import '../../FooterMobile/PanFooterMobile.dart';
+import '../../MobileTopNavBar/MobileTopNavBarhome.dart';
+import 'AriclesCommentContainerMobile/ArticlesCommentContainerMobile.dart';
+import 'RecentArticlesPageComp.dart/ArticlesPostaCommentMobile.dart';
+import 'RecentArticlesPageComp.dart/ArticlesShareMobile.dart';
+import 'RecentArticlesPageComp.dart/ArticlesTextMobile.dart';
+import 'RecentArticlesPageComp.dart/AuthorMobile.dart';
+import 'RecentArticlesPageComp.dart/SeoTagsArticle.dart';
 
 class RecentArticlesPageMobile extends StatefulWidget {
   const RecentArticlesPageMobile({Key? key}) : super(key: key);
@@ -47,7 +46,9 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Container(
                         width: MyUtility(context).width * 0.95,
-                        height: widthDevice < 400 ?  MyUtility(context).height * 5.29 : MyUtility(context).height * 4.12,
+                        height: widthDevice < 400
+                            ? MyUtility(context).height * 5.29
+                            : MyUtility(context).height * 4.12,
                         decoration: ShapeDecoration(
                           gradient: LinearGradient(
                             begin: Alignment(0.56, -0.83),
@@ -94,7 +95,8 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                                             decoration: ShapeDecoration(
                                               shape: OvalBorder(
                                                 side: BorderSide(
-                                                    width: 0.94, color: Colors.white),
+                                                    width: 0.94,
+                                                    color: Colors.white),
                                               ),
                                             ),
                                           ),
@@ -129,7 +131,8 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(right: 0, top: 10),
+                                padding:
+                                    const EdgeInsets.only(right: 0, top: 10),
                                 child: Column(
                                   children: [
                                     Center(
@@ -142,7 +145,8 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                                               width: 1,
                                               color: Colors.white,
                                             ),
-                                            borderRadius: BorderRadius.circular(15),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
                                           ),
                                         ),
                                         child: Padding(
@@ -152,11 +156,13 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                                             children: [
                                               SizedBox(
                                                 height:
-                                                    MyUtility(context).height * 0.03,
+                                                    MyUtility(context).height *
+                                                        0.03,
                                               ),
                                               Container(
                                                 width:
-                                                    MyUtility(context).width * 0.85,
+                                                    MyUtility(context).width *
+                                                        0.85,
                                                 height: 200,
                                                 decoration: ShapeDecoration(
                                                   image: DecorationImage(
@@ -166,27 +172,32 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                                                   ),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
-                                                        BorderRadius.circular(19.76),
+                                                        BorderRadius.circular(
+                                                            19.76),
                                                   ),
                                                 ),
                                               ),
                                               SizedBox(height: 10),
                                               SizedBox(
-                                                width: MyUtility(context).width * 0.8,
+                                                width:
+                                                    MyUtility(context).width *
+                                                        0.8,
                                                 child: Text(
                                                   'See your Lightstone EchoMBR Results for February 2024',
                                                   textAlign: TextAlign.start,
                                                   style: TextStyle(
                                                     color: Colors.black,
-                                                    fontSize: widthDevice < 400 ? 24 : 27.2,
+                                                    fontSize: widthDevice < 400
+                                                        ? 24
+                                                        : 27.2,
                                                     fontFamily: 'ralewaybold',
                                                   ),
                                                 ),
                                               ),
                                               SizedBox(height: 10),
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.only(bottom: 15),
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 15),
                                                 child: AuthorMobile(),
                                               ),
                                               Center(
@@ -195,17 +206,17 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                            'Your CSI success contributes to your business success and assists\nboth prospects and industry users.',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Color(0xFFE5882F),
-                                                              fontSize: 14,
-                                                              fontStyle:
-                                                                  FontStyle.italic,
-                                                              fontFamily:
-                                                                  'ralewaymedium',
-                                                            ),
-                                                          ),
+                                                      'Your CSI success contributes to your business success and assists\nboth prospects and industry users.',
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xFFE5882F),
+                                                        fontSize: 14,
+                                                        fontStyle:
+                                                            FontStyle.italic,
+                                                        fontFamily:
+                                                            'ralewaymedium',
+                                                      ),
+                                                    ),
                                                     ArticlesTextMobile(
                                                       headline:
                                                           'Your Ultimate Business Tool',
@@ -221,8 +232,10 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                                                       child: Container(
                                                         width: 204,
                                                         height: 204,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xFFD9D9D9)),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                color: Color(
+                                                                    0xFFD9D9D9)),
                                                       ),
                                                     ),
                                                     ArticlesTextMobile(
@@ -239,13 +252,17 @@ class _RecentArticlesPageMobileState extends State<RecentArticlesPageMobile> {
                                                       child: Container(
                                                         width: 204,
                                                         height: 204,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xFFD9D9D9)),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                color: Color(
+                                                                    0xFFD9D9D9)),
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          top: 15, bottom: 10),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 15,
+                                                              bottom: 10),
                                                       child: Center(
                                                           child:
                                                               ArticlesShareMobile()),

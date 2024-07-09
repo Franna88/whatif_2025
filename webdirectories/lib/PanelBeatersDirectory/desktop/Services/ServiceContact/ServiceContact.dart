@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceContact/ServiceContactContainer/ServiceContactContainer2.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceContact/ServiceContactContainer/ServiceContactcontainer1.dart';
+
 import 'package:webdirectories/myutility.dart';
+
+import 'ServiceContactContainer/ServiceContactContainer2.dart';
+import 'ServiceContactContainer/ServiceContactcontainer1.dart';
 
 class ServiceContact extends StatefulWidget {
   const ServiceContact({super.key});

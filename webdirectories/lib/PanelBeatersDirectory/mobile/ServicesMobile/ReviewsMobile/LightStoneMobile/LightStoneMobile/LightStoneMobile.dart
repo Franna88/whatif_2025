@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/LightStoneMobile/LightStoneMobile/LightStoneEcho/LightStoneEchoMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/LightStoneMobile/LightStoneMobile/WhoIsLightStoneMobile/WhoIsLightStoneMobile.dart';
 import 'package:webdirectories/myutility.dart';
+
+import 'LightStoneEcho/LightStoneEchoMobile.dart';
+import 'WhoIsLightStoneMobile/WhoIsLightStoneMobile.dart';
 
 class LightStoneMobile extends StatefulWidget {
   const LightStoneMobile({super.key});

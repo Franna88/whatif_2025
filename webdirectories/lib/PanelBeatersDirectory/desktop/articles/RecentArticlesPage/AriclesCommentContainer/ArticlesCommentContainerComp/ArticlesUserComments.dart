@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/ReportCommentPopup/ReportCommentPopup.dart';
+
+import '../../../ReportCommentPopup/ReportCommentPopup.dart';
 
 class ArticlesUserComments extends StatefulWidget {
   final String username;
