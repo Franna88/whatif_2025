@@ -48,38 +48,40 @@ class _MembershipOptionsState extends State<MembershipOptions> {
         ),
         Text('Membership Options',
             textAlign: TextAlign.center,
-            style: widthDevice < 1500
-                ? TextStyle(
+            style: heightDevice < 710 ? TextStyle(
                     color: Colors.white,
-                    fontSize: 30,
+                    fontSize: 25,
+                    fontFamily: 'ralewaybold',
+                  ) :
+                 TextStyle(
+                    color: Colors.white,
+                    fontSize: widthDevice < 1500 ? 30 : 40,
                     fontFamily: 'ralewaybold',
                   )
-                : TextStyle(
-                    color: Colors.white,
-                    fontSize: 40,
-                    fontFamily: 'ralewaybold',
-                  )),
+                ),
         SizedBox(
-          height: 10,
+          height: heightDevice < 710 ? 5 : 10,
         ),
         Text(
             'Choose your membership option.\nYou can change this at any time in the future.',
             textAlign: TextAlign.center,
-            style: widthDevice < 1500
-                ? TextStyle(
+            style: heightDevice < 710 ? TextStyle(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 12,
+                    fontFamily: 'raleway',
+                    height: 1,
+                  ) :
+                 TextStyle(
+                    color: Colors.white,
+                    fontSize: widthDevice < 1500 ? 14 : 18,
                     fontFamily: 'raleway',
                     height: 1,
                   )
-                : TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontFamily: 'raleway',
-                    height: 1,
-                  )),
+                ),
+        
         SizedBox(
-          height: widthDevice < 1500 ? 20 : 30,
+          
+          height: heightDevice < 710 ? 10 : widthDevice < 1500 ? 20 : 30,
         ),
 
         //ROW 1
@@ -92,19 +94,19 @@ class _MembershipOptionsState extends State<MembershipOptions> {
               child: Text(
                 'Options',
                 textAlign: TextAlign.start,
-                style: widthDevice < 1500
-                    ? TextStyle(
+                style: heightDevice < 710 ?  TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                         fontFamily: 'raleway',
                         height: 1,
-                      )
-                    : TextStyle(
+                      ):
+                     TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: widthDevice < 1500 ? 14 : 16,
                         fontFamily: 'raleway',
                         height: 1,
-                      ),
+                      )
+                    
               ),
             ),
             GreyTable(
@@ -546,8 +548,8 @@ class _MembershipOptionsState extends State<MembershipOptions> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 15,
+         SizedBox(
+          height: heightDevice < 710 ? 5 : 15,
         ),
         SizedBox(
           width: widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
@@ -573,7 +575,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
             },
             buttonText: 'Continue'),
         SizedBox(
-          height: widthDevice < 1500 ?   25: 35,
+          height: heightDevice < 710 ? 15 : widthDevice < 1500 ?   25: 35,
         ),
       ],
     );

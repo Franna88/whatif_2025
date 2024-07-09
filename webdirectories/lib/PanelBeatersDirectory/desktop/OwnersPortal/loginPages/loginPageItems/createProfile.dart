@@ -35,23 +35,21 @@ class CreateProfile extends StatelessWidget {
           number5: ProgressBarNumbers(number: '05'),
         ),
         SizedBox(
-          height: 10,
+          height: heightDevice < 710 ? 5 : 10,
         ),
-        Text(
-          'Create Profile',
-          textAlign: TextAlign.center,
-          style: widthDevice < 1500
-              ? TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontFamily: 'ralewaybold',
-                )
-              : TextStyle(
-                  color: Colors.white,
-                  fontSize: 40,
-                  fontFamily: 'ralewaybold',
-                ),
-        ),
+        Text('Create Profile',
+            textAlign: TextAlign.center,
+            style: heightDevice < 710
+                ? TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontFamily: 'ralewaybold',
+                  )
+                : TextStyle(
+                    color: Colors.white,
+                    fontSize: widthDevice < 1500 ? 30 : 40,
+                    fontFamily: 'ralewaybold',
+                  )),
         SizedBox(
           height: widthDevice < 1500 ? 10 : 15,
         ),
@@ -60,22 +58,22 @@ class CreateProfile extends StatelessWidget {
           child: Text(
               'Choose a strong password and username for your account. This will allow you to access your Owner\'s Portal later.',
               textAlign: TextAlign.center,
-              style: widthDevice < 1500
+              style: heightDevice < 710
                   ? TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize: 12,
                       fontFamily: 'raleway',
-                      height: 1,
+                      height: 1.3,
                     )
                   : TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: widthDevice < 1500 ? 14 : 18,
                       fontFamily: 'raleway',
-                      height: 1,
+                      height: 1.3,
                     )),
         ),
         SizedBox(
-          height: widthDevice < 1500 ?  10 : 15,
+          height: widthDevice < 1500 ? 10 : 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +85,7 @@ class CreateProfile extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: widthDevice < 1500 ?  10 : 15,
+          height: widthDevice < 1500 ? 10 : 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -115,16 +113,16 @@ class CreateProfile extends StatelessWidget {
             children: [
               Text('Your password needs to have:',
                   textAlign: TextAlign.center,
-                  style: widthDevice < 1500
+                  style: heightDevice < 710
                       ? TextStyle(
                           color: Colors.white,
-                          fontSize: 14,
+                          fontSize: 12,
                           fontFamily: 'raleway',
                           height: 1,
                         )
                       : TextStyle(
                           color: Colors.white,
-                          fontSize: 18,
+                          fontSize: widthDevice < 1500 ? 14 : 18,
                           fontFamily: 'raleway',
                           height: 1,
                         )),
@@ -137,14 +135,17 @@ class CreateProfile extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 10,
+          height: heightDevice < 710 ? 5 : 10,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment:  MainAxisAlignment.start ,
           children: [
+            
+            SizedBox(width: heightDevice < 710 ? 15 : widthDevice < 1500? 25 : widthDevice / 20,),
+              
             SmallCheckBox(description: 'Remember me', checkboxValue: false),
             SizedBox(
-              width: 120,
+              width:  120,
             )
           ],
         ),
@@ -157,7 +158,7 @@ class CreateProfile extends StatelessWidget {
             },
             buttonText: 'Continue'),
         SizedBox(
-          height: heightDevice / 30,
+          height: heightDevice < 710 ? 10 : heightDevice / 30,
         ),
       ],
     );

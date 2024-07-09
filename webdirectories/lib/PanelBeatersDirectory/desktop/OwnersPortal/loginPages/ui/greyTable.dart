@@ -8,10 +8,11 @@ class GreyTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var heightDevice = MediaQuery.of(context).size.height;
     return Container(
-              padding: EdgeInsets.only(left: 10,top: 13),
+              padding: EdgeInsets.only(left: 10,top: heightDevice < 710 ? 8 : 13),
               width: width,//125 //175
-              height: 40,
+              height: heightDevice < 710 ? 30 : 40,
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 48, 48, 48),
                 border: Border(

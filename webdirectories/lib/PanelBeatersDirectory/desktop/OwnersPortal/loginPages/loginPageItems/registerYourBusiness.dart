@@ -5,6 +5,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/progressBarNumbers.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/smallCheckBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/smallTextBox.dart';
+import 'package:webdirectories/WebDirectories/Page2/Page2.dart';
 
 class RegisterYourBusiness extends StatelessWidget {
   Function changePageIndex;
@@ -32,43 +33,54 @@ class RegisterYourBusiness extends StatelessWidget {
           number5: ProgressBarNumbers(number: '05'),
         ),
         SizedBox(
-          height: 10,
+          height: heightDevice < 710 ? 5 : 10,
         ),
+        heightDevice < 710 ? Text(
+          'Register your Business!',
+          textAlign: TextAlign.center,
+          style:TextStyle(
+            color: Colors.white,
+            fontSize:  25,
+            fontFamily: 'ralewaybold',
+          ) 
+        ):
         Text(
           'Register your Business!',
           textAlign: TextAlign.center,
-          style: widthDevice < 1500 ? TextStyle(
+          style:TextStyle(
             color: Colors.white,
-            fontSize: 30,
+            fontSize:  widthDevice < 1500 ?  30 : 40,
             fontFamily: 'ralewaybold',
-          ) : TextStyle(
-            color: Colors.white,
-            fontSize: 40,
-            fontFamily: 'ralewaybold',
-          )
+          ) 
         ),
         SizedBox(
-          height: 10,
+          height: heightDevice < 710 ? 5 : 10,
         ),
+        heightDevice < 710 ? 
         Text(
           'Join the Panel Beater Directory to connect with new \ncustomers and showcase your expertise to drivers in need.',
           textAlign: TextAlign.center,
-          style: widthDevice < 1500 ? TextStyle(
+          style:  TextStyle(
             color: Colors.white,
-            fontSize: 14,
+            fontSize: 12 ,
             fontFamily: 'raleway',
             
-            height: 1,
-          ) : TextStyle(
+            height: 1.3,
+          ) 
+        ):
+        Text(
+          'Join the Panel Beater Directory to connect with new \ncustomers and showcase your expertise to drivers in need.',
+          textAlign: TextAlign.center,
+          style:  TextStyle(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: widthDevice < 1500 ? 14 : 18 ,
             fontFamily: 'raleway',
             
-            height: 1,
-          )
+            height: 1.3,
+          ) 
         ),
         SizedBox(
-          height: 20,
+          height: heightDevice < 710 ? 5 : 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -113,7 +125,7 @@ class RegisterYourBusiness extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 20,
+          height: heightDevice < 710 ? 0 : 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -148,19 +160,26 @@ class RegisterYourBusiness extends StatelessWidget {
         ),
         Align(
           alignment: widthDevice < 1500 ?  Alignment.centerLeft : Alignment.center,
-          child: Wrap(
+          child: Row(mainAxisAlignment: MainAxisAlignment.center,
             
             children: [
               SmallCheckBox(
                   description: 'By creating an account, you agree to our',
                   checkboxValue: false),
+              
               TextButton(
                 
                 onPressed: () {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Material(
+                            child: Page2(),
+                          )));
                   //ADD LOGIC HERE
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 14, left: 0),
+                  padding:  EdgeInsets.only(top: widthDevice < 1500 ?   0 : 16, left: 0),
                   child: Text(
                     'Terms & Conditions',
                     style: widthDevice < 1500 ?  TextStyle(
@@ -171,7 +190,7 @@ class RegisterYourBusiness extends StatelessWidget {
                       
                       decoration: TextDecoration.underline,
                       decorationColor: Color(0xFFEF9040),
-                      height: 0.0
+                      //height: -3
                     ): TextStyle(
                       color: Color(0xFFEF9040),
                       fontSize: 14,
@@ -196,7 +215,7 @@ class RegisterYourBusiness extends StatelessWidget {
             },
             buttonText: 'Start Sign Up Process'),
         SizedBox(
-          height: heightDevice * 0.05,
+          height: heightDevice < 710 ? 10 : heightDevice / 30,
         ),
       ],
     );

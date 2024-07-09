@@ -22,6 +22,7 @@ class _PasswordFieldState extends State<PasswordField> {
   @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
+    var heightDevice = MediaQuery.of(context).size.height;
     return widthDevice <1500 ?  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,7 +33,7 @@ class _PasswordFieldState extends State<PasswordField> {
                 text: widget.keyText,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 14,
+                  fontSize: heightDevice < 710 ? 12 : 14,
                   fontFamily: 'raleway',
 
                   //height: 0.06,
@@ -52,11 +53,11 @@ class _PasswordFieldState extends State<PasswordField> {
           ),
         ),
         SizedBox(
-          height: 5,
+          height: heightDevice < 710 ? 3 : 5,
         ),
         Container(
           width: widget.widthContainer,//450 //215
-          height: 35,
+          height: heightDevice < 710 ? 28 : 35,
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
@@ -65,7 +66,7 @@ class _PasswordFieldState extends State<PasswordField> {
             ),
           ),
           child: TextField(
-            style: TextStyle(fontSize: 14,
+            style: TextStyle(fontSize:  heightDevice < 710 ? 12 : 16,
                 fontFamily: 'raleway',),
             keyboardType: TextInputType.visiblePassword,
             obscureText: _obscured,
@@ -76,7 +77,7 @@ class _PasswordFieldState extends State<PasswordField> {
                   EdgeInsets.only(bottom: 15, left: 15, right: 15),
               hintStyle: TextStyle(
                 color: const Color.fromARGB(255, 124, 124, 124),
-                fontSize: 14,
+                fontSize: heightDevice < 710 ? 12 : 16,
                 fontFamily: 'raleway',
               ),
               floatingLabelBehavior: FloatingLabelBehavior

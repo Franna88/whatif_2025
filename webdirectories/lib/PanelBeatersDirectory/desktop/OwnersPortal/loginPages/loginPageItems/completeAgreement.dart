@@ -61,13 +61,13 @@ class CompleteAgreement extends StatelessWidget {
             fontSize: 14,
             fontFamily: 'raleway',
             
-            height: 1,
+            height: 1.3,
           ) : TextStyle(
             color: Colors.white,
             fontSize: 18,
             fontFamily: 'raleway',
             
-            height: 1,
+            height: 1.3,
           )
         ),
         SizedBox(
@@ -82,15 +82,15 @@ class CompleteAgreement extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: heightDevice / 20,
+          height: heightDevice < 710 ? 15 : heightDevice / 20,
         ),
         LongOrangeButton(
             onPressed: () {
               changePageIndex();
             },
-            buttonText: 'Click here to complete Agreement'),
+            buttonText: 'Click here to Complete Agreement'),
         SizedBox(
-          height: heightDevice / 25,
+          height: heightDevice < 710 ? 10  :  heightDevice / 25,
         ),
       ],
     );

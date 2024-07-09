@@ -8,6 +8,7 @@ class SmallTextBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
+    var heightDevice = MediaQuery.of(context).size.height;
     return  widthDevice < 1500 ? Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,7 +19,7 @@ class SmallTextBox extends StatelessWidget {
                 text: keyText,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 14,
+                  fontSize: heightDevice < 710 ? 12 : 14,
                   fontFamily: 'raleway',
 
                   //height: 0.06,
@@ -38,11 +39,11 @@ class SmallTextBox extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 5,
+          height: heightDevice < 710 ? 3 : 5,
         ),
         Container(
           width: widthDevice * 0.14,
-          height: 35,
+          height: heightDevice < 710 ? 28 : 35,
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
@@ -51,17 +52,17 @@ class SmallTextBox extends StatelessWidget {
             ),
           ),
           child: TextField(
-            style: TextStyle(fontSize: 18,
+            style: TextStyle(fontSize: heightDevice < 710 ? 12 : 16,
                 fontFamily: 'raleway',),
             cursorColor: Colors.black,
             decoration: InputDecoration(
               contentPadding:
-                  EdgeInsets.only( bottom: 20, left: 15, right: 15),
+                  EdgeInsets.only( bottom: heightDevice < 710 ? 15 : 14, left: 15, right: 15),
               border: InputBorder.none,
               hintText: hintText,
               hintStyle: TextStyle(
                 color: const Color.fromARGB(255, 124, 124, 124),
-                fontSize: 14,
+                fontSize: heightDevice < 710 ? 12 : 16,
                 fontFamily: 'raleway',
               ),
             ),
