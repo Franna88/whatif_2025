@@ -14,7 +14,7 @@ class _AboutUsLeftContentMobileState extends State<AboutUsLeftContentMobile> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AboutUSContainerInfoMobile(
+        InfoContainer(
           section1Texts: [
             'B-BBEE Levels',
             'VDQ Registration',

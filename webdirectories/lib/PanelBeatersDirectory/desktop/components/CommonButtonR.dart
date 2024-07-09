@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/myutility.dart';
 
 class CommonButtonR extends StatelessWidget {
   final String buttonText;
@@ -14,6 +15,7 @@ class CommonButtonR extends StatelessWidget {
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Container(
+          width: MyUtility(context).width * 0.14,
           height: 36.72,
           decoration: ShapeDecoration(
             color: Colors.white,

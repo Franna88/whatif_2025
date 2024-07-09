@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LeaveReview/LeaveReview.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/ReviesMainContainer/LeftReviews/LeftReviews.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/ReviesMainContainer/RatingReviews/RatingReviews.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/ReviewsComponents/ReviewIconButtons.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -12,8 +13,21 @@ class ReviewsMainContainer extends StatefulWidget {
 }
 
 class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
+  var pageIndex = 0;
+
+  //this function changes page index
+  changePageIndex(value) {
+    setState(() {
+      pageIndex = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    List reviewPages = [
+      RatingReviews(changePageIndex: changePageIndex),
+      LeaveReview(changePageIndex: changePageIndex),
+    ];
     return Container(
       width: MyUtility(context).width * 0.84,
       height: MyUtility(context).height * 0.7,
@@ -80,7 +94,7 @@ class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [LeaveReview(), LeftReviews()],
+            children: [reviewPages[pageIndex], LeftReviews()],
           ),
           SizedBox(
             width: MyUtility(context).width / 1.3,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/myutility.dart';
 
 class DocumentButton extends StatelessWidget {
@@ -61,10 +62,8 @@ class DocumentButton extends StatelessWidget {
                             color: Colors.white,
                           ),
                           child: Center(
-                            child: Icon(
-                              Icons.download_sharp,
-                              color: Colors.black,
-                            ),
+                            child:
+                                SvgPicture.asset('images/DocumentDownload.svg'),
                           ),
                         ),
                       ),

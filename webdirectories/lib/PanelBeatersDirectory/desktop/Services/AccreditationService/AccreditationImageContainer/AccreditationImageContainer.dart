@@ -52,7 +52,7 @@ class _AccreditationImageContainerState
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: column.map((image) {
                       return Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 6, 4, 6),
+                        padding: const EdgeInsets.fromLTRB(0, 6, 4, 12),
                         child: image,
                       );
                     }).toList(),

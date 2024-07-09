@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AboutServices/AboutUsLeftConten/AboutUsLeftContentComp/AboutUSContainerInfo.dart';
+
+import 'AboutUsLeftContentComp/AboutUSContainerInfo.dart';
 
 class AboutUsLeftContent extends StatefulWidget {
   const AboutUsLeftContent({super.key});

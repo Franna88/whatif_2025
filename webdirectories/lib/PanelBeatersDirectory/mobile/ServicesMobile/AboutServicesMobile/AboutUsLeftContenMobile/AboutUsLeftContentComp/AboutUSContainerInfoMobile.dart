@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
-class AboutUSContainerInfoMobile extends StatefulWidget {
+class InfoContainer extends StatefulWidget {
   final List<String> section1Texts;
   final List<String> section2Texts;
 
-  const AboutUSContainerInfoMobile({
+  const InfoContainer({
     Key? key,
     required this.section1Texts,
     required this.section2Texts,
   }) : super(key: key);
 
   @override
-  State<AboutUSContainerInfoMobile> createState() =>
-      _AboutUSContainerInfoMobileState();
+  State<InfoContainer> createState() => _InfoContainerState();
 }
 
-class _AboutUSContainerInfoMobileState
-    extends State<AboutUSContainerInfoMobile> {
+class _InfoContainerState extends State<InfoContainer> {
   @override
   Widget build(BuildContext context) {
     int maxLength = widget.section1Texts.length > widget.section2Texts.length

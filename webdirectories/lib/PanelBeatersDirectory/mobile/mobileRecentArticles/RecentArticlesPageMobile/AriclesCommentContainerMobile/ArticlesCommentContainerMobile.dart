@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlesPage/AriclesCommentContainer/ArticlesCommentContainerComp/ArticlesUserComments.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/AriclesCommentContainerMobile/ArticlesCommentContainerMobileComp/ArticlesUserCommentsMobile.dart';
 import 'package:webdirectories/myutility.dart';
+
+import 'ArticlesCommentContainerMobileComp/ArticlesUserCommentsMobile.dart';
 
 class ArticlesCommentContainerMobile extends StatefulWidget {
   const ArticlesCommentContainerMobile({super.key});

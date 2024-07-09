@@ -33,12 +33,12 @@ class _ViewDocumentsState extends State<ViewDocuments> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.83,
+      width: MyUtility(context).width * 0.85,
       height: MyUtility(context).height * 0.71,
       decoration: BoxDecoration(
-        color: const Color(0xFF181B1D),
-        borderRadius: BorderRadius.circular(15),
-      ),
+          color: const Color(0xFF181B1D),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Colors.white, width: 1)),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DraggableScrollbar.rrect(

@@ -4,7 +4,11 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/Re
 import 'package:webdirectories/myutility.dart';
 
 class ReviewsNAvButton extends StatefulWidget {
-  const ReviewsNAvButton({super.key});
+  Function(int) changePageIndex;
+  int pageIndex;
+
+  ReviewsNAvButton(
+      {super.key, required this.changePageIndex, required this.pageIndex});
 
   @override
   State<ReviewsNAvButton> createState() => _ReviewsNAvButtonState();
@@ -23,13 +27,12 @@ class _ReviewsNAvButtonState extends State<ReviewsNAvButton> {
             left: 40,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LightStone()),
-                );
+                widget.changePageIndex(1);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0x3FFC40D0D),
+                backgroundColor: widget.pageIndex == 1
+                    ? Color(0xFFFF8828)
+                    : Color(0x3FFC40D0D),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(0.0),
@@ -48,7 +51,8 @@ class _ReviewsNAvButtonState extends State<ReviewsNAvButton> {
                   child: Text(
                     'Lightstone EchoMBR Reviews',
                     style: TextStyle(
-                      color: Colors.white,
+                      color:
+                          widget.pageIndex == 0 ? Colors.white : Colors.black,
                       fontSize: MyUtility(context).width * 0.015,
                       fontFamily: 'raleway',
                       fontWeight: FontWeight.w400,
@@ -64,13 +68,11 @@ class _ReviewsNAvButtonState extends State<ReviewsNAvButton> {
             left: 0,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Reviews()),
-                );
+                widget.changePageIndex(0);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF8828),
+                backgroundColor:
+                    widget.pageIndex == 0 ? Color(0xFFFF8828) : Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15.0),
@@ -88,7 +90,7 @@ class _ReviewsNAvButtonState extends State<ReviewsNAvButton> {
                 child: Text(
                   'Shop Reviews',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: widget.pageIndex == 0 ? Colors.black : Colors.white,
                     fontSize: MyUtility(context).width * 0.015,
                     fontFamily: 'raleway',
                     fontWeight: FontWeight.w400,

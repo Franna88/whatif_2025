@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceContact/ServiceContactContainer/ServiceContactContainer2.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceContact/ServiceContactContainer/ServiceContactcontainer1.dart';
+import 'package:webdirectories/myutility.dart';
 
 class ServiceContact extends StatefulWidget {
   const ServiceContact({super.key});
@@ -32,7 +33,10 @@ class _ServiceContactState extends State<ServiceContact> {
         SizedBox(
           height: 20,
         ),
-        ServiceContactContainer2()
+        ServiceContactContainer2(),
+        SizedBox(
+          height: MyUtility(context).height * 0.05,
+        )
       ],
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/ReportCommentPopup/ReportCommentPopup.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/ReportCommentPopup/ReportCommentPopup.dart';
+
+import '../../ReportCommentPopup/ReportCommentPopup.dart';
 
 class ArticlesUserCommentsMobile extends StatefulWidget {
   final String username;
@@ -76,7 +76,7 @@ class _ArticlesUserCommentsMobileState
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: widthDevice < 400 ? 12  : 14.96,
+                  fontSize: widthDevice < 400 ? 12 : 14.96,
                   fontFamily: 'ralewaymedium',
                 ),
               ),

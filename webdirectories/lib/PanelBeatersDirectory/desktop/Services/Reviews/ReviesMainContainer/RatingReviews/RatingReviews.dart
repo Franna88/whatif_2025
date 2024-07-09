@@ -5,7 +5,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/components/CommonBu
 import 'package:webdirectories/myutility.dart';
 
 class RatingReviews extends StatefulWidget {
-  const RatingReviews({Key? key}) : super(key: key);
+  Function(int) changePageIndex;
+  RatingReviews({Key? key, required this.changePageIndex}) : super(key: key);
 
   @override
   State<RatingReviews> createState() => _RatingReviewsState();
@@ -149,7 +150,11 @@ class _RatingReviewsState extends State<RatingReviews> {
               textAlign: TextAlign.center,
             ),
           ),
-          CommonButtonR(buttonText: 'Leave Us a Review', onPress: () {})
+          CommonButtonR(
+              buttonText: 'Leave Us a Review',
+              onPress: () {
+                widget.changePageIndex(1);
+              })
         ],
       ),
     );
