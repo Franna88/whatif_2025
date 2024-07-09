@@ -18,7 +18,7 @@ class _QuestionOrangeButtonState extends State<QuestionOrangeButton> {
     var widthDevice = MediaQuery.of(context).size.width;
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
           /*width: MediaQuery.of(context).size.width * 0.08,*/

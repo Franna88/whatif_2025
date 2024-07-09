@@ -3,7 +3,8 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/Loca
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ServicesMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/mobileLandingPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileJobFinder/mobileJobFinder.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileQuestionPages/mobileQuestionLanding.dart';
+
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileQuestionPages/newMobileGetListed.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/mobileRecentArticles.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/mainPageItems/ownersLoginMain.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ownersLoginMobile.dart';
@@ -60,7 +61,7 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
                   'News & Articles', 'option4', MobileRecentArticles()),
               PopupMenuDivider(), // Grey divider
               buildPopupMenuItem(
-                  'Get Listed Today!', 'option5', MobileQuestionLanding()),
+                  'Get Listed Today!', 'option5', NewMobileGetListed()),
               PopupMenuDivider(), // Grey divider
               buildPopupMenuItem('Owners Portal', 'option6', OwnersloginMain()),
             ],

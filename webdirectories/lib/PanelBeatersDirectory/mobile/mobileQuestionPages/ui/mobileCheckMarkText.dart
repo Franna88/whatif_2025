@@ -15,20 +15,19 @@ class MobileCheckMarkText extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: Row(
         children: [
-          const SizedBox(
-            width: 10,
-          ),
+          
+          
           Container(
             width: 25,
             height: 25,
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: Colors.white,
               shape: BoxShape.circle,
             ),
             padding: EdgeInsets.zero,
             child: Icon(
               Icons.check,
-              color: Colors.white,
+              color: Colors.black,
               size: 14,
             ),
           ),

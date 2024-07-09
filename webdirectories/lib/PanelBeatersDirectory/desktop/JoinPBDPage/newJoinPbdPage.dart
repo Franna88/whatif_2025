@@ -1,5 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/ui/attentionMotoristsBlock.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/ui/convertClicksBlock.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/ui/getListedBlock.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/ui/youtubeVideoBlock.dart';
 import 'package:webdirectories/myutility.dart';
 
 class NewJointPbdPage extends StatefulWidget {
@@ -20,10 +25,12 @@ class _NewJointPbdPageState extends State<NewJointPbdPage> {
         width: MyUtility(context).width,
         decoration: BoxDecoration(
           image: DecorationImage(
+            
             image: AssetImage('images/effortlessManagement.png'),
+            
             fit: BoxFit.fill,
             colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.2),
+              Color.fromARGB(99, 0, 0, 0),
               BlendMode.darken,
             ),
           ),
@@ -34,12 +41,23 @@ class _NewJointPbdPageState extends State<NewJointPbdPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 50, top: 50),
+                padding: EdgeInsets.only(
+                  left:  widthDevice / 10,
+                  top: 50,
+                ),
                 child: Image.asset(
                   'images/logoPanel.png',
                   height: 70,
                 ),
               ),
+              YoutubeVideoBlock(),
+              GetListedBlock(),
+              SizedBox(height: heightDevice / 10,),
+              ConvertClicksBlock(),
+              SizedBox(height: heightDevice / 10,),
+              AttentionMotoristsBlock(),
+              SizedBox(height: heightDevice / 10,),
+              PanelFooter()
             ],
           ),
         ),

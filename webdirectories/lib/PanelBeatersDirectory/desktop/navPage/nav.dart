@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFiner.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/joinPbdPage.dart';
+
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/newJoinPbdPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/landingPageDisplay.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/ownersPortal.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesFeatured.dart';
@@ -45,7 +46,7 @@ class _NavState extends State<Nav> {
       JobFinder(),
       WeConnectMainPage(goToLandingPageDisplay: goToLandingPageDisplay),
       RecentArticles(),
-      JoinPbd(),
+      NewJointPbdPage(),
       OwnersPortal(),
       Services(),
     ];

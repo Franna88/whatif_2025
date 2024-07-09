@@ -16,20 +16,18 @@ class CheckMarkText extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             child: Row(
               children: [
-                const SizedBox(
-                  width: 15,
-                ),
+                
                 Container(
                   width: widthDevice / 25,
                   height: heightDevice / 25,
                   decoration: BoxDecoration(
-                    color: Colors.black,
+                    color: Colors.white,
                     shape: BoxShape.circle,
                   ),
                   padding: EdgeInsets.zero,
                   child: Icon(
                     Icons.check,
-                    color: Colors.white,
+                    color: Colors.black,
                     size: heightDevice / 50,
                   ),
                 ),
@@ -40,7 +38,7 @@ class CheckMarkText extends StatelessWidget {
                   text,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: widthDevice / 73,
+                      fontSize: widthDevice / 74,
                       fontFamily: 'raleway',
                       letterSpacing: 0.5),
                 )
@@ -53,21 +51,19 @@ class CheckMarkText extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             child: Row(
               children: [
-                const SizedBox(
-                  width: 15,
-                ),
+               
                 Container(
-                  width: 25,
-                  height: 25,
+                  width: heightDevice < 710 ? 20 : 25,
+                  height: heightDevice < 710 ? 20 : 25,
                   decoration: BoxDecoration(
-                    color: Colors.black,
+                    color: Colors.white,
                     shape: BoxShape.circle,
                   ),
                   padding: EdgeInsets.zero,
                   child: Icon(
                     Icons.check,
-                    color: Colors.white,
-                    size: 14,
+                    color: Colors.black,
+                    size: heightDevice < 710 ? 12 : 14,
                   ),
                 ),
                 const SizedBox(
@@ -77,7 +73,7 @@ class CheckMarkText extends StatelessWidget {
                   text,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: heightDevice < 710 ? 16 : 18,
                       fontFamily: 'raleway',
                       letterSpacing: 0.5),
                 )

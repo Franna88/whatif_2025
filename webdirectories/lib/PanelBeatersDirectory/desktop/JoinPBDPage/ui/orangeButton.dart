@@ -17,7 +17,7 @@ class _OrangeButtonState extends State<OrangeButton> {
     var widthDevice = MediaQuery.of(context).size.width;
     return widthDevice > 1290
         ? Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               MouseRegion(
                 onEnter: (_) {
@@ -80,7 +80,7 @@ class _OrangeButtonState extends State<OrangeButton> {
         //SMALLER SCREENS
 
         : Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               MouseRegion(
                 onEnter: (_) {
