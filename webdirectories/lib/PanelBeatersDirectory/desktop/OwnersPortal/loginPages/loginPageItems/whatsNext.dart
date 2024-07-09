@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPortal.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/longOrangeButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/numberProgressBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/orangeCheckMark.dart';
@@ -35,21 +36,22 @@ class WhatsNext extends StatelessWidget {
         Text(
           'What\'s next?',
           textAlign: TextAlign.center,
-          style: widthDevice < 1500 ? TextStyle(
+          style: heightDevice < 710 ? TextStyle(
             color: Colors.white,
-            fontSize: 30,
+            fontSize: 25,
             fontFamily: 'ralewaybold',
-          ) : TextStyle(
+          ) :
+            TextStyle(
             color: Colors.white,
-            fontSize: 40,
+            fontSize: widthDevice < 1500 ?  30 : 40,
             fontFamily: 'ralewaybold',
-          )
+          ) 
         ),
         SizedBox(
           height: 10,
         ),
         Container(
-          height: widthDevice < 1500 ? 190 : 225,
+          height: heightDevice < 710 ? 150 : widthDevice < 1500 ? 190 : 225,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('images/watsnext.png'),
@@ -59,42 +61,50 @@ class WhatsNext extends StatelessWidget {
         SizedBox(
           height: 15,
         ),
-        Text(
-          'Thank you for choosing to be part of the Panel \nBeater Directory family! Your success is our \nsuccess and we can’t wait to grow with you.',
-          textAlign: TextAlign.center,
-          style: widthDevice < 1500 ? TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontFamily: 'raleway',
-            
-            height: 1,
-          ) : TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontFamily: 'raleway',
-            
-            height: 1,
-          )
+        SizedBox(
+          width: widthDevice < 1500 ? widthDevice / 3.5 : widthDevice / 04,
+          child: Text(
+            'Thank you for choosing to be part of the Panel Beater Directory family! Your success is our success and we can’t wait to grow with you.',
+            textAlign: TextAlign.center,
+            style: heightDevice < 710 ? TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontFamily: 'raleway',
+              
+              height: 1.3,
+            ) :
+             TextStyle(
+              color: Colors.white,
+              fontSize: widthDevice < 1500 ? 14 : 18,
+              fontFamily: 'raleway',
+              
+              height: 1.3,
+            ) 
+          ),
         ),
         SizedBox(
           height: 15,
         ),
-        Text(
-          'Your application is now being processed and you \nwill receive an email confirmation with your \nOwners Portal login code shortly.',
-          textAlign: TextAlign.center,
-          style: widthDevice < 1500 ? TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontFamily: 'raleway',
-            
-            height: 1,
-          ) : TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontFamily: 'raleway',
-            
-            height: 1,
-          )
+        SizedBox(
+          width: widthDevice < 1500 ? widthDevice / 3.5 : widthDevice / 03,
+          child: Text(
+            'Your application is now being processed and you \nwill receive an email confirmation with your \nOwners Portal login code shortly.',
+            textAlign: TextAlign.center,
+            style: heightDevice < 710 ? TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontFamily: 'raleway',
+              
+              height: 1.3,
+            ) :
+             TextStyle(
+              color: Colors.white,
+              fontSize: widthDevice < 1500 ? 14 : 18,
+              fontFamily: 'raleway',
+              
+              height: 1.3,
+            ) 
+          ),
         ),
         SizedBox(
           height: heightDevice / 20,
@@ -102,10 +112,14 @@ class WhatsNext extends StatelessWidget {
         LongOrangeButton(
             onPressed: () {
               //ADD LOGIC HERE
+               Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AdminPortal()),
+              );
             },
             buttonText: 'Login to Owners Portal'),
         SizedBox(
-          height: heightDevice / 30,
+          height: heightDevice < 710 ? 10 : heightDevice / 30,
         ),
       ],
     );

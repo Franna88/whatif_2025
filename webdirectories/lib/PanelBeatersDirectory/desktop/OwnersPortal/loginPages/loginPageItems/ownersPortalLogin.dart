@@ -19,7 +19,7 @@ class OwnersPortalLogin extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: heightDevice * 0.08,
+          height: heightDevice < 710 ? 25 : heightDevice * 0.08,
         ),
         Text('Owners Portal Login',
             textAlign: TextAlign.center,
@@ -94,7 +94,7 @@ class OwnersPortalLogin extends StatelessWidget {
             },
             buttonText: 'Login'),
         SizedBox(
-          height: 30,
+          height: heightDevice < 710 ? 15 : 30,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -116,14 +116,14 @@ class OwnersPortalLogin extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 20,
+         height: heightDevice < 710 ? 10 : 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 40,
-              height: 40,
+              width: heightDevice < 710 ? 25 : 40,
+              height: heightDevice < 710 ? 25 : 40,
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('images/googleicon.png'))),
@@ -132,7 +132,7 @@ class OwnersPortalLogin extends StatelessWidget {
               'Sign in with Google',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18,
+                fontSize: heightDevice < 710 ? 16 : 18,
                 fontFamily: 'raleway',
                 fontWeight: FontWeight.w400,
                 //height: 0.05,
@@ -141,7 +141,7 @@ class OwnersPortalLogin extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 20,
+          height: heightDevice < 710 ? 10 : 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -195,7 +195,7 @@ class OwnersPortalLogin extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: heightDevice * 0.05,
+         height: heightDevice < 710 ? 15 : heightDevice * 0.05,
         ),
       ],
     );

@@ -25,45 +25,56 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Stack(
-              children: [
-                Container(
-                  width: widthDevice < 1500 ? 25 : 30,
-                  height: widthDevice < 1500 ? 25 : 30,
-                  decoration: ShapeDecoration(
-                    shape: OvalBorder(
-                      side: BorderSide(width: 0.94, color: Colors.white),
+            GestureDetector(
+              onTap: () {
+                 Navigator.pop(context);
+              },
+              child: SizedBox(
+                child: Row(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          width: widthDevice < 1500 ? 25 : 30,
+                          height: widthDevice < 1500 ? 25 : 30,
+                          decoration: ShapeDecoration(
+                            shape: OvalBorder(
+                              side: BorderSide(width: 0.94, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: 3,
+                          top: 4,
+                          child: Icon(
+                            Icons.keyboard_arrow_left,
+                            color: Colors.white,
+                            size: widthDevice < 1500 ? 18 : 20,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                Positioned(
-                  left: 3,
-                  top: 4,
-                  child: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Colors.white,
-                    size: widthDevice < 1500 ? 18 : 20,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text(
-              'Go Back',
-              textAlign: TextAlign.center,
-              style: widthDevice < 1500
-                  ? TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'ralewaymedium',
-                    )
-                  : TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontFamily: 'ralewaymedium',
+                    SizedBox(
+                      width: 5,
                     ),
+                    Text(
+                      'Go Back',
+                      textAlign: TextAlign.center,
+                      style: widthDevice < 1500
+                          ? TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: 'ralewaymedium',
+                            )
+                          : TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontFamily: 'ralewaymedium',
+                            ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             SizedBox(
               width: widthDevice / 18,
@@ -138,13 +149,13 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
                     color: Colors.white,
                     fontSize: 14,
                     fontFamily: 'raleway',
-                    height: 1,
+                    height: 1.3,
                   )
                 : TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontFamily: 'raleway',
-                    height: 1,
+                    height: 1.3,
                   )),
         TextButton(
           onPressed: () {
