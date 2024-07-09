@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlesPage/RecentArticlesPageComp.dart/SeoTags.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/RecentArticlesPageComp.dart/SeoTagsMobile.dart';
+
+import 'SeoTagsMobile.dart';
+
 
 class SeoTagsArticleMobile extends StatefulWidget {
   const SeoTagsArticleMobile({super.key});

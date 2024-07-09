@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/ReviewsMainContainerMobile/RatingReviewsMobile/RatingReviewsComponentsMobile/RatingSliderMobile.dart';
+
+import 'RatingSliderMobile.dart';
+
 
 class RatingSliderWithTextMobile extends StatelessWidget {
   final int currentState;

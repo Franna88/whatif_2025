@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlesPage/RecentArticlesPageComp.dart/TextFiends/PostCommentSort.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlesPage/RecentArticlesPageComp.dart/TextFiends/PostCommentEmail.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/RecentArticlesPageComp.dart/TextFiendsMobile/PostComentTextFieldMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/RecentArticlesPageComp.dart/TextFiendsMobile/PostCommentEmailMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles/RecentArticlesPageMobile/RecentArticlesPageComp.dart/TextFiendsMobile/PostCommentSortMobile.dart';
+
 import 'package:webdirectories/myutility.dart';
+
+import 'TextFiendsMobile/PostComentTextFieldMobile.dart';
+import 'TextFiendsMobile/PostCommentEmailMobile.dart';
+import 'TextFiendsMobile/PostCommentSortMobile.dart';
 
 class ArticlesPostCommentMobile extends StatefulWidget {
   const ArticlesPostCommentMobile({super.key});

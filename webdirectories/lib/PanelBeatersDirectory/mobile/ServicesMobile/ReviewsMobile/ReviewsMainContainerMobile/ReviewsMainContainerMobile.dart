@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/LeaveReviewMobile/LeaveReviewMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/ReviewsMainContainerMobile/LeftReviewsMobile/LeftReviewsMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/ReviewsMainContainerMobile/RatingReviewsMobile/RatingReviewsMobile.dart';
+
+
+
 import 'package:webdirectories/myutility.dart';
+
+import '../LeaveReviewMobile/LeaveReviewMobile.dart';
+import 'LeftReviewsMobile/LeftReviewsMobile.dart';
+import 'RatingReviewsMobile/RatingReviewsMobile.dart';
 
 class ReviewsMainContainerMobile extends StatefulWidget {
   const ReviewsMainContainerMobile({super.key});
