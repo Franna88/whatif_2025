@@ -13,7 +13,7 @@ class _SocialIconsState extends State<SocialIcons> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MyUtility(context).width * 0.34,
+      width: MyUtility(context).width * 0.28,
       height: MyUtility(context).height * 0.12,
       decoration: ShapeDecoration(
         color: Color(0xFF181B1D),

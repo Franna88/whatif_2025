@@ -75,10 +75,10 @@ class _ProfileTextContainerState extends State<ProfileTextContainer> {
                   ),
                 ),
               ),
-              GestureDetector(
+              InkWell(
                 onTap: () {},
                 child: Container(
-                  width: MyUtility(context).width * 0.16,
+                  width: MyUtility(context).width * 0.15,
                   height: MyUtility(context).height * 0.05,
                   decoration: ShapeDecoration(
                     color: Colors.white,
@@ -98,8 +98,8 @@ class _ProfileTextContainerState extends State<ProfileTextContainer> {
                         ),
                         child: Center(
                           child: Icon(
-                            Icons.keyboard_arrow_left,
-                            size: 24,
+                            Icons.keyboard_arrow_right,
+                            size: 20,
                             color: Colors.white,
                           ),
                         ),
@@ -107,13 +107,16 @@ class _ProfileTextContainerState extends State<ProfileTextContainer> {
                       SizedBox(
                         width: 8,
                       ),
-                      Text(
-                        'Approvals & Services',
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.8999999761581421),
-                          fontSize: MyUtility(context).width * 0.0113,
-                          fontFamily: 'raleway',
-                          fontWeight: FontWeight.w400,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 4),
+                        child: Text(
+                          'Approvals & Services',
+                          style: TextStyle(
+                            color: Colors.black.withOpacity(0.8999999761581421),
+                            fontSize: MyUtility(context).width * 0.0113,
+                            fontFamily: 'raleway',
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       )
                     ],

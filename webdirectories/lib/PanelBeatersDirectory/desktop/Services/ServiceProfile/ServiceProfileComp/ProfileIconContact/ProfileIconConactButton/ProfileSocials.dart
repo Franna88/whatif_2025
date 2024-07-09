@@ -12,19 +12,29 @@ class _ProfileSocialsState extends State<ProfileSocials> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ProfileSocialIconContact(
             profileIcon: 'images/Contact1.svg',
             socialdescription: 'Call',
             onPress: () {}),
+        SizedBox(
+          width: 4,
+        ),
         ProfileSocialIconContact(
             profileIcon: 'images/Contact6.svg',
             socialdescription: 'WhatsApp',
             onPress: () {}),
+        SizedBox(
+          width: 4,
+        ),
         ProfileSocialIconContact(
             profileIcon: 'images/Contact7.svg',
             socialdescription: 'Email',
             onPress: () {}),
+        SizedBox(
+          width: 4,
+        ),
         ProfileSocialIconContact(
             profileIcon: 'images/GetQuote.svg',
             socialdescription: 'Get Quote',

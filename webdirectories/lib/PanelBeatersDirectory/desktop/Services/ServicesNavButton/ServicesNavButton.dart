@@ -62,7 +62,7 @@ class _ServicesNavButtonState extends State<ServicesNavButton> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               NavButton(
-                navIcon: 'images/profile.svg',
+                navIcon: 'images/compassprofile.svg',
                 navText: 'Profile',
                 isSelected: selectedNav == 'Profile',
                 onTap: () => _onNavButtonTap('Profile', 0),

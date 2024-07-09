@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AccreditationService/AccreditationFilter/Accreditationfilter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AccreditationService/AccreditationImageContainer/AccreditationImageContainer.dart';
+import 'package:webdirectories/myutility.dart';
 
 class AccreditationServices extends StatefulWidget {
   const AccreditationServices({super.key});
@@ -21,6 +22,9 @@ class _AccreditationServicesState extends State<AccreditationServices> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [AccreditationFilter(), AccreditationImageContainer()],
         ),
+        SizedBox(
+          height: MyUtility(context).height * 0.05,
+        )
       ],
     );
   }

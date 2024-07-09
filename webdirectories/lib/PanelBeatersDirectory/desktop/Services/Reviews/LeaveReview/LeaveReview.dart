@@ -7,8 +7,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/Le
 import 'package:webdirectories/myutility.dart';
 
 class LeaveReview extends StatefulWidget {
-  const LeaveReview({Key? key}) : super(key: key);
-
+  Function(int) changePageIndex;
+  LeaveReview({Key? key, required this.changePageIndex}) : super(key: key);
   @override
   State<LeaveReview> createState() => _LeaveReviewState();
 }
@@ -105,7 +105,9 @@ class _LeaveReviewState extends State<LeaveReview> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          widget.changePageIndex(0);
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),

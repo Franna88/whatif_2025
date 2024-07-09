@@ -28,8 +28,8 @@ class _ProfileSocialIconContactState extends State<ProfileSocialIconContact> {
           GestureDetector(
             onTap: widget.onPress,
             child: Container(
-              width: MyUtility(context).width * 0.04,
-              height: MyUtility(context).height * 0.08,
+              width: MyUtility(context).width * 0.05,
+              height: MyUtility(context).height * 0.085,
               child: SvgPicture.asset(widget.profileIcon),
             ),
           ),
@@ -39,7 +39,7 @@ class _ProfileSocialIconContactState extends State<ProfileSocialIconContact> {
               widget.socialdescription,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: MyUtility(context).width * 0.0115,
+                fontSize: 13.6,
                 fontFamily: 'raleway',
                 fontWeight: FontWeight.w400,
               ),
