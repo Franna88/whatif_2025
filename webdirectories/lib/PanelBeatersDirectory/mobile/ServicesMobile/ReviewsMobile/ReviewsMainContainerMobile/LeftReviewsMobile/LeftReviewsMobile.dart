@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/ReviewsComponentsMobile/ReviewIconButtonMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/ReviewsMainContainerMobile/LeftReviewsMobile/LeftReviewsComponentsMobile/CommentContainerMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/ReviewsMainContainerMobile/LeftReviewsMobile/LeftReviewsComponentsMobile/ReviewFilterButtonMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/ReviewsMainContainerMobile/LeftReviewsMobile/LeftReviewsComponentsMobile/SearchBoxMobile.dart';
 import 'package:webdirectories/myutility.dart';
+
+import '../../ReviewsComponentsMobile/ReviewIconButtonMobile.dart';
+import 'LeftReviewsComponentsMobile/CommentContainerMobile.dart';
+import 'LeftReviewsComponentsMobile/ReviewFilterButtonMobile.dart';
+import 'LeftReviewsComponentsMobile/SearchBoxMobile.dart';
 
 class LeftReviewsMobile extends StatefulWidget {
   const LeftReviewsMobile({super.key});

@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LightStone/LightStone/LightStoneEcho/LightStoneComp/PercentageText.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ReviewsMobile/LightStoneMobile/LightStoneMobile/LightStoneEcho/LightStoneCompMobile/PercentageTextMobile.dart';
 import 'package:webdirectories/myutility.dart';
+
+import 'LightStoneCompMobile/PercentageTextMobile.dart';
 
 class LightStoneEchoMobile extends StatefulWidget {
   const LightStoneEchoMobile({super.key});

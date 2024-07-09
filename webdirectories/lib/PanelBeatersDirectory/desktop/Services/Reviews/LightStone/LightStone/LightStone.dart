@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LightStone/LightStone/LightStoneEcho/LightStoneEcho.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LightStone/LightStone/WhoIsLightStone/WhoIsLightStone.dart';
+
 import 'package:webdirectories/myutility.dart';
+
+import 'LightStoneEcho/LightStoneEcho.dart';
+import 'WhoIsLightStone/WhoIsLightStone.dart';
 
 class LightStone extends StatefulWidget {
   const LightStone({super.key});

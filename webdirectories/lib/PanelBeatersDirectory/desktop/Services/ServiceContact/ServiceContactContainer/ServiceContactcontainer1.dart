@@ -41,42 +41,6 @@ class _ServiceContactContainer1State extends State<ServiceContactContainer1> {
       ),
       child: Column(
         children: [
-          /*ContainerRoundedCornerTop(
-            contactList: 'Customer Care 1',
-            contactDetails: widget.customerCare1,
-          ),
-          ContactContainer1Grey(
-            contactList: 'Customer Care 2',
-            contactDetails: widget.customerCare2,
-          ),
-          ContactContainer1Sections(
-            contactList: 'Towing Service',
-            contactDetails: widget.towingService,
-          ),
-          ContactContainer1Grey(
-            contactList: 'After Hours',
-            contactDetails: widget.afterHours,
-          ),
-          ContactContainer1Sections(
-            contactList: 'Email',
-            contactDetails: widget.email,
-          ),
-          ContactContainer1Grey(
-            contactList: 'Fax',
-            contactDetails: widget.fax,
-          ),
-          ContactContainer1Sections(
-            contactList: 'Street Address',
-            contactDetails: widget.streetAddress,
-          ),
-          ContactContainer1Grey(
-            contactList: 'Postal Address',
-            contactDetails: widget.postalAddress,
-          ),
-          RoundedCornerBottom(
-            contactList: 'GPS Coordinates',
-            contactDetails: widget.gpsCoordinates,
-          ),*/
           ServiceContact1(
             section1Texts: [
               'Customer Care 1',

@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LightStone/LightStone/LightStoneEcho/LightStoneComp/PercentageText.dart';
 import 'package:webdirectories/myutility.dart';
+
+import 'LightStoneComp/PercentageText.dart';
 
 class LightStoneEcho extends StatefulWidget {
   const LightStoneEcho({super.key});

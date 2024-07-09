@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AccreditationService/AccreditationFilter/Accreditationfilter.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AccreditationService/AccreditationImageContainer/AccreditationImageContainer.dart';
+
 import 'package:webdirectories/myutility.dart';
+
+import 'AccreditationFilter/Accreditationfilter.dart';
+import 'AccreditationImageContainer/AccreditationImageContainer.dart';
 
 class AccreditationServices extends StatefulWidget {
   const AccreditationServices({super.key});
