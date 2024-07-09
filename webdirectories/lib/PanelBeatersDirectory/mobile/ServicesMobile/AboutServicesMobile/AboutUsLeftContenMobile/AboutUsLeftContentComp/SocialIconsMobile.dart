@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/AboutServicesMobile/AboutUsLeftContenMobile/AboutUsLeftContentComp/SvgPictureButtonMobile.dart';
 import 'package:webdirectories/myutility.dart';
+
+import 'SvgPictureButtonMobile.dart';
 
 class SocialIconsMobile extends StatefulWidget {
   const SocialIconsMobile({super.key});

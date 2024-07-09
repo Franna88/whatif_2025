@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceContact/ServiceContactContainer/ServiceContactContainer1Comp/ServiceContact1.dart';
+
+import 'ServiceContactContainer1Comp/ServiceContact1.dart';
 
 class ServiceContactContainer1 extends StatefulWidget {
   final String customerCare1;
