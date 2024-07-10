@@ -9,10 +9,7 @@ class CoreMobile extends StatefulWidget {
   const CoreMobile({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
+  State<CoreMobile> createState() => _CoreMobileState();
 }
 
 class _CoreMobileState extends State<CoreMobile> {
@@ -73,12 +70,12 @@ class _CoreMobileState extends State<CoreMobile> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  isMonthly ? 'R99' : 'R1 188',
+                  isMonthly ? 'R1 188' : 'R99',
                   style:
                       TextStyle(color: Colors.white, fontSize: 40, height: 1.3),
                 ),
                 Text(
-                  isMonthly ? 'PM' : 'PA',
+                  isMonthly ? 'PA' : 'PM',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -89,8 +86,8 @@ class _CoreMobileState extends State<CoreMobile> {
             ),
             Text(
               isMonthly
-                  ? 'billed monthly, excluding VAT'
-                  : 'billed annually, excluding VAT',
+                  ? 'billed annually, excluding VAT'
+                  : 'billed monthly, excluding VAT',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
@@ -135,7 +132,7 @@ class _CoreMobileState extends State<CoreMobile> {
             const SizedBox(height: 15),
             Center(
               child: Container(
-                height: heightDevice * 0.50,
+                height: heightDevice * 0.51,
                 child: Stack(children: [
                   Positioned(
                     top: 50,
@@ -160,7 +157,7 @@ class _CoreMobileState extends State<CoreMobile> {
                   ),
                   Positioned(
                     top: 24,
-                    right: 12,
+                    right: 10,
                     child: Container(
                       width: widthDevice * 0.67,
                       height: heightDevice * 0.45,
@@ -181,25 +178,25 @@ class _CoreMobileState extends State<CoreMobile> {
                     ),
                   ),
                   Positioned(
-                    left: 26,
+                    left: 22,
                     child: Row(
                       children: [
                         PaymentPlanMobileContainer(
-                          price: isMonthly ? 'R99' : 'R1 188',
+                          price: isMonthly ? 'R1 188' : 'R99',
                           checkedItems: const [
                             'Include All Starter Benefits',
                             'Activation Fee (R299 once off)',
                             'Owners Portal Access',
                             'Contact Detail',
-                            'Navigation ',
+                            'Navigation',
                             'Job Finder',
                             'SEO Optimization'
                           ],
                           priceTitle: 'Core',
-                          priceType: isMonthly ? 'Monthly' : 'Annually',
+                          priceType: isMonthly ? 'Annually' : 'Monthly',
                           billingText: isMonthly
-                              ? 'billed monthly, excluding VAT'
-                              : 'billed annually, excluding VAT',
+                              ? 'billed annually, excluding VAT'
+                              : 'billed monthly, excluding VAT',
                         ),
                       ],
                     ),
@@ -223,10 +220,9 @@ class _CoreMobileState extends State<CoreMobile> {
                 text:
                     'Display your street and postal address for easy location by potential customers. Tell & Cell and WhatsApp messaging options facilitate immediate communication with clients. Get instant quote requests via email.'),
             PackageBenefitsMobileText(
-              boldText: 'Stand Out From the Crowd: ',
-              text:
-                  'Market your after-hours services and towing capabilities to cater to a wider range of customer needs.',
-            ),
+                boldText: 'Stand Out From the Crowd: ',
+                text:
+                    'Market your after-hours services and towing capabilities to cater to a wider range of customer needs.'),
             PackageBenefitsMobileText(
                 boldText: 'Cross-linked profiles',
                 text:

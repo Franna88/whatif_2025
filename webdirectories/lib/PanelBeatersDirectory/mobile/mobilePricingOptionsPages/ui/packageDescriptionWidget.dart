@@ -92,7 +92,7 @@ class PackageDescriptionWidget extends StatelessWidget {
                       padding: EdgeInsets.zero,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
                       child: Text(
                         'Sign Up Now!',
                         style: TextStyle(

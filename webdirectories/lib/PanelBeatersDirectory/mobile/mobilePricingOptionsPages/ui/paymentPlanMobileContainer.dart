@@ -1,21 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/DiscountTag.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/pricingBenefitsMobileText.dart';
 
 class PaymentPlanMobileContainer extends StatefulWidget {
-  String priceTitle;
-  String price;
-  String priceType;
-  List checkedItems;
-  String billingText;
+  final String priceTitle;
+  final String price;
+  final String priceType;
+  final List checkedItems;
+  final String billingText;
+  final bool showDiscountTag;
+
   PaymentPlanMobileContainer(
       {super.key,
       required this.checkedItems,
       required this.price,
       required this.priceTitle,
       required this.priceType,
-      required this.billingText});
+      required this.billingText,
+      this.showDiscountTag = false});
 
   @override
   State<PaymentPlanMobileContainer> createState() =>
@@ -29,8 +34,8 @@ class _PaymentPlanMobileContainerState
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
     return Container(
-      width: widthDevice * 0.60,
-      height: heightDevice * 0.50,
+      width: widthDevice * 0.615,
+      height: heightDevice * 0.51,
       decoration: BoxDecoration(
         border: Border.all(
             width: 0.8, color: const Color.fromARGB(255, 139, 139, 139)),
@@ -60,13 +65,21 @@ class _PaymentPlanMobileContainerState
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
-              child: Text(
-                widget.price,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontFamily: 'ralewaymedium',
-                    height: 1.2),
+              child: Row(
+                children: [
+                  Text(
+                    widget.price,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontFamily: 'ralewaymedium',
+                        height: 1.2),
+                  ),
+                  SizedBox(
+                    width: MyUtility(context).width * 0.04,
+                  ),
+                  if (widget.showDiscountTag) DiscountTag(),
+                ],
               ),
             ),
             Row(

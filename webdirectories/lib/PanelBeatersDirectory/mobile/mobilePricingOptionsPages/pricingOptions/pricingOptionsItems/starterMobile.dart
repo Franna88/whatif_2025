@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/mobileToggleSwitch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/packageBenefitsMobileText.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/packageDescriptionWidget.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/paymentPlanMobileContainer.dart';
@@ -12,6 +11,7 @@ class StarterMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       child: SingleChildScrollView(
@@ -31,9 +31,7 @@ class StarterMobile extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Text(
               'Launch your online presence and stand out among other businesses with a profile in our powerful, industry-specific Panel Beater Directory. Get started with an address and email contact detail and encourage feedback from satisfied customers to build your reputation and trust.\n\nAnd the best part? It’s absolutely free.',
               style: TextStyle(
@@ -71,115 +69,80 @@ class StarterMobile extends StatelessWidget {
                 height: 1,
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Center(child: SignUpMobileButton()),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Monthly',
-                  style: TextStyle(
-                    color: Color(0xFFF4F4F4),
-                    fontSize: 18,
-                    fontFamily: 'raleway',
-                  ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                MobileToggleSwitch(
-                  onChanged: (bool value) {},
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  'Annually',
-                  style: TextStyle(
-                    color: Color(0xFFF4F4F4),
-                    fontSize: 18,
-                    fontFamily: 'raleway',
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Center(
               child: Container(
-                height: heightDevice * 0.50,
-                child: Stack(children: [
-                  Positioned(
-                    top: 50,
-                    child: Container(
-                      width: widthDevice * 0.73,
-                      height: heightDevice * 0.38,
-                      decoration: ShapeDecoration(
-                        color: Color.fromARGB(151, 241, 243, 244),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(13.07),
-                        ),
-                        shadows: [
-                          BoxShadow(
-                            color: Color(0x3F000000),
-                            blurRadius: 2.38,
-                            offset: Offset(0, 2.38),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 24,
-                    right: 12,
-                    child: Container(
-                      width: widthDevice * 0.67,
-                      height: heightDevice * 0.45,
-                      decoration: ShapeDecoration(
-                        color: Color(0xB2F1F3F4),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(13.07),
-                        ),
-                        shadows: [
-                          BoxShadow(
-                            color: Color(0x3F000000),
-                            blurRadius: 2.38,
-                            offset: Offset(0, 2.38),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 26,
-                    child: Row(
-                      children: [
-                        PaymentPlanMobileContainer(
-                          price: 'R0',
-                          checkedItems: const [
-                            'Free Profile',
-                            'No Activation Fee',
-                            'Industry Specific',
-                            'Address',
-                            'Email Contact with Customers',
-                            'Reviews',
+                height: heightDevice * 0.51,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 50,
+                      child: Container(
+                        width: widthDevice * 0.73,
+                        height: heightDevice * 0.38,
+                        decoration: ShapeDecoration(
+                          color: Color.fromARGB(151, 241, 243, 244),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13.07),
+                          ),
+                          shadows: [
+                            BoxShadow(
+                              color: Color(0x3F000000),
+                              blurRadius: 2.38,
+                              offset: Offset(0, 2.38),
+                              spreadRadius: 0,
+                            )
                           ],
-                          priceTitle: 'Starter',
-                          priceType: 'Monthly',
-                          billingText: 'billed annually, excluding VAT',
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ]),
+                    Positioned(
+                      top: 24,
+                      right: 10,
+                      child: Container(
+                        width: widthDevice * 0.67,
+                        height: heightDevice * 0.45,
+                        decoration: ShapeDecoration(
+                          color: Color(0xB2F1F3F4),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13.07),
+                          ),
+                          shadows: [
+                            BoxShadow(
+                              color: Color(0x3F000000),
+                              blurRadius: 2.38,
+                              offset: Offset(0, 2.38),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 22,
+                      child: Row(
+                        children: [
+                          PaymentPlanMobileContainer(
+                            price: 'R0',
+                            checkedItems: const [
+                              'Free Profile',
+                              'No Activation Fee',
+                              'Industry Specific',
+                              'Address',
+                              'Email Contact with Customers',
+                              'Reviews',
+                            ],
+                            priceTitle: 'Starter',
+                            priceType: 'Monthly',
+                            billingText: 'billed annually, excluding VAT',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             PackageBenefitsMobileText(
@@ -199,9 +162,7 @@ class StarterMobile extends StatelessWidget {
                 boldText: 'Build Trust with Reviews:',
                 text:
                     ' Encourage satisfied customers to leave reviews. These client experiences and ratings add credibility and help potential customers choose you with more confidence.'),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Center(
               child: Container(
                 height: 210,
@@ -213,9 +174,7 @@ class StarterMobile extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             PackageDescriptionWidget(
               optionText: 'Starter Option',
               textContent: Text(
@@ -229,9 +188,7 @@ class StarterMobile extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),

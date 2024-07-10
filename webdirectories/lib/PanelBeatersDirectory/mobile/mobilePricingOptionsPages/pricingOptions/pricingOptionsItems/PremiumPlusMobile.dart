@@ -5,13 +5,21 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptions
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/paymentPlanMobileContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/signUpMobileButton.dart';
 
-class PremiumPlusMobile extends StatelessWidget {
+class PremiumPlusMobile extends StatefulWidget {
   const PremiumPlusMobile({super.key});
+
+  @override
+  _PremiumPlusMobileState createState() => _PremiumPlusMobileState();
+}
+
+class _PremiumPlusMobileState extends State<PremiumPlusMobile> {
+  bool isMonthly = true;
 
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       child: SingleChildScrollView(
@@ -60,23 +68,20 @@ class PremiumPlusMobile extends StatelessWidget {
                 ],
               ),
             ),
-            // SHOULD CHANGE FROM PM TO ANNUALLY
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // SHOULD CHANGE FROM PM TO ANNUALLY
                 Text(
-                  'R520',
+                  isMonthly ? 'R6,240' : 'R520',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 40,
                     height: 1.3,
                   ),
                 ),
-                // SHOULD CHANGE FROM PM TO ANNUALLY
                 Text(
-                  'PM',
+                  isMonthly ? 'PA' : 'PM',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -87,7 +92,9 @@ class PremiumPlusMobile extends StatelessWidget {
               ],
             ),
             Text(
-              'billed monthly, excluding VAT',
+              isMonthly
+                  ? 'billed annually, excluding VAT'
+                  : 'billed monthly, excluding VAT',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
@@ -117,7 +124,12 @@ class PremiumPlusMobile extends StatelessWidget {
                   width: 15,
                 ),
                 MobileToggleSwitch(
-                  onChanged: (bool value) {},
+                  initialValue: isMonthly,
+                  onChanged: (bool value) {
+                    setState(() {
+                      isMonthly = value;
+                    });
+                  },
                 ),
                 SizedBox(
                   width: 15,
@@ -137,7 +149,7 @@ class PremiumPlusMobile extends StatelessWidget {
             ),
             Center(
               child: Container(
-                height: heightDevice * 0.50,
+                height: heightDevice * 0.51,
                 child: Stack(children: [
                   Positioned(
                     top: 50,
@@ -183,11 +195,12 @@ class PremiumPlusMobile extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    left: 26,
+                    left: 20,
                     child: Row(
                       children: [
                         PaymentPlanMobileContainer(
-                          price: 'R5 928',
+                          showDiscountTag: true,
+                          price: isMonthly ? 'R6,240' : 'R520',
                           checkedItems: const [
                             'Include All Premium Benefits',
                             'Activation Fee (R299 once off)',
@@ -195,8 +208,10 @@ class PremiumPlusMobile extends StatelessWidget {
                             'Email Hosting',
                           ],
                           priceTitle: 'Premium +',
-                          priceType: 'Monthly',
-                          billingText: 'billed annually, excluding VAT',
+                          priceType: isMonthly ? 'Monthly' : 'Annually',
+                          billingText: isMonthly
+                              ? 'billed annually, excluding VAT'
+                              : 'billed monthly, excluding VAT',
                         ),
                       ],
                     ),
