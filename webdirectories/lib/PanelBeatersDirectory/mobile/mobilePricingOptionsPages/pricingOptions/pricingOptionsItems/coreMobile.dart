@@ -5,13 +5,24 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptions
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/paymentPlanMobileContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/signUpMobileButton.dart';
 
-class CoreMobile extends StatelessWidget {
+class CoreMobile extends StatefulWidget {
   const CoreMobile({super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
+  }
+}
+
+class _CoreMobileState extends State<CoreMobile> {
+  bool isMonthly = true;
 
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       child: SingleChildScrollView(
@@ -31,9 +42,7 @@ class CoreMobile extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Text.rich(
               TextSpan(
                 children: [
@@ -59,20 +68,17 @@ class CoreMobile extends StatelessWidget {
                 ],
               ),
             ),
-            //SHOULD CHANGE FROM PM TO ANUALY
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                //SHOULD CHANGE FROM PM TO ANUALY
                 Text(
-                  'R99',
+                  isMonthly ? 'R99' : 'R1 188',
                   style:
                       TextStyle(color: Colors.white, fontSize: 40, height: 1.3),
                 ),
-                //SHOULD CHANGE FROM PM TO ANUALY
                 Text(
-                  'PM',
+                  isMonthly ? 'PM' : 'PA',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -82,7 +88,9 @@ class CoreMobile extends StatelessWidget {
               ],
             ),
             Text(
-              'billed monthly, excluding VAT',
+              isMonthly
+                  ? 'billed monthly, excluding VAT'
+                  : 'billed annually, excluding VAT',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
@@ -90,13 +98,9 @@ class CoreMobile extends StatelessWidget {
                 height: 1,
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Center(child: SignUpMobileButton()),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -108,13 +112,16 @@ class CoreMobile extends StatelessWidget {
                     fontFamily: 'raleway',
                   ),
                 ),
-                SizedBox(
-                  width: 15,
+                SizedBox(width: 15),
+                MobileToggleSwitch(
+                  initialValue: isMonthly,
+                  onChanged: (value) {
+                    setState(() {
+                      isMonthly = value;
+                    });
+                  },
                 ),
-                MobileToggleSwitch(),
-                SizedBox(
-                  width: 15,
-                ),
+                SizedBox(width: 15),
                 Text(
                   'Annually',
                   style: TextStyle(
@@ -125,9 +132,7 @@ class CoreMobile extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Center(
               child: Container(
                 height: heightDevice * 0.50,
@@ -180,7 +185,7 @@ class CoreMobile extends StatelessWidget {
                     child: Row(
                       children: [
                         PaymentPlanMobileContainer(
-                          price: 'R99',
+                          price: isMonthly ? 'R99' : 'R1 188',
                           checkedItems: const [
                             'Include All Starter Benefits',
                             'Activation Fee (R299 once off)',
@@ -191,8 +196,10 @@ class CoreMobile extends StatelessWidget {
                             'SEO Optimization'
                           ],
                           priceTitle: 'Core',
-                          priceType: 'Monthly',
-                          billingText: 'billed monthly, excluding VAT',
+                          priceType: isMonthly ? 'Monthly' : 'Annually',
+                          billingText: isMonthly
+                              ? 'billed monthly, excluding VAT'
+                              : 'billed annually, excluding VAT',
                         ),
                       ],
                     ),
@@ -228,10 +235,7 @@ class CoreMobile extends StatelessWidget {
                 boldText: 'Direct Job Finder Access: ',
                 text:
                     'Access a pool of industry-specific job seekers actively searching for work without 3rd party fees or bias.'),
-
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Center(
               child: Container(
                 height: 210,
@@ -243,9 +247,7 @@ class CoreMobile extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             PackageDescriptionWidget(
               optionText: 'Core Option',
               textContent: Text(
@@ -259,9 +261,7 @@ class CoreMobile extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            )
+            const SizedBox(height: 20),
           ],
         ),
       ),

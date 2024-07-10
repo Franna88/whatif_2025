@@ -35,7 +35,7 @@ class StarterMobile extends StatelessWidget {
               height: 15,
             ),
             Text(
-              'Launch your online presence and stand out among other businesses with a profile in our powerful, industry-specific Panel Beater Directory.  Get started with an address and email contact detail and encourage feedback from satisfied customers to build your reputation and trust.\n\nAnd the best part? It’s absolutely free.',
+              'Launch your online presence and stand out among other businesses with a profile in our powerful, industry-specific Panel Beater Directory. Get started with an address and email contact detail and encourage feedback from satisfied customers to build your reputation and trust.\n\nAnd the best part? It’s absolutely free.',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -43,18 +43,15 @@ class StarterMobile extends StatelessWidget {
                 height: 1.2,
               ),
             ),
-            //SHOULD CHANGE FROM PM TO ANUALY
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                //SHOULD CHANGE FROM PM TO ANUALY
                 Text(
                   'R0',
                   style:
                       TextStyle(color: Colors.white, fontSize: 40, height: 1.3),
                 ),
-                //SHOULD CHANGE FROM PM TO ANUALY
                 Text(
                   'PM',
                   style: TextStyle(
@@ -95,7 +92,9 @@ class StarterMobile extends StatelessWidget {
                 SizedBox(
                   width: 15,
                 ),
-                MobileToggleSwitch(),
+                MobileToggleSwitch(
+                  onChanged: (bool value) {},
+                ),
                 SizedBox(
                   width: 15,
                 ),
@@ -164,18 +163,18 @@ class StarterMobile extends StatelessWidget {
                     child: Row(
                       children: [
                         PaymentPlanMobileContainer(
-                          price: 'FREE',
+                          price: 'R0',
                           checkedItems: const [
                             'Free Profile',
                             'No Activation Fee',
                             'Industry Specific',
                             'Address',
                             'Email Contact with Customers',
-                            'Riviews',
+                            'Reviews',
                           ],
                           priceTitle: 'Starter',
                           priceType: 'Monthly',
-                          billingText: 'billed monthly, excluding VAT',
+                          billingText: 'billed annually, excluding VAT',
                         ),
                       ],
                     ),
@@ -200,7 +199,6 @@ class StarterMobile extends StatelessWidget {
                 boldText: 'Build Trust with Reviews:',
                 text:
                     ' Encourage satisfied customers to leave reviews. These client experiences and ratings add credibility and help potential customers choose you with more confidence.'),
-
             const SizedBox(
               height: 20,
             ),
@@ -233,7 +231,7 @@ class StarterMobile extends StatelessWidget {
             ),
             const SizedBox(
               height: 20,
-            )
+            ),
           ],
         ),
       ),

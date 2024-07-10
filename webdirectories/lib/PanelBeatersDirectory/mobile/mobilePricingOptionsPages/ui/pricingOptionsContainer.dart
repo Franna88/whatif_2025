@@ -23,6 +23,7 @@ class _PricingOptionsContainerState extends State<PricingOptionsContainer> {
             filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
             child: new Container(
               width: widthDevice * 0.80,
+              height: heightDevice * 2.8,
               decoration: new BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   color: Colors.grey.shade200.withOpacity(0.3)),

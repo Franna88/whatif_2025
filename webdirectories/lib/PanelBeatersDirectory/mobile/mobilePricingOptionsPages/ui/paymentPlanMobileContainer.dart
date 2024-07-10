@@ -58,9 +58,16 @@ class _PaymentPlanMobileContainerState
                   fontFamily: 'ralewaybold',
                   height: 1),
             ),
-            Text(
-              widget.price,
-              style: TextStyle(color: Colors.white, fontSize: 25, height: 1.2),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: Text(
+                widget.price,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontFamily: 'ralewaymedium',
+                    height: 1.2),
+              ),
             ),
             Row(
               children: [
@@ -69,7 +76,7 @@ class _PaymentPlanMobileContainerState
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
-                      fontFamily: 'raleway',
+                      fontFamily: 'ralewaymedium',
                       height: 1),
                 ),
                 Icon(
@@ -105,8 +112,7 @@ class _PaymentPlanMobileContainerState
                         padding: EdgeInsets.zero,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 1, bottom: 1, left: 5, right: 13),
+                        padding: const EdgeInsets.only(left: 5, right: 13),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           mainAxisSize: MainAxisSize.min,
@@ -130,7 +136,7 @@ class _PaymentPlanMobileContainerState
                               'Read More',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 12,
+                                fontSize: 13,
                                 fontFamily: 'raleway',
                               ),
                             ),
@@ -170,7 +176,7 @@ class _PaymentPlanMobileContainerState
                             'Sign Up Now!',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 12,
+                              fontSize: 13,
                               fontFamily: 'raleway',
                             ),
                           ),

@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 
 class PackageDescriptionWidget extends StatelessWidget {
-  String optionText;
-  Widget textContent;
-  PackageDescriptionWidget(
-      {super.key, required this.optionText, required this.textContent});
+  final String optionText;
+  final Widget textContent;
+  final bool showReadMoreButton;
+
+  PackageDescriptionWidget({
+    Key? key,
+    required this.optionText,
+    required this.textContent,
+    this.showReadMoreButton = true, // Default to true for visibility
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
+
     return Center(
       child: Container(
         width: widthDevice * 0.78,
@@ -32,9 +39,7 @@ class PackageDescriptionWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 25),
               Text.rich(
                 TextSpan(
                   children: [
@@ -44,7 +49,7 @@ class PackageDescriptionWidget extends StatelessWidget {
                         color: Colors.black,
                         fontSize: 35,
                         fontFamily: 'ralewaybold',
-                        height: 1.2
+                        height: 1.2,
                       ),
                     ),
                     TextSpan(
@@ -53,7 +58,7 @@ class PackageDescriptionWidget extends StatelessWidget {
                         color: Color(0xFFEF9040),
                         fontSize: 35,
                         fontFamily: 'ralewaybold',
-                        height: 1.2
+                        height: 1.2,
                       ),
                     ),
                     TextSpan(
@@ -62,30 +67,21 @@ class PackageDescriptionWidget extends StatelessWidget {
                         color: Colors.black,
                         fontSize: 35,
                         fontFamily: 'ralewaybold',
-                        height: 1.2
-                        
+                        height: 1.2,
                       ),
                     ),
                   ],
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
-                width: 100,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Column(crossAxisAlignment: CrossAxisAlignment.center,
+              const SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [textContent],
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Center(
                 child: Container(
-                  /*width: MediaQuery.of(context).size.width * 0.08,*/
-                  /*height: MediaQuery.of(context).size.height * 0.05,*/
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
@@ -96,81 +92,68 @@ class PackageDescriptionWidget extends StatelessWidget {
                       padding: EdgeInsets.zero,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 1, bottom: 1, left: 20, right: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Sign Up Now!',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontFamily: 'raleway',
-                            ),
-                          ),
-                        ],
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Text(
+                        'Sign Up Now!',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontFamily: 'raleway',
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Container(
-                  /*width: MediaQuery.of(context).size.width * 0.08,*/
-                  /*height: MediaQuery.of(context).size.height * 0.05,*/
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+              const SizedBox(height: 10),
+              if (showReadMoreButton)
+                Center(
+                  child: Container(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: EdgeInsets.zero,
                       ),
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 1, bottom: 1, left: 5, right: 13),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 18,
-                            height: 18,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5, right: 13),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 18,
+                              height: 18,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              padding: EdgeInsets.zero,
+                              child: Icon(
+                                Icons.keyboard_arrow_right_outlined,
+                                color: Colors.black,
+                                size: 14,
+                              ),
                             ),
-                            padding: EdgeInsets.zero,
-                            child: Icon(
-                              Icons.keyboard_arrow_right_outlined,
-                              color: Colors.black,
-                              size: 14,
+                            const SizedBox(width: 8),
+                            Text(
+                              'Read More',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontFamily: 'raleway',
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Read More',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: 'raleway',
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 25),
             ],
           ),
         ),

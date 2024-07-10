@@ -5,13 +5,24 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptions
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/paymentPlanMobileContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/ui/signUpMobileButton.dart';
 
-class PremiumMobile extends StatelessWidget {
+class PremiumMobile extends StatefulWidget {
   const PremiumMobile({super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
+  }
+}
+
+class _PremiumMobileState extends State<PremiumMobile> {
+  bool isMonthly = true;
 
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
       child: SingleChildScrollView(
@@ -31,9 +42,7 @@ class PremiumMobile extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Text.rich(
               TextSpan(
                 children: [
@@ -68,30 +77,33 @@ class PremiumMobile extends StatelessWidget {
                 ],
               ),
             ),
-            //SHOULD CHANGE FROM PM TO ANUALY
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                //SHOULD CHANGE FROM PM TO ANUALY
                 Text(
-                  'R434',
-                  style:
-                      TextStyle(color: Colors.white, fontSize: 40, height: 1.3),
-                ),
-                //SHOULD CHANGE FROM PM TO ANUALY
-                Text(
-                  'PM',
+                  isMonthly ? 'R434' : 'R4 948',
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: 'raleway',
-                      height: 3),
+                    color: Colors.white,
+                    fontSize: 40,
+                    height: 1.3,
+                  ),
+                ),
+                Text(
+                  isMonthly ? 'PM' : 'PA',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontFamily: 'raleway',
+                    height: 3,
+                  ),
                 ),
               ],
             ),
             Text(
-              'billed monthly, excluding VAT',
+              isMonthly
+                  ? 'billed monthly, excluding VAT'
+                  : 'billed annually, excluding VAT',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
@@ -99,13 +111,9 @@ class PremiumMobile extends StatelessWidget {
                 height: 1,
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Center(child: SignUpMobileButton()),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -117,13 +125,16 @@ class PremiumMobile extends StatelessWidget {
                     fontFamily: 'raleway',
                   ),
                 ),
-                SizedBox(
-                  width: 15,
+                SizedBox(width: 15),
+                MobileToggleSwitch(
+                  initialValue: isMonthly,
+                  onChanged: (value) {
+                    setState(() {
+                      isMonthly = value;
+                    });
+                  },
                 ),
-                MobileToggleSwitch(),
-                SizedBox(
-                  width: 15,
-                ),
+                SizedBox(width: 15),
                 Text(
                   'Annually',
                   style: TextStyle(
@@ -134,9 +145,7 @@ class PremiumMobile extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Center(
               child: Container(
                 height: heightDevice * 0.50,
@@ -189,7 +198,7 @@ class PremiumMobile extends StatelessWidget {
                     child: Row(
                       children: [
                         PaymentPlanMobileContainer(
-                          price: 'R434',
+                          price: isMonthly ? 'R434' : 'R4 948',
                           checkedItems: const [
                             'Include All Core Benefits',
                             'Activation Fee (R299 once off)',
@@ -201,8 +210,10 @@ class PremiumMobile extends StatelessWidget {
                             'Parts & Equipment Trading'
                           ],
                           priceTitle: 'Premium',
-                          priceType: 'Monthly',
-                          billingText: 'billed monthly, excluding VAT',
+                          priceType: isMonthly ? 'Monthly' : 'Annually',
+                          billingText: isMonthly
+                              ? 'billed monthly, excluding VAT'
+                              : 'billed annually, excluding VAT',
                         ),
                       ],
                     ),
@@ -239,23 +250,20 @@ class PremiumMobile extends StatelessWidget {
             PackageBenefitsMobileText(
                 boldText: 'Utilize our Parts & Equipment Platform ',
                 text: 'to sell or trade with other auto body specialists.'),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Center(
               child: Container(
                 height: 210,
                 width: 170,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('images/PackegIcon.png'),
-                      fit: BoxFit.fill),
+                    image: AssetImage('images/PackegIcon.png'),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             PackageDescriptionWidget(
               optionText: 'Premium Option',
               textContent: Text(
@@ -269,9 +277,7 @@ class PremiumMobile extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            )
+            const SizedBox(height: 20),
           ],
         ),
       ),

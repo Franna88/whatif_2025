@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobilePricingOptionsPages/pricingOptions/pricingOptionsMobileMain.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileQuestionPages/ui/questionOrangeButton.dart';
 
 class MobileConvertClicks extends StatefulWidget {
@@ -52,7 +53,7 @@ class _MobileConvertClicksState extends State<MobileConvertClicks> {
               color: Color(0xFFF4F4F4),
               fontSize: 16,
               fontFamily: 'raleway',
-      
+
               height: 1.2,
               //letterSpacing: 0.90,
             ),
@@ -61,7 +62,14 @@ class _MobileConvertClicksState extends State<MobileConvertClicks> {
             height: 15,
           ),
           QuestionOrangeButton(
-              buttonText: 'What does it cost?', onPressed: () {}),
+              buttonText: 'What does it cost?',
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            Material(child: PricingOptionsMobileMain())));
+              }),
           const SizedBox(
             height: 15,
           ),
@@ -94,7 +102,7 @@ class _MobileConvertClicksState extends State<MobileConvertClicks> {
                         color: Color(0xFFF4F4F4),
                         fontSize: widthDevice < 380 ? 14 : 16,
                         fontFamily: 'raleway',
-      
+
                         height: 1.2,
                         //letterSpacing: 0.90,
                       ),
@@ -127,7 +135,7 @@ class _MobileConvertClicksState extends State<MobileConvertClicks> {
                         color: Color(0xFFF4F4F4),
                         fontSize: widthDevice < 380 ? 14 : 16,
                         fontFamily: 'raleway',
-      
+
                         height: 1.2,
                         //letterSpacing: 0.90,
                       ),
