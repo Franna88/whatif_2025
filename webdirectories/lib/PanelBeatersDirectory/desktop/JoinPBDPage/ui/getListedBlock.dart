@@ -24,9 +24,8 @@ class _GetListedBlockState extends State<GetListedBlock> {
           children: [
             Image.asset(
               'images/imageStack1.png',
-              height: heightDevice * 0.47,
+              height: heightDevice * 0.55,
             ),
-            
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -39,7 +38,7 @@ class _GetListedBlockState extends State<GetListedBlock> {
                         style: TextStyle(
                           color: Color(0xFFE5882F),
                           fontSize: widthDevice < 1500 ? 19 : 22,
-                          fontFamily: 'raleway',
+                          fontFamily: 'ralewaysemi',
                           height: 1,
                         ),
                       ),
@@ -72,7 +71,9 @@ class _GetListedBlockState extends State<GetListedBlock> {
                 CheckMarkText(text: 'Boost your online brand visibility'),
                 CheckMarkText(text: 'Take control of your own listing 24/7'),
                 CheckMarkText(text: 'It’s easy and only takes a few minutes'),
-                const SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
                 OrangeButton(
                     buttonText: 'Click to Register',
                     onPressed: () {

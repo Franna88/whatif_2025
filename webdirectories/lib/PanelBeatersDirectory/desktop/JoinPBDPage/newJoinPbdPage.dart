@@ -8,7 +8,9 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/ui/yout
 import 'package:webdirectories/myutility.dart';
 
 class NewJointPbdPage extends StatefulWidget {
-  const NewJointPbdPage({super.key});
+  final VoidCallback navigateToPricingOptions;
+
+  const NewJointPbdPage({super.key, required this.navigateToPricingOptions});
 
   @override
   State<NewJointPbdPage> createState() => _NewJointPbdPageState();
@@ -25,9 +27,7 @@ class _NewJointPbdPageState extends State<NewJointPbdPage> {
         width: MyUtility(context).width,
         decoration: BoxDecoration(
           image: DecorationImage(
-            
             image: AssetImage('images/effortlessManagement.png'),
-            
             fit: BoxFit.fill,
             colorFilter: ColorFilter.mode(
               Color.fromARGB(99, 0, 0, 0),
@@ -37,27 +37,39 @@ class _NewJointPbdPageState extends State<NewJointPbdPage> {
         ),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  left:  widthDevice / 10,
-                  top: 50,
-                ),
-                child: Image.asset(
-                  'images/logoPanel.png',
-                  height: 70,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: widthDevice / 10,
+                      top: 50,
+                    ),
+                    child: Image.asset(
+                      'images/logoPanel.png',
+                      height: 70,
+                    ),
+                  ),
+                  YoutubeVideoBlock(),
+                  GetListedBlock(),
+                  SizedBox(
+                    height: heightDevice / 10,
+                  ),
+                  ConvertClicksBlock(
+                      navigateToPricingOptions:
+                          widget.navigateToPricingOptions),
+                  SizedBox(
+                    height: heightDevice / 10,
+                  ),
+                  AttentionMotoristsBlock(),
+                  SizedBox(
+                    height: heightDevice / 10,
+                  ),
+                  PanelFooter()
+                ],
               ),
-              YoutubeVideoBlock(),
-              GetListedBlock(),
-              SizedBox(height: heightDevice / 10,),
-              ConvertClicksBlock(),
-              SizedBox(height: heightDevice / 10,),
-              AttentionMotoristsBlock(),
-              SizedBox(height: heightDevice / 10,),
-              PanelFooter()
             ],
           ),
         ),

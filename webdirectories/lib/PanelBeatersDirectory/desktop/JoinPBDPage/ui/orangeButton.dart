@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class OrangeButton extends StatefulWidget {
-  Function onPressed;
-  String buttonText;
+  final Function onPressed;
+  final String buttonText;
+
   OrangeButton({super.key, required this.buttonText, required this.onPressed});
 
   @override
@@ -11,10 +12,12 @@ class OrangeButton extends StatefulWidget {
 
 class _OrangeButtonState extends State<OrangeButton> {
   bool isHovered = false;
+
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
+
     return widthDevice > 1290
         ? Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -32,15 +35,29 @@ class _OrangeButtonState extends State<OrangeButton> {
                 },
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 200),
-                  /*width: MediaQuery.of(context).size.width * 0.08,*/
-                  /*height: MediaQuery.of(context).size.height * 0.05,*/
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment(-1, 0),
+                      end: Alignment(1, 0),
+                      colors: [Color(0xFFE2822B), Color(0xFFFBBA4B)],
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      ),
+                    ],
+                  ),
                   child: ElevatedButton(
                     onPressed: () {
                       widget.onPressed();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          isHovered ? Colors.black : Color(0xFFE2822B),
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -77,8 +94,6 @@ class _OrangeButtonState extends State<OrangeButton> {
               ),
             ],
           )
-        //SMALLER SCREENS
-
         : Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -95,15 +110,29 @@ class _OrangeButtonState extends State<OrangeButton> {
                 },
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 200),
-                  /*width: MediaQuery.of(context).size.width * 0.08,*/
-                  /*height: MediaQuery.of(context).size.height * 0.05,*/
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment(-1, 0),
+                      end: Alignment(1, 0),
+                      colors: [Color(0xFFE2822B), Color(0xFFFBBA4B)],
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x3F000000),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      ),
+                    ],
+                  ),
                   child: ElevatedButton(
                     onPressed: () {
                       widget.onPressed();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          isHovered ? Colors.black : Color(0xFFE2822B),
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),

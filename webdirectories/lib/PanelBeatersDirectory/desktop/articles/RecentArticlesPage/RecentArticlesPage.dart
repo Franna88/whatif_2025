@@ -39,8 +39,8 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
               width: MyUtility(context).width,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image:
-                      AssetImage('images/mainbackgroundPanel.png'), // Check the path
+                  image: AssetImage(
+                      'images/mainbackgroundPanel.png'), // Check the path
                   fit: BoxFit.fill,
                 ),
               ),
@@ -111,73 +111,47 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                               color: Color(0xFF0E1013),
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: MyUtility(context).width * 0.25,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(25.0),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10),
-                                        child: Container(
-                                          height: 35,
-                                          width: 35,
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 25),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(1),
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: Colors.black,
-                                          ),
-                                          child: IconButton(
-                                            onPressed: () {},
-                                            icon: Icon(
-                                              Icons.search,
+                                            border: Border.all(
                                               color: Colors.white,
-                                              size: 20,
+                                              width: 0.5,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.keyboard_arrow_left,
+                                              color: Colors.white,
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: TextFormField(
-                                          controller: search,
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          'Go Back',
                                           style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontFamily: 'ralewaysemi',
+                                            color: Colors.white,
+                                            fontSize: 17.68,
+                                            fontFamily: 'raleway',
+                                            fontWeight: FontWeight.w400,
                                           ),
-                                          decoration: InputDecoration(
-                                            hintText: 'Search Keywords',
-                                            hintStyle: TextStyle(
-                                              fontSize: 16,
-                                              fontFamily: 'ralewaysemi',
-                                              color: Color(0xFF717375),
-                                            ),
-                                            border: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                            ),
-                                            filled: true,
-                                            fillColor: Colors.transparent,
-                                            contentPadding: EdgeInsets.symmetric(
-                                              vertical: 10,
-                                              horizontal: 10,
-                                            ),
-                                          ),
+                                          textAlign: TextAlign.center,
                                         ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          search.clear();
-                                        },
-                                        icon: Icon(
-                                          Icons.close,
-                                          color: Color(0xFF717375),
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -185,7 +159,8 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 10, top: 10),
+                              padding:
+                                  const EdgeInsets.only(right: 10, top: 10),
                               child: DraggableScrollbar.rrect(
                                 controller: _scrollController,
                                 backgroundColor: Colors.grey.withOpacity(0.3),
@@ -203,27 +178,31 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                                               width: 1,
                                               color: Colors.white,
                                             ),
-                                            borderRadius: BorderRadius.circular(15),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
                                           ),
                                         ),
                                         child: Column(
                                           children: [
                                             SizedBox(
                                               height:
-                                                  MyUtility(context).height * 0.03,
+                                                  MyUtility(context).height *
+                                                      0.03,
                                             ),
                                             Container(
-                                              width: MyUtility(context).width * 0.8,
+                                              width: MyUtility(context).width *
+                                                  0.8,
                                               height: 400,
                                               decoration: ShapeDecoration(
                                                 image: DecorationImage(
-                                                  image:
-                                                      AssetImage("images/drive2.png"),
+                                                  image: AssetImage(
+                                                      "images/drive2.png"),
                                                   fit: BoxFit.cover,
                                                 ),
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(19.76),
+                                                      BorderRadius.circular(
+                                                          19.76),
                                                 ),
                                               ),
                                             ),
@@ -231,9 +210,11 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                                             Align(
                                               alignment: Alignment.centerLeft,
                                               child: Padding(
-                                                padding:  EdgeInsets.only(left: widthDevice < 1500 ? 20 :  widthDevice * 0.08),
+                                                padding: EdgeInsets.only(
+                                                    left: widthDevice < 1500
+                                                        ? 20
+                                                        : widthDevice * 0.08),
                                                 child: Text(
-                                                  
                                                   'See your Lightstone EchoMBR Results for\nFebruary 2024',
                                                   textAlign: TextAlign.start,
                                                   style: TextStyle(
@@ -246,11 +227,12 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                                             ),
                                             SizedBox(height: 10),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.only(bottom: 15),
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 15),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.spaceEvenly,
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
                                                 children: [
                                                   Author(),
                                                   SizedBox(
@@ -265,22 +247,26 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.spaceEvenly,
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
                                                 children: [
                                                   Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Row(
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment.center,
+                                                            CrossAxisAlignment
+                                                                .center,
                                                         children: [
                                                           Container(
                                                             width: 3,
                                                             height: 87,
-                                                            decoration: BoxDecoration(
-                                                                color: Color(
-                                                                    0xFFD9D9D9)),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    color: Color(
+                                                                        0xFFD9D9D9)),
                                                           ),
                                                           SizedBox(
                                                             width: 20,
@@ -288,11 +274,12 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                                                           Text(
                                                             'Your CSI success contributes to your business success and assists\nboth prospects and industry users.',
                                                             style: TextStyle(
-                                                              color:
-                                                                  Color(0xFFE5882F),
+                                                              color: Color(
+                                                                  0xFFE5882F),
                                                               fontSize: 20.4,
                                                               fontStyle:
-                                                                  FontStyle.italic,
+                                                                  FontStyle
+                                                                      .italic,
                                                               fontFamily:
                                                                   'ralewaymedium',
                                                             ),
@@ -333,41 +320,52 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                                                       Container(
                                                         width: 204,
                                                         height: 408,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xFFD9D9D9)),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                color: Color(
+                                                                    0xFFD9D9D9)),
                                                       ),
                                                       SizedBox(
-                                                        height: MyUtility(context)
-                                                                .height *
-                                                            0.05,
+                                                        height:
+                                                            MyUtility(context)
+                                                                    .height *
+                                                                0.05,
                                                       ),
                                                       Container(
                                                         width: 204,
                                                         height: 204,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xFFD9D9D9)),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                color: Color(
+                                                                    0xFFD9D9D9)),
                                                       ),
                                                       SizedBox(
-                                                        height: MyUtility(context)
-                                                                .height *
-                                                            0.05,
+                                                        height:
+                                                            MyUtility(context)
+                                                                    .height *
+                                                                0.05,
                                                       ),
                                                       Container(
                                                         width: 204,
                                                         height: 408,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xFFD9D9D9)),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                color: Color(
+                                                                    0xFFD9D9D9)),
                                                       ),
                                                       SizedBox(
-                                                        height: MyUtility(context)
-                                                                .height *
-                                                            0.05,
+                                                        height:
+                                                            MyUtility(context)
+                                                                    .height *
+                                                                0.05,
                                                       ),
                                                       Container(
                                                         width: 204,
                                                         height: 204,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(0xFFD9D9D9)),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                color: Color(
+                                                                    0xFFD9D9D9)),
                                                       ),
                                                     ],
                                                   )

@@ -146,7 +146,7 @@ class _PaymentPlanMobileContainerState
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Read More',
+                              'Call me back',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 13,

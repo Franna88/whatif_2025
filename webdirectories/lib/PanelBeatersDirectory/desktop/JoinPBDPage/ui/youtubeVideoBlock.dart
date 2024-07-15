@@ -18,8 +18,6 @@ class _YoutubeVideoBlockState extends State<YoutubeVideoBlock> {
     var widthDevice = MediaQuery.of(context).size.width;
     return Container(
       height: 1060,
-      //width: widthDevice * 88,
-      
       child: Stack(
         children: [
           Center(
@@ -29,9 +27,26 @@ class _YoutubeVideoBlockState extends State<YoutubeVideoBlock> {
                 child: new Container(
                   width: widthDevice * 0.85,
                   height: 920,
-                  decoration: new BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    color: Colors.grey.shade200.withOpacity(0.3),
+                  decoration: ShapeDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment(0.56, -0.83),
+                      end: Alignment(-0.56, 0.83),
+                      colors: [
+                        Colors.white.withOpacity(0.1),
+                        Colors.white.withOpacity(0.4),
+                      ],
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: Color(0xBF000000),
+                        blurRadius: 24,
+                        offset: Offset(0, 4),
+                        spreadRadius: -1,
+                      ),
+                    ],
                   ),
                   child: SingleChildScrollView(
                     child: Column(
@@ -50,13 +65,13 @@ class _YoutubeVideoBlockState extends State<YoutubeVideoBlock> {
                                   ? 50
                                   : widthDevice < 1500
                                       ? 55
-                                      : 65,
+                                      : 64.6,
                               fontFamily: 'ralewaybold',
                               height: 1,
                               shadows: <Shadow>[
                                 Shadow(
-                                  offset: Offset(1, 1),
-                                  blurRadius: 1,
+                                  offset: Offset(0, 2),
+                                  blurRadius: 4,
                                   color: Color.fromARGB(255, 53, 53, 53),
                                 ),
                               ],
@@ -75,7 +90,7 @@ class _YoutubeVideoBlockState extends State<YoutubeVideoBlock> {
                                 'Your FREE* Listing',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: widthDevice < 1500 ? 75 : 100,
+                                  fontSize: widthDevice < 1500 ? 75 : 95.2,
                                   height: 1,
                                   fontFamily: 'ralewaybold',
                                 ),
@@ -86,10 +101,8 @@ class _YoutubeVideoBlockState extends State<YoutubeVideoBlock> {
                                   SizedBox(
                                     width: widthDevice < 1500 ? 130 : 90,
                                   ),
-                                  Image.asset(
-                                    'images/scribble.png',
-                                    height: 80,
-                                  ),
+                                  Image.asset('images/scribble.png',
+                                      height: 80, fit: BoxFit.fill),
                                 ],
                               ),
                             ],
@@ -135,12 +148,12 @@ class _YoutubeVideoBlockState extends State<YoutubeVideoBlock> {
             ),
           ),
           Positioned(
-            right: widthDevice > 1600 ? widthDevice / 16 : widthDevice / 18,
-            bottom: 0,
+              right: widthDevice > 1600 ? widthDevice / 15 : widthDevice / 17,
+              bottom: 0,
               child: Image.asset(
-            'images/gear3.png',
-            height: 130,
-          ))
+                'images/gear3.png',
+                height: 130,
+              ))
         ],
       ),
     );

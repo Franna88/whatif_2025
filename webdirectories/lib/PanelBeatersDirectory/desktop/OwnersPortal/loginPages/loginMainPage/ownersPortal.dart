@@ -9,6 +9,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/registerYourBusiness.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/whatsNext.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/glassContainer.dart';
+import 'package:webdirectories/myutility.dart';
 
 class OwnersPortal extends StatefulWidget {
   const OwnersPortal({super.key});
@@ -56,7 +57,6 @@ class _OwnersPortalState extends State<OwnersPortal> {
         child: Column(
           children: [
             Container(
-              height: heightDevice,
               width: widthDevice,
               decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -64,23 +64,24 @@ class _OwnersPortalState extends State<OwnersPortal> {
                     fit: BoxFit.fill),
               ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 50, top: 30),
+                    padding: const EdgeInsets.only(
+                        left: 50, top: 15), // Halved the top padding
                     child: Image.asset(
                       'images/logoPanel.png',
-                      //width: 225,
                       height: 70,
                     ),
                   ),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       SizedBox(
                         height: heightDevice / 1.3,
                         child: Padding(
-                          padding: EdgeInsets.only(left: 40),
+                          padding: const EdgeInsets.only(left: 40),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,9 +114,8 @@ class _OwnersPortalState extends State<OwnersPortal> {
                         children: [
                           SizedBox(
                               height: widthDevice < 1500
-                                  ? heightDevice * 0.03
-                                  : heightDevice * 0.10),
-                          //SizedBox(width: heightDevice / 5),
+                                  ? heightDevice * 0.015 // Halved the height
+                                  : heightDevice * 0.05), // Halved the height
                           GlassContainer(child: pages[pageIndex]
                               //MembershipOptions()
                               ),
@@ -123,6 +123,10 @@ class _OwnersPortalState extends State<OwnersPortal> {
                       )
                     ],
                   ),
+                  SizedBox(
+                    height:
+                        MyUtility(context).height * 0.05, // Halved the height
+                  )
                 ],
               ),
             ),

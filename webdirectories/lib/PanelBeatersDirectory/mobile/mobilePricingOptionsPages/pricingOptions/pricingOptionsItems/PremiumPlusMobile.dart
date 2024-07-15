@@ -223,11 +223,11 @@ class _PremiumPlusMobileState extends State<PremiumPlusMobile> {
                 boldText: 'All starter, core & premium benefits included',
                 text: '.'),
             PackageBenefitsMobileText(
-                boldText: 'Own your Online Identity: ',
+                boldText: 'Businesses seeking ',
                 text:
-                    'Establish a professional brand presence with a .co.za domain name and annual hosting.  Your custom domain (e.g., yourshop.co.za) will be seamlessly linked to your directory profile, creating a trusted online destination for your business, without the need to develop and maintain a separate website.'),
+                    'a complete online solution, including domain hosting and professional email accounts.'),
             PackageBenefitsMobileText(
-              boldText: 'Email: ',
+              boldText: 'Email: ',  
               text:
                   'The client can create and manage up to 20 email accounts, linked to this .co.za hosted domain service.',
             ),

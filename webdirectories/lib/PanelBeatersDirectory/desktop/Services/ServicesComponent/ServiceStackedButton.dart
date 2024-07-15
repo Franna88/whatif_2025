@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesOther.dart';
 
 class ServicesStackedButton extends StatefulWidget {
-  const ServicesStackedButton({super.key});
+  final VoidCallback showFeatured;
+  final VoidCallback showOther;
+
+  const ServicesStackedButton({
+    Key? key,
+    required this.showFeatured,
+    required this.showOther,
+  }) : super(key: key);
 
   @override
-  State<ServicesStackedButton> createState() => _ServicesStackedButtonState();
+  _ServicesStackedButtonState createState() => _ServicesStackedButtonState();
 }
 
 class _ServicesStackedButtonState extends State<ServicesStackedButton> {
+  bool isFeaturedSelected = true;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -19,16 +26,17 @@ class _ServicesStackedButtonState extends State<ServicesStackedButton> {
         children: [
           Positioned(
             top: 15,
-            left: 100,
+            left: 110,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ServicesOther()),
-                );
+                setState(() {
+                  isFeaturedSelected = false;
+                });
+                widget.showOther();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
+                backgroundColor:
+                    isFeaturedSelected ? Colors.black : Color(0xFFFF8728),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
@@ -37,7 +45,7 @@ class _ServicesStackedButtonState extends State<ServicesStackedButton> {
               child: Text(
                 'Other',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: isFeaturedSelected ? Colors.white : Colors.black,
                   fontSize: 20.4,
                   fontFamily: 'raleway',
                   fontWeight: FontWeight.w400,
@@ -51,23 +59,23 @@ class _ServicesStackedButtonState extends State<ServicesStackedButton> {
             left: 0,
             child: ElevatedButton(
               onPressed: () {
-                /*   Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ServicesFeatured()),
-                );*/
+                setState(() {
+                  isFeaturedSelected = true;
+                });
+                widget.showFeatured();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF8728),
+                backgroundColor:
+                    isFeaturedSelected ? Color(0xFFFF8728) : Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                fixedSize: Size(126, 40),
-                padding: EdgeInsets.only(right: -10),
+                fixedSize: Size(140, 40),
               ),
               child: Text(
                 'Featured',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: isFeaturedSelected ? Colors.black : Colors.white,
                   fontSize: 20.4,
                   fontFamily: 'raleway',
                   fontWeight: FontWeight.w400,

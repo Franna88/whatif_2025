@@ -55,6 +55,53 @@ class _ServicesMobileState extends State<ServicesMobile> {
             child: Column(
               children: [
                 MobileTopNavBarhome(),
+                if (pageIndex == 0)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: SizedBox(
+                      width: MyUtility(context).width * 0.9,
+                      child: Center(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(1),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 0.5,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.keyboard_arrow_left,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                'Go Back',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17.68,
+                                  fontFamily: 'raleway',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 Center(
                     child: Padding(
                   padding: const EdgeInsets.only(bottom: 10),
@@ -81,7 +128,7 @@ class _ServicesMobileState extends State<ServicesMobile> {
                           )
                         ],
                       ),
-                      child: SingleChildScrollView(
+                      child: SingleChildScrollView( 
                         child: Column(children: [
                           SizedBox(
                             height: 20,

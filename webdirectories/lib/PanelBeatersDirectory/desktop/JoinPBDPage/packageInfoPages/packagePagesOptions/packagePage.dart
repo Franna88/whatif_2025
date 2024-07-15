@@ -5,7 +5,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/package
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/packageInfoPages/packagePagesOptions/starterPackagePage.dart';
 
 class PackagePage extends StatefulWidget {
-  String packageType;
+  final String packageType; // Add 'final'
+
   PackagePage({super.key, required this.packageType});
 
   @override
@@ -15,13 +16,16 @@ class PackagePage extends StatefulWidget {
 class _PackagePageState extends State<PackagePage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (widget.packageType == "Starter") StarterPackagePage(),
-        if (widget.packageType == "Core") CorePackagePage(),
-        if (widget.packageType == "Premium") PremiumPackagePage(),
-        if (widget.packageType == "PremiumPlus") PremiumPlusPackagePage(),
-      ],
+    return Scaffold(
+      // Wrap with Scaffold if not already done
+      body: Column(
+        children: [
+          if (widget.packageType == "Starter") StarterPackagePage(),
+          if (widget.packageType == "Core") CorePackagePage(),
+          if (widget.packageType == "Premium") PremiumPackagePage(),
+          if (widget.packageType == "PremiumPlus") PremiumPlusPackagePage(),
+        ],
+      ),
     );
   }
 }

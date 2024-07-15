@@ -16,7 +16,6 @@ class CheckMarkText extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             child: Row(
               children: [
-                
                 Container(
                   width: widthDevice / 25,
                   height: heightDevice / 25,
@@ -31,9 +30,6 @@ class CheckMarkText extends StatelessWidget {
                     size: heightDevice / 50,
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
                 Text(
                   text,
                   style: TextStyle(
@@ -46,12 +42,11 @@ class CheckMarkText extends StatelessWidget {
             ),
           )
 
-          //SMALLER SCREENS
+        //SMALLER SCREENS
         : Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Row(
               children: [
-               
                 Container(
                   width: heightDevice < 710 ? 20 : 25,
                   height: heightDevice < 710 ? 20 : 25,

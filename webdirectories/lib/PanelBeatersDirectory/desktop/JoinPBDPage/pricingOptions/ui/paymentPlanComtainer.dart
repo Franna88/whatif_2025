@@ -46,7 +46,7 @@ class _PaymentPlanContainerState extends State<PaymentPlanContainer> {
       child: AnimatedContainer(
         duration: Duration(milliseconds: 200),
         width: widthDevice / 5,
-        height: heightDevice - 440,
+        height: heightDevice - 330,
         decoration: BoxDecoration(
           color: isHovered ? Color(0xFF0E1013) : Color(0xFFF4F4F4),
           borderRadius: BorderRadius.circular(10.0),

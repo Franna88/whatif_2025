@@ -56,7 +56,7 @@ class _PackagesPageState extends State<PackagesPage> {
                   width: widthDevice / 2.8,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('images/laptop.png'),
+                        image: AssetImage('images/panlaptop.png'),
                         fit: BoxFit.fill),
                   ),
                 ),

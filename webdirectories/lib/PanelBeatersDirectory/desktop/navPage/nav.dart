@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFiner.dart';
-
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/newJoinPbdPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/landingPageDisplay.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/ownersPortal.dart';
@@ -9,6 +8,9 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.d
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticles.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/navBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/weConnectPage/weConnectMainPage/weConnectMainPage.dart';
+
+import '../JoinPBDPage/packageInfoPages/packagePagesOptions/packagePage.dart'; // Additional pages
+import '../JoinPBDPage/pricingOptions/pricingOptionsPage.dart'; // Additional pages
 
 class Nav extends StatefulWidget {
   const Nav({super.key});
@@ -22,19 +24,44 @@ class _NavState extends State<Nav> {
 
   void goToWeConnectMainPage() {
     setState(() {
-      _currentIndex = 3; 
+      _currentIndex = 3;
     });
   }
 
   void goToLandingPageDisplay() {
     setState(() {
-      _currentIndex = 0; 
+      _currentIndex = 0;
     });
   }
 
   void viewServiceDetails() {
     setState(() {
       _currentIndex = 7;
+    });
+  }
+
+  void navigateToPricingOptions() {
+    setState(() {
+      _currentIndex = 8;
+    });
+  }
+
+  void navigateToPackagePage(String packageType) {
+    setState(() {
+      switch (packageType) {
+        case 'Starter':
+          _currentIndex = 9; // Adjust indices accordingly
+          break;
+        case 'Core':
+          _currentIndex = 10; // Adjust indices accordingly
+          break;
+        case 'Premium':
+          _currentIndex = 11; // Adjust indices accordingly
+          break;
+        case 'PremiumPlus':
+          _currentIndex = 12; // Adjust indices accordingly
+          break;
+      }
     });
   }
 
@@ -46,25 +73,37 @@ class _NavState extends State<Nav> {
       JobFinder(),
       WeConnectMainPage(goToLandingPageDisplay: goToLandingPageDisplay),
       RecentArticles(),
-      NewJointPbdPage(),
+      NewJointPbdPage(navigateToPricingOptions: navigateToPricingOptions),
       OwnersPortal(),
       Services(),
+      PricingOptionsPage(
+        updateContainerIndex: (int index) {},
+        updatePackageType: (String packageType) {
+          navigateToPackagePage(packageType);
+        },
+      ),
+      PackagePage(packageType: "Starter"), // New Pages
+      PackagePage(packageType: "Core"), // New Pages
+      PackagePage(packageType: "Premium"), // New Pages
+      PackagePage(packageType: "PremiumPlus"), // New Pages
     ];
 
-    return Stack(
-      children: [
-        _pages[_currentIndex],
-        Positioned(
-          right: 1,
-          child: NavBar(
-            onIconTapped: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
+    return Scaffold(
+      body: Stack(
+        children: [
+          _pages[_currentIndex],
+          Positioned(
+            right: 0,
+            child: NavBar(
+              onIconTapped: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
