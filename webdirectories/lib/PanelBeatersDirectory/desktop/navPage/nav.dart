@@ -24,7 +24,7 @@ class _NavState extends State<Nav> {
 
   void goToWeConnectMainPage() {
     setState(() {
-      _currentIndex = 3;
+      _currentIndex = 2;
     });
   }
 
@@ -36,13 +36,13 @@ class _NavState extends State<Nav> {
 
   void viewServiceDetails() {
     setState(() {
-      _currentIndex = 7;
+      _currentIndex = 6;
     });
   }
 
   void navigateToPricingOptions() {
     setState(() {
-      _currentIndex = 8;
+      _currentIndex = 7;
     });
   }
 
@@ -69,7 +69,7 @@ class _NavState extends State<Nav> {
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
       LandingPageDisplay(goToWeConnectMainPage: goToWeConnectMainPage),
-      ServicesFeatured(viewServiceDetails: viewServiceDetails),
+      //ServicesFeatured(viewServiceDetails: viewServiceDetails),
       JobFinder(),
       WeConnectMainPage(goToLandingPageDisplay: goToLandingPageDisplay),
       RecentArticles(),

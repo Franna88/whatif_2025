@@ -6,10 +6,12 @@ class ReadMoreButton extends StatelessWidget {
   Color iconColor1;
   Color textColor1;
   String text1;
+  Function() onTap;
 
   ReadMoreButton(
       {super.key,
       required this.backgroundColor1,
+      required this.onTap,
       required this.circleColor1,
       required this.iconColor1,
       required this.text1,
@@ -21,7 +23,7 @@ class ReadMoreButton extends StatelessWidget {
       /*width: MediaQuery.of(context).size.width * 0.08,*/
       /*height: MediaQuery.of(context).size.height * 0.05,*/
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor1,
           shape: RoundedRectangleBorder(

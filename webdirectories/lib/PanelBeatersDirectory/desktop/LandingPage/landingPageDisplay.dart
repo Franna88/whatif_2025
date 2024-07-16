@@ -21,7 +21,7 @@ class LandingPageDisplay extends StatefulWidget {
 }
 
 class _LandingPageDisplayState extends State<LandingPageDisplay> {
-  int menuIndex = 0;
+  int menuIndex = 1;
 
   List infoContainers = [
     WatifMenu(),

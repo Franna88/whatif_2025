@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/ContactUsPage/ContactUsMainPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/packageInfoPages/ui/ballPointText.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/packageInfoPages/ui/exploreOptionsColumn.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/packageInfoPages/ui/packageBenefitsText.dart';
@@ -265,6 +266,14 @@ class _PackagesPageState extends State<PackagesPage> {
                           width: 30,
                         ),
                         ReadMoreButton(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ContactUsMainPage()),
+                              );
+                            },
                             backgroundColor1: Colors.black,
                             circleColor1: Colors.white,
                             iconColor1: Colors.black,

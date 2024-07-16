@@ -29,7 +29,7 @@ class _CategorySelectState extends State<CategorySelect>
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
-    _controller.animateTo(-0.32);
+    _controller.animateTo(-0.17);
     super.initState();
   }
 

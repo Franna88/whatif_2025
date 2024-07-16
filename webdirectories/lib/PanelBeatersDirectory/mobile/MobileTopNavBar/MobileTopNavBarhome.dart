@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeatureMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ServicesMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/mobileLandingPage.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileContactUs/mobileContactUsMain.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileJobFinder/mobileJobFinder.dart';
 
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileQuestionPages/newMobileGetListed.dart';
@@ -64,6 +65,8 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
                   'Get Listed Today!', 'option5', NewMobileGetListed()),
               PopupMenuDivider(), // Grey divider
               buildPopupMenuItem('Owners Portal', 'option6', OwnersloginMain()),
+              PopupMenuDivider(), // Grey divider
+              buildPopupMenuItem('Contact Us', 'option7', MobileContactUsMain()),
             ],
             onSelected: (String value) {
               setState(() {

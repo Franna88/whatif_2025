@@ -11,7 +11,7 @@ class NavBar extends StatefulWidget {
   // Define a list of icon paths
   final List<String> iconPaths = [
     'images/home.svg',
-    'images/pindrop.svg',
+    
     'images/business.svg',
     'images/gears.svg',
     'images/BPD.svg',
@@ -21,7 +21,7 @@ class NavBar extends StatefulWidget {
 
   final List<String> menuTooltips = [
     'PBD Home',
-    'Find',
+    
     'Job Finder',
     'More Services',
     'Info & Articles',
@@ -71,7 +71,7 @@ class _NavBarState extends State<NavBar> {
         children: [
           Column(
             children: List.generate(
-              5,
+              3,
               (index) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
                 child: Tooltip(
@@ -103,6 +103,29 @@ class _NavBarState extends State<NavBar> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 0.0),
             child: Tooltip(
+              message: widget.menuTooltips[4],
+              textStyle:
+                  TextStyle(color: Color(0xFFEF9040), fontFamily: 'raleway'),
+              child: IconButton(
+                icon: SvgPicture.asset(
+                  widget.iconPaths[4],
+                  width: 50,
+                  height: 50,
+                  color: selectedIndex == 4 ? Color(0xFFFF8828) : Colors.white,
+                ),
+                onPressed: () {
+                  setState(() {
+                    selectedIndex = 4;
+                  });
+
+                  widget.onIconTapped(4);
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: Tooltip(
               message: widget.menuTooltips[5],
               textStyle:
                   TextStyle(color: Color(0xFFEF9040), fontFamily: 'raleway'),
@@ -119,29 +142,6 @@ class _NavBarState extends State<NavBar> {
                   });
 
                   widget.onIconTapped(5);
-                },
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            child: Tooltip(
-              message: widget.menuTooltips[6],
-              textStyle:
-                  TextStyle(color: Color(0xFFEF9040), fontFamily: 'raleway'),
-              child: IconButton(
-                icon: SvgPicture.asset(
-                  widget.iconPaths[6],
-                  width: 50,
-                  height: 50,
-                  color: selectedIndex == 6 ? Color(0xFFFF8828) : Colors.white,
-                ),
-                onPressed: () {
-                  setState(() {
-                    selectedIndex = 6;
-                  });
-
-                  widget.onIconTapped(6);
                 },
               ),
             ),
