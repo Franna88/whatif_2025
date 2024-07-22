@@ -7,8 +7,6 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/m
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/textfieldButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesFeatured.dart';
 
-import '../../Locations/LocationFeatured.dart';
-import '../../Locations/LocationOther.dart';
 
 class FindAllPanelBeaters extends StatefulWidget {
   final VoidCallback viewServiceDetails;
