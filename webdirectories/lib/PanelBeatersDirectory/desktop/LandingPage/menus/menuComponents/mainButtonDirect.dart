@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class MainButtonDirect extends StatelessWidget {
   final String buttonTitle;
-  const MainButtonDirect({super.key, required this.buttonTitle});
+  final Function() onTap;
+  const MainButtonDirect({super.key, required this.buttonTitle, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -10,9 +11,7 @@ class MainButtonDirect extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: (){
-            // add logic here
-          },
+          onTap: onTap,
           child: Container(
             width: 600,
             margin: const EdgeInsets.symmetric(horizontal: 25),

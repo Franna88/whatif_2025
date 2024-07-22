@@ -68,14 +68,19 @@ class _NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
-      LandingPageDisplay(goToWeConnectMainPage: goToWeConnectMainPage),
+      LandingPageDisplay(
+        goToWeConnectMainPage: goToWeConnectMainPage,
+        viewServiceDetails: () {
+          viewServiceDetails();
+        },
+      ),
       //ServicesFeatured(viewServiceDetails: viewServiceDetails),
       JobFinder(),
       WeConnectMainPage(goToLandingPageDisplay: goToLandingPageDisplay),
       RecentArticles(),
       NewJointPbdPage(navigateToPricingOptions: navigateToPricingOptions),
       OwnersPortal(),
-      Services(),
+      ServicesFeatured(),
       PricingOptionsPage(
         updateContainerIndex: (int index) {},
         updatePackageType: (String packageType) {

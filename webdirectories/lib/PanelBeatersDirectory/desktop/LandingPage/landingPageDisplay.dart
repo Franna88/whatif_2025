@@ -12,9 +12,13 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/weConnectPage/weCon
 import 'package:webdirectories/myutility.dart';
 
 class LandingPageDisplay extends StatefulWidget {
+  final VoidCallback viewServiceDetails;
   final VoidCallback goToWeConnectMainPage;
 
-  const LandingPageDisplay({super.key, required this.goToWeConnectMainPage});
+  const LandingPageDisplay(
+      {super.key,
+      required this.goToWeConnectMainPage,
+      required this.viewServiceDetails});
 
   @override
   State<LandingPageDisplay> createState() => _LandingPageDisplayState();
@@ -23,13 +27,7 @@ class LandingPageDisplay extends StatefulWidget {
 class _LandingPageDisplayState extends State<LandingPageDisplay> {
   int menuIndex = 1;
 
-  List infoContainers = [
-    WatifMenu(),
-    FindAllPanelBeaters(),
-    ApprovalsServices(),
-    NewsMenu(),
-    FuelTowingRepairMenu()
-  ];
+  
 
   changeMenu(value) {
     setState(() {
@@ -43,6 +41,15 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
+    List infoContainers = [
+    WatifMenu(),
+    FindAllPanelBeaters(
+      viewServiceDetails: () {widget.viewServiceDetails();},
+    ),
+    ApprovalsServices(),
+    NewsMenu(),
+    FuelTowingRepairMenu()
+  ];
     return Material(
       child: SingleChildScrollView(
         child: Column(
@@ -52,7 +59,8 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
               width: MyUtility(context).width,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('images/LandingHeroIMG.png'), fit: BoxFit.fill),
+                    image: AssetImage('images/LandingHeroIMG.png'),
+                    fit: BoxFit.fill),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,12 +92,15 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                               _isHovered = false;
                             }),
                             child: GestureDetector(
-                              onTap: (){widget.goToWeConnectMainPage();},
+                              onTap: () {
+                                widget.goToWeConnectMainPage();
+                              },
                               child: Icon(
                                 Icons.keyboard_arrow_left_rounded,
                                 size: heightDevice * 0.12,
-                                color:
-                                    _isHovered ? Colors.white : Color(0xFFFF8828),
+                                color: _isHovered
+                                    ? Colors.white
+                                    : Color(0xFFFF8828),
                               ),
                             ),
                           ),

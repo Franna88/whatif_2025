@@ -79,7 +79,7 @@ class _MainContainerState extends State<MainContainer> {
 
           /*ApprovalsServicesDark()*/
           /*AreaSearch()*/
-          FindAllPanelBeaters()
+          //FindAllPanelBeaters(viewServiceDetails: () {  },)
         ],
       ),
     );

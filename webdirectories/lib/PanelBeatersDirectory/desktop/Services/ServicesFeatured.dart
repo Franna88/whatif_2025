@@ -7,12 +7,12 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButt
 import 'package:webdirectories/myutility.dart';
 
 import 'ServicesOther.dart';
+import 'services.dart';
 
 class ServicesFeatured extends StatefulWidget {
-  final Function viewServiceDetails;
-
-  ServicesFeatured({Key? key, required this.viewServiceDetails})
-      : super(key: key);
+  ServicesFeatured({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ServicesFeaturedState createState() => _ServicesFeaturedState();
@@ -152,7 +152,12 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                     businessAddress:
                                         '26 Foundry Street, George Industria, Western Cape, 6530',
                                     OnPressed: () {
-                                      widget.viewServiceDetails();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Services()),
+                                      );
                                     },
                                     views: '16 133',
                                     distance: '12km',
@@ -163,9 +168,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                         'South City Motors Auto Body Repair',
                                     businessAddress:
                                         '6 Lances Street, Cannon Hill, Kariega, Eastern Cape, 6229',
-                                    OnPressed: () {
-                                      widget.viewServiceDetails();
-                                    },
+                                    OnPressed: () {},
                                     views: '16 133',
                                     distance: '12km',
                                   ),
@@ -178,9 +181,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                     businessName: 'Star Panelbeaters',
                                     businessAddress:
                                         'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                                    OnPressed: () {
-                                      widget.viewServiceDetails();
-                                    },
+                                    OnPressed: () {},
                                     views: '16 133',
                                     distance: '12km',
                                   ),
@@ -189,9 +190,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                     businessName: 'Eden Coachworks',
                                     businessAddress:
                                         '6 Luven Street, George Industria, George, Western Cape, 6530',
-                                    OnPressed: () {
-                                      widget.viewServiceDetails();
-                                    },
+                                    OnPressed: () {},
                                     views: '16 133',
                                     distance: '12km',
                                   ),
@@ -214,7 +213,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                     businessAddress:
                                         'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
                                     OnPressed: () {
-                                      widget.viewServiceDetails();
+                                      
                                     },
                                     views: '16 133',
                                     distance: '12km',
@@ -224,9 +223,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                     businessName: 'Denys Edwardes',
                                     businessAddress:
                                         'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                                    OnPressed: () {
-                                      widget.viewServiceDetails();
-                                    },
+                                    OnPressed: () {},
                                     views: '16 133',
                                     distance: '12km',
                                   ),
@@ -239,9 +236,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                     businessName: 'JF Autobody Services',
                                     businessAddress:
                                         'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                                    OnPressed: () {
-                                      widget.viewServiceDetails();
-                                    },
+                                    OnPressed: () {},
                                     views: '16 133',
                                     distance: '12km',
                                   ),

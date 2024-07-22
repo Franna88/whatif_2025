@@ -5,9 +5,15 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/m
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/menuIndexWidget.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/searchButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/textfieldButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesFeatured.dart';
+
+import '../../Locations/LocationFeatured.dart';
+import '../../Locations/LocationOther.dart';
 
 class FindAllPanelBeaters extends StatefulWidget {
-  const FindAllPanelBeaters({Key? key}) : super(key: key);
+  final VoidCallback viewServiceDetails;
+
+const FindAllPanelBeaters({super.key, required this.viewServiceDetails});
 
   @override
   State<FindAllPanelBeaters> createState() => _FindAllPanelBeatersState();
@@ -85,7 +91,8 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
         const SizedBox(
           height: 15,
         ),
-        const MainButtonDirect(
+        MainButtonDirect(
+          onTap: widget.viewServiceDetails,
           buttonTitle: 'Area Search',
         ),
         const SizedBox(

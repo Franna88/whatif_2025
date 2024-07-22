@@ -50,19 +50,31 @@ class FuelTowingRepairMenu extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        const MainButtonDirect(buttonTitle: 'Fuel, Food & Pricing'),
+        MainButtonDirect(
+          buttonTitle: 'Fuel, Food & Pricing',
+          onTap: () {},
+        ),
         const SizedBox(
           height: 15,
         ),
-        const MainButtonDirect(buttonTitle: 'Repair, Parts & Tyres'),
+        MainButtonDirect(
+          buttonTitle: 'Repair, Parts & Tyres',
+          onTap: () {},
+        ),
         const SizedBox(
           height: 15,
         ),
-        const MainButtonDirect(buttonTitle: 'Towing Services'),
+        MainButtonDirect(
+          buttonTitle: 'Towing Services',
+          onTap: () {},
+        ),
         const SizedBox(
           height: 15,
         ),
-        const MainButtonDirect(buttonTitle: 'Emergency on Call'),
+        MainButtonDirect(
+          buttonTitle: 'Emergency on Call',
+          onTap: () {},
+        ),
         const SizedBox(
           height: 25,
         ),

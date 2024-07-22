@@ -40,19 +40,19 @@ class NewsMenu extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        const MainButtonDirect(buttonTitle: 'Articles'),
+         MainButtonDirect(buttonTitle: 'Articles', onTap: () {  },),
         const SizedBox(
           height: 15,
         ),
-        const MainButtonDirect(buttonTitle: 'CSI Lightstone EchoMBR'),
+         MainButtonDirect(buttonTitle: 'CSI Lightstone EchoMBR', onTap: () {  },),
         const SizedBox(
           height: 15,
         ),
-        const MainButtonDirect(buttonTitle: 'Industry News'),
+         MainButtonDirect(buttonTitle: 'Industry News', onTap: () {  },),
         const SizedBox(
           height: 15,
         ),
-        const MainButtonDirect(buttonTitle: 'Repair Finance'),
+         MainButtonDirect(buttonTitle: 'Repair Finance', onTap: () {  },),
         const SizedBox(
           height: 25,
         ),
