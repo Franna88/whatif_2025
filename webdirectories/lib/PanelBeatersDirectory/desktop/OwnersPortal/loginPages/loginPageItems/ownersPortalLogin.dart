@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPortal.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/ownersPortal.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/ownersPortalLoginForm.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/dividers.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/longOrangeButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/mediumTextBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/passwordTextField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OwnersPortalLogin extends StatelessWidget {
   Function changePageIndex;
@@ -37,65 +39,7 @@ class OwnersPortalLogin extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        MediumTextBox(
-          keyText: 'Email',
-          hintText: 'e.g.,admin@actionpanel.co.za',
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        PasswordField(
-          hintText: 'Enter Password',
-          keyText: 'Password',
-          widthContainer:
-              widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        TextButton(
-          onPressed: () {
-            //ADD LOGIC HERE
-          },
-          child: SizedBox(
-            //width: 450,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: widthDevice * 0.03),
-                child: Text(
-                  'Forgot Password?',
-                  textAlign: TextAlign.right,
-                  style: widthDevice < 1500
-                      ? TextStyle(
-                          color: Color(0xFFEF9040),
-                          fontSize: 14,
-                          fontFamily: 'ralewaymedium',
-                        )
-                      : TextStyle(
-                          color: Color(0xFFEF9040),
-                          fontSize: 16,
-                          fontFamily: 'ralewaymedium',
-                        ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        LongOrangeButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AdminPortal()),
-              );
-            },
-            buttonText: 'Login'),
-        SizedBox(
-          height: heightDevice < 710 ? 15 : 30,
-        ),
+        const OwnersPortalLoginForm(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -116,7 +60,7 @@ class OwnersPortalLogin extends StatelessWidget {
           ],
         ),
         SizedBox(
-         height: heightDevice < 710 ? 10 : 20,
+          height: heightDevice < 710 ? 10 : 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -195,7 +139,7 @@ class OwnersPortalLogin extends StatelessWidget {
           ],
         ),
         SizedBox(
-         height: heightDevice < 710 ? 15 : heightDevice * 0.05,
+          height: heightDevice < 710 ? 15 : heightDevice * 0.05,
         ),
       ],
     );

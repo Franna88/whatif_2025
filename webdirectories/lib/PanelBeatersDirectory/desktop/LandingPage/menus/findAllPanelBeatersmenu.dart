@@ -4,14 +4,14 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/m
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/mainButtonDropdown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/menuIndexWidget.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/searchButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/setYourLocationButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/textfieldButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesFeatured.dart';
-
 
 class FindAllPanelBeaters extends StatefulWidget {
   final VoidCallback viewServiceDetails;
 
-const FindAllPanelBeaters({super.key, required this.viewServiceDetails});
+  const FindAllPanelBeaters({super.key, required this.viewServiceDetails});
 
   @override
   State<FindAllPanelBeaters> createState() => _FindAllPanelBeatersState();
@@ -20,6 +20,7 @@ const FindAllPanelBeaters({super.key, required this.viewServiceDetails});
 class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
   int menuIndex = 2;
   int? currentOpenDropdown;
+  String nearMeText = 'Click here to set your location';
 
   void toggleDropdown(int index) {
     setState(() {
@@ -54,8 +55,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
           buttonTitle: 'Near Me',
           dropdownContent: const DropDownMenuWidget(
             topText: 'Find your nearest Panel Beater',
-            widget1:
-                TextfieldButton(hintText: 'Click here to set your location'),
+            widget1: SetYourLoactionButton(),
             widget2: SearchButton(),
           ),
           isOpen: currentOpenDropdown == 0,

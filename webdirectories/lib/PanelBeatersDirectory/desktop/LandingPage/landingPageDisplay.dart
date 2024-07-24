@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/category/categorySelect.dart';
@@ -27,8 +28,6 @@ class LandingPageDisplay extends StatefulWidget {
 class _LandingPageDisplayState extends State<LandingPageDisplay> {
   int menuIndex = 1;
 
-  
-
   changeMenu(value) {
     setState(() {
       menuIndex = value;
@@ -42,14 +41,16 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
     List infoContainers = [
-    WatifMenu(),
-    FindAllPanelBeaters(
-      viewServiceDetails: () {widget.viewServiceDetails();},
-    ),
-    ApprovalsServices(),
-    NewsMenu(),
-    FuelTowingRepairMenu()
-  ];
+      WatifMenu(),
+      FindAllPanelBeaters(
+        viewServiceDetails: () {
+          widget.viewServiceDetails();
+        },
+      ),
+      ApprovalsServices(),
+      NewsMenu(),
+      FuelTowingRepairMenu()
+    ];
     return Material(
       child: SingleChildScrollView(
         child: Column(

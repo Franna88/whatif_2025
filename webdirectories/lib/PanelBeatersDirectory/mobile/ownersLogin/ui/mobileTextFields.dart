@@ -4,11 +4,13 @@ class MobileTextFields extends StatelessWidget {
   String keyText;
   String hintText;
   double widthContainer;
+  TextEditingController? controller;
   MobileTextFields(
       {super.key,
       required this.hintText,
       required this.keyText,
-      required this.widthContainer});
+      required this.widthContainer,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,7 @@ class MobileTextFields extends StatelessWidget {
             ),
           ),
           child: TextField(
+            controller: controller,
             cursorColor: Colors.black,
             style: TextStyle(
                 color: Colors.black, fontSize: 15.64, fontFamily: 'raleway'),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/dividers.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/FooterMobile/PanFooterMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/mainPageItems/ownerLoginFormMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ui/longOrangeMobileButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ui/mobileTextFields.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ownersLogin/ui/ownersLoginContainer.dart';
@@ -91,45 +92,7 @@ class OwnersloginMain extends StatelessWidget {
                             const SizedBox(
                               height: 10,
                             ),
-                            MobileTextFields(
-                                hintText:
-                                    'e.g., mailto:admin@actionpanel.co.za',
-                                keyText: 'Email',
-                                widthContainer: widthDevice * 0.70),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            PasswordTextFieldMobile(
-                                hintText: 'Enter Password',
-                                keyText: 'Password',
-                                widthContainer: widthDevice * 0.70),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  width: 16,
-                                ),
-                                Text(
-                                  'Forgot Password ?',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    color: Color(0xFFEF9040),
-                                    fontSize: 14,
-                                    fontFamily: 'raleway',
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            LongOrangeMobileButton(
-                                onPressed: () {},
-                                buttonText: 'Login',
-                                widthButton: widthDevice * 0.70),
+                            const Ownerloginformmobile(),
                             const SizedBox(
                               height: 25,
                             ),

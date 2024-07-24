@@ -4,11 +4,13 @@ class PasswordTextFieldMobile extends StatefulWidget {
   double widthContainer;
   String hintText;
   String keyText;
+  TextEditingController? controller;
   PasswordTextFieldMobile(
       {super.key,
       required this.hintText,
       required this.keyText,
-      required this.widthContainer});
+      required this.widthContainer,
+      this.controller});
 
   @override
   _PasswordTextFieldMobileState createState() =>
@@ -71,6 +73,7 @@ class _PasswordTextFieldMobileState extends State<PasswordTextFieldMobile> {
           child: Align(
             alignment: Alignment.centerLeft,
             child: TextField(
+              controller: widget.controller,
               keyboardType: TextInputType.visiblePassword,
               style: TextStyle(
                   color: Colors.black, fontSize: 15.64, fontFamily: 'raleway'),
