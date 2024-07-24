@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Locations/LocationFeaturedComponents/BuisnessImageContainer.dart';
@@ -20,6 +21,23 @@ class ServicesFeatured extends StatefulWidget {
 
 class _ServicesFeaturedState extends State<ServicesFeatured> {
   bool showOtherServices = false;
+
+  late Future<List<Map<String, dynamic>>> _listingsFuture;
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _listingsFuture = _getListings();
+  }
+
+  Future<List<Map<String, dynamic>>> _getListings() async {
+    QuerySnapshot querySnapshot = await _firestore.collection('listings').get();
+    return querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+  }
 
   void toggleToFeatured() {
     setState(() {
@@ -139,113 +157,67 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                         ),
                         SizedBox(
                           height: MyUtility(context).height * 0.85,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  ServiceFeaturedContainer(
-                                    businessImage: 'images/williespan.png',
-                                    businessName: 'Willies Panelbeaters',
-                                    businessAddress:
-                                        '26 Foundry Street, George Industria, Western Cape, 6530',
-                                    OnPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Services()),
-                                      );
-                                    },
-                                    views: '16 133',
-                                    distance: '12km',
+                          child: FutureBuilder<List<Map<String, dynamic>>>(
+                            future: _listingsFuture,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}',
+                                      style:
+                                          const TextStyle(color: Colors.white)),
+                                );
+                              }
+                              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                return const Center(
+                                  child: Text(
+                                    'No listings found',
+                                    style: TextStyle(color: Colors.white),
                                   ),
-                                  ServiceFeaturedContainer(
-                                    businessImage: 'images/southcity.jpeg',
-                                    businessName:
-                                        'South City Motors Auto Body Repair',
-                                    businessAddress:
-                                        '6 Lances Street, Cannon Hill, Kariega, Eastern Cape, 6229',
-                                    OnPressed: () {},
-                                    views: '16 133',
-                                    distance: '12km',
+                                );
+                              }
+                              List<Map<String, dynamic>> listings =
+                                  snapshot.data!;
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 100.0, vertical: 20.0),
+                                child: GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount:
+                                        5, // Number of items per row
+                                    mainAxisSpacing: 8.0,
+                                    crossAxisSpacing: 8.0,
+                                    childAspectRatio: 3 /
+                                        3.5, // Adjust the aspect ratio as needed
                                   ),
-                                  BuisnessImageContainer(
-                                    topImage: 'images/hurricane.png',
-                                    bottomImage: 'images/hurricane2.png',
-                                  ),
-                                  ServiceFeaturedContainer(
-                                    businessImage: 'images/williespannal.png',
-                                    businessName: 'Star Panelbeaters',
-                                    businessAddress:
-                                        'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                                    OnPressed: () {},
-                                    views: '16 133',
-                                    distance: '12km',
-                                  ),
-                                  ServiceFeaturedContainer(
-                                    businessImage: 'images/edencoach.png',
-                                    businessName: 'Eden Coachworks',
-                                    businessAddress:
-                                        '6 Luven Street, George Industria, George, Western Cape, 6530',
-                                    OnPressed: () {},
-                                    views: '16 133',
-                                    distance: '12km',
-                                  ),
-                                  SizedBox(
-                                    width: MyUtility(context).width * 0.02,
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  BuisnessImageContainer(
-                                    topImage: 'images/Bulldog.png',
-                                    bottomImage: 'images/Bulldog2.png',
-                                  ),
-                                  ServiceFeaturedContainer(
-                                    businessImage: 'images/autotechpan.png',
-                                    businessName: 'Autotech Panelbeaters',
-                                    businessAddress:
-                                        'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                                    OnPressed: () {
-                                      
-                                    },
-                                    views: '16 133',
-                                    distance: '12km',
-                                  ),
-                                  ServiceFeaturedContainer(
-                                    businessImage: 'images/denys.png',
-                                    businessName: 'Denys Edwardes',
-                                    businessAddress:
-                                        'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                                    OnPressed: () {},
-                                    views: '16 133',
-                                    distance: '12km',
-                                  ),
-                                  BuisnessImageContainer(
-                                    topImage: 'images/glasurit.png',
-                                    bottomImage: 'images/glasurit2.png',
-                                  ),
-                                  ServiceFeaturedContainer(
-                                    businessImage: 'images/denys.png',
-                                    businessName: 'JF Autobody Services',
-                                    businessAddress:
-                                        'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                                    OnPressed: () {},
-                                    views: '16 133',
-                                    distance: '12km',
-                                  ),
-                                  SizedBox(
-                                    width: MyUtility(context).width * 0.02,
-                                  )
-                                ],
-                              ),
-                            ],
+                                  itemCount: listings.length,
+                                  itemBuilder: (context, index) {
+                                    Map<String, dynamic> listing =
+                                        listings[index];
+                                    return ServiceFeaturedContainer(
+                                      businessImage: 'images/williespan.png',
+                                      businessName: listing['title'],
+                                      businessAddress: listing['postaladdress'],
+                                      OnPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Services()),
+                                        );
+                                      },
+                                      views: '16 133',
+                                      distance: '12km',
+                                    );
+                                  },
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ],
