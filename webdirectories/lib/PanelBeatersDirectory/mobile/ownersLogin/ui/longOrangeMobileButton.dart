@@ -4,12 +4,13 @@ class LongOrangeMobileButton extends StatefulWidget {
   String buttonText;
   Function onPressed;
   double widthButton;
-
+  bool? isLoading;
   LongOrangeMobileButton(
       {super.key,
       required this.onPressed,
       required this.buttonText,
-      required this.widthButton});
+      required this.widthButton,
+      this.isLoading});
 
   @override
   State<LongOrangeMobileButton> createState() => _LongOrangeMobileButtonState();
@@ -59,7 +60,13 @@ class _LongOrangeMobileButtonState extends State<LongOrangeMobileButton> {
                 ),
               ),
               const SizedBox(width: 10.60),
-              Icon(Icons.east),
+              SizedBox(
+                width: 25,
+                height: 25,
+                child: widget.isLoading == true || widget.isLoading == null
+                    ? null
+                    : const Icon(Icons.east),
+              ),
             ],
           ),
         ),

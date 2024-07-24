@@ -5,11 +5,14 @@ class PasswordTextFieldMobile extends StatefulWidget {
   String hintText;
   String keyText;
   TextEditingController? controller;
+  String? Function(String?)? validator;
+
   PasswordTextFieldMobile(
       {super.key,
       required this.hintText,
       required this.keyText,
       required this.widthContainer,
+      this.validator,
       this.controller});
 
   @override
@@ -62,17 +65,18 @@ class _PasswordTextFieldMobileState extends State<PasswordTextFieldMobile> {
         ),
         Container(
           width: widget.widthContainer, //450 //215
-          height: 45,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1.99, color: Color(0xFFEAEBEC)),
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
+          height: 90,
+          // decoration: ShapeDecoration(
+          //   color: Colors.white,
+          //   shape: RoundedRectangleBorder(
+          //     side: BorderSide(width: 1.99, color: Color(0xFFEAEBEC)),
+          //     borderRadius: BorderRadius.circular(10),
+          //   ),
+          // ),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: TextField(
+            child: TextFormField(
+              validator: widget.validator,
               controller: widget.controller,
               keyboardType: TextInputType.visiblePassword,
               style: TextStyle(
@@ -94,7 +98,7 @@ class _PasswordTextFieldMobileState extends State<PasswordTextFieldMobile> {
                 isDense: true,
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 suffixIcon: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
@@ -109,6 +113,7 @@ class _PasswordTextFieldMobileState extends State<PasswordTextFieldMobile> {
                     ),
                   ),
                 ),
+                errorStyle: const TextStyle(color: Color(0xFFEF9040)),
               ),
             ),
           ),

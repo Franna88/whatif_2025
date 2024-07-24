@@ -75,12 +75,11 @@ class MediumTextBox extends StatelessWidget {
                     hintStyle: const TextStyle(color: Colors.grey),
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 15.0),
-                    border: const OutlineInputBorder(
+                    border: OutlineInputBorder(
                       borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    errorStyle: const TextStyle(
-                      height: 2,
-                    ),
+                    errorStyle: const TextStyle(color: Color(0xFFEF9040)),
                   ),
                 ),
               ),

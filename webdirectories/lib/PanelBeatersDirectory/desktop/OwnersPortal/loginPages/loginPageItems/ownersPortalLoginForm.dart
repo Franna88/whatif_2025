@@ -108,18 +108,7 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
             keyText: 'Email',
             hintText: 'e.g.,admin@actionpanel.co.za',
             controller: _emailController,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your email';
-              }
-              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                return 'Please enter a valid email address';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(
-            height: 10,
+            validator: (value) => customEmailValidator(value),
           ),
           PasswordField(
             hintText: 'Enter Password',
@@ -155,9 +144,6 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
                 ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 10,
           ),
           LongOrangeButton(
               onPressed: () => _login(context),
