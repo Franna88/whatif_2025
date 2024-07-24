@@ -33,7 +33,11 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
   }
 
   Future<List<Map<String, dynamic>>> _getListings() async {
-    QuerySnapshot querySnapshot = await _firestore.collection('listings').get();
+    QuerySnapshot querySnapshot = await _firestore
+        .collection('listings')
+        .where('featured', isEqualTo: 1)
+        .limit(20)
+        .get();
     return querySnapshot.docs
         .map((doc) => doc.data() as Map<String, dynamic>)
         .toList();

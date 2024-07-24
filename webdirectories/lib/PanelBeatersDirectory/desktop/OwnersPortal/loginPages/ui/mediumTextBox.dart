@@ -1,13 +1,18 @@
+import 'dart:js_interop_unsafe';
+
 import 'package:flutter/material.dart';
 
 class MediumTextBox extends StatelessWidget {
   String keyText;
   String hintText;
   TextEditingController? controller;
+  final String? Function(String?)? validator;
+
   MediumTextBox(
       {super.key,
       required this.hintText,
       required this.keyText,
+      this.validator,
       this.controller});
 
   @override
@@ -50,14 +55,15 @@ class MediumTextBox extends StatelessWidget {
               Container(
                 width: widthDevice * 0.30,
                 height: heightDevice < 710 ? 28 : 35,
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1.99, color: Color(0xFFEAEBEC)),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: TextField(
+                // decoration: ShapeDecoration(
+                //   color: Colors.white,
+                //   shape: RoundedRectangleBorder(
+                //     side: BorderSide(width: 1.99, color: Color(0xFFEAEBEC)),
+                //     borderRadius: BorderRadius.circular(10),
+                //   ),
+                // ),
+                child: TextFormField(
+                  validator: validator,
                   controller: controller,
                   style: TextStyle(
                     fontSize: heightDevice < 710 ? 14 : 16,
@@ -65,14 +71,15 @@ class MediumTextBox extends StatelessWidget {
                   ),
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.only(bottom: 16, left: 15, right: 15),
-                    border: InputBorder.none,
                     hintText: hintText,
-                    hintStyle: TextStyle(
-                      color: const Color.fromARGB(255, 124, 124, 124),
-                      fontSize: heightDevice < 710 ? 14 : 16,
-                      fontFamily: 'raleway',
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 15.0),
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                    ),
+                    errorStyle: const TextStyle(
+                      height: 2,
                     ),
                   ),
                 ),
@@ -116,31 +123,34 @@ class MediumTextBox extends StatelessWidget {
               ),
               Container(
                 width: widthDevice * 0.24,
-                height: 45,
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1.99, color: Color(0xFFEAEBEC)),
-                    borderRadius: BorderRadius.circular(15.90),
-                  ),
-                ),
-                child: TextField(
+                height: 90,
+                // decoration: ShapeDecoration(
+                //   color: Colors.white,
+                //   shape: RoundedRectangleBorder(
+                //     side: BorderSide(width: 1.99, color: Color(0xFFEAEBEC)),
+                //     borderRadius: BorderRadius.circular(15.90),
+                //   ),
+                // ),
+                child: TextFormField(
+                  validator: validator,
                   controller: controller,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: heightDevice < 710 ? 14 : 16,
                     fontFamily: 'raleway',
                   ),
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(
-                        top: 13, bottom: 13, left: 20, right: 20),
-                    border: InputBorder.none,
                     hintText: hintText,
-                    hintStyle: TextStyle(
-                      color: const Color.fromARGB(255, 124, 124, 124),
-                      fontSize: 18,
-                      fontFamily: 'raleway',
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 15.0),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(15.90),
                     ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    errorStyle: const TextStyle(color: Color(0xFFEF9040)),
                   ),
                 ),
               ),

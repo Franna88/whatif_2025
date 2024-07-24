@@ -15,30 +15,38 @@ class OwnersPortalLoginForm extends StatefulWidget {
 class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  bool _isLoading = false;
   Future<void> _login(BuildContext context) async {
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-      print("User signed in: ${userCredential.user?.email}");
+    if (_formKey.currentState!.validate()) {
+      try {
+        setState(() {
+          _isLoading = true;
+        });
 
-      if (!mounted) return; // Ensure the widget is still mounted
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        print("User signed in: ${userCredential.user?.email}");
 
-      // Navigate to the next screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                AdminPortal()), // Replace with your destination screen
-      );
-    } on FirebaseAuthException catch (e) {
-      print('Incorrect credentials. Please try again.');
-    } catch (e) {
-      print(e);
+        if (!mounted) return; // Ensure the widget is still mounted
+        setState(() {
+          _isLoading = false;
+        });
+        // Navigate to the next screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  AdminPortal()), // Replace with your destination screen
+        );
+      } on FirebaseAuthException catch (e) {
+        print('Incorrect credentials. Please try again.');
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -71,62 +79,103 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
     }
   }
 
+  String? customEmailValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    }
+    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  String? customPasswordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        MediumTextBox(
-          keyText: 'Email',
-          hintText: 'e.g.,admin@actionpanel.co.za',
-          controller: _emailController,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        PasswordField(
-          hintText: 'Enter Password',
-          keyText: 'Password',
-          controller: _passwordController,
-          widthContainer:
-              widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
-        ),
-        TextButton(
-          onPressed: () => _forgotPassword(context),
-          child: SizedBox(
-            //width: 450,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: widthDevice * 0.03),
-                child: Text(
-                  'Forgot Password?',
-                  textAlign: TextAlign.right,
-                  style: widthDevice < 1500
-                      ? const TextStyle(
-                          color: Color(0xFFEF9040),
-                          fontSize: 14,
-                          fontFamily: 'ralewaymedium',
-                        )
-                      : const TextStyle(
-                          color: Color(0xFFEF9040),
-                          fontSize: 16,
-                          fontFamily: 'ralewaymedium',
-                        ),
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          MediumTextBox(
+            keyText: 'Email',
+            hintText: 'e.g.,admin@actionpanel.co.za',
+            controller: _emailController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your email';
+              }
+              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                return 'Please enter a valid email address';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          PasswordField(
+            hintText: 'Enter Password',
+            keyText: 'Password',
+            controller: _passwordController,
+            validator: (value) => customPasswordValidator(value),
+            widthContainer:
+                widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
+          ),
+          TextButton(
+            onPressed: () => _forgotPassword(context),
+            child: SizedBox(
+              //width: 450,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: EdgeInsets.only(right: widthDevice * 0.03),
+                  child: Text(
+                    'Forgot Password?',
+                    textAlign: TextAlign.right,
+                    style: widthDevice < 1500
+                        ? const TextStyle(
+                            color: Color(0xFFEF9040),
+                            fontSize: 14,
+                            fontFamily: 'ralewaymedium',
+                          )
+                        : const TextStyle(
+                            color: Color(0xFFEF9040),
+                            fontSize: 16,
+                            fontFamily: 'ralewaymedium',
+                          ),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        LongOrangeButton(onPressed: () => _login(context), buttonText: 'Login'),
-        SizedBox(
-          height: heightDevice < 710 ? 15 : 30,
-        ),
-      ],
+          const SizedBox(
+            height: 10,
+          ),
+          LongOrangeButton(
+              onPressed: () => _login(context),
+              buttonText: _isLoading
+                  ? const SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.0,
+                        color: Colors.white,
+                      ),
+                    )
+                  : 'Login'),
+          SizedBox(
+            height: heightDevice < 710 ? 15 : 30,
+          ),
+        ],
+      ),
     );
   }
 }
