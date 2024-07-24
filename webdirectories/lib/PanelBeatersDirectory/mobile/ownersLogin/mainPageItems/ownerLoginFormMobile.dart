@@ -15,31 +15,38 @@ class Ownerloginformmobile extends StatefulWidget {
 class _OwnerloginformmobileState extends State<Ownerloginformmobile> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   Future<void> _login(BuildContext context) async {
-    print('clicked');
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-      print("User signed in: ${userCredential.user?.email}");
+    if (_formKey.currentState!.validate()) {
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        print("User signed in: ${userCredential.user?.email}");
 
-      if (!mounted) return; // Ensure the widget is still mounted
-
-      // Navigate to the next screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                const AdminPortal()), // Replace with your destination screen
-      );
-    } on FirebaseAuthMultiFactorException catch (e) {
-      print('Incorrect credentials. Please try again.');
-    } catch (e) {
-      print(e);
+        if (!mounted) return; // Ensure the widget is still mounted
+        setState(() {
+          _isLoading = false;
+        });
+        // Navigate to the next screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  const AdminPortal()), // Replace with your destination screen
+        );
+      } on FirebaseAuthMultiFactorException catch (e) {
+        print('Incorrect credentials. Please try again.');
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -72,53 +79,71 @@ class _OwnerloginformmobileState extends State<Ownerloginformmobile> {
     }
   }
 
+  String? customEmailValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    }
+    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  String? customPasswordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        MobileTextFields(
-            hintText: 'e.g., mailto:admin@actionpanel.co.za',
-            keyText: 'Email',
-            controller: _emailController,
-            widthContainer: widthDevice * 0.70),
-        const SizedBox(
-          height: 15,
-        ),
-        PasswordTextFieldMobile(
-            hintText: 'Enter Password',
-            keyText: 'Password',
-            controller: _passwordController,
-            widthContainer: widthDevice * 0.70),
-        const SizedBox(
-          height: 15,
-        ),
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              'Forgot Password ?',
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                color: Color(0xFFEF9040),
-                fontSize: 14,
-                fontFamily: 'raleway',
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          MobileTextFields(
+              hintText: 'e.g., mailto:admin@actionpanel.co.za',
+              keyText: 'Email',
+              controller: _emailController,
+              validator: customEmailValidator,
+              widthContainer: widthDevice * 0.70),
+          PasswordTextFieldMobile(
+              hintText: 'Enter Password',
+              keyText: 'Password',
+              controller: _passwordController,
+              validator: customPasswordValidator,
+              widthContainer: widthDevice * 0.70),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 16,
               ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        LongOrangeMobileButton(
+              Text(
+                'Forgot Password ?',
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Color(0xFFEF9040),
+                  fontSize: 14,
+                  fontFamily: 'raleway',
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          LongOrangeMobileButton(
             onPressed: () => _login(context),
             buttonText: 'Login',
-            widthButton: widthDevice * 0.70),
-      ],
+            widthButton: widthDevice * 0.70,
+            isLoading: _isLoading,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -5,12 +5,13 @@ class PasswordField extends StatefulWidget {
   final String hintText;
   final String keyText;
   final TextEditingController? controller;
-
+  final String? Function(String?)? validator;
   const PasswordField(
       {super.key,
       required this.hintText,
       required this.keyText,
       required this.widthContainer,
+      this.validator,
       this.controller});
 
   @override
@@ -73,7 +74,8 @@ class PasswordFieldState extends State<PasswordField> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: TextField(
+                child: TextFormField(
+                  validator: widget.validator,
                   controller: widget.controller,
                   style: TextStyle(
                     fontSize: heightDevice < 710 ? 12 : 16,
@@ -154,16 +156,17 @@ class PasswordFieldState extends State<PasswordField> {
               ),
               Container(
                 width: widget.widthContainer, //450 //215
-                height: 45,
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1.99, color: Color(0xFFEAEBEC)),
-                    borderRadius: BorderRadius.circular(15.90),
-                  ),
-                ),
-                child: TextField(
+                height: 90,
+                // decoration: ShapeDecoration(
+                //   color: Colors.white,
+                //   shape: RoundedRectangleBorder(
+                //     side: BorderSide(width: 1.99, color: Color(0xFFEAEBEC)),
+                //     borderRadius: BorderRadius.circular(15.90),
+                //   ),
+                // ),
+                child: TextFormField(
                   controller: widget.controller,
+                  validator: widget.validator,
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'raleway',
@@ -186,8 +189,9 @@ class PasswordFieldState extends State<PasswordField> {
                     isDense: true,
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15.90),
                     ),
+                    errorStyle: TextStyle(color: Color(0xFFEF9040)),
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                       child: GestureDetector(
