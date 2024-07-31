@@ -4,7 +4,19 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/myutility.dart';
 
 class BusinessContact extends StatefulWidget {
-  const BusinessContact({super.key});
+  final TextEditingController? customerCareController;
+  final TextEditingController? whatsappController;
+  final TextEditingController? afterHoursController;
+  final TextEditingController? businessFaxController;
+  final TextEditingController? businessAlternativeController;
+
+  const BusinessContact(
+      {super.key,
+      this.customerCareController,
+      this.whatsappController,
+      this.afterHoursController,
+      this.businessFaxController,
+      this.businessAlternativeController});
 
   @override
   State<BusinessContact> createState() => _BusinessContactState();
@@ -25,24 +37,36 @@ class _BusinessContactState extends State<BusinessContact> {
               Column(
                 children: [
                   ProfileTextField(
-                      controller: _textController,
+                      controller: widget.customerCareController != null
+                          ? widget.customerCareController!
+                          : _textController,
                       headline: 'Customer Care Number'),
                   ProfileTextField(
-                      controller: _textController, headline: 'WhatsApp Number '),
+                      controller: widget.whatsappController != null
+                          ? widget.whatsappController!
+                          : _textController,
+                      headline: 'WhatsApp Number '),
                 ],
               ),
               Column(
                 children: [
                   ProfileTextField(
-                      controller: _textController,
+                      controller: widget.businessAlternativeController != null
+                          ? widget.businessAlternativeController!
+                          : _textController,
                       headline: 'Business Alternative Number'),
                   ProfileTextField(
-                      controller: _textController,
+                      controller: widget.businessFaxController != null
+                          ? widget.businessFaxController!
+                          : _textController,
                       headline: 'Business Fax Number'),
                 ],
               ),
               ProfileShortTextField(
-                  controller: _textController, headline: 'After hours Number'),
+                  controller: widget.afterHoursController != null
+                      ? widget.afterHoursController!
+                      : _textController,
+                  headline: 'After hours Number'),
             ],
           ),
           Padding(
@@ -51,7 +75,7 @@ class _BusinessContactState extends State<BusinessContact> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  width: MyUtility(context).width ,
+                  width: MyUtility(context).width,
                   height: 1,
                   decoration: BoxDecoration(color: Color(0xFF0F253A)),
                 )

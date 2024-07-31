@@ -1,34 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/TeamProfile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/AddmemberPopup/AddmemberPopup.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessTeamMemberProfile.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class AddMember extends StatefulWidget {
-  const AddMember({super.key});
+  AddMember({super.key});
 
   @override
   State<AddMember> createState() => _AddMemberState();
 }
 
 class _AddMemberState extends State<AddMember> {
-  final List<Map<String, String>> teamProfiles = [
-    {
-      'image': 'images/employee.jpg',
-      'name': 'Johan Pretorius',
-      'position': 'Manager',
-    },
-    {
-      'image': 'images/employee.jpg',
-      'name': 'Jane Doe',
-      'position': 'Developer',
-    },
-    {
-      'image': 'images/employee.jpg',
-      'name': 'John Smith',
-      'position': 'Designer',
-    },
-  ];
+  final _firestore = FirebaseFirestore.instance;
+  Future<List<Map<String, dynamic>>> _fetchData() async {
+    StoredUser? user = await getUserInfo();
+    if (user == null) {
+      return [{}];
+    }
+    // Fetch team profiles
+    QuerySnapshot teamProfilesSnapshot = await _firestore
+        .collection('listings_team')
+        .where('listingsId', isEqualTo: int.parse(user.id))
+        .get();
+
+    return teamProfilesSnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,29 +83,48 @@ class _AddMemberState extends State<AddMember> {
               height: MyUtility(context).height * 0.025,
             ),
             Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: teamProfiles.map((profile) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TeamProfile(
-                        memberImage: profile['image']!,
-                        memberName: profile['name']!,
-                        memberPosition: profile['position']!,
+              child: FutureBuilder<List<Map<String, dynamic>>>(
+                future: _fetchData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No profiles found'));
+                  } else {
+                    List<Map<String, dynamic>> teamProfiles = snapshot.data!;
+                    teamProfiles.sort((a, b) => (a['teamOrder'] as int)
+                        .compareTo(b['teamOrder'] as int));
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: teamProfiles.map((profile) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TeamProfile(
+                              memberImage: profile['personPhoto'],
+                              memberName:
+                                  '${profile['firstName']} ${profile['surname']}',
+                              memberPosition: profile['shortDescription'],
+                            ),
+                          );
+                        }).toList(),
                       ),
                     );
-                  }).toList(),
-                ),
+                  }
+                },
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20, left: 20, bottom: 30 ),
+              padding: const EdgeInsets.only(top: 20, left: 20, bottom: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    width: MyUtility(context).width ,
+                    width: MyUtility(context).width,
                     height: 1,
                     color: Color(0xFF0F253A),
                   ),

@@ -1,3 +1,4 @@
+import 'package:cached_firestorage/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/TeamButton.dart';
 import 'package:webdirectories/myutility.dart';
@@ -21,7 +22,7 @@ class _GalleryContainerState extends State<GalleryContainer> {
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
     return Container(
-      width:  MyUtility(context).width * 0.15,
+      width: MyUtility(context).width * 0.15,
       height: MyUtility(context).height * 0.35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -41,11 +42,12 @@ class _GalleryContainerState extends State<GalleryContainer> {
               ),
               child: Stack(
                 children: [
-                  Image.asset(
-                    widget.galleryImage,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
+                  Positioned.fill(
+                    child: RemotePicture(
+                      imagePath: widget.galleryImage,
+                      mapKey: 'background',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   Positioned(
                     bottom: 8,
@@ -90,7 +92,7 @@ class _GalleryContainerState extends State<GalleryContainer> {
                           widget.description,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: widthDevice <1500 ? 13.6 : 16,
+                            fontSize: widthDevice < 1500 ? 13.6 : 16,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
                           ),

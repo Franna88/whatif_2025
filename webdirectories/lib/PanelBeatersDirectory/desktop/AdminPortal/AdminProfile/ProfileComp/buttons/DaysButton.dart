@@ -3,19 +3,17 @@ import 'package:webdirectories/myutility.dart';
 
 class DaysButton extends StatefulWidget {
   final String day;
-
-  const DaysButton({super.key, required this.day});
+  bool isSelected;
+  DaysButton({super.key, required this.day, required this.isSelected});
 
   @override
   State<DaysButton> createState() => _DaysButtonState();
 }
 
 class _DaysButtonState extends State<DaysButton> {
-  bool isSelected = false;
-
   void _toggleSelected() {
     setState(() {
-      isSelected = !isSelected;
+      widget.isSelected = !widget.isSelected;
     });
   }
 
@@ -29,7 +27,7 @@ class _DaysButtonState extends State<DaysButton> {
           width: MyUtility(context).width * 0.035,
           height: MyUtility(context).height * 0.065,
           decoration: ShapeDecoration(
-            color: isSelected ? Color(0xFF0F253A) : Color(0xFFB2BAC6),
+            color: widget.isSelected ? Color(0xFF0F253A) : Color(0xFFB2BAC6),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),

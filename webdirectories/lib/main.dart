@@ -1,3 +1,4 @@
+import 'package:cached_firestorage/cached_firestorage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/MyHome.dart';
@@ -20,7 +21,7 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
-
+  CachedFirestorage.instance.cacheTimeout = 30;
   runApp(MyApp());
 }
 

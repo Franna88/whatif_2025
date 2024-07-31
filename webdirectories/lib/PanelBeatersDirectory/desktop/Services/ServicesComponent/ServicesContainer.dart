@@ -1,3 +1,4 @@
+import 'package:cached_firestorage/lib.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -42,16 +43,19 @@ class _ServiceFeaturedContainerState extends State<ServiceFeaturedContainer> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-            ),
-            child: AspectRatio(
-              aspectRatio: 2.2 / 1,
-              child: Image.asset(
-                widget.businessImage,
-                fit: BoxFit.fill,
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              child: AspectRatio(
+                aspectRatio: 2.2 / 1,
+                child: RemotePicture(
+                  imagePath: widget.businessImage,
+                  mapKey: 'background',
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ),
