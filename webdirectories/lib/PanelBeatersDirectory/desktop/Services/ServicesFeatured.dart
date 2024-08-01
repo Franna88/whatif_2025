@@ -6,9 +6,10 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesCo
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServicesContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButton.dart';
 import 'package:webdirectories/myutility.dart';
-
+import 'package:geolocator/geolocator.dart';
 import 'ServicesOther.dart';
 import 'services.dart';
+import 'dart:math';
 
 class ServicesFeatured extends StatefulWidget {
   ServicesFeatured({
@@ -25,19 +26,64 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
   late Future<List<Map<String, dynamic>>> _listingsFuture;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  late Position _userPosition;
   @override
   void initState() {
     super.initState();
-    _listingsFuture = _getListings();
+    _getCurrentLocation();
+  }
+
+  Future<void> _getCurrentLocation() async {
+    LocationPermission permission;
+
+    // Check if location services are enabled
+    bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!isLocationServiceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    // Check for location permissions
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied.');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error('Location permissions are permanently denied.');
+    }
+
+    // Get the current position
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
+
+    setState(() {
+      _userPosition = position;
+    });
+  }
+
+  String _calculateDistance(userLat, userLong, listingLat, listingLong) {
+    // Calculate the distance
+    double distance =
+        Geolocator.distanceBetween(userLat, userLong, listingLat, listingLong);
+
+    return (distance / 1000).toStringAsFixed(1);
   }
 
   Future<List<Map<String, dynamic>>> _getListings() async {
+    if (_userPosition == null) return [{}];
     QuerySnapshot querySnapshot = await _firestore
         .collection('listings')
         .where('featured', isEqualTo: 1)
-        .limit(20)
+        .limit(5)
         .get();
+
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      if (data['displayphoto'] != null) print(data['displayphoto']);
+    }
     return querySnapshot.docs
         .map((doc) => doc.data() as Map<String, dynamic>)
         .toList();
@@ -162,7 +208,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                         SizedBox(
                           height: MyUtility(context).height * 0.85,
                           child: FutureBuilder<List<Map<String, dynamic>>>(
-                            future: _listingsFuture,
+                            future: _getListings(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -204,7 +250,8 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                     Map<String, dynamic> listing =
                                         listings[index];
                                     return ServiceFeaturedContainer(
-                                      businessImage: 'images/williespan.png',
+                                      businessImage:
+                                          'listings/images/listings/${listing['displayphoto']}',
                                       businessName: listing['title'],
                                       businessAddress: listing['postaladdress'],
                                       OnPressed: () {
@@ -215,8 +262,9 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                                   const Services()),
                                         );
                                       },
-                                      views: '16 133',
-                                      distance: '12km',
+                                      views: '${200 + Random().nextInt(801)}',
+                                      distance:
+                                          '${_calculateDistance(_userPosition.latitude, _userPosition.longitude, listing['latitude'], listing['longitude'])}km',
                                     );
                                   },
                                 ),

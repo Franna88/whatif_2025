@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DasboardComp/DashboardButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 
 class WelcomeBack extends StatefulWidget {
   const WelcomeBack({super.key});
@@ -9,6 +11,20 @@ class WelcomeBack extends StatefulWidget {
 }
 
 class _WelcomeBackState extends State<WelcomeBack> {
+  StoredUser? _user;
+  @override
+  void initState() {
+    _getUserInfo();
+    super.initState();
+  }
+
+  void _getUserInfo() async {
+    StoredUser? user = await getUserInfo();
+    setState(() {
+      _user = user;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
@@ -40,7 +56,7 @@ class _WelcomeBackState extends State<WelcomeBack> {
               ),
             ),
             Text(
-              'Jaydon Frankie',
+              '${_user?.title}',
               style: TextStyle(
                 color: Color(0xFFEF9040),
                 fontSize: 21.76,

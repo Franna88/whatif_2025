@@ -3,6 +3,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/Documents/Documents.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/Gallery/Gallery.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/RegistrationNumbers/RegistrationNumbers.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminApprovals/Approvals.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/ProfileButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/AddMember.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BuisinessDropDown.dart';
@@ -12,6 +13,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessMedia.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/MoreBusinessInfo.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/ServiceHours.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessProfile.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessProfileItem.dart';
 import 'package:webdirectories/myutility.dart';
 
 import 'Pages/AdminBusinessSetup/adminBusinessSetup.dart';
@@ -26,7 +29,7 @@ class AdminProfile extends StatefulWidget {
 class _AdminProfileState extends State<AdminProfile> {
   final TextEditingController _textController = TextEditingController();
   String selectedButton = 'BUSINESS INFO';
-  var pageIndex = 1;
+  var pageIndex = 0;
 
   updateIndex(index) {
     setState(() {
@@ -41,6 +44,7 @@ class _AdminProfileState extends State<AdminProfile> {
       RegistrationNumbers(),
       Documents(),
       AdminContact(),
+      Approvals(),
       Gallery()
     ];
     return SingleChildScrollView(
@@ -115,7 +119,6 @@ class _AdminProfileState extends State<AdminProfile> {
                   ),
                 ],
               ),
-              
               Center(
                 child: pages[pageIndex],
               )
@@ -125,8 +128,4 @@ class _AdminProfileState extends State<AdminProfile> {
       ),
     );
   }
-
- 
-    
-  
 }

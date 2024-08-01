@@ -5,7 +5,21 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/myutility.dart';
 
 class BusinessAddress extends StatefulWidget {
-  const BusinessAddress({super.key});
+  final String imageName;
+  final TextEditingController countryController;
+  final TextEditingController provinceController;
+  final TextEditingController cityController;
+  final TextEditingController suburbController;
+  final TextEditingController streetController;
+
+  const BusinessAddress(
+      {super.key,
+      required this.imageName,
+      required this.countryController,
+      required this.provinceController,
+      required this.cityController,
+      required this.suburbController,
+      required this.streetController});
 
   @override
   State<BusinessAddress> createState() => _BusinessAddressState();
@@ -18,20 +32,25 @@ class _BusinessAddressState extends State<BusinessAddress> {
     var widthDevice = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(left: 15),
-      child: Column(mainAxisAlignment: MainAxisAlignment.start,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Column(mainAxisAlignment: MainAxisAlignment.start,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   ProfileImage(
                     imageText: 'Logo',
+                    imageName: widget.imageName,
                   )
                 ],
               ),
-              SizedBox(width: 25,),
+              SizedBox(
+                width: 25,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -39,20 +58,23 @@ class _BusinessAddressState extends State<BusinessAddress> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ProfileShortTextField(
-                          controller: _textController, headline: 'Country'),
+                          controller: widget.countryController,
+                          headline: 'Country'),
                       ProfileShortTextField(
-                          controller: _textController, headline: 'Province'),
+                          controller: widget.provinceController,
+                          headline: 'Province'),
                       ProfileShortTextField(
-                          controller: _textController, headline: 'City'),
+                          controller: widget.cityController, headline: 'City'),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ProfileShortTextField(
-                          controller: _textController, headline: 'Suburb'),
+                          controller: widget.suburbController,
+                          headline: 'Suburb'),
                       LongTextField(
-                          controller: _textController,
+                          controller: widget.streetController,
                           headline: 'Street Address')
                     ],
                   ),
@@ -66,7 +88,9 @@ class _BusinessAddressState extends State<BusinessAddress> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  width: widthDevice < 1500 ? MyUtility(context).width * 0.64 : MyUtility(context).width * 0.71,
+                  width: widthDevice < 1500
+                      ? MyUtility(context).width * 0.64
+                      : MyUtility(context).width * 0.71,
                   height: 1,
                   decoration: BoxDecoration(color: Color(0xFF0F253A)),
                 )

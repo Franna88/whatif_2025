@@ -1,3 +1,4 @@
+import 'package:cached_firestorage/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/TeamButton.dart';
 import 'package:webdirectories/myutility.dart';
@@ -20,10 +21,12 @@ class TeamProfile extends StatefulWidget {
 class _TeamProfileState extends State<TeamProfile> {
   @override
   Widget build(BuildContext context) {
+    String imageUrl = "listings/images/team/${widget.memberImage}";
+
     var widthDevice = MediaQuery.of(context).size.width;
     return Container(
       width: MyUtility(context).width * 0.15,
-      height: MyUtility(context).height * 0.4,
+      height: 1000,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
@@ -34,20 +37,26 @@ class _TeamProfileState extends State<TeamProfile> {
       child: Column(
         children: [
           Expanded(
-            flex: 175,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-              child: Image.asset(
-                widget.memberImage,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+              flex: 225,
+              child: Stack(
+                children: <Widget>[
+                  Positioned.fill(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                      child: RemotePicture(
+                        imagePath: imageUrl,
+                        mapKey: 'background',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              )),
           Expanded(
-            flex: 125,
+            flex: 225,
             child: Container(
               decoration: BoxDecoration(
                 color: Color(0xFFD9D9D9),

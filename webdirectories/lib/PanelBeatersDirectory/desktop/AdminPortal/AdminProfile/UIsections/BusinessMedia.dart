@@ -1,8 +1,31 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/SocialsReuseable.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/AddMediaPopUp/AddMediaPopUp.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
+
+class MediaLink {
+  final String linkTitle;
+  final String linkUrl;
+  final int linksOrder;
+
+  MediaLink({
+    required this.linkTitle,
+    required this.linkUrl,
+    required this.linksOrder,
+  });
+
+  factory MediaLink.fromMap(Map<String, dynamic> map) {
+    return MediaLink(
+      linkTitle: map['linkTitle'],
+      linkUrl: map['urlLink'],
+      linksOrder: map['linksOrder'],
+    );
+  }
+}
 
 class Businessmedia extends StatefulWidget {
   const Businessmedia({super.key});
@@ -12,6 +35,41 @@ class Businessmedia extends StatefulWidget {
 }
 
 class _BusinessmediaState extends State<Businessmedia> {
+  final _firestore = FirebaseFirestore.instance;
+  List<MediaLink> _mediaList = [];
+
+  @override
+  void initState() {
+    _fetchMediaData();
+    super.initState();
+  }
+
+  Future<void> _addMedia() async {}
+
+  Future<void> _fetchMediaData() async {
+    StoredUser? user = await getUserInfo();
+    if (user != null) {
+      int listingId = int.parse(user.id);
+      try {
+        QuerySnapshot mediaDoc = await _firestore
+            .collection('listings_links')
+            .where('listingsId', isEqualTo: listingId)
+            .get();
+
+        if (mediaDoc.docs.isNotEmpty) {
+          setState(() {
+            _mediaList = mediaDoc.docs
+                .map((docs) =>
+                    MediaLink.fromMap(docs.data() as Map<String, dynamic>))
+                .toList();
+          });
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -81,12 +139,11 @@ class _BusinessmediaState extends State<Businessmedia> {
             ),
           ),
         ),
-        SocialsReuseable(
-          socials: 'Facebook',
-        ),
-        SocialsReuseable(
-          socials: 'Instagram',
-        ),
+        ..._mediaList
+            .map((media) => SocialsReuseable(
+                  socials: media.linkTitle,
+                ))
+            .toList()
       ],
     );
   }
