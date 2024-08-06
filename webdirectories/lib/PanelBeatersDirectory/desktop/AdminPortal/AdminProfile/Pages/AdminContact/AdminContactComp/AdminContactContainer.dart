@@ -68,7 +68,7 @@ class _AdminContactContainerState extends State<AdminContactContainer> {
                 ),
               ),
               SizedBox(
-                width: MyUtility(context).width * 0.195,
+                width: MyUtility(context).width * 0.12,
                 child: Text(
                   widget.phone,
                   style: TextStyle(
@@ -81,8 +81,7 @@ class _AdminContactContainerState extends State<AdminContactContainer> {
                 ),
               ),
               Container(
-                
-                width: MyUtility(context).width * 0.14,
+                width: MyUtility(context).width * 0.2,
                 child: Text(
                   widget.email,
                   style: TextStyle(

@@ -6,7 +6,10 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/Re
 import 'package:webdirectories/myutility.dart';
 
 class ReviewsMainContainer extends StatefulWidget {
-  const ReviewsMainContainer({super.key});
+  final List<Map<String, dynamic>> reviewsData;
+  final bool waiting;
+  const ReviewsMainContainer(
+      {super.key, required this.reviewsData, required this.waiting});
 
   @override
   State<ReviewsMainContainer> createState() => _ReviewsMainContainerState();
@@ -14,6 +17,58 @@ class ReviewsMainContainer extends StatefulWidget {
 
 class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
   var pageIndex = 0;
+  var reviewsPageIndex = 0;
+  var _currentReviewPage = 0;
+  var _reviewsPerPage = 2;
+  String _searchQuery = '';
+  String _filterType = 'Date Posted';
+
+  List<Map<String, dynamic>> get _filteredReviews {
+    List<Map<String, dynamic>> filtered = widget.reviewsData;
+
+    // Apply search filter
+    if (_searchQuery.isNotEmpty) {
+      filtered = filtered.where((review) {
+        return review['ratingMessage']
+            .toLowerCase()
+            .contains(_searchQuery.toLowerCase());
+      }).toList();
+    }
+
+    // Apply sorting filter
+    if (_filterType == 'Highest') {
+      filtered.sort((a, b) => b['rating'].compareTo(a['rating']));
+    } else if (_filterType == 'Lowest') {
+      filtered.sort((a, b) => a['rating'].compareTo(b['rating']));
+    } else if (_filterType == 'Date Posted') {
+      filtered.sort((a, b) => b['ratingDate'].compareTo(a['ratingDate']));
+    }
+
+    return filtered;
+  }
+
+  List<Map<String, dynamic>> get _currentPageReviews {
+    int start = _currentReviewPage * _reviewsPerPage;
+    int end = start + _reviewsPerPage;
+    end = end > _filteredReviews.length ? _filteredReviews.length : end;
+    return _filteredReviews.sublist(start, end);
+  }
+
+  void _nextPage() {
+    if ((_currentReviewPage + 1) * _reviewsPerPage < _filteredReviews.length) {
+      setState(() {
+        _currentReviewPage++;
+      });
+    }
+  }
+
+  void _previousPage() {
+    if (_currentReviewPage > 0) {
+      setState(() {
+        _currentReviewPage--;
+      });
+    }
+  }
 
   //this function changes page index
   changePageIndex(value) {
@@ -22,10 +77,23 @@ class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
     });
   }
 
+  void _onSearchChanged(String query) {
+    setState(() {
+      _searchQuery = query;
+    });
+  }
+
+  void _onFilterChanged(String filterType) {
+    setState(() {
+      _filterType = filterType;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     List reviewPages = [
-      RatingReviews(changePageIndex: changePageIndex),
+      RatingReviews(
+          changePageIndex: changePageIndex, reviewsData: widget.reviewsData),
       LeaveReview(changePageIndex: changePageIndex),
     ];
     return Container(
@@ -94,14 +162,38 @@ class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [reviewPages[pageIndex], LeftReviews()],
+            children: [
+              widget.waiting == true
+                  ? SizedBox(
+                      width: MyUtility(context).width * 0.4,
+                      child: Center(
+                          child: SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ))))
+                  : reviewPages[pageIndex],
+              LeftReviews(
+                reviews: _currentPageReviews,
+                onFilter: _onFilterChanged,
+                onSearch: _onSearchChanged,
+              )
+            ],
           ),
           SizedBox(
             width: MyUtility(context).width / 1.3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ReviewIconButton(),
+                ReviewIconButton(
+                  onTapPrevious: () {
+                    _previousPage();
+                  },
+                  onTapNext: () {
+                    _nextPage();
+                  },
+                ),
               ],
             ),
           )

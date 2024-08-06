@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
 class SearchBox extends StatefulWidget {
-  const SearchBox({super.key});
+  final Function(String) onSearch;
+  const SearchBox({super.key, required this.onSearch});
 
   @override
   State<SearchBox> createState() => _SearchBoxState();
@@ -31,7 +32,9 @@ class _SearchBoxState extends State<SearchBox> {
                 color: Colors.black,
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.onSearch(search.text);
+                },
                 icon: Icon(
                   Icons.search,
                   color: Colors.white,
@@ -42,6 +45,9 @@ class _SearchBoxState extends State<SearchBox> {
           ),
           Expanded(
             child: TextFormField(
+              onChanged: (value) {
+                widget.onSearch(value);
+              },
               controller: search,
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(

@@ -16,7 +16,7 @@ class RegistrationNumbers extends StatefulWidget {
 }
 
 class _RegistrationNumbersState extends State<RegistrationNumbers> {
-  List<Map<String, dynamic>>? registrationInfo;
+  List<Map<String, dynamic>> registrationInfo = [];
   final _firestore = FirebaseFirestore.instance;
   bool _isLoading = true;
 
@@ -56,7 +56,28 @@ class _RegistrationNumbersState extends State<RegistrationNumbers> {
 
           return registrationData;
         } else {
-          return [{}];
+          return [
+            {
+              'registrationType': 'CRA Membership',
+              'registrationNumbers': '2068',
+              'displayProfile': 'Yes',
+            },
+            {
+              'registrationType': 'CRA Membership',
+              'registrationNumbers': '2068',
+              'displayProfile': 'Yes',
+            },
+            {
+              'registrationType': 'CRA Membership',
+              'registrationNumbers': '2068',
+              'displayProfile': 'yes',
+            },
+            {
+              'registrationType': 'CRA Membership',
+              'registrationNumbers': '2068',
+              'displayProfile': 'yes',
+            },
+          ];
         }
       } catch (e) {
         print(e);

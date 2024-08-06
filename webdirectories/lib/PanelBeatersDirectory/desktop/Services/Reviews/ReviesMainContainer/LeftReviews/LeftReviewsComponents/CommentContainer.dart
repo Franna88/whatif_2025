@@ -68,13 +68,18 @@ class _CommentContainerState extends State<CommentContainer> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Text(
-              widget.review,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: MyUtility(context).width * 0.0105,
-                fontFamily: 'raleway',
-                fontWeight: FontWeight.w400,
+            Container(
+              height: 100,
+              child: SingleChildScrollView(
+                child: Text(
+                  widget.review,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: MyUtility(context).width * 0.0105,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
             )
           ],

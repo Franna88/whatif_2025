@@ -3,7 +3,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AboutServi
 import 'package:webdirectories/myutility.dart';
 
 class SocialIcons extends StatefulWidget {
-  const SocialIcons({super.key});
+  final List<Map<String, dynamic>> socialIconsList;
+  const SocialIcons({super.key, required this.socialIconsList});
 
   @override
   State<SocialIcons> createState() => _SocialIconsState();
@@ -29,13 +30,31 @@ class _SocialIconsState extends State<SocialIcons> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPictureButton(imagePath: 'images/xt.svg', onPress: () {}),
-          SvgPictureButton(imagePath: 'images/facebook.svg', onPress: () {}),
-          SvgPictureButton(imagePath: 'images/insta.svg', onPress: () {}),
-          SvgPictureButton(imagePath: 'images/youtube.svg', onPress: () {}),
-          SvgPictureButton(imagePath: 'images/in.svg', onPress: () {}),
-          SvgPictureButton(imagePath: 'images/tictok.svg', onPress: () {}),
-          SvgPictureButton(imagePath: 'images/xt.svg', onPress: () {}),
+          ...widget.socialIconsList.map((e) {
+            switch (e['linkTitle']) {
+              case 'Facebook':
+                return SvgPictureButton(
+                    imagePath: 'images/facebook.svg', onPress: () {});
+              case 'Instagram':
+                return SvgPictureButton(
+                    imagePath: 'images/insta.svg', onPress: () {});
+              case 'Youtube':
+                return SvgPictureButton(
+                    imagePath: 'images/youtube.svg', onPress: () {});
+              case 'LinkedIn':
+                return SvgPictureButton(
+                    imagePath: 'images/in.svg', onPress: () {});
+              case 'TikTok':
+                return SvgPictureButton(
+                    imagePath: 'images/tictok.svg', onPress: () {});
+              case 'Twitter':
+                return SvgPictureButton(
+                    imagePath: 'images/xt.svg', onPress: () {});
+              default:
+                return SvgPictureButton(
+                    imagePath: 'images/xt.svg', onPress: () {});
+            }
+          }).toList(),
         ],
       ),
     );

@@ -3,8 +3,10 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/Re
 
 class RatingSliderWithText extends StatelessWidget {
   final int currentState;
+  final double? sliderAmount;
 
-  const RatingSliderWithText({Key? key, required this.currentState})
+  const RatingSliderWithText(
+      {Key? key, required this.currentState, this.sliderAmount})
       : super(key: key);
 
   @override
@@ -26,7 +28,12 @@ class RatingSliderWithText extends StatelessWidget {
           SizedBox(
             width: 8,
           ),
-          SizedBox(width: 320, child: RatingSlider(currentState: currentState)),
+          SizedBox(
+              width: 320,
+              child: RatingSlider(
+                amount: sliderAmount ?? currentState.toDouble(),
+                currentState: currentState,
+              )),
         ],
       ),
     );

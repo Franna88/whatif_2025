@@ -22,3 +22,12 @@ StoredUser fromJson(Map<String, dynamic> json) {
     email: json['email'],
   );
 }
+
+Future<String?> GetListingId() async {
+  String? listingId = await storage.read(key: 'id');
+
+  if (listingId != null) {
+    return listingId;
+  }
+  return null;
+}

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ReviewIconButton extends StatefulWidget {
-  const ReviewIconButton({super.key});
+  final Function() onTapPrevious;
+  final Function() onTapNext;
+
+  const ReviewIconButton(
+      {super.key, required this.onTapPrevious, required this.onTapNext});
 
   @override
   State<ReviewIconButton> createState() => _ReviewIconButtonState();
@@ -13,7 +17,9 @@ class _ReviewIconButtonState extends State<ReviewIconButton> {
     return Row(
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            widget.onTapPrevious();
+          },
           icon: Container(
             padding: EdgeInsets.all(1),
             decoration: BoxDecoration(
@@ -32,7 +38,9 @@ class _ReviewIconButtonState extends State<ReviewIconButton> {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            widget.onTapNext();
+          },
           icon: Container(
             padding: EdgeInsets.all(2),
             decoration:

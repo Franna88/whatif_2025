@@ -20,6 +20,7 @@ class _AboutUsContainerInfoState extends State<AboutUsContainerInfo> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.4,
+      height: 487.2,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),

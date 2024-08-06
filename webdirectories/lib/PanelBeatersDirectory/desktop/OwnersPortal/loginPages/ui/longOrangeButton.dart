@@ -63,7 +63,7 @@ class _OrangeButtonState extends State<LongOrangeButton> {
                   SizedBox(
                     width: 25,
                     height: 25,
-                    child: widget.isLoading == true || widget.isLoading == null
+                    child: widget.isLoading == true
                         ? null
                         : const Icon(Icons.east),
                   ),
@@ -115,7 +115,7 @@ class _OrangeButtonState extends State<LongOrangeButton> {
                   SizedBox(
                     width: 25,
                     height: 25,
-                    child: widget.isLoading == true || widget.isLoading == null
+                    child: widget.isLoading == true
                         ? null
                         : const Icon(Icons.east),
                   ),

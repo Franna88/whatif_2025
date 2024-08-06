@@ -5,7 +5,14 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/Re
 import 'package:webdirectories/myutility.dart';
 
 class LeftReviews extends StatefulWidget {
-  const LeftReviews({super.key});
+  final List<Map<String, dynamic>> reviews;
+  final Function(String) onSearch;
+  final Function(String) onFilter;
+  const LeftReviews(
+      {super.key,
+      required this.reviews,
+      required this.onSearch,
+      required this.onFilter});
 
   @override
   State<LeftReviews> createState() => _LeftReviewsState();
@@ -23,30 +30,39 @@ class _LeftReviewsState extends State<LeftReviews> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SearchBox(),
+              SearchBox(
+                onSearch: widget.onSearch,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ReviewFilterButton(
-                      filterType: 'Date Posted', onPressed: () {}),
-                  ReviewFilterButton(filterType: 'Lowest', onPressed: () {}),
-                  ReviewFilterButton(filterType: 'Highest', onPressed: () {})
+                      filterType: 'Date Posted',
+                      onPressed: () {
+                        widget.onFilter('Date Posted');
+                      }),
+                  ReviewFilterButton(
+                      filterType: 'Lowest',
+                      onPressed: () {
+                        widget.onFilter('Date Posted');
+                      }),
+                  ReviewFilterButton(
+                      filterType: 'Highest',
+                      onPressed: () {
+                        widget.onFilter('Date Posted');
+                      })
                 ],
               )
             ],
           ),
-          CommentContainer(
-              starRating: '3',
-              reviewName: 'Shaun Williams ',
-              reviewDate: '25 March 2024',
-              review:
-                  'Excellent service received. The work they have done on my vehicle is outstanding! There is no indication that any repairs was done, the finishing is flawless.'),
-          CommentContainer(
-              starRating: '3',
-              reviewName: 'Verona Medunsa',
-              reviewDate: '10 January 2024',
-              review:
-                  'Decent fender bender repair work, and the repair process was done in good time.  I didn’t appreciate the staff attitudes though, they came across quite cold and unbothered. ')
+          ...widget.reviews.map((review) {
+            return CommentContainer(
+              starRating: review['rating'].toString(),
+              reviewName: review['ratingFrom'],
+              reviewDate: review['ratingDate'],
+              review: review['ratingMessage'],
+            );
+          }).toList(),
         ],
       ),
     );

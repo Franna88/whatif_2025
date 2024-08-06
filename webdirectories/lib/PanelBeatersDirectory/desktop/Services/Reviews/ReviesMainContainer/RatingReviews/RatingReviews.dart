@@ -1,18 +1,62 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/ReviesMainContainer/RatingReviews/RatingReviewsComponents/RatingsSliderWithText.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/CommonButtonR.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class RatingReviews extends StatefulWidget {
   Function(int) changePageIndex;
-  RatingReviews({Key? key, required this.changePageIndex}) : super(key: key);
+  final List<Map<String, dynamic>> reviewsData;
+  RatingReviews(
+      {Key? key, required this.changePageIndex, required this.reviewsData})
+      : super(key: key);
 
   @override
   State<RatingReviews> createState() => _RatingReviewsState();
 }
 
 class _RatingReviewsState extends State<RatingReviews> {
+  String title = '';
+  @override
+  void initState() {
+    _getTitle();
+    super.initState();
+  }
+
+  void _getTitle() async {
+    String? name = await storage.read(key: 'title');
+    print(name);
+    if (name != null) {
+      setState(() {
+        title = name;
+      });
+    }
+  }
+
+  double calculateAverageRating(List<Map<String, dynamic>> reviews) {
+    if (reviews.isEmpty) {
+      return 0.0; // Return 0 if there are no reviews
+    }
+
+    double totalRating =
+        reviews.fold(0.0, (sum, review) => sum + (review['rating'] as double));
+    return totalRating / reviews.length;
+  }
+
+  double calculateRecommendationPercentage(List<Map<String, dynamic>> reviews) {
+    if (reviews.isEmpty) {
+      return 0.0; // Return 0 if there are no reviews
+    }
+
+    int recommendedCount =
+        reviews.where((review) => review['rating'] >= 4.0).length;
+    return (recommendedCount / reviews.length) * 100;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +72,7 @@ class _RatingReviewsState extends State<RatingReviews> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            'Ratings & Reviews (148) ',
+            'Ratings & Reviews (${widget.reviewsData.length})',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
@@ -42,16 +86,48 @@ class _RatingReviewsState extends State<RatingReviews> {
             children: [
               SizedBox(
                 height: MyUtility(context).height * 0.2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    RatingSliderWithText(currentState: 5),
-                    RatingSliderWithText(currentState: 4),
-                    RatingSliderWithText(currentState: 3),
-                    RatingSliderWithText(currentState: 2),
-                    RatingSliderWithText(currentState: 1)
-                  ],
-                ),
+                child: widget.reviewsData.isEmpty
+                    ? const SizedBox.shrink()
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RatingSliderWithText(
+                              currentState: 5,
+                              sliderAmount: (widget.reviewsData
+                                      .where((el) => el['rating'] == 5)
+                                      .toList()
+                                      .length /
+                                  widget.reviewsData.length)),
+                          RatingSliderWithText(
+                              currentState: 4,
+                              sliderAmount: (widget.reviewsData
+                                      .where((el) => el['rating'] == 4)
+                                      .toList()
+                                      .length /
+                                  widget.reviewsData.length)),
+                          RatingSliderWithText(
+                              currentState: 3,
+                              sliderAmount: (widget.reviewsData
+                                      .where((el) => el['rating'] == 3)
+                                      .toList()
+                                      .length /
+                                  widget.reviewsData.length)),
+                          RatingSliderWithText(
+                              currentState: 2,
+                              sliderAmount: (widget.reviewsData
+                                      .where((el) => el['rating'] == 2)
+                                      .toList()
+                                      .length /
+                                  widget.reviewsData.length)),
+                          RatingSliderWithText(
+                              currentState: 1,
+                              sliderAmount: (widget.reviewsData
+                                      .where((el) => el['rating'] == 1)
+                                      .toList()
+                                      .length /
+                                  widget.reviewsData.length)),
+                        ],
+                      ),
               ),
               SizedBox(
                 height: MyUtility(context).height * 0.2,
@@ -65,7 +141,8 @@ class _RatingReviewsState extends State<RatingReviews> {
                         Row(
                           children: [
                             Text(
-                              '4.5',
+                              calculateAverageRating(widget.reviewsData)
+                                  .toString(),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: MyUtility(context).width * 0.0125,
@@ -81,7 +158,7 @@ class _RatingReviewsState extends State<RatingReviews> {
                           ],
                         ),
                         Text(
-                          '273 Reviews',
+                          '${widget.reviewsData.length} Reviews',
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.5),
                             fontSize: MyUtility(context).width * 0.006,
@@ -96,7 +173,7 @@ class _RatingReviewsState extends State<RatingReviews> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '88%',
+                          '${calculateRecommendationPercentage(widget.reviewsData).toStringAsFixed(0)}%',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: MyUtility(context).width * 0.0125,
@@ -137,7 +214,7 @@ class _RatingReviewsState extends State<RatingReviews> {
                     ),
                   ),
                   TextSpan(
-                    text: 'N4 Autocraft Panelbeaters - Pretoria East.',
+                    text: title,
                     style: TextStyle(
                       color: Color(0xFF64DAFF),
                       fontSize: MyUtility(context).width * 0.011,

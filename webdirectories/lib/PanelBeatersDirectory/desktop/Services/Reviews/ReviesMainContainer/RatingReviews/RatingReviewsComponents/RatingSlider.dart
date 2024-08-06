@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class RatingSlider extends StatelessWidget {
   final int currentState;
-
-  const RatingSlider({Key? key, required this.currentState}) : super(key: key);
+  final double? amount;
+  const RatingSlider({Key? key, required this.currentState, this.amount})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,8 @@ class RatingSlider extends StatelessWidget {
       children: [
         SizedBox(
           child: LinearProgressIndicator(
-            value: currentState / 5, // Assuming currentState ranges from 0 to 5
+            value: amount ??
+                currentState / 5, // Assuming currentState ranges from 0 to 5
             backgroundColor: Colors.white.withOpacity(0.09000000357627869),
             valueColor: AlwaysStoppedAnimation<Color>(Colors.transparent),
           ),
@@ -25,7 +27,8 @@ class RatingSlider extends StatelessWidget {
               6,
               (index) {
                 Color color;
-                if (index < currentState) {
+                if (index <
+                    (amount != null ? amount! * 6 : currentState).ceil()) {
                   // Color for completed states
                   color = Color(0xFFFFB400);
                 } else {

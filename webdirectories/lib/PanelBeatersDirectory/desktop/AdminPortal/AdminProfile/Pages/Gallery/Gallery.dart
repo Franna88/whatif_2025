@@ -34,13 +34,22 @@ class _GalleryState extends State<Gallery> {
           .where('listingsId', isEqualTo: int.parse(user.id))
           .get();
 
-      for (var doc in gallerySnapshot.docs) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        print(data['immageFile']);
+      if (gallerySnapshot.docs.isNotEmpty) {
+        for (var doc in gallerySnapshot.docs) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+          String fileName = data['immageFile'];
+          data['immageFile'] = 'listings/$fileName';
+        }
+        return gallerySnapshot.docs
+            .map((doc) => doc.data() as Map<String, dynamic>)
+            .toList();
+      } else {
+        return [
+          {'immageFile': 'images/gallery.jpg', 'immageTitle': 'Car wash'},
+          {'immageFile': 'images/gallery.jpg', 'immageTitle': 'Car wash'},
+          {'immageFile': 'images/gallery.jpg', 'immageTitle': 'Car wash'},
+        ];
       }
-      return gallerySnapshot.docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
-          .toList();
     } catch (e) {
       print('error fetching gallery data: $e');
       return [{}];
@@ -164,7 +173,7 @@ class _GalleryState extends State<Gallery> {
                         //   mapKey: image['immageTitle'],
                         // );
                         return GalleryContainer(
-                          galleryImage: 'listings/${image['immageFile']}',
+                          galleryImage: image['immageFile'],
                           description: image['immageTitle'],
                         );
                       },

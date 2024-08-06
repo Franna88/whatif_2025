@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
 class ProfileTextContainer extends StatefulWidget {
-  const ProfileTextContainer({super.key});
+  final Map<String, String> contactData;
+  const ProfileTextContainer({super.key, required this.contactData});
 
   @override
   State<ProfileTextContainer> createState() => _ProfileTextContainerState();
@@ -36,7 +39,7 @@ class _ProfileTextContainerState extends State<ProfileTextContainer> {
               SizedBox(
                 width: 520.2,
                 child: Text(
-                  '012 980 0010',
+                  widget.contactData['telephone']!,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: MyUtility(context).width * 0.0115,
@@ -51,7 +54,7 @@ class _ProfileTextContainerState extends State<ProfileTextContainer> {
               SizedBox(
                 width: 520.2,
                 child: Text(
-                  '18 Sneeuberg Street, N4 Gateway Industrial Park, Willow Park Manor X65, Pretoria East, Gauteng, 0184',
+                  widget.contactData['address']!,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: MyUtility(context).width * 0.0115,
@@ -65,7 +68,7 @@ class _ProfileTextContainerState extends State<ProfileTextContainer> {
               SizedBox(
                 width: 520.2,
                 child: Text(
-                  '9397 Total Unique Page Views',
+                  '${200 + Random().nextInt(801)} Total Unique Page Views',
                   style: TextStyle(
                     color: Color(0xFFFF8728),
                     fontSize: MyUtility(context).width * 0.0115,

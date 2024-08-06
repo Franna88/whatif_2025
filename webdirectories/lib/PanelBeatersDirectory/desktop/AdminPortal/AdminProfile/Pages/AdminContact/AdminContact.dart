@@ -4,6 +4,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBoxB.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/ContactPopup/ContactPopup.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class AdminContact extends StatefulWidget {
@@ -18,14 +20,32 @@ class _AdminContactState extends State<AdminContact> {
   final _firestore = FirebaseFirestore.instance;
 
   Future<List<Map<String, String>>> _fetchContactData() async {
+    StoredUser? user = await getUserInfo();
+
+    if (user == null) {
+      return [];
+    }
+
     QuerySnapshot contactSnapshot = await _firestore
         .collection('contact_person')
         .where('listingsId', isEqualTo: 1)
         .get();
-    List<Map<String, String>> contactData = contactSnapshot.docs
-        .map((doc) => doc.data() as Map<String, String>)
-        .toList();
-    return contactData;
+
+    if (contactSnapshot.docs.isNotEmpty) {
+      List<Map<String, String>> contactData = contactSnapshot.docs
+          .map((doc) => doc.data() as Map<String, String>)
+          .toList();
+      return contactData;
+    } else {
+      return [
+        {
+          'contactPersonDesignation': 'Administrator',
+          'contactPerson': 'Samantha Sheingold',
+          'contactPersonCell': '0123464690',
+          'contactPersonEmail': 'samantha@webdirectories.co.za',
+        },
+      ];
+    }
   }
 
   @override
@@ -112,7 +132,7 @@ class _AdminContactState extends State<AdminContact> {
                     ),
                   ),
                   SizedBox(
-                    width: MyUtility(context).width * 0.195,
+                    width: MyUtility(context).width * 0.12,
                     child: Text(
                       'Phone',
                       style: TextStyle(
@@ -125,7 +145,7 @@ class _AdminContactState extends State<AdminContact> {
                     ),
                   ),
                   SizedBox(
-                    width: MyUtility(context).width * 0.195,
+                    width: MyUtility(context).width * 0.25,
                     child: Text(
                       'Email',
                       style: TextStyle(

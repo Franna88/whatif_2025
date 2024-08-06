@@ -6,7 +6,16 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/components/commonBu
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
 
 class ServicesMaps extends StatefulWidget {
-  const ServicesMaps({super.key});
+  final int listingId;
+  final String listingAddress;
+  final double listinglatitude;
+  final double listinglongitude;
+  const ServicesMaps(
+      {super.key,
+      required this.listingId,
+      required this.listingAddress,
+      required this.listinglatitude,
+      required this.listinglongitude});
 
   @override
   State<ServicesMaps> createState() => _ServicesMapsState();
@@ -22,7 +31,15 @@ class _ServicesMapsState extends State<ServicesMaps> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [MapsContainer(), BusinessHours()],
+          children: [
+            MapsContainer(
+                address: widget.listingAddress,
+                latitude: widget.listinglatitude,
+                longitude: widget.listinglongitude),
+            BusinessHours(
+              listingId: widget.listingId,
+            )
+          ],
         ),
         SizedBox(
           width: MyUtility(context).width * 0.85,
