@@ -5,7 +5,8 @@ import 'package:webdirectories/myutility.dart';
 import 'AccreditationImageComp/ImageBox.dart';
 
 class AccreditationImageContainer extends StatefulWidget {
-  const AccreditationImageContainer({super.key});
+  final List<Map<String, dynamic>> data;
+  const AccreditationImageContainer({super.key, required this.data});
 
   @override
   State<AccreditationImageContainer> createState() =>
@@ -46,19 +47,33 @@ class _AccreditationImageContainerState
             controller: _scrollController,
             padding: EdgeInsets.all(4.0),
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: imageColumns.map((column) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: column.map((image) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 6, 4, 12),
-                        child: image,
-                      );
-                    }).toList(),
+              GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Number of columns in the grid
+                  childAspectRatio: 3 / 2, // Aspect ratio for each grid item
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                padding: EdgeInsets.all(10),
+                itemCount: widget.data.length,
+                itemBuilder: (context, index) {
+                  final accreditation = widget.data[index];
+                  final imageUrl = widget.data[index]['imageUrl'];
+                  return Card(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: 121.04,
+                          height: 116.04,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: Image.network(imageUrl).image,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        )),
                   );
-                }).toList(),
+                },
               ),
             ],
           ),

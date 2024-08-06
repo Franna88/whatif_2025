@@ -5,8 +5,10 @@ import 'package:webdirectories/myutility.dart';
 import 'ServiceContactContainer2comp/ServiceContactContainer2top.dart';
 
 class ServiceContactContainer2 extends StatefulWidget {
+  final List<Map<String, dynamic>> contactPersons;
   const ServiceContactContainer2({
     Key? key,
+    required this.contactPersons,
   }) : super(key: key);
 
   @override
@@ -16,6 +18,39 @@ class ServiceContactContainer2 extends StatefulWidget {
 
 class _ServiceContactContainer2State extends State<ServiceContactContainer2> {
   final ScrollController _scrollController = ScrollController();
+  List<String> section1Texts = ['Contact'];
+  List<String> section2Texts = ['Designation'];
+  List<String> section3Texts = ['Tel'];
+  List<String> section4Texts = ['Email'];
+
+  @override
+  void initState() {
+    _formatContactData();
+    super.initState();
+  }
+
+  void _formatContactData() {
+    if (widget.contactPersons.isNotEmpty) {
+      List<String> section1 = section1Texts; // Full name
+      List<String> section2 = section2Texts; // Designation
+      List<String> section3 = section3Texts; // Cell
+      List<String> section4 = section4Texts; // Email
+
+      for (int i = 0; i < widget.contactPersons.length; i++) {
+        section1.add(widget.contactPersons[i]['contactPerson']);
+        section2.add(widget.contactPersons[i]['contactPersonDesignation']);
+        section3.add(widget.contactPersons[i]['contactPersonCell']);
+        section4.add(widget.contactPersons[i]['contactPersonEmail']);
+      }
+
+      setState(() {
+        section1Texts = section1;
+        section2Texts = section2;
+        section3Texts = section3;
+        section4Texts = section4;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,34 +72,10 @@ class _ServiceContactContainer2State extends State<ServiceContactContainer2> {
             controller: _scrollController,
             children: [
               ServiceContainer2top(
-                section1Texts: [
-                  'Contact',
-                  'Ella Jansen van Vuuren',
-                  'Marthinus Scheepers',
-                  'J.P Nortje',
-                  'Another Contact', // Added a fifth item for testing
-                ],
-                section2Texts: [
-                  'Designation',
-                  'Administration',
-                  'Marthinus Scheepers',
-                  'Owner',
-                  'Another Designation', // Added a fifth item for testing
-                ],
-                section3Texts: [
-                  'Tel',
-                  '012 980 0010',
-                  '074 686 8850',
-                  '083 279 8288',
-                  'Another Tel', // Added a fifth item for testing
-                ],
-                section4Texts: [
-                  'Email',
-                  'queries@n4autocraft.co.za',
-                  'marthinus@n4autocraft.co.za',
-                  'jp@n4autocraft.co.za',
-                  'another@n4autocraft.co.za', // Added a fifth item for testing
-                ],
+                section1Texts: section1Texts,
+                section2Texts: section2Texts,
+                section3Texts: section3Texts,
+                section4Texts: section4Texts,
               ),
             ],
           ),

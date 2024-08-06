@@ -96,7 +96,9 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
         setState(() {
           _isLoading = false;
         });
-        print('Incorrect credentials. Please try again.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Incorrect credentials. Please try again.')),
+        );
       } catch (e) {
         setState(() {
           _isLoading = false;

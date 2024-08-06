@@ -35,7 +35,9 @@ class _ProfileImageState extends State<ProfileImage> {
     //   });
     // }
     setState(() {
-      _imageUrl = "listings/images/listings/${widget.imageName}";
+      _imageUrl = widget.imageName == ''
+          ? ''
+          : "listings/images/listings/${widget.imageName}";
     });
   }
 
@@ -88,8 +90,8 @@ class _ProfileImageState extends State<ProfileImage> {
             child: Center(
                 child: Padding(
               padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-              child: _imageUrl == null
-                  ? const CircularProgressIndicator()
+              child: widget.imageName == ''
+                  ? Text('No Image')
                   : RemotePicture(
                       imagePath: _imageUrl!,
                       mapKey: widget.imageName,

@@ -1,15 +1,49 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesMaps/BusinessHours/BusinessHoursComp/DaysHours.dart';
 import 'package:webdirectories/myutility.dart';
 
 class BusinessHours extends StatefulWidget {
-  const BusinessHours({super.key});
+  final int listingId;
+  const BusinessHours({super.key, required this.listingId});
 
   @override
   State<BusinessHours> createState() => _BusinessHoursState();
 }
 
 class _BusinessHoursState extends State<BusinessHours> {
+  final _firestore = FirebaseFirestore.instance;
+  Map<String, dynamic> _businessHoursData = {};
+  bool _isLoading = true;
+  @override
+  void initState() {
+    _getBusinessHoursData();
+    super.initState();
+  }
+
+  Future<void> _getBusinessHoursData() async {
+    try {
+      QuerySnapshot businessHoursSnapshot = await _firestore
+          .collection('listing_hours')
+          .where('listingsId', isEqualTo: widget.listingId)
+          .get();
+
+      if (businessHoursSnapshot.docs.isNotEmpty) {
+        setState(() {
+          _businessHoursData = businessHoursSnapshot.docs
+              .map((doc) => doc.data() as Map<String, dynamic>)
+              .toList()[0];
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error fetching business hours data: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,48 +80,81 @@ class _BusinessHoursState extends State<BusinessHours> {
                 ),
               ),
             ),
-            Center(
-              child: SizedBox(
-                width: MyUtility(context).width * 0.36,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DaysHours(
-                      days: 'Monday',
-                      BusinessHOurs: '07:30 - 17:00',
-                    ),
-                    DaysHours(
-                      days: 'Tuesday',
-                      BusinessHOurs: '07:30 - 17:00',
-                    ),
-                    DaysHours(
-                      days: 'Wednesday',
-                      BusinessHOurs: '07:30 - 17:00',
-                    ),
-                    DaysHours(
-                      days: 'Thursday',
-                      BusinessHOurs: '07:30 - 17:00',
-                    ),
-                    DaysHours(
-                      days: 'Friday',
-                      BusinessHOurs: '07:30 - 17:00',
-                    ),
-                    DaysHours(
-                      days: 'Saturday',
-                      BusinessHOurs: 'Closed',
-                    ),
-                    DaysHours(
-                      days: 'Sunday',
-                      BusinessHOurs: 'Closed',
-                    ),
-                    DaysHours(
-                      days: 'Public Holidays',
-                      BusinessHOurs: 'Closed',
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            _isLoading
+                ? const Center(
+                    child: const CircularProgressIndicator(color: Colors.white))
+                : _businessHoursData.isEmpty
+                    ? const Center(
+                        child: Text(
+                        'No Business Hours Available',
+                        style: TextStyle(color: Colors.white),
+                      ))
+                    : Center(
+                        child: SizedBox(
+                          width: MyUtility(context).width * 0.36,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DaysHours(
+                                days: 'Monday',
+                                BusinessHOurs: _businessHoursData['mOpen'] !=
+                                        'closed'
+                                    ? '${_businessHoursData['mOpen']} - ${_businessHoursData['mClosed']}'
+                                    : 'Closed',
+                              ),
+                              DaysHours(
+                                days: 'Tuesday',
+                                BusinessHOurs: _businessHoursData['tOpen'] !=
+                                        'closed'
+                                    ? '${_businessHoursData['tOpen']} - ${_businessHoursData['tClosed']}'
+                                    : 'Closed',
+                              ),
+                              DaysHours(
+                                days: 'Wednesday',
+                                BusinessHOurs: _businessHoursData['wOpen'] !=
+                                        'closed'
+                                    ? '${_businessHoursData['wOpen']} - ${_businessHoursData['wClosed']}'
+                                    : 'Closed',
+                              ),
+                              DaysHours(
+                                days: 'Thursday',
+                                BusinessHOurs: _businessHoursData['thOpen'] !=
+                                        'closed'
+                                    ? '${_businessHoursData['thOpen']} - ${_businessHoursData['thClosed']}'
+                                    : 'Closed',
+                              ),
+                              DaysHours(
+                                days: 'Friday',
+                                BusinessHOurs: _businessHoursData['fOpen'] !=
+                                        'closed'
+                                    ? '${_businessHoursData['fOpen']} - ${_businessHoursData['fClosed']}'
+                                    : 'Closed',
+                              ),
+                              DaysHours(
+                                days: 'Saturday',
+                                BusinessHOurs: _businessHoursData['saOpen'] !=
+                                        'closed'
+                                    ? '${_businessHoursData['saOpen']} - ${_businessHoursData['saClosed']}'
+                                    : 'Closed',
+                              ),
+                              DaysHours(
+                                days: 'Sunday',
+                                BusinessHOurs: _businessHoursData['suOpen'] !=
+                                        'closed'
+                                    ? '${_businessHoursData['suOpen']} - ${_businessHoursData['suClosed']}'
+                                    : 'Closed',
+                              ),
+                              DaysHours(
+                                days: 'Public Holidays',
+                                BusinessHOurs: _businessHoursData['pOpen'] !=
+                                        'closed'
+                                    ? '${_businessHoursData['pOpen']} - ${_businessHoursData['pClosed']}'
+                                    : 'Closed',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
             Center(
               child: Container(
                 width: MyUtility(context).width * 0.38,

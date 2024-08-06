@@ -1,15 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:webdirectories/myutility.dart';
 
 class MapsContainer extends StatefulWidget {
-  const MapsContainer({super.key});
+  final String address;
+  final double latitude;
+  final double longitude;
+  const MapsContainer(
+      {super.key,
+      required this.address,
+      required this.latitude,
+      required this.longitude});
 
   @override
   State<MapsContainer> createState() => _MapsContainerState();
 }
 
 class _MapsContainerState extends State<MapsContainer> {
+  late GoogleMapController mapController;
+  late Marker _marker;
+
+  @override
+  void initState() {
+    super.initState();
+    _marker = Marker(
+      markerId: const MarkerId('locationMarker'),
+      position: LatLng(widget.latitude, widget.longitude),
+      infoWindow: const InfoWindow(title: 'Marker', snippet: 'Your Location'),
+    );
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,7 +66,7 @@ class _MapsContainerState extends State<MapsContainer> {
                     height: 20,
                     child: SvgPicture.asset('images/pindropblack.svg')),
                 Text(
-                  '18 Sneeuberg Street, N4 Gateway Industrial Park, Willow Park Manor X65, Pretoria East, Gauteng, 0184',
+                  widget.address,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 10.88,
@@ -56,14 +81,13 @@ class _MapsContainerState extends State<MapsContainer> {
           Container(
             width: MyUtility(context).width * 0.41,
             height: MyUtility(context).height * 0.57,
-            decoration: ShapeDecoration(
-              image: DecorationImage(
-                image: AssetImage("images/maps.png"),
-                fit: BoxFit.fill,
+            child: GoogleMap(
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(widget.latitude, widget.longitude),
+                zoom: 14.0,
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
+              markers: {_marker},
             ),
           )
         ],

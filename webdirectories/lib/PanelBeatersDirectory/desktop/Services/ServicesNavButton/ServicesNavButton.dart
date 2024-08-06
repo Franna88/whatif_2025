@@ -4,7 +4,9 @@ import 'package:webdirectories/myutility.dart';
 
 class ServicesNavButton extends StatefulWidget {
   Function(int) updatePageIndex;
-  ServicesNavButton({Key? key, required this.updatePageIndex})
+  final String listingTitle;
+  ServicesNavButton(
+      {Key? key, required this.updatePageIndex, required this.listingTitle})
       : super(key: key);
 
   @override
@@ -38,7 +40,7 @@ class _ServicesNavButtonState extends State<ServicesNavButton> {
           ),
           child: Center(
             child: Text(
-              'N4 Autocraft Panelbeaters - Pretoria East',
+              widget.listingTitle,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: MyUtility(context).width * 0.0145,

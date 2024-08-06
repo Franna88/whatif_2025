@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -6,13 +9,39 @@ import 'ServiceProfileComp/ProfileIconContact/ProfileIconConactButton/ProfileSoc
 import 'ServiceProfileComp/ProfileTextContainer.dart';
 
 class ServiceProfile extends StatefulWidget {
-  const ServiceProfile({super.key});
+  final List<String> imagesData;
+  final Map<String, String> linkData;
+  final Map<String, String> contactData;
+  const ServiceProfile(
+      {super.key,
+      required this.imagesData,
+      required this.linkData,
+      required this.contactData});
 
   @override
   State<ServiceProfile> createState() => _ServiceProfileState();
 }
 
 class _ServiceProfileState extends State<ServiceProfile> {
+  //final _firestore = FirebaseFirestore.instance;
+
+  // @override
+  // void initState() {
+  //   _imagesData = _fetchImages();
+  //   super.initState();
+  // }
+
+  // Future<List<Map<String, dynamic>>> _fetchImages() async {
+  //   QuerySnapshot querySnapshot = await _firestore
+  //       .collection('gallery')
+  //       .where('listingsId',
+  //           isEqualTo: int.parse(widget.listingData['listingsId']))
+  //       .get();
+  //   return querySnapshot.docs
+  //       .map((doc) => doc.data() as Map<String, dynamic>)
+  //       .toList();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,11 +54,15 @@ class _ServiceProfileState extends State<ServiceProfile> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ImageScrollContainer(),
+              ImageScrollContainer(images: widget.imagesData),
               Column(
                 children: [
-                  ProfileSocials(),
-                  ProfileTextContainer(),
+                  ProfileSocials(
+                    socialsLinks: widget.linkData,
+                  ),
+                  ProfileTextContainer(
+                    contactData: widget.contactData,
+                  ),
                   SizedBox(
                     height: MyUtility(context).height * 0.05,
                   )

@@ -5,6 +5,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Locations/LocationF
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServiceStackedButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServicesContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 import 'package:geolocator/geolocator.dart';
 import 'ServicesOther.dart';
@@ -26,7 +27,8 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
   late Future<List<Map<String, dynamic>>> _listingsFuture;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  late Position _userPosition;
+  Position? _userPosition;
+  bool _isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -61,6 +63,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
 
     setState(() {
       _userPosition = position;
+      _isLoading = false;
     });
   }
 
@@ -73,7 +76,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
   }
 
   Future<List<Map<String, dynamic>>> _getListings() async {
-    if (_userPosition == null) return [{}];
+    // Fetch featured listings
     QuerySnapshot querySnapshot = await _firestore
         .collection('listings')
         .where('featured', isEqualTo: 1)
@@ -84,6 +87,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       if (data['displayphoto'] != null) print(data['displayphoto']);
     }
+
     return querySnapshot.docs
         .map((doc) => doc.data() as Map<String, dynamic>)
         .toList();
@@ -213,7 +217,9 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
                                 return const Center(
-                                    child: CircularProgressIndicator());
+                                    child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ));
                               }
                               if (snapshot.hasError) {
                                 return Center(
@@ -255,16 +261,26 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                       businessName: listing['title'],
                                       businessAddress: listing['postaladdress'],
                                       OnPressed: () {
+                                        storage.write(
+                                            key: 'id',
+                                            value: listing['listingsId']
+                                                .toString());
+                                        storage.write(
+                                            key: 'title',
+                                            value: listing['title'].toString());
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Services()),
+                                              builder: (context) => Services(
+                                                  listingId:
+                                                      (listing['listingsId'])
+                                                          .toString())),
                                         );
                                       },
                                       views: '${200 + Random().nextInt(801)}',
-                                      distance:
-                                          '${_calculateDistance(_userPosition.latitude, _userPosition.longitude, listing['latitude'], listing['longitude'])}km',
+                                      distance: _userPosition?.latitude != null
+                                          ? '${_calculateDistance(_userPosition?.latitude, _userPosition?.longitude, listing['latitude'], listing['longitude'])}km'
+                                          : '0 km',
                                     );
                                   },
                                 ),

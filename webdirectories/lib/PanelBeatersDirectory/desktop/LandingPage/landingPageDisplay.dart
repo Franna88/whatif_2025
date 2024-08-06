@@ -56,7 +56,7 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
         child: Column(
           children: [
             Container(
-              height: MyUtility(context).height,
+              height: MyUtility(context).height * 1.1,
               width: MyUtility(context).width,
               decoration: const BoxDecoration(
                 image: DecorationImage(

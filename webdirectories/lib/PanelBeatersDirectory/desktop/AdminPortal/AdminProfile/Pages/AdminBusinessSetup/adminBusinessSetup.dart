@@ -123,8 +123,11 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
   @override
   Widget build(BuildContext context) {
     return _isLoading == true
-        ? const Center(
-            child: CircularProgressIndicator(),
+        ? Container(
+            height: MyUtility(context).height,
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
           )
         : Column(
             children: [

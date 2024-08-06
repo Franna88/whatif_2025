@@ -43,19 +43,17 @@ class _ServiceFeaturedContainerState extends State<ServiceFeaturedContainer> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-              child: AspectRatio(
-                aspectRatio: 2.2 / 1,
-                child: RemotePicture(
-                  imagePath: widget.businessImage,
-                  mapKey: 'background',
-                  fit: BoxFit.fill,
-                ),
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+            child: AspectRatio(
+              aspectRatio: 2.2 / 1,
+              child: RemotePicture(
+                imagePath: widget.businessImage,
+                mapKey: 'background',
+                fit: BoxFit.fill,
               ),
             ),
           ),

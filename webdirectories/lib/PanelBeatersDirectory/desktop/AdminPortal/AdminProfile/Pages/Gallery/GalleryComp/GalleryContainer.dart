@@ -42,13 +42,20 @@ class _GalleryContainerState extends State<GalleryContainer> {
               ),
               child: Stack(
                 children: [
-                  Positioned.fill(
-                    child: RemotePicture(
-                      imagePath: widget.galleryImage,
-                      mapKey: 'background',
-                      fit: BoxFit.cover,
-                    ),
+                  Image.asset(
+                    widget.galleryImage,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
                   ),
+                  // Positioned.fill(
+                  //   child: RemotePicture(
+                  //     imagePath: widget.galleryImage,
+                  //     mapKey: 'background',
+                  //     fit: BoxFit.cover,
+                  //   ),
+
+                  // ),
                   Positioned(
                     bottom: 8,
                     right: 8,

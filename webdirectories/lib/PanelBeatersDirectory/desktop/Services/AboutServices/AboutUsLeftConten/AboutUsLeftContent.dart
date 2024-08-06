@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'AboutUsLeftContentComp/AboutUSContainerInfo.dart';
 
 class AboutUsLeftContent extends StatefulWidget {
-  const AboutUsLeftContent({super.key});
+  final List<String> section1Texts;
+  final List<String> section2Texts;
+  const AboutUsLeftContent(
+      {super.key, required this.section1Texts, required this.section2Texts});
 
   @override
   State<AboutUsLeftContent> createState() => _AboutUsLeftContentState();
@@ -14,28 +17,16 @@ class _AboutUsLeftContentState extends State<AboutUsLeftContent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AboutUsContainerInfo(
-          section1Texts: [
-            'B-BBEE Levels',
-            'VDQ Registration',
-            'FixEezy Finance Option',
-            'Lightstone Registration',
-            'CRA Membership',
-            'Fender Bender Finance',
-            'Business Registration Number',
-            'SAMBRA Membership'
-          ],
-          section2Texts: [
-            'Level 49',
-            '067ABC',
-            'FX0000Test',
-            '3167',
-            '20268',
-            '20268',
-            '2013/123123/07',
-            '12341234'
-          ],
-        ),
+        widget.section1Texts.isEmpty
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              )
+            : AboutUsContainerInfo(
+                section1Texts: widget.section1Texts,
+                section2Texts: widget.section2Texts,
+              ),
       ],
     );
   }
