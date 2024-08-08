@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:webdirectories/myutility.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'AccreditationImageComp/ImageBox.dart';
 
 class AccreditationImageContainer extends StatefulWidget {
@@ -21,6 +21,17 @@ class _AccreditationImageContainerState
     4,
     (columnIndex) => List.generate(6, (rowIndex) => ImageBox()),
   );
+
+  void _launchURL(String url) async {
+    if (url != '0') {
+      final Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        throw 'Could not launch $uri';
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +54,28 @@ class _AccreditationImageContainerState
           controller: _scrollController,
           backgroundColor: Colors.grey,
           alwaysVisibleScrollThumb: true,
-          child: ListView(
+          child: GridView.builder(
             controller: _scrollController,
-            padding: EdgeInsets.all(4.0),
-            children: [
-              GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Number of columns in the grid
-                  childAspectRatio: 3 / 2, // Aspect ratio for each grid item
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                padding: EdgeInsets.all(10),
-                itemCount: widget.data.length,
-                itemBuilder: (context, index) {
-                  final accreditation = widget.data[index];
-                  final imageUrl = widget.data[index]['imageUrl'];
-                  return Card(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4, // Number of columns in the grid
+              childAspectRatio: 3 / 3, // Aspect ratio for each grid item
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            padding: EdgeInsets.all(10),
+            itemCount: widget.data.length,
+            itemBuilder: (context, index) {
+              final accreditation = widget.data[index];
+              return MouseRegion(
+                child: GestureDetector(
+                  onTap: () {
+                    final url = accreditation[
+                        'link']; // Assuming each accreditation has a 'link' key
+                    if (url != null) {
+                      _launchURL(url);
+                    }
+                  },
+                  child: Card(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -67,15 +83,16 @@ class _AccreditationImageContainerState
                           height: 116.04,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: Image.network(imageUrl).image,
+                              image: Image.network(accreditation['imageUrl'])
+                                  .image,
                               fit: BoxFit.fill,
                             ),
                           ),
                         )),
-                  );
-                },
-              ),
-            ],
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),
