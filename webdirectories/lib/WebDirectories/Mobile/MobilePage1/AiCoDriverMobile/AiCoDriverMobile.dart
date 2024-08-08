@@ -16,7 +16,7 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
       children: [
         Text(
           'Your AI Co-driver',
-          style: TextStyle(fontSize: 44, fontFamily: 'ralewaysemi'),
+          style: TextStyle(fontSize: 40, fontFamily: 'ralewaysemi'),
           textAlign: TextAlign.center,
         ),
         Padding(

@@ -564,7 +564,7 @@ class _WebsiteDisclaimerState extends State<WebsiteDisclaimer> {
                 style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'ralewayit',
-                    color: Color.fromARGB(255, 10, 168, 241)),
+                    color: Color.fromRGBO(30, 30, 248, 1)),
               ),
             ),
             SizedBox(
@@ -587,7 +587,7 @@ class _WebsiteDisclaimerState extends State<WebsiteDisclaimer> {
                 style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'ralewayit',
-                    color: Color.fromARGB(255, 10, 168, 241)),
+                    color: Color.fromRGBO(30, 30, 248, 1)),
               ),
             ),
             GestureDetector(
@@ -599,7 +599,7 @@ class _WebsiteDisclaimerState extends State<WebsiteDisclaimer> {
                 style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'ralewayit',
-                    color: Color.fromARGB(255, 10, 168, 241)),
+                    color: Color.fromRGBO(30, 30, 248, 1)),
               ),
             ),
             SizedBox(

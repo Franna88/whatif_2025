@@ -15,8 +15,11 @@ class _Page2State extends State<Page2> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [TopNavBar(), WebsiteDisclaimer(), Footer()],
+      child: Material(
+        color: Colors.white,
+        child: Column(
+          children: [TopNavBar(), WebsiteDisclaimer(), Footer()],
+        ),
       ),
     );
   }

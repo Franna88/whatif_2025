@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Author extends StatefulWidget {
-  const Author({super.key});
+  final Color? otherDirectoryTextColor;
+  const Author({super.key, this.otherDirectoryTextColor});
 
   @override
   State<Author> createState() => _AuthorState();
@@ -65,7 +66,9 @@ class _AuthorState extends State<Author> {
                 Text(
                   '10 min read',
                   style: TextStyle(
-                    color: Color(0xFFE5882F),
+                    color: widget.otherDirectoryTextColor == null
+                        ? Color(0xFFE5882F)
+                        : widget.otherDirectoryTextColor,
                     fontSize: 13.6,
                     fontFamily: 'ralewaymedium',
                     fontWeight: FontWeight.w500,

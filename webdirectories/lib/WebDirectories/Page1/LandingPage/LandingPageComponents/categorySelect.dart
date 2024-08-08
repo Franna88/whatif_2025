@@ -180,9 +180,7 @@ class _CategorySelectState extends State<CategorySelect>
             ),
           ],
         ),
-        SizedBox(
-          height: 100,
-        ),
+        
       ],
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage4/ArticleMobile/ArticlesComponents/AriclesSmallImageContainer.dart';
+import 'package:webdirectories/WebDirectories/Mobile/MobilePage4/ArticleMobile/mobileDummyArticle.dart';
+import 'package:webdirectories/WebDirectories/Page5/RecentArticles/dummyArticle.dart';
 import 'package:webdirectories/myutility.dart';
 
 class StackedArticleMobile extends StatefulWidget {
@@ -20,7 +22,9 @@ class _StackedArticleMobileState extends State<StackedArticleMobile> {
             writer: 'Wena Cronje',
             discription:
                 "Will jet fuel provide a performance boost or lead to disastrous results?",
-            onpress: () {}),
+            onpress: () {
+              
+            }),
         ArticlesSmallImageContainer(
             catagory: 'Towing Directory',
             headline: "Why Compare Car Insurance quotes?",

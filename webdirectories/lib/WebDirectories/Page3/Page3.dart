@@ -19,22 +19,25 @@ class _Page3State extends State<Page3> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          TopNavBar(),
-          OurStory(),
-          SizedBox(
-            height: MyUtility(context).height * 0.05,
-          ),
-          OurStoryExtention(),
-          SizedBox(
-            height: MyUtility(context).height * 0.05,
-          ),
-          OurMission(),
-          WebDirectoriesWay(),
-          OurEagleProclamation(),
-          Footer()
-        ],
+      child: Material(
+        color: Colors.white,
+        child: Column(
+          children: [
+            TopNavBar(),
+            OurStory(),
+            SizedBox(
+              height: MyUtility(context).height * 0.05,
+            ),
+            OurStoryExtention(),
+            SizedBox(
+              height: MyUtility(context).height * 0.05,
+            ),
+            OurMission(),
+            WebDirectoriesWay(),
+            OurEagleProclamation(),
+            Footer()
+          ],
+        ),
       ),
     );
   }

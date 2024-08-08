@@ -184,64 +184,71 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
           SizedBox(
             height: MyUtility(context).height * 0.02,
           ),
-          SizedBox(
-            width: 200,
-            height: MyUtility(context).height * 0.06,
-            child: ElevatedButton(
-              onPressed: () {
-                //PANEL BEATER
-                widget.Title2 == "WATIF"
-                    ? Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Material(
-                                  child: MobilePage3(),
-                                )))
-                    : widget.Title1 == "PANEL BEATER\n"
-                        ? Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Material(
-                                      child: MobileView(),
-                                    )))
-                        : goToLink(widget.url);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
+          // Learn more button
+          Row(
+            children: [
+              Spacer(),
+              TextButton(
+                onPressed: () {
+                  //PANEL BEATER
+                  widget.Title2 == "WATIF"
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Material(
+                                    child: MobilePage3(),
+                                  )))
+                      : widget.Title1 == "PANEL BEATER\n"
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Material(
+                                        child: MobileView(),
+                                      )))
+                          : goToLink(widget.url);
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 0),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 0),
-              ),
-              child: Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.center, // Center the content
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.black,
-                    ),
-                    padding:
-                        EdgeInsets.all(1), // Reduce padding around the icon
-                    child: Icon(
-                      Icons.keyboard_arrow_right,
-                      color: Colors.white,
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Center the content
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black,
+                        ),
+                        padding:
+                            EdgeInsets.all(1), // Reduce padding around the icon
+                        child: Icon(
+                          Icons.keyboard_arrow_right,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                          width: 8), // Adjust space between the icon and text
+                      Text(
+                        widget.viewdirctoriesbutton,
+                        style: TextStyle(
+                          fontFamily: 'raleway',
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 8), // Adjust space between the icon and text
-                  Text(
-                    widget.viewdirctoriesbutton,
-                    style: TextStyle(
-                      fontFamily: 'raleway',
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+              Spacer()
+            ],
           ),
         ],
       ),

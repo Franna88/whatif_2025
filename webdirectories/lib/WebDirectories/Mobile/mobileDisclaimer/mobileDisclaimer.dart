@@ -14,8 +14,11 @@ class _MobileDisclaimerState extends State<MobileDisclaimer> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [MobileTopNavBar(), WebsiteDisclaimer(), FooterMobile()],
+      child: Material(
+        color: Colors.white,
+        child: Column(
+          children: [MobileTopNavBar(), WebsiteDisclaimer(), FooterMobile()],
+        ),
       ),
     );
   }

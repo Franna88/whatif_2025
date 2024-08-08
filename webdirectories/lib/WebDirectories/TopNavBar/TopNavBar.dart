@@ -29,7 +29,7 @@ class _TopNavBarState extends State<TopNavBar> {
         Padding(
           padding: const EdgeInsets.only(left: 50, top: 15),
           child: Image.asset(
-            'images/logow.png',
+            'images/webDirLogo2.png',
             width: 225,
             height: 110,
           ),

@@ -18,16 +18,19 @@ class _MobilePage2State extends State<MobilePage2> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          MobileTopNavBar(),
-          Image.asset('images/buisnesslight.png'),
-          OurStoryMobile(),
-          GoogleRankingMobile(),
-          OurMissionMobile(),
-          DirectoriesWayMobile(),
-          FooterMobile()
-        ],
+      child: Material(
+        color: Colors.white,
+        child: Column(
+          children: [
+            MobileTopNavBar(),
+            Image.asset('images/buisnesslight.png'),
+            OurStoryMobile(),
+            GoogleRankingMobile(),
+            OurMissionMobile(),
+            DirectoriesWayMobile(),
+            FooterMobile()
+          ],
+        ),
       ),
     );
   }

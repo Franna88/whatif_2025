@@ -134,7 +134,7 @@ class _LandingPageMobileState extends State<LandingPageMobile>
       width: MyUtility(context).width,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/glasses.gif"),
+          image: AssetImage("images/webDirMobileLanding.png"),
           fit: BoxFit.cover,
         ),
       ),

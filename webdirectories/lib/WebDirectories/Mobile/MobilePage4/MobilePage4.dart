@@ -17,13 +17,16 @@ class _MobilePage4State extends State<MobilePage4> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          MobileTopNavBar(),
-          ArticleMobile(),
-          StackedArticleMobile(),
-          FooterMobile()
-        ],
+      child: Material(
+        color: Colors.white,
+        child: Column(
+          children: [
+            MobileTopNavBar(),
+            ArticleMobile(),
+            StackedArticleMobile(),
+            FooterMobile()
+          ],
+        ),
       ),
     );
   }

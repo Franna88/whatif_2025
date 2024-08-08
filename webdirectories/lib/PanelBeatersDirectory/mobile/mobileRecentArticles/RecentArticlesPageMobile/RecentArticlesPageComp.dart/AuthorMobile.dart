@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AuthorMobile extends StatefulWidget {
-  const AuthorMobile({super.key});
+  final Color? otherDirectoryTextColor;
+  const AuthorMobile({super.key, this.otherDirectoryTextColor});
 
   @override
   State<AuthorMobile> createState() => _AuthorMobileState();
@@ -35,7 +36,7 @@ class _AuthorMobileState extends State<AuthorMobile> {
                   'Article by Wena Cronje ',
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.5),
-                    fontSize: widthDevice < 400 ? 12 :  13.6,
+                    fontSize: widthDevice < 400 ? 12 : 13.6,
                     fontFamily: 'raleway',
                     fontWeight: FontWeight.w400,
                     height: 0,
@@ -58,7 +59,7 @@ class _AuthorMobileState extends State<AuthorMobile> {
                           'Fri 28 June, 2024',
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.5),
-                            fontSize:  widthDevice < 400 ? 12 :  13.6,
+                            fontSize: widthDevice < 400 ? 12 : 13.6,
                             fontFamily: 'raleway',
                             fontWeight: FontWeight.w400,
                           ),
@@ -77,8 +78,10 @@ class _AuthorMobileState extends State<AuthorMobile> {
                         Text(
                           '10 min read',
                           style: TextStyle(
-                            color: Color(0xFFE5882F),
-                            fontSize:  widthDevice < 400 ? 12 :  13.6,
+                            color: widget.otherDirectoryTextColor == null
+                                ? Color(0xFFE5882F)
+                                : widget.otherDirectoryTextColor,
+                            fontSize: widthDevice < 400 ? 12 : 13.6,
                             fontFamily: 'ralewaymedium',
                             fontWeight: FontWeight.w500,
                           ),

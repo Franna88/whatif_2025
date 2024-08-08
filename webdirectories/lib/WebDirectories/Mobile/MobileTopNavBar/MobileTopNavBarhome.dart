@@ -30,7 +30,7 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
             child: Align(
               alignment: Alignment.topLeft,
               child: Image.asset(
-                'images/logo.png',
+                'images/webDirLogo.png',
                 fit: BoxFit.fill,
               ),
             ),
@@ -38,6 +38,7 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
         ),
         SizedBox(width: 10),
         PopupMenuButton(
+          color: Colors.white,
           icon: Icon(
             Icons.menu,
             size: 40,

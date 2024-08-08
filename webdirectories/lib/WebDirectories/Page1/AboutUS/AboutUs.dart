@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/WebDirectories/Page1/AboutUS/AboutUsComponents/AboutUsButton.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../Page7/Page7.dart';
+
 class AboutUs extends StatefulWidget {
   const AboutUs({super.key});
 
@@ -115,7 +117,16 @@ class _AboutUsState extends State<AboutUs> {
                 SizedBox(
                   height: MyUtility(context).height * 0.02,
                 ),
-                AboutUsButton(buttonText: 'Contact Us', onPressed: () {}),
+                AboutUsButton(
+                    buttonText: 'Contact Us',
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Material(
+                                    child: Page7(),
+                                  )));
+                    }),
               ],
             ),
           ),

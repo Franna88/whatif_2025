@@ -26,21 +26,27 @@ class _MobilePage1State extends State<MobilePage1> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          LandingPageMobile(),
-          Image.asset('images/mobileglasses.png'),
-          PartnerWithUsMobile(),
-          AboutUsMobile(),
-          JoinUsMobile(),
-          SizedBox(
-            height: MyUtility(context).height * 0.03,
-          ),
-          Image.asset('images/Watif.png'),
-          AiCoDriverMobile(),
-          CommentsSliderMobile(),
-          FooterMobile()
-        ],
+      child: Material(
+        color: Colors.white,
+        child: Column(
+          children: [
+            LandingPageMobile(),
+            Image.asset('images/mobileglasses.png'),
+            PartnerWithUsMobile(),
+            AboutUsMobile(),
+            JoinUsMobile(),
+            SizedBox(
+              height: MyUtility(context).height * 0.03,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(25),
+              child: Image.asset('images/3mobile.png'),
+            ),
+            AiCoDriverMobile(),
+            CommentsSliderMobile(),
+            FooterMobile()
+          ],
+        ),
       ),
     );
   }

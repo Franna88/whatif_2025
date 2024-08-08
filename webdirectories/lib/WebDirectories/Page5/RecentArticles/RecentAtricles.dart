@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/WebDirectories/Page5/RecentArticles/RecentArticlesComponents/ArticleContainer.dart';
+import 'package:webdirectories/WebDirectories/Page5/RecentArticles/dummyArticle.dart';
 import 'package:webdirectories/myutility.dart';
 
 class RecentArticles extends StatefulWidget {
@@ -118,7 +119,13 @@ class _RecentArticlesState extends State<RecentArticles> {
                     writer: 'Wena Cronje',
                     description:
                         "Your CSI success contributes to your business success and assists both prospects and industry users.",
-                    onpress: () {}),
+                    onpress: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DummyAtricle()),
+                      );
+                    }),
                 ArticlesContainer(
                     image: 'images/turbine.png',
                     category: 'Fuel Directory',

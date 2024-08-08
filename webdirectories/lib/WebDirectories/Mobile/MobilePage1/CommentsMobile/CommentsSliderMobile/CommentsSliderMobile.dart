@@ -27,12 +27,12 @@ class _CommentsSliderMobileState extends State<CommentsSliderMobile> {
                     profileImage: 'images/pfp.png',
                     comment:
                         "“I've been taking my car to the same panel beater for years, and I've always been happy with their service. Johan and his team is always honest and upfront about the cost, and they do a great job. I highly recommend the Panel Beater Directory to anyone looking to find a reliable auto body repairer.”",
-                    username: 'Stephan Williams'),
+                    username: 'Stephan Joubert'),
                 CommentsMobile(
-                    profileImage: 'images/pfp2.png',
+                    profileImage: 'images/avatar5.png',
                     comment:
                         "“I have a long commute to work and I’m always on a tight budget. But then I found the Fuel Directory and it’s really a lifesaver! I can now find the best deals on petrol in Centurion with just a few clicks. It’s so easy to use and it saves me a ton of money. I’m grateful, thanks!”",
-                    username: 'Lisa Thornberg'),
+                    username: 'Lisa Gumede'),
                 CommentsMobile(
                     profileImage: 'images/pfp3.png',
                     comment:

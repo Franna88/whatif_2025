@@ -13,6 +13,7 @@ class _PartnerWithUsState extends State<PartnerWithUs> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       width: MyUtility(context).width,
       height: MyUtility(context).height,
       child: Column(

@@ -74,18 +74,7 @@ class _ArticleMobileState extends State<ArticleMobile> {
                     onTap: () {
                       // Define your onTap action here
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      padding: EdgeInsets.all(0),
-                      child: SvgPicture.asset(
-                        'images/x.svg',
-                        width: 5,
-                        height: 5,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                    child: Icon(Icons.close, color: Colors.black,)
                   ),
                 ),
               ),

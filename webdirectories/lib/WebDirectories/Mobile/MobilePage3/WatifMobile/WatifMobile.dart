@@ -36,35 +36,9 @@ class _WatifMobileState extends State<WatifMobile> {
             'Hello, my name is',
             style: TextStyle(fontSize: 42, fontFamily: 'ralewaysemi'),
           ),
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "WATIF ",
-                    style: TextStyle(
-                      fontSize: 80,
-                      fontFamily: 'ralewaysemi',
-                      color: Colors.black,
-                      height: 1.1,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-              Positioned(
-                top: 0,
-                right: 40,
-                child: SvgPicture.asset(
-                  'images/tm.svg',
-                  height: 20,
-                  width: 20,
-                ),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: Image.asset('images/watifLogo.png'),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -282,7 +256,14 @@ class _WatifMobileState extends State<WatifMobile> {
             width: 150,
             height: 40,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(
+                              child: MobilePage6(),
+                            )));
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF0E1013),
                 shape: RoundedRectangleBorder(
@@ -293,26 +274,18 @@ class _WatifMobileState extends State<WatifMobile> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MobilePage6()));
-                    },
-                    child: Container(
-                      width: 25,
-                      height: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      padding: EdgeInsets.zero,
-                      child: Icon(
-                        Icons.keyboard_arrow_right_outlined,
-                        color: Colors.black,
-                        size: 16,
-                      ),
+                  Container(
+                    width: 25,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    padding: EdgeInsets.zero,
+                    child: Icon(
+                      Icons.keyboard_arrow_right_outlined,
+                      color: Colors.black,
+                      size: 16,
                     ),
                   ),
                   SizedBox(

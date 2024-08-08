@@ -66,7 +66,7 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                          color: index == 0 ? Colors.black : Colors.white,
+                          color:  Colors.white,
                           width: 1.0),
                       color: Colors.black,
                     ),
@@ -95,6 +95,7 @@ class _OurStoryMobileState extends State<OurStoryMobile> {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
                       shape: BoxShape.circle,
                       color: index == 1 ? Colors.black : Colors.white,
                     ),
