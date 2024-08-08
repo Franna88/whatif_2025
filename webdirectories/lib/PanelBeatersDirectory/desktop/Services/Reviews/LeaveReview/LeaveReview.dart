@@ -1,20 +1,142 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LeaveReview/LeaveReviewsComp/LeaveReviewFormField.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LeaveReview/LeaveReviewsComp/LongFormField.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LeaveReview/LeaveReviewsComp/MessageFormField.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LeaveReview/LeaveReviewsComp/SelectStar.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class LeaveReview extends StatefulWidget {
   Function(int) changePageIndex;
-  LeaveReview({Key? key, required this.changePageIndex}) : super(key: key);
+  final Function(Map<String, dynamic>) onReviewSubmit;
+  LeaveReview(
+      {Key? key, required this.changePageIndex, required this.onReviewSubmit})
+      : super(key: key);
   @override
   State<LeaveReview> createState() => _LeaveReviewState();
 }
 
 class _LeaveReviewState extends State<LeaveReview> {
   final ScrollController _scrollController = ScrollController();
+  final _formKey = GlobalKey<FormState>();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _ratingController = TextEditingController();
+  final _reviewController = TextEditingController();
+  XFile? _selectedImage;
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _ratingController.dispose();
+    _reviewController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _selectedImage = image;
+    });
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // Process the form submission
+      String firstName = _firstNameController.text;
+      String lastName = _lastNameController.text;
+      String email = _emailController.text;
+      String rating = _ratingController.text;
+      String review = _reviewController.text;
+      XFile? image = _selectedImage;
+      String? imageUrl;
+      DateTime now = DateTime.now();
+      String formattedDate =
+          "${now.year.toString().padLeft(4, '0')}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+
+      final String? id = await storage.read(key: 'id');
+      // Upload image to Firebase Storage if selected
+      if (image != null) {
+        try {
+          if (id != null) {
+            final storageRef = FirebaseStorage.instance.ref().child(
+                'ratings/${id}/${DateTime.now().millisecondsSinceEpoch}_${image.name}');
+            final uploadTask = storageRef.putFile(File(image.path));
+            final snapshot = await uploadTask;
+            imageUrl = await snapshot.ref.getDownloadURL();
+          } else {
+            print('Error uploading image: listingsId is null');
+            setState(() {
+              _isLoading = false;
+            });
+            return;
+          }
+        } catch (e) {
+          print('Error uploading image: $e');
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Error uploading image. Please try again.')));
+          setState(() {
+            _isLoading = false;
+          });
+          return;
+        }
+      }
+
+      // Save review data to Firestore
+      try {
+        Map<String, dynamic> newData = {
+          'listingsId': id,
+          'ratingFrom': '$firstName $lastName',
+          'ratingEmail': email,
+          'rating': int.parse(rating),
+          'ratingMessage': review,
+          'imageUrl': imageUrl,
+          'ratingDate': formattedDate,
+        };
+        DocumentReference ratingDoc =
+            await FirebaseFirestore.instance.collection('rating').add(newData);
+
+        await FirebaseFirestore.instance
+            .collection('rating')
+            .doc(ratingDoc.id)
+            .update({'ratingId': ratingDoc.id});
+
+        // Show success message and reset the form
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Review submitted successfully')));
+        _formKey.currentState!.reset();
+        widget.onReviewSubmit({...newData, 'ratingId': ratingDoc.id});
+
+        setState(() {
+          _selectedImage = null;
+          _isLoading = false;
+        });
+      } catch (e) {
+        print('Error saving review: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error saving review. Please try again.')));
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,80 +175,141 @@ class _LeaveReviewState extends State<LeaveReview> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    SizedBox(
-                      width: MyUtility(context).width / 3.24,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            LeaveReviewFormField(
-                              reviewInfo: 'First name',
+                            SizedBox(
+                              width: MyUtility(context).width / 3.24,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    LeaveReviewFormField(
+                                      controller: _firstNameController,
+                                      reviewInfo: 'First name',
+                                    ),
+                                    LeaveReviewFormField(
+                                      controller: _lastNameController,
+                                      reviewInfo: 'Last name',
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            LeaveReviewFormField(
-                              reviewInfo: 'Last name',
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: LongFormField(
+                                controller: _emailController,
+                                reviewInfo: '*Email address',
+                              ),
+                            ),
+                            Text(
+                              '*Score',
+                              style: TextStyle(
+                                color:
+                                    Colors.white.withOpacity(0.699999988079071),
+                                fontSize: MyUtility(context).width * 0.01,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: SelectStar(
+                                onRatingChanged: (rating) {
+                                  setState(() {
+                                    _ratingController.text = rating.toString();
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: MessageFormField(
+                                  controller: _reviewController),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 15),
+                              child: _selectedImage == null
+                                  ? TextButton(
+                                      style: TextButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(2),
+                                        ),
+                                        side: BorderSide(
+                                          width: 1,
+                                          color: Colors.white.withOpacity(0.7),
+                                        ),
+                                        foregroundColor: Colors.white
+                                            .withOpacity(0.699999988079071),
+                                        minimumSize: Size(100.8, 39),
+                                      ),
+                                      onPressed: _pickImage,
+                                      child: Text('Upload Image'),
+                                    )
+                                  : Center(
+                                      child: Column(
+                                        children: [
+                                          Image.network(
+                                            _selectedImage!.path,
+                                            height: 120,
+                                          ),
+                                          SizedBox(height: 20),
+                                          TextButton(
+                                            onPressed: _pickImage,
+                                            style: TextButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(2),
+                                              ),
+                                              side: BorderSide(
+                                                width: 1,
+                                                color: Colors.white
+                                                    .withOpacity(0.7),
+                                              ),
+                                              foregroundColor: Colors.white
+                                                  .withOpacity(
+                                                      0.699999988079071),
+                                              minimumSize: Size(100.8, 39),
+                                            ),
+                                            child: Text('Change Image'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  _submitForm();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  backgroundColor: Color(0xFFFF8728),
+                                  foregroundColor: Colors.black,
+                                  minimumSize: Size(100.8, 39),
+                                ),
+                                child: Text(
+                                  'Post Review',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: MyUtility(context).width * 0.01,
+                                    fontFamily: 'raleway',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: LongFormField(
-                        reviewInfo: '*Email address',
-                      ),
-                    ),
-                    Text(
-                      '*Score',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.699999988079071),
-                        fontSize: MyUtility(context).width * 0.01,
-                        fontFamily: 'raleway',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: SelectStar(
-                        onRatingChanged: (rating) {
-                          print('Selected rating: $rating');
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: MessageFormField(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child:
-                          LongFormField(reviewInfo: 'Add Image if Applicable'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          widget.changePageIndex(0);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          backgroundColor: Color(0xFFFF8728),
-                          foregroundColor: Colors.black,
-                          minimumSize: Size(100.8, 39),
-                        ),
-                        child: Text(
-                          'Post Review',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: MyUtility(context).width * 0.01,
-                            fontFamily: 'raleway',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                    ),
+                        ))
                   ],
                 ),
               ),

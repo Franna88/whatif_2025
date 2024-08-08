@@ -49,13 +49,15 @@ class _ServiceFeaturedContainerState extends State<ServiceFeaturedContainer> {
               topRight: Radius.circular(10),
             ),
             child: AspectRatio(
-              aspectRatio: 2.2 / 1,
-              child: RemotePicture(
-                imagePath: widget.businessImage,
-                mapKey: 'background',
-                fit: BoxFit.fill,
-              ),
-            ),
+                aspectRatio: 2.2 / 1,
+                child: Image.network(
+                  widget.businessImage,
+                  fit: BoxFit
+                      .fill, // This ensures the image covers the entire aspect ratio area
+                  errorBuilder: (context, error, stackTrace) {
+                    return Center(child: Text('Error loading image'));
+                  },
+                )),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 5),

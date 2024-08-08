@@ -19,10 +19,9 @@ class ReviewsOrangeContainer extends StatefulWidget {
 class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
   String id = '';
   List<Map<String, dynamic>> _reviews = [];
-  List<Map<String, dynamic>> _lightStoneData = [];
+  Map<String, dynamic> _lightStoneData = {};
   bool _isloading = true;
   final _firestore = FirebaseFirestore.instance;
-
   var pageIndex = 0;
 
   @override
@@ -31,39 +30,68 @@ class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
     super.initState();
   }
 
-  Future<String?> _getReviewData() async {
+  Future<void> _getReviewData() async {
     List<Map<String, dynamic>> reviewData = [];
-    List<Map<String, dynamic>> registrationData = [];
+    Map<String, dynamic> lightstoneData = {};
     String? listingId = await GetListingId();
+
     if (listingId != null) {
-      // Fetch reviews
-      QuerySnapshot reviewsSnapshot = await _firestore
-          .collection('rating')
-          .where('listingsId', isEqualTo: int.parse(listingId))
-          .get();
+      int listingIdInt = int.parse(listingId);
+
+      // Fetch reviews and registration data in parallel
+      final futures = await Future.wait([
+        _firestore
+            .collection('rating')
+            .where('listingsId', isEqualTo: listingIdInt)
+            .get(),
+        _firestore
+            .collection('registration_numbers')
+            .where('listingsId', isEqualTo: listingIdInt)
+            .get(),
+      ]);
+
+      final reviewsSnapshot = futures[0] as QuerySnapshot;
+      final registrationDataSnapshot = futures[1] as QuerySnapshot;
+
       if (reviewsSnapshot.docs.isNotEmpty) {
         reviewData = reviewsSnapshot.docs
             .map((doc) => doc.data() as Map<String, dynamic>)
             .toList();
       }
 
-      // Fetch registration data
-      QuerySnapshot registrationDataSnapshot = await _firestore
-          .collection('registration_numbers')
-          .where('listingsId', isEqualTo: int.parse(listingId))
-          .get();
       if (registrationDataSnapshot.docs.isNotEmpty) {
-        List<Map<String, dynamic>> data = registrationDataSnapshot.docs
+        List<Map<String, dynamic>> registrationData = registrationDataSnapshot
+            .docs
             .map((doc) => doc.data() as Map<String, dynamic>)
             .toList();
-        registrationData =
-            data.where((e) => e['registrationTypeID'] == 8).toList();
-      }
 
+        List<Map<String, dynamic>> filteredRegistrationData = registrationData
+            .where((e) => e['registrationTypeId'] == 8)
+            .toList();
+
+        if (filteredRegistrationData.isNotEmpty) {
+          QuerySnapshot lightstoneSnapshot = await _firestore
+              .collection('lightstone')
+              .where('brid',
+                  isEqualTo:
+                      filteredRegistrationData.first['registrationNumbers'])
+              .limit(1)
+              .get();
+
+          if (lightstoneSnapshot.docs.isNotEmpty) {
+            lightstoneData =
+                lightstoneSnapshot.docs.first.data() as Map<String, dynamic>;
+          }
+        }
+      }
       setState(() {
         id = listingId;
         _reviews = reviewData;
-        _lightStoneData = registrationData;
+        _lightStoneData = lightstoneData;
+        _isloading = false;
+      });
+    } else {
+      setState(() {
         _isloading = false;
       });
     }
@@ -76,11 +104,23 @@ class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
     });
   }
 
+  void _onReviewsUpdated(Map<String, dynamic> newReview) {
+    List<Map<String, dynamic>> reviewsData = _reviews;
+    reviewsData.add(newReview);
+
+    setState(() {
+      _reviews = reviewsData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> reviewPages = [
-      ReviewsMainContainer(reviewsData: _reviews, waiting: _isloading),
-      LightStone()
+      ReviewsMainContainer(
+          reviewsData: _reviews,
+          waiting: _isloading,
+          onLeaveReview: _onReviewsUpdated),
+      LightStone(data: _lightStoneData),
     ];
     return Column(
       children: [
@@ -88,6 +128,7 @@ class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ReviewsNAvButton(
+              hasLightStone: _lightStoneData.isNotEmpty,
               changePageIndex: changePageIndex,
               pageIndex: pageIndex,
             ),

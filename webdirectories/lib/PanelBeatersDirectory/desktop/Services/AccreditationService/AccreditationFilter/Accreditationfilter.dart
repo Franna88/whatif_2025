@@ -3,10 +3,14 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Accreditat
 import 'package:webdirectories/myutility.dart';
 
 class AccreditationFilter extends StatefulWidget {
+  final String? selectedFilter;
   final void Function(String filter) onFilterSelected;
   final List<String> filterOptions;
   const AccreditationFilter(
-      {Key? key, required this.onFilterSelected, required this.filterOptions})
+      {Key? key,
+      required this.onFilterSelected,
+      required this.filterOptions,
+      this.selectedFilter})
       : super(key: key);
 
   @override
@@ -66,7 +70,7 @@ class _AccreditationFilterState extends State<AccreditationFilter> {
                 .map((filter) => FilterButton(
                     servicesText: filter,
                     onFilterSelected: _onFilterSelected,
-                    isSelected: _selectedFilter == filter))
+                    isSelected: widget.selectedFilter == filter))
                 .toList(),
           )
         ],
