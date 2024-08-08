@@ -3,8 +3,9 @@ import 'package:webdirectories/myutility.dart';
 
 class LongFormField extends StatefulWidget {
   final String reviewInfo;
-
-  const LongFormField({Key? key, required this.reviewInfo}) : super(key: key);
+  final TextEditingController? controller;
+  const LongFormField({Key? key, required this.reviewInfo, this.controller})
+      : super(key: key);
 
   @override
   State<LongFormField> createState() => _LongFormFieldState();
@@ -31,7 +32,7 @@ class _LongFormFieldState extends State<LongFormField> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: TextFormField(
-          controller: _controller,
+          controller: widget.controller,
           textAlignVertical: TextAlignVertical.top,
           style: TextStyle(
             color: Colors.white.withOpacity(0.7),

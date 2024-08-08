@@ -5,6 +5,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Locations/LocationF
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServiceStackedButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServicesContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 import 'package:geolocator/geolocator.dart';
@@ -83,14 +84,25 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
         .limit(5)
         .get();
 
-    for (var doc in querySnapshot.docs) {
+    List<Future<Map<String, dynamic>>> listingFutures =
+        querySnapshot.docs.map((doc) async {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      if (data['displayphoto'] != null) print(data['displayphoto']);
-    }
+      String? imageUrl =
+          await getImageUrl('listings/images/listings/${data['displayphoto']}');
+      if (imageUrl != null) {
+        data['displayphoto'] = imageUrl;
+      }
+      return data;
+    }).toList();
 
-    return querySnapshot.docs
-        .map((doc) => doc.data() as Map<String, dynamic>)
-        .toList();
+    // Wait for all futures to complete
+    List<Map<String, dynamic>> listings = await Future.wait(listingFutures);
+
+    // Filter out listings with null displayphoto
+    listings =
+        listings.where((listing) => listing['displayphoto'] != null).toList();
+
+    return listings;
   }
 
   void toggleToFeatured() {
@@ -256,8 +268,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                     Map<String, dynamic> listing =
                                         listings[index];
                                     return ServiceFeaturedContainer(
-                                      businessImage:
-                                          'listings/images/listings/${listing['displayphoto']}',
+                                      businessImage: listing['displayphoto'],
                                       businessName: listing['title'],
                                       businessAddress: listing['postaladdress'],
                                       OnPressed: () {

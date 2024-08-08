@@ -7,9 +7,13 @@ import 'package:webdirectories/myutility.dart';
 
 class ReviewsMainContainer extends StatefulWidget {
   final List<Map<String, dynamic>> reviewsData;
+  final Function(Map<String, dynamic>) onLeaveReview;
   final bool waiting;
   const ReviewsMainContainer(
-      {super.key, required this.reviewsData, required this.waiting});
+      {super.key,
+      required this.reviewsData,
+      required this.waiting,
+      required this.onLeaveReview});
 
   @override
   State<ReviewsMainContainer> createState() => _ReviewsMainContainerState();
@@ -94,7 +98,10 @@ class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
     List reviewPages = [
       RatingReviews(
           changePageIndex: changePageIndex, reviewsData: widget.reviewsData),
-      LeaveReview(changePageIndex: changePageIndex),
+      LeaveReview(
+        changePageIndex: changePageIndex,
+        onReviewSubmit: widget.onLeaveReview,
+      ),
     ];
     return Container(
       width: MyUtility(context).width * 0.84,

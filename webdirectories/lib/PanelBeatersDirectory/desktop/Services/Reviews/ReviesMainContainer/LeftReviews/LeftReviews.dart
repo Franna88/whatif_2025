@@ -8,6 +8,7 @@ class LeftReviews extends StatefulWidget {
   final List<Map<String, dynamic>> reviews;
   final Function(String) onSearch;
   final Function(String) onFilter;
+
   const LeftReviews(
       {super.key,
       required this.reviews,

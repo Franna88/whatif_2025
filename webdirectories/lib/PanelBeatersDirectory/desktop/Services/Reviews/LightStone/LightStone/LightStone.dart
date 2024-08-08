@@ -6,7 +6,8 @@ import 'LightStoneEcho/LightStoneEcho.dart';
 import 'WhoIsLightStone/WhoIsLightStone.dart';
 
 class LightStone extends StatefulWidget {
-  const LightStone({super.key});
+  final Map<String, dynamic> data;
+  const LightStone({super.key, required this.data});
 
   @override
   State<LightStone> createState() => _LightStoneState();
@@ -31,7 +32,14 @@ class _LightStoneState extends State<LightStone> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [LightStoneEcho(), WhoIsLightStone()],
+        children: [
+          LightStoneEcho(
+            percentage: widget.data['lightstoneScore'].toString(),
+          ),
+          WhoIsLightStone(
+            data: widget.data,
+          )
+        ],
       ),
     );
   }

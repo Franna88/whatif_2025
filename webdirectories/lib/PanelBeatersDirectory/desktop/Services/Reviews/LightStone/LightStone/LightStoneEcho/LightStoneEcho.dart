@@ -7,7 +7,8 @@ import 'package:webdirectories/myutility.dart';
 import 'LightStoneComp/PercentageText.dart';
 
 class LightStoneEcho extends StatefulWidget {
-  const LightStoneEcho({super.key});
+  final String percentage;
+  const LightStoneEcho({super.key, required this.percentage});
 
   @override
   State<LightStoneEcho> createState() => _LightStoneEchoState();
@@ -37,7 +38,7 @@ class _LightStoneEchoState extends State<LightStoneEcho> {
             Positioned(
                 bottom: MyUtility(context).height * 0.1,
                 left: MyUtility(context).width * 0.096,
-                child: PercentageText(percentage: '98')),
+                child: PercentageText(percentage: widget.percentage)),
           ],
         )
       ],

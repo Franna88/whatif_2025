@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
 class MessageFormField extends StatefulWidget {
+  final TextEditingController controller;
   const MessageFormField({
     Key? key,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -31,7 +33,7 @@ class _MessageFormFieldState extends State<MessageFormField> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: TextFormField(
-          controller: _controller,
+          controller: widget.controller,
           textAlignVertical: TextAlignVertical.top,
           style: TextStyle(
             color: Colors.white.withOpacity(0.7),

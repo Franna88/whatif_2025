@@ -4,7 +4,8 @@ import 'package:webdirectories/myutility.dart';
 import 'WhoIsLightStoneComp/columnContainer.dart';
 
 class WhoIsLightStone extends StatefulWidget {
-  const WhoIsLightStone({super.key});
+  final Map<String, dynamic> data;
+  const WhoIsLightStone({super.key, required this.data});
 
   @override
   State<WhoIsLightStone> createState() => _WhoIsLightStoneState();
@@ -90,15 +91,15 @@ class _WhoIsLightStoneState extends State<WhoIsLightStone> {
             'Repair Quality'
           ],
           section3Texts: [
-            '98%',
-            '96%',
-            '96%',
-            '94%',
-            '100%',
-            '100%',
-            '100%',
-            '100%',
-            '98%'
+            widget.data['lightstoneScore'].toString(),
+            widget.data['frft'].toString(),
+            widget.data['advocacy'].toString(),
+            widget.data['staff'].toString(),
+            widget.data['consultant'].toString(),
+            widget.data['opportunityInspect'].toString(),
+            widget.data['vehicleCleanliness'].toString(),
+            widget.data['rot'].toString(),
+            widget.data['repairQuality'].toString(),
           ],
         )
       ],

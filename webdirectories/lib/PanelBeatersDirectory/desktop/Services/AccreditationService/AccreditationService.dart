@@ -43,66 +43,28 @@ class _AccreditationServicesState extends State<AccreditationServices> {
 
   void _fetchAndOrganizeServices() async {
     try {
-      // Fetch all service types
-      QuerySnapshot approvalCategorySnapshot =
-          await _firestore.collection('approvals_category').get();
-      List<Map<String, dynamic>> approvalCategoryData = approvalCategorySnapshot
-          .docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
-          .toList();
       Map<String, List<Map<String, dynamic>>> servicesMap = {};
-
-      print(approvalCategoryData);
-
-      // Fetch all approvals linked to the account
-      QuerySnapshot listingsApprovalsSnapshot = await _firestore
-          .collection('listing_approvals')
+      // // Fetch all service types
+      QuerySnapshot listingsSnapshot = await _firestore
+          .collection('listings')
           .where('listingsId', isEqualTo: widget.listingId)
           .get();
+      if (listingsSnapshot.docs.isNotEmpty) {
+        // Assuming listingsId is unique and there is only one document returned
+        DocumentSnapshot listingDoc = listingsSnapshot.docs.first;
 
-      // Organize services under their respective service types
-      for (var doc in listingsApprovalsSnapshot.docs) {
-        Map<String, dynamic> listingsApprovalsData =
-            doc.data() as Map<String, dynamic>;
+        QuerySnapshot approvalsSnapshot =
+            await listingDoc.reference.collection('approvals').get();
 
-        QuerySnapshot approvalDoc = await _firestore
-            .collection('approvals')
-            .where('approvalsId',
-                isEqualTo: listingsApprovalsData['approvalsId'])
-            .get();
+        // Process the approvals subcollection data
+        await processApprovals(approvalsSnapshot, servicesMap);
 
-        Map<String, dynamic> approvalDocData =
-            approvalDoc.docs.first.data() as Map<String, dynamic>;
-        int approvalCategoryId = approvalDocData['approvalsCategoryId'];
-
-        String approvalsCategoryName = approvalCategoryData.firstWhere((doc) =>
-            doc['approvalsCategoryId'] ==
-            approvalCategoryId)['approvalsCategory'];
-
-        String? imageUrl = await getImageUrl(
-            'images/logos/${approvalDocData['approvalsFile']}');
-
-        if (imageUrl != null) {
-          // Ensure the service type exists in the map
-          if (servicesMap.containsKey(approvalsCategoryName)) {
-            servicesMap[approvalsCategoryName]!.add({
-              'ImageUrl': imageUrl,
-              'link': approvalDocData['approvalsUrl']
-            });
-          } else {
-            servicesMap[approvalsCategoryName] = [];
-            servicesMap[approvalsCategoryName]!.add({
-              'ImageUrl': imageUrl,
-              'link': approvalDocData['approvalsUrl']
-            });
-          }
-        }
+        setState(() {
+          _selectedAccreditationType = servicesMap.keys.first;
+          _accreditationData = servicesMap;
+          _isLoading = false;
+        });
       }
-
-      setState(() {
-        _accreditationData = servicesMap;
-        _isLoading = false;
-      });
     } catch (e) {
       print('Error fetching services: $e');
       setState(() {
@@ -111,11 +73,55 @@ class _AccreditationServicesState extends State<AccreditationServices> {
     }
   }
 
+  Future<void> processApprovals(QuerySnapshot approvalsSnapshot,
+      Map<String, List<Map<String, dynamic>>> servicesMap) async {
+    List<Future<void>> futures = [];
+
+    for (var approvalDoc in approvalsSnapshot.docs) {
+      futures.add(() async {
+        Map<String, dynamic> approvalData =
+            approvalDoc.data() as Map<String, dynamic>;
+        String? imageUrl =
+            await getImageUrl('images/logos/${approvalData['approvalsFile']}');
+
+        Map<String, dynamic> approvalCategoryData =
+            approvalData['approvalCategory'] as Map<String, dynamic>;
+        String approvalsCategoryName =
+            approvalCategoryData['approvalsCategory'];
+
+        if (imageUrl != null) {
+          // Ensure the service type exists in the map
+          if (servicesMap.containsKey(approvalsCategoryName)) {
+            servicesMap[approvalsCategoryName]!.add(
+                {'imageUrl': imageUrl, 'link': approvalData['approvalsUrl']});
+          } else {
+            servicesMap[approvalsCategoryName] = [
+              {'imageUrl': imageUrl, 'link': approvalData['approvalsUrl']}
+            ];
+          }
+        }
+      }());
+    }
+
+    await Future.wait(futures);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: _isLoading
-          ? const CircularProgressIndicator(color: Colors.white)
+          ? SizedBox(
+              height: MyUtility(context).height * 0.8,
+              child: Center(
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )
           : Column(
               children: [
                 SizedBox(
@@ -125,6 +131,7 @@ class _AccreditationServicesState extends State<AccreditationServices> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     AccreditationFilter(
+                        selectedFilter: _selectedAccreditationType,
                         onFilterSelected: _onAccreditationTypeSelected,
                         filterOptions: _accreditationData.keys.toList()),
                     AccreditationImageContainer(
