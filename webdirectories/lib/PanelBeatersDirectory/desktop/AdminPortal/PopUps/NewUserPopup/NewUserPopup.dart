@@ -11,6 +11,9 @@ class NewUserPopup extends StatefulWidget {
 }
 
 class _NewUserPopupState extends State<NewUserPopup> {
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _mobileController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -49,9 +52,18 @@ class _NewUserPopupState extends State<NewUserPopup> {
                   CloseButton(),
                 ],
               ),
-              PopUpTextField(text: 'Full Name'),
-              PopUpTextField(text: 'Email'),
-              PopUpTextField(text: 'Mobile Phone'),
+              PopUpTextField(
+                text: 'Full Name',
+                controller: _fullNameController,
+              ),
+              PopUpTextField(
+                text: 'Email',
+                controller: _emailController,
+              ),
+              PopUpTextField(
+                text: 'Mobile Phone',
+                controller: _mobileController,
+              ),
               PopUpsButton(
                 text: 'Send',
                 onTap: () {},

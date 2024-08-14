@@ -13,6 +13,9 @@ class AddAdvertPopup extends StatefulWidget {
 }
 
 class _AddAdvertPopupState extends State<AddAdvertPopup> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -51,13 +54,21 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
                   CloseButton(),
                 ],
               ),
-              PopUpTextField(text: 'Title'),
-              BiggerPopupTextField(text: 'Description'),
+              PopUpTextField(
+                text: 'Title',
+                controller: _titleController,
+              ),
+              BiggerPopupTextField(
+                text: 'Description',
+                controller: _descriptionController,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AttachmentPopupButton(text: 'Attach File', onTap: () {}),
-                  const SizedBox(height: 15,),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   PopUpsButton(
                     text: 'save',
                     onTap: () {},

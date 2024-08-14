@@ -16,10 +16,10 @@ class AdminContact extends StatefulWidget {
 }
 
 class _AdminContactState extends State<AdminContact> {
-  late List<Map<String, String>> contactInfo;
+  List<Map<String, dynamic>> _contactInfo = [];
   final _firestore = FirebaseFirestore.instance;
 
-  Future<List<Map<String, String>>> _fetchContactData() async {
+  Future<List<Map<String, dynamic>>> _fetchContactData() async {
     StoredUser? user = await getUserInfo();
 
     if (user == null) {
@@ -28,12 +28,12 @@ class _AdminContactState extends State<AdminContact> {
 
     QuerySnapshot contactSnapshot = await _firestore
         .collection('contact_person')
-        .where('listingsId', isEqualTo: 1)
+        .where('listingsId', isEqualTo: int.parse(user.id))
         .get();
 
     if (contactSnapshot.docs.isNotEmpty) {
-      List<Map<String, String>> contactData = contactSnapshot.docs
-          .map((doc) => doc.data() as Map<String, String>)
+      List<Map<String, dynamic>> contactData = contactSnapshot.docs
+          .map((doc) => doc.data() as Map<String, dynamic>)
           .toList();
       return contactData;
     } else {
@@ -46,6 +46,14 @@ class _AdminContactState extends State<AdminContact> {
         },
       ];
     }
+  }
+
+  void _updateContactData(Map<String, dynamic> newContact) {
+    List<Map<String, dynamic>> contactData = _contactInfo;
+    contactData.add(newContact);
+    setState(() {
+      _contactInfo = contactData;
+    });
   }
 
   @override
@@ -82,7 +90,7 @@ class _AdminContactState extends State<AdminContact> {
                     return Dialog(
                       backgroundColor: Colors.transparent,
                       insetPadding: EdgeInsets.all(10),
-                      child: ContactPopup(),
+                      child: ContactPopup(onAddContact: _updateContactData),
                     );
                   },
                 );

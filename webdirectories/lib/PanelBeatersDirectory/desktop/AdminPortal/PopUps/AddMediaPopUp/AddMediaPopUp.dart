@@ -11,6 +11,8 @@ class AddMediaPopup extends StatefulWidget {
 }
 
 class _AddMediaPopupState extends State<AddMediaPopup> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _linkController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -49,8 +51,14 @@ class _AddMediaPopupState extends State<AddMediaPopup> {
                   CloseButton(),
                 ],
               ),
-              PopUpTextField(text: 'Title'),
-              PopUpTextField(text: 'Link'),
+              PopUpTextField(
+                text: 'Title',
+                controller: _titleController,
+              ),
+              PopUpTextField(
+                text: 'Link',
+                controller: _linkController,
+              ),
               PopUpsButton(
                 text: 'save',
                 onTap: () {},

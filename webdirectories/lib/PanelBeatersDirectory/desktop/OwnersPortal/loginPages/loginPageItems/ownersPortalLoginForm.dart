@@ -29,8 +29,13 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
   Future<void> storeUserInfo(StoredUser user) async {
     await storage.write(
         key: 'user',
-        value: jsonEncode(
-            {'id': user.id, 'title': user.title, 'email': user.email}));
+        value: jsonEncode({
+          'id': user.id,
+          'member_id': user.memberId,
+          'full_name': user.fullName,
+          'email': user.email,
+          'cell': user.cell
+        }));
   }
 
   Future<void> _login(BuildContext context) async {
@@ -52,16 +57,39 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
 
           // Fetch user details from Firestore
           QuerySnapshot<Map<String, dynamic>> userDoc = await _firestore
-              .collection('listings')
-              .where('auth_id', isEqualTo: user.uid.toString())
+              .collection('listing_members')
+              .where('authId', isEqualTo: user.uid.toString())
+              .limit(1)
               .get();
+
           if (userDoc.docs.isNotEmpty) {
+            QuerySnapshot<Map<String, dynamic>> listingAllocationSnapshot =
+                await _firestore
+                    .collection('listing_allocation')
+                    .where('listingMembersId',
+                        isEqualTo:
+                            userDoc.docs.first.data()['listingMembersId'])
+                    .limit(1)
+                    .get();
             Map<String, dynamic> userData = userDoc.docs.first.data();
+            if (listingAllocationSnapshot.docs.isEmpty) {
+              setState(() {
+                _isLoading = false;
+              });
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('User data not found.')),
+              );
+              return;
+            }
             // Store user information locally
             await storeUserInfo(StoredUser(
-                id: userData['listingsId'].toString(),
-                title: userData['title'],
-                email: user.email!));
+                id: listingAllocationSnapshot.docs.first
+                    .data()['listingsId']
+                    .toString(),
+                email: user.email!,
+                fullName: userData['fullname'],
+                memberId: userData['listingMembersId'].toString(),
+                cell: userData['usercell']));
 
             if (!mounted) return; // Ensure the widget is still mounted
 

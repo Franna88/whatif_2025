@@ -4,12 +4,11 @@ import 'package:webdirectories/myutility.dart';
 class PopUpsButton extends StatefulWidget {
   final String text;
   final VoidCallback onTap;
+  final bool? waiting;
 
-  const PopUpsButton({
-    Key? key,
-    required this.text,
-    required this.onTap,
-  }) : super(key: key);
+  const PopUpsButton(
+      {Key? key, required this.text, required this.onTap, this.waiting})
+      : super(key: key);
 
   @override
   State<PopUpsButton> createState() => _PopUpsButtonState();
@@ -30,16 +29,25 @@ class _PopUpsButtonState extends State<PopUpsButton> {
           ),
         ),
         child: Center(
-          child: Text(
-            widget.text,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w700,
-              height: 0,
-            ),
-          ),
+          child: widget.waiting != null && widget.waiting == true
+              ? SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
+                    color: Colors.white,
+                  ),
+                )
+              : Text(
+                  widget.text,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                  ),
+                ),
         ),
       ),
     );

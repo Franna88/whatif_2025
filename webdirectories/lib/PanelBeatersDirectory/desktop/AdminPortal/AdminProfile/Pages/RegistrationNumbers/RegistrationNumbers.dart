@@ -16,7 +16,7 @@ class RegistrationNumbers extends StatefulWidget {
 }
 
 class _RegistrationNumbersState extends State<RegistrationNumbers> {
-  List<Map<String, dynamic>> registrationInfo = [];
+  List<Map<String, dynamic>> _registrationInfo = [];
   final _firestore = FirebaseFirestore.instance;
   bool _isLoading = true;
 
@@ -24,67 +24,128 @@ class _RegistrationNumbersState extends State<RegistrationNumbers> {
     // Implement registration data fetching logic
     StoredUser? user = await getUserInfo();
     if (user != null) {
+      print(user.id);
       try {
+        // QuerySnapshot registrationSnapshot = await _firestore
+        //     .collection('registration_numbers')
+        //     .where('listingsId', isEqualTo: int.parse(user.id))
+        //     .get();
+
+        // if (registrationSnapshot.docs.isNotEmpty) {
+        //   List<Map<String, dynamic>> registrationData = registrationSnapshot
+        //       .docs
+        //       .map((doc) => doc.data() as Map<String, dynamic>)
+        //       .toList();
+
+        //   // Fetch the registration type names
+        //   for (var registration in registrationData) {
+        //     int? registrationTypeId = registration['registrationTypeId'];
+        //     QuerySnapshot registrationTypeSnapshot = await FirebaseFirestore
+        //         .instance
+        //         .collection('registration_type')
+        //         .where('registrationTypeId', isEqualTo: registrationTypeId)
+        //         .get();
+        //     String registrationTypeName =
+        //         registrationTypeSnapshot.docs.first['registrationType'];
+        //     String showRegistration =
+        //         registrationTypeSnapshot.docs.first['registrationShow'] == 1
+        //             ? 'Yes'
+        //             : 'No';
+        //     registration['registrationType'] = registrationTypeName;
+        //     registration['displayProfile'] = showRegistration;
+        //   }
+
+        //   return registrationData;
+
+        // Fetch the registration numbers related to the listing
         QuerySnapshot registrationSnapshot = await _firestore
             .collection('registration_numbers')
             .where('listingsId', isEqualTo: int.parse(user.id))
             .get();
 
-        if (registrationSnapshot.docs.isNotEmpty) {
-          List<Map<String, dynamic>> registrationData = registrationSnapshot
-              .docs
-              .map((doc) => doc.data() as Map<String, dynamic>)
-              .toList();
+        if (registrationSnapshot.docs.isEmpty) return [];
 
-          // Fetch the registration type names
-          for (var registration in registrationData) {
-            int? registrationTypeId = registration['registrationTypeId'];
-            QuerySnapshot registrationTypeSnapshot = await FirebaseFirestore
-                .instance
-                .collection('registration_type')
-                .where('registrationTypeId', isEqualTo: registrationTypeId)
-                .get();
-            String registrationTypeName =
-                registrationTypeSnapshot.docs.first['registrationType'];
-            String showRegistration =
-                registrationTypeSnapshot.docs.first['registrationShow'] == 1
+        List<Map<String, dynamic>> registrationData = registrationSnapshot.docs
+            .map((doc) => doc.data() as Map<String, dynamic>)
+            .toList();
+
+        // Extract all registrationTypeIds from registrationData
+        Set<int?> registrationTypeIds = registrationData
+            .map((registration) => registration['registrationTypeId'] as int?)
+            .toSet();
+
+        registrationTypeIds.removeWhere((i) => i == null);
+
+        // Fetch all relevant registration types in one query
+        QuerySnapshot registrationTypeSnapshot = await _firestore
+            .collection('registration_type')
+            .where('registrationTypeId', whereIn: registrationTypeIds)
+            .get();
+
+        // Create a map of registrationTypeId to registrationType details
+        Map<int, Map<String, dynamic>> registrationTypeMap = {
+          for (var doc in registrationTypeSnapshot.docs)
+            doc['registrationTypeId']: {
+              'type': doc['registrationType'],
+              'show': doc['registrationShow'],
+            }
+        };
+
+        // Map the registration type names and show profile status back to the registration data
+        for (var registration in registrationData) {
+          int? registrationTypeId = registration['registrationTypeId'];
+          if (registrationTypeId != null &&
+              registrationTypeMap.containsKey(registrationTypeId)) {
+            registration['registrationType'] =
+                registrationTypeMap[registrationTypeId]!['type'];
+            registration['displayProfile'] =
+                registrationTypeMap[registrationTypeId]!['show'] == 1
                     ? 'Yes'
                     : 'No';
-            registration['registrationType'] = registrationTypeName;
-            registration['displayProfile'] = showRegistration;
           }
-
-          return registrationData;
-        } else {
-          return [
-            {
-              'registrationType': 'CRA Membership',
-              'registrationNumbers': '2068',
-              'displayProfile': 'Yes',
-            },
-            {
-              'registrationType': 'CRA Membership',
-              'registrationNumbers': '2068',
-              'displayProfile': 'Yes',
-            },
-            {
-              'registrationType': 'CRA Membership',
-              'registrationNumbers': '2068',
-              'displayProfile': 'yes',
-            },
-            {
-              'registrationType': 'CRA Membership',
-              'registrationNumbers': '2068',
-              'displayProfile': 'yes',
-            },
-          ];
         }
+
+        return registrationData;
+        //     } else {
+        //       return [
+        //         {
+        //           'registrationType': 'CRA Membership',
+        //           'registrationNumbers': '2068',
+        //           'displayProfile': 'Yes',
+        //         },
+        //         {
+        //           'registrationType': 'CRA Membership',
+        //           'registrationNumbers': '2068',
+        //           'displayProfile': 'Yes',
+        //         },
+        //         {
+        //           'registrationType': 'CRA Membership',
+        //           'registrationNumbers': '2068',
+        //           'displayProfile': 'yes',
+        //         },
+        //         {
+        //           'registrationType': 'CRA Membership',
+        //           'registrationNumbers': '2068',
+        //           'displayProfile': 'yes',
+        //         },
+        //       ];
+        //     }
       } catch (e) {
         print(e);
       }
+    } else {
+      throw "User not found";
     }
 
-    return [{}];
+    return [];
+  }
+
+  void updateRegistrationNumbersOnAdd(Map<String, dynamic> newRegistration) {
+    List<Map<String, dynamic>> regData = _registrationInfo;
+    regData.add(newRegistration);
+    setState(() {
+      _registrationInfo = regData;
+    });
   }
 
   @override
@@ -127,7 +188,9 @@ class _RegistrationNumbersState extends State<RegistrationNumbers> {
                         return Dialog(
                           backgroundColor: Colors.transparent,
                           insetPadding: EdgeInsets.all(10),
-                          child: RegistrationPopup(),
+                          child: RegistrationPopup(
+                            onAddRegistration: updateRegistrationNumbersOnAdd,
+                          ),
                         );
                       },
                     );
@@ -212,10 +275,10 @@ class _RegistrationNumbersState extends State<RegistrationNumbers> {
                       itemBuilder: (context, index) {
                         final registration = registrationInfo[index];
                         return RegistrationContainer(
-                          registrationType: registration['registrationType']!,
+                          registrationType: registration['registrationType'],
                           registrationNumber:
-                              registration['registrationNumbers']!.toString(),
-                          displayProfile: registration['displayProfile']!,
+                              registration['registrationNumbers'].toString(),
+                          displayProfile: registration['registrationDisplay'],
                           pressEdit: () {},
                           PressDelete: () {},
                         );

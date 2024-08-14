@@ -27,52 +27,119 @@ class _DocumentsState extends State<Documents> {
 
     // Fetch documents
     try {
+      // QuerySnapshot documentsSnapshot = await _firestore
+      //     .collection('listings_documents')
+      //     .where('listingsId', isEqualTo: int.parse(user.id))
+      //     .get();
+      // List<Map<String, dynamic>> documentData = documentsSnapshot.docs
+      //     .map((doc) => doc.data() as Map<String, dynamic>)
+      //     .toList();
+
+      // if (documentsSnapshot.docs.isNotEmpty) {
+      //   // Fetch the document categories and document sub categories
+      //   for (var doc in documentData) {
+      //     int? documentCategoryId = doc['documentCategoryId'];
+      //     int? documentSubCategoryId = doc['documentSubCategoryId'];
+
+      //     // Fetch the document category
+      //     QuerySnapshot documentCategorySnapshot = await FirebaseFirestore
+      //         .instance
+      //         .collection('document_category')
+      //         .where('documentCategoryId', isEqualTo: documentCategoryId)
+      //         .get();
+
+      //     // Fetch the document sub category
+      //     QuerySnapshot QueryDocumentSubCategorySnapshot =
+      //         await FirebaseFirestore.instance
+      //             .collection('document_sub_category')
+      //             .where('documentSubCategoryId',
+      //                 isEqualTo: documentSubCategoryId)
+      //             .get();
+
+      //     if (documentCategorySnapshot.docs.isNotEmpty &&
+      //         QueryDocumentSubCategorySnapshot.docs.isNotEmpty) {
+      //       String documentCategoryData =
+      //           documentCategorySnapshot.docs.first['documentCategory'];
+      //       String documentSubCategoryData = QueryDocumentSubCategorySnapshot
+      //           .docs.first['documentSubCategory'];
+
+      //       // Add the document category and sub category to the document
+      //       doc['documentCategory'] = documentCategoryData;
+      //       doc['documentSubCategory'] = documentSubCategoryData;
+      //     }
+      //   }
+
+      //   return documentData;
+      // } else {
+      //   return [];
+      // }
+      // Fetch documents related to the user's listing
       QuerySnapshot documentsSnapshot = await _firestore
           .collection('listings_documents')
           .where('listingsId', isEqualTo: int.parse(user.id))
           .get();
+
+      if (documentsSnapshot.docs.isEmpty) return [];
+
       List<Map<String, dynamic>> documentData = documentsSnapshot.docs
           .map((doc) => doc.data() as Map<String, dynamic>)
           .toList();
 
-      if (documentsSnapshot.docs.isNotEmpty) {
-        // Fetch the document categories and document sub categories
-        for (var doc in documentData) {
-          int? documentCategoryId = doc['documentCategoryId'];
-          int? documentSubCategoryId = doc['documentSubCategoryId'];
+      // Extract unique category and subcategory IDs
+      Set<int?> documentCategoryIds =
+          documentData.map((doc) => doc['documentCategoryId'] as int?).toSet();
+      Set<int?> documentSubCategoryIds = documentData
+          .map((doc) => doc['documentSubCategoryId'] as int?)
+          .toSet();
 
-          // Fetch the document category
-          QuerySnapshot documentCategorySnapshot = await FirebaseFirestore
-              .instance
-              .collection('document_category')
-              .where('documentCategoryId', isEqualTo: documentCategoryId)
-              .get();
+      // Fetch categories and subcategories in parallel
+      Future<QuerySnapshot> documentCategoryFuture = FirebaseFirestore.instance
+          .collection('document_category')
+          .where('documentCategoryId', whereIn: documentCategoryIds.toList())
+          .get();
 
-          // Fetch the document sub category
-          QuerySnapshot QueryDocumentSubCategorySnapshot =
-              await FirebaseFirestore.instance
-                  .collection('document_sub_category')
-                  .where('documentSubCategoryId',
-                      isEqualTo: documentSubCategoryId)
-                  .get();
+      Future<QuerySnapshot> documentSubCategoryFuture = FirebaseFirestore
+          .instance
+          .collection('document_sub_category')
+          .where('documentSubCategoryId',
+              whereIn: documentSubCategoryIds.toList())
+          .get();
 
-          if (documentCategorySnapshot.docs.isNotEmpty &&
-              QueryDocumentSubCategorySnapshot.docs.isNotEmpty) {
-            String documentCategoryData =
-                documentCategorySnapshot.docs.first['documentCategory'];
-            String documentSubCategoryData = QueryDocumentSubCategorySnapshot
-                .docs.first['documentSubCategory'];
+      List<QuerySnapshot> results = await Future.wait([
+        documentCategoryFuture,
+        documentSubCategoryFuture,
+      ]);
 
-            // Add the document category and sub category to the document
-            doc['documentCategory'] = documentCategoryData;
-            doc['documentSubCategory'] = documentSubCategoryData;
-          }
+      QuerySnapshot documentCategorySnapshot = results[0];
+      QuerySnapshot documentSubCategorySnapshot = results[1];
+
+      // Create maps for fast lookup
+      Map<int, String> documentCategoryMap = {
+        for (var doc in documentCategorySnapshot.docs)
+          doc['documentCategoryId']: doc['documentCategory']
+      };
+
+      Map<int, String> documentSubCategoryMap = {
+        for (var doc in documentSubCategorySnapshot.docs)
+          doc['documentSubCategoryId']: doc['documentSubCategory']
+      };
+
+      // Assign category and subcategory names to the document data
+      for (var doc in documentData) {
+        int? documentCategoryId = doc['documentCategoryId'];
+        int? documentSubCategoryId = doc['documentSubCategoryId'];
+
+        if (documentCategoryMap.containsKey(documentCategoryId)) {
+          doc['documentCategory'] = documentCategoryMap[documentCategoryId];
         }
 
-        return documentData;
-      } else {
-        return [];
+        if (documentSubCategoryMap.containsKey(documentSubCategoryId)) {
+          doc['documentSubCategory'] =
+              documentSubCategoryMap[documentSubCategoryId];
+        }
       }
+
+      return documentData;
     } catch (e) {
       print('error fetching documents: $e');
       return [];

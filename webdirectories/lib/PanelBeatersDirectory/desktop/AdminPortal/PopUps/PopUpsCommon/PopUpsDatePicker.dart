@@ -1,17 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:intl/intl.dart';
 
-class PopUpTextField extends StatefulWidget {
+class PopUpDatePicker extends StatefulWidget {
   final TextEditingController controller;
   final String text;
-  const PopUpTextField(
-      {super.key, required this.text, required this.controller});
+
+  const PopUpDatePicker({
+    super.key,
+    required this.text,
+    required this.controller,
+  });
 
   @override
-  State<PopUpTextField> createState() => _PopUpTextFieldState();
+  _PopUpDatePickerState createState() => _PopUpDatePickerState();
 }
 
-class _PopUpTextFieldState extends State<PopUpTextField> {
+class _PopUpDatePickerState extends State<PopUpDatePicker> {
+  void _selectDate(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked != null) {
+      setState(() {
+        widget.controller.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,6 +52,8 @@ class _PopUpTextFieldState extends State<PopUpTextField> {
           width: MyUtility(context).width * 0.25,
           child: TextFormField(
             controller: widget.controller,
+            readOnly: true, // Prevent manual editing
+            onTap: () => _selectDate(context),
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,

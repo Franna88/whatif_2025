@@ -40,6 +40,8 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
   }
 
   Future<void> _fetchUserData() async {
+    if (!mounted) return;
+
     setState(() {
       _isLoading = true;
     });
@@ -97,6 +99,8 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
             'province': provinceData['province'],
             'suburb': suburbData['suburb'],
           });
+
+          if (!mounted) return;
 
           setState(() {
             _controller.setValues(userData);

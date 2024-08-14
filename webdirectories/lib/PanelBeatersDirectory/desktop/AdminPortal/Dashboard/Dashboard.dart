@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/GraphContainer.dart';
@@ -5,6 +6,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboa
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/JobFinderOverviewContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/NotificationsContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/WelcomeBack.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class Dashboard extends StatefulWidget {
@@ -15,6 +18,13 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final _firestore = FirebaseFirestore.instance;
+  String _title = '';
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
@@ -75,14 +85,14 @@ class _DashboardState extends State<Dashboard> {
                 )
               ],
             ),
-             SizedBox(
+            SizedBox(
               height: widthDevice < 1500 ? 15 : 30,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Notificationscontainer(),
-                 SizedBox(
+                SizedBox(
                   width: widthDevice < 1500 ? 15 : 30,
                 ),
                 JobFinderOverviewContainer()

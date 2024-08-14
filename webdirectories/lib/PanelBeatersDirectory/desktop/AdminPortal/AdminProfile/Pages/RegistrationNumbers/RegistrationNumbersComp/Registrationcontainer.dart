@@ -5,7 +5,7 @@ import 'package:webdirectories/myutility.dart';
 class RegistrationContainer extends StatefulWidget {
   final String registrationType;
   final String registrationNumber;
-  final String displayProfile;
+  final int displayProfile;
   final VoidCallback pressEdit;
   final VoidCallback PressDelete;
 
@@ -68,7 +68,7 @@ class _RegistrationContainerState extends State<RegistrationContainer> {
               SizedBox(
                 width: MyUtility(context).width * 0.17,
                 child: Text(
-                  widget.displayProfile,
+                  widget.displayProfile == 1 ? 'Yes' : 'No',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 17.68,
