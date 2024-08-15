@@ -20,7 +20,8 @@ class Advertisement extends StatefulWidget {
 
 class _AdvertisementState extends State<Advertisement> {
   final _firestore = FirebaseFirestore.instance;
-  List<AdvertisementModel> advertData = [];
+  List<AdvertisementModel> _advertData = [];
+  StoredUser? user;
   bool _isLoading = true;
 
   @override
@@ -31,59 +32,55 @@ class _AdvertisementState extends State<Advertisement> {
 
   void _fetchAdvertData() async {
     try {
-      StoredUser? user = await getUserInfo();
+      user = await getUserInfo();
       if (user == null) {
         return;
       }
 
       QuerySnapshot<Map<String, dynamic>> advertSnapshot = await _firestore
           .collection('specials')
-          .where('listingsId', isEqualTo: int.parse(user.id))
+          .where('listingsId', isEqualTo: int.parse(user!.id))
           .get();
       List<AdvertisementModel> advertList = [];
+      List<Future<void>> futures = [];
       if (advertSnapshot.docs.isNotEmpty) {
         for (var doc in advertSnapshot.docs) {
-          String? image =
-              await getImageUrl('listings/${doc.data()['immageFile']}');
-          advertList.add(AdvertisementModel(
-              dateAdded: doc.data()['dateAdded'],
-              dateUpdated: doc.data()['dateUpdated'],
-              immageDescription: doc.data()['immageDescription'],
-              immageFile: image,
-              immageTitle: doc.data()['immageTitle'],
-              membersId: int.parse(user.memberId),
-              specialsOrder: doc.data()['specialsOrder'],
-              listingsId: int.parse(user.id)));
+          futures.add(() async {
+            String? image =
+                await getImageUrl('listings/${doc.data()['immageFile']}');
+            advertList.add(AdvertisementModel(
+                dateAdded: doc.data()['dateAdded'],
+                dateUpdated: doc.data()['dateUpdated'],
+                immageDescription: doc.data()['immageDescription'],
+                immageFile: image,
+                immageTitle: doc.data()['immageTitle'],
+                membersId: int.parse(user!.memberId),
+                specialsOrder: doc.data()['specialsOrder'],
+                listingsId: int.parse(user!.id)));
+          }());
         }
-
-        setState(() {
-          _isLoading = false;
-          advertData = advertList;
-        });
+        await Future.wait(futures);
       }
+      advertList.sort(
+        (a, b) => a.specialsOrder.compareTo(b.specialsOrder),
+      );
+
+      setState(() {
+        _isLoading = false;
+        _advertData = advertList;
+      });
     } catch (e) {
       print('error fetching advert data: $e');
     }
   }
 
-  final List<Map<String, String>> advertisements = [
-    {
-      'image': 'Images/advert.jpg',
-      'name': 'VW Polo 2014 Front bumper',
-    },
-    {
-      'image': 'Images/advert.jpg',
-      'name': 'Toyota Corolla 2016 Headlight',
-    },
-    {
-      'image': 'Images/advert.jpg',
-      'name': 'Ford Focus 2018 Mirror',
-    },
-    {
-      'image': 'Images/advert.jpg',
-      'name': 'Ford Focus 2018 Mirror',
-    },
-  ];
+  void _onAdvertAdded(AdvertisementModel newAdData) {
+    List<AdvertisementModel> advertList = _advertData;
+    advertList.add(newAdData);
+    setState(() {
+      _advertData = advertList;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +128,11 @@ class _AdvertisementState extends State<Advertisement> {
                                     return Dialog(
                                       backgroundColor: Colors.transparent,
                                       insetPadding: EdgeInsets.all(10),
-                                      child: AddAdvertPopup(),
+                                      child: AddAdvertPopup(
+                                        onAdvertAdded: _onAdvertAdded,
+                                        user: user,
+                                        adCount: _advertData.length,
+                                      ),
                                     );
                                   },
                                 );
@@ -145,7 +146,7 @@ class _AdvertisementState extends State<Advertisement> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: advertData.map((ad) {
+                            children: _advertData.map((ad) {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Advertcontainer(

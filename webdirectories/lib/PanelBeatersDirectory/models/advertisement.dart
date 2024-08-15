@@ -13,9 +13,23 @@ class AdvertisementModel {
   final String dateAdded;
   final String? dateUpdated;
   final String immageDescription;
-  final String? immageFile;
+  String? immageFile;
   final String immageTitle;
   final int listingsId;
   final int? membersId;
   final int specialsOrder;
+
+  // Convert the object to a map
+  Map<String, dynamic> toMap() {
+    return {
+      'dateAdded': dateAdded,
+      'dateUpdated': dateUpdated,
+      'immageDescription': immageDescription,
+      'immageFile': immageFile,
+      'immageTitle': immageTitle,
+      'listingsId': listingsId,
+      'membersId': membersId,
+      'specialsOrder': specialsOrder,
+    };
+  }
 }

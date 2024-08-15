@@ -96,9 +96,7 @@ class _AddImagePopupState extends State<AddImagePopup> {
         } else {
           Uint8List data = await image.readAsBytes();
           final storageRef = _firestorage.ref().child('listings/${image.name}');
-          print('Check 1');
           final uploadTask = storageRef.putData(data);
-          print('Check 2');
           await uploadTask;
           print(
             'Image uploaded successfully: ${image.name}',
