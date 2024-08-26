@@ -1,6 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DasboardComp/DashPartsandQuote.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashEditProfile.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashGraph.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashJobFinder.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashNotificationsUp.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashProfileView.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/GraphContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/IconTotalContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/JobFinderOverviewContainer.dart';
@@ -32,7 +38,9 @@ class _DashboardState extends State<Dashboard> {
     return Container(
       width: MyUtility(context).width,
       height: MyUtility(context).height,
-      decoration: BoxDecoration(color: Color(0xFFF4F4F4)),
+      decoration: BoxDecoration(
+        color: Color(0xFF181B1D),
+      ),
       child: Padding(
         padding: EdgeInsets.only(
             left: widthDevice < 1500 ? 15 : 30,
@@ -40,15 +48,18 @@ class _DashboardState extends State<Dashboard> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            DashProfileView(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                WelcomeBack(),
+                /*WelcomeBack(),*/
+                DashEditProfile(),
                 SizedBox(
                   width: widthDevice < 1500 ? 15 : 30,
                 ),
-                GraphContaier()
+                /*GraphContaier()*/
+                DashGraph()
               ],
             ),
             SizedBox(
@@ -57,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
+                /*Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     IcontTotalContainer(
@@ -79,24 +90,45 @@ class _DashboardState extends State<Dashboard> {
                       colorsvgBack: Color(0xFF212529),
                     ),
                   ],
-                ),
-                SizedBox(
+                ),*/
+                /* SizedBox(
                   width: MyUtility(context).width * 0.1,
-                )
+                )*/
               ],
             ),
-            SizedBox(
+
+            /* SizedBox(
               height: widthDevice < 1500 ? 15 : 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Notificationscontainer(),
-                SizedBox(
-                  width: widthDevice < 1500 ? 15 : 30,
-                ),
-                JobFinderOverviewContainer()
-              ],
+            ),*/
+            SizedBox(
+              height: 315.94,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  //Notificationscontainer(),
+                  DashJobFinder(),
+                  SizedBox(
+                    width: widthDevice < 1500 ? 15 : 30,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 3),
+                        child: Dashpartsandquote(),
+                      ),
+                      Dashpartsandquote(),
+                      Dashpartsandquote(),
+                    ],
+                  ),
+                  SizedBox(
+                    width: widthDevice < 1500 ? 15 : 30,
+                  ),
+                  DashNotificationsUp()
+                  //JobFinderOverviewContainer()
+                  //Notificationscontainer()
+                ],
+              ),
             ),
           ],
         ),

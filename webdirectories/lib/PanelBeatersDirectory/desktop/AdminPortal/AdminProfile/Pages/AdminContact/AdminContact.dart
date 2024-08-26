@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminContact/AdminContactComp/AdminContactContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminContact/AdminContactComp/NewTeamMemberAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBoxB.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/ContactPopup/ContactPopup.dart';
@@ -170,39 +171,40 @@ class _AdminContactState extends State<AdminContact> {
             ),
           ),
         ),
-        SizedBox(
-          height: heightDevice,
-          child: FutureBuilder<List<Map<String, dynamic>>>(
-            future: _fetchContactData(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                    child: CircularProgressIndicator(
-                  color: Colors.black,
-                ));
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(child: Text('No contact persons found'));
-              } else {
-                final contactInfo = snapshot.data!;
-                return ListView.builder(
-                  itemCount: contactInfo.length,
-                  itemBuilder: (context, index) {
-                    final contact = contactInfo[index];
-                    return AdminContactContainer(
-                      type: contact['contactPersonDesignation'],
-                      contactPerson: contact['contactPerson'],
-                      phone: contact['contactPersonCell'],
-                      email: contact['contactPersonEmail'],
-                      pressEdit: () {},
-                      PressDelete: () {},
+        Column(
+          children: [
+            SizedBox(
+              height: heightDevice,
+              child: FutureBuilder<List<Map<String, dynamic>>>(
+                future: _fetchContactData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No contact persons found'));
+                  } else {
+                    final contactInfo = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: contactInfo.length,
+                      itemBuilder: (context, index) {
+                        final contact = contactInfo[index];
+                        return AdminContactContainer(
+                          type: contact['contactPersonDesignation'],
+                          contactPerson: contact['contactPerson'],
+                          phone: contact['contactPersonCell'],
+                          email: contact['contactPersonEmail'],
+                          pressEdit: () {},
+                          PressDelete: () {},
+                        );
+                      },
                     );
-                  },
-                );
-              }
-            },
-          ),
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ],
     );

@@ -15,8 +15,11 @@ class _Page4State extends State<Page4> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [TopNavBar(), Watif(), DownloadWatif(), Footer()],
+      child: Material(
+        color: Colors.white,
+        child: Column(
+          children: [TopNavBar(), Watif(), DownloadWatif(), Footer()],
+        ),
       ),
     );
   }

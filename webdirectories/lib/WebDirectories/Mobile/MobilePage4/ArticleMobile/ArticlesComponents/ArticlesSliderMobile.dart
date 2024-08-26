@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage4/ArticleMobile/ArticlesComponents/ArticlesContainermobile.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../mobileDummyArticle.dart';
+
 class ArticlesSliderMobile extends StatefulWidget {
   const ArticlesSliderMobile({Key? key}) : super(key: key);
 
@@ -36,7 +38,12 @@ class _ArticlesSliderMobileState extends State<ArticlesSliderMobile> {
                 writer: 'Wena Cronje',
                 discription:
                     "Your CSI success contributes to your business success and assists both prospects and industry users.",
-                onpress: () {},
+                onpress: () {
+                  Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MobileDummyArticle()),
+              );
+                },
               ),
               ArticlesContainerMobile(
                   image: 'images/turbine.png',

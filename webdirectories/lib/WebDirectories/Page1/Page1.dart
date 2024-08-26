@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPortal.dart';
 import 'package:webdirectories/WebDirectories/Footer/Footer.dart';
 import 'package:webdirectories/WebDirectories/Page1/AboutUS/AboutUs.dart';
 import 'package:webdirectories/WebDirectories/Page1/AiCoDriver/AiCoDriver.dart';
@@ -19,7 +20,8 @@ class _Page1State extends State<Page1> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
+        child:
+            AdminPortal() /*Column(
         children: [
           //  CategorySelect(),
           LandingPageDisPlay(),
@@ -30,7 +32,7 @@ class _Page1State extends State<Page1> {
           Comments(),
           Footer()
         ],
-      ),
-    );
+      ),*/
+        );
   }
 }

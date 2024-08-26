@@ -6,7 +6,9 @@ import 'TextFiends/PostCommentEmail.dart';
 import 'TextFiends/PostCommentSort.dart';
 
 class ArticlesPostComment extends StatefulWidget {
-  const ArticlesPostComment({super.key});
+  final Color? otherDirectoryTextColor;
+  final otherDirectoryButtonColor;
+  const ArticlesPostComment({super.key, this.otherDirectoryTextColor, this.otherDirectoryButtonColor});
 
   @override
   State<ArticlesPostComment> createState() => _ArticlesPostCommentState();
@@ -52,7 +54,9 @@ class _ArticlesPostCommentState extends State<ArticlesPostComment> {
                   'Join the conversation!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFFE5882F),
+                    color: widget.otherDirectoryTextColor == null
+                        ? Color(0xFFE5882F)
+                        : widget.otherDirectoryTextColor,
                     fontSize: 20.4,
                     fontFamily: 'ralewaysemi',
                     fontWeight: FontWeight.w600,
@@ -96,7 +100,7 @@ class _ArticlesPostCommentState extends State<ArticlesPostComment> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFFF8728),
+                            backgroundColor: widget.otherDirectoryButtonColor == null ? Color(0xFFFF8728) : widget.otherDirectoryButtonColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.40),
                             ),

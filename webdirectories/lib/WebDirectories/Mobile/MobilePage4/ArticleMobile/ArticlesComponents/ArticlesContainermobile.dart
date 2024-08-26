@@ -131,7 +131,7 @@ class _ArticlesContainerMobileState extends State<ArticlesContainerMobile> {
                 child: Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: widget.onpress,
                     icon: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,

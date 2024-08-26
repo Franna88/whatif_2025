@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/ContactUsPage/ContactUsMainPage.dart';
 import 'package:webdirectories/WebDirectories/Footer/FooterComponents/FooterTextButton.dart';
 import 'package:webdirectories/WebDirectories/Page1/Page1.dart';
 import 'package:webdirectories/WebDirectories/Page2/Page2.dart';
 import 'package:webdirectories/WebDirectories/Page3/Page3.dart';
 import 'package:webdirectories/WebDirectories/Page4/Page4.dart';
 import 'package:webdirectories/WebDirectories/Page5/Page5.dart';
+import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouch.dart';
 import 'package:webdirectories/WebDirectories/Page7/Page7.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -52,7 +54,7 @@ class _FooterState extends State<Footer> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(
-            'images/logo.png',
+            'images/webDirLogo.png',
             height: MyUtility(context).height * 0.12,
             width: MyUtility(context).width * 0.15,
           ),

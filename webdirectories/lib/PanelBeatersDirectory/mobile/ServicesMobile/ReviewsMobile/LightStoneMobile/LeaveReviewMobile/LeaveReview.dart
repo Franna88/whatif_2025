@@ -22,6 +22,8 @@ class _LeaveReviewMobileState extends State<LeaveReviewMobile> {
   final _emailController = TextEditingController();
   final _ratingController = TextEditingController();
   final _reviewController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -102,6 +104,7 @@ class _LeaveReviewMobileState extends State<LeaveReviewMobile> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: MessageFormField(
+
                         controller: _emailController,
                       ),
                     ),

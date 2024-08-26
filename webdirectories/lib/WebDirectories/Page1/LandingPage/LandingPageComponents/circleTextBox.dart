@@ -162,78 +162,93 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                 SizedBox(
                   width: MyUtility(context).width / 4.8,
                   height: MyUtility(context).height * 0.18,
-                  child: Text(
-                    widget.description,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'raleway',
-                        color: const Color.fromARGB(255, 255, 255, 255)),
-                    textAlign: TextAlign.center,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        widget.description,
+                        style: TextStyle(
+                            fontSize: MyUtility(context). width < 1500 ? 16 : 18,
+                            fontFamily: 'raleway',
+                            color: const Color.fromARGB(255, 255, 255, 255)),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: MyUtility(context).height * 0.05,
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.1,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      widget.Title2 == "WATIF"
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Material(
-                                        child: Page4(),
-                                      )))
-                          : widget.Title1 == "PANEL BEATER "
-                              ? Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Material(
-                                            child: PanelBeatersHome(),
-                                          )))
-                              : goToLink(widget.url);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+
+                  ),
+                  
+                  // width: MediaQuery.of(context).size.width * 0.1,
+                  // height: MediaQuery.of(context).size.height * 0.05,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    child: TextButton(
+                      onPressed: () {
+                        widget.Title2 == "WATIF"
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Material(
+                                          child: Page4(),
+                                        )))
+                            : widget.Title1 == "PANEL BEATER "
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Material(
+                                              child: PanelBeatersHome(),
+                                            )))
+                                : goToLink(widget.url);
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide.none,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: EdgeInsets.zero,
                       ),
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        GestureDetector(
-                          onTap: () async {},
-                          child: Container(
-                            width: 25,
-                            height: 25,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              shape: BoxShape.circle,
-                            ),
-                            padding: EdgeInsets.zero,
-                            child: Icon(
-                              Icons.keyboard_arrow_right_outlined,
-                              color: Colors.white,
-                              size: 16,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GestureDetector(
+                            onTap: () async {},
+                            child: Container(
+                              width: 25,
+                              height: 25,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                shape: BoxShape.circle,
+                              ),
+                              padding: EdgeInsets.zero,
+                              child: Icon(
+                                Icons.keyboard_arrow_right_outlined,
+                                color: Colors.white,
+                                size: 16,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: 4),
-                        Text(
-                          widget.Title2 == "WATIF"
-                              ? 'Learn More'
-                              : 'View Directory',
-                          style: TextStyle(
-                            color: Color(0xFF0C0C0C).withOpacity(0.9),
-                            fontSize: 16.5,
-                            fontFamily: 'Raleway',
+                          SizedBox(width: 10),
+                          Text(
+                            widget.Title2 == "WATIF"
+                                ? 'Learn More'
+                                : 'View Directory',
+                            style: TextStyle(
+                              color: Color(0xFF0C0C0C).withOpacity(0.9),
+                              fontSize: 16.5,
+                              fontFamily: 'Raleway',
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 )

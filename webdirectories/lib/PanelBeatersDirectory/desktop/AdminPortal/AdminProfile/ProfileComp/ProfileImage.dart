@@ -57,11 +57,9 @@ class _ProfileImageState extends State<ProfileImage> {
             child: Text(
               widget.imageText,
               style: TextStyle(
-                color: Color(0xFF0F253A),
-                fontSize: 20.4,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w700,
-                height: 1,
+                color: Colors.white,
+                fontSize: 14.7364,
+                fontFamily: 'raleway',
               ),
             ),
           ),
@@ -70,13 +68,13 @@ class _ProfileImageState extends State<ProfileImage> {
           ),
           Container(
             width: widthDevice < 1500
-                ? MyUtility(context).width * 0.12
-                : MyUtility(context).width * 0.08,
-            height: MyUtility(context).height * 0.14,
+                ? MyUtility(context).width * 0.3
+                : MyUtility(context).width * 0.22,
+            height: MyUtility(context).height * 0.27,
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
               ),
               shadows: [
                 BoxShadow(

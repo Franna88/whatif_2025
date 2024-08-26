@@ -88,6 +88,7 @@ class _JoinUsState extends State<JoinUs> {
                         "Log into your Owners Portal to review, update & manage all your business information in real-time."),
               ],
             ),
+            const SizedBox(height: 15,)
           ],
         ),
       ),

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminContact/AdminContact.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminContact/AdminContactComp/AdminContactAlt.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminHoursAlt.dart/AdminHoursAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/Documents/Documents.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/Documents/Documentscomp/DocumentAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/Gallery/Gallery.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/RegistrationNumbers/RegistrationNumbers.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminApprovals/Approvals.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/RegistrationNumbers/RegistrationNumbersComp/RegistrationAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/ProfileButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/AddMember.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BuisinessDropDown.dart';
@@ -13,11 +17,13 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessMedia.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/MoreBusinessInfo.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/ServiceHours.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashProfileView.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessProfile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessProfileItem.dart';
 import 'package:webdirectories/myutility.dart';
 
 import 'Pages/AdminBusinessSetup/adminBusinessSetup.dart';
+import 'Pages/Gallery/GalleryComp/GalaryAlt.dart';
 
 class AdminProfile extends StatefulWidget {
   const AdminProfile({Key? key}) : super(key: key);
@@ -28,7 +34,7 @@ class AdminProfile extends StatefulWidget {
 
 class _AdminProfileState extends State<AdminProfile> {
   final TextEditingController _textController = TextEditingController();
-  String selectedButton = 'BUSINESS INFO';
+  String selectedButton = 'Business Info';
   var pageIndex = 0;
 
   updateIndex(index) {
@@ -41,83 +47,121 @@ class _AdminProfileState extends State<AdminProfile> {
   Widget build(BuildContext context) {
     var pages = [
       AdminusinessSetup(),
-      RegistrationNumbers(),
-      Documents(),
-      AdminContact(),
-      Approvals(),
-      Gallery()
+      //RegistrationNumbers(),
+      RegistrationAlit(),
+      //Documents(),
+      DocumentAlt(),
+      //AdminContact(),
+      AdminContactAlt(),
+      Approvals(), Approvals(),
+      GalleryAlt(),
+      AdminHoursAlt()
     ];
     return SingleChildScrollView(
       child: Container(
         width: MyUtility(context).width,
-        decoration: BoxDecoration(color: Color(0xFFF4F4F4)),
+        decoration: BoxDecoration(
+          color: Color(0xFF171616),
+        ),
         child: Padding(
           padding: const EdgeInsets.only(left: 20, top: 20),
           child: Column(
             children: [
-              Row(
-                children: [
-                  ProfileButton(
-                    text: 'BUSINESS INFO',
-                    isSelected: selectedButton == 'BUSINESS INFO',
-                    onPressed: () {
-                      setState(() {
-                        selectedButton = 'BUSINESS INFO';
-                        updateIndex(0);
-                      });
-                    },
+              DashProfileView(),
+              Container(
+                width: MyUtility(context).width,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Color(0xFF2C2C2C),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      ProfileButton(
+                        text: 'Business Info',
+                        isSelected: selectedButton == 'Business Info',
+                        onPressed: () {
+                          setState(() {
+                            selectedButton = 'Business Info';
+                            updateIndex(0);
+                          });
+                        },
+                      ),
+                      ProfileButton(
+                        text: 'Registration Number',
+                        isSelected: selectedButton == 'Registration Number',
+                        onPressed: () {
+                          setState(() {
+                            selectedButton = 'Registration Number';
+                            updateIndex(1);
+                          });
+                        },
+                      ),
+                      ProfileButton(
+                        text: 'Documents',
+                        isSelected: selectedButton == 'Documents',
+                        onPressed: () {
+                          setState(() {
+                            selectedButton = 'Documents';
+                            updateIndex(2);
+                          });
+                        },
+                      ),
+                      ProfileButton(
+                        text: 'Contacts',
+                        isSelected: selectedButton == 'Contacts',
+                        onPressed: () {
+                          setState(() {
+                            selectedButton = 'Contacts';
+                            updateIndex(3);
+                          });
+                        },
+                      ),
+                      ProfileButton(
+                        text: 'Approvals',
+                        isSelected: selectedButton == 'Approvals',
+                        onPressed: () {
+                          setState(() {
+                            selectedButton = 'Approvals';
+                            updateIndex(4);
+                          });
+                        },
+                      ),
+                      ProfileButton(
+                        text: 'More Info',
+                        isSelected: selectedButton == 'More Info',
+                        onPressed: () {
+                          setState(() {
+                            selectedButton = 'More Info';
+                            updateIndex(5);
+                          });
+                        },
+                      ),
+                      ProfileButton(
+                        text: 'Gallery',
+                        isSelected: selectedButton == 'Gallery',
+                        onPressed: () {
+                          setState(() {
+                            selectedButton = 'Gallery';
+                            updateIndex(6);
+                          });
+                        },
+                      ),
+                      ProfileButton(
+                        text: 'Hours',
+                        isSelected: selectedButton == 'Hours',
+                        onPressed: () {
+                          setState(() {
+                            selectedButton = 'Hours';
+                            updateIndex(7);
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  ProfileButton(
-                    text: 'REGISTRATION NUMBERS',
-                    isSelected: selectedButton == 'REGISTRATION NUMBERS',
-                    onPressed: () {
-                      setState(() {
-                        selectedButton = 'REGISTRATION NUMBERS';
-                        updateIndex(1);
-                      });
-                    },
-                  ),
-                  ProfileButton(
-                    text: 'DOCUMENTS',
-                    isSelected: selectedButton == 'DOCUMENTS',
-                    onPressed: () {
-                      setState(() {
-                        selectedButton = 'DOCUMENTS';
-                        updateIndex(2);
-                      });
-                    },
-                  ),
-                  ProfileButton(
-                    text: 'CONTACTS',
-                    isSelected: selectedButton == 'CONTACTS',
-                    onPressed: () {
-                      setState(() {
-                        selectedButton = 'CONTACTS';
-                        updateIndex(3);
-                      });
-                    },
-                  ),
-                  ProfileButton(
-                    text: 'APPROVALS',
-                    isSelected: selectedButton == 'APPROVALS',
-                    onPressed: () {
-                      setState(() {
-                        selectedButton = 'APPROVALS';
-                        updateIndex(4);
-                      });
-                    },
-                  ),
-                  ProfileButton(
-                    text: 'GALLERY',
-                    isSelected: selectedButton == 'GALLERY',
-                    onPressed: () {
-                      setState(() {
-                        selectedButton = 'GALLERY';
-                        updateIndex(5);
-                      });
-                    },
-                  ),
-                ],
+                ),
               ),
               Center(
                 child: pages[pageIndex],

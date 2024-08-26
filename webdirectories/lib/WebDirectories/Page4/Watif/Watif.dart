@@ -25,8 +25,15 @@ class _WatifState extends State<Watif> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MyUtility(context).height * 1.0,
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          alignment: Alignment.centerRight,
+          image: AssetImage('images/watifNew.png',),
+          
+        ),
+      ),
+      height: MyUtility(context).height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -171,10 +178,10 @@ class _WatifState extends State<Watif> {
                   ),
                 ),
                 // Right side image
-                SizedBox(
-                  height: MyUtility(context).height / 1.0,
-                  child: Image.asset('images/phone.png'),
-                )
+                // SizedBox(
+                //   height: MyUtility(context).height / 1.7,
+                //   child: Image.asset('images/watifNew.png'),
+                // )
               ],
             ),
           ),

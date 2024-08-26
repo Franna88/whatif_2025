@@ -53,7 +53,7 @@ class _FooterMobileState extends State<FooterMobile> {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Image.asset(
-                    'images/logo.png',
+                    'images/webDirLogo.png',
                     fit: BoxFit.fill,
                   ),
                 ),

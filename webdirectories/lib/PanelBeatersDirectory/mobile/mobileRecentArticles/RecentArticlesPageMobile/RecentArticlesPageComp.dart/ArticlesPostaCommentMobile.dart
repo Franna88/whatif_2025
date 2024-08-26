@@ -7,7 +7,13 @@ import 'TextFiendsMobile/PostCommentEmailMobile.dart';
 import 'TextFiendsMobile/PostCommentSortMobile.dart';
 
 class ArticlesPostCommentMobile extends StatefulWidget {
-  const ArticlesPostCommentMobile({super.key});
+  final Color? otherDirectoryButtonColor;
+  final Color? otherDirectoryTextColor;
+  final bool? whiteText;
+  const ArticlesPostCommentMobile(
+      {super.key,
+      this.otherDirectoryButtonColor,
+      this.otherDirectoryTextColor, this.whiteText});
 
   @override
   State<ArticlesPostCommentMobile> createState() =>
@@ -61,7 +67,7 @@ class _ArticlesPostCommentMobileState extends State<ArticlesPostCommentMobile> {
                     'Join the conversation!',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFFE5882F),
+                      color: widget.otherDirectoryTextColor == null ?  Color(0xFFE5882F) : widget.otherDirectoryTextColor,
                       fontSize: 17,
                       fontFamily: 'ralewaysemi',
                       fontWeight: FontWeight.w600,
@@ -108,7 +114,7 @@ class _ArticlesPostCommentMobileState extends State<ArticlesPostCommentMobile> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFF8728),
+                              backgroundColor: widget.otherDirectoryButtonColor == null ? Color(0xFFFF8728) : widget.otherDirectoryButtonColor,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.40),
                               ),
@@ -119,7 +125,7 @@ class _ArticlesPostCommentMobileState extends State<ArticlesPostCommentMobile> {
                             child: Text(
                               'Post Comment',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: widget.whiteText == null ? Colors.black : Colors.white,
                                 fontSize: 11.56,
                                 fontFamily: 'raleway',
                                 fontWeight: FontWeight.w400,

@@ -88,7 +88,7 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
               Padding(
                 padding: const EdgeInsets.only(left: 50, top: 15),
                 child: Image.asset(
-                  'images/logo.png',
+                  'images/webDirLogo.png',
                   width: 225,
                   height: 110,
                 ),
@@ -139,15 +139,20 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CategorySelect(
-                menuIndex: menuIndex,
-                changeMenu: changeMenu,
-              ),
               Column(
                 children: [
                   SizedBox(
-                    height: 9,
+                     height: 17,
+                   ),
+                  CategorySelect(
+                    menuIndex: menuIndex,
+                    changeMenu: changeMenu,
                   ),
+                ],
+              ),
+              Column(crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                   
                   CircleTextBox(
                     Title1: directoriesInfo[menuIndex]['1title'],
                     Title2: directoriesInfo[menuIndex]['2title'],
@@ -156,6 +161,7 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                     changeMenu: changeMenu,
                     menuIndex: menuIndex,
                   ),
+                  const SizedBox(height: 100,)
                 ],
               )
             ],

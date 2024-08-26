@@ -16,14 +16,17 @@ class _MobilePage6State extends State<MobilePage6> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          MobileTopNavBar(),
-          GetinTouchMobile(),
-          MessageUsMobile(),
-          Maps(),
-          FooterMobile()
-        ],
+      child: Material(
+        color: Colors.white,
+        child: Column(
+          children: [
+            MobileTopNavBar(),
+            GetinTouchMobile(),
+            MessageUsMobile(),
+            Maps(),
+            FooterMobile()
+          ],
+        ),
       ),
     );
   }
