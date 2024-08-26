@@ -146,6 +146,7 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
                 provinceController: _controller.provinceController,
                 suburbController: _controller.suburbController,
                 streetController: _controller.streetController,
+                postalController: _textController,
               ),
               BusinessContact(
                 customerCareController: _controller.customerCareController,

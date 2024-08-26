@@ -16,6 +16,7 @@ class LeaveReviewMobile extends StatefulWidget {
 
 class _LeaveReviewMobileState extends State<LeaveReviewMobile> {
   final ScrollController _scrollController = ScrollController();
+  final TextEditingController _messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +97,9 @@ class _LeaveReviewMobileState extends State<LeaveReviewMobile> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child: MessageFormField(),
+                      child: MessageFormField(
+                        controller: _messageController,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),

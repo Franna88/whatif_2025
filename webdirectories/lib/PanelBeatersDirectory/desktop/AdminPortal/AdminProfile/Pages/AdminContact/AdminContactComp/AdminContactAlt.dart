@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminContact/AdminContactComp/AdMinContactAltContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminContact/AdminContactComp/AdminContactContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminContact/AdminContactComp/NewTeamMemberAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
@@ -9,14 +10,14 @@ import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
-class AdminContact extends StatefulWidget {
-  const AdminContact({super.key});
+class AdminContactAlt extends StatefulWidget {
+  const AdminContactAlt({super.key});
 
   @override
-  State<AdminContact> createState() => _AdminContactState();
+  State<AdminContactAlt> createState() => _AdminContactAltState();
 }
 
-class _AdminContactState extends State<AdminContact> {
+class _AdminContactAltState extends State<AdminContactAlt> {
   late List<Map<String, String>> contactInfo;
   final _firestore = FirebaseFirestore.instance;
 
@@ -59,36 +60,27 @@ class _AdminContactState extends State<AdminContact> {
         SizedBox(
           height: MyUtility(context).height * 0.05,
         ),
-        Text(
-          'Contacts',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24.48,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconSearchBoxB(),
-            AddButton(
-              text: 'Insert Contact',
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  barrierDismissible: true,
-                  barrierColor: Colors.black.withOpacity(0.5),
-                  builder: (BuildContext context) {
-                    return Dialog(
-                      backgroundColor: Colors.transparent,
-                      insetPadding: EdgeInsets.all(10),
-                      child: ContactPopup(),
-                    );
-                  },
+        AddButton(
+          text: 'Insert Contact',
+          onPressed: () {
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              barrierColor: Colors.black.withOpacity(0.5),
+              builder: (BuildContext context) {
+                return Dialog(
+                  backgroundColor: Colors.transparent,
+                  insetPadding: EdgeInsets.all(10),
+                  child: ContactPopup(),
                 );
               },
-            ),
+            );
+          },
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconSearchBoxB(),
           ],
         ),
         Padding(
@@ -97,7 +89,6 @@ class _AdminContactState extends State<AdminContact> {
             width: MyUtility(context).width * 0.9,
             height: MyUtility(context).height * 0.065,
             decoration: ShapeDecoration(
-              color: Color(0xFF0F253A),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -108,27 +99,24 @@ class _AdminContactState extends State<AdminContact> {
                 children: [
                   SizedBox(
                     width: MyUtility(context).width * 0.195,
+                    // check first two to see if it matches
                     child: Text(
-                      'Type',
+                      'Designation',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 17.68,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
+                        fontSize: 16.6064,
+                        fontFamily: 'ralewaybold',
                       ),
                     ),
                   ),
                   SizedBox(
                     width: MyUtility(context).width * 0.195,
                     child: Text(
-                      'Contact Person',
+                      'Name & Surname',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 17.68,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
+                        fontSize: 16.6064,
+                        fontFamily: 'ralewaybold',
                       ),
                     ),
                   ),
@@ -138,24 +126,28 @@ class _AdminContactState extends State<AdminContact> {
                       'Phone',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 17.68,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
+                        fontSize: 16.6064,
+                        fontFamily: 'ralewaybold',
                       ),
                     ),
                   ),
                   SizedBox(
-                    width: MyUtility(context).width * 0.25,
+                    width: MyUtility(context).width * 0.23,
                     child: Text(
                       'Email',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 17.68,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
+                        fontSize: 16.6064,
+                        fontFamily: 'ralewaybold',
                       ),
+                    ),
+                  ),
+                  Text(
+                    'Email',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.6064,
+                      fontFamily: 'ralewaybold',
                     ),
                   ),
                 ],
@@ -163,40 +155,41 @@ class _AdminContactState extends State<AdminContact> {
             ),
           ),
         ),
-        Column(
-          children: [
-            SizedBox(
-              height: heightDevice,
-              child: FutureBuilder<List<Map<String, dynamic>>>(
-                future: _fetchContactData(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(child: Text('No contact persons found'));
-                  } else {
-                    final contactInfo = snapshot.data!;
-                    return ListView.builder(
-                      itemCount: contactInfo.length,
-                      itemBuilder: (context, index) {
-                        final contact = contactInfo[index];
-                        return AdminContactContainer(
-                          type: contact['contactPersonDesignation'],
-                          contactPerson: contact['contactPerson'],
-                          phone: contact['contactPersonCell'],
-                          email: contact['contactPersonEmail'],
-                          pressEdit: () {},
-                          PressDelete: () {},
-                        );
-                      },
+        SizedBox(
+          height: heightDevice,
+          child: FutureBuilder<List<Map<String, dynamic>>>(
+            future: _fetchContactData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Center(child: Text('No contact persons found'));
+              } else {
+                final contactInfo = snapshot.data!;
+                return ListView.builder(
+                  itemCount: contactInfo.length,
+                  itemBuilder: (context, index) {
+                    final contact = contactInfo[index];
+                    return AdminContactAltContainer(
+                      type: contact['contactPersonDesignation'],
+                      contactPerson: contact['contactPerson'],
+                      phone: contact['contactPersonCell'],
+                      email: contact['contactPersonEmail'],
+                      pressEdit: () {},
+                      pressDelete: () {},
+                      isEven: index % 2 == 0,
                     );
-                  }
-                },
-              ),
-            ),
-          ],
+                  },
+                );
+              }
+            },
+          ),
+        ),
+        Container(
+          height: MyUtility(context).height * 0.6,
+          child: NewTeamMemberAlt(),
         ),
       ],
     );

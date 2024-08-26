@@ -17,7 +17,10 @@ class ProfileButton extends StatelessWidget {
     var widthDevice = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(
-        color: isSelected ? Color(0xFF0F253A) : Color(0x660F253A),
+        borderRadius: BorderRadius.circular(17),
+        border: Border.all(
+          color: isSelected ? Colors.white : Colors.transparent,
+        ),
       ),
       child: TextButton(
         onPressed: onPressed,
@@ -25,8 +28,8 @@ class ProfileButton extends StatelessWidget {
           text,
           style: TextStyle(
             color: Colors.white,
-            fontSize: widthDevice < 1500 ? 18 : 27.2,
-            fontFamily: 'Koulen',
+            fontSize: widthDevice < 1500 ? 18 : 17.64,
+            fontFamily: 'raleway',
             fontWeight: FontWeight.w400,
           ),
         ),

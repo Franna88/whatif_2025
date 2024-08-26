@@ -36,9 +36,9 @@ class _AddButtonState extends State<AddButton> {
           onTap: widget.onPressed,
           child: Container(
             decoration: ShapeDecoration(
-              color: Color(0xFF0F253A),
+              color: Color(0xFFFF8728),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(22.5),
               ),
               shadows: [
                 BoxShadow(
@@ -54,9 +54,8 @@ class _AddButtonState extends State<AddButton> {
               widget.text,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18.76,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w700,
+                fontSize: 14.24,
+                fontFamily: 'raleway',
               ),
             ),
           ),

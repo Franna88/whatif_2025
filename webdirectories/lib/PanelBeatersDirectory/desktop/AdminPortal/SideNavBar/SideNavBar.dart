@@ -17,7 +17,7 @@ class SideNavBar extends StatefulWidget {
 }
 
 class _SideNavBarState extends State<SideNavBar> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -41,7 +41,7 @@ class _SideNavBarState extends State<SideNavBar> {
     return Row(
       children: [
         Container(
-          width: MyUtility(context).width / 6,
+          width: MyUtility(context).width / 5.2,
           height: MyUtility(context).height,
           decoration: BoxDecoration(
             color: Color(0xFF181B1D),
@@ -52,8 +52,7 @@ class _SideNavBarState extends State<SideNavBar> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Image.asset(
-                  'images/panLogo.png',
-                  height: 100,
+                  'images/newpandir.png',
                 ),
               ),
               Expanded(
@@ -95,7 +94,16 @@ class _SideNavBarState extends State<SideNavBar> {
                       isSelected: _selectedIndex == 5,
                       onTap: () => _onItemTapped(5),
                     ),
-                    SizedBox(height: widthDevice <1500 ? MyUtility(context).height * 0.23 : MyUtility(context).height * 0.38),
+                    SideNavButton(
+                      icon: 'images/jobrequests.svg',
+                      label: 'Edit Specials & Promotions',
+                      isSelected: _selectedIndex == 5,
+                      onTap: () => _onItemTapped(5),
+                    ),
+                    SizedBox(
+                        height: widthDevice < 1500
+                            ? MyUtility(context).height * 0.23
+                            : MyUtility(context).height * 0.38),
                     SideNavButton(
                       icon: 'images/Logout.svg',
                       label: 'Logout',
@@ -109,7 +117,7 @@ class _SideNavBarState extends State<SideNavBar> {
           ),
         ),
         Container(
-          width: MyUtility(context).width - MyUtility(context).width / 6,
+          width: MyUtility(context).width - MyUtility(context).width / 5.2,
           height: MyUtility(context).height,
           child: pages[_selectedIndex],
         )

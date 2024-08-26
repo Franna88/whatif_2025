@@ -19,31 +19,30 @@ class _LongTextFieldState extends State<LongTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20 , right: 20),
+      padding: const EdgeInsets.only(bottom: 20, right: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             widget.headline,
             style: TextStyle(
-              color: Color(0xFF0F253A),
-              fontSize: 20.4,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w700,
-              height: 1,
+              color: Colors.white,
+              fontSize: 14.7364,
+              fontFamily: 'raleway',
             ),
           ),
           SizedBox(height: 8),
           Container(
-            width: MyUtility(context).width * 0.38,
-            height: MyUtility(context).height * 0.075,
+            width: MyUtility(context).width * 0.497,
+            height: MyUtility(context).height * 0.13,
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: Center(
+            child: Align(
+              alignment: Alignment.topLeft,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: TextFormField(
@@ -54,8 +53,9 @@ class _LongTextFieldState extends State<LongTextField> {
                     contentPadding: EdgeInsets.zero,
                   ),
                   style: TextStyle(
-                    fontSize: 22,
-                    fontFamily: 'Inter',
+                    fontSize: 14.7364,
+                    fontFamily: 'raleway',
+                    color: Color(0xFF5F6368),
                   ),
                 ),
               ),

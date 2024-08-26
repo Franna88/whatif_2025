@@ -21,38 +21,41 @@ class SideNavButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: Container(
-          color: isSelected
-              ? Color(0xFFEF9040).withOpacity(0.2)
-              : Colors.transparent,
+          color: isSelected ? Color(0xFFFF7B16) : Colors.transparent,
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 200,
                   child: Row(
                     children: [
                       SizedBox(
-                        width: MyUtility(context).width * 0.03,
-                        height: MyUtility(context).height * 0.035,
+                        width: MyUtility(context).width * 0.01,
+                      ),
+                      SizedBox(
+                        width: MyUtility(context).width * 0.02,
+                        height: MyUtility(context).height * 0.022,
                         child: SvgPicture.asset(
                           icon,
                           width: widthDevice < 1500 ? 18 : 24,
                           height: widthDevice < 1500 ? 18 : 24,
-                          color: isSelected ? Color(0xFFEF9040) : Colors.white,
+                          color: Colors.white,
                         ),
                       ),
                       SizedBox(width: 8),
                       Text(
                         label,
                         style: TextStyle(
-                          fontSize: widthDevice < 1500 ? 18 : 20,
-                          color: isSelected ? Color(0xFFEF9040) : Colors.white,
+                          color: Colors.white,
+                          fontSize: 15.64,
+                          fontFamily: 'raleway',
+                          fontWeight: FontWeight.w400,
+                          height: 0.03,
                         ),
                       ),
                     ],

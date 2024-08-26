@@ -76,10 +76,7 @@ class _JobFinderReuseableState extends State<JobFinderReuseable> {
                     height: 0,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SvgPicture.asset('images/dasharrow.svg'),
-                )
+                SvgPicture.asset('images/suitcase.svg')
               ],
             ),
           ),

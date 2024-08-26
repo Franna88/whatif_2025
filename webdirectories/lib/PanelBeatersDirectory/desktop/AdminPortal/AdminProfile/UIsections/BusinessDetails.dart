@@ -44,22 +44,44 @@ class _BusinessDetailsState extends State<BusinessDetails> {
                 width: 25,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  Text(
+                    'Update Business Info',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.6064,
+                      fontFamily: 'ralewaybold',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 7, bottom: 6),
+                    child: Text(
+                      'Please fill in all applicable fields relevant to your business',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13.7364,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
                   ProfileTextField(
                       controller: widget.tradingNameController,
                       headline: 'Trading Name'),
                   ProfileTextField(
                       controller: widget.registeredNameController,
                       headline: 'Registered Business name'),
+                  ProfileTextField(
+                      controller: widget.bEEElevelController,
+                      headline: 'B-BBEE Level'),
                 ],
               ),
               SizedBox(
                 width: 20,
               ),
-              ProfileTextField(
-                  controller: widget.bEEElevelController,
-                  headline: 'B-BBEE Level'),
             ],
           ),
           Row(

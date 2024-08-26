@@ -11,6 +11,7 @@ class BusinessAddress extends StatefulWidget {
   final TextEditingController cityController;
   final TextEditingController suburbController;
   final TextEditingController streetController;
+  final TextEditingController postalController;
 
   const BusinessAddress(
       {super.key,
@@ -19,7 +20,8 @@ class BusinessAddress extends StatefulWidget {
       required this.provinceController,
       required this.cityController,
       required this.suburbController,
-      required this.streetController});
+      required this.streetController,
+      required this.postalController});
 
   @override
   State<BusinessAddress> createState() => _BusinessAddressState();
@@ -63,21 +65,24 @@ class _BusinessAddressState extends State<BusinessAddress> {
                       ProfileShortTextField(
                           controller: widget.provinceController,
                           headline: 'Province'),
-                      ProfileShortTextField(
-                          controller: widget.cityController, headline: 'City'),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ProfileShortTextField(
+                          controller: widget.cityController, headline: 'City'),
+                      ProfileShortTextField(
                           controller: widget.suburbController,
                           headline: 'Suburb'),
-                      LongTextField(
-                          controller: widget.streetController,
-                          headline: 'Street Address')
                     ],
                   ),
+                  LongTextField(
+                      controller: widget.streetController,
+                      headline: 'Street Address'),
+                  LongTextField(
+                      controller: widget.postalController,
+                      headline: 'Postal Address')
                 ],
               ),
             ],

@@ -82,12 +82,9 @@ class _GraphContaierState extends State<GraphContaier> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
-                Transform.scale(scale: widthDevice < 1650 ? 1 : 1.3,
-                  child: CustomBarGraph()),
-                
-                 
-               
+                Transform.scale(
+                    scale: widthDevice < 1650 ? 1 : 1.3,
+                    child: CustomBarGraph()),
               ],
             ),
             Column(

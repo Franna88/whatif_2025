@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminApprovals/AdminSelectServices.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminApprovals/SelectaCategory.dart';
 
 class Approvals extends StatefulWidget {
   const Approvals({super.key});
@@ -11,7 +13,13 @@ class _ApprovalsState extends State<Approvals> {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text(""),
+      child: Padding(
+        padding: EdgeInsets.only(top: 30, bottom: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [SelectaCategory(), Adminselectservices()],
+        ),
+      ),
     );
   }
 }

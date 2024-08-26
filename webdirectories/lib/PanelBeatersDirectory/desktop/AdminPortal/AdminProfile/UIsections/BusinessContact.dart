@@ -28,11 +28,13 @@ class _BusinessContactState extends State<BusinessContact> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 20),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+          SizedBox(
+            width: MyUtility(context).width * 0.25,
+          ),
+          Column(
             children: [
               Column(
                 children: [
@@ -42,46 +44,48 @@ class _BusinessContactState extends State<BusinessContact> {
                           : _textController,
                       headline: 'Customer Care Number'),
                   ProfileTextField(
-                      controller: widget.whatsappController != null
-                          ? widget.whatsappController!
-                          : _textController,
-                      headline: 'WhatsApp Number '),
-                ],
-              ),
-              Column(
-                children: [
-                  ProfileTextField(
                       controller: widget.businessAlternativeController != null
                           ? widget.businessAlternativeController!
                           : _textController,
                       headline: 'Business Alternative Number'),
                   ProfileTextField(
+                      controller: widget.afterHoursController != null
+                          ? widget.afterHoursController!
+                          : _textController,
+                      headline: 'After hours Number'),
+                  ProfileTextField(
+                      controller: widget.whatsappController != null
+                          ? widget.whatsappController!
+                          : _textController,
+                      headline: 'WhatsApp Number '),
+                  ProfileTextField(
                       controller: widget.businessFaxController != null
                           ? widget.businessFaxController!
                           : _textController,
                       headline: 'Business Fax Number'),
+                  // this is still needs to be connected
+                  ProfileTextField(
+                      controller: widget.businessFaxController != null
+                          ? widget.businessFaxController!
+                          : _textController,
+                      headline: 'Business email Address'),
                 ],
               ),
-              ProfileShortTextField(
-                  controller: widget.afterHoursController != null
-                      ? widget.afterHoursController!
-                      : _textController,
-                  headline: 'After hours Number'),
+              /*Padding(
+                padding: const EdgeInsets.only(bottom: 30, top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: MyUtility(context).width,
+                      height: 1,
+                      decoration: BoxDecoration(color: Color(0xFF0F253A)),
+                    )
+                  ],
+                ),
+              )*/
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 30, top: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  width: MyUtility(context).width,
-                  height: 1,
-                  decoration: BoxDecoration(color: Color(0xFF0F253A)),
-                )
-              ],
-            ),
-          )
         ],
       ),
     );

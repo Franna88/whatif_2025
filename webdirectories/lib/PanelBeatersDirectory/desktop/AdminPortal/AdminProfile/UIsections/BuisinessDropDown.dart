@@ -28,7 +28,9 @@ class _BusinessDropDownState extends State<BusinessDropDown> {
             ),
           ),
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -42,7 +44,9 @@ class _BusinessDropDownState extends State<BusinessDropDown> {
                 });
               },
             ),
-           SizedBox(width: MyUtility(context).width * 0.10,),
+            SizedBox(
+              width: MyUtility(context).width * 0.10,
+            ),
             ProfileDropDown(
               headline: 'Specialist Service',
               items: items,
@@ -61,7 +65,7 @@ class _BusinessDropDownState extends State<BusinessDropDown> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                width: MyUtility(context).width ,
+                width: MyUtility(context).width,
                 height: 1,
                 decoration: BoxDecoration(color: Color(0xFF0F253A)),
               )

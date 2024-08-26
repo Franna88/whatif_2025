@@ -26,21 +26,19 @@ class _ProfileShortTextFieldState extends State<ProfileShortTextField> {
           Text(
             widget.headline,
             style: TextStyle(
-              color: Color(0xFF0F253A),
-              fontSize: 20.4,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w700,
-              height: 1,
+              color: Colors.white,
+              fontSize: 14.7364,
+              fontFamily: 'raleway',
             ),
           ),
           SizedBox(height: 8),
           Container(
-            width: MyUtility(context).width * 0.18,
-            height: MyUtility(context).height * 0.075,
+            width: MyUtility(context).width * 0.242,
+            height: MyUtility(context).height * 0.045,
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
             child: Padding(
@@ -49,11 +47,12 @@ class _ProfileShortTextFieldState extends State<ProfileShortTextField> {
                 controller: widget.controller,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.zero,
+                  contentPadding: EdgeInsets.only(bottom: 12),
                 ),
                 style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Inter',
+                  fontSize: 14.7364,
+                  fontFamily: 'raleway',
+                  color: Color(0xFF5F6368),
                 ),
               ),
             ),
