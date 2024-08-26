@@ -238,7 +238,10 @@ class _ManageUsersState extends State<ManageUsers> {
                   ),
                   Expanded(
                     child: _isLoading
-                        ? const Center(child: CircularProgressIndicator())
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ))
                         : usersData.isEmpty
                             ? const Center(
                                 child: Text(

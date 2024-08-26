@@ -41,7 +41,7 @@ class _JobFinderReuseableState extends State<JobFinderReuseable> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 61.88,
+                  width: 70,
                   child: Text(
                     widget.appliedDate,
                     style: TextStyle(

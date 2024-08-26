@@ -123,7 +123,9 @@ class _RegistrationPopupState extends State<RegistrationPopup> {
   Widget build(BuildContext context) {
     return Center(
       child: _isLoading == true
-          ? const CircularProgressIndicator()
+          ? const CircularProgressIndicator(
+              color: Colors.black,
+            )
           : Container(
               width: MyUtility(context).width * 0.3,
               height: MyUtility(context).height * 0.5,

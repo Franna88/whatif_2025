@@ -147,7 +147,10 @@ class _GalleryState extends State<Gallery> {
                 future: _fetchGalleryData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ));
                   }
                   if (snapshot.hasError) {
                     return Center(

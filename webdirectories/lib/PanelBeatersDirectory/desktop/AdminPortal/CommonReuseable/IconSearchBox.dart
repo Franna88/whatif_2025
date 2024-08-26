@@ -3,7 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:webdirectories/myutility.dart';
 
 class IconSearchBox extends StatefulWidget {
-  const IconSearchBox({super.key});
+  final Function(String) onChanged;
+  const IconSearchBox({super.key, required this.onChanged});
 
   @override
   State<IconSearchBox> createState() => _IconSearchBoxState();
@@ -38,6 +39,9 @@ class _IconSearchBoxState extends State<IconSearchBox> {
                 child: SvgPicture.asset('images/searchicon.svg')),
             Expanded(
               child: TextField(
+                onChanged: (value) {
+                  widget.onChanged(value);
+                },
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
                   hintText: 'Search here...',

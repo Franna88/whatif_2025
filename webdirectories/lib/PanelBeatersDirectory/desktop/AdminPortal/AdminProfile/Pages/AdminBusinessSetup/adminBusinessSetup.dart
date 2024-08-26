@@ -130,7 +130,9 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
         ? Container(
             height: MyUtility(context).height,
             child: const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.black,
+              ),
             ),
           )
         : Column(

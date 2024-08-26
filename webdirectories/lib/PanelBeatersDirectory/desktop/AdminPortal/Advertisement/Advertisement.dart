@@ -90,7 +90,10 @@ class _AdvertisementState extends State<Advertisement> {
         height: MyUtility(context).height,
         decoration: BoxDecoration(color: Color(0xFFF4F4F4)),
         child: _isLoading == true
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(
+                child: CircularProgressIndicator(
+                color: Colors.black,
+              ))
             : Center(
                 child: Container(
                   width: MyUtility(context).width * 0.75,
