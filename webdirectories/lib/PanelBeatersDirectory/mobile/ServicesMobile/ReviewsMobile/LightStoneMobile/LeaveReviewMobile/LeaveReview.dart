@@ -16,8 +16,14 @@ class LeaveReviewMobile extends StatefulWidget {
 
 class _LeaveReviewMobileState extends State<LeaveReviewMobile> {
   final ScrollController _scrollController = ScrollController();
+  final _formKey = GlobalKey<FormState>();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _ratingController = TextEditingController();
+  final _reviewController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -98,7 +104,8 @@ class _LeaveReviewMobileState extends State<LeaveReviewMobile> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: MessageFormField(
-                        controller: _messageController,
+
+                        controller: _emailController,
                       ),
                     ),
                     Padding(

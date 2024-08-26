@@ -1,7 +1,16 @@
+import 'package:flutter/material.dart';
+
 class StoredUser {
   final String id;
-  final String title;
+  final String memberId;
   final String email;
+  final String fullName;
+  final String cell;
 
-  StoredUser({required this.id, required this.title, required this.email});
+  StoredUser(
+      {required this.id,
+      required this.memberId,
+      required this.email,
+      required this.fullName,
+      required this.cell});
 }

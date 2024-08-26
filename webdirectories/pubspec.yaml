@@ -55,6 +55,7 @@ dependencies:
   cached_firestorage: ^0.2.0
   flutter_html: ^3.0.0-beta.2
   image_picker: ^1.1.2
+  file_picker: ^8.0.7
   fl_chart: ^0.68.0
 
 dev_dependencies:

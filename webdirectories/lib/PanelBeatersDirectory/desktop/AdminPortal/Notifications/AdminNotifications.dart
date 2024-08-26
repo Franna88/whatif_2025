@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/NotificationsTitle.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/formatUtils.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class AdminNotifications extends StatefulWidget {
@@ -12,28 +17,95 @@ class AdminNotifications extends StatefulWidget {
 }
 
 class _AdminNotificationsState extends State<AdminNotifications> {
-  final List<Map<String, String>> notifications = [
-    {
-      'notificationTitle': 'Important Update',
-      'year': '2024',
-      'month': '03',
-      'day': '07',
-    },
-    {
-      'notificationTitle':
-          'Lorem ipsum dolor sit amet, consectetur adipiscing consectetur adipiscing elit, sed do eiusmod Lorem ipsum dolor sit amet',
-      'year': '2024',
-      'month': '04',
-      'day': '15',
-    },
-    {
-      'notificationTitle': 'New Feature Release',
-      'year': '2024',
-      'month': '05',
-      'day': '21',
-    },
-    // Add more notifications as needed
-  ];
+  final _firestore = FirebaseFirestore.instance;
+  List<NotificationsModel> _notificationData = [];
+  String _searchQuery = '';
+  bool _isLoading = true;
+  @override
+  void initState() {
+    _fetchNotificationData();
+    super.initState();
+  }
+
+  void _fetchNotificationData() async {
+    StoredUser? user = await getUserInfo();
+
+    if (user == null) {
+      return;
+    }
+
+    final notificationsFuture = _firestore
+        .collection('notifications')
+        .where('listingsId', isEqualTo: int.parse(user.id))
+        .orderBy('notificationDate', descending: true)
+        .get();
+
+    final generalNotificationsFuture = _firestore
+        .collection('notifications')
+        .where('listingsId', isEqualTo: 0)
+        .orderBy('notificationDate', descending: true)
+        .get();
+
+    // Run both queries in parallel
+    List<QuerySnapshot<Map<String, dynamic>>> results =
+        await Future.wait([notificationsFuture, generalNotificationsFuture]);
+
+    List<NotificationsModel> notificationList = [];
+
+    final generalNotificationSnapshot = results[1];
+    if (generalNotificationSnapshot.docs.isNotEmpty) {
+      for (var doc in generalNotificationSnapshot.docs) {
+        notificationList.add(NotificationsModel(
+          notificationsId: doc['notificationId'],
+          notificationTypeId: doc['notificationTypeId'],
+          notificationTitle: doc['notificationTitle'],
+          notificationDate: doc['notificationDate'],
+          notification: doc['notification'],
+          listingsId: doc['listingsId'],
+        ));
+      }
+    }
+
+    final notificationSnapshot = results[0];
+    if (notificationSnapshot.docs.isNotEmpty) {
+      for (var doc in notificationSnapshot.docs) {
+        notificationList.add(NotificationsModel(
+          notificationsId: doc['notificationId'],
+          notificationTypeId: doc['notificationTypeId'],
+          notificationTitle: doc['notificationTitle'],
+          notificationDate: doc['notificationDate'],
+          notification: doc['notification'],
+          listingsId: doc['listingsId'],
+        ));
+      }
+    }
+
+    setState(() {
+      _notificationData = notificationList;
+      _isLoading = false;
+    });
+  }
+
+  List<NotificationsModel> get _filteredNotifications {
+    List<NotificationsModel> filtered = _notificationData;
+
+    // Apply search filter
+    if (_searchQuery.isNotEmpty) {
+      filtered = filtered.where((notification) {
+        return notification.notificationTitle
+            .toLowerCase()
+            .contains(_searchQuery.toLowerCase());
+      }).toList();
+    }
+
+    return filtered;
+  }
+
+  void _onSearchChanged(String query) {
+    setState(() {
+      _searchQuery = query;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +143,10 @@ class _AdminNotificationsState extends State<AdminNotifications> {
                     ],
                   ),
                   Align(
-                      alignment: Alignment.centerLeft, child: IconSearchBox()),
+                      alignment: Alignment.centerLeft,
+                      child: IconSearchBox(
+                        onChanged: _onSearchChanged,
+                      )),
                   Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 10),
                     child: Container(
@@ -115,18 +190,36 @@ class _AdminNotificationsState extends State<AdminNotifications> {
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: notifications.length,
-                      itemBuilder: (context, index) {
-                        final notification = notifications[index];
-                        return NotificationTitle(
-                          notificationTitle: notification['notificationTitle']!,
-                          year: notification['year']!,
-                          month: notification['month']!,
-                          day: notification['day']!,
-                        );
-                      },
-                    ),
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.black,
+                            ),
+                          )
+                        : _filteredNotifications.isEmpty
+                            ? const Text('No Notifications found')
+                            : ListView.builder(
+                                itemCount: _filteredNotifications.length,
+                                itemBuilder: (context, index) {
+                                  final notification = _notificationData[index];
+                                  return NotificationTitle(
+                                    notificationTitle: limitString(
+                                        notification.notificationTitle, 40),
+                                    year: notification.notificationDate
+                                        .toDate()
+                                        .year
+                                        .toString(),
+                                    month: notification.notificationDate
+                                        .toDate()
+                                        .month
+                                        .toString(),
+                                    day: notification.notificationDate
+                                        .toDate()
+                                        .day
+                                        .toString(),
+                                  );
+                                },
+                              ),
                   ),
                 ],
               ),

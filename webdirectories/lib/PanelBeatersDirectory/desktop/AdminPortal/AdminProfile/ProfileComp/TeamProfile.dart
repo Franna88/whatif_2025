@@ -21,7 +21,9 @@ class TeamProfile extends StatefulWidget {
 class _TeamProfileState extends State<TeamProfile> {
   @override
   Widget build(BuildContext context) {
-    String imageUrl = "listings/images/team/${widget.memberImage}";
+    String imageUrl = widget.memberImage != ''
+        ? "listings/images/team/${widget.memberImage}"
+        : "";
 
     var widthDevice = MediaQuery.of(context).size.width;
     return Container(
@@ -46,11 +48,20 @@ class _TeamProfileState extends State<TeamProfile> {
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
-                      child: RemotePicture(
-                        imagePath: imageUrl,
-                        mapKey: 'background',
-                        fit: BoxFit.cover,
-                      ),
+                      child: imageUrl == ""
+                          ? Image.asset(
+                              'images/employee.jpg',
+                              errorBuilder: (context, error, stackTrace) {
+                                // Fallback widget in case of error
+                                return const Icon(Icons.picture_in_picture);
+                              },
+                              fit: BoxFit.cover,
+                            )
+                          : RemotePicture(
+                              imagePath: imageUrl,
+                              mapKey: 'background',
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 ],

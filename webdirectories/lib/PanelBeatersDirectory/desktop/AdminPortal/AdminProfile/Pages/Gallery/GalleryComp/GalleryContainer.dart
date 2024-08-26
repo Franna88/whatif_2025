@@ -19,6 +19,12 @@ class GalleryContainer extends StatefulWidget {
 
 class _GalleryContainerState extends State<GalleryContainer> {
   @override
+  void initState() {
+    print(widget.galleryImage);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
     return Container(
@@ -42,11 +48,16 @@ class _GalleryContainerState extends State<GalleryContainer> {
               ),
               child: Stack(
                 children: [
-                  Image.asset(
+                  Image.network(
                     widget.galleryImage,
                     fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
+                    errorBuilder: (context, error, stackTrace) {
+                      // Fallback widget in case of error
+                      return Center(
+                        child: SizedBox(
+                            width: 200, child: const Icon(Icons.error)),
+                      );
+                    },
                   ),
                   // Positioned.fill(
                   //   child: RemotePicture(

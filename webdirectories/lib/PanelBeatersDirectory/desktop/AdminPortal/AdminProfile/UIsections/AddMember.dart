@@ -17,10 +17,19 @@ class AddMember extends StatefulWidget {
 
 class _AddMemberState extends State<AddMember> {
   final _firestore = FirebaseFirestore.instance;
-  Future<List<Map<String, dynamic>>> _fetchData() async {
+
+  List<Map<String, dynamic>> _teamProfiles = [];
+
+  @override
+  void initState() {
+    _fetchData();
+    super.initState();
+  }
+
+  Future<void> _fetchData() async {
     StoredUser? user = await getUserInfo();
     if (user == null) {
-      return [{}];
+      return;
     }
     // Fetch team profiles
     QuerySnapshot teamProfilesSnapshot = await _firestore
@@ -28,9 +37,19 @@ class _AddMemberState extends State<AddMember> {
         .where('listingsId', isEqualTo: int.parse(user.id))
         .get();
 
-    return teamProfilesSnapshot.docs
-        .map((doc) => doc.data() as Map<String, dynamic>)
-        .toList();
+    if (teamProfilesSnapshot.docs.isNotEmpty) {
+      setState(() {
+        _teamProfiles = teamProfilesSnapshot.docs
+            .map((doc) => doc.data() as Map<String, dynamic>)
+            .toList();
+      });
+    }
+  }
+
+  void addMember(Map<String, dynamic> newMember) {
+    setState(() {
+      _teamProfiles.add(newMember);
+    });
   }
 
   @override
@@ -70,7 +89,8 @@ class _AddMemberState extends State<AddMember> {
                           return Dialog(
                             backgroundColor: Colors.transparent,
                             insetPadding: EdgeInsets.all(10),
-                            child: AddMemberPopup(),
+                            child: AddMemberPopup(
+                                teamProfiles: _teamProfiles, add: addMember),
                           );
                         },
                       );
@@ -83,41 +103,24 @@ class _AddMemberState extends State<AddMember> {
               height: MyUtility(context).height * 0.025,
             ),
             Expanded(
-              child: FutureBuilder<List<Map<String, dynamic>>>(
-                future: _fetchData(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return Center(child: Text('No profiles found'));
-                  } else {
-                    List<Map<String, dynamic>> teamProfiles = snapshot.data!;
-                    teamProfiles.sort((a, b) => (a['teamOrder'] as int)
-                        .compareTo(b['teamOrder'] as int));
-                    return SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: teamProfiles.map((profile) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TeamProfile(
-                              memberImage: profile['personPhoto'],
-                              memberName:
-                                  '${profile['firstName']} ${profile['surname']}',
-                              memberPosition: profile['shortDescription'],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    );
-                  }
-                },
+                child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: _teamProfiles.map((profile) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TeamProfile(
+                      memberImage: profile['personPhoto'],
+                      memberName:
+                          '${profile['firstName']} ${profile['surname']}',
+                      memberPosition: profile['shortDescription'],
+                    ),
+                  );
+                }).toList(),
               ),
-            ),
+            )),
             Padding(
               padding: const EdgeInsets.only(top: 20, left: 20, bottom: 30),
               child: Row(

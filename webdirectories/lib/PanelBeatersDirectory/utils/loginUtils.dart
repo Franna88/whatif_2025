@@ -18,8 +18,10 @@ Future<StoredUser?> getUserInfo() async {
 StoredUser fromJson(Map<String, dynamic> json) {
   return StoredUser(
     id: json['id'],
-    title: json['title'],
     email: json['email'],
+    memberId: json['member_id'],
+    fullName: json['full_name'],
+    cell: json['cell'],
   );
 }
 

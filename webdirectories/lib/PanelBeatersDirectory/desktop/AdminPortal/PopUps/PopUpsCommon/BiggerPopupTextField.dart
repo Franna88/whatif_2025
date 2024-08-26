@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
 class BiggerPopupTextField extends StatefulWidget {
+  final TextEditingController controller;
   final String text;
-  const BiggerPopupTextField({Key? key, required this.text}) : super(key: key);
+  const BiggerPopupTextField(
+      {Key? key, required this.text, required this.controller})
+      : super(key: key);
 
   @override
   State<BiggerPopupTextField> createState() => _BiggerPopupTextFieldState();
@@ -40,6 +43,7 @@ class _BiggerPopupTextFieldState extends State<BiggerPopupTextField> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
+              controller: widget.controller,
               maxLines: null,
               decoration: InputDecoration(
                 border: InputBorder.none,

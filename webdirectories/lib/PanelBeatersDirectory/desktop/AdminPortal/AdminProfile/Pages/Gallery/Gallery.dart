@@ -7,6 +7,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBoxB.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/AddImagePopup/AddImagepopup.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -18,14 +19,14 @@ class Gallery extends StatefulWidget {
 }
 
 class _GalleryState extends State<Gallery> {
-  late List<Map<String, String>> galleryItems;
+  List<Map<String, dynamic>> galleryItems = [];
   final _firestore = FirebaseFirestore.instance;
 
   Future<List<Map<String, dynamic>>> _fetchGalleryData() async {
     StoredUser? user = await getUserInfo();
 
     if (user == null) {
-      return [{}];
+      return [];
     }
 
     try {
@@ -35,25 +36,34 @@ class _GalleryState extends State<Gallery> {
           .get();
 
       if (gallerySnapshot.docs.isNotEmpty) {
+        List<Map<String, dynamic>> processedData = [];
         for (var doc in gallerySnapshot.docs) {
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
           String fileName = data['immageFile'];
-          data['immageFile'] = 'listings/$fileName';
+          String? url = await getImageUrl('listings/$fileName');
+
+          if (url != null) {
+            data['immageFile'] = url;
+          }
+
+          processedData.add(data);
         }
-        return gallerySnapshot.docs
-            .map((doc) => doc.data() as Map<String, dynamic>)
-            .toList();
+        return processedData;
       } else {
-        return [
-          {'immageFile': 'images/gallery.jpg', 'immageTitle': 'Car wash'},
-          {'immageFile': 'images/gallery.jpg', 'immageTitle': 'Car wash'},
-          {'immageFile': 'images/gallery.jpg', 'immageTitle': 'Car wash'},
-        ];
+        return [];
       }
     } catch (e) {
       print('error fetching gallery data: $e');
-      return [{}];
+      return [];
     }
+  }
+
+  void _onImageUpload(Map<String, dynamic> newImageData) {
+    List<Map<String, dynamic>> images = galleryItems;
+    images.add(newImageData);
+    setState(() {
+      galleryItems = images;
+    });
   }
 
   @override
@@ -96,7 +106,8 @@ class _GalleryState extends State<Gallery> {
                             return Dialog(
                               backgroundColor: Colors.transparent,
                               insetPadding: EdgeInsets.all(10),
-                              child: AddImagePopup(),
+                              child:
+                                  AddImagePopup(onImageUpload: _onImageUpload),
                             );
                           },
                         );
@@ -136,7 +147,10 @@ class _GalleryState extends State<Gallery> {
                 future: _fetchGalleryData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ));
                   }
                   if (snapshot.hasError) {
                     return Center(
@@ -168,6 +182,7 @@ class _GalleryState extends State<Gallery> {
                       itemCount: images.length,
                       itemBuilder: (context, index) {
                         Map<String, dynamic> image = images[index];
+                        print(image['immageFile']);
                         // return RemotePicture(
                         //   imagePath: 'listings/${image['immageFile']}',
                         //   mapKey: image['immageTitle'],

@@ -1,10 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Advertisement/Advertisementcomp/AdvertEdit.dart';
 
 import 'package:webdirectories/myutility.dart';
 
 class Advertcontainer extends StatefulWidget {
-  final String memberImage;
+  final String? memberImage;
   final String memberName;
 
   const Advertcontainer({
@@ -40,10 +42,21 @@ class _AdvertcontainerState extends State<Advertcontainer> {
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
-              child: Image.asset(
-                widget.memberImage,
-                fit: BoxFit.fill,
-              ),
+              child: widget.memberImage != null
+                  ? Image.network(
+                      widget.memberImage!,
+                      fit: BoxFit.fill,
+                      errorBuilder: (context, error, stackTrace) => SizedBox(
+                        width: 100,
+                        height: 100,
+                        child: Center(
+                          child: Icon(Icons.error),
+                        ),
+                      ),
+                    )
+                  : Center(
+                      child: Icon(Icons.error),
+                    ),
             ),
           ),
           Expanded(

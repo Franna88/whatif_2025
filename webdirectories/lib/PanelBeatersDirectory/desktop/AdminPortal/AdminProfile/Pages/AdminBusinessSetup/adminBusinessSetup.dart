@@ -40,6 +40,8 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
   }
 
   Future<void> _fetchUserData() async {
+    if (!mounted) return;
+
     setState(() {
       _isLoading = true;
     });
@@ -98,6 +100,8 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
             'suburb': suburbData['suburb'],
           });
 
+          if (!mounted) return;
+
           setState(() {
             _controller.setValues(userData);
             print(userData['displayphoto']);
@@ -126,7 +130,9 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
         ? Container(
             height: MyUtility(context).height,
             child: const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.black,
+              ),
             ),
           )
         : Column(

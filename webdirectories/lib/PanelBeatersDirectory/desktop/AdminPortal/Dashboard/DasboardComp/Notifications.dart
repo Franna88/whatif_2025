@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 
 class Notifications extends StatefulWidget {
   final String notification;
@@ -37,7 +41,7 @@ class _NotificationsState extends State<Notifications> {
                 widget.notification,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: widthDevice < 1500 ?  10.88 : 12,
+                  fontSize: widthDevice < 1500 ? 10.88 : 12,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w700,
                   height: 0,
@@ -47,7 +51,7 @@ class _NotificationsState extends State<Notifications> {
                 widget.date,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: widthDevice < 1500 ?  10.88 : 12,
+                  fontSize: widthDevice < 1500 ? 10.88 : 12,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w700,
                   height: 0,

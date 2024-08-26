@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Advertisement/Advertisementcomp/AdvertButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageUsers/ManageUserComp/ManageUserInfo.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/NewUserPopup/NewUserPopup.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/users.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class ManageUsers extends StatefulWidget {
@@ -12,6 +16,68 @@ class ManageUsers extends StatefulWidget {
 }
 
 class _ManageUsersState extends State<ManageUsers> {
+  final _firestore = FirebaseFirestore.instance;
+  List<UserModel> usersData = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    _fetchUserData();
+    super.initState();
+  }
+
+  void _fetchUserData() async {
+    print('loading users...');
+    try {
+      StoredUser? user = await getUserInfo();
+      if (user == null) {
+        print('User not found');
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+
+      QuerySnapshot<Map<String, dynamic>> usersSnapshot = await _firestore
+          .collection('listing_members')
+          .where('listingsId', isEqualTo: int.parse(user.id))
+          .get();
+      List<UserModel> users = [];
+      if (usersSnapshot.docs.isNotEmpty) {
+        print('loading users... ${usersSnapshot.docs.length} users found');
+        for (var user in usersSnapshot.docs) {
+          UserModel userData = UserModel(
+            dateAdded: user.data()['dateAdded'],
+            firstName: user.data()['firstName'],
+            surname: user.data()['surname'],
+            email: user.data()['email'],
+            status: user.data()['status'] ?? 'Active',
+          );
+
+          users.add(userData);
+        }
+
+        setState(() {
+          _isLoading = false;
+          usersData = users;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        print('No users found');
+      }
+    } catch (e) {
+      print('error fetching user data: $e');
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error fetching user data')));
+    }
+  }
+
   final List<Map<String, String>> userInfo = [
     {
       'year': '2024',
@@ -171,20 +237,33 @@ class _ManageUsersState extends State<ManageUsers> {
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: userInfo.length,
-                      itemBuilder: (context, index) {
-                        final user = userInfo[index];
-                        return ManageUserInfo(
-                          year: user['year']!,
-                          month: user['month']!,
-                          day: user['day']!,
-                          email: user['email']!,
-                          fullName: user['fullName']!,
-                          status: user['status']!,
-                        );
-                      },
-                    ),
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ))
+                        : usersData.isEmpty
+                            ? const Center(
+                                child: Text(
+                                  'No users found',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              )
+                            : ListView.builder(
+                                itemCount: usersData.length,
+                                itemBuilder: (context, index) {
+                                  UserModel user = usersData[index];
+                                  return ManageUserInfo(
+                                    year: user.dateAdded.year.toString(),
+                                    month: user.dateAdded.month.toString(),
+                                    day: user.dateAdded.day.toString(),
+                                    email: user.email,
+                                    fullName:
+                                        '${user.firstName} ${user.surname}',
+                                    status: user.status,
+                                  );
+                                },
+                              ),
                   ),
                 ],
               ),
