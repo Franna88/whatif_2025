@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/TeamProfile.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/AddMember.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BuisinessDropDown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessAddress.dart';
@@ -162,7 +163,7 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
                 businessFaxController: _controller.businessFaxController,
                 afterHoursController: _controller.afterHoursController,
               ),
-              BusinessDropDown(),
+              /*BusinessDropDown(),
               MoreBusinessInfo(controller: _controller.moreInfoController),
               Container(
                 height: MyUtility(context).height * 0.6,
@@ -227,6 +228,18 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
               ),
               SizedBox(
                 height: 100,
+              ),*/
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 50),
+                    child: AddButton(text: 'Save', onPressed: () {}),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 50,
               ),
             ],
           );
