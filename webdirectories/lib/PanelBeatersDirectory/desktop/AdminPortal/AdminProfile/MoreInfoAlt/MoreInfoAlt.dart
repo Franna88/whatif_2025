@@ -13,16 +13,21 @@ class _MoreInfoALtState extends State<MoreInfoALt> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 12.5, top: 12.5),
-          child: Text(
-            'To maintain system security and reliability, please avoid uploading images or links. All posts are subject to moderation.',
-            style: TextStyle(
-              color: Color(0xFFD17226),
-              fontSize: 13.7364,
-              fontFamily: 'ralewaysemi',
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12.5, top: 12.5),
+              child: Text(
+                'To maintain system security and reliability, please avoid uploading images or links. All posts are subject to moderation.',
+                style: TextStyle(
+                  color: Color(0xFFD17226),
+                  fontSize: 13.7364,
+                  fontFamily: 'ralewaysemi',
+                ),
+              ),
             ),
-          ),
+          ],
         ),
         Container(
           width: MyUtility(context).width * 0.9,

@@ -77,117 +77,108 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: MyUtility(context).width * 0.9,
-        height: MyUtility(context).height * 0.9,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Text(
-                'Media',
-                style: TextStyle(
-                  color: Color(0xFF0F253A),
-                  fontSize: 20.4,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w700,
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Center(
+        child: SizedBox(
+          width: MyUtility(context).width * 0.9,
+          height: MyUtility(context).height * 0.9,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AddButton(
+                    text: 'Insert New Record',
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            backgroundColor: Colors.transparent,
+                            insetPadding: EdgeInsets.all(10),
+                            child: AddMediaPopup(
+                              onMediaAdded:
+                                  _fetchMediaData, // Refresh the list after adding new media
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  IconSearchBoxB(),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 15),
+                child: Container(
+                  width: MyUtility(context).width * 0.9,
+                  height: MyUtility(context).height * 0.065,
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: MyUtility(context).width * 0.26,
+                          child: Text(
+                            'Media Type',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.6064,
+                              fontFamily: 'ralewaybold',
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: MyUtility(context).width * 0.46,
+                          child: Text(
+                            'Media Link',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.6064,
+                              fontFamily: 'ralewaybold',
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'Edit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.6064,
+                            fontFamily: 'ralewaybold',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AddButton(
-                  text: 'Insert New Record',
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      barrierColor: Colors.black.withOpacity(0.5),
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          backgroundColor: Colors.transparent,
-                          insetPadding: EdgeInsets.all(10),
-                          child: AddMediaPopup(
-                            onMediaAdded:
-                                _fetchMediaData, // Refresh the list after adding new media
-                          ),
-                        );
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _mediaList.length,
+                  itemBuilder: (context, index) {
+                    final media = _mediaList[index];
+                    return MediaLinkContainer(
+                      mediaType: media.linkTitle,
+                      mediaLink: media.linkUrl,
+                      pressEdit: () {
+                        // Edit action
                       },
+                      isEven: index % 2 == 0,
                     );
                   },
                 ),
-                IconSearchBoxB(),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 15),
-              child: Container(
-                width: MyUtility(context).width * 0.9,
-                height: MyUtility(context).height * 0.065,
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: MyUtility(context).width * 0.26,
-                        child: Text(
-                          'Media Type',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.6064,
-                            fontFamily: 'ralewaybold',
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: MyUtility(context).width * 0.46,
-                        child: Text(
-                          'Media Link',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.6064,
-                            fontFamily: 'ralewaybold',
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Edit',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.6064,
-                          fontFamily: 'ralewaybold',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _mediaList.length,
-                itemBuilder: (context, index) {
-                  final media = _mediaList[index];
-                  return MediaLinkContainer(
-                    mediaType: media.linkTitle,
-                    mediaLink: media.linkUrl,
-                    pressEdit: () {
-                      // Edit action
-                    },
-                    isEven: index % 2 == 0,
-                  );
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
