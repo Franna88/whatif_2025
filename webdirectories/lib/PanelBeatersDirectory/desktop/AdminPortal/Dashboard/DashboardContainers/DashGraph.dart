@@ -4,6 +4,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboa
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DasboardComp/PreviousandCurrent.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../DasboardComp/DashDatePicker.dart';
+
 class DashGraph extends StatefulWidget {
   const DashGraph({super.key});
 
@@ -52,28 +54,38 @@ class _DashGraphState extends State<DashGraph> {
                     fontFamily: 'ralewaybold',
                   ),
                 ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 6),
-                      child: Text(
-                        'Edit Dates',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Color(0xFFD6D6D6),
-                          fontSize: 11.09,
-                          fontStyle: FontStyle.italic,
-                          fontFamily: 'ralewayit',
-                          fontWeight: FontWeight.w500,
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CalendarPickerPopup();
+                      },
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 6),
+                        child: Text(
+                          'Edit Dates',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Color(0xFFD6D6D6),
+                            fontSize: 11.09,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: 'ralewayit',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                    ),
-                    SvgPicture.asset(
-                      'images/Briefcase.svg',
-                      color: Color(0xFFFFA500),
-                      height: MyUtility(context).width * 0.011,
-                    )
-                  ],
+                      SvgPicture.asset(
+                        'images/Briefcase.svg',
+                        color: Color(0xFFFFA500),
+                        height: MyUtility(context).width * 0.011,
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

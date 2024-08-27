@@ -24,8 +24,11 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          //child: MyUtility(context).width < 600 ? MobilePage1() : Page1(),
-          child: AdminPortal()),
+        child: MyUtility(context).width < 600 ? MobilePage1() : Page1(),
+        //   child: Services(
+        // listingId: '396',
+        // )
+      ),
     );
   }
 }

@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopUpTextField.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopUpsButton.dart';
 import 'package:webdirectories/myutility.dart';
 
 class AddMediaPopup extends StatefulWidget {
-  const AddMediaPopup({super.key});
+  final VoidCallback onMediaAdded;
+
+  const AddMediaPopup({super.key, required this.onMediaAdded});
 
   @override
   State<AddMediaPopup> createState() => _AddMediaPopupState();
@@ -13,6 +18,36 @@ class AddMediaPopup extends StatefulWidget {
 class _AddMediaPopupState extends State<AddMediaPopup> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _linkController = TextEditingController();
+
+  Future<void> _saveMedia() async {
+    String title = _titleController.text.trim();
+    String link = _linkController.text.trim();
+
+    if (title.isNotEmpty && link.isNotEmpty) {
+      StoredUser? user = await getUserInfo();
+      if (user != null) {
+        int listingId = int.parse(user.id);
+        try {
+          await FirebaseFirestore.instance.collection('listings_links').add({
+            'linkTitle': title,
+            'urlLink': link,
+            'listingsId': listingId,
+            'linksOrder': 0, // Adjust as necessary
+          });
+          widget.onMediaAdded(); // Notify parent to update UI
+          Navigator.of(context).pop(); // Close the popup
+          print('Media saved: Title = $title, Link = $link'); // Debugging print
+        } catch (e) {
+          print('Failed to add media: $e'); // Debugging print
+        }
+      } else {
+        print('User not found'); // Debugging print
+      }
+    } else {
+      print('Title and link cannot be empty'); // Debugging print
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -40,7 +75,7 @@ class _AddMediaPopupState extends State<AddMediaPopup> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Add Member',
+                    'Add Media',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 21.76,
@@ -60,9 +95,9 @@ class _AddMediaPopupState extends State<AddMediaPopup> {
                 controller: _linkController,
               ),
               PopUpsButton(
-                text: 'save',
-                onTap: () {},
-              )
+                text: 'Save',
+                onTap: _saveMedia, // Save media on button tap
+              ),
             ],
           ),
         ),

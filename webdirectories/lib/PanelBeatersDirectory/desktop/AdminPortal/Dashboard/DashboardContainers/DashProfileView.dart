@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DasboardComp/DashPropdown.dart';
@@ -14,17 +15,21 @@ class DashProfileView extends StatefulWidget {
 
 class _DashProfileViewState extends State<DashProfileView> {
   StoredUser? _user;
+  final _firestore = FirebaseFirestore.instance;
+  String _username = '';
   @override
   void initState() {
-    _getUserInfo();
+    _getUsername();
     super.initState();
   }
 
-  void _getUserInfo() async {
+  void _getUsername() async {
     StoredUser? user = await getUserInfo();
-    setState(() {
-      _user = user;
-    });
+    if (user != null) {
+      setState(() {
+        _username = user.fullName;
+      });
+    }
   }
 
   @override
@@ -54,7 +59,9 @@ class _DashProfileViewState extends State<DashProfileView> {
                             ),
                           ),
                           TextSpan(
-                            text: 'N4 Autocraft',
+                            text: _username.isNotEmpty
+                                ? _username
+                                : 'N4 Autocraft',
                             style: TextStyle(
                               color: Color(0xFFFF8728),
                               fontSize: 12.95,

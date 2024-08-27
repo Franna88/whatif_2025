@@ -27,7 +27,9 @@ class _DaysButtonAltState extends State<DaysButtonAlt> {
           width: MyUtility(context).width * 0.025,
           height: MyUtility(context).height * 0.05,
           decoration: ShapeDecoration(
-            color: widget.isSelected ? Color(0xFFB2BAC6) : Color(0xFFFF7B16),
+            color: widget.isSelected
+                ? Color(0xFFB2BAC6).withOpacity(0.35)
+                : Color(0xFFFF7B16),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
             ),
@@ -36,8 +38,8 @@ class _DaysButtonAltState extends State<DaysButtonAlt> {
             child: Text(
               widget.day,
               style: TextStyle(
-                color: Colors.white,
-                fontSize: 21.76,
+                color: widget.isSelected ? Colors.white : Colors.white,
+                fontSize: 19.76,
                 fontFamily: 'raleway',
               ),
             ),

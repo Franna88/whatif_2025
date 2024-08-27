@@ -49,7 +49,7 @@ class _AddButtonState extends State<AddButton> {
                 )
               ],
             ),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
             child: Text(
               widget.text,
               style: TextStyle(

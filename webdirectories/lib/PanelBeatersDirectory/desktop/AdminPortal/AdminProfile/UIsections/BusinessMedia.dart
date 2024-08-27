@@ -119,7 +119,7 @@ class _BusinessmediaState extends State<Businessmedia> {
                   ),
                 ),
                 AddButton(
-                  text: 'Add',
+                  text: 'Insert New Record',
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -129,7 +129,10 @@ class _BusinessmediaState extends State<Businessmedia> {
                         return Dialog(
                           backgroundColor: Colors.transparent,
                           insetPadding: EdgeInsets.all(10),
-                          child: AddMediaPopup(),
+                          child: AddMediaPopup(
+                            onMediaAdded:
+                                _fetchMediaData, // Refresh the list after adding new media
+                          ),
                         );
                       },
                     );
