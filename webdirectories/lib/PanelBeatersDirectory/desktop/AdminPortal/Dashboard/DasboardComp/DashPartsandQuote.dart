@@ -1,9 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:webdirectories/myutility.dart';
 
 class Dashpartsandquote extends StatefulWidget {
-  const Dashpartsandquote({super.key});
+  final String containerText;
+  final String containerNumber;
+  final String svgImage;
+  const Dashpartsandquote(
+      {super.key,
+      required this.containerText,
+      required this.containerNumber,
+      required this.svgImage});
 
   @override
   State<Dashpartsandquote> createState() => _DashpartsandquoteState();
@@ -13,8 +21,8 @@ class _DashpartsandquoteState extends State<Dashpartsandquote> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 250.52,
-      height: 94.52,
+      width: MyUtility(context).width * 0.165,
+      height: MyUtility(context).height * 0.125,
       decoration: ShapeDecoration(
         color: Color(0xFF2C2C2C),
         shape: RoundedRectangleBorder(
@@ -34,18 +42,18 @@ class _DashpartsandquoteState extends State<Dashpartsandquote> {
           // Center content with icon and main text
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(left: 8),
+              padding: const EdgeInsets.only(left: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SvgPicture.asset(
-                    'images/gear1.svg',
+                    widget.svgImage,
                     width: 40.0,
                     height: 40.0,
                   ),
                   SizedBox(width: 8.0), // Space between icon and text
                   Text(
-                    'Parts & Equipment\nPlatform',
+                    widget.containerText,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13.6,
@@ -65,7 +73,7 @@ class _DashpartsandquoteState extends State<Dashpartsandquote> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '*51',
+                  widget.containerNumber,
                   style: TextStyle(
                     color: Color(0xFFFF8728),
                     fontSize: 20.7264,

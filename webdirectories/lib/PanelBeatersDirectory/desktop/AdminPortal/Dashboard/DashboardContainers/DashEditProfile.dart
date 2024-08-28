@@ -18,7 +18,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: widthDevice < 1500 ? 558.28 : widthDevice * 0.25,
+          width: MyUtility(context).width * 0.33,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -44,7 +44,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: 90.5284,
+                  width: MyUtility(context).width * 0.06,
                   decoration: ShapeDecoration(
                     color: Color(0xFF2C2C2C),
                     shape: RoundedRectangleBorder(
@@ -69,7 +69,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: 90.5284,
+                  width: MyUtility(context).width * 0.06,
                   decoration: ShapeDecoration(
                     color: Color(0xFF2C2C2C),
                     shape: RoundedRectangleBorder(
@@ -94,7 +94,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: 90.5284,
+                  width: MyUtility(context).width * 0.06,
                   decoration: ShapeDecoration(
                     color: Color(0xFF2C2C2C),
                     shape: RoundedRectangleBorder(
@@ -125,8 +125,8 @@ class _DashEditProfileState extends State<DashEditProfile> {
           width: widthDevice < 1500 ? 558.28 : widthDevice * 0.34,*/
           /*width: 476.68,
           height: 208.08,*/
-          width: 500,
-          height: 235,
+          width: MyUtility(context).width * 0.33,
+          height: MyUtility(context).height * 0.3,
           decoration: ShapeDecoration(
             color: Color(0xFF2C2C2C),
             shape: RoundedRectangleBorder(
@@ -178,7 +178,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
                                   ? 558.28
                                   : widthDevice * 0.37) /
                               2.7,
-                          height: 135.12,
+                          height: MyUtility(context).height * 0.18,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(5),
@@ -209,7 +209,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
                                   ? 558.28
                                   : widthDevice * 0.37) /
                               2.7,
-                          height: 135.12,
+                          height: MyUtility(context).height * 0.18,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(5),

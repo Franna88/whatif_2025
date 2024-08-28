@@ -18,7 +18,7 @@ class _DashJobFinderState extends State<DashJobFinder> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.22,
-      height: 307.94,
+      height: MyUtility(context).height * 0.4,
       decoration: ShapeDecoration(
         color: Color(0xFF2C2C2C),
         shape: RoundedRectangleBorder(

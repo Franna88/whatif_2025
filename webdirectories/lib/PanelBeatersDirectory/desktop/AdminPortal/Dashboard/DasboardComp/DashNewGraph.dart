@@ -8,7 +8,7 @@ class DashNewGraph extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: MyUtility(context).width * 0.34,
+          width: MyUtility(context).width * 0.33,
           height: MyUtility(context).height * 0.3,
           child: LineChart(
             LineChartData(

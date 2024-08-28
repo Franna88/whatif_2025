@@ -101,7 +101,7 @@ class _DashboardState extends State<Dashboard> {
               height: widthDevice < 1500 ? 15 : 30,
             ),*/
             SizedBox(
-              height: 315.94,
+              height: MyUtility(context).height * 0.4,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -115,10 +115,22 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 3),
-                        child: Dashpartsandquote(),
+                        child: Dashpartsandquote(
+                          containerText: 'Parts & Equipment\nPlatform',
+                          containerNumber: '*51',
+                          svgImage: 'images/gear1.svg',
+                        ),
                       ),
-                      Dashpartsandquote(),
-                      Dashpartsandquote(),
+                      Dashpartsandquote(
+                        containerText: 'Request a\nQuote',
+                        containerNumber: '*51',
+                        svgImage: 'images/quote.svg',
+                      ),
+                      Dashpartsandquote(
+                        svgImage: 'images/quote.svg',
+                        containerText: 'View My Latest\nLightstone Results',
+                        containerNumber: '',
+                      ),
                     ],
                   ),
                   SizedBox(

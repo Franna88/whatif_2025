@@ -23,8 +23,8 @@ class _DashGraphState extends State<DashGraph> {
       width: MyUtility(context).width < 1500
           ? 452.88
           : MyUtility(context).width * 0.35,*/
-      width: 650.38,
-      height: 325.74,
+      width: MyUtility(context).width * 0.42,
+      height: MyUtility(context).height * 0.42,
       decoration: ShapeDecoration(
         color: Color(0xFF2C2C2C),
         shape: RoundedRectangleBorder(
@@ -88,6 +88,9 @@ class _DashGraphState extends State<DashGraph> {
                   ),
                 )
               ],
+            ),
+            SizedBox(
+              height: MyUtility(context).height * 0.01,
             ),
             Row(
               children: [
