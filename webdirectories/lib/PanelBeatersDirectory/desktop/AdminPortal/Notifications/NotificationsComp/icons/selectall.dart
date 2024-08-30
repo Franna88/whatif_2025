@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+
+class Selectall extends StatefulWidget {
+  const Selectall({super.key});
+
+  @override
+  State<Selectall> createState() => _SelectallState();
+}
+
+class _SelectallState extends State<Selectall> {
+  bool _isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: 'Select All', // Tooltip text
+      preferBelow: false, // Tooltip appears above the checkbox
+      child: Checkbox(
+        value: _isSelected,
+        onChanged: (bool? value) {
+          setState(() {
+            _isSelected = value ?? false;
+          });
+        },
+        activeColor: Colors.transparent, // Remove default active color
+        checkColor: Color(0xFFEF9040), // Inside color when selected
+        side: MaterialStateBorderSide.resolveWith(
+          (states) => BorderSide(
+            color: Color(0xFF757575), // Border color of the checkbox
+            width: 2.0, // Border width
+          ),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(2.0), // Square shape
+        ),
+      ),
+    );
+  }
+}

@@ -32,30 +32,32 @@ class _AddButtonState extends State<AddButton> {
             _isHovered = false;
           });
         },
-        child: GestureDetector(
-          onTap: widget.onPressed,
-          child: Container(
-            decoration: ShapeDecoration(
-              color: Color(0xFFFF8728),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(22.5),
+        child: Center(
+          child: GestureDetector(
+            onTap: widget.onPressed,
+            child: Container(
+              decoration: ShapeDecoration(
+                color: Color(0xFFFF8728),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22.5),
+                ),
+                shadows: [
+                  BoxShadow(
+                    color: Color(0x7F000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                    spreadRadius: 0,
+                  )
+                ],
               ),
-              shadows: [
-                BoxShadow(
-                  color: Color(0x7F000000),
-                  blurRadius: 4,
-                  offset: Offset(0, 4),
-                  spreadRadius: 0,
-                )
-              ],
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-            child: Text(
-              widget.text,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14.24,
-                fontFamily: 'raleway',
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+              child: Text(
+                widget.text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14.24,
+                  fontFamily: 'raleway',
+                ),
               ),
             ),
           ),

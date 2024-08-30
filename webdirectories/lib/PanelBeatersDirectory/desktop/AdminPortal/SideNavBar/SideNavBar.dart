@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminJobFinder/AdminJobFinder.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminLightStoneKai/AdminLightStone.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/AdminProfile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Advertisement/Advertisement.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DasboardComp/Notifications.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/Dashboard.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageUsers/ManageUsers.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/AdminNotifications.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/AdminNotificationsAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/SideNavBar/SideNavButton/SideNavButton.dart';
 import 'package:webdirectories/myutility.dart';
+
+import '../AdminJobFinder/JobFinderDetails.dart';
+import '../ContactUsPage/OwnersContactUs.dart';
+import '../Notifications/CustomerReviews.dart/CustomerReviews.dart';
+import '../Notifications/DocumentExpires/DocumentExpired.dart';
+import '../Notifications/NotificationMessage.dart/NotificationMessage.dart';
+import '../Notifications/SystemAlert.dart/SystemAlert.dart';
+import '../PerformanceandStats/PerformanceandStats.dart';
 
 class SideNavBar extends StatefulWidget {
   const SideNavBar({Key? key}) : super(key: key);
@@ -17,13 +27,19 @@ class SideNavBar extends StatefulWidget {
 }
 
 class _SideNavBarState extends State<SideNavBar> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 11;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
     // widget.onItemSelected(index);
+  }
+
+  void navigateToPage(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -34,8 +50,17 @@ class _SideNavBarState extends State<SideNavBar> {
       AdminProfile(),
       Advertisement(),
       ManageUsers(),
-      AdminNotifications(),
-      AdminJobFinder()
+      AdminNotificationsAlt(navigateToPage: navigateToPage),
+      SystemAlert(navigateToPage: navigateToPage),
+      DocumentExpired(navigateToPage: navigateToPage),
+      CustomerReviews(navigateToPage: navigateToPage),
+      AdminJobFinder(),
+      //JobFinderDetails(),
+      AdminLightStone(
+        data: null,
+      ),
+      PerformanceAndStats(),
+      OwnersContactUs()
     ];
 
     return Row(
@@ -91,14 +116,26 @@ class _SideNavBarState extends State<SideNavBar> {
                     SideNavButton(
                       icon: 'images/jobrequests.svg',
                       label: 'Job Finder',
-                      isSelected: _selectedIndex == 5,
-                      onTap: () => _onItemTapped(5),
+                      isSelected: _selectedIndex == 8,
+                      onTap: () => _onItemTapped(8),
                     ),
                     SideNavButton(
                       icon: 'images/jobrequests.svg',
-                      label: 'Edit Specials & Promotions',
-                      isSelected: _selectedIndex == 5,
-                      onTap: () => _onItemTapped(5),
+                      label: 'Lightstone KAI',
+                      isSelected: _selectedIndex == 9,
+                      onTap: () => _onItemTapped(9),
+                    ),
+                    SideNavButton(
+                      icon: 'images/advert1.svg',
+                      label: 'Profile Performance & Stats',
+                      isSelected: _selectedIndex == 10,
+                      onTap: () => _onItemTapped(10),
+                    ),
+                    SideNavButton(
+                      icon: 'images/advert1.svg',
+                      label: 'Contact Us',
+                      isSelected: _selectedIndex == 11,
+                      onTap: () => _onItemTapped(11),
                     ),
                     SizedBox(
                         height: widthDevice < 1500

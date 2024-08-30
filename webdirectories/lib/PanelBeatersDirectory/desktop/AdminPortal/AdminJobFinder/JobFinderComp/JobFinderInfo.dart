@@ -1,118 +1,189 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/myutility.dart';
 
-class JobFinderInfo extends StatefulWidget {
+import '../JobFinderDetails.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
+
+class JobFinderInfo extends StatelessWidget {
   final String year;
   final String month;
   final String day;
   final String occupation;
   final String contact;
   final String name;
+  final String country;
+  final String city;
   final String location;
+  final bool isEven;
 
-  const JobFinderInfo(
-      {super.key,
-      required this.year,
-      required this.month,
-      required this.day,
-      required this.occupation,
-      required this.contact,
-      required this.name,
-      required this.location});
+  // Add the JobFinderModel to the constructor
+  final JobFinderModel job;
 
-  @override
-  State<JobFinderInfo> createState() => _JobFinderInfoState();
-}
+  const JobFinderInfo({
+    super.key,
+    required this.year,
+    required this.month,
+    required this.day,
+    required this.occupation,
+    required this.contact,
+    required this.country,
+    required this.city,
+    required this.name,
+    required this.location,
+    required this.isEven,
+    required this.job, // Include the job model
+  });
 
-class _JobFinderInfoState extends State<JobFinderInfo> {
   @override
   Widget build(BuildContext context) {
-    var widthDevice = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 0, right: 20),
       child: Container(
         width: MyUtility(context).width * 0.72,
         height: MyUtility(context).height * 0.06,
-        decoration: ShapeDecoration(
-          color: Color(0xFFA1A1A1),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
+        decoration: BoxDecoration(
+          color: isEven ? const Color(0xFF0E1013) : const Color(0x7F292E31),
+          border: Border.all(color: const Color(0xFF5B5B5B), width: 1),
+          borderRadius: BorderRadius.circular(0),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 8, right:  10),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: MyUtility(context).width * 0.1,
+              // Date
+              Expanded(
+                flex: 2,
                 child: Text(
-                  '${widget.year}/${widget.month}/${widget.day}',
-                  style: TextStyle(
+                  '$year/$month/$day',
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14.96,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14.64,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              SizedBox(
-                width: MyUtility(context).width * 0.17,
+              _buildVerticalDivider(),
+              // Occupation
+              Expanded(
+                flex: 5,
                 child: Text(
-                  widget.occupation,
-                  style: TextStyle(
+                  occupation,
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14.96,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14.64,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              SizedBox(
-                width: MyUtility(context).width * 0.12,
+              _buildVerticalDivider(),
+              //country
+              Expanded(
+                flex: 3,
                 child: Text(
-                  widget.contact,
-                  style: TextStyle(
+                  country,
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14.96,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14.64,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              SizedBox(
-                width: MyUtility(context).width * 0.12,
+              _buildVerticalDivider(),
+              // Location
+              Expanded(
+                flex: 3,
                 child: Text(
-                  widget.name,
-                  style: TextStyle(
+                  location,
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14.96,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14.64,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              SizedBox(
-                width: MyUtility(context).width * 0.17,
+              _buildVerticalDivider(),
+              Expanded(
+                flex: 3,
                 child: Text(
-                  widget.location,
-                  style: TextStyle(
+                  city,
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 14.96,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
+                    fontSize: 14.64,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
-                child: SvgPicture.asset('images/dashboard.svg'),
-              )
+              _buildVerticalDivider(),
+              // Name
+              Expanded(
+                flex: 3,
+                child: Text(
+                  name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.64,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              _buildVerticalDivider(),
+              // contact
+              Expanded(
+                flex: 3,
+                child: Text(
+                  contact,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.64,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+
+              _buildVerticalDivider(),
+              // Icon
+              Expanded(
+                flex: 2,
+                child: SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                    child: AddButton(
+                      text: 'View',
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => JobFinderDetails(job: job),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildVerticalDivider() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: Container(
+        width: 0.5,
+        height: double.infinity,
+        color: const Color(0xFF5B5B5B),
       ),
     );
   }

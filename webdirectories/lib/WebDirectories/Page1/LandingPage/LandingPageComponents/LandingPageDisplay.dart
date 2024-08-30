@@ -77,7 +77,7 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/glasses.gif"),
+          image: AssetImage("images/newwebcover.png"),
           fit: BoxFit.cover,
         ),
       ),
@@ -142,17 +142,17 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
               Column(
                 children: [
                   SizedBox(
-                     height: 17,
-                   ),
+                    height: 17,
+                  ),
                   CategorySelect(
                     menuIndex: menuIndex,
                     changeMenu: changeMenu,
                   ),
                 ],
               ),
-              Column(crossAxisAlignment: CrossAxisAlignment.start,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   
                   CircleTextBox(
                     Title1: directoriesInfo[menuIndex]['1title'],
                     Title2: directoriesInfo[menuIndex]['2title'],
@@ -161,7 +161,9 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                     changeMenu: changeMenu,
                     menuIndex: menuIndex,
                   ),
-                  const SizedBox(height: 100,)
+                  const SizedBox(
+                    height: 100,
+                  )
                 ],
               )
             ],

@@ -35,11 +35,11 @@ class SideNavButton extends StatelessWidget {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: MyUtility(context).width * 0.01,
+                        width: MyUtility(context).width * 0.009,
                       ),
                       SizedBox(
-                        width: MyUtility(context).width * 0.02,
-                        height: MyUtility(context).height * 0.022,
+                        width: MyUtility(context).width * 0.018,
+                        height: MyUtility(context).height * 0.019,
                         child: SvgPicture.asset(
                           icon,
                           width: widthDevice < 1500 ? 18 : 24,

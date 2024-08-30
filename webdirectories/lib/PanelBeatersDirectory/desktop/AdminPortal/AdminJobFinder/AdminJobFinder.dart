@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminJobFinder/JobFinderComp/InfoTextBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminJobFinder/JobFinderComp/JobFinderInfo.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBox.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminJobFinder/JobFinderComp/JobSearchScrollBAr.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashProfileView.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
-import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
 import 'package:webdirectories/myutility.dart';
 
 class AdminJobFinder extends StatefulWidget {
@@ -173,178 +172,254 @@ class _AdminJobFinderState extends State<AdminJobFinder> {
   };
 
   @override
+  final ScrollController _scrollController = ScrollController();
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         width: MyUtility(context).width,
         height: MyUtility(context).height,
-        decoration: BoxDecoration(color: Color(0xFFF4F4F4)),
-        child: Center(
-          child: Container(
-            width: MyUtility(context).width * 0.75,
-            height: MyUtility(context).height * 0.9,
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+        decoration: BoxDecoration(color: Color(0xFF171616)),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 20),
+              child: const DashProfileView(),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Job Finder',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 24.48,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
+            Center(
+              child: Container(
+                width: MyUtility(context).width * 0.78,
+                height: MyUtility(context).height * 0.85,
+                decoration: ShapeDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment(0.57, -0.82),
+                    end: Alignment(-0.57, 0.82),
+                    colors: [
+                      Color(0x19777777),
+                      Colors.white.withOpacity(0.4000000059604645)
                     ],
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InfoTextBox(),
-                        IconSearchBox(
-                          onChanged: _onSearchChanged,
-                        ),
-                      ],
-                    ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 10),
-                    child: Container(
-                      width: MyUtility(context).width * 0.73,
-                      height: MyUtility(context).height * 0.06,
-                      decoration: ShapeDecoration(
-                        color: Color(0xFF0F253A),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0xBF000000),
+                      blurRadius: 24,
+                      offset: Offset(0, 4),
+                      spreadRadius: -1,
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Find Top Talent here',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.6064,
+                              fontFamily: 'ralewaybold',
+                            ),
+                          )
+                        ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8, right: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                      Text.rich(
+                        TextSpan(
                           children: [
-                            SizedBox(
-                              width: MyUtility(context).width * 0.1,
-                              child: Text(
-                                'Applied Date',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.68,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                ),
+                            TextSpan(
+                              text:
+                                  'Job seekers can submit their details to our Panel Beater Directory. This information is accessible to employers exclusively through our Owners portal for 60 days. Employers can then contact potential candidates directly. ',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14.73,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
                               ),
                             ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.17,
-                              child: Text(
-                                'Occupation',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.68,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                ),
+                            TextSpan(
+                              text:
+                                  'Please note: This is a free information service only. We are not responsible for the accuracy or content of the information provided. We have no financial interest in or influence over the hiring process.',
+                              style: TextStyle(
+                                color: Color(0xFFEF9040),
+                                fontSize: 14.73,
+                                fontFamily: 'ralewaysemi',
                               ),
                             ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.12,
-                              child: Text(
-                                'Contact',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.68,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.12,
-                              child: Text(
-                                'Name',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.68,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.17,
-                              child: Text(
-                                'Location',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.68,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.01,
-                            )
                           ],
                         ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: _isLoading == true
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.black,
+                      /*Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InfoTextBox(),
+                            IconSearchBox(
+                              onChanged: _onSearchChanged,
                             ),
-                          )
-                        : _filteredJob.isEmpty
+                          ],
+                        ),
+                      ),*/
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                              width: MyUtility(context).width * 0.2,
+                              height: MyUtility(context).height * 0.095,
+                              child: JobSearchScrollBar()),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Date',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6064,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  )),
+                              Expanded(
+                                  flex: 5,
+                                  child: Text(
+                                    'Occupation',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6064,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  )),
+                              Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    'Country',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6064,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  )),
+                              Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    'Province',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6064,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  )),
+                              Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    'City',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6064,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  )),
+                              Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    'Name',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6064,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  )),
+                              Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    'Contact',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6064,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  )),
+                              Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Data',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6064,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: _isLoading == true
                             ? const Center(
-                                child: Text('No Jobs Found'),
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
                               )
-                            : ListView.builder(
-                                itemCount: _filteredJob.length,
-                                itemBuilder: (context, index) {
-                                  final job = _filteredJob[index];
-                                  return JobFinderInfo(
-                                    year: job.dateSubmitted
-                                        .toDate()
-                                        .year
-                                        .toString(),
-                                    month: job.dateSubmitted
-                                        .toDate()
-                                        .month
-                                        .toString(),
-                                    day: job.dateSubmitted
-                                        .toDate()
-                                        .day
-                                        .toString(),
-                                    occupation: job.occupation,
-                                    contact: job.contactNumber,
-                                    name: job.name,
-                                    location:
-                                        '${job.city}, ${job.province}, ${job.country}',
-                                  );
-                                },
-                              ),
+                            : _filteredJob.isEmpty
+                                ? const Center(
+                                    child: Text('No Jobs Found'),
+                                  )
+                                : DraggableScrollbar.rrect(
+                                    controller: _scrollController,
+                                    backgroundColor: const Color(0x7F9E9E9F),
+                                    alwaysVisibleScrollThumb: true,
+                                    child: ListView.builder(
+                                      controller:
+                                          _scrollController, // Ensure the controller is connected to the scrollbar
+                                      itemCount: _filteredJob.length,
+                                      itemBuilder: (context, index) {
+                                        final job = _filteredJob[index];
+                                        return JobFinderInfo(
+                                          country: job.country,
+                                          city: job.city,
+                                          year: job.dateSubmitted
+                                              .toDate()
+                                              .year
+                                              .toString(),
+                                          month: job.dateSubmitted
+                                              .toDate()
+                                              .month
+                                              .toString(),
+                                          day: job.dateSubmitted
+                                              .toDate()
+                                              .day
+                                              .toString(),
+                                          occupation: job.occupation,
+                                          contact: job.contactNumber,
+                                          name: job.name,
+                                          location: job.province,
+                                          isEven: index % 2 == 0,
+                                          job:
+                                              job, // Pass the entire job object here
+                                        );
+                                      },
+                                    ),
+                                  ),
+                      )
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

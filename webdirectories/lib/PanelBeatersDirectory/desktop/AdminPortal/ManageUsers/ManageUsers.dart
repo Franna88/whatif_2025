@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Advertisement/Advertisementcomp/AdvertButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageUsers/ManageUserComp/ManageUserInfo.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/NewUserPopup/NewUserPopup.dart';
@@ -7,6 +9,8 @@ import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/users.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
+
+import '../Dashboard/DashboardContainers/DashProfileView.dart';
 
 class ManageUsers extends StatefulWidget {
   const ManageUsers({super.key});
@@ -78,197 +82,235 @@ class _ManageUsersState extends State<ManageUsers> {
     }
   }
 
-  final List<Map<String, String>> userInfo = [
-    {
-      'year': '2024',
-      'month': '03',
-      'day': '07',
-      'email': 'user1@gmail.com',
-      'fullName': 'User1 User1',
-      'status': 'Active'
-    },
-    {
-      'year': '2024',
-      'month': '03',
-      'day': '07',
-      'email': 'user2@gmail.com',
-      'fullName': 'User2 User2',
-      'status': 'Inactive'
-    },
-    {
-      'year': '2024',
-      'month': '03',
-      'day': '07',
-      'email': 'user3@gmail.com',
-      'fullName': 'User3 User3',
-      'status': 'Active'
-    },
-    // Add more user info as needed
+  final List<UserModel> dummyUsers = [
+    UserModel(
+      dateAdded: DateTime(2024, 3, 7),
+      firstName: 'User1',
+      surname: 'User1',
+      email: 'user1@gmail.com',
+      status: 'Active',
+    ),
+    UserModel(
+      dateAdded: DateTime(2024, 3, 7),
+      firstName: 'User2',
+      surname: 'User2',
+      email: 'user2@gmail.com',
+      status: 'Inactive',
+    ),
+    UserModel(
+      dateAdded: DateTime(2024, 3, 7),
+      firstName: 'User3',
+      surname: 'User3',
+      email: 'user3@gmail.com',
+      status: 'Active',
+    ),
   ];
 
   @override
+  final ScrollController _scrollController = ScrollController();
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: MyUtility(context).width,
         height: MyUtility(context).height,
-        decoration: BoxDecoration(color: Color(0xFFF4F4F4)),
-        child: Center(
-          child: Container(
-            width: MyUtility(context).width * 0.75,
-            height: MyUtility(context).height * 0.9,
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+        decoration: BoxDecoration(
+          color: Color(0xFF171616),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 20),
+              child: const DashProfileView(),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Manage Users',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 24.48,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      AdvertButton(
-                        text: 'Request User',
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            barrierColor: Colors.black.withOpacity(0.5),
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                backgroundColor: Colors.transparent,
-                                insetPadding: EdgeInsets.all(10),
-                                child: NewUserPopup(),
-                              );
-                            },
-                          );
-                        },
-                      ),
+            Center(
+              child: Container(
+                width: MyUtility(context).width * 0.75,
+                height: MyUtility(context).height * 0.85,
+                decoration: ShapeDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment(0.57, -0.82),
+                    end: Alignment(-0.57, 0.82),
+                    colors: [
+                      Color(0x19777777),
+                      Colors.white.withOpacity(0.4000000059604645)
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 10),
-                    child: Container(
-                      width: MyUtility(context).width * 0.73,
-                      height: MyUtility(context).height * 0.06,
-                      decoration: ShapeDecoration(
-                        color: Color(0xFF00437B),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8, right: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: MyUtility(context).width * 0.15,
-                              child: Text(
-                                'Date Reg',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.96,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.15,
-                              child: Text(
-                                'Email',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.96,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.225,
-                              child: Text(
-                                'Full Name',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.96,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.15,
-                              child: Text(
-                                'Status',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.96,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              'View',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14.96,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  Expanded(
-                    child: _isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                            color: Colors.black,
-                          ))
-                        : usersData.isEmpty
-                            ? const Center(
-                                child: Text(
-                                  'No users found',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              )
-                            : ListView.builder(
-                                itemCount: usersData.length,
-                                itemBuilder: (context, index) {
-                                  UserModel user = usersData[index];
-                                  return ManageUserInfo(
-                                    year: user.dateAdded.year.toString(),
-                                    month: user.dateAdded.month.toString(),
-                                    day: user.dateAdded.day.toString(),
-                                    email: user.email,
-                                    fullName:
-                                        '${user.firstName} ${user.surname}',
-                                    status: user.status,
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0xBF000000),
+                      blurRadius: 24,
+                      offset: Offset(0, 4),
+                      spreadRadius: -1,
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              AddButton(
+                                text: 'Request New User',
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    barrierColor: Colors.black.withOpacity(0.5),
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        backgroundColor: Colors.transparent,
+                                        insetPadding: EdgeInsets.all(10),
+                                        child: NewUserPopup(),
+                                      );
+                                    },
                                   );
                                 },
                               ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: Text(
+                              'Manage Users',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.6064,
+                                fontFamily: 'ralewaybold',
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Please fill out the following form to create a new user account. Once completed, we will send a welcome email with login instructions to the nominated email address',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.73,
+                              fontFamily: 'raleway',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20, bottom: 10),
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Date Reg',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.60,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Email',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.60,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Full Name',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.60,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Status',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.60,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'View',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.60,
+                                      fontFamily: 'ralewaybold',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: _isLoading
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ))
+                            : usersData.isEmpty
+                                ? const Center(
+                                    child: Text(
+                                      'No users found',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  )
+                                : DraggableScrollbar.rrect(
+                                    controller: _scrollController,
+                                    backgroundColor: Color(0x7F9E9E9F),
+                                    alwaysVisibleScrollThumb: true,
+                                    child: ListView.builder(
+                                      controller: _scrollController,
+                                      itemCount: usersData.length,
+                                      itemBuilder: (context, index) {
+                                        UserModel user = usersData[index];
+                                        return ManageUserInfo(
+                                          year: user.dateAdded.year.toString(),
+                                          month:
+                                              user.dateAdded.month.toString(),
+                                          day: user.dateAdded.day.toString(),
+                                          email: user.email,
+                                          fullName:
+                                              '${user.firstName} ${user.surname}',
+                                          status: user.status,
+                                          isEven: index % 2 == 0,
+                                          pressEdit: () {},
+                                          pressDelete: () {},
+                                        );
+                                      },
+                                    ),
+                                  ),
+                      )
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
