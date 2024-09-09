@@ -4,12 +4,14 @@ import 'package:webdirectories/myutility.dart';
 
 class SideNavButton extends StatelessWidget {
   final String icon;
+  final String selectedIcon; // New field for selected icon
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
 
   SideNavButton({
     required this.icon,
+    required this.selectedIcon, // Add selectedIcon to constructor
     required this.label,
     required this.isSelected,
     required this.onTap,
@@ -41,10 +43,12 @@ class SideNavButton extends StatelessWidget {
                         width: MyUtility(context).width * 0.018,
                         height: MyUtility(context).height * 0.019,
                         child: SvgPicture.asset(
-                          icon,
+                          isSelected
+                              ? selectedIcon
+                              : icon, // Change icon based on isSelected
                           width: widthDevice < 1500 ? 18 : 24,
                           height: widthDevice < 1500 ? 18 : 24,
-                          color: Colors.white,
+                          color: Colors.white, // Keep color consistent
                         ),
                       ),
                       SizedBox(width: 8),

@@ -40,16 +40,15 @@ class _PopUpDatePickerState extends State<PopUpDatePicker> {
         Text(
           widget.text,
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.32,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w700,
-            height: 1.0,
+            color: Colors.black,
+            fontSize: 12.73,
+            fontFamily: 'raleway',
           ),
         ),
         SizedBox(height: 8.0),
         SizedBox(
           width: MyUtility(context).width * 0.25,
+          height: MyUtility(context).height * 0.045,
           child: TextFormField(
             controller: widget.controller,
             readOnly: true, // Prevent manual editing

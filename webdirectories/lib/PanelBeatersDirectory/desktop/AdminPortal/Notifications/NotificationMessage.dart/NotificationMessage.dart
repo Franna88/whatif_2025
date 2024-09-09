@@ -126,7 +126,7 @@ class _NotificationMessageState extends State<NotificationMessage> {
           padding: const EdgeInsets.only(left: 20, top: 20),
           child: Column(
             children: [
-              DashProfileView(),
+              //DashProfileView(),
               Container(
                 width: MyUtility(context).width,
                 height: MyUtility(context).height * 0.82,
@@ -156,7 +156,11 @@ class _NotificationMessageState extends State<NotificationMessage> {
                     SizedBox(
                         width: MyUtility(context).width * 0.75,
                         height: MyUtility(context).height * 0.065,
-                        child: BackButtonMessage()),
+                        child: BackButtonMessage(
+                          onPress: () {
+                            widget.navigateToPage(4);
+                          },
+                        )),
                     Center(
                       child: Container(
                         width: MyUtility(context).width * 0.75,

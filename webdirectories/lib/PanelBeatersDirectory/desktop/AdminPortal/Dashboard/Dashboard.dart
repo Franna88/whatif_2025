@@ -17,7 +17,9 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  final Function(int) navigateToPage;
+
+  const Dashboard({super.key, required this.navigateToPage});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -38,17 +40,20 @@ class _DashboardState extends State<Dashboard> {
     return Container(
       width: MyUtility(context).width,
       height: MyUtility(context).height,
-      decoration: BoxDecoration(
-        color: Color(0xFF181B1D),
-      ),
+      decoration: BoxDecoration(color: Color(0xFF171616)),
       child: Padding(
         padding: EdgeInsets.only(
-            left: widthDevice < 1500 ? 15 : 30,
-            top: widthDevice < 1500 ? 15 : 30),
+          left: widthDevice < 1500 ? 15 : 30,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            DashProfileView(),
+            /* DashProfileView(
+              onPress: () {
+                widget.navigateToPage(14);
+              },
+              connectToIndexPage: true, // Enables page navigation via dropdown
+            ),*/
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -63,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
               ],
             ),
             SizedBox(
-              height: widthDevice < 1500 ? 15 : 30,
+              height: widthDevice < 1500 ? 15 : 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -142,6 +147,9 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
             ),
+            SizedBox(
+              height: MyUtility(context).height * 0.025,
+            )
           ],
         ),
       ),

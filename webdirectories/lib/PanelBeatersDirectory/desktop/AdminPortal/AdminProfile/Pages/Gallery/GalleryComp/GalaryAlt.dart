@@ -89,132 +89,136 @@ class _GalleryAltState extends State<GalleryAlt> {
           ],
         ),
         Center(
-          child: Container(
-            width: MyUtility(context).width * 0.8,
-            height: MyUtility(context).height,
-            decoration: ShapeDecoration(
-              gradient: LinearGradient(
-                begin: Alignment(0.57, -0.82),
-                end: Alignment(-0.57, 0.82),
-                colors: [
-                  Color(0x19777777),
-                  Colors.white.withOpacity(0.4000000059604645)
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: Container(
+              width: MyUtility(context).width * 0.8,
+              height: MyUtility(context).height,
+              decoration: ShapeDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(0.57, -0.82),
+                  end: Alignment(-0.57, 0.82),
+                  colors: [
+                    Color(0x19777777),
+                    Colors.white.withOpacity(0.4000000059604645)
+                  ],
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                shadows: [
+                  BoxShadow(
+                    color: Color(0xBF000000),
+                    blurRadius: 24,
+                    offset: Offset(0, 4),
+                    spreadRadius: -1,
+                  )
                 ],
               ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: Color(0xBF000000),
-                  blurRadius: 24,
-                  offset: Offset(0, 4),
-                  spreadRadius: -1,
-                )
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: MyUtility(context).height * 0.05,
-                  ),
-                  AddButton(
-                    text: 'Add Image',
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        barrierColor: Colors.black.withOpacity(0.5),
-                        builder: (BuildContext context) {
-                          return Dialog(
-                            backgroundColor: Colors.transparent,
-                            insetPadding: EdgeInsets.all(10),
-                            child: AddImagePopup(
-                              onImageUpload: (Map<String, dynamic> newImage) {},
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Drag and drop to reorder list!',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.6064,
-                          fontFamily: 'raleway',
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconSearchBoxB(),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.7,
-                    child: FutureBuilder<List<Map<String, dynamic>>>(
-                      future: _fetchGalleryData(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                        if (snapshot.hasError) {
-                          return Center(
-                            child: Text('Something went wrong.',
-                                style: const TextStyle(color: Colors.black)),
-                          );
-                        }
-                        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                          return const Center(
-                            child: Text(
-                              'No images found',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          );
-                        }
-                        List<Map<String, dynamic>> images = snapshot.data!;
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 50.0, vertical: 20.0),
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount:
-                                  4, // Increased from 3 to 4 for smaller containers
-                              mainAxisSpacing: 8.0,
-                              crossAxisSpacing: 8.0,
-                              childAspectRatio: 4 /
-                                  3.5, // Adjusted aspect ratio for a better fit
-                            ),
-                            itemCount: images.length,
-                            itemBuilder: (context, index) {
-                              Map<String, dynamic> image = images[index];
-                              return GalleryAltContainer(
-                                galleryImage: image['immageFile'],
-                                description: image['immageTitle'],
-                              );
-                            },
-                          ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: MyUtility(context).height * 0.05,
+                    ),
+                    AddButton(
+                      text: 'Add Image',
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          barrierColor: Colors.black.withOpacity(0.5),
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              backgroundColor: Colors.transparent,
+                              insetPadding: EdgeInsets.all(10),
+                              child: AddImagePopup(
+                                onImageUpload:
+                                    (Map<String, dynamic> newImage) {},
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
-                  ),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Drag and drop to reorder list!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.6064,
+                            fontFamily: 'raleway',
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconSearchBoxB(),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    SizedBox(
+                      height: MyUtility(context).height * 0.7,
+                      child: FutureBuilder<List<Map<String, dynamic>>>(
+                        future: _fetchGalleryData(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Something went wrong.',
+                                  style: const TextStyle(color: Colors.black)),
+                            );
+                          }
+                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                'No images found',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            );
+                          }
+                          List<Map<String, dynamic>> images = snapshot.data!;
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 50.0, vertical: 20.0),
+                            child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount:
+                                    4, // Increased from 3 to 4 for smaller containers
+                                mainAxisSpacing: 8.0,
+                                crossAxisSpacing: 8.0,
+                                childAspectRatio: 4 /
+                                    3.5, // Adjusted aspect ratio for a better fit
+                              ),
+                              itemCount: images.length,
+                              itemBuilder: (context, index) {
+                                Map<String, dynamic> image = images[index];
+                                return GalleryAltContainer(
+                                  galleryImage: image['immageFile'],
+                                  description: image['immageTitle'],
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

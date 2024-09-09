@@ -27,7 +27,7 @@ class _PopupCheckBoxState extends State<PopupCheckBox> {
       child: Row(
         children: [
           Container(
-            width: MyUtility(context).width * 0.015,
+            width: MyUtility(context).width * 0.012,
             height: MyUtility(context).height * 0.025,
             decoration: ShapeDecoration(
               color: Colors.transparent,
@@ -51,11 +51,10 @@ class _PopupCheckBoxState extends State<PopupCheckBox> {
           Text(
             widget.text,
             style: TextStyle(
-              color: Colors.white,
-              fontSize: 13.6,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w700,
-              height: 0,
+              color: Color(0xFF5B5B5B),
+              fontSize: 12.2,
+              fontFamily: 'raleway',
+              fontWeight: FontWeight.w400,
             ),
           ),
         ],

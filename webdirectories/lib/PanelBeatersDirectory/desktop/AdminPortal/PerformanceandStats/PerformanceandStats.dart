@@ -75,10 +75,9 @@ class _PerformanceAndStatsState extends State<PerformanceAndStats> {
       height: MyUtility(context).height,
       decoration: BoxDecoration(color: Color(0xFF171616)),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 20),
+        padding: const EdgeInsets.only(left: 20, top: 0, right: 20),
         child: Column(
           children: [
-            const DashProfileView(),
             SizedBox(height: 20),
             Container(
               width: MyUtility(context).width * 0.8,

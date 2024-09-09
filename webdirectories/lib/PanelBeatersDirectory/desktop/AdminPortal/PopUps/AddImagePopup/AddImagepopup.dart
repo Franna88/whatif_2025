@@ -13,6 +13,8 @@ import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../PopUpsCommon/PopUpsCancel.dart';
+
 class AddImagePopup extends StatefulWidget {
   final Function(Map<String, dynamic> newImage) onImageUpload;
   const AddImagePopup({super.key, required this.onImageUpload});
@@ -144,36 +146,45 @@ class _AddImagePopupState extends State<AddImagePopup> {
     return Center(
       child: Container(
         width: MyUtility(context).width * 0.3,
-        height: _selectedImage == null
-            ? MyUtility(context).height * 0.425
-            : MyUtility(context).height * 0.6,
+        height: MyUtility(context).height * 0.4,
         decoration: ShapeDecoration(
-          color: Color(0xFF0F253A),
+          color: Color(0xFFD9D9D9),
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              width: 5,
               strokeAlign: BorderSide.strokeAlignOutside,
-              color: Color(0xFFEF9040),
             ),
             borderRadius: BorderRadius.circular(15),
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: MyUtility(context).width,
+              height: MyUtility(context).height * 0.06,
+              decoration: ShapeDecoration(
+                color: Color(0xFFD17226),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.09),
+                    topRight: Radius.circular(8.09),
+                  ),
+                ),
+              ),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Add Image',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 21.76,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      'Add Image',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.65,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                   CloseButton(
@@ -183,7 +194,10 @@ class _AddImagePopupState extends State<AddImagePopup> {
                   ),
                 ],
               ),
-              Form(
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,17 +228,45 @@ class _AddImagePopupState extends State<AddImagePopup> {
                               ],
                             ),
                       SizedBox(
-                        height: 20,
+                        height: MyUtility(context).height * 0.02,
                       ),
-                      PopUpsButton(
-                        text: 'Save',
-                        onTap: _saveForm,
-                        waiting: _isLoading,
+                      SizedBox(
+                        width: MyUtility(context).width * 0.17,
+                        child: Text(
+                          'Note: Image may not be larger than 2 megabytes. Preferable landscape images. Image format: .jpg, jpeg, .png and .gif',
+                          style: TextStyle(
+                            color: Color(0xFFD17226),
+                            fontSize: 10,
+                            fontFamily: 'ralewaymedium',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: MyUtility(context).height * 0.02,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          PopUpsButton(
+                            text: 'Save',
+                            onTap: _saveForm,
+                            waiting: _isLoading,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          PopUpsCancel(
+                            text: 'Cancel',
+                            onTap: () {},
+                            buttonColor: Color(0xFF3C4043),
+                          ),
+                        ],
                       )
                     ],
-                  ))
-            ],
-          ),
+                  )),
+            )
+          ],
         ),
       ),
     );

@@ -90,7 +90,7 @@ class _DocumentAltState extends State<DocumentAlt> {
       child: SizedBox(
         // width: MyUtility(context).width * 0.9,
         child: Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 20, right: 20),
           child: Container(
             width: MyUtility(context).width * 0.9,
             decoration: ShapeDecoration(

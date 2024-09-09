@@ -64,7 +64,7 @@ class _AdminContactAltState extends State<AdminContactAlt> {
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Text(
                   'Image max 2 Megabytes each. Prefer landscape format. Accepted file types: JPG, JPEG, PNG, GIF.',
                   style: TextStyle(
@@ -106,24 +106,30 @@ class _AdminContactAltState extends State<AdminContactAlt> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AddButton(
-                  text: 'Insert New Contact Person',
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      barrierColor: Colors.black.withOpacity(0.5),
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          backgroundColor: Colors.transparent,
-                          insetPadding: EdgeInsets.all(10),
-                          child: ContactPopup(
-                            onAddContact: (Map<String, dynamic> newContact) {},
-                          ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    AddButton(
+                      text: 'Insert New Contact Person',
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          barrierColor: Colors.black.withOpacity(0.5),
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              backgroundColor: Colors.transparent,
+                              insetPadding: EdgeInsets.all(10),
+                              child: ContactPopup(
+                                onAddContact:
+                                    (Map<String, dynamic> newContact) {},
+                              ),
+                            );
+                          },
                         );
                       },
-                    );
-                  },
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 5),

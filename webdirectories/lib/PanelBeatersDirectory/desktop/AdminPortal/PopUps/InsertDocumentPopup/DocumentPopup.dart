@@ -18,6 +18,8 @@ import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../PopUpsCommon/PopUpsCancel.dart';
+
 class DocumentPopup extends StatefulWidget {
   const DocumentPopup({super.key});
 
@@ -227,125 +229,195 @@ class _DocumentPopupState extends State<DocumentPopup> {
     return Center(
       child: Container(
         width: MyUtility(context).width * 0.3,
-        height: MyUtility(context).height * 0.85,
+        height: MyUtility(context).height * 0.645,
         decoration: ShapeDecoration(
-          color: Color(0xFF0F253A),
+          color: Color(0xFFD9D9D9),
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              width: 5,
-              color: Color(0xFFEF9040),
+              strokeAlign: BorderSide.strokeAlignOutside,
             ),
             borderRadius: BorderRadius.circular(15),
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
+        child: Column(
+          children: [
+            Container(
+              width: MyUtility(context).width,
+              height: MyUtility(context).height * 0.06,
+              decoration: ShapeDecoration(
+                color: Color(0xFFD17226),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.09),
+                    topRight: Radius.circular(8.09),
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
                       'Insert Document',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 21.76,
-                        fontFamily: 'Inter',
+                        fontSize: 14.65,
+                        fontFamily: 'raleway',
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    CloseButton(
-                      style: ButtonStyle(
-                          foregroundColor:
-                              WidgetStateProperty.all(Colors.white)),
-                    ),
-                  ],
-                ),
-                PopUpDropdownField(
-                  text: 'Sub Category',
-                  controller: _subCategoryController,
-                  items: _documentSubCategoryMenuData,
-                  initialValue: '',
-                  onChanged: _onSubCategoryChanged,
-                ),
-                PopUpTextField(
-                  text: 'Category',
-                  controller: _categoryController,
-                ),
-                PopUpTextField(
-                  text: 'Title',
-                  controller: _titleController,
-                ),
-                PopUpDatePicker(
-                  text: 'Expiry Date',
-                  controller: _expiryController,
-                ),
-                Row(
+                  ),
+                  CloseButton(
+                    style: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.all(Colors.white)),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    PopUpTextField(
+                      text: 'Category',
+                      controller: _categoryController,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    PopUpDropdownField(
+                      text: 'Sub Category',
+                      controller: _subCategoryController,
+                      items: _documentSubCategoryMenuData,
+                      initialValue: '',
+                      onChanged: _onSubCategoryChanged,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    PopUpTextField(
+                      text: 'Title',
+                      controller: _titleController,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
                       children: [
                         Text(
-                          'Notification Email',
+                          "File (.pdf)",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.32,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
+                            color: Colors.black,
+                            fontSize: 14.73,
+                            fontFamily: 'raleway',
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
-                        SizedBox(
-                          height: 8,
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: AttachmentPopupButton(
+                              text: 'Attach File', onTap: _pickFiles),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        Text(
+                          "No file chosen",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.73,
+                            fontFamily: 'raleway',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    PopUpDatePicker(
+                      text: 'Expiry Date',
+                      controller: _expiryController,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            PopupCheckBox(
-                              value: emailNotification,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  emailNotification = newValue;
-                                });
-                              },
-                              text: 'Yes',
+                            Text(
+                              'Notification Email',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.73,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                             SizedBox(
-                              width: 8,
+                              height: 8,
                             ),
-                            PopupCheckBox(
-                              value: !emailNotification,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  emailNotification = !newValue;
-                                });
-                              },
-                              text: 'No',
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                PopupCheckBox(
+                                  value: emailNotification,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      emailNotification = newValue;
+                                    });
+                                  },
+                                  text: 'Yes',
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                PopupCheckBox(
+                                  value: !emailNotification,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      emailNotification = !newValue;
+                                    });
+                                  },
+                                  text: 'No',
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ],
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: AttachmentPopupButton(
-                          text: 'Attach File', onTap: _pickFiles),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PopUpsButton(
+                          text: 'Insert',
+                          onTap: _saveForm,
+                          waiting: _isLoading,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        PopUpsCancel(
+                          text: 'Cancel',
+                          onTap: () {},
+                          buttonColor: Color(0xFF3C4043),
+                        ),
+                      ],
                     )
                   ],
                 ),
-                PopUpsButton(
-                  text: 'Save',
-                  onTap: _saveForm,
-                  waiting: _isLoading,
-                )
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

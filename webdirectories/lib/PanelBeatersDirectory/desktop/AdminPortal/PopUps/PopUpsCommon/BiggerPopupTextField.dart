@@ -21,11 +21,10 @@ class _BiggerPopupTextFieldState extends State<BiggerPopupTextField> {
         Text(
           widget.text,
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.32,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w700,
-            height: 1.0,
+            color: Colors.black,
+            fontSize: 14.61,
+            fontFamily: 'raleway',
+            fontWeight: FontWeight.w400,
           ),
         ),
         SizedBox(

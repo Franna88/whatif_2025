@@ -127,10 +127,9 @@ class _DocumentExpiredState extends State<DocumentExpired> {
         height: MyUtility(context).height,
         decoration: BoxDecoration(color: Color(0xFF171616)),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20),
+          padding: const EdgeInsets.only(left: 20, top: 0),
           child: Column(
             children: [
-              DashProfileView(),
               Container(
                 width: MyUtility(context).width,
                 height: MyUtility(context).height * 0.82,

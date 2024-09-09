@@ -12,10 +12,16 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/SideNav
 import 'package:webdirectories/myutility.dart';
 
 import '../AdminJobFinder/JobFinderDetails.dart';
+import '../Advertisement/AdvertisementAlt.dart';
 import '../ContactUsPage/OwnersContactUs.dart';
+import '../Dashboard/DashboardContainers/DashProfileView.dart';
+import '../Dashboard/DashboardContainers/ManageProfile.dart';
+import '../IndustryNews/IndustryNews.dart';
+import '../ManageMyAccount/ManageAccount.dart';
 import '../Notifications/CustomerReviews.dart/CustomerReviews.dart';
 import '../Notifications/DocumentExpires/DocumentExpired.dart';
 import '../Notifications/NotificationMessage.dart/NotificationMessage.dart';
+import '../Notifications/NotificationWelcome/NotificationWelcome.dart';
 import '../Notifications/SystemAlert.dart/SystemAlert.dart';
 import '../PerformanceandStats/PerformanceandStats.dart';
 
@@ -27,40 +33,51 @@ class SideNavBar extends StatefulWidget {
 }
 
 class _SideNavBarState extends State<SideNavBar> {
-  int _selectedIndex = 11;
+  final PageController _pageController = PageController(initialPage: 0);
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    // widget.onItemSelected(index);
+    _pageController.jumpToPage(index);
   }
 
   void navigateToPage(int index) {
     setState(() {
       _selectedIndex = index;
     });
+    _pageController.jumpToPage(index);
   }
 
   @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
     var pages = [
-      Dashboard(),
+      Dashboard(navigateToPage: navigateToPage),
       AdminProfile(),
-      Advertisement(),
+      //Advertisement(),
+      AdvertisementAlt(),
       ManageUsers(),
       AdminNotificationsAlt(navigateToPage: navigateToPage),
       SystemAlert(navigateToPage: navigateToPage),
       DocumentExpired(navigateToPage: navigateToPage),
       CustomerReviews(navigateToPage: navigateToPage),
-      AdminJobFinder(),
+      AdminJobFinder(navigateToPage: navigateToPage),
       //JobFinderDetails(),
       AdminLightStone(
         data: null,
       ),
       PerformanceAndStats(),
-      OwnersContactUs()
+      OwnersContactUs(),
+      IndustryNews(),
+      ManageAccount(),
+
+      ManageProfile(navigateToPage: navigateToPage),
+      NotificationWelcome(
+        navigateToPage: navigateToPage,
+      ),
+      NotificationMessage(navigateToPage: navigateToPage)
     ];
 
     return Row(
@@ -84,55 +101,78 @@ class _SideNavBarState extends State<SideNavBar> {
                 child: ListView(
                   children: [
                     SideNavButton(
-                      icon: 'images/dashicon.svg',
+                      icon: 'images/dash1.svg',
+                      selectedIcon: 'images/dash1.1.svg',
                       label: 'Dashboard',
                       isSelected: _selectedIndex == 0,
                       onTap: () => _onItemTapped(0),
                     ),
                     SideNavButton(
-                      icon: 'images/Profile1.svg',
-                      label: 'Profile',
+                      icon: 'images/dash2.svg',
+                      selectedIcon: 'images/dash2.1.svg',
+                      label: 'Edit My Profile',
                       isSelected: _selectedIndex == 1,
                       onTap: () => _onItemTapped(1),
                     ),
                     SideNavButton(
-                      icon: 'images/advert1.svg',
-                      label: 'Advertisement',
+                      icon: 'images/dash3.svg',
+                      selectedIcon: 'images/dash3.1.svg',
+                      label: 'Edit Specials & Promotions',
                       isSelected: _selectedIndex == 2,
                       onTap: () => _onItemTapped(2),
                     ),
                     SideNavButton(
-                      icon: 'images/ManageUsers.svg',
-                      label: 'Manage Users',
-                      isSelected: _selectedIndex == 3,
-                      onTap: () => _onItemTapped(3),
-                    ),
-                    SideNavButton(
-                      icon: 'images/totalnotifications.svg',
+                      icon: 'images/dash4.svg',
+                      selectedIcon: 'images/dash4.1.svg',
                       label: 'Notifications',
                       isSelected: _selectedIndex == 4,
                       onTap: () => _onItemTapped(4),
                     ),
                     SideNavButton(
-                      icon: 'images/jobrequests.svg',
-                      label: 'Job Finder',
-                      isSelected: _selectedIndex == 8,
-                      onTap: () => _onItemTapped(8),
-                    ),
-                    SideNavButton(
-                      icon: 'images/jobrequests.svg',
+                      icon: 'images/dash5.svg',
+                      selectedIcon: 'images/dash5.1.svg',
                       label: 'Lightstone KAI',
                       isSelected: _selectedIndex == 9,
                       onTap: () => _onItemTapped(9),
                     ),
                     SideNavButton(
-                      icon: 'images/advert1.svg',
+                      icon: 'images/dash6.svg',
+                      selectedIcon: 'images/dash6.1.svg',
+                      label: 'Job Finder',
+                      isSelected: _selectedIndex == 8,
+                      onTap: () => _onItemTapped(8),
+                    ),
+                    SideNavButton(
+                      icon: 'images/dash7.svg',
+                      selectedIcon: 'images/dash7.1.svg',
+                      label: 'Industry News',
+                      isSelected: _selectedIndex == 12,
+                      onTap: () => _onItemTapped(12),
+                    ),
+                    SideNavButton(
+                      icon: 'images/dash8.svg',
+                      selectedIcon: 'images/dash8.1.svg',
                       label: 'Profile Performance & Stats',
                       isSelected: _selectedIndex == 10,
                       onTap: () => _onItemTapped(10),
                     ),
                     SideNavButton(
-                      icon: 'images/advert1.svg',
+                      icon: 'images/dash9.svg',
+                      selectedIcon: 'images/dash9.1.svg',
+                      label: 'Manage My Account',
+                      isSelected: _selectedIndex == 13,
+                      onTap: () => _onItemTapped(13),
+                    ),
+                    SideNavButton(
+                      icon: 'images/dash10.svg',
+                      selectedIcon: 'images/dash10.1.svg',
+                      label: 'Manage Users',
+                      isSelected: _selectedIndex == 3,
+                      onTap: () => _onItemTapped(3),
+                    ),
+                    SideNavButton(
+                      icon: 'images/dash11.svg',
+                      selectedIcon: 'images/dash11.1.svg',
                       label: 'Contact Us',
                       isSelected: _selectedIndex == 11,
                       onTap: () => _onItemTapped(11),
@@ -143,6 +183,7 @@ class _SideNavBarState extends State<SideNavBar> {
                             : MyUtility(context).height * 0.38),
                     SideNavButton(
                       icon: 'images/Logout.svg',
+                      selectedIcon: 'images/Logout.svg',
                       label: 'Logout',
                       isSelected: _selectedIndex == 6,
                       onTap: () => _onItemTapped(6),
@@ -156,8 +197,22 @@ class _SideNavBarState extends State<SideNavBar> {
         Container(
           width: MyUtility(context).width - MyUtility(context).width / 5.2,
           height: MyUtility(context).height,
-          child: pages[_selectedIndex],
-        )
+          decoration: BoxDecoration(color: Color(0xFF171616)),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20, top: 20),
+                child: DashProfileView(),
+              ),
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  children: pages,
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

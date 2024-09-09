@@ -39,16 +39,16 @@ class _PopUpDropdownFieldState extends State<PopUpDropdownField> {
         Text(
           widget.text,
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.32,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w700,
-            height: 1.0,
+            color: Colors.black,
+            fontSize: 14.61,
+            fontFamily: 'raleway',
+            fontWeight: FontWeight.w400,
           ),
         ),
         SizedBox(height: 8.0),
         SizedBox(
           width: MyUtility(context).width * 0.25,
+          height: MyUtility(context).height * 0.045,
           child: DropdownButtonFormField<String>(
             value: widget.initialValue,
             items: widget.items,
@@ -74,9 +74,8 @@ class _PopUpDropdownFieldState extends State<PopUpDropdownField> {
             icon: Icon(Icons.arrow_drop_down, color: Colors.black),
             style: TextStyle(
               color: Colors.black,
-              fontSize: 16.32,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w700,
+              fontSize: 12.02,
+              fontFamily: 'raleway',
             ),
           ),
         ),

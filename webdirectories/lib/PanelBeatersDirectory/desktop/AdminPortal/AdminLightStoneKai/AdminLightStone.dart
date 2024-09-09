@@ -34,13 +34,12 @@ class _AdminLightStoneState extends State<AdminLightStone> {
         height: MyUtility(context).height,
         decoration: const BoxDecoration(color: Color(0xFF171616)),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20),
+          padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
           child: Column(
             children: [
-              const DashProfileView(),
               Container(
                 width: MyUtility(context).width,
-                height: MyUtility(context).height * 0.82,
+                height: MyUtility(context).height * 0.85,
                 decoration: ShapeDecoration(
                   gradient: LinearGradient(
                     begin: const Alignment(0.57, -0.82),
@@ -65,7 +64,7 @@ class _AdminLightStoneState extends State<AdminLightStone> {
                 child: Center(
                   child: Container(
                     width: MyUtility(context).width * 0.75,
-                    height: MyUtility(context).height * 0.75,
+                    height: MyUtility(context).height * 0.8,
                     decoration: ShapeDecoration(
                       color: const Color(0xFF181B1D),
                       shape: RoundedRectangleBorder(
@@ -82,7 +81,7 @@ class _AdminLightStoneState extends State<AdminLightStone> {
                               AdminLightEco(
                                 percentage: data.containsKey('lightstoneScore')
                                     ? data['lightstoneScore'].toString()
-                                    : '0', // Default value if key is missing or data is null
+                                    : '89', // Default value if key is missing or data is null
                               ),
                               AdminWhoisLight(
                                 data: data,

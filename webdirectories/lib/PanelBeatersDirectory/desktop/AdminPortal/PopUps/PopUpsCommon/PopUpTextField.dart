@@ -20,16 +20,16 @@ class _PopUpTextFieldState extends State<PopUpTextField> {
         Text(
           widget.text,
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 16.32,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w700,
-            height: 1.0,
+            color: Colors.black,
+            fontSize: 14.61,
+            fontFamily: 'raleway',
+            fontWeight: FontWeight.w400,
           ),
         ),
         SizedBox(height: 8.0),
         SizedBox(
           width: MyUtility(context).width * 0.25,
+          height: MyUtility(context).height * 0.045,
           child: TextFormField(
             controller: widget.controller,
             decoration: InputDecoration(

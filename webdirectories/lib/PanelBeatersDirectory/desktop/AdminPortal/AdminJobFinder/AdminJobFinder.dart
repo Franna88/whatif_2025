@@ -8,7 +8,8 @@ import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
 import 'package:webdirectories/myutility.dart';
 
 class AdminJobFinder extends StatefulWidget {
-  const AdminJobFinder({super.key});
+  final Function(int) navigateToPage;
+  const AdminJobFinder({super.key, required this.navigateToPage});
 
   @override
   State<AdminJobFinder> createState() => _AdminJobFinderState();
@@ -182,10 +183,6 @@ class _AdminJobFinderState extends State<AdminJobFinder> {
         decoration: BoxDecoration(color: Color(0xFF171616)),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 20),
-              child: const DashProfileView(),
-            ),
             Center(
               child: Container(
                 width: MyUtility(context).width * 0.78,
@@ -407,8 +404,10 @@ class _AdminJobFinderState extends State<AdminJobFinder> {
                                           name: job.name,
                                           location: job.province,
                                           isEven: index % 2 == 0,
-                                          job:
-                                              job, // Pass the entire job object here
+                                          job: job,
+                                          onPress: () {
+                                            widget.navigateToPage(13);
+                                          }, // Pass the entire job object here
                                         );
                                       },
                                     ),

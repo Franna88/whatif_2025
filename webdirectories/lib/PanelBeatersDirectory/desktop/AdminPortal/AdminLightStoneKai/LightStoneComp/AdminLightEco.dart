@@ -43,6 +43,14 @@ class _AdminLightEcoState extends State<AdminLightEco> {
                 height: MyUtility(context).height * 0.55,
                 width: MyUtility(context).width * 0.4),
             Positioned(
+              top: 115,
+              left: 75,
+              right: 0,
+              child: SvgPicture.asset('images/needle.svg',
+                  height: MyUtility(context).height * 0.3,
+                  width: MyUtility(context).width * 0.2),
+            ),
+            Positioned(
                 bottom: MyUtility(context).height * 0.08,
                 left: MyUtility(context).width * 0.1,
                 child: AdminPercentageText(percentage: widget.percentage)),

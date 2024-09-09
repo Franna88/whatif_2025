@@ -5,6 +5,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/RegistrationNumbers/RegistrationNumbersComp/Registrationcontainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBoxB.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopUpsDelete.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/RegistrationPopup/RegistrationPopup.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
@@ -159,7 +160,7 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
       child: SizedBox(
         width: MyUtility(context).width * 0.9,
         child: Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 20, right: 20),
           child: Container(
             width: MyUtility(context).width * 0.9,
             decoration: ShapeDecoration(
@@ -319,7 +320,22 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
                                     // Implement edit functionality
                                   },
                                   pressDelete: () {
-                                    // Implement delete functionality
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      barrierColor:
+                                          Colors.black.withOpacity(0.5),
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          backgroundColor: Colors.transparent,
+                                          insetPadding: EdgeInsets.all(10),
+                                          child: PopUpsDeleteEntry(
+                                            onAddRegistration:
+                                                updateRegistrationNumbersOnAdd,
+                                          ),
+                                        );
+                                      },
+                                    );
                                   },
                                   isEven: index % 2 == 0,
                                 );

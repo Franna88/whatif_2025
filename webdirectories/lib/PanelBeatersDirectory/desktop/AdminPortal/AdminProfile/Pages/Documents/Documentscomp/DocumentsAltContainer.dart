@@ -122,7 +122,7 @@ class DocumentAlitContainer extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onTap: pressEdit,

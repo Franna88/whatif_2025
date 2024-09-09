@@ -14,14 +14,15 @@ class NotificationTitleAlt extends StatefulWidget {
   final String year;
   final String month;
   final String day;
+  final VoidCallback onPress;
 
-  const NotificationTitleAlt({
-    super.key,
-    required this.notificationTitle,
-    required this.year,
-    required this.month,
-    required this.day,
-  });
+  const NotificationTitleAlt(
+      {super.key,
+      required this.notificationTitle,
+      required this.year,
+      required this.month,
+      required this.day,
+      required this.onPress});
 
   @override
   State<NotificationTitleAlt> createState() => _NotificationTitleAltState();
@@ -143,15 +144,7 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                         NotificationDelete(iconColor: Colors.white),
                         NotificationLetter(
                           iconColor: Colors.white,
-                          onPress: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NotificationMessage(
-                                        navigateToPage: (int) {},
-                                      )),
-                            );
-                          },
+                          onPress: widget.onPress,
                         ),
                         NotificationTimeIcon(iconColor: Colors.white),
                       ],

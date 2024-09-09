@@ -103,7 +103,7 @@ class _AdminWhoisLightState extends State<AdminWhoisLight> {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 25),
           child: AddButton(
               text: 'Login to Lightstone EchoMBR Portal', onPressed: () {}),
         )

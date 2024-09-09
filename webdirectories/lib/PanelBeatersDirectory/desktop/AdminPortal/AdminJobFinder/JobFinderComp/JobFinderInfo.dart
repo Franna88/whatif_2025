@@ -6,6 +6,7 @@ import '../JobFinderDetails.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
 
 class JobFinderInfo extends StatelessWidget {
+  final VoidCallback onPress;
   final String year;
   final String month;
   final String day;
@@ -22,6 +23,7 @@ class JobFinderInfo extends StatelessWidget {
 
   const JobFinderInfo({
     super.key,
+    required this.onPress,
     required this.year,
     required this.month,
     required this.day,

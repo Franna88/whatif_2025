@@ -130,7 +130,6 @@ class _SystemAlertState extends State<SystemAlert> {
           padding: const EdgeInsets.only(left: 20, top: 20),
           child: Column(
             children: [
-              DashProfileView(),
               Container(
                 width: MyUtility(context).width,
                 height: MyUtility(context).height * 0.82,
@@ -294,6 +293,9 @@ class _SystemAlertState extends State<SystemAlert> {
                                                       .toDate()
                                                       .day
                                                       .toString(),
+                                                  onPress: () {
+                                                    widget.navigateToPage(15);
+                                                  },
                                                 ),
                                               );
                                             },

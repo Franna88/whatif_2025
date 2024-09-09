@@ -73,109 +73,111 @@ class _AdminProfileState extends State<AdminProfile> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                DashProfileView(),
-                Container(
-                  width: MyUtility(context).width,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Color(0xFF2C2C2C),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        ProfileButton(
-                          text: 'Business Info',
-                          isSelected: selectedButton == 'Business Info',
-                          onPressed: () {
-                            setState(() {
-                              selectedButton = 'Business Info';
-                              updateIndex(0);
-                            });
-                          },
-                        ),
-                        ProfileButton(
-                          text: 'Registration Number',
-                          isSelected: selectedButton == 'Registration Number',
-                          onPressed: () {
-                            setState(() {
-                              selectedButton = 'Registration Number';
-                              updateIndex(1);
-                            });
-                          },
-                        ),
-                        ProfileButton(
-                          text: 'Documents',
-                          isSelected: selectedButton == 'Documents',
-                          onPressed: () {
-                            setState(() {
-                              selectedButton = 'Documents';
-                              updateIndex(2);
-                            });
-                          },
-                        ),
-                        ProfileButton(
-                          text: 'Contacts',
-                          isSelected: selectedButton == 'Contacts',
-                          onPressed: () {
-                            setState(() {
-                              selectedButton = 'Contacts';
-                              updateIndex(3);
-                            });
-                          },
-                        ),
-                        ProfileButton(
-                          text: 'Approvals',
-                          isSelected: selectedButton == 'Approvals',
-                          onPressed: () {
-                            setState(() {
-                              selectedButton = 'Approvals';
-                              updateIndex(4);
-                            });
-                          },
-                        ),
-                        ProfileButton(
-                          text: 'More Info',
-                          isSelected: selectedButton == 'More Info',
-                          onPressed: () {
-                            setState(() {
-                              selectedButton = 'More Info';
-                              updateIndex(5);
-                            });
-                          },
-                        ),
-                        ProfileButton(
-                          text: 'Gallery',
-                          isSelected: selectedButton == 'Gallery',
-                          onPressed: () {
-                            setState(() {
-                              selectedButton = 'Gallery';
-                              updateIndex(6);
-                            });
-                          },
-                        ),
-                        ProfileButton(
-                          text: 'Hours',
-                          isSelected: selectedButton == 'Hours',
-                          onPressed: () {
-                            setState(() {
-                              selectedButton = 'Hours';
-                              updateIndex(7);
-                            });
-                          },
-                        ),
-                        ProfileButton(
-                          text: 'Media Links',
-                          isSelected: selectedButton == 'Media Links',
-                          onPressed: () {
-                            setState(() {
-                              selectedButton = 'Media Links';
-                              updateIndex(8);
-                            });
-                          },
-                        ),
-                      ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Container(
+                    width: MyUtility(context).width,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Color(0xFF2C2C2C),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          ProfileButton(
+                            text: 'Business Info',
+                            isSelected: selectedButton == 'Business Info',
+                            onPressed: () {
+                              setState(() {
+                                selectedButton = 'Business Info';
+                                updateIndex(0);
+                              });
+                            },
+                          ),
+                          ProfileButton(
+                            text: 'Registration Number',
+                            isSelected: selectedButton == 'Registration Number',
+                            onPressed: () {
+                              setState(() {
+                                selectedButton = 'Registration Number';
+                                updateIndex(1);
+                              });
+                            },
+                          ),
+                          ProfileButton(
+                            text: 'Documents',
+                            isSelected: selectedButton == 'Documents',
+                            onPressed: () {
+                              setState(() {
+                                selectedButton = 'Documents';
+                                updateIndex(2);
+                              });
+                            },
+                          ),
+                          ProfileButton(
+                            text: 'Contacts',
+                            isSelected: selectedButton == 'Contacts',
+                            onPressed: () {
+                              setState(() {
+                                selectedButton = 'Contacts';
+                                updateIndex(3);
+                              });
+                            },
+                          ),
+                          ProfileButton(
+                            text: 'Approvals',
+                            isSelected: selectedButton == 'Approvals',
+                            onPressed: () {
+                              setState(() {
+                                selectedButton = 'Approvals';
+                                updateIndex(4);
+                              });
+                            },
+                          ),
+                          ProfileButton(
+                            text: 'More Info',
+                            isSelected: selectedButton == 'More Info',
+                            onPressed: () {
+                              setState(() {
+                                selectedButton = 'More Info';
+                                updateIndex(5);
+                              });
+                            },
+                          ),
+                          ProfileButton(
+                            text: 'Gallery',
+                            isSelected: selectedButton == 'Gallery',
+                            onPressed: () {
+                              setState(() {
+                                selectedButton = 'Gallery';
+                                updateIndex(6);
+                              });
+                            },
+                          ),
+                          ProfileButton(
+                            text: 'Hours',
+                            isSelected: selectedButton == 'Hours',
+                            onPressed: () {
+                              setState(() {
+                                selectedButton = 'Hours';
+                                updateIndex(7);
+                              });
+                            },
+                          ),
+                          ProfileButton(
+                            text: 'Media Links',
+                            isSelected: selectedButton == 'Media Links',
+                            onPressed: () {
+                              setState(() {
+                                selectedButton = 'Media Links';
+                                updateIndex(8);
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

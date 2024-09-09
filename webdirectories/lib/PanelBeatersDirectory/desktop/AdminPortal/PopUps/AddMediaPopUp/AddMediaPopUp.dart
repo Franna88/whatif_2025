@@ -6,6 +6,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopUpsButton.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../PopUpsCommon/PopUpsCancel.dart';
+
 class AddMediaPopup extends StatefulWidget {
   final VoidCallback onMediaAdded;
 
@@ -52,54 +54,91 @@ class _AddMediaPopupState extends State<AddMediaPopup> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: MyUtility(context).width * 0.295,
-        height: MyUtility(context).height * 0.45,
+        width: MyUtility(context).width * 0.3,
+        height: MyUtility(context).height * 0.35,
         decoration: ShapeDecoration(
-          color: Color(0xFF0F253A),
+          color: Color(0xFFD9D9D9),
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              width: 3,
               strokeAlign: BorderSide.strokeAlignOutside,
-              color: Color(0xFFEF9040),
             ),
             borderRadius: BorderRadius.circular(15),
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: MyUtility(context).width,
+              height: MyUtility(context).height * 0.06,
+              decoration: ShapeDecoration(
+                color: Color(0xFFD17226),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.09),
+                    topRight: Radius.circular(8.09),
+                  ),
+                ),
+              ),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Add Media',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 21.76,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      'Add Media',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.65,
+                        fontFamily: 'raleway',
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                   CloseButton(),
                 ],
               ),
-              PopUpTextField(
-                text: 'Title',
-                controller: _titleController,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  PopUpTextField(
+                    text: 'Link Title',
+                    controller: _titleController,
+                  ),
+                  SizedBox(
+                    height: MyUtility(context).height * 0.02,
+                  ),
+                  PopUpTextField(
+                    text: 'URL Link',
+                    controller: _linkController,
+                  ),
+                  SizedBox(
+                    height: MyUtility(context).height * 0.02,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      PopUpsButton(
+                        text: 'Save',
+                        onTap: _saveMedia, // Save media on button tap
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      PopUpsCancel(
+                        text: 'Cancel',
+                        onTap: () {},
+                        buttonColor: Color(0xFF3C4043),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              PopUpTextField(
-                text: 'Link',
-                controller: _linkController,
-              ),
-              PopUpsButton(
-                text: 'Save',
-                onTap: _saveMedia, // Save media on button tap
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

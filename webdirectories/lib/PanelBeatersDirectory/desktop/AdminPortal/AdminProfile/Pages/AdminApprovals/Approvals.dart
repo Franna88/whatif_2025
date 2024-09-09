@@ -14,7 +14,7 @@ class _ApprovalsState extends State<Approvals> {
   Widget build(BuildContext context) {
     return const Center(
       child: Padding(
-        padding: EdgeInsets.only(top: 30, bottom: 20),
+        padding: EdgeInsets.only(top: 30, bottom: 20, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [SelectaCategory(), Adminselectservices()],

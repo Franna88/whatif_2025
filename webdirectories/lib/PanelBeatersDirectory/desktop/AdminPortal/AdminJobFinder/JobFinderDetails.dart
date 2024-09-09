@@ -59,7 +59,9 @@ class JobFinderDetails extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            BackButtonMessage(),
+                            BackButtonMessage(
+                              onPress: () {},
+                            ),
                             AddButton(text: 'Email Data', onPressed: () {})
                           ],
                         ),

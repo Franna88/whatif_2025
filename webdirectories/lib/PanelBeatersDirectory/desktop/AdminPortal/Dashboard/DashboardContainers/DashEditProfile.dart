@@ -18,7 +18,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: MyUtility(context).width * 0.33,
+          width: MyUtility(context).width * 0.28,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -44,7 +44,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: MyUtility(context).width * 0.06,
+                  width: MyUtility(context).width * 0.063,
                   decoration: ShapeDecoration(
                     color: Color(0xFF2C2C2C),
                     shape: RoundedRectangleBorder(
@@ -59,6 +59,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 12.234,
+                            height: 1.2,
                             fontFamily: 'raleway'),
                         textAlign: TextAlign.center,
                       ),
@@ -69,7 +70,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: MyUtility(context).width * 0.06,
+                  width: MyUtility(context).width * 0.063,
                   decoration: ShapeDecoration(
                     color: Color(0xFF2C2C2C),
                     shape: RoundedRectangleBorder(
@@ -84,6 +85,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 12.234,
+                            height: 1.2,
                             fontFamily: 'raleway'),
                         textAlign: TextAlign.center,
                       ),
@@ -94,7 +96,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: MyUtility(context).width * 0.06,
+                  width: MyUtility(context).width * 0.063,
                   decoration: ShapeDecoration(
                     color: Color(0xFF2C2C2C),
                     shape: RoundedRectangleBorder(
@@ -109,6 +111,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 12.234,
+                            height: 1.2,
                             fontFamily: 'raleway'),
                         textAlign: TextAlign.center,
                       ),

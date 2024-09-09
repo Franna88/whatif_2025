@@ -16,7 +16,7 @@ class _IconSearchBoxBState extends State<IconSearchBoxB> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: MyUtility(context).width * 0.2,
-        height: MyUtility(context).height * 0.065,
+        height: MyUtility(context).height * 0.055,
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(

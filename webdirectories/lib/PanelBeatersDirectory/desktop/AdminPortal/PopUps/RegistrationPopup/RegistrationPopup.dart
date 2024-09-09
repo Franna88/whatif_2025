@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopUpTextField.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopUpsButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopUpsCancel.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopUpsDropdown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopupCheckBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
@@ -128,34 +129,45 @@ class _RegistrationPopupState extends State<RegistrationPopup> {
             )
           : Container(
               width: MyUtility(context).width * 0.3,
-              height: MyUtility(context).height * 0.5,
+              height: MyUtility(context).height * 0.43,
               decoration: ShapeDecoration(
-                color: Color(0xFF0F253A),
+                color: Color(0xFFD9D9D9),
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
-                    width: 5,
                     strokeAlign: BorderSide.strokeAlignOutside,
-                    color: Color(0xFFEF9040),
                   ),
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: MyUtility(context).width,
+                    height: MyUtility(context).height * 0.06,
+                    decoration: ShapeDecoration(
+                      color: Color(0xFFD17226),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8.09),
+                          topRight: Radius.circular(8.09),
+                        ),
+                      ),
+                    ),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Insert Registration',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 21.76,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Text(
+                            'Insert Registration',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.61,
+                              fontFamily: 'raleway',
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                         CloseButton(
@@ -165,8 +177,11 @@ class _RegistrationPopupState extends State<RegistrationPopup> {
                         ),
                       ],
                     ),
-                    Form(
-                        key: formKey,
+                  ),
+                  Form(
+                      key: formKey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -198,14 +213,30 @@ class _RegistrationPopupState extends State<RegistrationPopup> {
                             const SizedBox(
                               height: 20,
                             ),
-                            PopUpsButton(
-                                text: 'Save',
-                                onTap: onSubmit,
-                                waiting: _isLoading)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: PopUpsButton(
+                                      text: 'Save',
+                                      onTap: onSubmit,
+                                      waiting: _isLoading),
+                                ),
+                                PopUpsCancel(
+                                  text: 'Cancel',
+                                  onTap: () {},
+                                  buttonColor: Color(0xFF3C4043),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            )
                           ],
-                        ))
-                  ],
-                ),
+                        ),
+                      ))
+                ],
               ),
             ),
     );

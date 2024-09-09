@@ -2,12 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashProfileView.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/NotificationFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/icons/NotificationSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/NotificationTitleAlt.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/icons/NotificationsTitle.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/formatUtils.dart';
@@ -128,10 +126,9 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
         height: MyUtility(context).height,
         decoration: BoxDecoration(color: Color(0xFF171616)),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20),
+          padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
           child: Column(
             children: [
-              DashProfileView(),
               Container(
                 width: MyUtility(context).width,
                 height: MyUtility(context).height * 0.82,
@@ -276,6 +273,9 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
                                                 padding: const EdgeInsets.only(
                                                     left: 16, right: 16),
                                                 child: NotificationTitleAlt(
+                                                  onPress: () {
+                                                    widget.navigateToPage(16);
+                                                  },
                                                   notificationTitle: limitString(
                                                       notification
                                                           .notificationTitle,

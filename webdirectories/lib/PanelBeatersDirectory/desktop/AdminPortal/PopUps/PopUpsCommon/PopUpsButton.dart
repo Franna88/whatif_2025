@@ -21,11 +21,11 @@ class _PopUpsButtonState extends State<PopUpsButton> {
       onTap: widget.onTap,
       child: Container(
         width: MyUtility(context).width * 0.065,
-        height: MyUtility(context).height * 0.055,
+        height: MyUtility(context).height * 0.04,
         decoration: ShapeDecoration(
           color: Color(0xFFEF9040),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
         child: Center(
@@ -42,10 +42,9 @@ class _PopUpsButtonState extends State<PopUpsButton> {
                   widget.text,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
-                    height: 0,
+                    fontSize: 14.61,
+                    fontFamily: 'raleway',
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
         ),

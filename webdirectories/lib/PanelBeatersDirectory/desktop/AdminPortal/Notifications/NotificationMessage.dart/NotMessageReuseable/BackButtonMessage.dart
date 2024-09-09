@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart'; // Changed to material.dart to use Material icons and widgets
 
 class BackButtonMessage extends StatefulWidget {
-  const BackButtonMessage({super.key});
+  final VoidCallback onPress;
+
+  const BackButtonMessage({super.key, required this.onPress});
 
   @override
   State<BackButtonMessage> createState() => _BackButtonMessageState();
@@ -11,9 +13,7 @@ class _BackButtonMessageState extends State<BackButtonMessage> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
+      onTap: widget.onPress,
       child: Row(
         children: [
           Container(

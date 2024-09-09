@@ -9,6 +9,7 @@ import '../NotificationsComp/icons/NotificationStar.dart';
 import '../NotificationsComp/icons/NotificationTimeIcon.dart';
 
 class SystemAlertContainer extends StatefulWidget {
+  final VoidCallback onPress;
   final String notificationTitle;
   final String year;
   final String month;
@@ -16,6 +17,7 @@ class SystemAlertContainer extends StatefulWidget {
 
   const SystemAlertContainer({
     super.key,
+    required this.onPress,
     required this.notificationTitle,
     required this.year,
     required this.month,
@@ -124,7 +126,7 @@ class _SystemAlertContainerState extends State<SystemAlertContainer> {
                         NotificationDelete(iconColor: Colors.white),
                         NotificationLetter(
                           iconColor: Colors.white,
-                          onPress: () {},
+                          onPress: widget.onPress,
                         ),
                         NotificationTimeIcon(iconColor: Colors.white),
                       ],

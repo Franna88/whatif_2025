@@ -78,7 +78,7 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 20, right: 20),
       child: Center(
         child: SizedBox(
           width: MyUtility(context).width * 0.9,

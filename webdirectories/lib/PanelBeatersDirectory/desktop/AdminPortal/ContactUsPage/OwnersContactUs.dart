@@ -19,10 +19,9 @@ class _OwnersContactUsState extends State<OwnersContactUs> {
       height: MyUtility(context).height,
       decoration: BoxDecoration(color: Color(0xFF171616)),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 20),
+        padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
         child: Column(
           children: [
-            DashProfileView(),
             Container(
               width: MyUtility(context).width * 0.8,
               height: MyUtility(context).height * 0.85,

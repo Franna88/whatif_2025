@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DasboardComp/DashPropdown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
@@ -7,7 +6,14 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class DashProfileView extends StatefulWidget {
-  const DashProfileView({super.key});
+  final VoidCallback? onPress; // Optional onPress
+  final bool connectToIndexPage; // Boolean parameter to determine connection
+
+  const DashProfileView({
+    super.key,
+    this.onPress,
+    this.connectToIndexPage = false,
+  });
 
   @override
   State<DashProfileView> createState() => _DashProfileViewState();
@@ -17,6 +23,7 @@ class _DashProfileViewState extends State<DashProfileView> {
   StoredUser? _user;
   final _firestore = FirebaseFirestore.instance;
   String _username = '';
+
   @override
   void initState() {
     _getUsername();
@@ -42,48 +49,48 @@ class _DashProfileViewState extends State<DashProfileView> {
           Row(
             children: [
               Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Hi ',
-                            style: TextStyle(
-                              color: Color(0xFFCCCCCC),
-                              fontSize: 12.95,
-                              fontFamily: 'ralewaymedium',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                            ),
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Hi ',
+                          style: TextStyle(
+                            color: Color(0xFFCCCCCC),
+                            fontSize: 12.95,
+                            fontFamily: 'ralewaymedium',
+                            fontWeight: FontWeight.w500,
+                            height: 0,
                           ),
-                          TextSpan(
-                            text: _username.isNotEmpty
-                                ? _username
-                                : 'N4 Autocraft',
-                            style: TextStyle(
-                              color: Color(0xFFFF8728),
-                              fontSize: 12.95,
-                              fontFamily: 'ralewaymedium',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                            ),
+                        ),
+                        TextSpan(
+                          text:
+                              _username.isNotEmpty ? _username : 'N4 Autocraft',
+                          style: TextStyle(
+                            color: Color(0xFFFF8728),
+                            fontSize: 12.95,
+                            fontFamily: 'ralewaymedium',
+                            fontWeight: FontWeight.w500,
+                            height: 0,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'Dashboard',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 23.8,
-                        fontFamily: 'ralewaymedium',
-                        fontWeight: FontWeight.w500,
-                        height: 0,
-                      ),
+                  ),
+                  Text(
+                    'Dashboard',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 23.8,
+                      fontFamily: 'ralewaymedium',
+                      fontWeight: FontWeight.w500,
+                      height: 0,
                     ),
-                  ]),
+                  ),
+                ],
+              ),
               SizedBox(
                 width: MyUtility(context).width * 0.025,
               ),
@@ -128,7 +135,7 @@ class _DashProfileViewState extends State<DashProfileView> {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
           Row(
@@ -141,9 +148,7 @@ class _DashProfileViewState extends State<DashProfileView> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
-                    padding: EdgeInsets.symmetric(
-                        horizontal:
-                            8.0), // Adjust the horizontal padding as needed
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                   ),
                   onPressed: () {},
                   child: Text(
@@ -161,7 +166,6 @@ class _DashProfileViewState extends State<DashProfileView> {
               ),
               GestureDetector(
                 onTap: () {
-                  // Action when button is pressed
                   print('Image button pressed!');
                 },
                 child: Image.network(
@@ -185,14 +189,17 @@ class _DashProfileViewState extends State<DashProfileView> {
               Text(
                 'MJ cronje',
                 style: TextStyle(
-                    fontSize: 10.5604,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'raleway'),
+                  fontSize: 10.5604,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'raleway',
+                ),
               ),
-              DashDropDown()
+              if (widget.connectToIndexPage)
+                DashDropDown(onPress: widget.onPress),
+              if (!widget.connectToIndexPage) DashDropDown(onPress: () {}),
             ],
-          )
+          ),
         ],
       ),
     );

@@ -7,6 +7,8 @@ import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../PopUpsCommon/PopUpsCancel.dart';
+
 class AddMemberPopup extends StatefulWidget {
   final List<Map<String, dynamic>> teamProfiles;
   final Function(Map<String, dynamic>) add;
@@ -76,27 +78,35 @@ class _AddMemberPopupState extends State<AddMemberPopup> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: MyUtility(context).width * 0.295,
-        height: MyUtility(context).height * 0.65,
+        width: MyUtility(context).width * 0.3,
+        height: MyUtility(context).height * 0.55,
         decoration: ShapeDecoration(
-          color: Color(0xFF0F253A),
+          color: Color(0xFFD9D9D9),
           shape: RoundedRectangleBorder(
             side: BorderSide(
-              width: 3,
               strokeAlign: BorderSide.strokeAlignOutside,
-              color: Color(0xFFEF9040),
             ),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(15),
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: MyUtility(context).width,
+              height: MyUtility(context).height * 0.06,
+              decoration: ShapeDecoration(
+                color: Color(0xFFD17226),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.09),
+                    topRight: Radius.circular(8.09),
+                  ),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -104,8 +114,8 @@ class _AddMemberPopupState extends State<AddMemberPopup> {
                       'Add Member',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 21.76,
-                        fontFamily: 'Inter',
+                        fontSize: 14.65,
+                        fontFamily: 'raleway',
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -113,7 +123,10 @@ class _AddMemberPopupState extends State<AddMemberPopup> {
                   ],
                 ),
               ),
-              Form(
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
@@ -121,22 +134,44 @@ class _AddMemberPopupState extends State<AddMemberPopup> {
                         text: 'First Name',
                         controller: _firstNameController,
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       PopUpTextField(
                         text: 'Last Name',
                         controller: _surname,
+                      ),
+                      SizedBox(
+                        height: 20,
                       ),
                       BiggerPopupTextField(
                         text: 'Description',
                         controller: _descriptionController,
                       ),
-                      PopUpsButton(
-                          text: 'save',
-                          onTap: handleAddNewMemberSubmit,
-                          waiting: _isLoading)
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          PopUpsButton(
+                              text: 'save',
+                              onTap: handleAddNewMemberSubmit,
+                              waiting: _isLoading),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          PopUpsCancel(
+                            text: 'Cancel',
+                            onTap: () {},
+                            buttonColor: Color(0xFF3C4043),
+                          ),
+                        ],
+                      )
                     ],
-                  ))
-            ],
-          ),
+                  )),
+            )
+          ],
         ),
       ),
     );
