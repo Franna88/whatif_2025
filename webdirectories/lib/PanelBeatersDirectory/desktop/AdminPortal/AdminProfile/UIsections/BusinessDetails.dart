@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/ProfileImage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/TextField/ProfileTextField.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/myutility.dart';
 
 class BusinessDetails extends StatefulWidget {
@@ -44,39 +45,52 @@ class _BusinessDetailsState extends State<BusinessDetails> {
                 width: 25,
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    'Update Business Info',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.6064,
-                      fontFamily: 'ralewaybold',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 7, bottom: 6),
-                    child: Text(
-                      'Please fill in all applicable fields relevant to your business',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13.7364,
-                        fontFamily: 'raleway',
-                        fontWeight: FontWeight.w400,
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(30),
+                        child: AddButton(text: 'Save', onPressed: () {}),
                       ),
-                    ),
+                    ],
                   ),
-                  ProfileTextField(
-                      controller: widget.tradingNameController,
-                      headline: 'Trading Name'),
-                  ProfileTextField(
-                      controller: widget.registeredNameController,
-                      headline: 'Registered Business name'),
-                  ProfileTextField(
-                      controller: widget.bEEElevelController,
-                      headline: 'B-BBEE Level'),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Update Business Info',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.6064,
+                          fontFamily: 'ralewaybold',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 7, bottom: 6),
+                        child: Text(
+                          'Please fill in all applicable fields relevant to your business',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 13.7364,
+                            fontFamily: 'raleway',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      ProfileTextField(
+                          controller: widget.tradingNameController,
+                          headline: 'Trading Name'),
+                      ProfileTextField(
+                          controller: widget.registeredNameController,
+                          headline: 'Registered Business name'),
+                      ProfileTextField(
+                          controller: widget.bEEElevelController,
+                          headline: 'B-BBEE Level'),
+                    ],
+                  ),
                 ],
               ),
               SizedBox(

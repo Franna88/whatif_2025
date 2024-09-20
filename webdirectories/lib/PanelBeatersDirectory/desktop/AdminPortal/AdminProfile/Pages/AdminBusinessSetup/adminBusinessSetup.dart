@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/ProfileImage.dart';
+
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/TeamProfile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/AddMember.dart';
@@ -164,71 +166,71 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
                 afterHoursController: _controller.afterHoursController,
               ),
               /*BusinessDropDown(),
-              MoreBusinessInfo(controller: _controller.moreInfoController),
-              Container(
-                height: MyUtility(context).height * 0.6,
-                child: AddMember(),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'More Info',
-                        style: TextStyle(
-                          color: Color(0xFF0F253A),
-                          fontSize: 20.4,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w700,
-                          height: 1,
+                MoreBusinessInfo(controller: _controller.moreInfoController),
+                Container(
+                  height: MyUtility(context).height * 0.6,
+                  child: AddMember(),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 25),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'More Info',
+                          style: TextStyle(
+                            color: Color(0xFF0F253A),
+                            fontSize: 20.4,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w700,
+                            height: 1,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    width: MyUtility(context).width * 0.755,
-                    height: MyUtility(context).height * 0.17,
-                    decoration: ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: TextFormField(
-                        controller: _textController,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.zero,
-                        ),
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Inter',
+                    SizedBox(height: 10),
+                    Container(
+                      width: MyUtility(context).width * 0.755,
+                      height: MyUtility(context).height * 0.17,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
                       ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: TextFormField(
+                          controller: _textController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Inter',
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 15),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ServiceHours(),
-                        Businessmedia(),
-                      ],
+                    const Padding(
+                      padding: EdgeInsets.only(top: 15),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ServiceHours(),
+                          Businessmedia(),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 100,
-              ),*/
+                  ],
+                ),
+                SizedBox(
+                  height: 100,
+                ),*/
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

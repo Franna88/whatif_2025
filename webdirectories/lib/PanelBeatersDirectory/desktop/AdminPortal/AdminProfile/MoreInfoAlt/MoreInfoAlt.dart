@@ -36,14 +36,7 @@ class _MoreInfoALtState extends State<MoreInfoALt> {
               width: MyUtility(context).width * 0.9,
               height: MyUtility(context).height * 0.8,
               decoration: ShapeDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment(0.57, -0.82),
-                  end: Alignment(-0.57, 0.82),
-                  colors: [
-                    Color(0x19777777),
-                    Colors.white.withOpacity(0.4000000059604645)
-                  ],
-                ),
+                color: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),

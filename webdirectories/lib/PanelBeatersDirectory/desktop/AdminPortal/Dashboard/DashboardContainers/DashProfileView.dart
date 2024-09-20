@@ -168,7 +168,7 @@ class _DashProfileViewState extends State<DashProfileView> {
                 onTap: () {
                   print('Image button pressed!');
                 },
-                child: Image.network(
+                child: Image.asset(
                   'images/bell.png',
                   width: 20,
                   height: 20,
