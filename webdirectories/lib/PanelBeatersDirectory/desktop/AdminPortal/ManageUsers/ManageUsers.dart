@@ -18,7 +18,7 @@ class ManageUsers extends StatefulWidget {
 
 class _ManageUsersState extends State<ManageUsers> {
   final _firestore = FirebaseFirestore.instance;
-  List<UserModel> usersData = [];
+  List<Map<String, dynamic>> usersData = []; // Store user and documentId
   bool _isLoading = true;
   final ScrollController _scrollController = ScrollController();
 
@@ -43,21 +43,52 @@ class _ManageUsersState extends State<ManageUsers> {
 
       QuerySnapshot<Map<String, dynamic>> usersSnapshot = await _firestore
           .collection('listing_members')
-          .where('listingsId', isEqualTo: int.parse(user.id))
+          .where('listingMembersId', isEqualTo: 1218)
           .get();
 
-      List<UserModel> users = [];
+      List<Map<String, dynamic>> users = [];
+
+      print(usersSnapshot.docs[0].get('fullname'));
+
       if (usersSnapshot.docs.isNotEmpty) {
         print('loading users... ${usersSnapshot.docs.length} users found');
         for (var doc in usersSnapshot.docs) {
+          // Handle 'dateAdded' as Timestamp, with null check and fallback
+          Timestamp? timestamp = doc.data()['dateAdded'] as Timestamp?;
+          DateTime dateAdded =
+              timestamp != null ? timestamp.toDate() : DateTime.now();
+
+          // Safely split fullname into firstName and surname
+          String fullName = doc.data()['fullname']?.toString() ?? '';
+          List<String> nameParts =
+              fullName.split(' '); // Split full name by spaces
+          String firstName = nameParts.isNotEmpty
+              ? nameParts[0]
+              : ''; // First part as firstName
+          String surname = nameParts.length > 1
+              ? nameParts.sublist(1).join(' ')
+              : ''; // Combine remaining parts as surname
+
+          // Optional fields
+          String? mobile = doc.data()['mobile'];
+          String displayOnProfile =
+              doc.data()['displayOnProfile']?.toString() ?? 'false';
+
           UserModel userData = UserModel(
-            dateAdded: (doc.data()['dateAdded'] as Timestamp).toDate(),
-            firstName: doc.data()['firstName'],
-            surname: doc.data()['surname'],
-            email: doc.data()['email'],
-            status: doc.data()['status'] ?? 'Active',
+            dateAdded: dateAdded,
+            firstName: firstName,
+            surname: surname,
+            email: doc.data()['email']?.toString() ?? '',
+            status: doc.data()['status']?.toString() ?? 'Active',
           );
-          users.add(userData);
+
+          // Store user data and documentId
+          users.add({
+            'user': userData,
+            'documentId': doc.id,
+            'mobile': mobile,
+            'displayOnProfile': displayOnProfile,
+          });
         }
 
         setState(() {
@@ -83,26 +114,37 @@ class _ManageUsersState extends State<ManageUsers> {
 
   // Handle the submission of new user data from NewUserPopup
   void _addNewUser(Map<String, String> userData) {
+    // Safely split fullName into firstName and surname
+    List<String> nameParts = userData['fullName']!.split(' ');
+    String firstName =
+        nameParts.isNotEmpty ? nameParts[0] : ''; // Use first part as firstName
+    String surname = nameParts.length > 1
+        ? nameParts[1]
+        : ''; // Use second part as surname, if available
+
     // Add new user to local usersData list
     setState(() {
-      usersData.add(
-        UserModel(
-          firstName: userData['fullName']!.split(' ')[0],
-          surname: userData['fullName']!.split(' ')[1],
+      usersData.add({
+        'user': UserModel(
+          firstName: firstName,
+          surname: surname,
           email: userData['email']!,
           status: 'Active',
           dateAdded: DateTime.now(),
         ),
-      );
+        'documentId': null, // No document ID for new users
+        'mobile': userData['mobile'],
+        'displayOnProfile': userData['displayOnProfile'],
+      });
     });
 
     // Save new user to Firestore
     _firestore.collection('listing_members').add({
-      'firstName': userData['fullName']!.split(' ')[0],
-      'surname': userData['fullName']!.split(' ')[1],
+      'firstName': firstName,
+      'surname': surname,
       'email': userData['email'],
       'status': 'Active',
-      'dateAdded': DateTime.now(),
+      'dateAdded': DateTime.now(), // Firestore converts to Timestamp
     }).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('New user added successfully')),
@@ -110,6 +152,26 @@ class _ManageUsersState extends State<ManageUsers> {
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error adding user: $error')),
+      );
+    });
+  }
+
+  // Handle editing a user
+  void _editUser(String documentId, Map<String, String> updatedUserData) {
+    _firestore.collection('listing_members').doc(documentId).update({
+      'firstName': updatedUserData['fullName']?.split(' ')[0],
+      'surname': updatedUserData['fullName']?.split(' ')[1],
+      'email': updatedUserData['email'],
+      'mobile': updatedUserData['mobile'],
+      'displayOnProfile': updatedUserData['displayOnProfile'],
+    }).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User updated successfully')),
+      );
+      _fetchUserData(); // Refresh the user list after update
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error updating user: $error')),
       );
     });
   }
@@ -307,7 +369,11 @@ class _ManageUsersState extends State<ManageUsers> {
                                         itemCount: usersData.length,
                                         itemBuilder: (context, index) {
                                           if (index < usersData.length) {
-                                            UserModel user = usersData[index];
+                                            var userMap = usersData[index];
+                                            UserModel user = userMap['user'];
+                                            String documentId =
+                                                userMap['documentId'];
+
                                             return ManageUserInfo(
                                               year: user.dateAdded.year
                                                   .toString(),
@@ -320,7 +386,44 @@ class _ManageUsersState extends State<ManageUsers> {
                                                   '${user.firstName} ${user.surname}',
                                               status: user.status,
                                               isEven: index % 2 == 0,
-                                              pressEdit: () {},
+                                              pressEdit: () {
+                                                showDialog(
+                                                  context: context,
+                                                  barrierDismissible: true,
+                                                  barrierColor: Colors.black
+                                                      .withOpacity(0.5),
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return Dialog(
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      insetPadding:
+                                                          const EdgeInsets.all(
+                                                              10),
+                                                      child: NewUserPopup(
+                                                        initialData: {
+                                                          'fullName':
+                                                              '${user.firstName} ${user.surname}', // Pre-fill with user's full name
+                                                          'email': user
+                                                              .email, // Pre-fill with user's email
+                                                          'mobile': userMap[
+                                                                  'mobile'] ??
+                                                              '',
+                                                          'displayOnProfile':
+                                                              userMap['displayOnProfile'] ??
+                                                                  'false',
+                                                        },
+                                                        onSubmit:
+                                                            (updatedUserData) {
+                                                          // Pass the document ID and updated user data to edit the user
+                                                          _editUser(documentId,
+                                                              updatedUserData);
+                                                        },
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
                                               pressDelete: () {},
                                             );
                                           }

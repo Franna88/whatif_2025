@@ -6,8 +6,9 @@ import 'package:webdirectories/myutility.dart';
 
 class NewUserPopup extends StatefulWidget {
   final Function(Map<String, String>) onSubmit; // Callback function
+  final Map<String, String>? initialData; // Optional initial data for editing
 
-  const NewUserPopup({super.key, required this.onSubmit});
+  const NewUserPopup({super.key, required this.onSubmit, this.initialData});
 
   @override
   State<NewUserPopup> createState() => _NewUserPopupState();
@@ -18,6 +19,19 @@ class _NewUserPopupState extends State<NewUserPopup> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   bool displayOnProfile = false; // Checkbox value
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialData != null) {
+      // Pre-fill data if initialData is provided
+      _fullNameController.text = widget.initialData!['fullName'] ?? '';
+      _emailController.text = widget.initialData!['email'] ?? '';
+      _mobileController.text = widget.initialData!['mobile'] ?? '';
+      displayOnProfile =
+          widget.initialData!['displayOnProfile']?.toLowerCase() == 'true';
+    }
+  }
 
   // Handle the "Send" button press
   void _submitForm() {
@@ -33,7 +47,7 @@ class _NewUserPopupState extends State<NewUserPopup> {
         'mobile': mobile,
         'displayOnProfile': displayOnProfile.toString(),
       });
-      Navigator.pop(context); // Close the popup
+      Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill all the fields')),
@@ -48,10 +62,10 @@ class _NewUserPopupState extends State<NewUserPopup> {
         width: MyUtility(context).width * 0.3,
         height: MyUtility(context).height * 0.5,
         decoration: ShapeDecoration(
-          color: Color(0xFFD9D9D9), // Light grey background
+          color: const Color(0xFFD9D9D9), // Light grey background
           shape: RoundedRectangleBorder(
-            side: BorderSide(
-              strokeAlign: BorderSide.strokeAlignOutside,
+            side: const BorderSide(
+              color: Colors.grey, // Optional border color
             ),
             borderRadius: BorderRadius.circular(15), // Rounded corners
           ),
@@ -64,9 +78,9 @@ class _NewUserPopupState extends State<NewUserPopup> {
             Container(
               width: MyUtility(context).width,
               height: MyUtility(context).height * 0.06,
-              decoration: ShapeDecoration(
+              decoration: const ShapeDecoration(
                 color: Color(0xFFD17226), // Orange color for header
-                shape: const RoundedRectangleBorder(
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8.09),
                     topRight: Radius.circular(8.09),
@@ -76,11 +90,11 @@ class _NewUserPopupState extends State<NewUserPopup> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8),
                     child: Text(
                       'Request New User',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize:
                             14.61, // Matching the previous title font size
@@ -89,11 +103,11 @@ class _NewUserPopupState extends State<NewUserPopup> {
                       ),
                     ),
                   ),
-                  CloseButton(
-                    style: ButtonStyle(
-                      foregroundColor: WidgetStateProperty.all(
-                          Colors.white), // Updated to WidgetStateProperty
-                    ),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () {
+                      Navigator.pop(context); // Close popup on press
+                    },
                   ),
                 ],
               ),
@@ -127,7 +141,7 @@ class _NewUserPopupState extends State<NewUserPopup> {
                         displayOnProfile = newValue ?? false;
                       });
                     },
-                    text: 'Display on Profile',
+                    text: 'Active User',
                   ),
                   const SizedBox(height: 20),
                   Row(

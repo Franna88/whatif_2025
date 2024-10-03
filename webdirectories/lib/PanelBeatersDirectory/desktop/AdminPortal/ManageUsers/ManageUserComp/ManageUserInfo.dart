@@ -140,13 +140,26 @@ class _ManageUserInfoState extends State<ManageUserInfo> {
             // Edit/Delete Buttons
             Expanded(
               flex: 1,
-              child: GestureDetector(
-                onTap: widget.pressDelete,
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.white,
-                  size: 20.0,
-                ),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: widget.pressEdit,
+                    child: Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: widget.pressDelete,
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
