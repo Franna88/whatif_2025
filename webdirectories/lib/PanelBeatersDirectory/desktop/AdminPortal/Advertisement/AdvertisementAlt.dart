@@ -1,12 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Advertisement/Advertisementcomp/AdvertButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Advertisement/Advertisementcomp/AdvertContainerAlt.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Advertisement/Advertisementcomp/Advertcontainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/AddAdvertPopup/AddAdvertPopup.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/advertisement.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
@@ -14,7 +10,7 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.da
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
-import '../Dashboard/DashboardContainers/DashProfileView.dart';
+import '../PopUps/PopUpsCommon/NewDeletePopUp.dart';
 
 class AdvertisementAlt extends StatefulWidget {
   const AdvertisementAlt({super.key});
@@ -55,17 +51,22 @@ class _AdvertisementAltState extends State<AdvertisementAlt> {
       if (advertSnapshot.docs.isNotEmpty) {
         for (var doc in advertSnapshot.docs) {
           futures.add(() async {
-            String? image =
-                await getImageUrl('listings/${doc.data()['immageFile']}');
+            // Fetch the image URL; if null, provide a default value (e.g., empty string)
+            String image =
+                await getImageUrl('listings/${doc.data()['immageFile']}') ?? '';
+
+            // Handle potential null values for fields from Firestore
             advertList.add(AdvertisementModel(
-                dateAdded: doc.data()['dateAdded'],
-                dateUpdated: doc.data()['dateUpdated'],
-                immageDescription: doc.data()['immageDescription'],
-                immageFile: image,
-                immageTitle: doc.data()['immageTitle'],
-                membersId: int.parse(user!.memberId),
-                specialsOrder: doc.data()['specialsOrder'],
-                listingsId: int.parse(user!.id)));
+              id: doc.id,
+              dateAdded: doc.data()['dateAdded'] ?? '',
+              dateUpdated: doc.data()['dateUpdated'] ?? '',
+              immageDescription: doc.data()['immageDescription'] ?? '',
+              immageFile: image,
+              immageTitle: doc.data()['immageTitle'] ?? '',
+              membersId: int.parse(user!.memberId),
+              specialsOrder: doc.data()['specialsOrder'] ?? 0,
+              listingsId: int.parse(user!.id),
+            ));
           }());
         }
         await Future.wait(futures);
@@ -87,6 +88,16 @@ class _AdvertisementAltState extends State<AdvertisementAlt> {
   void _onAdvertAdded(AdvertisementModel newAdData) {
     setState(() {
       _advertData.add(newAdData);
+    });
+  }
+
+  void _onAdvertUpdated(AdvertisementModel updatedAdData) {
+    setState(() {
+      // Update the specific advertisement in the list
+      int index = _advertData.indexWhere((ad) => ad.id == updatedAdData.id);
+      if (index != -1) {
+        _advertData[index] = updatedAdData;
+      }
     });
   }
 
@@ -154,6 +165,7 @@ class _AdvertisementAltState extends State<AdvertisementAlt> {
                                                 const EdgeInsets.all(10),
                                             child: AddAdvertPopup(
                                               onAdvertAdded: _onAdvertAdded,
+                                              onAdvertUpdated: _onAdvertUpdated,
                                               user: user,
                                               adCount: _advertData.length,
                                             ),
@@ -170,7 +182,7 @@ class _AdvertisementAltState extends State<AdvertisementAlt> {
                               Row(
                                 children: [
                                   Text(
-                                    'Advertise Special Product offerings below.  Once uploaded, a button will appear on your business profile, “Specials”.\nIf a prospect click on the button it will open in a pop-up window. Offers can be edited and/or deleted 24/7.',
+                                    'Advertise Special Product offerings below.  Once uploaded, a button will appear on your business profile, “Specials”.\nIf a prospect clicks on the button it will open in a pop-up window. Offers can be edited and/or deleted 24/7.',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 14.73,
@@ -246,10 +258,53 @@ class _AdvertisementAltState extends State<AdvertisementAlt> {
                                       final ad = _advertData[index];
                                       return AdvertContainerAlt(
                                         name: ad.immageTitle,
-                                        subscription: '',
+                                        subscription: ad.immageDescription,
                                         displayProfile: '',
-                                        pressEdit: () {},
-                                        pressDelete: () {},
+                                        pressEdit: () {
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.5),
+                                            builder: (BuildContext context) {
+                                              return Dialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                insetPadding:
+                                                    const EdgeInsets.all(10),
+                                                child: AddAdvertPopup(
+                                                  onAdvertAdded: _onAdvertAdded,
+                                                  onAdvertUpdated:
+                                                      _onAdvertUpdated,
+                                                  user: user,
+                                                  adCount: _advertData.length,
+                                                  advertToEdit:
+                                                      ad, // Pass the advert for editing
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        pressDelete: () {
+                                          // Open the delete confirmation dialog
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.5),
+                                            builder: (BuildContext context) {
+                                              return Dialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                insetPadding:
+                                                    EdgeInsets.all(10),
+                                                child: NewDeleteButton(
+                                                  documentId: ad.id,
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
                                         isEven: index % 2 == 0,
                                       );
                                     },

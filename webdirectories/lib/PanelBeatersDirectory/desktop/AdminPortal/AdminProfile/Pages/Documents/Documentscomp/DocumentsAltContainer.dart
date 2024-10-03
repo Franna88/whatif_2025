@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/myutility.dart';
 
-class DocumentAlitContainer extends StatelessWidget {
+class DocumentAltContainer extends StatelessWidget {
   final String title;
   final String category;
   final String subCategory;
@@ -10,7 +10,7 @@ class DocumentAlitContainer extends StatelessWidget {
   final VoidCallback pressDelete;
   final bool isEven;
 
-  const DocumentAlitContainer({
+  const DocumentAltContainer({
     super.key,
     required this.title,
     required this.category,

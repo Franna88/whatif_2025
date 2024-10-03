@@ -1,26 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminContact/AdminContact.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminContact/AdminContactComp/AdminContactAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminHoursAlt.dart/AdminHoursAlt.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/Documents/Documents.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/Documents/Documentscomp/DocumentAlt.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/Gallery/Gallery.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/RegistrationNumbers/RegistrationNumbers.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminApprovals/Approvals.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/RegistrationNumbers/RegistrationNumbersComp/RegistrationAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/ProfileButton.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/AddMember.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BuisinessDropDown.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessAddress.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessContact.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessDetails.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessMedia.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/MoreBusinessInfo.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/ServiceHours.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashProfileView.dart';
-import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessProfile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessProfileItem.dart';
-import 'package:webdirectories/myutility.dart';
 
 import 'AdminMediaLinks.dart/AdminMediaLink.dart';
 import 'MoreInfoAlt/MoreInfoAlt.dart';
@@ -183,12 +167,15 @@ class _AdminProfileState extends State<AdminProfile> {
         ),
         SliverFillRemaining(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Center(
-                  child: pages[pageIndex],
-                )
-              ],
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Column(
+                children: [
+                  Center(
+                    child: pages[pageIndex],
+                  )
+                ],
+              ),
             ),
           ),
         ),

@@ -15,18 +15,23 @@ import '../PopUpsCommon/AttachmentPopupButton.dart';
 import '../PopUpsCommon/PopUpsCancel.dart';
 import '../PopUpsCommon/PopUpsButton.dart';
 import '../PopUpsCommon/PopUpTextField.dart';
+import '../PopUpsCommon/PopupCheckBox.dart';
 import 'AddEditor.dart';
 
 class AddAdvertPopup extends StatefulWidget {
   final Function(AdvertisementModel) onAdvertAdded;
+  final Function(AdvertisementModel) onAdvertUpdated; // For updating an advert
   final StoredUser? user;
   final int adCount;
+  final AdvertisementModel? advertToEdit; // Null if adding a new advert
 
   const AddAdvertPopup({
     super.key,
     required this.onAdvertAdded,
+    required this.onAdvertUpdated, // Required for updating
     this.user,
     required this.adCount,
+    this.advertToEdit, // If null, we're adding a new advert
   });
 
   @override
@@ -38,10 +43,36 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
   final _firestore = FirebaseFirestore.instance;
   final _firestorage = FirebaseStorage.instance;
   final TextEditingController _titleController = TextEditingController();
-  final QuillController _descriptionController =
-      QuillController.basic(); // Initialize QuillController here
+  final QuillController _descriptionController = QuillController.basic();
   bool _isLoading = false;
   XFile? _selectedImage;
+
+  bool displayOnBusinessProfile = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // If editing, pre-fill the fields with existing data
+    if (widget.advertToEdit != null) {
+      _titleController.text = widget.advertToEdit!.immageTitle;
+
+      // Check if the description is in valid JSON format, otherwise treat it as plain text
+      try {
+        final delta = jsonDecode(widget.advertToEdit!.immageDescription);
+        _descriptionController.document = Document.fromJson(delta);
+      } catch (e) {
+        // If it's not valid JSON, treat it as plain text and create a new Quill document
+        _descriptionController.document = Document()
+          ..insert(0, widget.advertToEdit!.immageDescription);
+      }
+
+      displayOnBusinessProfile =
+          widget.advertToEdit!.displayOnBusinessProfile ?? false;
+
+      // You may need to implement logic to load the image from a URL if necessary
+    }
+  }
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
@@ -63,56 +94,75 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
       setState(() {
         _isLoading = true;
       });
-      if (_selectedImage != null) {
-        try {
-          Uint8List data = await _selectedImage!.readAsBytes();
-          final storageRef =
-              _firestorage.ref().child('listings/${_selectedImage!.name}');
-          final uploadTask = storageRef.putData(data);
-          await uploadTask;
 
-          if (widget.user == null) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('User not logged in'),
-            ));
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OwnersPortal(),
-                ));
-            return;
+      String descriptionText = await _getDescriptionAsPlainText();
+
+      AdvertisementModel advertData = AdvertisementModel(
+        id: widget.advertToEdit?.id ?? '', // Use existing ID if editing
+        dateAdded:
+            widget.advertToEdit?.dateAdded ?? DateTime.now().toIso8601String(),
+        dateUpdated: DateTime.now().toIso8601String(),
+        immageDescription: descriptionText,
+        immageFile:
+            _selectedImage?.name ?? widget.advertToEdit?.immageFile ?? '',
+        immageTitle: _titleController.text,
+        listingsId: int.parse(widget.user!.id),
+        membersId: int.parse(widget.user!.memberId),
+        specialsOrder:
+            widget.advertToEdit?.specialsOrder ?? (widget.adCount + 1),
+      );
+
+      try {
+        if (widget.advertToEdit != null) {
+          // Editing existing advert
+          if (_selectedImage != null) {
+            Uint8List data = await _selectedImage!.readAsBytes();
+            final storageRef =
+                _firestorage.ref().child('listings/${_selectedImage!.name}');
+            final uploadTask = storageRef.putData(data);
+            await uploadTask;
+
+            String? url = await getImageUrl('listings/${_selectedImage!.name}');
+            advertData.immageFile = url!;
           }
 
-          String descriptionText = await _getDescriptionAsPlainText();
+          // Update the existing document using advert's ID
+          await _firestore
+              .collection('specials')
+              .doc(advertData.id) // Use document ID to update
+              .update(advertData.toMap());
 
-          AdvertisementModel newAddData = AdvertisementModel(
-            dateAdded: DateTime.now().toIso8601String(),
-            dateUpdated: '',
-            immageDescription: descriptionText, // Save description as JSON
-            immageFile: _selectedImage!.name,
-            immageTitle: _titleController.text,
-            listingsId: int.parse(widget.user!.id),
-            membersId: int.parse(widget.user!.memberId),
-            specialsOrder: widget.adCount + 1,
-          );
-          await _firestore.collection('specials').add(newAddData.toMap());
+          widget.onAdvertUpdated(advertData);
+        } else {
+          // Adding new advert
+          if (_selectedImage != null) {
+            Uint8List data = await _selectedImage!.readAsBytes();
+            final storageRef =
+                _firestorage.ref().child('listings/${_selectedImage!.name}');
+            final uploadTask = storageRef.putData(data);
+            await uploadTask;
 
-          if (!mounted) return;
+            String? url = await getImageUrl('listings/${_selectedImage!.name}');
+            advertData.immageFile = url!;
+          }
 
-          String? url = await getImageUrl('listings/${newAddData.immageFile}');
-          newAddData.immageFile = url;
-          widget.onAdvertAdded(newAddData);
-          Navigator.pop(context);
+          // Add a new document and get the document ID
+          DocumentReference docRef =
+              await _firestore.collection('specials').add(advertData.toMap());
+          advertData.id = docRef.id; // Set the ID of the newly created advert
 
-          setState(() {
-            _isLoading = false;
-          });
-        } catch (e) {
-          print('Error adding advert: $e');
-          setState(() {
-            _isLoading = false;
-          });
+          widget.onAdvertAdded(
+              advertData); // Notify parent that a new advert was added
         }
+
+        if (!mounted) return;
+        Navigator.pop(context);
+      } catch (e) {
+        print('Error saving advert: $e');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -122,11 +172,11 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
     return Center(
       child: Container(
         width: MyUtility(context).width * 0.3,
-        height: MyUtility(context).height * 0.9,
+        height: MyUtility(context).height * 0.92,
         decoration: ShapeDecoration(
-          color: Color(0xFFD9D9D9),
+          color: const Color(0xFFD9D9D9),
           shape: RoundedRectangleBorder(
-            side: BorderSide(
+            side: const BorderSide(
               strokeAlign: BorderSide.strokeAlignOutside,
             ),
             borderRadius: BorderRadius.circular(15),
@@ -140,8 +190,8 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
               width: MyUtility(context).width,
               height: MyUtility(context).height * 0.06,
               decoration: ShapeDecoration(
-                color: Color(0xFFD17226),
-                shape: RoundedRectangleBorder(
+                color: const Color(0xFFD17226),
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8.09),
                     topRight: Radius.circular(8.09),
@@ -151,10 +201,10 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: const Text(
-                      'Add Advert',
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8),
+                    child: Text(
+                      'Add/Edit Advert',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.73,
@@ -184,13 +234,27 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
                       controller: _titleController,
                     ),
                     const SizedBox(height: 20),
-                    // Pass the controller to AddEditor
                     AddEditor(controller: _descriptionController),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            PopupCheckBox(
+                              value: displayOnBusinessProfile,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  displayOnBusinessProfile = newValue;
+                                });
+                              },
+                              text: 'Display on Business Profile',
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
                           'Edit/Add Image:',
                           style: TextStyle(
                             color: Colors.black,
@@ -199,12 +263,11 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        _selectedImage == null
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 10),
-                                child: AttachmentPopupButton(
-                                    text: 'Attach File', onTap: _pickImage),
+                        _selectedImage == null &&
+                                widget.advertToEdit?.immageFile != null
+                            ? Text(
+                                widget.advertToEdit!.immageFile!,
+                                style: const TextStyle(color: Colors.white),
                               )
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,24 +275,14 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
                                   AttachmentPopupButton(
                                       text: 'Change File', onTap: _pickImage),
                                   const SizedBox(height: 10),
-                                  Text(
-                                    _selectedImage!.name,
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
+                                  if (_selectedImage != null)
+                                    Text(
+                                      _selectedImage!.name,
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
                                 ],
                               ),
-                        SizedBox(
-                          width: MyUtility(context).width * 0.17,
-                          child: Text(
-                            'Note: Image may not be larger than 2 megabytes. Preferable landscape images.\nImage format: .jpg, jpeg, .png and .gif',
-                            style: TextStyle(
-                              color: Color(0xFFD17226),
-                              fontSize: 10,
-                              fontFamily: 'ralewaymedium',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
                         const SizedBox(height: 15),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -239,11 +292,11 @@ class _AddAdvertPopupState extends State<AddAdvertPopup> {
                               onTap: _saveForm,
                               waiting: _isLoading,
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             PopUpsCancel(
                               text: 'Cancel',
-                              onTap: () {},
-                              buttonColor: Color(0xFF3C4043),
+                              onTap: () => Navigator.pop(context),
+                              buttonColor: const Color(0xFF3C4043),
                             ),
                           ],
                         ),

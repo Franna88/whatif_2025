@@ -10,13 +10,15 @@ class BusinessDetails extends StatefulWidget {
   final TextEditingController tradingNameController;
   final TextEditingController registeredNameController;
   final TextEditingController bEEElevelController;
+  final VoidCallback imageChange;
 
   const BusinessDetails(
       {super.key,
       required this.imageName,
       required this.tradingNameController,
       required this.registeredNameController,
-      required this.bEEElevelController});
+      required this.bEEElevelController,
+      required this.imageChange});
 
   @override
   State<BusinessDetails> createState() => _BusinessDetailsState();
@@ -40,6 +42,7 @@ class _BusinessDetailsState extends State<BusinessDetails> {
               ProfileImage(
                 imageText: 'Display Image',
                 imageName: widget.imageName,
+                imageChange: widget.imageChange,
               ),
               SizedBox(
                 width: 25,
@@ -47,25 +50,26 @@ class _BusinessDetailsState extends State<BusinessDetails> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: AddButton(text: 'Save', onPressed: () {}),
-                      ),
-                    ],
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        'Update Business Info',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.6064,
-                          fontFamily: 'ralewaybold',
-                          fontWeight: FontWeight.w700,
+                      SizedBox(
+                        width: MyUtility(context).width * 0.5,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Update Business Info',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.6064,
+                                fontFamily: 'ralewaybold',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            AddButton(text: 'Save', onPressed: () {}),
+                          ],
                         ),
                       ),
                       Padding(

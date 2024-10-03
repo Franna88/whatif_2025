@@ -4,12 +4,13 @@ import 'package:webdirectories/myutility.dart';
 class GalleryAltContainer extends StatefulWidget {
   final String galleryImage;
   final String description;
+  final VoidCallback editButton;
 
-  const GalleryAltContainer({
-    super.key,
-    required this.galleryImage,
-    required this.description,
-  });
+  const GalleryAltContainer(
+      {super.key,
+      required this.galleryImage,
+      required this.description,
+      required this.editButton});
 
   @override
   State<GalleryAltContainer> createState() => _GalleryAltContainerState();
@@ -63,7 +64,7 @@ class _GalleryAltContainerState extends State<GalleryAltContainer> {
                   Row(
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: widget.editButton,
                         child: Icon(
                           Icons.edit,
                           color: Color(0xFFD17226), // Orange color for icons

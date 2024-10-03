@@ -45,8 +45,10 @@ class _ViewRecordsState extends State<ViewRecords> {
             ),
           ),
           AccountLongTextField(
-              descriptionText: 'Panel Beater Directory Membership Number',
-              length: 0.37),
+            descriptionText: 'Panel Beater Directory Membership Number',
+            length: 0.37,
+            controller: null,
+          ),
           AccountDatePicker(
             descriptionText: 'Invoices',
             length: 0.8,

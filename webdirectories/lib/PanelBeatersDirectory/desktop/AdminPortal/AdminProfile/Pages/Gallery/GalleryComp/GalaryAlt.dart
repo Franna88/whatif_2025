@@ -22,12 +22,20 @@ class GalleryAlt extends StatefulWidget {
 class _GalleryAltState extends State<GalleryAlt> {
   List<Map<String, dynamic>> galleryItems = [];
   final _firestore = FirebaseFirestore.instance;
+  bool _isLoading = true;
 
-  Future<List<Map<String, dynamic>>> _fetchGalleryData() async {
+  @override
+  void initState() {
+    super.initState();
+    _loadGalleryData();
+  }
+
+  // Fetch the gallery data only once and store it locally
+  Future<void> _loadGalleryData() async {
     StoredUser? user = await getUserInfo();
 
     if (user == null) {
-      return [];
+      return;
     }
 
     try {
@@ -47,36 +55,70 @@ class _GalleryAltState extends State<GalleryAlt> {
             data['immageFile'] = url;
           }
 
-          processedData.add(data);
+          processedData
+              .add({...data, 'docId': doc.id}); // Add docId for updating
         }
-        return processedData;
+
+        setState(() {
+          galleryItems = processedData;
+          _isLoading = false;
+        });
       } else {
-        return [];
+        setState(() {
+          _isLoading = false;
+        });
       }
     } catch (e) {
-      print('error fetching gallery data: $e');
-      return [];
+      print('Error fetching gallery data: $e');
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
-  void _onImageUpload(Map<String, dynamic> newImageData) {
-    List<Map<String, dynamic>> images = galleryItems;
-    images.add(newImageData);
-    setState(() {
-      galleryItems = images;
-    });
+  // Function to handle adding or editing images
+  void _showImagePopup({Map<String, dynamic>? existingImage}) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.all(10),
+          child: AddImagePopup(
+            onImageUpload: (Map<String, dynamic> image) {
+              setState(() {
+                if (existingImage == null) {
+                  // Add new image
+                  galleryItems.add(image);
+                } else {
+                  // Update existing image
+                  int index = galleryItems.indexWhere(
+                      (item) => item['docId'] == existingImage['docId']);
+                  if (index != -1) {
+                    galleryItems[index] = image;
+                  }
+                }
+              });
+            },
+            existingImage: existingImage, // Pass the existing image if editing
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    var heightDevice = MediaQuery.of(context).size.height;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 12.5, top: 12.5),
+              padding: const EdgeInsets.only(bottom: 12.5, top: 12.5, left: 20),
               child: Text(
                 'Image limit: 12 images, max 2 Megabytes each. Prefer landscape format. Accepted file types: JPG, JPEG, PNG, GIF.',
                 style: TextStyle(
@@ -98,10 +140,7 @@ class _GalleryAltState extends State<GalleryAlt> {
                 gradient: LinearGradient(
                   begin: Alignment(0.57, -0.82),
                   end: Alignment(-0.57, 0.82),
-                  colors: [
-                    Color(0x19777777),
-                    Colors.white.withOpacity(0.4000000059604645)
-                  ],
+                  colors: [Color(0x19777777), Colors.white.withOpacity(0.4)],
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -120,28 +159,16 @@ class _GalleryAltState extends State<GalleryAlt> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: MyUtility(context).height * 0.05,
-                    ),
-                    AddButton(
-                      text: 'Add Image',
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: true,
-                          barrierColor: Colors.black.withOpacity(0.5),
-                          builder: (BuildContext context) {
-                            return Dialog(
-                              backgroundColor: Colors.transparent,
-                              insetPadding: EdgeInsets.all(10),
-                              child: AddImagePopup(
-                                onImageUpload:
-                                    (Map<String, dynamic> newImage) {},
-                              ),
-                            );
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        AddButton(
+                          text: 'Add Image',
+                          onPressed: () {
+                            _showImagePopup(); // Call without existingImage for adding new image
                           },
-                        );
-                      },
+                        ),
+                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -163,60 +190,95 @@ class _GalleryAltState extends State<GalleryAlt> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    SizedBox(
-                      height: MyUtility(context).height * 0.7,
-                      child: FutureBuilder<List<Map<String, dynamic>>>(
-                        future: _fetchGalleryData(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-                          if (snapshot.hasError) {
-                            return Center(
-                              child: Text('Something went wrong.',
-                                  style: const TextStyle(color: Colors.black)),
-                            );
-                          }
-                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return const Center(
-                              child: Text(
-                                'No images found',
-                                style: TextStyle(color: Colors.black),
+                    SizedBox(height: 25),
+                    _isLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : galleryItems.isEmpty
+                            ? const Center(
+                                child: Text(
+                                  'No images found',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              )
+                            : Expanded(
+                                child: GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4,
+                                    mainAxisSpacing: 8.0,
+                                    crossAxisSpacing: 8.0,
+                                    childAspectRatio: 4 / 3.5,
+                                  ),
+                                  itemCount: galleryItems.length,
+                                  itemBuilder: (context, index) {
+                                    Map<String, dynamic> image =
+                                        galleryItems[index];
+
+                                    return Draggable<Map<String, dynamic>>(
+                                      data: image,
+                                      feedback: Material(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.orange, width: 1),
+                                          ),
+                                          child: GalleryAltContainer(
+                                            galleryImage: image['immageFile'],
+                                            description: image['immageTitle'],
+                                            editButton: () {
+                                              _showImagePopup(
+                                                  existingImage:
+                                                      image); // Pass existingImage for editing
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      childWhenDragging: Opacity(
+                                        opacity: 0.3,
+                                        child: GalleryAltContainer(
+                                          galleryImage: image['immageFile'],
+                                          description: image['immageTitle'],
+                                          editButton: () {
+                                            _showImagePopup(
+                                                existingImage:
+                                                    image); // Pass existingImage for editing
+                                          },
+                                        ),
+                                      ),
+                                      child: DragTarget<Map<String, dynamic>>(
+                                        onAccept: (draggedImage) {
+                                          setState(() {
+                                            int oldIndex = galleryItems
+                                                .indexOf(draggedImage);
+                                            int newIndex =
+                                                galleryItems.indexOf(image);
+
+                                            if (oldIndex != newIndex) {
+                                              galleryItems.removeAt(oldIndex);
+                                              galleryItems.insert(
+                                                  newIndex, draggedImage);
+                                            }
+                                          });
+                                        },
+                                        builder: (BuildContext context,
+                                            List<Map<String, dynamic>?>
+                                                candidateData,
+                                            rejectedData) {
+                                          return GalleryAltContainer(
+                                            galleryImage: image['immageFile'],
+                                            description: image['immageTitle'],
+                                            editButton: () {
+                                              _showImagePopup(
+                                                  existingImage:
+                                                      image); // Pass existingImage for editing
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                            );
-                          }
-                          List<Map<String, dynamic>> images = snapshot.data!;
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 50.0, vertical: 20.0),
-                            child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount:
-                                    4, // Increased from 3 to 4 for smaller containers
-                                mainAxisSpacing: 8.0,
-                                crossAxisSpacing: 8.0,
-                                childAspectRatio: 4 /
-                                    3.5, // Adjusted aspect ratio for a better fit
-                              ),
-                              itemCount: images.length,
-                              itemBuilder: (context, index) {
-                                Map<String, dynamic> image = images[index];
-                                return GalleryAltContainer(
-                                  galleryImage: image['immageFile'],
-                                  description: image['immageTitle'],
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ),
                   ],
                 ),
               ),

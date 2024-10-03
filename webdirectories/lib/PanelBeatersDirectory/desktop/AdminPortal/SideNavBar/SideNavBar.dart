@@ -1,14 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminJobFinder/AdminJobFinder.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminLightStoneKai/AdminLightStone.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/AdminProfile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Advertisement/Advertisement.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DasboardComp/Notifications.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/Dashboard.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageUsers/ManageUsers.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/AdminNotifications.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/AdminNotificationsAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/SideNavBar/SideNavButton/SideNavButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
 import 'package:webdirectories/myutility.dart';
 
 import '../AdminJobFinder/JobFinderDetails.dart';
@@ -35,6 +34,36 @@ class SideNavBar extends StatefulWidget {
 class _SideNavBarState extends State<SideNavBar> {
   final PageController _pageController = PageController(initialPage: 0);
   int _selectedIndex = 0;
+
+  var jobDetails = JobFinderModel(
+    name: '',
+    email: '',
+    qualification: '',
+    city: '',
+    province: '',
+    country: '',
+    occupation: '',
+    years: '',
+    contactNumber: '',
+    dateSubmitted: Timestamp.fromDate(DateTime.now()),
+  );
+
+  getJobDetails(value) {
+    setState(() {
+      jobDetails = JobFinderModel(
+        name: value.name,
+        email: value.email,
+        qualification: value.qualification,
+        city: value.city,
+        province: value.province,
+        country: value.country,
+        occupation: value.occupation,
+        years: value.years,
+        contactNumber: value.contactNumber,
+        dateSubmitted: value.dateSubmitted,
+      );
+    });
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -63,7 +92,10 @@ class _SideNavBarState extends State<SideNavBar> {
       SystemAlert(navigateToPage: navigateToPage),
       DocumentExpired(navigateToPage: navigateToPage),
       CustomerReviews(navigateToPage: navigateToPage),
-      AdminJobFinder(navigateToPage: navigateToPage),
+      AdminJobFinder(
+        navigateToPage: navigateToPage,
+        getJobDetails: getJobDetails,
+      ),
       //JobFinderDetails(),
       AdminLightStone(
         data: null,
@@ -77,7 +109,12 @@ class _SideNavBarState extends State<SideNavBar> {
       NotificationWelcome(
         navigateToPage: navigateToPage,
       ),
-      NotificationMessage(navigateToPage: navigateToPage)
+      NotificationMessage(navigateToPage: navigateToPage),
+
+      JobFinderDetails(
+        job: jobDetails,
+        navigateToPage: navigateToPage,
+      ),
     ];
 
     return Row(
@@ -202,7 +239,10 @@ class _SideNavBarState extends State<SideNavBar> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 20),
-                child: DashProfileView(),
+                child: DashProfileView(
+                  onSelect: (index) =>
+                      navigateToPage(index), // Ensure this is correct
+                ),
               ),
               Expanded(
                 child: PageView(

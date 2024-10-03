@@ -5,12 +5,14 @@ class MediaLinkContainer extends StatelessWidget {
   final String mediaType;
   final String mediaLink;
   final VoidCallback pressEdit;
+  final VoidCallback pressDelete;
   final bool isEven;
 
   const MediaLinkContainer({
     super.key,
     required this.mediaType,
     required this.mediaLink,
+    required this.pressDelete,
     required this.pressEdit,
     required this.isEven,
   });
@@ -74,6 +76,15 @@ class MediaLinkContainer extends StatelessWidget {
                   onTap: pressEdit,
                   child: Icon(
                     Icons.edit,
+                    color: Colors.white,
+                    size: 20.0,
+                  ),
+                ),
+                SizedBox(width: 10),
+                GestureDetector(
+                  onTap: pressDelete,
+                  child: Icon(
+                    Icons.delete,
                     color: Colors.white,
                     size: 20.0,
                   ),

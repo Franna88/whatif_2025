@@ -8,18 +8,23 @@ class ReqruitDetails extends StatelessWidget {
   final String occupation;
   final String contact;
   final String name;
+  final String qualification;
   final String location;
+  final String years;
+  final String email;
 
-  const ReqruitDetails({
-    super.key,
-    required this.year,
-    required this.month,
-    required this.day,
-    required this.occupation,
-    required this.contact,
-    required this.name,
-    required this.location,
-  });
+  const ReqruitDetails(
+      {super.key,
+      required this.year,
+      required this.month,
+      required this.day,
+      required this.occupation,
+      required this.contact,
+      required this.name,
+      required this.qualification,
+      required this.location,
+      required this.years,
+      required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +37,12 @@ class ReqruitDetails extends StatelessWidget {
         children: [
           _buildRow('Date Published:', '$year-$month-$day', true),
           _buildRow('Occupation:', occupation, false),
-          _buildRow('Contact Number:', contact, true),
+          _buildRow('qualification:', qualification, true),
+          _buildRow('Years Experience:', years, false),
+          _buildRow('Area / Areas Looking for Work:', location, true),
           _buildRow('Name & Surname:', name, false),
-          _buildRow('Location:', location, true),
+          _buildRow('Contact Number:', contact, true),
+          _buildRow('Email Address:', email, false),
         ],
       ),
     );

@@ -4,8 +4,9 @@ import '../../../../../myutility.dart'; // Assuming this utility file is part of
 
 class AddEditor extends StatelessWidget {
   final quill.QuillController controller; // Accept controller as a parameter
+  final quill.QuillController _controller = quill.QuillController.basic();
 
-  const AddEditor({super.key, required this.controller});
+  AddEditor({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +43,19 @@ class AddEditor extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  quill.QuillToolbar.simple(controller: controller),
+                  quill.QuillSimpleToolbar(
+                    controller: _controller,
+                    configurations: quill.QuillSimpleToolbarConfigurations(
+                        showColorButton: true,
+                        buttonOptions: quill.QuillSimpleToolbarButtonOptions(),
+                        showBackgroundColorButton: true,
+                        showCodeBlock: false,
+                        showLink: false),
+                  ),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: quill.QuillEditor.basic(
-                        controller: controller,
-                      ),
+                    child: quill.QuillEditor.basic(
+                      controller: _controller,
+                      configurations: quill.QuillEditorConfigurations(),
                     ),
                   ),
                 ],

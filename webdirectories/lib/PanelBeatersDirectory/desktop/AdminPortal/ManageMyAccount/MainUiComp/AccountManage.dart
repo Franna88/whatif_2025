@@ -61,14 +61,23 @@ class _AccountManageState extends State<AccountManage> {
             ],
           ),
           AccountLongTextField(
-              descriptionText: 'Finance Manager Name', length: 0.8),
+            descriptionText: 'Finance Manager Name',
+            length: 0.8,
+            controller: null,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AccountLongTextField(
-                  descriptionText: 'Finance Manager Name', length: 0.37),
+                descriptionText: 'Finance Manager Name',
+                length: 0.37,
+                controller: null,
+              ),
               AccountLongTextField(
-                  descriptionText: 'Finance Manager Name', length: 0.37),
+                descriptionText: 'Finance Manager Name',
+                length: 0.37,
+                controller: null,
+              ),
             ],
           ),
           Padding(

@@ -1,8 +1,10 @@
+import 'package:cached_firestorage/remote_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
 
 class DashEditProfile extends StatefulWidget {
-  const DashEditProfile({super.key});
+  final String userDisplayImageName;
+  const DashEditProfile({super.key, required this.userDisplayImageName});
 
   @override
   State<DashEditProfile> createState() => _DashEditProfileState();
@@ -169,11 +171,12 @@ class _DashEditProfileState extends State<DashEditProfile> {
                         const Text(
                           'Update My DisplayImage',
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10.2,
-                              fontFamily: 'raleway',
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.white),
+                            color: Colors.white,
+                            fontSize: 10.2,
+                            fontFamily: 'raleway',
+                            decoration: TextDecoration.underline,
+                            decorationColor: Colors.white,
+                          ),
                         ),
                         const SizedBox(height: 5),
                         Container(
@@ -185,11 +188,13 @@ class _DashEditProfileState extends State<DashEditProfile> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/your_image.png'), // Replace with your image path
-                              fit: BoxFit.cover,
-                            ),
+                          ),
+                          child: RemotePicture(
+                            imagePath:
+                                'images/your_image.png', // Static logo path
+                            mapKey: 'logo',
+                            useAvatarView: false,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ],
@@ -216,11 +221,13 @@ class _DashEditProfileState extends State<DashEditProfile> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/your_image.png'), // Replace with your image path
-                              fit: BoxFit.cover,
-                            ),
+                          ),
+                          child: RemotePicture(
+                            imagePath:
+                                'images/your_image.png', // Static logo path
+                            mapKey: 'logo',
+                            useAvatarView: false,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/AdminMediaLinks.dart/MediaLinkContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBoxB.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/AddMediaPopUp/AddMediaPopup.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/NewDeletePopUp.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
@@ -24,7 +25,10 @@ class MediaLink {
     return MediaLink(
       linkTitle: map['linkTitle'],
       linkUrl: map['urlLink'],
-      linksOrder: map['linksOrder'],
+      linksOrder: map['linksOrder'] is int
+          ? map['linksOrder']
+          : int.parse(
+              map['linksOrder'] ?? '0'), // Handle string-to-int conversion
     );
   }
 }
@@ -49,7 +53,7 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
   Future<void> _fetchMediaData() async {
     StoredUser? user = await getUserInfo();
     if (user != null) {
-      int listingId = int.parse(user.id);
+      int listingId = int.tryParse(user.id) ?? 0; // Ensure correct ID parsing
       try {
         QuerySnapshot mediaDoc = await _firestore
             .collection('listings_links')
@@ -80,107 +84,209 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
     return Padding(
       padding: const EdgeInsets.only(top: 20, right: 20),
       child: Center(
-        child: SizedBox(
-          width: MyUtility(context).width * 0.9,
-          height: MyUtility(context).height * 0.9,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Container(
+          width: MyUtility(context).width * 0.8,
+          height: MyUtility(context).height,
+          decoration: ShapeDecoration(
+            gradient: LinearGradient(
+              begin: Alignment(0.57, -0.82),
+              end: Alignment(-0.57, 0.82),
+              colors: [Color(0x19777777), Colors.white.withOpacity(0.4)],
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            shadows: [
+              BoxShadow(
+                color: Color(0xBF000000),
+                blurRadius: 24,
+                offset: Offset(0, 4),
+                spreadRadius: -1,
+              )
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SizedBox(
+              width: MyUtility(context).width * 0.9,
+              height: MyUtility(context).height * 0.9,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AddButton(
-                    text: 'Insert New Record',
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        barrierColor: Colors.black.withOpacity(0.5),
-                        builder: (BuildContext context) {
-                          return Dialog(
-                            backgroundColor: Colors.transparent,
-                            insetPadding: EdgeInsets.all(10),
-                            child: AddMediaPopup(
-                              onMediaAdded:
-                                  _fetchMediaData, // Refresh the list after adding new media
-                            ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AddButton(
+                        text: 'Insert New Record',
+                        onPressed: () {
+                          // When adding new media, no existingTitle or existingUrl is passed
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            barrierColor: Colors.black.withOpacity(0.5),
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                backgroundColor: Colors.transparent,
+                                insetPadding: EdgeInsets.all(10),
+                                child: AddMediaPopup(
+                                  existingTitle: null, // No title for new media
+                                  existingUrl: null, // No URL for new media
+                                  documentId:
+                                      null, // No document ID for new media
+                                  onMediaAdded:
+                                      _fetchMediaData, // Refresh after adding media
+                                ),
+                              );
+                            },
                           );
                         },
-                      );
-                    },
+                      ),
+                      IconSearchBoxB(),
+                    ],
                   ),
-                  IconSearchBoxB(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20, bottom: 15),
+                    child: Container(
+                      width: MyUtility(context).width * 0.9,
+                      height: MyUtility(context).height * 0.065,
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: MyUtility(context).width * 0.26,
+                              child: Text(
+                                'Media Type',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.6064,
+                                  fontFamily: 'ralewaybold',
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: MyUtility(context).width * 0.46,
+                              child: Text(
+                                'Media Link',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.6064,
+                                  fontFamily: 'ralewaybold',
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'Edit',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.6064,
+                                fontFamily: 'ralewaybold',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _mediaList.length,
+                      itemBuilder: (context, index) {
+                        final media = _mediaList[index];
+
+                        return MediaLinkContainer(
+                          mediaType: media.linkTitle,
+                          mediaLink: media.linkUrl,
+                          pressEdit: () async {
+                            // Fetch the document ID for the media being edited
+                            QuerySnapshot mediaDoc = await _firestore
+                                .collection('listings_links')
+                                .where('urlLink', isEqualTo: media.linkUrl)
+                                .get();
+
+                            if (mediaDoc.docs.isNotEmpty) {
+                              String docId = mediaDoc.docs.first.id;
+
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                barrierColor: Colors.black.withOpacity(0.5),
+                                builder: (BuildContext context) {
+                                  return Dialog(
+                                    backgroundColor: Colors.transparent,
+                                    insetPadding: EdgeInsets.all(10),
+                                    child: AddMediaPopup(
+                                      existingTitle: media
+                                          .linkTitle, // Pass title for editing
+                                      existingUrl:
+                                          media.linkUrl, // Pass URL for editing
+                                      documentId:
+                                          docId, // Pass doc ID for editing
+                                      onMediaAdded:
+                                          _fetchMediaData, // Refresh after editing
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              print('No document found for editing');
+                            }
+                          },
+                          isEven: index % 2 == 0,
+                          pressDelete: () {
+                            // Open the delete confirmation dialog
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              barrierColor: Colors.black.withOpacity(0.5),
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  insetPadding: EdgeInsets.all(10),
+                                  child: NewDeleteButton(
+                                    documentId: media.linkTitle,
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  )
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 15),
-                child: Container(
-                  width: MyUtility(context).width * 0.9,
-                  height: MyUtility(context).height * 0.065,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: MyUtility(context).width * 0.26,
-                          child: Text(
-                            'Media Type',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.6064,
-                              fontFamily: 'ralewaybold',
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: MyUtility(context).width * 0.46,
-                          child: Text(
-                            'Media Link',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.6064,
-                              fontFamily: 'ralewaybold',
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'Edit',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.6064,
-                            fontFamily: 'ralewaybold',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _mediaList.length,
-                  itemBuilder: (context, index) {
-                    final media = _mediaList[index];
-                    return MediaLinkContainer(
-                      mediaType: media.linkTitle,
-                      mediaLink: media.linkUrl,
-                      pressEdit: () {
-                        // Edit action
-                      },
-                      isEven: index % 2 == 0,
-                    );
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _deleteMedia(MediaLink media) async {
+    try {
+      QuerySnapshot mediaDoc = await _firestore
+          .collection('listings_links')
+          .where('urlLink', isEqualTo: media.linkUrl)
+          .get();
+
+      if (mediaDoc.docs.isNotEmpty) {
+        await _firestore
+            .collection('listings_links')
+            .doc(mediaDoc.docs.first.id)
+            .delete();
+        _fetchMediaData(); // Refresh the list after deletion
+        print('Media deleted: ${media.linkUrl}');
+      } else {
+        print('No media found for deletion');
+      }
+    } catch (e) {
+      print('Error deleting media: $e');
+    }
   }
 }

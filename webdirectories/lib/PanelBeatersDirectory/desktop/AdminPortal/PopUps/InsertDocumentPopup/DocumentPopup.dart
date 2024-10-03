@@ -21,7 +21,8 @@ import 'package:webdirectories/myutility.dart';
 import '../PopUpsCommon/PopUpsCancel.dart';
 
 class DocumentPopup extends StatefulWidget {
-  const DocumentPopup({super.key});
+  final Map<String, dynamic>? existingDocument;
+  const DocumentPopup({super.key, this.existingDocument});
 
   @override
   State<DocumentPopup> createState() => _DocumentPopupState();
@@ -47,8 +48,19 @@ class _DocumentPopupState extends State<DocumentPopup> {
 
   @override
   void initState() {
-    _getDocumentCategory();
     super.initState();
+    // Prepopulate fields if editing an existing document
+    if (widget.existingDocument != null) {
+      _categoryController.text =
+          widget.existingDocument!['documentCategory'] ?? '';
+      _subCategoryController.text =
+          widget.existingDocument!['documentSubCategory'] ?? '';
+      _titleController.text = widget.existingDocument!['documentTitle'] ?? '';
+      _expiryController.text = widget.existingDocument!['expiryDate'] ?? '';
+      emailNotification = widget.existingDocument!['expEmail'] ?? false;
+      // Handle pre-selected files if needed
+    }
+    _getDocumentCategory(); // Assuming this method is necessary for dropdown options
   }
 
   void _getDocumentCategory() async {
@@ -92,18 +104,44 @@ class _DocumentPopupState extends State<DocumentPopup> {
       setState(() {
         _isLoading = true;
       });
-      // Process form submission
-      print('Form is valid');
+
       try {
-        // Upload files and save links to Firestore
-        await uploadFilesAndSaveLinks(
-            _pickedFiles['file'] as Uint8List, _pickedFiles['fileName']);
+        if (widget.existingDocument != null) {
+          // Editing an existing document
+          await _firestore
+              .collection('listings_documents')
+              .doc(widget.existingDocument!['id'])
+              .update({
+            'documentCategoryId': _categoryController.text,
+            'documentSubCategoryId': _subCategoryController.text,
+            'documentTitle': _titleController.text,
+            'expiryDate': _expiryController.text,
+            'expEmail': emailNotification,
+          });
 
-        if (!mounted) return;
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Document updated successfully')),
+          );
+        } else {
+          // Adding a new document
+          if (_pickedFiles['file'] == null || _pickedFiles['fileName'] == '') {
+            // Handle no file selected
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Please select a file to upload')),
+            );
+            setState(() {
+              _isLoading = false;
+            });
+            return;
+          }
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Document added successfully')),
-        );
+          // Proceed with file upload
+          await uploadFilesAndSaveLinks(
+              _pickedFiles['file'] as Uint8List, _pickedFiles['fileName']);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Document added successfully')),
+          );
+        }
 
         Navigator.pop(context);
 
@@ -111,16 +149,15 @@ class _DocumentPopupState extends State<DocumentPopup> {
           _isLoading = false;
         });
       } catch (e) {
-        if (!mounted) return;
-        print('Error adding document: $e');
+        print('Error adding/updating document: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
               content: Text('Something went wrong. Please try again')),
         );
-        Navigator.pop(context);
+        setState(() {
+          _isLoading = false;
+        });
       }
-    } else {
-      print('Form is not valid');
     }
   }
 
@@ -195,15 +232,19 @@ class _DocumentPopupState extends State<DocumentPopup> {
             'fileName': fileName,
           };
         });
-      }
-    } catch (e) {
-      if (mounted) {
+      } else {
+        // Handle case when no file is selected
+        setState(() {
+          _pickedFiles = {'file': null, 'fileName': ''};
+        });
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to pick files: $e'),
-          ),
+          const SnackBar(content: Text('No file selected')),
         );
       }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to pick files: $e')),
+      );
     }
   }
 

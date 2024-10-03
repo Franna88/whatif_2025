@@ -11,7 +11,13 @@ import '../PopUpsCommon/PopUpsCancel.dart';
 
 class ContactPopup extends StatefulWidget {
   final Function(Map<String, dynamic> newContact) onAddContact;
-  const ContactPopup({super.key, required this.onAddContact});
+  final Map<String, dynamic>?
+      existingContact; // New parameter for existing contact
+
+  const ContactPopup(
+      {super.key,
+      required this.onAddContact,
+      this.existingContact}); // Make it optional
 
   @override
   State<ContactPopup> createState() => _ContactPopupState();
@@ -27,50 +33,79 @@ class _ContactPopupState extends State<ContactPopup> {
   final TextEditingController _emailController = TextEditingController();
   bool displayOnBusinessProfile = false;
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Prepopulate the fields if editing an existing contact
+    if (widget.existingContact != null) {
+      _contactPersonController.text =
+          widget.existingContact!['contactPerson'] ?? '';
+      _designationController.text =
+          widget.existingContact!['contactPersonDesignation'] ?? '';
+      _phoneController.text =
+          widget.existingContact!['contactPersonCell'] ?? '';
+      _emailController.text =
+          widget.existingContact!['contactPersonEmail'] ?? '';
+    }
+  }
+
   void _onsaveform() async {
     if (_formKey.currentState!.validate()) {
-      {
-        setState(() {
-          _isLoading = true;
-        });
-        try {
-          StoredUser? user = await getUserInfo();
+      setState(() {
+        _isLoading = true;
+      });
 
-          if (user == null) throw "User not found";
+      try {
+        StoredUser? user = await getUserInfo();
+        if (user == null) throw "User not found";
 
-          Map<String, dynamic> addData = {
-            'contactPerson': _contactPersonController.text,
-            'contactPersonCell': _phoneController.text,
-            'contactPersonEmail': _emailController.text,
-            'contactPersonDesignation': _designationController.text,
-            'listingsId': int.parse(user.id),
-          };
-
-          await _firestore.collection('contact_person').add(addData);
-
-          addData.remove('listingsId');
-
-          if (!mounted) return;
-
-          setState(() {
-            _isLoading = false;
-          });
-
-          widget.onAddContact(addData);
+        Map<String, dynamic> contactData = {
+          'contactPerson': _contactPersonController.text,
+          'contactPersonCell': _phoneController.text,
+          'contactPersonEmail': _emailController.text,
+          'contactPersonDesignation': _designationController.text,
+          'listingsId': int.parse(user.id),
+        };
+        if (widget.existingContact != null) {
+          // Editing an existing contact
+          await _firestore
+              .collection('contact_person')
+              .doc(widget.existingContact!['id']) // Use the correct document ID
+              .update(contactData);
 
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Contact Person added successfully')),
+            const SnackBar(content: Text('Contact updated successfully')),
           );
-        } catch (e) {
-          print('Error adding contact person: $e');
-
-          if (!mounted) return;
-
+        } else {
+          // Adding a new contact
+          await _firestore.collection('contact_person').add(contactData);
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text('Something went wrong. Please try again')),
+            const SnackBar(content: Text('Contact added successfully')),
           );
         }
+
+        widget.onAddContact(contactData); // Pass updated or new contact back
+
+        if (!mounted) return;
+        setState(() {
+          _isLoading = false;
+        });
+
+        Navigator.of(context).pop(); // Close the dialog
+      } catch (e) {
+        print('Error saving contact: $e');
+        if (!mounted) return;
+
+        setState(() {
+          _isLoading = false;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Something went wrong. Please try again')),
+        );
       }
     }
   }
@@ -112,7 +147,9 @@ class _ContactPopupState extends State<ContactPopup> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: Text(
-                      'Insert Registration',
+                      widget.existingContact != null
+                          ? 'Edit Contact'
+                          : 'Insert Registration', // Update title based on action
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14.65,
@@ -136,50 +173,44 @@ class _ContactPopupState extends State<ContactPopup> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     PopUpTextField(
-                      text: 'Contact Person',
-                      controller: _contactPersonController,
-                    ),
-                    SizedBox(
-                      height: MyUtility(context).height * 0.02,
-                    ),
-                    PopUpTextField(
                       text: 'Designation',
                       controller: _designationController,
                     ),
-                    SizedBox(
-                      height: MyUtility(context).height * 0.02,
+                    SizedBox(height: MyUtility(context).height * 0.02),
+                    PopUpTextField(
+                      text: 'Name & Surname',
+                      controller: _contactPersonController,
                     ),
+                    SizedBox(height: MyUtility(context).height * 0.02),
                     PopUpTextField(
                       text: 'Phone',
                       controller: _phoneController,
                     ),
-                    SizedBox(
-                      height: MyUtility(context).height * 0.02,
-                    ),
+                    SizedBox(height: MyUtility(context).height * 0.02),
                     PopUpTextField(
                       text: 'Email',
                       controller: _emailController,
                     ),
-                    SizedBox(
-                      height: MyUtility(context).height * 0.02,
-                    ),
+                    SizedBox(height: MyUtility(context).height * 0.02),
                     Row(
                       children: [
                         PopUpsButton(
-                          text: 'Save',
+                          text: widget.existingContact != null
+                              ? 'Update'
+                              : 'Save', // Update button text based on action
                           onTap: _onsaveform,
                           waiting: _isLoading,
                         ),
-                        SizedBox(
-                          width: 8,
-                        ),
+                        SizedBox(width: 8),
                         PopUpsCancel(
                           text: 'Cancel',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
                           buttonColor: Color(0xFF3C4043),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

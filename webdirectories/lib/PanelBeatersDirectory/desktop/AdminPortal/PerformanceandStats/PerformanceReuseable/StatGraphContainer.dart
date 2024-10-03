@@ -43,10 +43,10 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Performancetags(header: 'Total Lead Views', figures: '2561'),
-                SizedBox(
+                /*SizedBox(
                   width: MyUtility(context).width * 0.03,
                 ),
-                Performancetags(header: 'Email Clicks', figures: '233'),
+                 Performancetags(header: 'Email Clicks', figures: '233'),
                 SizedBox(
                   width: MyUtility(context).width * 0.03,
                 ),
@@ -54,7 +54,7 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
                 SizedBox(
                   width: MyUtility(context).width * 0.03,
                 ),
-                Performancetags(header: 'Quote Clicks', figures: '36')
+                Performancetags(header: 'Quote Clicks', figures: '36')*/
               ],
             ),
             Row(

@@ -1,25 +1,45 @@
 class AdvertisementModel {
+  String id; // Add this field for the document ID
+  String dateAdded;
+  String dateUpdated;
+  String immageDescription;
+  String immageFile;
+  String immageTitle;
+  int listingsId;
+  int membersId;
+  int specialsOrder;
+  bool? displayOnBusinessProfile;
+
   AdvertisementModel({
+    required this.id, // Include id in constructor
     required this.dateAdded,
-    this.dateUpdated,
+    required this.dateUpdated,
     required this.immageDescription,
     required this.immageFile,
     required this.immageTitle,
     required this.listingsId,
-    this.membersId,
+    required this.membersId,
     required this.specialsOrder,
+    this.displayOnBusinessProfile,
   });
 
-  final String dateAdded;
-  final String? dateUpdated;
-  final String immageDescription;
-  String? immageFile;
-  final String immageTitle;
-  final int listingsId;
-  final int? membersId;
-  final int specialsOrder;
+  // Modify the fromMap method to accept the document ID
+  factory AdvertisementModel.fromMap(Map<String, dynamic> data, String id) {
+    return AdvertisementModel(
+      id: id,
+      dateAdded: data['dateAdded'] ?? '',
+      dateUpdated: data['dateUpdated'] ?? '',
+      immageDescription: data['immageDescription'] ?? '',
+      immageFile: data['immageFile'] ?? '',
+      immageTitle: data['immageTitle'] ?? '',
+      listingsId: data['listingsId'] ?? 0,
+      membersId: data['membersId'] ?? 0,
+      specialsOrder: data['specialsOrder'] ?? 0,
+      displayOnBusinessProfile: data['displayOnBusinessProfile'] ?? false,
+    );
+  }
 
-  // Convert the object to a map
+  // toMap method to convert to Firestore format
   Map<String, dynamic> toMap() {
     return {
       'dateAdded': dateAdded,
@@ -30,6 +50,7 @@ class AdvertisementModel {
       'listingsId': listingsId,
       'membersId': membersId,
       'specialsOrder': specialsOrder,
+      'displayOnBusinessProfile': displayOnBusinessProfile,
     };
   }
 }

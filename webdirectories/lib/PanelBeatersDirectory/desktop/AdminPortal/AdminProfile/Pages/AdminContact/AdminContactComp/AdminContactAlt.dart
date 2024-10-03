@@ -7,6 +7,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBoxB.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/ContactPopup/ContactPopup.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/NewDeletePopUp.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
@@ -22,7 +23,7 @@ class _AdminContactAltState extends State<AdminContactAlt> {
   late List<Map<String, String>> contactInfo;
   final _firestore = FirebaseFirestore.instance;
 
-  Future<List<Map<String, String>>> _fetchContactData() async {
+  Future<List<Map<String, dynamic>>> _fetchContactData() async {
     StoredUser? user = await getUserInfo();
 
     if (user == null) {
@@ -31,13 +32,16 @@ class _AdminContactAltState extends State<AdminContactAlt> {
 
     QuerySnapshot contactSnapshot = await _firestore
         .collection('contact_person')
-        .where('listingsId', isEqualTo: 1)
+        .where('listingsId',
+            isEqualTo: int.parse(user.id)) // Make sure 'user.id' is an int
         .get();
 
     if (contactSnapshot.docs.isNotEmpty) {
-      List<Map<String, String>> contactData = contactSnapshot.docs
-          .map((doc) => doc.data() as Map<String, String>)
-          .toList();
+      List<Map<String, dynamic>> contactData = contactSnapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        data['id'] = doc.id; // Add the document ID to the data
+        return data;
+      }).toList();
       return contactData;
     } else {
       return [
@@ -46,6 +50,7 @@ class _AdminContactAltState extends State<AdminContactAlt> {
           'contactPerson': 'Samantha Sheingold',
           'contactPersonCell': '0123464690',
           'contactPersonEmail': 'samantha@webdirectories.co.za',
+          'id': 'dummy-id', // Placeholder ID for the dummy data
         },
       ];
     }
@@ -207,7 +212,7 @@ class _AdminContactAltState extends State<AdminContactAlt> {
                             ),
                           ),
                           Expanded(
-                            flex: 2,
+                            flex: 3,
                             child: Text(
                               'Name & Surname',
                               style: TextStyle(
@@ -229,7 +234,7 @@ class _AdminContactAltState extends State<AdminContactAlt> {
                             ),
                           ),
                           Expanded(
-                            flex: 3,
+                            flex: 2,
                             child: Text(
                               'Phone',
                               style: TextStyle(
@@ -284,10 +289,54 @@ class _AdminContactAltState extends State<AdminContactAlt> {
                                 phone: contact['contactPersonCell'],
                                 email: contact['contactPersonEmail'],
                                 pressEdit: () {
-                                  // Implement edit functionality
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    barrierColor: Colors.black.withOpacity(0.5),
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        backgroundColor: Colors.transparent,
+                                        insetPadding: EdgeInsets.all(10),
+                                        child: ContactPopup(
+                                          existingContact: {
+                                            'id': contact[
+                                                'id'], // Pass the correct document ID
+                                            'contactPerson':
+                                                contact['contactPerson'],
+                                            'contactPersonCell':
+                                                contact['contactPersonCell'],
+                                            'contactPersonEmail':
+                                                contact['contactPersonEmail'],
+                                            'contactPersonDesignation': contact[
+                                                'contactPersonDesignation'],
+                                          },
+                                          onAddContact: (Map<String, dynamic>
+                                              updatedContact) {
+                                            setState(() {
+                                              // Optionally, refresh the UI or update the local state
+                                            });
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  );
                                 },
                                 pressDelete: () {
-                                  // Implement delete functionality
+                                  // Open the delete confirmation dialog
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    barrierColor: Colors.black.withOpacity(0.5),
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        backgroundColor: Colors.transparent,
+                                        insetPadding: EdgeInsets.all(10),
+                                        child: NewDeleteButton(
+                                          documentId: contact['id'],
+                                        ),
+                                      );
+                                    },
+                                  );
                                 },
                                 isEven: index % 2 == 0,
                               );

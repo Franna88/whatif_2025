@@ -53,7 +53,10 @@ class _UpdatePaymentDetailsState extends State<UpdatePaymentDetails> {
                 options: ['Annual EFT', 'First National Bank', 'Weekly EFT'],
               ),
               AccountLongTextField(
-                  descriptionText: 'Branch Code', length: 0.37),
+                descriptionText: 'Branch Code',
+                length: 0.37,
+                controller: null,
+              ),
             ],
           ),
           Row(
@@ -66,11 +69,17 @@ class _UpdatePaymentDetailsState extends State<UpdatePaymentDetails> {
                 options: ['Annual EFT', 'N4 Autocraft', 'Weekly EFT'],
               ),
               AccountLongTextField(
-                  descriptionText: 'Account Number', length: 0.37),
+                descriptionText: 'Account Number',
+                length: 0.37,
+                controller: null,
+              ),
             ],
           ),
           AccountLongTextField(
-              descriptionText: 'Membership Start Date', length: 0.9),
+            descriptionText: 'Membership Start Date',
+            length: 0.9,
+            controller: null,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

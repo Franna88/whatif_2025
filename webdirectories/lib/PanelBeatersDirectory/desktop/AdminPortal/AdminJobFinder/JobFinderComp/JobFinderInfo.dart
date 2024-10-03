@@ -7,6 +7,7 @@ import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
 
 class JobFinderInfo extends StatelessWidget {
   final VoidCallback onPress;
+  final VoidCallback onTap;
   final String year;
   final String month;
   final String day;
@@ -24,6 +25,7 @@ class JobFinderInfo extends StatelessWidget {
   const JobFinderInfo({
     super.key,
     required this.onPress,
+    required this.onTap,
     required this.year,
     required this.month,
     required this.day,
@@ -158,17 +160,7 @@ class JobFinderInfo extends StatelessWidget {
                 child: SizedBox(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                    child: AddButton(
-                      text: 'View',
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => JobFinderDetails(job: job),
-                          ),
-                        );
-                      },
-                    ),
+                    child: AddButton(text: 'View', onPressed: onTap),
                   ),
                 ),
               ),

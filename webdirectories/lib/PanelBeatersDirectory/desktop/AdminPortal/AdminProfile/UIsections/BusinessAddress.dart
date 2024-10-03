@@ -12,6 +12,7 @@ class BusinessAddress extends StatefulWidget {
   final TextEditingController suburbController;
   final TextEditingController streetController;
   final TextEditingController postalController;
+  final VoidCallback imageChange;
 
   const BusinessAddress(
       {super.key,
@@ -21,7 +22,8 @@ class BusinessAddress extends StatefulWidget {
       required this.cityController,
       required this.suburbController,
       required this.streetController,
-      required this.postalController});
+      required this.postalController,
+      required this.imageChange});
 
   @override
   State<BusinessAddress> createState() => _BusinessAddressState();
@@ -47,6 +49,7 @@ class _BusinessAddressState extends State<BusinessAddress> {
                   ProfileImage(
                     imageText: 'Logo',
                     imageName: widget.imageName,
+                    imageChange: widget.imageChange,
                   )
                 ],
               ),

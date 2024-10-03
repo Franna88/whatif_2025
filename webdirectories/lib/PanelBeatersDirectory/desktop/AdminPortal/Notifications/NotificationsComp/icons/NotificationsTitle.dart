@@ -66,7 +66,7 @@ class _NotificationTitleState extends State<NotificationTitle> {
               SizedBox(
                 width: MyUtility(context).width * 0.15,
                 child: Text(
-                  '${widget.year}/${widget.month}/${widget.day}',
+                  '${widget.day}/${widget.month}/${widget.year}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14.96,

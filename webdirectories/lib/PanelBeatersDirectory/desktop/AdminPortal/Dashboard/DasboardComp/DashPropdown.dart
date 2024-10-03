@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DashDropDown extends StatelessWidget {
-  final VoidCallback? onPress;
+  final Function(int)? onSelect; // Function to navigate
 
-  const DashDropDown({Key? key, required this.onPress}) : super(key: key);
+  const DashDropDown({Key? key, required this.onSelect}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,16 +12,16 @@ class DashDropDown extends StatelessWidget {
         print("Selected: $value");
         switch (value) {
           case 'Profile':
-            if (onPress != null) {
+            if (onSelect != null) {
               print("Navigating to page 14");
-              onPress!(); // Call the onPress callback
+              onSelect!(14); // Pass index 14 for Profile
             } else {
-              print('onPress callback is null');
+              print('onSelect callback is null');
             }
             break;
-
           case 'Logout':
             print('Logout selected');
+            _handleLogout(); // Call a method to handle logout logic
             break;
         }
       },
@@ -43,5 +43,11 @@ class DashDropDown extends StatelessWidget {
         ];
       },
     );
+  }
+
+  void _handleLogout() {
+    // Implement your logout logic here
+    print('Executing logout...');
+    // For example, call your authentication service to log out
   }
 }

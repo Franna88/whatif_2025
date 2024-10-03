@@ -27,10 +27,46 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final _firestore = FirebaseFirestore.instance;
-  String _title = '';
+  String? _userDisplayImageName; // This will store the image URL
+  bool _isLoading = true; // Track loading
+
   @override
   void initState() {
     super.initState();
+    _fetchUserData(); // Fetch the user data when the Dashboard initializes
+  }
+
+  Future<void> _fetchUserData() async {
+    StoredUser? user =
+        await getUserInfo(); // Assuming you have this method to get the user
+
+    if (user != null) {
+      try {
+        // Fetch the user's document from Firestore based on their ID
+        QuerySnapshot userDoc = await _firestore
+            .collection('listings')
+            .where('listingsId', isEqualTo: int.parse(user.id))
+            .get();
+
+        if (userDoc.docs.isNotEmpty) {
+          Map<String, dynamic> userData =
+              userDoc.docs[0].data() as Map<String, dynamic>;
+
+          // Assuming 'displayphoto' is a field that stores the image path
+          String? imageUrl = userData['displayphoto'];
+
+          setState(() {
+            _userDisplayImageName = imageUrl; // Store image URL in state
+            _isLoading = false; // Stop loading once data is fetched
+          });
+        }
+      } catch (e) {
+        print('Error fetching user data: $e');
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -59,7 +95,10 @@ class _DashboardState extends State<Dashboard> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 /*WelcomeBack(),*/
-                DashEditProfile(),
+                DashEditProfile(
+                  userDisplayImageName: _userDisplayImageName ??
+                      '', // Passing the display image URL here
+                ),
                 SizedBox(
                   width: widthDevice < 1500 ? 15 : 30,
                 ),
@@ -111,7 +150,11 @@ class _DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   //Notificationscontainer(),
-                  DashJobFinder(),
+                  DashJobFinder(
+                    onpress: () {
+                      widget.navigateToPage(8);
+                    },
+                  ),
                   SizedBox(
                     width: widthDevice < 1500 ? 15 : 30,
                   ),
@@ -141,7 +184,11 @@ class _DashboardState extends State<Dashboard> {
                   SizedBox(
                     width: widthDevice < 1500 ? 15 : 30,
                   ),
-                  DashNotificationsUp()
+                  DashNotificationsUp(
+                    onTap: () {
+                      widget.navigateToPage(4);
+                    },
+                  )
                   //JobFinderOverviewContainer()
                   //Notificationscontainer()
                 ],

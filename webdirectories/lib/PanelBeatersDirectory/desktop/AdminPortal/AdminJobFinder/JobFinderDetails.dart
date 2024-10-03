@@ -8,9 +8,12 @@ import 'package:webdirectories/myutility.dart';
 import 'JobFinderComp/ReqruitDetails.dart';
 
 class JobFinderDetails extends StatelessWidget {
+  final Function(int) navigateToPage;
   final JobFinderModel job;
 
-  const JobFinderDetails({Key? key, required this.job}) : super(key: key);
+  const JobFinderDetails(
+      {Key? key, required this.job, required this.navigateToPage})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +24,6 @@ class JobFinderDetails extends StatelessWidget {
         decoration: const BoxDecoration(color: Color(0xFF171616)),
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 20, top: 20),
-              child: DashProfileView(),
-            ),
             Center(
               child: Container(
                 width: MyUtility(context).width * 0.78,
@@ -60,7 +59,9 @@ class JobFinderDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             BackButtonMessage(
-                              onPress: () {},
+                              onPress: () {
+                                navigateToPage(8);
+                              },
                             ),
                             AddButton(text: 'Email Data', onPressed: () {})
                           ],
@@ -84,6 +85,9 @@ class JobFinderDetails extends StatelessWidget {
                                 name: job.name,
                                 location:
                                     "${job.province} ${job.city} ${job.country}",
+                                qualification: job.qualification,
+                                years: job.years,
+                                email: job.email,
                               ),
                             ],
                           ),

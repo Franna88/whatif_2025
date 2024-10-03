@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DasboardComp/ProfilePassword.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 import '../../ManageMyAccount/ManageComponents/AccountDatePicker.dart';
 import '../../ManageMyAccount/ManageComponents/AccountLongTextField.dart';
@@ -16,6 +18,29 @@ class ManageProfile extends StatefulWidget {
 }
 
 class _ManageProfileState extends State<ManageProfile> {
+  // Text Controllers
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  String? dateOfBirth;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserProfile();
+  }
+
+  void _getUserProfile() async {
+    StoredUser? user = await getUserInfo();
+    if (user != null) {
+      setState(() {
+        fullNameController.text = user.fullName;
+        emailController.text = user.email;
+        phoneController.text = user.cell;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,12 +51,6 @@ class _ManageProfileState extends State<ManageProfile> {
         padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
         child: Column(
           children: [
-            DashProfileView(
-              onPress: () {
-                widget.navigateToPage(4);
-              },
-              connectToIndexPage: true,
-            ),
             Container(
               width: 1487,
               height: MyUtility(context).height * 0.85,
@@ -91,18 +110,26 @@ class _ManageProfileState extends State<ManageProfile> {
                         height: MyUtility(context).height * 0.015,
                       ),
                       AccountLongTextField(
-                          descriptionText: 'Full Name', length: 0.8),
+                        descriptionText: 'Full Name',
+                        length: 0.8,
+                        controller: fullNameController, // Bind full name
+                      ),
                       SizedBox(
                         height: MyUtility(context).height * 0.015,
                       ),
                       AccountLongTextField(
-                          descriptionText: 'Email Address', length: 0.8),
+                        descriptionText: 'Email Address',
+                        length: 0.8,
+                        controller: emailController, // Bind email address
+                      ),
                       SizedBox(
                         height: MyUtility(context).height * 0.015,
                       ),
                       AccountLongTextField(
-                          descriptionText: 'Mobile Phone (e.g. +27731112468):',
-                          length: 0.8),
+                        descriptionText: 'Mobile Phone (e.g. +27731112468):',
+                        length: 0.8,
+                        controller: phoneController, // Bind mobile phone
+                      ),
                       SizedBox(
                         height: MyUtility(context).height * 0.015,
                       ),
@@ -115,19 +142,23 @@ class _ManageProfileState extends State<ManageProfile> {
                         height: MyUtility(context).height * 0.015,
                       ),
                       ProfilePassword(
-                          descriptionText: 'descriptionText', length: 0.9),
+                          descriptionText: 'New Password', length: 0.9),
                       SizedBox(
                         height: MyUtility(context).height * 0.015,
                       ),
                       ProfilePassword(
-                          descriptionText: 'descriptionText', length: 0.9),
+                          descriptionText: 'Confirm Password', length: 0.9),
                       SizedBox(
                         height: MyUtility(context).height * 0.02,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          AddButton(text: '   Save   ', onPressed: () {}),
+                          AddButton(
+                              text: '   Save   ',
+                              onPressed: () {
+                                // Save profile data logic here
+                              }),
                         ],
                       ),
                     ],
@@ -139,5 +170,14 @@ class _ManageProfileState extends State<ManageProfile> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Clean up controllers when the widget is disposed
+    fullNameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    super.dispose();
   }
 }

@@ -68,7 +68,7 @@ class AdminContactAltContainer extends StatelessWidget {
                 SizedBox(width: 10),
                 // Contact Person
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Text(
                     contactPerson,
                     textAlign: TextAlign.start,
@@ -110,7 +110,7 @@ class AdminContactAltContainer extends StatelessWidget {
                 SizedBox(width: 10),
                 // Email
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Text(
                     phone,
                     textAlign: TextAlign.start,

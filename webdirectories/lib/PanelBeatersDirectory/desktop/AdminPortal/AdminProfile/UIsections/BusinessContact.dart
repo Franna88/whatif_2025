@@ -57,7 +57,7 @@ class _BusinessContactState extends State<BusinessContact> {
                       controller: widget.whatsappController != null
                           ? widget.whatsappController!
                           : _textController,
-                      headline: 'WhatsApp Number '),
+                      headline: 'WhatsApp Number (e.g., +27824596527)'),
                   ProfileTextField(
                       controller: widget.businessFaxController != null
                           ? widget.businessFaxController!

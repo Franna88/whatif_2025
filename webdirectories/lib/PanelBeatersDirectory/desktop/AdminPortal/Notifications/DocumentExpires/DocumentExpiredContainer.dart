@@ -151,7 +151,7 @@ class _DocumentexpiredcontainerState extends State<Documentexpiredcontainer> {
                               child: AddButton(
                                   text: 'update Now', onPressed: () {})),
                           Text(
-                            '${widget.year}/${widget.month}/${widget.day}',
+                            '${widget.day}/${widget.month}/${widget.year}',
                             style: TextStyle(
                               color: Color(0xFF202124),
                               fontSize: 14.54,

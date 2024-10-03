@@ -10,16 +10,33 @@ import '../PopUpsCommon/PopUpsCancel.dart';
 
 class AddMediaPopup extends StatefulWidget {
   final VoidCallback onMediaAdded;
+  final String? existingTitle; // Optional: used when editing
+  final String? existingUrl; // Optional: used when editing
+  final String? documentId; // Optional: used when editing
 
-  const AddMediaPopup({super.key, required this.onMediaAdded});
+  const AddMediaPopup({
+    super.key,
+    required this.onMediaAdded,
+    this.existingTitle, // Make this optional
+    this.existingUrl, // Make this optional
+    this.documentId, // Make this optional
+  });
 
   @override
   State<AddMediaPopup> createState() => _AddMediaPopupState();
 }
 
 class _AddMediaPopupState extends State<AddMediaPopup> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _linkController = TextEditingController();
+  late TextEditingController _titleController;
+  late TextEditingController _linkController;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize with existing values if they are passed (for editing)
+    _titleController = TextEditingController(text: widget.existingTitle ?? '');
+    _linkController = TextEditingController(text: widget.existingUrl ?? '');
+  }
 
   Future<void> _saveMedia() async {
     String title = _titleController.text.trim();
@@ -28,25 +45,41 @@ class _AddMediaPopupState extends State<AddMediaPopup> {
     if (title.isNotEmpty && link.isNotEmpty) {
       StoredUser? user = await getUserInfo();
       if (user != null) {
-        int listingId = int.parse(user.id);
+        int listingId = int.tryParse(user.id) ?? 0;
+
         try {
-          await FirebaseFirestore.instance.collection('listings_links').add({
-            'linkTitle': title,
-            'urlLink': link,
-            'listingsId': listingId,
-            'linksOrder': 0, // Adjust as necessary
-          });
+          if (widget.documentId != null) {
+            // If documentId is provided, update the existing media
+            await FirebaseFirestore.instance
+                .collection('listings_links')
+                .doc(widget.documentId)
+                .update({
+              'linkTitle': title,
+              'urlLink': link,
+              'listingsId': listingId,
+            });
+            print('Media updated: Title = $title, Link = $link');
+          } else {
+            // If no documentId, create a new media entry
+            await FirebaseFirestore.instance.collection('listings_links').add({
+              'linkTitle': title,
+              'urlLink': link,
+              'listingsId': listingId,
+              'linksOrder': 0, // Adjust as necessary
+            });
+            print('Media saved: Title = $title, Link = $link');
+          }
+
           widget.onMediaAdded(); // Notify parent to update UI
           Navigator.of(context).pop(); // Close the popup
-          print('Media saved: Title = $title, Link = $link'); // Debugging print
         } catch (e) {
-          print('Failed to add media: $e'); // Debugging print
+          print('Failed to save media: $e');
         }
       } else {
-        print('User not found'); // Debugging print
+        print('User not found');
       }
     } else {
-      print('Title and link cannot be empty'); // Debugging print
+      print('Title and link cannot be empty');
     }
   }
 
@@ -59,9 +92,6 @@ class _AddMediaPopupState extends State<AddMediaPopup> {
         decoration: ShapeDecoration(
           color: Color(0xFFD9D9D9),
           shape: RoundedRectangleBorder(
-            side: BorderSide(
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
             borderRadius: BorderRadius.circular(15),
           ),
         ),
@@ -87,7 +117,7 @@ class _AddMediaPopupState extends State<AddMediaPopup> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: Text(
-                      'Add Media',
+                      widget.documentId == null ? 'Add Media' : 'Edit Media',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14.65,
@@ -108,16 +138,12 @@ class _AddMediaPopupState extends State<AddMediaPopup> {
                     text: 'Link Title',
                     controller: _titleController,
                   ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.02,
-                  ),
+                  SizedBox(height: MyUtility(context).height * 0.02),
                   PopUpTextField(
                     text: 'URL Link',
                     controller: _linkController,
                   ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.02,
-                  ),
+                  SizedBox(height: MyUtility(context).height * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -125,12 +151,10 @@ class _AddMediaPopupState extends State<AddMediaPopup> {
                         text: 'Save',
                         onTap: _saveMedia, // Save media on button tap
                       ),
-                      SizedBox(
-                        width: 8,
-                      ),
+                      SizedBox(width: 8),
                       PopUpsCancel(
                         text: 'Cancel',
-                        onTap: () {},
+                        onTap: () => Navigator.of(context).pop(),
                         buttonColor: Color(0xFF3C4043),
                       ),
                     ],

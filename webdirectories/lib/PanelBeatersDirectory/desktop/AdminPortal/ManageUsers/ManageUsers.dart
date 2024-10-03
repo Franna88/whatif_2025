@@ -2,15 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Advertisement/Advertisementcomp/AdvertButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageUsers/ManageUserComp/ManageUserInfo.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/NewUserPopup/NewUserPopup.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/users.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
-
-import '../Dashboard/DashboardContainers/DashProfileView.dart';
 
 class ManageUsers extends StatefulWidget {
   const ManageUsers({super.key});
@@ -23,6 +20,7 @@ class _ManageUsersState extends State<ManageUsers> {
   final _firestore = FirebaseFirestore.instance;
   List<UserModel> usersData = [];
   bool _isLoading = true;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -30,6 +28,7 @@ class _ManageUsersState extends State<ManageUsers> {
     super.initState();
   }
 
+  // Fetch user data from Firestore and handle errors
   void _fetchUserData() async {
     print('loading users...');
     try {
@@ -46,18 +45,18 @@ class _ManageUsersState extends State<ManageUsers> {
           .collection('listing_members')
           .where('listingsId', isEqualTo: int.parse(user.id))
           .get();
+
       List<UserModel> users = [];
       if (usersSnapshot.docs.isNotEmpty) {
         print('loading users... ${usersSnapshot.docs.length} users found');
-        for (var user in usersSnapshot.docs) {
+        for (var doc in usersSnapshot.docs) {
           UserModel userData = UserModel(
-            dateAdded: user.data()['dateAdded'],
-            firstName: user.data()['firstName'],
-            surname: user.data()['surname'],
-            email: user.data()['email'],
-            status: user.data()['status'] ?? 'Active',
+            dateAdded: (doc.data()['dateAdded'] as Timestamp).toDate(),
+            firstName: doc.data()['firstName'],
+            surname: doc.data()['surname'],
+            email: doc.data()['email'],
+            status: doc.data()['status'] ?? 'Active',
           );
-
           users.add(userData);
         }
 
@@ -72,7 +71,7 @@ class _ManageUsersState extends State<ManageUsers> {
         print('No users found');
       }
     } catch (e) {
-      print('error fetching user data: $e');
+      print('Error fetching user data: $e');
       if (!mounted) return;
       setState(() {
         _isLoading = false;
@@ -82,38 +81,52 @@ class _ManageUsersState extends State<ManageUsers> {
     }
   }
 
-  final List<UserModel> dummyUsers = [
-    UserModel(
-      dateAdded: DateTime(2024, 3, 7),
-      firstName: 'User1',
-      surname: 'User1',
-      email: 'user1@gmail.com',
-      status: 'Active',
-    ),
-    UserModel(
-      dateAdded: DateTime(2024, 3, 7),
-      firstName: 'User2',
-      surname: 'User2',
-      email: 'user2@gmail.com',
-      status: 'Inactive',
-    ),
-    UserModel(
-      dateAdded: DateTime(2024, 3, 7),
-      firstName: 'User3',
-      surname: 'User3',
-      email: 'user3@gmail.com',
-      status: 'Active',
-    ),
-  ];
+  // Handle the submission of new user data from NewUserPopup
+  void _addNewUser(Map<String, String> userData) {
+    // Add new user to local usersData list
+    setState(() {
+      usersData.add(
+        UserModel(
+          firstName: userData['fullName']!.split(' ')[0],
+          surname: userData['fullName']!.split(' ')[1],
+          email: userData['email']!,
+          status: 'Active',
+          dateAdded: DateTime.now(),
+        ),
+      );
+    });
+
+    // Save new user to Firestore
+    _firestore.collection('listing_members').add({
+      'firstName': userData['fullName']!.split(' ')[0],
+      'surname': userData['fullName']!.split(' ')[1],
+      'email': userData['email'],
+      'status': 'Active',
+      'dateAdded': DateTime.now(),
+    }).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('New user added successfully')),
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error adding user: $error')),
+      );
+    });
+  }
 
   @override
-  final ScrollController _scrollController = ScrollController();
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: MyUtility(context).width,
         height: MyUtility(context).height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Color(0xFF171616),
         ),
         child: Column(
@@ -126,17 +139,17 @@ class _ManageUsersState extends State<ManageUsers> {
                   height: MyUtility(context).height * 0.85,
                   decoration: ShapeDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment(0.57, -0.82),
-                      end: Alignment(-0.57, 0.82),
+                      begin: const Alignment(0.57, -0.82),
+                      end: const Alignment(-0.57, 0.82),
                       colors: [
-                        Color(0x19777777),
-                        Colors.white.withOpacity(0.4000000059604645)
+                        const Color(0x19777777),
+                        Colors.white.withOpacity(0.4),
                       ],
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    shadows: [
+                    shadows: const [
                       BoxShadow(
                         color: Color(0xBF000000),
                         blurRadius: 24,
@@ -149,6 +162,7 @@ class _ManageUsersState extends State<ManageUsers> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
+                        // Header section
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -166,8 +180,11 @@ class _ManageUsersState extends State<ManageUsers> {
                                       builder: (BuildContext context) {
                                         return Dialog(
                                           backgroundColor: Colors.transparent,
-                                          insetPadding: EdgeInsets.all(10),
-                                          child: NewUserPopup(),
+                                          insetPadding:
+                                              const EdgeInsets.all(10),
+                                          child: NewUserPopup(
+                                            onSubmit: _addNewUser,
+                                          ),
                                         );
                                       },
                                     );
@@ -175,19 +192,18 @@ class _ManageUsersState extends State<ManageUsers> {
                                 ),
                               ],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 10, bottom: 10),
                               child: Text(
                                 'Manage Users',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 16.6064,
+                                  fontSize: 16.6,
                                   fontFamily: 'ralewaybold',
                                 ),
                               ),
                             ),
-                            Text(
+                            const Text(
                               'Please fill out the following form to create a new user account. Once completed, we will send a welcome email with login instructions to the nominated email address',
                               style: TextStyle(
                                 color: Colors.white,
@@ -198,81 +214,83 @@ class _ManageUsersState extends State<ManageUsers> {
                             ),
                           ],
                         ),
+
+                        // User list table header
                         Padding(
                           padding: const EdgeInsets.only(top: 20, bottom: 10),
                           child: Container(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 8, right: 16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      'Date Reg',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.60,
-                                        fontFamily: 'ralewaybold',
-                                      ),
+                            padding: const EdgeInsets.only(left: 8, right: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Date Reg',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6,
+                                      fontFamily: 'ralewaybold',
                                     ),
                                   ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      'Email',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.60,
-                                        fontFamily: 'ralewaybold',
-                                      ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Email',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6,
+                                      fontFamily: 'ralewaybold',
                                     ),
                                   ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      'Full Name',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.60,
-                                        fontFamily: 'ralewaybold',
-                                      ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Full Name',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6,
+                                      fontFamily: 'ralewaybold',
                                     ),
                                   ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      'Status',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.60,
-                                        fontFamily: 'ralewaybold',
-                                      ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    'Status',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6,
+                                      fontFamily: 'ralewaybold',
                                     ),
                                   ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      'View',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.60,
-                                        fontFamily: 'ralewaybold',
-                                      ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'View',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.6,
+                                      fontFamily: 'ralewaybold',
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
+
+                        // User list with scroll bar
                         Expanded(
                           child: _isLoading
                               ? const Center(
                                   child: CircularProgressIndicator(
-                                  color: Colors.black,
-                                ))
+                                    color: Colors.black,
+                                  ),
+                                )
                               : usersData.isEmpty
                                   ? const Center(
                                       child: Text(
@@ -282,31 +300,35 @@ class _ManageUsersState extends State<ManageUsers> {
                                     )
                                   : DraggableScrollbar.rrect(
                                       controller: _scrollController,
-                                      backgroundColor: Color(0x7F9E9E9F),
+                                      backgroundColor: const Color(0x7F9E9E9F),
                                       alwaysVisibleScrollThumb: true,
                                       child: ListView.builder(
                                         controller: _scrollController,
                                         itemCount: usersData.length,
                                         itemBuilder: (context, index) {
-                                          UserModel user = usersData[index];
-                                          return ManageUserInfo(
-                                            year:
-                                                user.dateAdded.year.toString(),
-                                            month:
-                                                user.dateAdded.month.toString(),
-                                            day: user.dateAdded.day.toString(),
-                                            email: user.email,
-                                            fullName:
-                                                '${user.firstName} ${user.surname}',
-                                            status: user.status,
-                                            isEven: index % 2 == 0,
-                                            pressEdit: () {},
-                                            pressDelete: () {},
-                                          );
+                                          if (index < usersData.length) {
+                                            UserModel user = usersData[index];
+                                            return ManageUserInfo(
+                                              year: user.dateAdded.year
+                                                  .toString(),
+                                              month: user.dateAdded.month
+                                                  .toString(),
+                                              day:
+                                                  user.dateAdded.day.toString(),
+                                              email: user.email,
+                                              fullName:
+                                                  '${user.firstName} ${user.surname}',
+                                              status: user.status,
+                                              isEven: index % 2 == 0,
+                                              pressEdit: () {},
+                                              pressDelete: () {},
+                                            );
+                                          }
+                                          return const SizedBox.shrink();
                                         },
                                       ),
                                     ),
-                        )
+                        ),
                       ],
                     ),
                   ),

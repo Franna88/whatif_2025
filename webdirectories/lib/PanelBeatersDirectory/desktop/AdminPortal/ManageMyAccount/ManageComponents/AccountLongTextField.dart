@@ -4,14 +4,38 @@ import 'package:webdirectories/myutility.dart';
 class AccountLongTextField extends StatefulWidget {
   final String descriptionText;
   final double length;
-  const AccountLongTextField(
-      {super.key, required this.descriptionText, required this.length});
+  final TextEditingController? controller; // Add a controller parameter
+
+  const AccountLongTextField({
+    super.key,
+    required this.descriptionText,
+    required this.length,
+    required this.controller, // Allow passing in a controller
+  });
 
   @override
   State<AccountLongTextField> createState() => _AccountLongTextFieldState();
 }
 
 class _AccountLongTextFieldState extends State<AccountLongTextField> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    // If a controller is passed, use it. Otherwise, create a new one.
+    _controller = widget.controller ?? TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the controller if it was created internally
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +46,7 @@ class _AccountLongTextFieldState extends State<AccountLongTextField> {
           height: MyUtility(context).height * 0.035,
           child: Text(
             widget.descriptionText,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 14.7364,
               fontFamily: 'raleway',
@@ -42,7 +66,7 @@ class _AccountLongTextFieldState extends State<AccountLongTextField> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.22),
             ),
-            shadows: [
+            shadows: const [
               BoxShadow(
                 color: Color(0x3F000000),
                 blurRadius: 3.71,
@@ -52,17 +76,18 @@ class _AccountLongTextFieldState extends State<AccountLongTextField> {
             ],
           ),
           child: TextField(
-            style: TextStyle(
+            controller: _controller, // Attach the controller
+            style: const TextStyle(
               color: Color(0xFF5F6368),
               fontSize: 14.73,
               fontFamily: 'raleway',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.symmetric(vertical: 12.0),
             ),
           ),
-        )
+        ),
       ],
     );
   }

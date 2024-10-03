@@ -6,6 +6,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBoxB.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/InsertDocumentPopup/DocumentPopup.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/NewDeletePopUp.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
@@ -246,15 +247,45 @@ class _DocumentAltState extends State<DocumentAlt> {
                               itemCount: documentInfo.length,
                               itemBuilder: (context, index) {
                                 final document = documentInfo[index];
-                                return DocumentAlitContainer(
+                                return DocumentAltContainer(
                                   title: document['documentTitle'],
                                   category: document['documentCategory'],
                                   subCategory: document['documentSubCategory'],
                                   pressEdit: () {
-                                    // Implement edit functionality
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      barrierColor:
+                                          Colors.black.withOpacity(0.5),
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          backgroundColor: Colors.transparent,
+                                          insetPadding: EdgeInsets.all(10),
+                                          child: DocumentPopup(
+                                            existingDocument:
+                                                document, // Pass the document data for editing
+                                          ),
+                                        );
+                                      },
+                                    );
                                   },
                                   pressDelete: () {
-                                    // Implement delete functionality
+                                    // Open the delete confirmation dialog
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      barrierColor:
+                                          Colors.black.withOpacity(0.5),
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          backgroundColor: Colors.transparent,
+                                          insetPadding: EdgeInsets.all(10),
+                                          child: NewDeleteButton(
+                                            documentId: document['documentId'],
+                                          ),
+                                        );
+                                      },
+                                    );
                                   },
                                   isEven: index % 2 == 0,
                                 );

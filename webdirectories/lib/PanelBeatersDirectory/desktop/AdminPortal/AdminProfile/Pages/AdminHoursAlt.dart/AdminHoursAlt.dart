@@ -58,7 +58,7 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 12.5, top: 12.5),
+          padding: const EdgeInsets.only(bottom: 12.5, top: 12.5, left: 20),
           child: Text(
             'To maintain system security and reliability, please avoid uploading images or links in the Useful Information section. All posts are subject to moderation.',
             style: TextStyle(

@@ -11,7 +11,10 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 
 class RegistrationPopup extends StatefulWidget {
   final Function(Map<String, dynamic>) onAddRegistration;
-  const RegistrationPopup({super.key, required this.onAddRegistration});
+  final Map<String, dynamic>? existingRegistration;
+
+  const RegistrationPopup(
+      {super.key, required this.onAddRegistration, this.existingRegistration});
 
   @override
   State<RegistrationPopup> createState() => _RegistrationPopupState();
@@ -28,11 +31,22 @@ class _RegistrationPopupState extends State<RegistrationPopup> {
 
   @override
   void initState() {
-    _getRegistrationTypes();
-    setState(() {
-      _registrationType.text = '0';
-    });
     super.initState();
+    _getRegistrationTypes();
+
+    if (widget.existingRegistration != null) {
+      // Pre-fill form if editing
+      _registrationType.text =
+          widget.existingRegistration!['registrationTypeId'].toString();
+      _registrationNumber.text =
+          widget.existingRegistration!['registrationNumbers'].toString();
+      displayOnBusinessProfile =
+          widget.existingRegistration!['registrationDisplay'] == 1;
+    } else {
+      setState(() {
+        _registrationType.text = '0';
+      });
+    }
   }
 
   void _getRegistrationTypes() async {
@@ -81,41 +95,53 @@ class _RegistrationPopupState extends State<RegistrationPopup> {
         });
 
         StoredUser? user = await getUserInfo();
-
         if (user == null) throw "User not found";
 
-        var addData = {
+        var registrationData = {
           'registrationTypeId': int.parse(_registrationType.text),
           'registrationNumbers': int.parse(_registrationNumber.text),
-          'registrationDisplay': displayOnBusinessProfile == true ? 1 : 0,
+          'registrationDisplay': displayOnBusinessProfile ? 1 : 0,
           'listingsId': int.parse(user.id),
           'dateAdded': DateTime.now(),
         };
-        await _firestore.collection('registration_numbers').add(addData);
 
-        if (mounted) {
+        if (widget.existingRegistration != null &&
+            widget.existingRegistration!.containsKey('id')) {
+          // Update existing registration using the document ID
+          await _firestore
+              .collection('registration_numbers')
+              .doc(widget
+                  .existingRegistration!['id']) // Use the document ID here
+              .update(registrationData);
+
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Registration number added successfully'),
-            ),
+            const SnackBar(content: Text('Registration updated successfully')),
           );
-          widget.onAddRegistration(addData);
+        } else {
+          // Add new registration
+          await _firestore
+              .collection('registration_numbers')
+              .add(registrationData);
 
-          setState(() {
-            _isLoading = false;
-          });
-          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Registration added successfully')),
+          );
         }
+
+        widget.onAddRegistration(registrationData);
+
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.pop(context);
       } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                  'Something went wrong. Add registration number unsuccessful, $e'),
-            ),
-          );
-          Navigator.pop(context);
-        }
+        setState(() {
+          _isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e')),
+        );
+        Navigator.pop(context);
       }
     }
   }

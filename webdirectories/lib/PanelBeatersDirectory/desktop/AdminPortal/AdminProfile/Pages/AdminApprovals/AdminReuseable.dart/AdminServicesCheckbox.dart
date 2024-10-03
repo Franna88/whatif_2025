@@ -59,7 +59,7 @@ class _AdminServicesCheckBoxState extends State<AdminServicesCheckBox> {
           widget.label,
           style: TextStyle(
             color: Colors.white.withOpacity(0.9),
-            fontSize: 14.6,
+            fontSize: 15.6,
             fontFamily: 'ralewayMedium',
           ),
         ),

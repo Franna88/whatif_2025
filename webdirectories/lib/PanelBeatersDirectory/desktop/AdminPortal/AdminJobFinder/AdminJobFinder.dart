@@ -9,7 +9,9 @@ import 'package:webdirectories/myutility.dart';
 
 class AdminJobFinder extends StatefulWidget {
   final Function(int) navigateToPage;
-  const AdminJobFinder({super.key, required this.navigateToPage});
+  final Function(JobFinderModel) getJobDetails;
+  const AdminJobFinder(
+      {super.key, required this.navigateToPage, required this.getJobDetails});
 
   @override
   State<AdminJobFinder> createState() => _AdminJobFinderState();
@@ -20,6 +22,7 @@ class _AdminJobFinderState extends State<AdminJobFinder> {
   String _searchQuery = '';
   List<JobFinderModel> _jobData = [];
   bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -266,10 +269,16 @@ class _AdminJobFinderState extends State<AdminJobFinder> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          SizedBox(
-                              width: MyUtility(context).width * 0.2,
-                              height: MyUtility(context).height * 0.095,
-                              child: JobSearchScrollBar()),
+                          Stack(
+                            children: [
+                              SizedBox(
+                                  width: MyUtility(context).width * 0.2,
+                                  height: MyUtility(context).height * 0.095,
+                                  child: JobSearchScrollBar(
+                                    onSearchChanged: _onSearchChanged,
+                                  )),
+                            ],
+                          ),
                         ],
                       ),
                       Padding(
@@ -407,7 +416,26 @@ class _AdminJobFinderState extends State<AdminJobFinder> {
                                           job: job,
                                           onPress: () {
                                             widget.navigateToPage(13);
-                                          }, // Pass the entire job object here
+                                          },
+                                          // Pass the entire job object here
+                                          onTap: () async {
+                                            await widget
+                                                .getJobDetails(JobFinderModel(
+                                              name: job.name,
+                                              email: job.email,
+                                              qualification: job.qualification,
+                                              city: job.city,
+                                              province: job.province,
+                                              country: job.country,
+                                              occupation: job.occupation,
+                                              years: job.years,
+                                              contactNumber: job.contactNumber,
+                                              dateSubmitted: job.dateSubmitted,
+                                            ));
+                                            widget.navigateToPage(
+                                              17,
+                                            );
+                                          },
                                         );
                                       },
                                     ),

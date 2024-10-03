@@ -1,18 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DasboardComp/DashPropdown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
+import '../DasboardComp/DashPropdown.dart';
 
 class DashProfileView extends StatefulWidget {
-  final VoidCallback? onPress; // Optional onPress
-  final bool connectToIndexPage; // Boolean parameter to determine connection
+  final Function(int)? onSelect; // Function to handle navigation
 
   const DashProfileView({
     super.key,
-    this.onPress,
-    this.connectToIndexPage = false,
+    this.onSelect,
   });
 
   @override
@@ -91,9 +89,7 @@ class _DashProfileViewState extends State<DashProfileView> {
                   ),
                 ],
               ),
-              SizedBox(
-                width: MyUtility(context).width * 0.025,
-              ),
+              SizedBox(width: MyUtility(context).width * 0.025),
               Container(
                 width: 356.6464,
                 height: 40.8476,
@@ -105,10 +101,7 @@ class _DashProfileViewState extends State<DashProfileView> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.grey,
-                      ),
+                      child: Icon(Icons.search, color: Colors.grey),
                     ),
                     Expanded(
                       child: Padding(
@@ -161,9 +154,7 @@ class _DashProfileViewState extends State<DashProfileView> {
                   ),
                 ),
               ),
-              SizedBox(
-                width: 8,
-              ),
+              SizedBox(width: 8),
               GestureDetector(
                 onTap: () {
                   print('Image button pressed!');
@@ -174,18 +165,12 @@ class _DashProfileViewState extends State<DashProfileView> {
                   height: 20,
                 ),
               ),
-              SizedBox(
-                width: 8,
-              ),
+              SizedBox(width: 8),
               CircleAvatar(
                 radius: 18,
-                backgroundImage: NetworkImage(
-                  'images/avitar2.png',
-                ),
+                backgroundImage: NetworkImage('images/avitar2.png'),
               ),
-              SizedBox(
-                width: 4,
-              ),
+              SizedBox(width: 4),
               Text(
                 'MJ cronje',
                 style: TextStyle(
@@ -195,9 +180,9 @@ class _DashProfileViewState extends State<DashProfileView> {
                   fontFamily: 'raleway',
                 ),
               ),
-              if (widget.connectToIndexPage)
-                DashDropDown(onPress: widget.onPress),
-              if (!widget.connectToIndexPage) DashDropDown(onPress: () {}),
+              DashDropDown(
+                onSelect: widget.onSelect, // Pass the onSelect function
+              ),
             ],
           ),
         ],

@@ -37,6 +37,13 @@ class _AdminselectservicesState extends State<Adminselectservices> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // Sort the services list alphabetically
+    services.sort((a, b) => a.compareTo(b));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width * 0.4,

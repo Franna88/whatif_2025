@@ -1,26 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/ProfileImage.dart';
 
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/TeamProfile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/AddMember.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BuisinessDropDown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessAddress.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessContact.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessDetails.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessMedia.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/MoreBusinessInfo.dart';
-import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessProfile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessProfileController.dart';
-import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessProfileItem.dart';
-import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessTeamMemberProfile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
-
-import '../../UIsections/ServiceHours.dart';
 
 class AdminusinessSetup extends StatefulWidget {
   AdminusinessSetup({super.key});
@@ -146,6 +135,7 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
                 tradingNameController: _controller.tradingNameController,
                 registeredNameController: _controller.registeredNameController,
                 bEEElevelController: _controller.bEEElevelController,
+                imageChange: () {},
               ),
               BusinessAddress(
                 imageName:
@@ -156,6 +146,7 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
                 suburbController: _controller.suburbController,
                 streetController: _controller.streetController,
                 postalController: _textController,
+                imageChange: () {},
               ),
               BusinessContact(
                 customerCareController: _controller.customerCareController,
