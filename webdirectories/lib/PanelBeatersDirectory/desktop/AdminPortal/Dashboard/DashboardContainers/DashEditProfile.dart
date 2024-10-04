@@ -168,14 +168,17 @@ class _DashEditProfileState extends State<DashEditProfile> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Update My DisplayImage',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10.2,
-                            fontFamily: 'raleway',
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            'Update My DisplayImage',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10.2,
+                              fontFamily: 'raleway',
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.white,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 5),
