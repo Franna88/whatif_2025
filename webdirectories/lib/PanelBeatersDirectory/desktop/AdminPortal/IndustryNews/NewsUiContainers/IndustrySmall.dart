@@ -9,11 +9,13 @@ class IndustrySmall extends StatefulWidget {
   final String image;
   final String heading;
   final String article;
+  final VoidCallback link;
   const IndustrySmall(
       {super.key,
       required this.image,
       required this.heading,
-      required this.article});
+      required this.article,
+      required this.link});
 
   @override
   State<IndustrySmall> createState() => _IndustrySmallState();
@@ -83,7 +85,8 @@ class _IndustrySmallState extends State<IndustrySmall> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IndustryAddButton(text: 'Read More', onPressed: () {}),
+                      IndustryAddButton(
+                          text: 'Read More', onPressed: widget.link),
                     ],
                   )
                 ],

@@ -20,8 +20,8 @@ class _Page1State extends State<Page1> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: AdminPortal(),
-      /* Column(
+      child: /*AdminPortal(),*/
+          Column(
         children: [
           //  CategorySelect(),
           LandingPageDisPlay(),
@@ -32,7 +32,7 @@ class _Page1State extends State<Page1> {
           Comments(),
           Footer()
         ],
-      ),*/
+      ),
     );
   }
 }
