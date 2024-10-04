@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/IndustryNews/NewsUiContainers/IndustryArticles.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/IndustryNews/NewsUiContainers/IndustrySmall.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Dashboard/DashboardContainers/DashProfileView.dart';
 import 'NewsUiContainers/AriclesAlt.dart';
@@ -16,6 +17,14 @@ class IndustryNews extends StatefulWidget {
 
 class _IndustryNewsState extends State<IndustryNews> {
   final ScrollController _scrollController = ScrollController();
+
+  void _openLink(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url); // Launch the URL
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,11 +144,17 @@ class _IndustryNewsState extends State<IndustryNews> {
                               children: [
                                 IndustryArticles(
                                   imagePath: 'images/ARM.png',
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _openLink(
+                                        'https://autoref.co.za/'); // Link you want to open
+                                  },
                                 ),
                                 IndustryArticles(
                                   imagePath: 'images/abr.png',
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _openLink(
+                                        'https://www.abrbuzz.co.za/'); // Link you want to open
+                                  },
                                   alignLeft: true,
                                 )
                               ],
@@ -152,24 +167,36 @@ class _IndustryNewsState extends State<IndustryNews> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           IndustrySmall(
                             image: 'images/AutoTrader.png',
                             heading: 'Autotrader',
                             article:
                                 'AutoTrader South Africa is a leading online platform for buying and selling new and used vehicles in South Africa. It provides a comprehensive marketplace for car buyers and sellers, offering a wide range of listings, search tools, and additional services. AutoTrader also features automotive news, reviews, and advice, making it a valuable resource for anyone interested in the South African automotive market.',
+                            link: () {
+                              _openLink(
+                                  'https://www.autotrader.co.za/'); // Link you want to open
+                            },
                           ),
                           IndustrySmall(
                             image: 'images/carmag.png',
                             heading: 'CAR Magazine',
                             article:
                                 'CAR Magazine is a leading automotive publication in South Africa. Since 1957, it has been at the forefront of providing expert opinions on all things motoring. Known for its in-depth reviews, road tests, and industry news, CAR Magazine offers valuable information for both car enthusiasts and potential buyers. Their commitment to authority and credibility has made them a trusted source in the South African automotive market.',
+                            link: () {
+                              _openLink(
+                                  'https://www.carmag.co.za/'); // Link you want to open
+                            },
                           ),
                           IndustrySmall(
                             image: 'images/rmi.png',
                             heading: 'Retail Motor Industry Organization',
                             article:
                                 'RMI is a leading trade association representing the interests of the automotive retail industry in South Africa. It provides support, services, and advocacy for its members, which include car dealerships, vehicle repair workshops, and other related businesses. RMI plays a crucial role in promoting the growth and development of the automotive retail sector, while also ensuring that its members adhere to industry standards and ethical practices.',
+                            link: () {
+                              _openLink(
+                                  'https://www.rmi.org.za/'); // Link you want to open
+                            },
                           ),
                           IndustrySmall(
                             image: 'images/CRA.png',
@@ -177,6 +204,10 @@ class _IndustryNewsState extends State<IndustryNews> {
                                 'Collision Repairers Association of South Africa',
                             article:
                                 "The CRA is committed to maintaining and promoting a high standard of service among its members, ensuring that customers receive top-notch repairs. By adhering to global best practices, CRA helps to minimize the risks associated with future collisions caused by poor workmanship. Whether you're a consumer looking for a trustworthy repair shop or a professional in the industry, CRA offers a valuable network and resources.",
+                            link: () {
+                              _openLink(
+                                  'https://crasa.org.za/'); // Link you want to open
+                            },
                           ),
                         ],
                       )

@@ -20,18 +20,21 @@ class _Page1State extends State<Page1> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: //AdminPortal(),
+      child: /*AdminPortal(),*/
           Column(
-        children: [
-          //  CategorySelect(),
-          LandingPageDisPlay(),
-          PartnerWithUs(),
-          AboutUs(),
-          JoinUs(),
-          AiCoDriver(),
-          Comments(),
-          Footer()
-        ],
+        child: //AdminPortal(),
+            Column(
+          children: [
+            //  CategorySelect(),
+            LandingPageDisPlay(),
+            PartnerWithUs(),
+            AboutUs(),
+            JoinUs(),
+            AiCoDriver(),
+            Comments(),
+            Footer()
+          ],
+        ),
       ), /**/
     );
   }
