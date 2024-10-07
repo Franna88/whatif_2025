@@ -22,19 +22,17 @@ class _Page1State extends State<Page1> {
     return SingleChildScrollView(
       child: /*AdminPortal(),*/
           Column(
-        child: //AdminPortal(),
-            Column(
-          children: [
-            //  CategorySelect(),
-            LandingPageDisPlay(),
-            PartnerWithUs(),
-            AboutUs(),
-            JoinUs(),
-            AiCoDriver(),
-            Comments(),
-            Footer()
-          ],
-        ),
+        children: [
+          //  AdminPortal(),
+          // CategorySelect(),
+          LandingPageDisPlay(),
+          PartnerWithUs(),
+          AboutUs(),
+          JoinUs(),
+          AiCoDriver(),
+          Comments(),
+          Footer() /**/
+        ],
       ), /**/
     );
   }

@@ -1,16 +1,71 @@
+import 'dart:typed_data';
+
 import 'package:cached_firestorage/remote_picture.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
+
+import '../../../../utils/firebaseImageUtils.dart';
 
 class DashEditProfile extends StatefulWidget {
   final String userDisplayImageName;
-  const DashEditProfile({super.key, required this.userDisplayImageName});
+  final String businessLogo;
+  Function(String) updateDisplayImage;
+  DashEditProfile(
+      {super.key,
+      required this.userDisplayImageName,
+      required this.businessLogo,
+      required this.updateDisplayImage});
 
   @override
   State<DashEditProfile> createState() => _DashEditProfileState();
 }
 
 class _DashEditProfileState extends State<DashEditProfile> {
+  final _firestorage = FirebaseStorage.instance;
+  String? _imageUrl;
+  XFile? _selectedImage;
+  XFile? _selectedLogo;
+
+  Future<void> _loadImage() async {
+    setState(() {
+      _imageUrl = "listings/images/listings/${widget.userDisplayImageName}";
+      print("listings/images/listings/${widget.userDisplayImageName}");
+    });
+  }
+
+  Future<void> _pickImage(type) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    print("loadImage");
+    if (image != null) {
+      print("readImage");
+      Uint8List data = await image!.readAsBytes();
+      final storageRef = _firestorage.ref().child('listings/${image!.name}');
+      final uploadTask = storageRef.putData(data);
+      await uploadTask;
+
+      String? url = await getImageUrl('listings/${image!.name}');
+      print(url);
+      widget.updateDisplayImage(url!);
+      /*  setState(() {
+        if (type == "Logo") {
+          _selectedLogo = image;
+        } else {
+          _selectedImage = image;
+        }
+      });*/
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadImage();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double widthDevice = MediaQuery.of(context).size.width;
@@ -169,7 +224,9 @@ class _DashEditProfileState extends State<DashEditProfile> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            _pickImage("display");
+                          },
                           child: Text(
                             'Update My DisplayImage',
                             style: TextStyle(
@@ -193,8 +250,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: RemotePicture(
-                            imagePath:
-                                'images/your_image.png', // Static logo path
+                            imagePath: _imageUrl!,
                             mapKey: 'logo',
                             useAvatarView: false,
                             fit: BoxFit.cover,
@@ -205,14 +261,19 @@ class _DashEditProfileState extends State<DashEditProfile> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Update My Logo',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10.2,
-                              fontFamily: 'raleway',
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.white),
+                        InkWell(
+                          onTap: () {
+                            _pickImage("Logo");
+                          },
+                          child: const Text(
+                            'Update My Logo2',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10.2,
+                                fontFamily: 'raleway',
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.white),
+                          ),
                         ),
                         const SizedBox(height: 5),
                         Container(
@@ -226,8 +287,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: RemotePicture(
-                            imagePath:
-                                'images/your_image.png', // Static logo path
+                            imagePath: widget.businessLogo, // Static logo path
                             mapKey: 'logo',
                             useAvatarView: false,
                             fit: BoxFit.cover,

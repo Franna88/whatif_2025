@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DasboardComp/DashPartsandQuote.dart';
@@ -29,6 +30,8 @@ class _DashboardState extends State<Dashboard> {
   final _firestore = FirebaseFirestore.instance;
   String? _userDisplayImageName; // This will store the image URL
   bool _isLoading = true; // Track loading
+  String docId = "";
+  String businessLogo = "";
 
   @override
   void initState() {
@@ -41,6 +44,7 @@ class _DashboardState extends State<Dashboard> {
         await getUserInfo(); // Assuming you have this method to get the user
 
     if (user != null) {
+      print(user.id);
       try {
         // Fetch the user's document from Firestore based on their ID
         QuerySnapshot userDoc = await _firestore
@@ -56,8 +60,13 @@ class _DashboardState extends State<Dashboard> {
           String? imageUrl = userData['displayphoto'];
 
           setState(() {
-            _userDisplayImageName = imageUrl; // Store image URL in state
+            print("PHOTO");
+            print(userData['displayphoto']);
+            _userDisplayImageName =
+                userData['displayphoto']; // Store image URL in state
             _isLoading = false; // Stop loading once data is fetched
+            docId = userDoc.docs[0].id;
+            businessLogo = userData['listingLogo'];
           });
         }
       } catch (e) {
@@ -67,6 +76,13 @@ class _DashboardState extends State<Dashboard> {
         });
       }
     }
+  }
+
+  updateDisplayImage(image) async {
+    await _firestore
+        .collection('listings')
+        .doc(docId) // Use document ID to update
+        .update({"displayphoto": image}).whenComplete(() {});
   }
 
   @override
@@ -96,9 +112,10 @@ class _DashboardState extends State<Dashboard> {
               children: [
                 /*WelcomeBack(),*/
                 DashEditProfile(
-                  userDisplayImageName: _userDisplayImageName ??
-                      '', // Passing the display image URL here
-                ),
+                    businessLogo: businessLogo,
+                    userDisplayImageName:
+                        _userDisplayImageName!, // Passing the display image URL here
+                    updateDisplayImage: updateDisplayImage),
                 SizedBox(
                   width: widthDevice < 1500 ? 15 : 30,
                 ),

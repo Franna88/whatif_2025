@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AboutServices/AboutServices.dart';
@@ -33,10 +34,12 @@ class _ServicesState extends State<Services> {
   Map<String, String> _contactData = {};
   bool? _isLoading;
   var pageIndex = 0;
+  List businessViews = [];
 
   @override
   void initState() {
     super.initState();
+    checkViewExist();
     _getListingData();
   }
 
@@ -45,6 +48,43 @@ class _ServicesState extends State<Services> {
     setState(() {
       pageIndex = value;
     });
+  }
+
+//check if business in view list and view
+  checkViewExist() async {
+    var busnessDetails = {
+      'businessId': widget.listingId,
+      'views': [],
+    };
+
+    final DocumentSnapshot doc = await FirebaseFirestore.instance
+        .collection('views')
+        .doc(widget.listingId)
+        .get();
+
+    if (doc.exists) {
+      setState(() {
+        businessViews = doc.get('views');
+      });
+    } else {
+      FirebaseFirestore.instance
+          .collection('views')
+          .doc(widget.listingId)
+          .set(busnessDetails);
+    }
+  }
+
+//Update businessViews
+  updateViews() async {
+    final ipv4 = await Ipify.ipv4();
+    print(ipv4);
+    var viewDetails = {"ip": ipv4, "date": DateTime.now()};
+    businessViews.add(viewDetails);
+
+    FirebaseFirestore.instance
+        .collection('views')
+        .doc(widget.listingId)
+        .update({"views": businessViews});
   }
 
   Future<void> _getListingData() async {
