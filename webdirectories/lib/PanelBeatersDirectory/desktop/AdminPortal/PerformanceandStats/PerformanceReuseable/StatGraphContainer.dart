@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 
 import '../../../../../myutility.dart';
 import '../../AdminProfile/ProfileComp/buttons/AddButton.dart';
@@ -6,17 +9,147 @@ import 'PerformanceDatePicker.dart';
 import 'PerformanceGraph.dart';
 import 'PerformanceTags.dart';
 import 'ProfileIconText.dart';
+import 'package:intl/intl.dart';
 
 class StatGraphContainer extends StatefulWidget {
-  const StatGraphContainer({super.key});
+  List views;
+  StatGraphContainer({super.key, required this.views});
 
   @override
   State<StatGraphContainer> createState() => _StatGraphContainerState();
 }
 
 class _StatGraphContainerState extends State<StatGraphContainer> {
+//var
+  var previousMonth = DateFormat('MMMM yyyy')
+      .format(DateTime(DateTime.now().year, DateTime.now().month - 1));
+  var currentMonth = DateFormat('MMMM yyyy')
+      .format(DateTime(DateTime.now().year, DateTime.now().month));
+  var previousMonthViews = 0;
+  var currentMonthViews = 0;
+  var monthDaysAmount = [];
+  var yAmount = 0;
+  var graphData = [];
+  final _firestore = FirebaseFirestore.instance;
+  var firstDayMonth =
+      DateTime.utc(DateTime.now().year, DateTime.now().month, 1);
+  var lastDayMonth = DateTime(DateTime.now().year, DateTime.now().month + 1, 0);
+
+  List viewList = [];
+  Future<void> _fetchViewData() async {
+    StoredUser? user =
+        await getUserInfo(); // Assuming you have this method to get the user
+
+    if (user != null) {
+      try {
+        // Fetch the user's document from Firestore based on their ID
+        final viewData =
+            await _firestore.collection('views').doc(user.id).get();
+
+        if (viewData.exists) {
+          setState(() {
+            print(viewData.get('views'));
+            viewList = (viewData.get('views'));
+          });
+        }
+      } catch (e) {
+        print('Error fetching user data: $e');
+        setState(() {});
+      }
+    }
+  }
+
+  getYAmount(value) {
+    if (value > yAmount) {
+      setState(() {
+        yAmount = value;
+      });
+    }
+  }
+
+  List<DateTime> getDaysInBetween() {
+    List<DateTime> days = [];
+    for (int i = 0; i <= lastDayMonth.difference(firstDayMonth).inDays; i++) {
+      days.add(DateTime(
+          firstDayMonth.year,
+          firstDayMonth.month,
+          // In Dart you can set more than. 30 days, DateTime will do the trick
+          firstDayMonth.day + i));
+    }
+    return days;
+  }
+
+  getViewsAmount(date) {
+    var viewAmount = 0;
+    for (int j = 0; j < (viewList).length; j++) {
+      DateTime viewDate = (viewList[j]['date']).toDate();
+      String formattedDate = DateFormat('yyyy-MM-dd').format(viewDate);
+      String normalDate = DateFormat('yyyy-MM-dd').format(date);
+      print(formattedDate == normalDate);
+      if (formattedDate == normalDate) {
+        viewAmount = viewAmount + 1;
+      }
+    }
+    getYAmount(viewAmount);
+    return viewAmount;
+  }
+
+  getDaysForGraph() {
+    var days = getDaysInBetween();
+
+    for (int i = 0; i < days.length; i++) {
+      setState(() {
+        monthDaysAmount.add(
+            {"day": i + 1, "date": days[i], "views": getViewsAmount(days[i])});
+      });
+    }
+  }
+
+  getPreviousMonthsViewAmount() {
+    (viewList).forEach((viewData) {
+      DateTime date = (viewData['date'].toDate());
+      var viewDate =
+          DateFormat('MMMM yyyy').format(DateTime(date.year, date.month));
+
+      if (viewDate == previousMonth) {
+        setState(() {
+          previousMonthViews++;
+        });
+      }
+    });
+  }
+
+  getCurrentMonthsViewAmount() {
+    getDaysForGraph();
+
+    for (var viewData in (viewList)) {
+      DateTime date = (viewData['date'].toDate());
+      var viewDate =
+          DateFormat('MMMM yyyy').format(DateTime(date.year, date.month));
+
+      if (viewDate == currentMonth) {
+        setState(() {
+          currentMonthViews++;
+        });
+      }
+    }
+//Get month days amount
+  }
+
+  @override
+  void initState() {
+    print(viewList);
+    _fetchViewData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(viewList);
+    print(widget.views);
+    getCurrentMonthsViewAmount();
+    getPreviousMonthsViewAmount();
+    // getCurrentMonthsViewAmount();
     return Container(
       width: MyUtility(context).width * 0.75,
       height: MyUtility(context).height * 0.68,
@@ -42,19 +175,9 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Performancetags(header: 'Total Lead Views', figures: '2561'),
-                /*SizedBox(
-                  width: MyUtility(context).width * 0.03,
-                ),
-                 Performancetags(header: 'Email Clicks', figures: '233'),
-                SizedBox(
-                  width: MyUtility(context).width * 0.03,
-                ),
-                Performancetags(header: 'Phone Clicks', figures: '702'),
-                SizedBox(
-                  width: MyUtility(context).width * 0.03,
-                ),
-                Performancetags(header: 'Quote Clicks', figures: '36')*/
+                Performancetags(
+                    header: 'Total Lead Views',
+                    figures: (widget.views.length).toString()),
               ],
             ),
             Row(
@@ -82,20 +205,26 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ProfileIconText(
-                          visitors: '+25 visitors',
-                          date: 'July 2024',
+                          visitors: '+${previousMonthViews} visitors',
+                          date: '${previousMonth}',
                           previous: 'Previous'),
                       ProfileIconText(
-                          visitors: '+75 visitors',
-                          date: 'Aug 2024',
+                          visitors: '+${currentMonthViews} visitors',
+                          date: '${currentMonth}',
                           previous: 'Current'),
                     ],
                   ),
-                  Performancegraph(),
+                  Performancegraph(
+                    daysAmount: monthDaysAmount,
+                    yAmount: double.parse(yAmount.toString()),
+                    graphData: graphData,
+                  ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      PerformanceDatePicker(),
+                      PerformanceDatePicker(
+                          firstDayMonth: firstDayMonth,
+                          lastDayMonth: lastDayMonth),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 30),
                         child: AddButton(text: 'Search', onPressed: () {}),

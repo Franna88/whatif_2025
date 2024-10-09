@@ -53,33 +53,64 @@ class _ServicesState extends State<Services> {
 //check if business in view list and view
   checkViewExist() async {
     var busnessDetails = {
-      'businessId': widget.listingId,
+      'listingId': widget.listingId,
       'views': [],
     };
+    final ipv4 = await Ipify.ipv4();
 
     final DocumentSnapshot doc = await FirebaseFirestore.instance
         .collection('views')
         .doc(widget.listingId)
         .get();
-
+    print("VIEWS");
     if (doc.exists) {
+      print("EXISTS");
       setState(() {
-        businessViews = doc.get('views');
+        businessViews.addAll(doc.get('views'));
+        print("EXISTS");
+        print(businessViews[0]['ip']);
+        for (var doc in businessViews) {
+          print((doc['ip']));
+          DateTime dateViewAdded = doc['date'].toDate();
+          var todayDate = DateTime.now();
+          Duration difference = todayDate.difference(dateViewAdded);
+          int days = difference.inDays % 24;
+          if (days >= 1) {
+            print("ADD");
+            //add view
+            updateViews(ipv4);
+          }
+        }
+        /* businessViews.map((e) {
+            DateTime dateViewAdded = e['date'].toDate();
+          var todayDate = DateTime.now();
+          //check if view added on same day
+          Duration difference = todayDate.difference(dateViewAdded);
+          int days = difference.inDays % 24;
+          if (days >= 1) {
+            print("ADD");
+            //add view
+            updateViews(ipv4);
+          }
+        });*/
       });
     } else {
+      print("NOTEXISTS");
+      //create business listing
       FirebaseFirestore.instance
           .collection('views')
           .doc(widget.listingId)
-          .set(busnessDetails);
+          .set(busnessDetails)
+          .whenComplete(updateViews(ipv4));
     }
   }
 
 //Update businessViews
-  updateViews() async {
-    final ipv4 = await Ipify.ipv4();
-    print(ipv4);
-    var viewDetails = {"ip": ipv4, "date": DateTime.now()};
-    businessViews.add(viewDetails);
+  updateViews(ip) async {
+    var viewDetails = {"ip": ip, "date": DateTime.now()};
+    setState(() {
+      businessViews.add(viewDetails);
+    });
 
     FirebaseFirestore.instance
         .collection('views')

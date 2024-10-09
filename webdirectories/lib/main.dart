@@ -10,8 +10,6 @@ import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 
 void main() async {
-  final ipv4 = await Ipify.ipv4();
-  print(ipv4);
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(

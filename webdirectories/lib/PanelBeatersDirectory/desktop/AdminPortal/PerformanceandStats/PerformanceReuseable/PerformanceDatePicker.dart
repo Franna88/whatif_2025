@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
+import 'package:intl/intl.dart';
 
 class PerformanceDatePicker extends StatefulWidget {
+  DateTime lastDayMonth;
+  DateTime firstDayMonth;
+
+  PerformanceDatePicker({
+    super.key,
+    required this.firstDayMonth,
+    required this.lastDayMonth,
+  });
   @override
   _PerformanceDatePickerState createState() => _PerformanceDatePickerState();
 }
@@ -42,6 +51,13 @@ class _PerformanceDatePickerState extends State<PerformanceDatePicker> {
         }
       });
     }
+  }
+
+  @override
+  void initState() {
+    selectedFromDate = widget.firstDayMonth;
+    selectedToDate = widget.lastDayMonth;
+    super.initState();
   }
 
   @override

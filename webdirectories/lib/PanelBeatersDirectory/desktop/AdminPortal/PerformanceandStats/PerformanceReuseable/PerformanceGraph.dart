@@ -2,7 +2,41 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
-class Performancegraph extends StatelessWidget {
+class Performancegraph extends StatefulWidget {
+  List daysAmount;
+  double yAmount;
+  List graphData;
+
+  Performancegraph({
+    super.key,
+    required this.daysAmount,
+    required this.yAmount,
+    required this.graphData,
+  });
+  @override
+  State<Performancegraph> createState() => _PerformancegraphState();
+}
+
+class _PerformancegraphState extends State<Performancegraph> {
+  List<FlSpot> data = [];
+
+  mapData() {
+    for (int i = 0; i < (widget.daysAmount).length; i++) {
+      var index = double.parse(i.toString());
+      print(widget.daysAmount[i]['views']);
+      setState(() {
+        data.add(FlSpot(index, widget.daysAmount[i]['views']));
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    print(widget.daysAmount.length);
+    mapData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,7 +65,9 @@ class Performancegraph extends StatelessWidget {
               ),
               lineBarsData: [
                 LineChartBarData(
-                  spots: [
+                  spots: data,
+
+                  /* [
                     FlSpot(0, 3),
                     FlSpot(1, 1),
                     FlSpot(2, 4),
@@ -39,8 +75,8 @@ class Performancegraph extends StatelessWidget {
                     FlSpot(4, 5),
                     FlSpot(5, 3),
                     FlSpot(6, 4),
-                  ],
-                  isCurved: true,
+                  ],*/
+                  isCurved: false,
                   color: const Color(0xFFF59121),
                   belowBarData: BarAreaData(
                     show: true,
@@ -76,9 +112,9 @@ class Performancegraph extends StatelessWidget {
                 ),
               ],
               minX: 0,
-              maxX: 6,
+              maxX: double.parse((widget.daysAmount.length).toString()),
               minY: 0,
-              maxY: 6,
+              maxY: widget.yAmount,
             ),
           ),
         ),

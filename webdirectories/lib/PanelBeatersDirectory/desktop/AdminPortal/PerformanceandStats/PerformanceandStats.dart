@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PerformanceandStats/PerformanceReuseable/PerformanceListContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PerformanceandStats/PerformanceReuseable/StatGraphContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
-
+import 'package:intl/intl.dart';
 import '../Dashboard/DashboardContainers/DashProfileView.dart';
 
 class PerformanceAndStats extends StatefulWidget {
@@ -16,6 +19,39 @@ class PerformanceAndStats extends StatefulWidget {
 
 class _PerformanceAndStatsState extends State<PerformanceAndStats> {
   final _scrollController = ScrollController();
+  final _firestore = FirebaseFirestore.instance;
+  bool _isLoading = true; // Track loading
+  List viewList = [];
+  Future<void> _fetchViewData() async {
+    StoredUser? user =
+        await getUserInfo(); // Assuming you have this method to get the user
+
+    if (user != null) {
+      try {
+        // Fetch the user's document from Firestore based on their ID
+        final viewData =
+            await _firestore.collection('views').doc(user.id).get();
+
+        if (viewData.exists) {
+          setState(() {
+            print(viewData.get('views'));
+            viewList = (viewData.get('views'));
+          });
+        }
+      } catch (e) {
+        print('Error fetching user data: $e');
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    _fetchViewData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +188,7 @@ class _PerformanceAndStatsState extends State<PerformanceAndStats> {
                         ),
                       ),
                       SizedBox(height: 10), // Add spacing
-                      StatGraphContainer(),
+                      StatGraphContainer(views: viewList),
                       SizedBox(height: 10),
                       Text(
                         'Review your Profile Analytics',
@@ -205,13 +241,22 @@ class _PerformanceAndStatsState extends State<PerformanceAndStats> {
                             alwaysVisibleScrollThumb: true,
                             child: ListView.builder(
                               controller: _scrollController,
-                              itemCount: dummyData.length,
+                              itemCount: viewList.length,
                               itemBuilder: (context, index) {
-                                final document = dummyData[index];
+                                final document = viewList[index];
+
+                                DateTime viewDate = (document['date']).toDate();
+
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(viewDate!);
+
+                                String formattedTime =
+                                    DateFormat('hh:mm a').format(viewDate);
                                 return PerformanceListContainer(
-                                  ipAddress: document['ipAddress']!,
-                                  linkReference: document['linkReference']!,
-                                  dateAndTime: document['dateAndTime']!,
+                                  ipAddress: document['ip']!,
+                                  linkReference: "No DATA ,CHECK with CLIENT",
+                                  dateAndTime:
+                                      "${formattedDate} ${formattedTime}",
                                   isEven: index % 2 == 0,
                                 );
                               },
