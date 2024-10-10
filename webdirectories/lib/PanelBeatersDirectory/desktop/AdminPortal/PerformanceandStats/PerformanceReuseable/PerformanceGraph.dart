@@ -23,7 +23,7 @@ class _PerformancegraphState extends State<Performancegraph> {
   mapData() {
     for (int i = 0; i < (widget.daysAmount).length; i++) {
       var index = double.parse(i.toString());
-      print(widget.daysAmount[i]['views']);
+
       setState(() {
         data.add(FlSpot(index, widget.daysAmount[i]['views']));
       });
@@ -32,7 +32,6 @@ class _PerformancegraphState extends State<Performancegraph> {
 
   @override
   void initState() {
-    print(widget.daysAmount.length);
     mapData();
     super.initState();
   }
@@ -58,7 +57,7 @@ class _PerformancegraphState extends State<Performancegraph> {
                 },
               ),
               titlesData: FlTitlesData(
-                show: false,
+                show: true,
               ),
               borderData: FlBorderData(
                 show: false,
@@ -66,17 +65,7 @@ class _PerformancegraphState extends State<Performancegraph> {
               lineBarsData: [
                 LineChartBarData(
                   spots: data,
-
-                  /* [
-                    FlSpot(0, 3),
-                    FlSpot(1, 1),
-                    FlSpot(2, 4),
-                    FlSpot(3, 3.5),
-                    FlSpot(4, 5),
-                    FlSpot(5, 3),
-                    FlSpot(6, 4),
-                  ],*/
-                  isCurved: false,
+                  isCurved: true,
                   color: const Color(0xFFF59121),
                   belowBarData: BarAreaData(
                     show: true,
@@ -91,6 +80,9 @@ class _PerformancegraphState extends State<Performancegraph> {
                   ),
                   dotData: FlDotData(
                     show: true,
+                    checkToShowDot: (spot, barDate) {
+                      return spot.x >= 1;
+                    },
                     getDotPainter: (spot, percent, barData, index) {
                       if (spot.x == 4) {
                         return FlDotCirclePainter(
@@ -108,6 +100,7 @@ class _PerformancegraphState extends State<Performancegraph> {
                     },
                   ),
                   curveSmoothness: 0.35,
+                  preventCurveOverShooting: true,
                   barWidth: 4,
                 ),
               ],

@@ -21,7 +21,7 @@ class _Page1State extends State<Page1> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: AdminPortal(),
-      /*  Column(
+      /*   Column(
         children: [
           //  AdminPortal(),
           // CategorySelect(),
@@ -33,7 +33,7 @@ class _Page1State extends State<Page1> {
           Comments(),
           Footer()
         ],
-      ),*/
+      ), */
     );
   }
 }

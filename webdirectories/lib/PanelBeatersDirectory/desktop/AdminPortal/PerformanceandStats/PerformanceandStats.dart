@@ -34,7 +34,6 @@ class _PerformanceAndStatsState extends State<PerformanceAndStats> {
 
         if (viewData.exists) {
           setState(() {
-            print(viewData.get('views'));
             viewList = (viewData.get('views'));
           });
         }
@@ -55,57 +54,6 @@ class _PerformanceAndStatsState extends State<PerformanceAndStats> {
 
   @override
   Widget build(BuildContext context) {
-    final dummyData = [
-      {
-        'ipAddress': '105.244.93.99',
-        'linkReference':
-            'https://www.panelbeatersdirectory.co.za/convenience-advanced.php',
-        'dateAndTime': '2024-08-22 21:34:14',
-      },
-      {
-        'ipAddress': '156.155.78.178',
-        'linkReference':
-            'https://panelbeatersdirectory.co.za/owner/listings-registration-numbers.php?listings_id=2473&page=number&menu=1',
-        'dateAndTime': '2024-08-22 13:09:56',
-      },
-      {
-        'ipAddress': '105.186.235.56',
-        'linkReference':
-            'https://panelbeatersdirectory.co.za/advanced-search-form.php?',
-        'dateAndTime': '2024-08-21 21:19:07',
-      },
-      {
-        'ipAddress': '196.15.134.130',
-        'linkReference':
-            'https://panelbeatersdirectory.co.za/advanced-search-form.php?approval_select=3&country_id=8',
-        'dateAndTime': '2024-08-20 14:53:09',
-      },
-      {
-        'ipAddress': '105.245.122.10',
-        'linkReference':
-            'https://panelbeatersdirectory.co.za/advanced-search-form.php?approval_select=327&city_id=148',
-        'dateAndTime': '2024-08-20 09:43:11',
-      },
-      {
-        'ipAddress': '102.131.29.218',
-        'linkReference':
-            'https://panelbeatersdirectory.co.za/directory-city.php?city_id=148',
-        'dateAndTime': '2024-08-20 08:40:48',
-      },
-      {
-        'ipAddress': '105.244.93.99',
-        'linkReference':
-            'https://www.panelbeatersdirectory.co.za/convenience-advanced.php',
-        'dateAndTime': '2024-08-22 21:34:14',
-      },
-      {
-        'ipAddress': '105.244.93.99',
-        'linkReference':
-            'https://www.panelbeatersdirectory.co.za/convenience-advanced.php',
-        'dateAndTime': '2024-08-22 21:34:14',
-      },
-    ];
-
     return Container(
       width: MyUtility(context).width,
       height: MyUtility(context).height,
@@ -188,7 +136,9 @@ class _PerformanceAndStatsState extends State<PerformanceAndStats> {
                         ),
                       ),
                       SizedBox(height: 10), // Add spacing
-                      StatGraphContainer(views: viewList),
+                      Visibility(
+                          visible: viewList.length > 1,
+                          child: StatGraphContainer(views: viewList)),
                       SizedBox(height: 10),
                       Text(
                         'Review your Profile Analytics',

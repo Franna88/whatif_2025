@@ -35,30 +35,6 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
       DateTime.utc(DateTime.now().year, DateTime.now().month, 1);
   var lastDayMonth = DateTime(DateTime.now().year, DateTime.now().month + 1, 0);
 
-  List viewList = [];
-  Future<void> _fetchViewData() async {
-    StoredUser? user =
-        await getUserInfo(); // Assuming you have this method to get the user
-
-    if (user != null) {
-      try {
-        // Fetch the user's document from Firestore based on their ID
-        final viewData =
-            await _firestore.collection('views').doc(user.id).get();
-
-        if (viewData.exists) {
-          setState(() {
-            print(viewData.get('views'));
-            viewList = (viewData.get('views'));
-          });
-        }
-      } catch (e) {
-        print('Error fetching user data: $e');
-        setState(() {});
-      }
-    }
-  }
-
   getYAmount(value) {
     if (value > yAmount) {
       setState(() {
@@ -81,11 +57,11 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
 
   getViewsAmount(date) {
     var viewAmount = 0;
-    for (int j = 0; j < (viewList).length; j++) {
-      DateTime viewDate = (viewList[j]['date']).toDate();
+    for (int j = 0; j < (widget.views).length; j++) {
+      DateTime viewDate = (widget.views[j]['date']).toDate();
       String formattedDate = DateFormat('yyyy-MM-dd').format(viewDate);
       String normalDate = DateFormat('yyyy-MM-dd').format(date);
-      print(formattedDate == normalDate);
+
       if (formattedDate == normalDate) {
         viewAmount = viewAmount + 1;
       }
@@ -106,7 +82,7 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
   }
 
   getPreviousMonthsViewAmount() {
-    (viewList).forEach((viewData) {
+    (widget.views).forEach((viewData) {
       DateTime date = (viewData['date'].toDate());
       var viewDate =
           DateFormat('MMMM yyyy').format(DateTime(date.year, date.month));
@@ -122,34 +98,33 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
   getCurrentMonthsViewAmount() {
     getDaysForGraph();
 
-    for (var viewData in (viewList)) {
+    (widget.views).forEach((viewData) {
       DateTime date = (viewData['date'].toDate());
+      print("DATE");
+      print(date);
       var viewDate =
           DateFormat('MMMM yyyy').format(DateTime(date.year, date.month));
-
+      print(viewDate);
+      print(currentMonth);
       if (viewDate == currentMonth) {
         setState(() {
-          currentMonthViews++;
+          currentMonthViews;
         });
       }
-    }
-//Get month days amount
+    });
   }
 
   @override
   void initState() {
-    print(viewList);
-    _fetchViewData();
+    print(widget.views);
+
+    getCurrentMonthsViewAmount();
+    getPreviousMonthsViewAmount();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(viewList);
-    print(widget.views);
-    getCurrentMonthsViewAmount();
-    getPreviousMonthsViewAmount();
-    // getCurrentMonthsViewAmount();
     return Container(
       width: MyUtility(context).width * 0.75,
       height: MyUtility(context).height * 0.68,
