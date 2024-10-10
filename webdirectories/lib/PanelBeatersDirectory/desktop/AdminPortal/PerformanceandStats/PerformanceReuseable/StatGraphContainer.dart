@@ -108,7 +108,7 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
       print(currentMonth);
       if (viewDate == currentMonth) {
         setState(() {
-          currentMonthViews;
+          currentMonthViews++;
         });
       }
     });
@@ -117,7 +117,6 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
   @override
   void initState() {
     print(widget.views);
-
     getCurrentMonthsViewAmount();
     getPreviousMonthsViewAmount();
     super.initState();
