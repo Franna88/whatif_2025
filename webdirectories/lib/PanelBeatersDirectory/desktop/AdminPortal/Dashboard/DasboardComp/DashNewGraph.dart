@@ -2,9 +2,42 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
-class DashNewGraph extends StatelessWidget {
+class DashNewGraph extends StatefulWidget {
+  List daysAmount;
+  double yAmount;
+  List graphData;
+
+  DashNewGraph({
+    super.key,
+    required this.daysAmount,
+    required this.yAmount,
+    required this.graphData,
+  });
+  @override
+  State<DashNewGraph> createState() => _DashNewGraphState();
+}
+
+class _DashNewGraphState extends State<DashNewGraph> {
+  List<FlSpot> data = [];
+
+  mapData() {
+    for (int i = 0; i < (widget.daysAmount).length; i++) {
+      var index = double.parse(i.toString());
+
+      setState(() {
+        data.add(FlSpot(index, widget.daysAmount[i]['views']));
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    mapData();
     return Column(
       children: [
         Container(
@@ -24,22 +57,14 @@ class DashNewGraph extends StatelessWidget {
                 },
               ),
               titlesData: FlTitlesData(
-                show: false,
+                show: true,
               ),
               borderData: FlBorderData(
                 show: false,
               ),
               lineBarsData: [
                 LineChartBarData(
-                  spots: [
-                    FlSpot(0, 3),
-                    FlSpot(1, 1),
-                    FlSpot(2, 4),
-                    FlSpot(3, 3.5),
-                    FlSpot(4, 5),
-                    FlSpot(5, 3),
-                    FlSpot(6, 4),
-                  ],
+                  spots: data,
                   isCurved: true,
                   color: const Color(0xFFF59121),
                   belowBarData: BarAreaData(
@@ -55,6 +80,9 @@ class DashNewGraph extends StatelessWidget {
                   ),
                   dotData: FlDotData(
                     show: true,
+                    checkToShowDot: (spot, barDate) {
+                      return spot.x >= 1;
+                    },
                     getDotPainter: (spot, percent, barData, index) {
                       if (spot.x == 4) {
                         return FlDotCirclePainter(
@@ -72,13 +100,14 @@ class DashNewGraph extends StatelessWidget {
                     },
                   ),
                   curveSmoothness: 0.35,
+                  preventCurveOverShooting: true,
                   barWidth: 4,
                 ),
               ],
               minX: 0,
-              maxX: 6,
+              maxX: double.parse((widget.daysAmount.length).toString()),
               minY: 0,
-              maxY: 6,
+              maxY: widget.yAmount,
             ),
           ),
         ),

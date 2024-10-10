@@ -32,6 +32,7 @@ class _DashboardState extends State<Dashboard> {
   bool _isLoading = true; // Track loading
   String docId = "";
   String businessLogo = "";
+  String userId = "";
 
   @override
   void initState() {
@@ -60,8 +61,8 @@ class _DashboardState extends State<Dashboard> {
           String? imageUrl = userData['displayphoto'];
 
           setState(() {
-            print("PHOTO");
-            print(userData['displayphoto']);
+            userId = user.id;
+
             _userDisplayImageName =
                 userData['displayphoto']; // Store image URL in state
             _isLoading = false; // Stop loading once data is fetched
@@ -120,44 +121,14 @@ class _DashboardState extends State<Dashboard> {
                   width: widthDevice < 1500 ? 15 : 30,
                 ),
                 /*GraphContaier()*/
-                DashGraph()
+                DashGraph(
+                  userId: userId,
+                )
               ],
             ),
             SizedBox(
               height: widthDevice < 1500 ? 15 : 15,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                /*Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IcontTotalContainer(
-                      iconpath: 'images/jobrequests.svg',
-                      description: 'Job Requests',
-                      total: '100',
-                      colorsvgBack: Color(0xFFEF9040),
-                    ),
-                    IcontTotalContainer(
-                      iconpath: 'images/totalviews.svg',
-                      description: 'Total Views',
-                      total: '600',
-                      colorsvgBack: Color(0xFF0F253A),
-                    ),
-                    IcontTotalContainer(
-                      iconpath: 'images/totalnotifications.svg',
-                      description: 'Total\nNotifications',
-                      total: '80',
-                      colorsvgBack: Color(0xFF212529),
-                    ),
-                  ],
-                ),*/
-                /* SizedBox(
-                  width: MyUtility(context).width * 0.1,
-                )*/
-              ],
-            ),
-
             /* SizedBox(
               height: widthDevice < 1500 ? 15 : 30,
             ),*/
