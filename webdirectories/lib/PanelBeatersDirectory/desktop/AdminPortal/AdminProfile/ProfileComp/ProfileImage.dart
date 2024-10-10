@@ -31,9 +31,7 @@ class _ProfileImageState extends State<ProfileImage> {
 
   Future<void> _loadImage() async {
     setState(() {
-      _imageUrl = widget.imageName == ''
-          ? ''
-          : "listings/images/listings/${widget.imageName}";
+      _imageUrl = widget.imageName == '' ? '' : "listings/${widget.imageName}";
     });
   }
 

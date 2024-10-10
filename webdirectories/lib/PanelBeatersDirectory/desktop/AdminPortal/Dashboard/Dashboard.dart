@@ -68,6 +68,7 @@ class _DashboardState extends State<Dashboard> {
             _isLoading = false; // Stop loading once data is fetched
             docId = userDoc.docs[0].id;
             businessLogo = userData['listingLogo'];
+            print(userData['listingLogo']);
           });
         }
       } catch (e) {
@@ -84,6 +85,13 @@ class _DashboardState extends State<Dashboard> {
         .collection('listings')
         .doc(docId) // Use document ID to update
         .update({"displayphoto": image}).whenComplete(() {});
+  }
+
+  updateLogo(image) async {
+    await _firestore
+        .collection('listings')
+        .doc(docId) // Use document ID to update
+        .update({"listingLogo": image}).whenComplete(() {});
   }
 
   @override
@@ -116,7 +124,8 @@ class _DashboardState extends State<Dashboard> {
                     businessLogo: businessLogo,
                     userDisplayImageName:
                         _userDisplayImageName!, // Passing the display image URL here
-                    updateDisplayImage: updateDisplayImage),
+                    updateDisplayImage: updateDisplayImage,
+                    updateLogo: updateLogo),
                 SizedBox(
                   width: widthDevice < 1500 ? 15 : 30,
                 ),

@@ -13,11 +13,13 @@ class DashEditProfile extends StatefulWidget {
   final String userDisplayImageName;
   final String businessLogo;
   Function(String) updateDisplayImage;
+  Function(String) updateLogo;
   DashEditProfile(
       {super.key,
       required this.userDisplayImageName,
       required this.businessLogo,
-      required this.updateDisplayImage});
+      required this.updateDisplayImage,
+      required this.updateLogo});
 
   @override
   State<DashEditProfile> createState() => _DashEditProfileState();
@@ -26,22 +28,20 @@ class DashEditProfile extends StatefulWidget {
 class _DashEditProfileState extends State<DashEditProfile> {
   final _firestorage = FirebaseStorage.instance;
   String? _imageUrl;
-  XFile? _selectedImage;
-  XFile? _selectedLogo;
+  String? _logoUrl;
 
   Future<void> _loadImage() async {
     setState(() {
-      _imageUrl = "listings/images/listings/${widget.userDisplayImageName}";
-      print("listings/images/listings/${widget.userDisplayImageName}");
+      _imageUrl = "listings/${widget.userDisplayImageName}";
+      _logoUrl = "listings/${widget.businessLogo}";
     });
   }
 
   Future<void> _pickImage(type) async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    print("loadImage");
+
     if (image != null) {
-      print("readImage");
       Uint8List data = await image!.readAsBytes();
       final storageRef = _firestorage.ref().child('listings/${image!.name}');
       final uploadTask = storageRef.putData(data);
@@ -49,14 +49,16 @@ class _DashEditProfileState extends State<DashEditProfile> {
 
       String? url = await getImageUrl('listings/${image!.name}');
       print(url);
-      widget.updateDisplayImage(url!);
-      /*  setState(() {
+
+      setState(() {
         if (type == "Logo") {
-          _selectedLogo = image;
+          widget.updateLogo(image!.name!);
+          _logoUrl = "listings/${image!.name!}";
         } else {
-          _selectedImage = image;
+          widget.updateDisplayImage(image!.name!);
+          _imageUrl = "listings/${image!.name!}";
         }
-      });*/
+      }); /* */
     }
   }
 
@@ -251,7 +253,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
                           ),
                           child: RemotePicture(
                             imagePath: _imageUrl!,
-                            mapKey: 'logo',
+                            mapKey: 'image',
                             useAvatarView: false,
                             fit: BoxFit.cover,
                           ),
@@ -287,7 +289,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: RemotePicture(
-                            imagePath: widget.businessLogo, // Static logo path
+                            imagePath: _logoUrl!, // Static logo path
                             mapKey: 'logo',
                             useAvatarView: false,
                             fit: BoxFit.cover,

@@ -66,4 +66,17 @@ class Businessprofilecontroller {
     afterHoursController.text = userData['businessAfterhours'] ?? '';
     moreInfoController.text = userData['moreInfo'] ?? '';
   }
+
+  getValues() {
+    return {
+      "title": tradingNameController.text,
+      "registeredBussinessName": registeredNameController.text,
+      "beerating": bEEElevelController.text,
+      "businessTelephone": customerCareController.text,
+      "whatsappNumber": whatsappController.text,
+      "alternativeNumber": businessAlternativeController.text,
+      "businessFaxnumber": businessFaxController.text,
+      "businessAfterhours": afterHoursController.text
+    };
+  }
 }

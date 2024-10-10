@@ -5,13 +5,11 @@ import 'package:webdirectories/myutility.dart';
 class Performancegraph extends StatefulWidget {
   List daysAmount;
   double yAmount;
-  List graphData;
 
   Performancegraph({
     super.key,
     required this.daysAmount,
     required this.yAmount,
-    required this.graphData,
   });
   @override
   State<Performancegraph> createState() => _PerformancegraphState();
@@ -21,6 +19,7 @@ class _PerformancegraphState extends State<Performancegraph> {
   List<FlSpot> data = [];
 
   mapData() {
+    data.clear();
     for (int i = 0; i < (widget.daysAmount).length; i++) {
       var index = double.parse(i.toString());
 
@@ -32,12 +31,12 @@ class _PerformancegraphState extends State<Performancegraph> {
 
   @override
   void initState() {
-    mapData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    mapData();
     return Column(
       children: [
         Container(

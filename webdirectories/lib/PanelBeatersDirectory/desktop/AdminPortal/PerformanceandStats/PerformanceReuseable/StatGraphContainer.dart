@@ -35,6 +35,21 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
       DateTime.utc(DateTime.now().year, DateTime.now().month, 1);
   var lastDayMonth = DateTime(DateTime.now().year, DateTime.now().month + 1, 0);
 
+  updateDates(type, value) {
+    setState(() {
+      if (type == "FromDate") {
+        firstDayMonth = value;
+      } else {
+        lastDayMonth = value;
+      }
+    });
+  }
+
+  getNewDataForGraph() async {
+    monthDaysAmount.clear();
+    getDaysForGraph();
+  }
+
   getYAmount(value) {
     if (value > yAmount) {
       setState(() {
@@ -71,6 +86,7 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
   }
 
   getDaysForGraph() {
+    monthDaysAmount.clear();
     var days = getDaysInBetween();
 
     for (int i = 0; i < days.length; i++) {
@@ -79,6 +95,7 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
             {"day": i + 1, "date": days[i], "views": getViewsAmount(days[i])});
       });
     }
+    print(monthDaysAmount);
   }
 
   getPreviousMonthsViewAmount() {
@@ -190,18 +207,25 @@ class _StatGraphContainerState extends State<StatGraphContainer> {
                   ),
                   Performancegraph(
                     daysAmount: monthDaysAmount,
-                    yAmount: double.parse(yAmount.toString()),
-                    graphData: graphData,
+                    yAmount: double.parse(
+                      yAmount.toString(),
+                    ),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       PerformanceDatePicker(
                           firstDayMonth: firstDayMonth,
-                          lastDayMonth: lastDayMonth),
+                          lastDayMonth: lastDayMonth,
+                          updateDates: updateDates,
+                          getNewDataForGraph: getNewDataForGraph),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 30),
-                        child: AddButton(text: 'Search', onPressed: () {}),
+                        child: AddButton(
+                            text: 'Search',
+                            onPressed: () {
+                              getNewDataForGraph();
+                            }),
                       )
                     ],
                   )

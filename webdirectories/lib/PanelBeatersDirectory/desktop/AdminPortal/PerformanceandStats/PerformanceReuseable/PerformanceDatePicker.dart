@@ -5,11 +5,15 @@ import 'package:intl/intl.dart';
 class PerformanceDatePicker extends StatefulWidget {
   DateTime lastDayMonth;
   DateTime firstDayMonth;
+  Function(String, DateTime) updateDates;
+  Function getNewDataForGraph;
 
   PerformanceDatePicker({
     super.key,
     required this.firstDayMonth,
     required this.lastDayMonth,
+    required this.updateDates,
+    required this.getNewDataForGraph,
   });
   @override
   _PerformanceDatePickerState createState() => _PerformanceDatePickerState();
@@ -46,8 +50,10 @@ class _PerformanceDatePickerState extends State<PerformanceDatePicker> {
       setState(() {
         if (isFromDate) {
           selectedFromDate = pickedDate;
+          widget.updateDates("FromDate", pickedDate);
         } else {
           selectedToDate = pickedDate;
+          widget.updateDates("ToDate", pickedDate);
         }
       });
     }

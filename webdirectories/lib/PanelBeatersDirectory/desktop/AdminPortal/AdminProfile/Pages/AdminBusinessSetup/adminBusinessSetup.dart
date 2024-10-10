@@ -6,6 +6,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessAddress.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessContact.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/UIsections/BusinessDetails.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/BusinessProfile/BusinessProfileController.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
@@ -25,6 +26,8 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
   String? _userDisplayImageName;
+  String businessLogo = "";
+  String docId = "";
   @override
   void initState() {
     super.initState();
@@ -96,8 +99,11 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
 
           setState(() {
             _controller.setValues(userData);
+            docId = userDoc.docs[0].id;
             print(userData['displayphoto']);
-            _userDisplayImageName = userData['displayphoto'];
+
+            _userDisplayImageName = "${userData['displayphoto']}";
+            businessLogo = "${userData['listingLogo']}";
           });
         } catch (e) {
           print(e);
@@ -108,6 +114,26 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
     setState(() {
       _isLoading = false;
     });
+  }
+
+  //Dialog for password Validate
+  Future descriptionDialog(description) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: DescriptionDialog(
+          description: description,
+        ));
+      });
+
+  saveData() async {
+    print(_controller.getValues());
+    await _firestore
+        .collection('listings')
+        .doc(docId)
+        .update(_controller.getValues())
+        .whenComplete(
+            () => descriptionDialog("Details have been saved successfully!"));
   }
 
   @override
@@ -138,8 +164,7 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
                 imageChange: () {},
               ),
               BusinessAddress(
-                imageName:
-                    _userDisplayImageName != null ? _userDisplayImageName! : '',
+                imageName: businessLogo != null ? businessLogo! : '',
                 countryController: _controller.countryController,
                 cityController: _controller.cityController,
                 provinceController: _controller.provinceController,
@@ -227,7 +252,11 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 50),
-                    child: AddButton(text: 'Save', onPressed: () {}),
+                    child: AddButton(
+                        text: 'Save',
+                        onPressed: () {
+                          saveData();
+                        }),
                   ),
                 ],
               ),
