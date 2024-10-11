@@ -7,14 +7,15 @@ class TeamProfileAlt extends StatefulWidget {
   final String memberName;
   final String memberPosition;
   final VoidCallback editButton;
+  final VoidCallback deleteButton;
 
-  const TeamProfileAlt({
-    super.key,
-    required this.memberImage,
-    required this.memberName,
-    required this.memberPosition,
-    required this.editButton,
-  });
+  const TeamProfileAlt(
+      {super.key,
+      required this.memberImage,
+      required this.memberName,
+      required this.memberPosition,
+      required this.editButton,
+      required this.deleteButton});
 
   @override
   State<TeamProfileAlt> createState() => _TeamProfileAltState();
@@ -24,9 +25,7 @@ class _TeamProfileAltState extends State<TeamProfileAlt> {
   @override
   Widget build(BuildContext context) {
     // Full image path for the remote picture
-    String imageUrl = widget.memberImage.isNotEmpty
-        ? "https://your-base-url.com/listings/images/team/${widget.memberImage}" // Adjust this URL to match your Firebase Storage or server base URL
-        : "";
+    String imageUrl = "listings/${widget.memberImage}";
 
     var widthDevice = MediaQuery.of(context).size.width;
 
@@ -72,7 +71,7 @@ class _TeamProfileAltState extends State<TeamProfileAlt> {
                   ),
                   InkWell(
                     onTap: () {
-                      // Handle delete action
+                      widget.deleteButton();
                     },
                     child: const Icon(
                       Icons.delete,
@@ -88,22 +87,15 @@ class _TeamProfileAltState extends State<TeamProfileAlt> {
           CircleAvatar(
             radius: widthDevice < 1500 ? 45 : 80,
             backgroundColor: Colors.white,
-            child: imageUrl.isEmpty
-                ? CircleAvatar(
-                    radius: widthDevice < 1500 ? 43 : 80,
-                    backgroundImage: const AssetImage(
-                        'images/employee.jpg'), // Fallback image
-                    backgroundColor: Colors.transparent,
-                  )
-                : CircleAvatar(
-                    radius: widthDevice < 1500 ? 43 : 80,
-                    backgroundColor: Colors.transparent,
-                    child: RemotePicture(
-                      imagePath: imageUrl,
-                      mapKey: 'background',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+            child: CircleAvatar(
+              radius: widthDevice < 1500 ? 43 : 80,
+              backgroundColor: Colors.transparent,
+              child: RemotePicture(
+                imagePath: imageUrl,
+                mapKey: 'background',
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ],
       ),

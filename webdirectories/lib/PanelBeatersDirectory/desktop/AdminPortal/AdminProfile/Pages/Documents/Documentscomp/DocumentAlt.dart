@@ -44,6 +44,11 @@ class _DocumentAltState extends State<DocumentAlt> {
           int? documentCategoryId = doc['documentCategoryId'];
           int? documentSubCategoryId = doc['documentSubCategoryId'];
 
+          int docIndex = (documentsSnapshot.docs).indexWhere(
+              (item) => item['documentTitle'] == doc['documentTitle']);
+
+          doc["docId"] = documentsSnapshot.docs[docIndex].id;
+
           // Fetch the document category
           QuerySnapshot documentCategorySnapshot = await FirebaseFirestore
               .instance
@@ -133,7 +138,11 @@ class _DocumentAltState extends State<DocumentAlt> {
                               return Dialog(
                                 backgroundColor: Colors.transparent,
                                 insetPadding: EdgeInsets.all(10),
-                                child: DocumentPopup(),
+                                child: DocumentPopup(
+                                  refreshList: () {
+                                    setState(() {});
+                                  },
+                                ),
                               );
                             },
                           );
@@ -144,7 +153,9 @@ class _DocumentAltState extends State<DocumentAlt> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconSearchBoxB(),
+                      IconSearchBoxB(
+                        search: TextEditingController(),
+                      ),
                     ],
                   ),
                   Padding(
@@ -247,6 +258,7 @@ class _DocumentAltState extends State<DocumentAlt> {
                               itemCount: documentInfo.length,
                               itemBuilder: (context, index) {
                                 final document = documentInfo[index];
+                                print(document);
                                 return DocumentAltContainer(
                                   title: document['documentTitle'],
                                   category: document['documentCategory'],
@@ -264,6 +276,9 @@ class _DocumentAltState extends State<DocumentAlt> {
                                           child: DocumentPopup(
                                             existingDocument:
                                                 document, // Pass the document data for editing
+                                            refreshList: () {
+                                              setState(() {});
+                                            },
                                           ),
                                         );
                                       },
@@ -281,7 +296,12 @@ class _DocumentAltState extends State<DocumentAlt> {
                                           backgroundColor: Colors.transparent,
                                           insetPadding: EdgeInsets.all(10),
                                           child: NewDeleteButton(
-                                            documentId: document['documentId'],
+                                            documentId: document['docId'],
+                                            collectionName:
+                                                'listings_documents',
+                                            refreshList: () {
+                                              setState(() {});
+                                            },
                                           ),
                                         );
                                       },

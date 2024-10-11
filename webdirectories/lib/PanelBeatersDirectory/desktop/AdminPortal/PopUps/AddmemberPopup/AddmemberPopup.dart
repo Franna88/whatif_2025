@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,6 +9,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopUpTextField.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/PopUpsCommon/PopUpsButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -42,6 +44,8 @@ class _AddMemberPopupState extends State<AddMemberPopup> {
   final TextEditingController _descriptionController = TextEditingController();
   bool _isLoading = false;
   XFile? _selectedImage;
+  String imageStatus = "";
+  final _firestorage = FirebaseStorage.instance;
 
   @override
   void initState() {
@@ -51,18 +55,46 @@ class _AddMemberPopupState extends State<AddMemberPopup> {
       _firstNameController.text = widget.existingProfile!['firstName'];
       _surname.text = widget.existingProfile!['surname'];
       _descriptionController.text = widget.existingProfile!['shortDescription'];
+      imageStatus = widget.existingProfile!['personPhoto'];
+    }
+  } /*
+
+    Future<void> _pickImage(type) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      Uint8List data = await image!.readAsBytes();
+      final storageRef = _firestorage.ref().child('listings/${image!.name}');
+      final uploadTask = storageRef.putData(data);
+      await uploadTask;
+
+      String? url = await getImageUrl('listings/${image!.name}');
+      print(url);
+
+      setState(() {
+       
+          widget.updateLogo(image!.name!);
+          _logoUrl = "listings/${image!.name!}";
+      
+      }); /* */
     }
   }
+*/
 
   // Function to pick an image
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
+    print(image);
+    print(image!.name);
     if (image != null) {
       // Check if file size is within the 2 MB limit
       final int imageSize = await File(image.path).length();
-      if (imageSize > 2 * 1024 * 1024) {
+      /*  if (imageSize > 2 * 1024 * 1024) {
+        setState(() {
+          imageStatus = "Image to big";
+        });
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content:
@@ -70,12 +102,13 @@ class _AddMemberPopupState extends State<AddMemberPopup> {
           ),
         );
         return;
-      }
-
-      setState(() {
-        _selectedImage = image;
-      });
+     }*/
     }
+
+    setState(() {
+      _selectedImage = image;
+      imageStatus = "${(image!.name)}";
+    });
   }
 
   // Function to upload the selected image to Firebase Storage and get the URL
@@ -119,8 +152,7 @@ class _AddMemberPopupState extends State<AddMemberPopup> {
           'firstName': _firstNameController.text,
           'surname': _surname.text,
           'shortDescription': _descriptionController.text,
-          'personPhoto':
-              imageUrl ?? widget.existingProfile?['personPhoto'] ?? '',
+          'personPhoto': _selectedImage!.name,
           'membersId': int.tryParse(user.memberId) ?? 0,
           'listingsId': int.tryParse(user.id) ?? 0,
           'teamOrder': widget.teamProfiles.length + 1,
@@ -246,16 +278,18 @@ class _AddMemberPopupState extends State<AddMemberPopup> {
                               text: 'Choose Image',
                               onTap: _pickImage,
                             ),
-                            if (widget.existingProfile?['personPhoto'] !=
-                                    null &&
-                                _selectedImage == null)
-                              Padding(
+                            Visibility(
+                              visible: imageStatus != "",
+                              child: Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Text(
-                                  'Existing Image: ${widget.existingProfile!['personPhoto']}',
-                                  style: TextStyle(color: Colors.grey),
+                                  'Existing Image: ${imageStatus}',
+                                  style: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 49, 23, 23)),
                                 ),
                               ),
+                            ),
                           ],
                         ),
                         SizedBox(height: MyUtility(context).height * 0.02),

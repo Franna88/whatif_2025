@@ -88,7 +88,7 @@ class _AddMediaPopupState extends State<AddMediaPopup> {
     return Center(
       child: Container(
         width: MyUtility(context).width * 0.3,
-        height: MyUtility(context).height * 0.35,
+        height: MyUtility(context).height * 0.4,
         decoration: ShapeDecoration(
           color: Color(0xFFD9D9D9),
           shape: RoundedRectangleBorder(

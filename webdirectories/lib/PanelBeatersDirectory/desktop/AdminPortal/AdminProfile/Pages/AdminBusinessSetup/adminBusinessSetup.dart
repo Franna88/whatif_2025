@@ -116,7 +116,7 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
     });
   }
 
-  //Dialog for password Validate
+  //Dialog for notification popup
   Future descriptionDialog(description) => showDialog(
       context: context,
       builder: (context) {

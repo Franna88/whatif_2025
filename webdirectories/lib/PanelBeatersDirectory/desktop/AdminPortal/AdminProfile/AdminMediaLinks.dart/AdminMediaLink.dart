@@ -51,6 +51,7 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
   }
 
   Future<void> _fetchMediaData() async {
+    _mediaList.clear();
     StoredUser? user = await getUserInfo();
     if (user != null) {
       int listingId = int.tryParse(user.id) ?? 0; // Ensure correct ID parsing
@@ -141,7 +142,9 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
                           );
                         },
                       ),
-                      IconSearchBoxB(),
+                      IconSearchBoxB(
+                        search: TextEditingController(),
+                      ),
                     ],
                   ),
                   Padding(
@@ -198,7 +201,7 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
                       itemCount: _mediaList.length,
                       itemBuilder: (context, index) {
                         final media = _mediaList[index];
-
+                        print(media);
                         return MediaLinkContainer(
                           mediaType: media.linkTitle,
                           mediaLink: media.linkUrl,
@@ -238,7 +241,15 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
                             }
                           },
                           isEven: index % 2 == 0,
-                          pressDelete: () {
+                          pressDelete: () async {
+                            // Fetch the document ID for the media being edited
+                            QuerySnapshot mediaDoc = await _firestore
+                                .collection('listings_links')
+                                .where('urlLink', isEqualTo: media.linkUrl)
+                                .get();
+
+                            String docId = mediaDoc.docs.first.id;
+
                             // Open the delete confirmation dialog
                             showDialog(
                               context: context,
@@ -249,7 +260,11 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
                                   backgroundColor: Colors.transparent,
                                   insetPadding: EdgeInsets.all(10),
                                   child: NewDeleteButton(
-                                    documentId: media.linkTitle,
+                                    documentId: docId,
+                                    collectionName: 'listings_links',
+                                    refreshList: () {
+                                      _fetchMediaData();
+                                    },
                                   ),
                                 );
                               },

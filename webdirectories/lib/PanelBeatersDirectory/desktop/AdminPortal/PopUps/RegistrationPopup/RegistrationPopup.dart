@@ -215,7 +215,7 @@ class _RegistrationPopupState extends State<RegistrationPopup> {
                               text: 'Registration Type',
                               controller: _registrationType,
                               items: registrationTypeData,
-                              initialValue: '',
+                              initialValue: _registrationType.text,
                             ),
                             const SizedBox(
                               height: 20,
@@ -231,6 +231,7 @@ class _RegistrationPopupState extends State<RegistrationPopup> {
                               value: displayOnBusinessProfile,
                               onChanged: (newValue) {
                                 setState(() {
+                                  print(newValue);
                                   displayOnBusinessProfile = newValue;
                                 });
                               },
@@ -251,7 +252,9 @@ class _RegistrationPopupState extends State<RegistrationPopup> {
                                 ),
                                 PopUpsCancel(
                                   text: 'Cancel',
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
                                   buttonColor: Color(0xFF3C4043),
                                 ),
                               ],

@@ -5,12 +5,14 @@ class GalleryAltContainer extends StatefulWidget {
   final String galleryImage;
   final String description;
   final VoidCallback editButton;
+  final VoidCallback deleteButton;
 
   const GalleryAltContainer(
       {super.key,
       required this.galleryImage,
       required this.description,
-      required this.editButton});
+      required this.editButton,
+      required this.deleteButton});
 
   @override
   State<GalleryAltContainer> createState() => _GalleryAltContainerState();
@@ -73,7 +75,9 @@ class _GalleryAltContainerState extends State<GalleryAltContainer> {
                       ),
                       SizedBox(width: 10),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          widget.deleteButton();
+                        },
                         child: Icon(
                           Icons.delete,
                           color: Color(0xFFD17226), // Orange color for icons

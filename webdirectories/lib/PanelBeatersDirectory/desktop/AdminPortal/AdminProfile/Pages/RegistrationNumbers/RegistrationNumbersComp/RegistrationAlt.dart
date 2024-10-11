@@ -11,6 +11,8 @@ import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../../../components/descriptionDialog.dart';
+
 class RegistrationAlit extends StatefulWidget {
   const RegistrationAlit({super.key});
 
@@ -64,14 +66,16 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
 
         for (var registration in registrationData) {
           int? registrationTypeId = registration['registrationTypeId'];
+
           if (registrationTypeId != null &&
               registrationTypeMap.containsKey(registrationTypeId)) {
             registration['registrationType'] =
                 registrationTypeMap[registrationTypeId]!['type'];
-            registration['displayProfile'] =
-                registrationTypeMap[registrationTypeId]!['show'] == 1
-                    ? 'Yes'
-                    : 'No';
+            registration['displayProfile'] = registrationTypeMap[
+                        registrationTypeId]!['registrationDisplay'] ==
+                    1
+                ? 'Yes'
+                : 'No';
           }
         }
 
@@ -90,6 +94,22 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
     regData.add(newRegistration);
     setState(() {
       _registrationInfo = regData;
+    });
+  }
+
+  removeRegItem(docId) {
+    FirebaseFirestore.instance
+        .collection('registration_numbers')
+        .doc(docId)
+        .delete()
+        .whenComplete(() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Registration number removed successfully'),
+        ),
+      );
+      setState(() {});
+      Navigator.pop(context);
     });
   }
 
@@ -158,7 +178,9 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconSearchBoxB(),
+                      IconSearchBoxB(
+                        search: TextEditingController(),
+                      ),
                     ],
                   ),
                   Padding(
@@ -250,6 +272,7 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
                               itemCount: registrationInfo.length,
                               itemBuilder: (context, index) {
                                 final registration = registrationInfo[index];
+                                print(registrationInfo[index]);
                                 return RegistrationAltContainer(
                                   registrationType:
                                       registration['registrationType']!,
@@ -295,8 +318,11 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
                                           backgroundColor: Colors.transparent,
                                           insetPadding: EdgeInsets.all(10),
                                           child: PopUpsDeleteEntry(
-                                            onAddRegistration:
-                                                updateRegistrationNumbersOnAdd,
+                                            onDelete: () {
+                                              removeRegItem(
+                                                  registrationInfo[index]
+                                                      ['id']); /* */
+                                            },
                                           ),
                                         );
                                       },

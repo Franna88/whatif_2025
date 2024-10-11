@@ -22,7 +22,9 @@ import '../PopUpsCommon/PopUpsCancel.dart';
 
 class DocumentPopup extends StatefulWidget {
   final Map<String, dynamic>? existingDocument;
-  const DocumentPopup({super.key, this.existingDocument});
+  final VoidCallback refreshList;
+  const DocumentPopup(
+      {super.key, this.existingDocument, required this.refreshList});
 
   @override
   State<DocumentPopup> createState() => _DocumentPopupState();
@@ -45,12 +47,16 @@ class _DocumentPopupState extends State<DocumentPopup> {
   };
   bool emailNotification = false;
   bool _isLoading = false;
+  String fileStatus = "No File Chosen";
 
   @override
   void initState() {
     super.initState();
     // Prepopulate fields if editing an existing document
     if (widget.existingDocument != null) {
+      print(widget.existingDocument);
+
+      fileStatus = widget.existingDocument!['documentFile'];
       _categoryController.text =
           widget.existingDocument!['documentCategory'] ?? '';
       _subCategoryController.text =
@@ -96,6 +102,7 @@ class _DocumentPopupState extends State<DocumentPopup> {
       _documentSubCategoryData =
           docSubCategorySnapShot.docs.map((doc) => doc.data()).toList();
       _documentSubCategoryMenuData = documentSubCategoryData;
+      print(_documentSubCategoryMenuData);
     });
   }
 
@@ -147,6 +154,7 @@ class _DocumentPopupState extends State<DocumentPopup> {
 
         setState(() {
           _isLoading = false;
+          widget.refreshList();
         });
       } catch (e) {
         print('Error adding/updating document: $e');
@@ -231,6 +239,7 @@ class _DocumentPopupState extends State<DocumentPopup> {
             'file': file,
             'fileName': fileName,
           };
+          fileStatus = "${fileName}";
         });
       } else {
         // Handle case when no file is selected
@@ -270,7 +279,7 @@ class _DocumentPopupState extends State<DocumentPopup> {
     return Center(
       child: Container(
         width: MyUtility(context).width * 0.3,
-        height: MyUtility(context).height * 0.645,
+        height: MyUtility(context).height * 0.70,
         decoration: ShapeDecoration(
           color: Color(0xFFD9D9D9),
           shape: RoundedRectangleBorder(
@@ -365,7 +374,7 @@ class _DocumentPopupState extends State<DocumentPopup> {
                               text: 'Attach File', onTap: _pickFiles),
                         ),
                         Text(
-                          "No file chosen",
+                          "${fileStatus}",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14.73,
@@ -449,7 +458,9 @@ class _DocumentPopupState extends State<DocumentPopup> {
                         ),
                         PopUpsCancel(
                           text: 'Cancel',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                           buttonColor: Color(0xFF3C4043),
                         ),
                       ],

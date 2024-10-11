@@ -117,6 +117,7 @@ class DocumentAltContainer extends StatelessWidget {
               width: 0.5,
               color: Color(0xFF5B5B5B),
             ),
+
             SizedBox(width: 10),
             // Edit/Delete Buttons
             Expanded(

@@ -12,6 +12,8 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.da
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../../PopUps/PopUpsCommon/NewDeletePopUp.dart';
+
 class GalleryAlt extends StatefulWidget {
   const GalleryAlt({super.key});
 
@@ -100,6 +102,7 @@ class _GalleryAltState extends State<GalleryAlt> {
                     galleryItems[index] = image;
                   }
                 }
+                _loadGalleryData();
               });
             },
             existingImage: existingImage, // Pass the existing image if editing
@@ -185,7 +188,9 @@ class _GalleryAltState extends State<GalleryAlt> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            IconSearchBoxB(),
+                            IconSearchBoxB(
+                              search: TextEditingController(),
+                            ),
                           ],
                         ),
                       ],
@@ -213,7 +218,7 @@ class _GalleryAltState extends State<GalleryAlt> {
                                   itemBuilder: (context, index) {
                                     Map<String, dynamic> image =
                                         galleryItems[index];
-
+                                    print(image);
                                     return Draggable<Map<String, dynamic>>(
                                       data: image,
                                       feedback: Material(
@@ -230,6 +235,7 @@ class _GalleryAltState extends State<GalleryAlt> {
                                                   existingImage:
                                                       image); // Pass existingImage for editing
                                             },
+                                            deleteButton: () {},
                                           ),
                                         ),
                                       ),
@@ -243,6 +249,7 @@ class _GalleryAltState extends State<GalleryAlt> {
                                                 existingImage:
                                                     image); // Pass existingImage for editing
                                           },
+                                          deleteButton: () {},
                                         ),
                                       ),
                                       child: DragTarget<Map<String, dynamic>>(
@@ -271,6 +278,31 @@ class _GalleryAltState extends State<GalleryAlt> {
                                               _showImagePopup(
                                                   existingImage:
                                                       image); // Pass existingImage for editing
+                                            },
+                                            deleteButton: () {
+                                              showDialog(
+                                                context: context,
+                                                barrierDismissible: true,
+                                                barrierColor: Colors.black
+                                                    .withOpacity(0.5),
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Dialog(
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    insetPadding:
+                                                        EdgeInsets.all(10),
+                                                    child: NewDeleteButton(
+                                                      documentId:
+                                                          image['docId'],
+                                                      collectionName: 'gallery',
+                                                      refreshList: () {
+                                                        _loadGalleryData();
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              );
                                             },
                                           );
                                         },

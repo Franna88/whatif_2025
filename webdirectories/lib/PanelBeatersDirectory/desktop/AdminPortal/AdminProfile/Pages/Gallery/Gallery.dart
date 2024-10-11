@@ -94,7 +94,9 @@ class _GalleryState extends State<Gallery> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconSearchBoxB(),
+                    IconSearchBoxB(
+                      search: TextEditingController(),
+                    ),
                     AddButton(
                       text: 'Add Image',
                       onPressed: () {

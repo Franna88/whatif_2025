@@ -13,11 +13,12 @@ class ContactPopup extends StatefulWidget {
   final Function(Map<String, dynamic> newContact) onAddContact;
   final Map<String, dynamic>?
       existingContact; // New parameter for existing contact
-
-  const ContactPopup(
+  VoidCallback refreshList;
+  ContactPopup(
       {super.key,
       required this.onAddContact,
-      this.existingContact}); // Make it optional
+      this.existingContact,
+      required this.refreshList}); // Make it optional
 
   @override
   State<ContactPopup> createState() => _ContactPopupState();
@@ -91,6 +92,7 @@ class _ContactPopupState extends State<ContactPopup> {
         if (!mounted) return;
         setState(() {
           _isLoading = false;
+          widget.refreshList();
         });
 
         Navigator.of(context).pop(); // Close the dialog

@@ -8,6 +8,8 @@ import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../../PopUps/PopUpsCommon/NewDeletePopUp.dart';
+
 class NewTeamMemberAlt extends StatefulWidget {
   NewTeamMemberAlt({super.key});
 
@@ -22,7 +24,7 @@ class _NewTeamMemberAltState extends State<NewTeamMemberAlt> {
   Future<void> _fetchData() async {
     StoredUser? user = await getUserInfo();
     if (user == null) {
-      setState(() {
+      /*setState(() {
         teamProfiles = [
           {
             'personPhoto': 'images/avatar1.png',
@@ -58,6 +60,7 @@ class _NewTeamMemberAltState extends State<NewTeamMemberAlt> {
           },
         ];
       });
+      */
       return;
     }
 
@@ -258,6 +261,7 @@ class _NewTeamMemberAltState extends State<NewTeamMemberAlt> {
                             },
                           );
                         },
+                        deleteButton: () {},
                       ),
                     ),
                   ),
@@ -271,6 +275,7 @@ class _NewTeamMemberAltState extends State<NewTeamMemberAlt> {
                       memberPosition:
                           profile['shortDescription'] ?? 'Unknown Position',
                       editButton: () {},
+                      deleteButton: () {},
                     ),
                   ),
                   child: Padding(
@@ -318,6 +323,26 @@ class _NewTeamMemberAltState extends State<NewTeamMemberAlt> {
                                         teamProfiles[index] =
                                             updatedMember; // Update the profile in the list
                                       });
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          deleteButton: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              barrierColor: Colors.black.withOpacity(0.5),
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  insetPadding: EdgeInsets.all(10),
+                                  child: NewDeleteButton(
+                                    documentId: profile['docId'],
+                                    collectionName: 'listings_team',
+                                    refreshList: () {
+                                      _fetchData();
                                     },
                                   ),
                                 );

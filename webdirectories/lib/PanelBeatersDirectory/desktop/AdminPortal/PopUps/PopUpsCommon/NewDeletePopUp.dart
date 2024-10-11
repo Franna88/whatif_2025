@@ -5,8 +5,15 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutilit
 
 class NewDeleteButton extends StatefulWidget {
   final String? documentId; // Allow the document ID to be nullable
+  final String? collectionName;
+  final VoidCallback? refreshList;
 
-  const NewDeleteButton({Key? key, required this.documentId}) : super(key: key);
+  const NewDeleteButton(
+      {Key? key,
+      required this.documentId,
+      this.collectionName,
+      this.refreshList})
+      : super(key: key);
 
   @override
   State<NewDeleteButton> createState() => _NewDeleteButtonState();
@@ -37,13 +44,16 @@ class _NewDeleteButtonState extends State<NewDeleteButton> {
 
     try {
       await _firestore
-          .collection('yourCollectionName')
+          .collection(widget.collectionName!)
           .doc(widget.documentId)
-          .delete();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Record deleted successfully!')),
-      );
-      Navigator.of(context).pop(); // Close the popup after deleting
+          .delete()
+          .whenComplete(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Record deleted successfully!')),
+        );
+        Navigator.of(context).pop(); // Close the popup after deleting
+        widget.refreshList!();
+      });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to delete record: $e')),

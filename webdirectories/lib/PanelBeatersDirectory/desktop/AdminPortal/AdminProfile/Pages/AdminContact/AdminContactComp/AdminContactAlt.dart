@@ -128,6 +128,9 @@ class _AdminContactAltState extends State<AdminContactAlt> {
                               child: ContactPopup(
                                 onAddContact:
                                     (Map<String, dynamic> newContact) {},
+                                refreshList: () {
+                                  setState(() {});
+                                },
                               ),
                             );
                           },
@@ -183,7 +186,9 @@ class _AdminContactAltState extends State<AdminContactAlt> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconSearchBoxB(),
+                    IconSearchBoxB(
+                      search: TextEditingController(),
+                    ),
                   ],
                 ),
                 Padding(
@@ -283,6 +288,7 @@ class _AdminContactAltState extends State<AdminContactAlt> {
                             itemCount: contactInfo.length,
                             itemBuilder: (context, index) {
                               final contact = contactInfo[index];
+                              print(contact);
                               return AdminContactAltContainer(
                                 type: contact['contactPersonDesignation'],
                                 contactPerson: contact['contactPerson'],
@@ -311,10 +317,9 @@ class _AdminContactAltState extends State<AdminContactAlt> {
                                                 'contactPersonDesignation'],
                                           },
                                           onAddContact: (Map<String, dynamic>
-                                              updatedContact) {
-                                            setState(() {
-                                              // Optionally, refresh the UI or update the local state
-                                            });
+                                              updatedContact) {},
+                                          refreshList: () {
+                                            setState(() {});
                                           },
                                         ),
                                       );
@@ -332,8 +337,11 @@ class _AdminContactAltState extends State<AdminContactAlt> {
                                         backgroundColor: Colors.transparent,
                                         insetPadding: EdgeInsets.all(10),
                                         child: NewDeleteButton(
-                                          documentId: contact['id'],
-                                        ),
+                                            documentId: contact['id'],
+                                            collectionName: "contact_person",
+                                            refreshList: () {
+                                              setState(() {});
+                                            }),
                                       );
                                     },
                                   );

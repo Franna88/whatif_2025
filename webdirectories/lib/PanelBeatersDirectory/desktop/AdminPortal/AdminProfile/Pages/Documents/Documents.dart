@@ -174,7 +174,9 @@ class _DocumentsState extends State<Documents> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconSearchBoxB(),
+                IconSearchBoxB(
+                  search: TextEditingController(),
+                ),
                 AddButton(
                   text: 'Insert Document',
                   onPressed: () {
@@ -186,7 +188,11 @@ class _DocumentsState extends State<Documents> {
                         return Dialog(
                           backgroundColor: Colors.transparent,
                           insetPadding: EdgeInsets.all(10),
-                          child: DocumentPopup(),
+                          child: DocumentPopup(
+                            refreshList: () {
+                              setState(() {});
+                            },
+                          ),
                         );
                       },
                     );

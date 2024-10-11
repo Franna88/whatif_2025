@@ -176,7 +176,9 @@ class _RegistrationNumbersState extends State<RegistrationNumbers> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconSearchBoxB(),
+                IconSearchBoxB(
+                  search: TextEditingController(),
+                ),
                 AddButton(
                   text: 'Insert Record',
                   onPressed: () {

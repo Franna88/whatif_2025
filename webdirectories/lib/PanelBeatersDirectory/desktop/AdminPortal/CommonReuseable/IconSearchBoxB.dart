@@ -3,7 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:webdirectories/myutility.dart';
 
 class IconSearchBoxB extends StatefulWidget {
-  const IconSearchBoxB({super.key});
+  TextEditingController search;
+  IconSearchBoxB({super.key, required this.search});
 
   @override
   State<IconSearchBoxB> createState() => _IconSearchBoxBState();

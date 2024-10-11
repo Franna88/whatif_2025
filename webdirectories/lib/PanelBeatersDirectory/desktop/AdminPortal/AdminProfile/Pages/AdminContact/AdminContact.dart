@@ -79,7 +79,9 @@ class _AdminContactState extends State<AdminContact> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconSearchBoxB(),
+            IconSearchBoxB(
+              search: TextEditingController(),
+            ),
             AddButton(
               text: 'Insert Contact',
               onPressed: () {
@@ -91,7 +93,12 @@ class _AdminContactState extends State<AdminContact> {
                     return Dialog(
                       backgroundColor: Colors.transparent,
                       insetPadding: EdgeInsets.all(10),
-                      child: ContactPopup(onAddContact: _updateContactData),
+                      child: ContactPopup(
+                        onAddContact: _updateContactData,
+                        refreshList: () {
+                          setState(() {});
+                        },
+                      ),
                     );
                   },
                 );
