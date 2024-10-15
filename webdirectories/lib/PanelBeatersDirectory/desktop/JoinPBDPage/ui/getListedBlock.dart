@@ -4,7 +4,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/ui/chec
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/ui/orangeButton.dart';
 
 class GetListedBlock extends StatefulWidget {
-  const GetListedBlock({super.key});
+  final VoidCallback navigateToPricingOptions;
+  GetListedBlock({super.key, required this.navigateToPricingOptions});
 
   @override
   State<GetListedBlock> createState() => _GetListedBlockState();
@@ -77,7 +78,7 @@ class _GetListedBlockState extends State<GetListedBlock> {
                 OrangeButton(
                     buttonText: 'Click to Register',
                     onPressed: () {
-                      //ADD ROUTE
+                      widget.navigateToPricingOptions();
                     }),
               ],
             ),

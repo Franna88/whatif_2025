@@ -20,7 +20,7 @@ class _LetsFindYourCustomPlanState extends State<WeAreDone> {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
     return SizedBox(
-      height: heightDevice * 0.75,
+      //height: heightDevice * 0.75,
       child: WhiteContainer(
         child: Padding(
           padding: const EdgeInsets.only(top: 10, right: 10),

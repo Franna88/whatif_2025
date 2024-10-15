@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 class SmallCheckBox extends StatefulWidget {
   String description;
   bool checkboxValue;
+  Function(bool?)? changeCheckboxValue;
   SmallCheckBox(
-      {super.key, required this.description, required this.checkboxValue});
+      {super.key,
+      required this.description,
+      required this.checkboxValue,
+      this.changeCheckboxValue});
 
   @override
   State<SmallCheckBox> createState() => _CheckBoxStyleState();
@@ -14,12 +18,11 @@ class _CheckBoxStyleState extends State<SmallCheckBox> {
   @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
-    
+
     return widthDevice < 1500
         ? Row(
             children: [
               Container(
-                
                 height: 25,
                 width: 25,
                 child: Transform.scale(
@@ -44,6 +47,9 @@ class _CheckBoxStyleState extends State<SmallCheckBox> {
                     checkColor: Colors.white,
                     onChanged: (bool? value) {
                       setState(() {
+                        if (widget.changeCheckboxValue != null) {
+                          widget.changeCheckboxValue!(!widget.checkboxValue);
+                        }
                         widget.checkboxValue = !widget.checkboxValue;
                       });
                     },
@@ -86,6 +92,9 @@ class _CheckBoxStyleState extends State<SmallCheckBox> {
               checkColor: Colors.white,
               onChanged: (bool? value) {
                 setState(() {
+                  if (widget.changeCheckboxValue != null) {
+                    widget.changeCheckboxValue!(!widget.checkboxValue);
+                  }
                   widget.checkboxValue = !widget.checkboxValue;
                 });
               },

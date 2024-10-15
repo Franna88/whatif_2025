@@ -6,7 +6,9 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 
 class EnterVerificationCode extends StatefulWidget {
   Function changePageIndex;
-  EnterVerificationCode({super.key, required this.changePageIndex});
+  String email;
+  EnterVerificationCode(
+      {super.key, required this.changePageIndex, required this.email});
 
   @override
   State<EnterVerificationCode> createState() => _EnterVerificationCodeState();
@@ -27,7 +29,7 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
           children: [
             GestureDetector(
               onTap: () {
-                 Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: SizedBox(
                 child: Row(
@@ -39,7 +41,8 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
                           height: widthDevice < 1500 ? 25 : 30,
                           decoration: ShapeDecoration(
                             shape: OvalBorder(
-                              side: BorderSide(width: 0.94, color: Colors.white),
+                              side:
+                                  BorderSide(width: 0.94, color: Colors.white),
                             ),
                           ),
                         ),

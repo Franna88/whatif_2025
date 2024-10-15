@@ -53,7 +53,9 @@ class _NewJointPbdPageState extends State<NewJointPbdPage> {
                     ),
                   ),
                   YoutubeVideoBlock(),
-                  GetListedBlock(),
+                  GetListedBlock(
+                      navigateToPricingOptions:
+                          widget.navigateToPricingOptions),
                   SizedBox(
                     height: heightDevice / 10,
                   ),

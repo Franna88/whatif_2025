@@ -9,7 +9,18 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/smallScreenRadioButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/whiteBallpointText.dart';
 
-enum MembershipValues { onceOffM, onceOffA }
+enum MembershipValues {
+  starterM,
+  starterA,
+  coreM,
+  coreA,
+  premiumM,
+  premiumA,
+  premiumPlusM,
+  premiumPlusA
+}
+
+enum MembershipOnceOff { noOnceOf, onceOff }
 
 class MembershipOptions extends StatefulWidget {
   Function changePageIndex;
@@ -20,7 +31,8 @@ class MembershipOptions extends StatefulWidget {
 }
 
 class _MembershipOptionsState extends State<MembershipOptions> {
-  MembershipValues? _radioValue = MembershipValues.onceOffM;
+  MembershipValues? _radioValue = MembershipValues.starterA;
+  MembershipOnceOff onceOffValue = MembershipOnceOff.onceOff;
 
   @override
   Widget build(BuildContext context) {
@@ -48,40 +60,43 @@ class _MembershipOptionsState extends State<MembershipOptions> {
         ),
         Text('Membership Options',
             textAlign: TextAlign.center,
-            style: heightDevice < 710 ? TextStyle(
+            style: heightDevice < 710
+                ? TextStyle(
                     color: Colors.white,
                     fontSize: 25,
                     fontFamily: 'ralewaybold',
-                  ) :
-                 TextStyle(
+                  )
+                : TextStyle(
                     color: Colors.white,
                     fontSize: widthDevice < 1500 ? 30 : 40,
                     fontFamily: 'ralewaybold',
-                  )
-                ),
+                  )),
         SizedBox(
           height: heightDevice < 710 ? 5 : 10,
         ),
         Text(
             'Choose your membership option.\nYou can change this at any time in the future.',
             textAlign: TextAlign.center,
-            style: heightDevice < 710 ? TextStyle(
+            style: heightDevice < 710
+                ? TextStyle(
                     color: Colors.white,
                     fontSize: 12,
                     fontFamily: 'raleway',
                     height: 1,
-                  ) :
-                 TextStyle(
+                  )
+                : TextStyle(
                     color: Colors.white,
                     fontSize: widthDevice < 1500 ? 14 : 18,
                     fontFamily: 'raleway',
                     height: 1,
-                  )
-                ),
-        
+                  )),
+
         SizedBox(
-          
-          height: heightDevice < 710 ? 10 : widthDevice < 1500 ? 20 : 30,
+          height: heightDevice < 710
+              ? 10
+              : widthDevice < 1500
+                  ? 20
+                  : 30,
         ),
 
         //ROW 1
@@ -91,23 +106,21 @@ class _MembershipOptionsState extends State<MembershipOptions> {
           children: [
             GreyTable(
               width: widthDevice < 1500 ? 175 : 200,
-              child: Text(
-                'Options',
-                textAlign: TextAlign.start,
-                style: heightDevice < 710 ?  TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'raleway',
-                        height: 1,
-                      ):
-                     TextStyle(
-                        color: Colors.white,
-                        fontSize: widthDevice < 1500 ? 14 : 16,
-                        fontFamily: 'raleway',
-                        height: 1,
-                      )
-                    
-              ),
+              child: Text('Options',
+                  textAlign: TextAlign.start,
+                  style: heightDevice < 710
+                      ? TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'raleway',
+                          height: 1,
+                        )
+                      : TextStyle(
+                          color: Colors.white,
+                          fontSize: widthDevice < 1500 ? 14 : 16,
+                          fontFamily: 'raleway',
+                          height: 1,
+                        )),
             ),
             GreyTable(
               width: widthDevice < 1500 ? 105 : 125,
@@ -181,53 +194,53 @@ class _MembershipOptionsState extends State<MembershipOptions> {
               width: widthDevice < 1500 ? 105 : 125,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
-                      groupValue: _radioValue,
-                      onChanged: (MembershipValues? value) {
+                      groupValue: onceOffValue,
+                      onChanged: (MembershipOnceOff? value) {
                         setState(
                           () {
-                            _radioValue = value;
+                            onceOffValue = value!;
                           },
                         );
                       },
                       text: 'R299',
-                      value: MembershipValues.onceOffM)
+                      value: MembershipOnceOff.onceOff)
                   : RadioButton(
-                      groupValue: _radioValue,
-                      onChanged: (MembershipValues? value) {
+                      groupValue: onceOffValue,
+                      onChanged: (MembershipOnceOff? value) {
                         setState(
                           () {
-                            _radioValue = value;
+                            onceOffValue = value!;
                           },
                         );
                       },
                       text: 'R299',
-                      value: MembershipValues.onceOffM),
+                      value: MembershipOnceOff.onceOff),
             ),
             GreyTable(
               width: widthDevice < 1500 ? 105 : 125,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
-                      groupValue: _radioValue,
-                      onChanged: (MembershipValues? value) {
+                      groupValue: onceOffValue,
+                      onChanged: (MembershipOnceOff? value) {
                         setState(
                           () {
-                            _radioValue = value;
+                            onceOffValue = value!;
                           },
                         );
                       },
                       text: 'R299',
-                      value: MembershipValues.onceOffA)
+                      value: MembershipOnceOff.onceOff)
                   : RadioButton(
-                      groupValue: _radioValue,
-                      onChanged: (MembershipValues? value) {
+                      groupValue: onceOffValue,
+                      onChanged: (MembershipOnceOff? value) {
                         setState(
                           () {
-                            _radioValue = value;
+                            onceOffValue = value!;
                           },
                         );
                       },
                       text: 'R299',
-                      value: MembershipValues.onceOffA),
+                      value: MembershipOnceOff.onceOff),
             ),
           ],
         ),
@@ -265,22 +278,24 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.noOnceOf;
                           },
                         );
                       },
                       text: 'Free',
-                      value: MembershipValues.onceOffM)
+                      value: MembershipValues.starterM)
                   : RadioButton(
                       groupValue: _radioValue,
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.noOnceOf;
                           },
                         );
                       },
                       text: 'Free',
-                      value: MembershipValues.onceOffM),
+                      value: MembershipValues.starterM),
             ),
             GreyTable(
               width: widthDevice < 1500 ? 105 : 125,
@@ -291,22 +306,24 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.noOnceOf;
                           },
                         );
                       },
                       text: 'Free',
-                      value: MembershipValues.onceOffA)
+                      value: MembershipValues.starterA)
                   : RadioButton(
                       groupValue: _radioValue,
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.noOnceOf;
                           },
                         );
                       },
                       text: 'Free',
-                      value: MembershipValues.onceOffA),
+                      value: MembershipValues.starterA),
             ),
           ],
         ),
@@ -345,22 +362,24 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 99',
-                      value: MembershipValues.onceOffM)
+                      value: MembershipValues.coreM)
                   : RadioButton(
                       groupValue: _radioValue,
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 99',
-                      value: MembershipValues.onceOffM),
+                      value: MembershipValues.coreM),
             ),
             GreyTable(
               width: widthDevice < 1500 ? 105 : 125,
@@ -371,22 +390,24 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 1 188',
-                      value: MembershipValues.onceOffA)
+                      value: MembershipValues.coreA)
                   : RadioButton(
                       groupValue: _radioValue,
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 1 188',
-                      value: MembershipValues.onceOffA),
+                      value: MembershipValues.coreA),
             ),
           ],
         ),
@@ -424,22 +445,24 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 434',
-                      value: MembershipValues.onceOffM)
+                      value: MembershipValues.premiumM)
                   : RadioButton(
                       groupValue: _radioValue,
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 434',
-                      value: MembershipValues.onceOffM),
+                      value: MembershipValues.premiumM),
             ),
             GreyTable(
               width: widthDevice < 1500 ? 105 : 125,
@@ -450,22 +473,24 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 4 948',
-                      value: MembershipValues.onceOffA)
+                      value: MembershipValues.premiumA)
                   : RadioButton(
                       groupValue: _radioValue,
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 4 948',
-                      value: MembershipValues.onceOffA),
+                      value: MembershipValues.premiumA),
             ),
           ],
         ),
@@ -503,22 +528,24 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 520',
-                      value: MembershipValues.onceOffM)
+                      value: MembershipValues.premiumPlusM)
                   : RadioButton(
                       groupValue: _radioValue,
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 520',
-                      value: MembershipValues.onceOffM),
+                      value: MembershipValues.premiumPlusM),
             ),
             GreyTable(
               width: widthDevice < 1500 ? 105 : 125,
@@ -533,22 +560,23 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                         );
                       },
                       text: 'R 5 921',
-                      value: MembershipValues.onceOffA)
+                      value: MembershipValues.premiumPlusA)
                   : RadioButton(
                       groupValue: _radioValue,
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
                             _radioValue = value;
+                            onceOffValue = MembershipOnceOff.onceOff;
                           },
                         );
                       },
                       text: 'R 5 921',
-                      value: MembershipValues.onceOffA),
+                      value: MembershipValues.premiumPlusA),
             ),
           ],
         ),
-         SizedBox(
+        SizedBox(
           height: heightDevice < 710 ? 5 : 15,
         ),
         SizedBox(
@@ -562,7 +590,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                   ballText: 'Calendar month cancellation notice'),
               WhiteBallpointText(
                   ballText:
-                      'Monthly on advance via Debit Order to limit costs'),
+                      'Monthly on advance via Debit\n Order to limit costs'),
             ],
           ),
         ),
@@ -575,7 +603,11 @@ class _MembershipOptionsState extends State<MembershipOptions> {
             },
             buttonText: 'Continue'),
         SizedBox(
-          height: heightDevice < 710 ? 15 : widthDevice < 1500 ?   25: 35,
+          height: heightDevice < 710
+              ? 15
+              : widthDevice < 1500
+                  ? 25
+                  : 35,
         ),
       ],
     );

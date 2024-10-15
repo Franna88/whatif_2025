@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class DashDropDown extends StatelessWidget {
@@ -48,6 +49,7 @@ class DashDropDown extends StatelessWidget {
   void _handleLogout() {
     // Implement your logout logic here
     print('Executing logout...');
+    FirebaseAuth.instance.signOut();
     // For example, call your authentication service to log out
   }
 }

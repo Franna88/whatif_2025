@@ -17,16 +17,16 @@ class _GlassEffectState extends State<GlassEffect> {
     var widthDevice = MediaQuery.of(context).size.width;
     return Stack(children: <Widget>[
       Center(
-        child: new ClipRect(
-          child: new BackdropFilter(
-            filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: new Container(
+        child: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            child: Container(
               width: widthDevice * 0.30,
               //height: heightDevice * 0.76,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   color: Colors.grey.shade200.withOpacity(0.3)),
-              child: new Center(child: widget.child),
+              child: Center(child: widget.child),
             ),
           ),
         ),

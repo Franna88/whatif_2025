@@ -13,7 +13,8 @@ import '../JoinPBDPage/packageInfoPages/packagePagesOptions/packagePage.dart'; /
 import '../JoinPBDPage/pricingOptions/pricingOptionsPage.dart'; // Additional pages
 
 class Nav extends StatefulWidget {
-  const Nav({super.key});
+  int? pageIndex;
+  Nav({super.key, this.pageIndex});
 
   @override
   State<Nav> createState() => _NavState();
@@ -63,6 +64,17 @@ class _NavState extends State<Nav> {
           break;
       }
     });
+  }
+
+  @override
+  void initState() {
+    if (widget.pageIndex != null) {
+      setState(() {
+        _currentIndex = widget.pageIndex!;
+      });
+    }
+
+    super.initState();
   }
 
   @override

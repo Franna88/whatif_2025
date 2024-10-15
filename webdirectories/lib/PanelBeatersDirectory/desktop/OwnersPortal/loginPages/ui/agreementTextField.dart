@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AgreementTextField extends StatelessWidget {
-  
   String hintText;
   double width;
-  AgreementTextField({super.key, required this.hintText, required this.width});
+  TextEditingController controller;
+  AgreementTextField(
+      {super.key,
+      required this.hintText,
+      required this.width,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        
         SizedBox(
           height: 5,
         ),
@@ -26,6 +29,7 @@ class AgreementTextField extends StatelessWidget {
             ),
           ),
           child: TextField(
+            controller: controller,
             cursorColor: Colors.black,
             decoration: InputDecoration(
               contentPadding:

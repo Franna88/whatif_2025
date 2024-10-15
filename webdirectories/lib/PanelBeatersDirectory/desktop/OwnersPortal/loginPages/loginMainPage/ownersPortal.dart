@@ -11,6 +11,9 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/glassContainer.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../components/descriptionDialog.dart';
+import 'registerBusinessValues.dart';
+
 class OwnersPortal extends StatefulWidget {
   const OwnersPortal({super.key});
 
@@ -19,7 +22,8 @@ class OwnersPortal extends StatefulWidget {
 }
 
 class _OwnersPortalState extends State<OwnersPortal> {
-  var pageIndex = 0;
+  var pageIndex = 4;
+  final RegisterBusinessValues _controller = RegisterBusinessValues();
 
   //Update pageIndex value
   changePageIndex() {
@@ -28,12 +32,35 @@ class _OwnersPortalState extends State<OwnersPortal> {
     });
   }
 
+  changeIndex(value) {
+    setState(() {
+      pageIndex = value;
+    });
+  }
+
   //Open popup register
   Future openAgreementPopup() => showDialog(
       context: context,
       builder: (context) {
         return Dialog(
-            child: Agreement(closeDialog: () => Navigator.pop(context)));
+          child: Agreement(
+            closeDialog: () => Navigator.pop(
+              context,
+            ),
+            changePageIndex: changePageIndex,
+            controller: _controller,
+          ),
+        );
+      });
+
+  //Dialog for notification popup
+  Future descriptionDialog(description) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: DescriptionDialog(
+          description: description,
+        ));
       });
 
   @override
@@ -43,13 +70,25 @@ class _OwnersPortalState extends State<OwnersPortal> {
 
     var pages = [
       OwnersPortalLogin(changePageIndex: changePageIndex),
-      RegisterYourBusiness(changePageIndex: changePageIndex),
-      EnterVerificationCode(changePageIndex: changePageIndex),
-      CreateProfile(changePageIndex: changePageIndex),
+      RegisterYourBusiness(
+        changePageIndex: changePageIndex,
+        firstName: _controller.firstName,
+        lastName: _controller.lastName,
+        tradingName: _controller.tradingName,
+        phone: _controller.phone,
+        email: _controller.email,
+        descriptionDialog: () {
+          descriptionDialog("Please check terms and conditions");
+        },
+      ),
+      EnterVerificationCode(
+          changePageIndex: changePageIndex, email: _controller.email.text),
+      CreateProfile(changePageIndex: changePageIndex, email: _controller.email),
       MembershipOptions(changePageIndex: changePageIndex),
       CompleteAgreement(
           openAgreementPopup: openAgreementPopup,
-          changePageIndex: changePageIndex),
+          changePageIndex: changePageIndex,
+          controller: _controller),
       WhatsNext()
     ];
     return Material(

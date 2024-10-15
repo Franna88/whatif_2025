@@ -9,9 +9,55 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/smallTextBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/whiteBallpointText.dart';
 
-class CreateProfile extends StatelessWidget {
+class CreateProfile extends StatefulWidget {
   Function changePageIndex;
-  CreateProfile({super.key, required this.changePageIndex});
+  TextEditingController email;
+  CreateProfile(
+      {super.key, required this.changePageIndex, required this.email});
+
+  @override
+  State<CreateProfile> createState() => _CreateProfileState();
+}
+
+class _CreateProfileState extends State<CreateProfile> {
+  final TextEditingController password = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
+  final TextEditingController passwordStatus = TextEditingController();
+
+  checkPasswordValidation() {
+    print(password.text);
+    setState(() {
+      if (password.text == "" || password.text.isEmpty) {
+        passwordStatus.text = "Password is required";
+        print("Password is required");
+      } else if (password.text!.length < 8) {
+        passwordStatus.text = "Password must be at least 8 characters long";
+      } else if (!password.text.contains(RegExp(r'[A-Z]'))) {
+        passwordStatus.text =
+            "Password must contain at least one uppercase letter";
+      } else if (!password.text.contains(RegExp(r'[a-z]'))) {
+        passwordStatus.text =
+            "Password must contain at least one lowercase letter";
+      } else if (!password.text.contains(RegExp(r'[0-9]'))) {
+        passwordStatus.text =
+            "Password must contain at least one numeric character";
+      } else if (!password.text.contains(RegExp(r'[!@#\$%^&*()<>?/|}{~:]'))) {
+        passwordStatus.text =
+            "Password must contain at least one special character";
+      } else if (password.text != confirmPassword.text) {
+        passwordStatus.text = "Passwords do not match";
+      } else {
+        passwordStatus.text = "";
+      }
+
+      // passwordStatus.text = "";
+    });
+    if (passwordStatus.text == "") {
+      widget.changePageIndex();
+    }
+  }
+
+  checkPasswordConfirm() {}
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +124,11 @@ class CreateProfile extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SmallTextBox(hintText: 'Name', keyText: 'Username'),
+            SmallTextBox(
+              hintText: 'Name',
+              keyText: 'Username',
+              textController: widget.email,
+            ),
             SizedBox(
               width: widthDevice < 1500 ? 200 : 230,
             )
@@ -91,8 +141,9 @@ class CreateProfile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             PasswordField(
-                hintText: 'Password',
+                hintText: 'Password1',
                 keyText: 'Password',
+                controller: password,
                 widthContainer: widthDevice < 1500 ? widthDevice * 0.14 : 215),
             SizedBox(
               width: 20,
@@ -100,9 +151,21 @@ class CreateProfile extends StatelessWidget {
             PasswordField(
                 hintText: 'Password',
                 keyText: 'Confirm Password',
+                controller: confirmPassword,
                 widthContainer: widthDevice < 1500 ? widthDevice * 0.14 : 215),
           ],
         ),
+        SizedBox(
+          height: 15,
+        ),
+        Text(passwordStatus.text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: const Color.fromARGB(255, 255, 36, 20),
+              fontSize: widthDevice < 1500 ? 14 : 18,
+              fontFamily: 'raleway',
+              height: 1,
+            )),
         SizedBox(
           height: widthDevice < 1500 ? 15 : 25,
         ),
@@ -138,25 +201,35 @@ class CreateProfile extends StatelessWidget {
           height: heightDevice < 710 ? 5 : 10,
         ),
         Row(
-          mainAxisAlignment:  MainAxisAlignment.start ,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            
-            SizedBox(width: heightDevice < 710 ? 15 : widthDevice < 1500? 25 : widthDevice / 20,),
-              
+            SizedBox(
+              width: heightDevice < 710
+                  ? 15
+                  : widthDevice < 1500
+                      ? 25
+                      : widthDevice / 20,
+            ),
             SmallCheckBox(description: 'Remember me', checkboxValue: false),
             SizedBox(
-              width:  120,
+              width: 120,
             )
           ],
         ),
         SizedBox(
-          height:  widthDevice < 1500 ? 15 : 25,
+          height: widthDevice < 1500 ? 15 : 25,
         ),
         LongOrangeButton(
             onPressed: () {
-              changePageIndex();
+              setState(() {
+                checkPasswordValidation();
+              });
+
+              /*    if (passwordStatus == "") {
+                widget.changePageIndex();
+              }*/
             },
-            buttonText: 'Continue'),
+            buttonText: "Continue"),
         SizedBox(
           height: heightDevice < 710 ? 10 : heightDevice / 30,
         ),
