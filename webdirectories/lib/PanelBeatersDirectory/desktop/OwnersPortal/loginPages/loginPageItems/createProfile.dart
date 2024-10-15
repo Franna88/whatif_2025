@@ -12,39 +12,43 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 class CreateProfile extends StatefulWidget {
   Function changePageIndex;
   TextEditingController email;
+  TextEditingController password;
   CreateProfile(
-      {super.key, required this.changePageIndex, required this.email});
+      {super.key,
+      required this.changePageIndex,
+      required this.email,
+      required this.password});
 
   @override
   State<CreateProfile> createState() => _CreateProfileState();
 }
 
 class _CreateProfileState extends State<CreateProfile> {
-  final TextEditingController password = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
   final TextEditingController passwordStatus = TextEditingController();
 
   checkPasswordValidation() {
-    print(password.text);
+    print(widget.password.text);
     setState(() {
-      if (password.text == "" || password.text.isEmpty) {
+      if (widget.password.text == "" || widget.password.text.isEmpty) {
         passwordStatus.text = "Password is required";
         print("Password is required");
-      } else if (password.text!.length < 8) {
+      } else if (widget.password.text!.length < 8) {
         passwordStatus.text = "Password must be at least 8 characters long";
-      } else if (!password.text.contains(RegExp(r'[A-Z]'))) {
+      } else if (!widget.password.text.contains(RegExp(r'[A-Z]'))) {
         passwordStatus.text =
             "Password must contain at least one uppercase letter";
-      } else if (!password.text.contains(RegExp(r'[a-z]'))) {
+      } else if (!widget.password.text.contains(RegExp(r'[a-z]'))) {
         passwordStatus.text =
             "Password must contain at least one lowercase letter";
-      } else if (!password.text.contains(RegExp(r'[0-9]'))) {
+      } else if (!widget.password.text.contains(RegExp(r'[0-9]'))) {
         passwordStatus.text =
             "Password must contain at least one numeric character";
-      } else if (!password.text.contains(RegExp(r'[!@#\$%^&*()<>?/|}{~:]'))) {
+      } else if (!widget.password.text
+          .contains(RegExp(r'[!@#\$%^&*()<>?/|}{~:]'))) {
         passwordStatus.text =
             "Password must contain at least one special character";
-      } else if (password.text != confirmPassword.text) {
+      } else if (widget.password.text != confirmPassword.text) {
         passwordStatus.text = "Passwords do not match";
       } else {
         passwordStatus.text = "";
@@ -143,7 +147,7 @@ class _CreateProfileState extends State<CreateProfile> {
             PasswordField(
                 hintText: 'Password1',
                 keyText: 'Password',
-                controller: password,
+                controller: widget.password,
                 widthContainer: widthDevice < 1500 ? widthDevice * 0.14 : 215),
             SizedBox(
               width: 20,
@@ -155,17 +159,17 @@ class _CreateProfileState extends State<CreateProfile> {
                 widthContainer: widthDevice < 1500 ? widthDevice * 0.14 : 215),
           ],
         ),
-        SizedBox(
-          height: 15,
+        Visibility(
+          visible: passwordStatus.text != "",
+          child: Text(passwordStatus.text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: const Color.fromARGB(255, 255, 36, 20),
+                fontSize: widthDevice < 1500 ? 14 : 18,
+                fontFamily: 'raleway',
+                height: 1,
+              )),
         ),
-        Text(passwordStatus.text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: const Color.fromARGB(255, 255, 36, 20),
-              fontSize: widthDevice < 1500 ? 14 : 18,
-              fontFamily: 'raleway',
-              height: 1,
-            )),
         SizedBox(
           height: widthDevice < 1500 ? 15 : 25,
         ),
@@ -200,22 +204,7 @@ class _CreateProfileState extends State<CreateProfile> {
         SizedBox(
           height: heightDevice < 710 ? 5 : 10,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: heightDevice < 710
-                  ? 15
-                  : widthDevice < 1500
-                      ? 25
-                      : widthDevice / 20,
-            ),
-            SmallCheckBox(description: 'Remember me', checkboxValue: false),
-            SizedBox(
-              width: 120,
-            )
-          ],
-        ),
+        SmallCheckBox(description: 'Remember me', checkboxValue: false),
         SizedBox(
           height: widthDevice < 1500 ? 15 : 25,
         ),

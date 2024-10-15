@@ -22,8 +22,17 @@ class OwnersPortal extends StatefulWidget {
 }
 
 class _OwnersPortalState extends State<OwnersPortal> {
-  var pageIndex = 4;
   final RegisterBusinessValues _controller = RegisterBusinessValues();
+  var pageIndex = 0;
+  var membershipType = "";
+
+  getMemberShipType(value) {
+    setState(() {
+      membershipType = value;
+      _controller.memberShipType.text = value;
+      //_controller. = value;
+    });
+  }
 
   //Update pageIndex value
   changePageIndex() {
@@ -44,6 +53,7 @@ class _OwnersPortalState extends State<OwnersPortal> {
       builder: (context) {
         return Dialog(
           child: Agreement(
+            membershipType: membershipType,
             closeDialog: () => Navigator.pop(
               context,
             ),
@@ -83,8 +93,14 @@ class _OwnersPortalState extends State<OwnersPortal> {
       ),
       EnterVerificationCode(
           changePageIndex: changePageIndex, email: _controller.email.text),
-      CreateProfile(changePageIndex: changePageIndex, email: _controller.email),
-      MembershipOptions(changePageIndex: changePageIndex),
+      CreateProfile(
+        changePageIndex: changePageIndex,
+        email: _controller.email,
+        password: _controller.password,
+      ),
+      MembershipOptions(
+          changePageIndex: changePageIndex,
+          getMemberShipType: getMemberShipType),
       CompleteAgreement(
           openAgreementPopup: openAgreementPopup,
           changePageIndex: changePageIndex,

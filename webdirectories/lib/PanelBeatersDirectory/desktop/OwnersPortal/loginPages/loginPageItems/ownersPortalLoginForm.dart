@@ -52,6 +52,8 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
 
         User? user = userCredential.user;
 
+        print(user!.uid);
+
         if (user != null) {
           print("User signed in: ${user.email} ${user.uid}");
 
@@ -109,7 +111,7 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
               _isLoading = false;
             });
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('User data not found.')),
+              SnackBar(content: Text('User data not found1.')),
             );
           }
         } else {

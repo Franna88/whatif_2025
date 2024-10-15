@@ -175,7 +175,10 @@ class _RegisterYourBusinessState extends State<RegisterYourBusiness> {
         SizedBox(
           height: 10,
         ),
-        MediumTextBox(hintText: 'Name', keyText: 'Business Trading Name'),
+        MediumTextBox(
+            hintText: 'Name',
+            keyText: 'Business Trading Name',
+            controller: widget.tradingName),
         SizedBox(
           height: 10,
         ),

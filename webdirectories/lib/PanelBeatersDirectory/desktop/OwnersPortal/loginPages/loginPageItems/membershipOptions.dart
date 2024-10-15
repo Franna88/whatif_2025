@@ -24,7 +24,11 @@ enum MembershipOnceOff { noOnceOf, onceOff }
 
 class MembershipOptions extends StatefulWidget {
   Function changePageIndex;
-  MembershipOptions({super.key, required this.changePageIndex});
+  Function(String) getMemberShipType;
+  MembershipOptions(
+      {super.key,
+      required this.changePageIndex,
+      required this.getMemberShipType});
 
   @override
   State<MembershipOptions> createState() => _MembershipOptionsState();
@@ -277,6 +281,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("StarterM");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.noOnceOf;
                           },
@@ -289,6 +294,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("StarterM");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.noOnceOf;
                           },
@@ -305,6 +311,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("StarterA");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.noOnceOf;
                           },
@@ -317,6 +324,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("StarterA");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.noOnceOf;
                           },
@@ -361,6 +369,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("CoreM");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },
@@ -373,6 +382,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("CoreM");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },
@@ -389,6 +399,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("CoreA");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },
@@ -401,6 +412,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("CoreA");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },
@@ -444,6 +456,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("PremiumM");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },
@@ -456,6 +469,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("PremiumM");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },
@@ -472,6 +486,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("PremiumA");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },
@@ -484,6 +499,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("PremiumA");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },
@@ -527,6 +543,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("Premium+M");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },
@@ -539,6 +556,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("Premium+M");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },
@@ -555,6 +573,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("Premium+A");
                             _radioValue = value;
                           },
                         );
@@ -566,6 +585,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       onChanged: (MembershipValues? value) {
                         setState(
                           () {
+                            widget.getMemberShipType("Premium+A");
                             _radioValue = value;
                             onceOffValue = MembershipOnceOff.onceOff;
                           },

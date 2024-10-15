@@ -1,9 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_ipify/dart_ipify.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/glassContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/agreementBallPoint.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/agreementTextField.dart';
@@ -11,13 +16,16 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 
 import '../loginMainPage/registerBusinessValues.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class Agreement extends StatefulWidget {
+  String membershipType;
   Function closeDialog;
   Function changePageIndex;
   RegisterBusinessValues controller;
   Agreement(
       {super.key,
+      required this.membershipType,
       required this.closeDialog,
       required this.changePageIndex,
       required this.controller});
@@ -27,10 +35,156 @@ class Agreement extends StatefulWidget {
 }
 
 class _AgreementState extends State<Agreement> {
-  submitAgreement() {}
+  final _firestore = FirebaseFirestore.instance;
+  final auth = FirebaseAuth.instance;
+  String paystackUrl = "";
+  String paymentStatus = "";
+
+  getPaystackUrl() {
+    switch (widget.membershipType) {
+      case "StarterM":
+        setState(() {
+          paystackUrl = "";
+        });
+        break;
+      case "StarterA":
+        setState(() {
+          paystackUrl = "";
+        });
+        break;
+      case "CoreM":
+        setState(() {
+          paystackUrl = "https://paystack.com/pay/dmpdqvg0yl";
+        });
+        break;
+      case "CoreA":
+        setState(() {
+          paystackUrl = "https://paystack.com/pay/9u-s87qg5-";
+        });
+        break;
+      case "PremiumM":
+        setState(() {
+          paystackUrl = "https://paystack.com/pay/9ogv5c2nn2";
+        });
+        break;
+      case "PremiumA":
+        setState(() {
+          paystackUrl = "https://paystack.com/pay/2v2fce2k-c";
+        });
+        break;
+      case "Premium+M":
+        setState(() {
+          paystackUrl = "https://paystack.com/pay/98jc3yw4yg";
+        });
+        break;
+      case "Premium+A":
+        setState(() {
+          paystackUrl = "https://paystack.com/pay/lg1hrdqwba";
+        });
+        break;
+
+      default:
+        print(' invalid entry');
+    }
+  }
+
+  checkSubscription() {
+    return http.get(
+      Uri.parse(
+          'https://api.paystack.co/customer/${widget.controller.email.text}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer sk_test_216721a21d245ae3b272fcd9b76eeb7e1076d5b7',
+      },
+    );
+  }
+
+  afterPaymentMade() {
+    var timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
+      final response = await checkSubscription();
+
+      final decode =
+          jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+
+//Check if customer exists
+      if (decode['status'] == true) {
+//Subscriptions are available
+        if (decode['data']['subscriptions'].length >= 1) {
+          if (decode['data']['subscriptions'][0]['status'] == "active") {
+            setState(() {
+              paymentStatus =
+                  "Payment successful, account has been activated. Please continue...";
+              submitAgreement();
+            });
+          }
+        }
+      } else {}
+    });
+  }
+
+  callPaystack() {
+    print("Call Paystack");
+    print(widget.membershipType);
+    print(paystackUrl);
+    if (widget.membershipType == "StarterM" ||
+        widget.membershipType == "StarterM") {
+      paymentStatus = "Awaiting Payment1";
+    } else {
+      setState(() {
+        paymentStatus = "Awaiting Payment";
+        afterPaymentMade();
+        launchUrl(Uri.parse(paystackUrl));
+      });
+    }
+  }
+
+  //Register new user
+  submitAgreement() async {
+    try {
+      //  print(widget.controller.getValues());
+      UserCredential userDocRef = await auth.createUserWithEmailAndPassword(
+          email: widget.controller.email.text,
+          password: widget.controller.password.text);
+
+      var myNewDoc = await FirebaseFirestore.instance
+          .collection("listings")
+          .doc(userDocRef.user!.uid)
+          .set(widget.controller.getValues());
+      print(widget.controller);
+
+      await FirebaseFirestore.instance
+          .collection("listings")
+          .doc(userDocRef.user!.uid)
+          .update({
+        "authId": userDocRef.user!.uid,
+        "listingsId": userDocRef.user!.uid,
+      });
+
+      await FirebaseFirestore.instance
+          .collection("listing_allocation")
+          .doc(userDocRef.user!.uid)
+          .set(widget.controller.getListingAllocations(userDocRef.user!.uid));
+
+      await FirebaseFirestore.instance
+          .collection("listing_members")
+          .doc(userDocRef.user!.uid)
+          .set(widget.controller.getListingMembersValue(userDocRef.user!.uid))
+          .whenComplete(() {
+        //  widget.closeDialog();
+        widget.changePageIndex();
+      });
+    } catch (e) {
+      print('Error fetching listing data: $e');
+      setState(() {
+        //  _isLoading = false;
+      });
+    }
+  }
 
   @override
   void initState() {
+    getPaystackUrl();
     var todayDate = DateTime.now();
     widget.controller.date.text = DateFormat('yyyy/MM/dd')
         .format(DateTime(todayDate.year, todayDate.month, todayDate.day));
@@ -106,14 +260,19 @@ class _AgreementState extends State<Agreement> {
                         SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          'Go Back',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: 'raleway',
-                            fontWeight: FontWeight.w400,
+                        InkWell(
+                          onTap: () {
+                            widget.closeDialog();
+                          },
+                          child: Text(
+                            'Go Back',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontFamily: 'raleway',
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ],
@@ -1247,49 +1406,62 @@ class _AgreementState extends State<Agreement> {
 
                             //SUBMIT BUTTON
 
-                            Container(
-                              padding: const EdgeInsets.only(
-                                  top: 5, bottom: 5, left: 20, right: 20),
-                              decoration: ShapeDecoration(
-                                color: Color(0xFFE2822B),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(230),
-                                ),
-                                shadows: [
-                                  BoxShadow(
-                                    color: Color(0x3F000000),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 4),
-                                    spreadRadius: 0,
-                                  )
-                                ],
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Submit',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontFamily: 'raleway',
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                            InkWell(
+                              onTap: () {
+                                callPaystack();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                    top: 5, bottom: 5, left: 20, right: 20),
+                                decoration: ShapeDecoration(
+                                  color: Color(0xFFE2822B),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(230),
                                   ),
-                                ],
+                                  shadows: [
+                                    BoxShadow(
+                                      color: Color(0x3F000000),
+                                      blurRadius: 4,
+                                      offset: Offset(0, 4),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Submit',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontFamily: 'raleway',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            BlackIconButton(
-                              backgroundColor1: Colors.black,
-                              circleColor1: Colors.green,
-                              iconColor1: Colors.white,
-                              text1: 'Application Submitted',
-                              textColor1: Colors.white,
-                              icon: Icons.check,
-                              onPress: () {},
+                            Visibility(
+                              visible: paymentStatus != "",
+                              child: BlackIconButton(
+                                backgroundColor1: Colors.black,
+                                circleColor1:
+                                    paymentStatus != "Awaiting Payment"
+                                        ? Colors.grey
+                                        : Colors.green,
+                                iconColor1: Colors.white,
+                                text1: paymentStatus,
+                                textColor1: Colors.white,
+                                icon: Icons.check,
+                                onPress: () {
+                                  widget.closeDialog();
+                                },
+                              ),
                             )
                           ],
                         ),

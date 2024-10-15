@@ -64,10 +64,10 @@ class LoginLandingPage extends StatelessWidget {
                 Column(
                   children: [
                     //SizedBox(width: heightDevice / 5),
-                    GlassContainer(
+                    /*   GlassContainer(
                         child: MembershipOptions(changePageIndex: () {})
                         //MembershipOptions()
-                        ),
+                        ),*/
                   ],
                 )
               ],

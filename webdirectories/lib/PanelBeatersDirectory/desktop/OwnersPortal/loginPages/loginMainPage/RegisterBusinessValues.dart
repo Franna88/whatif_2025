@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RegisterBusinessValues {
+  late TextEditingController memberShipType;
+  late TextEditingController membershipRef;
   late TextEditingController tradingName;
   late TextEditingController registeredBussinessName;
   late TextEditingController firstName;
@@ -13,11 +15,14 @@ class RegisterBusinessValues {
   late TextEditingController streetAddress;
   late TextEditingController city;
   late TextEditingController postal;
+  late TextEditingController password;
 
   late TextEditingController ip;
   late TextEditingController date;
 
   RegisterBusinessValues() {
+    memberShipType = TextEditingController();
+    membershipRef = TextEditingController();
     tradingName = TextEditingController();
     registeredBussinessName = TextEditingController();
     firstName = TextEditingController();
@@ -31,12 +36,15 @@ class RegisterBusinessValues {
     streetAddress = TextEditingController();
     city = TextEditingController();
     postal = TextEditingController();
+    password = TextEditingController();
 
     ip = TextEditingController();
     date = TextEditingController();
   }
 
   void dispose() {
+    memberShipType.dispose();
+    membershipRef.dispose();
     tradingName.dispose();
     registeredBussinessName.dispose();
     firstName.dispose();
@@ -62,9 +70,120 @@ class RegisterBusinessValues {
     email.text = userData['email'] ?? '';
   }
 
-  getValues() {
+  getListingAllocations(id) {
     return {
-      "title": tradingName.text,
+      "allocationId": id,
+      "dateAdded": DateTime.now(),
+      "listingMembersId": id,
+      "listingsId": id,
+      "membersId": id,
     };
   }
-}
+
+  //Values for listing_members collection
+  getListingMembersValue(id) {
+    return {
+      "dateReg": DateTime.now(),
+      "dateUpdate": "Null",
+      "email": email.text,
+      "fullname": "${firstName.text} ${lastName.text}",
+      "listingMembersId": id,
+      "authId": id,
+      "loginCount": 0,
+      "password": "",
+      "secKey": "",
+      "status": 1,
+      "userActive": "NULL",
+      "userActiveTime": "",
+      "userDob": "",
+      "userGroupId": 0,
+      "userLogoutTime": "",
+      "usercell": phone.text,
+      "username": "",
+      "usertell": "",
+    };
+  }
+
+  //Values for listing collection
+  getValues() {
+    return {
+      "accountTypeId": "",
+      "accountname": "",
+      "accountnumber": "",
+      "afterHoursClicks": 0,
+      "alternativeNumber": "",
+      "bank": "",
+      "beecertexpirydate": "",
+      "beerating": "",
+      "branchcode": null,
+      "businessAfterhours": "",
+      "businessEmail": "",
+      "businessFaxnumber": "",
+      "businessTelephone": "",
+      "cap": "",
+      "cityId": "",
+      "consultantId": "",
+      "contactClicks": "",
+      "contactEnd": "",
+      "contactListing": "",
+      "contactStart": "",
+      "countryId": "",
+      "csirating": "",
+      "dateModified": "",
+      "directoryMembershipNumber": "",
+      "emailClicks": "",
+      "faxClicks": "",
+      "featuredEnd": "",
+      "featuredStart": "",
+      "financeManagerEmail": "",
+      "financeManagerName": "",
+      "formattedAddress": "",
+      "googlegps": "",
+      "gpsCoordinates": "",
+      "hubspotLink": "",
+      "latitude": "",
+      "listingClicks": "",
+      "longitude": 0,
+      "mapStatus": 0,
+      "membersId": "",
+      "listingsId": "",
+      "authId": "",
+      "provinceId": "",
+      "registeredBussinessName": "",
+      "isActive": 0,
+      "textMessageNumber": "",
+      "whatsappNumber": "",
+      "title": "",
+      "listingLogo": "004_1.jpg",
+      "displayphoto": "004_1.jpg",
+      "featured": 1,
+      "tradingName": tradingName.text,
+      "registeredBussinessName": registeredBussinessName.text,
+      "firstName": firstName.text,
+      "lastName": lastName.text,
+      "phone": phone.text,
+      "email": email.text,
+      "country": country.text,
+      "suburb": suburb.text,
+      "province": province.text,
+      "streetAddress": streetAddress.text,
+      "city": city.text,
+      "postal": postal.text,
+      "postaladdress": postal.text,
+      "ip": ip.text,
+      "dateAdded": DateTime.now(),
+      "memberShipType": memberShipType.text,
+      "membershipRef": membershipRef.text
+    };
+  }
+}/*
+packageOptionId
+payProblem
+payProblemDate
+payProblemReason
+phoneClicks
+popupEmail
+postaladdress
+profileAdministratorEmail
+profileAdministratorName
+quoteClicks*/

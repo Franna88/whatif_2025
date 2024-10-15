@@ -81,7 +81,8 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
     QuerySnapshot querySnapshot = await _firestore
         .collection('listings')
         .where('featured', isEqualTo: 1)
-        .limit(5)
+        // .where('authId', isEqualTo: "QV7frChverVoYOCSpETX58jhVt33")
+        // .limit(5)
         .get();
 
     List<Future<Map<String, dynamic>>> listingFutures =
@@ -267,6 +268,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                   itemBuilder: (context, index) {
                                     Map<String, dynamic> listing =
                                         listings[index];
+
                                     return ServiceFeaturedContainer(
                                       businessImage: listing['displayphoto'],
                                       businessName: listing['title'],
