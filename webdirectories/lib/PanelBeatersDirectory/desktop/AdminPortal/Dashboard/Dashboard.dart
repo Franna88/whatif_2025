@@ -40,6 +40,13 @@ class _DashboardState extends State<Dashboard> {
     _fetchUserData(); // Fetch the user data when the Dashboard initializes
   }
 
+  bool _isNumeric(String str) {
+    if (str == null) {
+      return false;
+    }
+    return double.tryParse(str) is double;
+  }
+
   Future<void> _fetchUserData() async {
     StoredUser? user =
         await getUserInfo(); // Assuming you have this method to get the user
@@ -47,10 +54,12 @@ class _DashboardState extends State<Dashboard> {
     if (user != null) {
       print(user.id);
       try {
+        var docId = _isNumeric(user.id) ? int.parse(user.id) : user.id;
+
         // Fetch the user's document from Firestore based on their ID
         QuerySnapshot userDoc = await _firestore
             .collection('listings')
-            .where('listingsId', isEqualTo: int.parse(user.id))
+            .where('listingsId', isEqualTo: docId)
             .get();
 
         if (userDoc.docs.isNotEmpty) {
@@ -126,13 +135,13 @@ class _DashboardState extends State<Dashboard> {
                         _userDisplayImageName!, // Passing the display image URL here
                     updateDisplayImage: updateDisplayImage,
                     updateLogo: updateLogo),
+                /* */
                 SizedBox(
                   width: widthDevice < 1500 ? 15 : 30,
                 ),
-                /*GraphContaier()*/
                 DashGraph(
                   userId: userId,
-                )
+                ) /**/
               ],
             ),
             SizedBox(

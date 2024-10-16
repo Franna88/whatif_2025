@@ -4,6 +4,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/TextField/ProfileShortTextField.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../ProfileComp/profileMap.dart';
+
 class BusinessAddress extends StatefulWidget {
   final String imageName;
   final TextEditingController countryController;
@@ -13,7 +15,9 @@ class BusinessAddress extends StatefulWidget {
   final TextEditingController streetController;
   final TextEditingController postalController;
   final VoidCallback imageChange;
-
+  final double lat;
+  final double long;
+  final String docId;
   const BusinessAddress(
       {super.key,
       required this.imageName,
@@ -23,7 +27,10 @@ class BusinessAddress extends StatefulWidget {
       required this.suburbController,
       required this.streetController,
       required this.postalController,
-      required this.imageChange});
+      required this.imageChange,
+      required this.lat,
+      required this.long,
+      required this.docId});
 
   @override
   State<BusinessAddress> createState() => _BusinessAddressState();
@@ -50,7 +57,15 @@ class _BusinessAddressState extends State<BusinessAddress> {
                     imageText: 'Logo',
                     imageName: widget.imageName,
                     imageChange: widget.imageChange,
-                  )
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  profileMap(
+                    lat: widget.lat,
+                    long: widget.long,
+                    docId: widget.docId,
+                  ),
                 ],
               ),
               SizedBox(

@@ -137,7 +137,7 @@ class _PerformanceAndStatsState extends State<PerformanceAndStats> {
                       ),
                       SizedBox(height: 10), // Add spacing
                       Visibility(
-                          visible: viewList.length > 1,
+                          visible: viewList.length >= 1,
                           child: StatGraphContainer(views: viewList)),
                       SizedBox(height: 10),
                       Text(

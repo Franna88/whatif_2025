@@ -28,6 +28,9 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
   String? _userDisplayImageName;
   String businessLogo = "";
   String docId = "";
+  double lat = 0.0;
+  double long = 0.0;
+
   @override
   void initState() {
     super.initState();
@@ -98,6 +101,8 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
           if (!mounted) return;
 
           setState(() {
+            lat = userData['latitude'];
+            long = userData['longitude'];
             _controller.setValues(userData);
             docId = userDoc.docs[0].id;
             print(userData['displayphoto']);
@@ -127,7 +132,6 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
       });
 
   saveData() async {
-    print(_controller.getValues());
     await _firestore
         .collection('listings')
         .doc(docId)
@@ -172,6 +176,9 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
                 streetController: _controller.streetController,
                 postalController: _textController,
                 imageChange: () {},
+                lat: lat,
+                long: long,
+                docId: docId,
               ),
               BusinessContact(
                 customerCareController: _controller.customerCareController,

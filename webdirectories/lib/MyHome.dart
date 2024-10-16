@@ -24,13 +24,13 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: MyUtility(context).width < 600
-              ? MobilePage1()
-              : PanelBeatersHome() // Page1(),
-          //   child: Services(
-          // listingId: '396',
-          // )
-          ),
+        child: MyUtility(context).width < 600
+            ? MobilePage1()
+            : Page1(), //PanelBeatersHome()
+        //   child: Services(
+        // listingId: '396',
+        // )
+      ),
     );
   }
 }
