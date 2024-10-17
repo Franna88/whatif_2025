@@ -72,8 +72,7 @@ class _EditMapState extends State<EditMap> {
     });
   }
 
-//43 Cobham drive kibler park Johannesburg
-  checkSubscription() {
+  getGeoCoordFromAdd() {
     return http.get(
       Uri.parse(
           'https://maps.googleapis.com/maps/api/geocode/json?address=${searchResults.text}&region=es&key=AIzaSyBFFemx-2r0ZkP7T05pJo2nIjV_RB9R_VE'),
@@ -81,7 +80,7 @@ class _EditMapState extends State<EditMap> {
   }
 
   getCoordFromAddress() async {
-    final response = await checkSubscription();
+    final response = await getGeoCoordFromAdd();
 
     final decode =
         jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;

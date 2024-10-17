@@ -66,6 +66,7 @@ dependencies:
   dart_ipify: ^1.1.1
   geocode: ^1.0.3
   geocoding: ^3.0.0
+  excel: ^4.0.6
   
 
 dev_dependencies:

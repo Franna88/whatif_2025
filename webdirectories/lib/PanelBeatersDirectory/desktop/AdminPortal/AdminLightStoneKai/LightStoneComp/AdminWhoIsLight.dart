@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LightStone/LightStone/WhoIsLightStone/WhoIsLightStoneComp/columnContainer.dart';
 import 'package:webdirectories/myutility.dart';
@@ -30,41 +31,47 @@ class _AdminWhoisLightState extends State<AdminWhoisLight> {
         SizedBox(
           width: MyUtility(context).width * 0.37,
           height: MyUtility(context).height * 0.165,
-          child: Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text:
-                      'The Lightstone EchoMBR Rankings are informed by data collected through actual customer feedback. Lightstone identifies auto body repairers that perform well. These results give the South African consumer trustworthy choices during an inherently difficult period after a motor accident.',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15.64,
-                    fontFamily: 'raleway',
-                    fontWeight: FontWeight.w400,
+          child: GestureDetector(
+            onTap: () async {
+              final Uri uri = Uri.parse("https://corporate.lightstone.co.za/");
+              await launchUrl(uri);
+            },
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text:
+                        'The Lightstone EchoMBR Rankings are informed by data collected through actual customer feedback. Lightstone identifies auto body repairers that perform well. These results give the South African consumer trustworthy choices during an inherently difficult period after a motor accident.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.64,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text: ' ',
-                  style: TextStyle(
-                    color: Color(0xFF0BA3F9),
-                    fontSize: MyUtility(context).width * 0.012,
-                    fontFamily: 'raleway',
-                    fontWeight: FontWeight.w400,
+                  TextSpan(
+                    text: ' ',
+                    style: TextStyle(
+                      color: Color(0xFF0BA3F9),
+                      fontSize: MyUtility(context).width * 0.012,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text: '(Click to Read More).',
-                  style: TextStyle(
-                    color: Color(0xFFFF8728),
-                    fontSize: MyUtility(context).width * 0.012,
-                    fontFamily: 'raleway',
-                    fontWeight: FontWeight.w400,
-                    decoration: TextDecoration.underline,
+                  TextSpan(
+                    text: '(Click to Read More).',
+                    style: TextStyle(
+                      color: Color(0xFFFF8728),
+                      fontSize: MyUtility(context).width * 0.012,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+              textAlign: TextAlign.justify,
             ),
-            textAlign: TextAlign.justify,
           ),
         ),
         ColumnContainer(
@@ -91,12 +98,12 @@ class _AdminWhoisLightState extends State<AdminWhoisLight> {
             'Repair Quality'
           ],
           section3Texts: [
-            widget.data['lightstoneScore'].toString(),
+            widget.data['keyAttIndex'].toString(),
             widget.data['frft'].toString(),
             widget.data['advocacy'].toString(),
             widget.data['staff'].toString(),
-            widget.data['consultant'].toString(),
-            widget.data['opportunityInspect'].toString(),
+            widget.data['keptInformed'].toString(),
+            widget.data['opportunityToInspect'].toString(),
             widget.data['vehicleCleanliness'].toString(),
             widget.data['rot'].toString(),
             widget.data['repairQuality'].toString(),
@@ -105,7 +112,12 @@ class _AdminWhoisLightState extends State<AdminWhoisLight> {
         Padding(
           padding: const EdgeInsets.only(top: 25),
           child: AddButton(
-              text: 'Login to Lightstone EchoMBR Portal', onPressed: () {}),
+              text: 'Login to Lightstone EchoMBR Portal',
+              onPressed: () async {
+                final Uri uri = Uri.parse(
+                    "https://www.lightstoneproperty.co.za/content/login.aspx");
+                await launchUrl(uri);
+              }),
         )
       ],
     );

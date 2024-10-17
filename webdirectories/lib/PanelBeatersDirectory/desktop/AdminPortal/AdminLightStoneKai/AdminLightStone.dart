@@ -79,9 +79,9 @@ class _AdminLightStoneState extends State<AdminLightStone> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               AdminLightEco(
-                                percentage: data.containsKey('lightstoneScore')
-                                    ? data['lightstoneScore'].toString()
-                                    : '89', // Default value if key is missing or data is null
+                                percentage: data.containsKey('keyAttIndex')
+                                    ? data['keyAttIndex'].toString()
+                                    : '50', // Default value if key is missing or data is null
                               ),
                               AdminWhoisLight(
                                 data: data,

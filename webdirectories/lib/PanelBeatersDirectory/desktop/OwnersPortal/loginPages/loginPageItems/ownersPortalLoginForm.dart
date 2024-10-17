@@ -9,6 +9,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 
+import '../../../../../SuperAdmin/superAdmin.dart';
+
 class OwnersPortalLoginForm extends StatefulWidget {
   const OwnersPortalLoginForm({super.key});
 
@@ -38,6 +40,26 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
         }));
   }
 
+  checkUserAdmin(user) async {
+    QuerySnapshot<Map<String, dynamic>> userDoc = await _firestore
+        .collection('listings')
+        .where('authId', isEqualTo: user.uid.toString())
+        .limit(1)
+        .get();
+
+    if (userDoc.docs.isNotEmpty) {
+      if (userDoc.docs.first.data()['admin'] != null) {
+        return // Navigate to admin screen
+            Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Material(child: SuperAdmin()),
+          ),
+        );
+      }
+    }
+  }
+
   Future<void> _login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -65,6 +87,9 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
               .get();
 
           if (userDoc.docs.isNotEmpty) {
+//check if user admin
+            await checkUserAdmin(user);
+
             QuerySnapshot<Map<String, dynamic>> listingAllocationSnapshot =
                 await _firestore
                     .collection('listing_allocation')

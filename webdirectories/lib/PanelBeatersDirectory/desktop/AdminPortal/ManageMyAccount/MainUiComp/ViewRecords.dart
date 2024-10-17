@@ -1,8 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageMyAccount/ManageComponents/AccountDatePicker.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../AdminProfile/ProfileComp/TextField/ProfileTextField.dart';
+import '../../AdminProfile/ProfileComp/buttons/AddButton.dart';
+import '../../PopUps/PopUpsCommon/PopUpsDropdown.dart';
 import '../ManageComponents/AccountLongTextField.dart';
+import 'invoiceList.dart';
+import 'package:http/http.dart' as http;
 
 class ViewRecords extends StatefulWidget {
   const ViewRecords({super.key});
@@ -12,10 +20,39 @@ class ViewRecords extends StatefulWidget {
 }
 
 class _ViewRecordsState extends State<ViewRecords> {
+  getRegKeyForBillDozer() {
+    return http.get(
+      Uri.parse(
+          'https://secure.billdozer.com/api/rest/portaluser/registrationkey/tny@applord.co.za'),
+      headers: {
+        'apiKey': 'cacd3efb-518e-4711-bb7d-2da461a9dfaf',
+        'password': 'bills',
+        'page': '1',
+        'perPage': '10',
+        'type': 'INVOICE',
+        'rfromDateTime': '2015-06-01T00:00:00UTC',
+        'accountNumber': 'GT260'
+      },
+    );
+  }
+
+  displayInvoices() async {
+    final response = await getRegKeyForBillDozer();
+
+    final decode =
+        jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    print(decode);
+    if (decode['status'] == "OK") {
+      var url = Uri.parse(
+          "https://secure.billdozer.com/portal/pages/secure/view?registrationKey=${decode['id']}");
+      launchUrl(url);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MyUtility(context).height * 0.42,
+      // height: MyUtility(context).height * 0.42,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -62,7 +99,21 @@ class _ViewRecordsState extends State<ViewRecords> {
               hintText:
                   'Please select date to view or download your statements',
             ),
+          ),
+          Row(
+            children: [
+              AddButton(
+                  text: "View Invoices",
+                  onPressed: () {
+                    displayInvoices();
+                  }),
+            ],
+          ),
+          SizedBox(
+            height: 15,
           )
+
+          //InvoiceList(),
         ],
       ),
     );

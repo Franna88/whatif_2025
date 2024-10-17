@@ -9,6 +9,8 @@ import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPageCompo
 import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPageComponents/categorySelect.dart';
 import 'package:webdirectories/WebDirectories/Page1/PartnerWithUs/PartnerWithUs.dart';
 
+import '../../SuperAdmin/superAdmin.dart';
+
 class Page1 extends StatefulWidget {
   const Page1({super.key});
 
@@ -24,8 +26,9 @@ class _Page1State extends State<Page1> {
           /**/ Column(
         children: [
           AdminPortal(),
+          // SuperAdmin(),
           // CategorySelect(),
-          /* LandingPageDisPlay(),
+          /*  LandingPageDisPlay(),
           PartnerWithUs(),
           AboutUs(),
           JoinUs(),

@@ -10,6 +10,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/SideNav
 import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../models/storedUser.dart';
+import '../../../utils/loginUtils.dart';
 import '../AdminJobFinder/JobFinderDetails.dart';
 import '../Advertisement/AdvertisementAlt.dart';
 import '../ContactUsPage/OwnersContactUs.dart';
@@ -33,7 +35,9 @@ class SideNavBar extends StatefulWidget {
 
 class _SideNavBarState extends State<SideNavBar> {
   final PageController _pageController = PageController(initialPage: 0);
+  final _firestore = FirebaseFirestore.instance;
   int _selectedIndex = 0;
+  Map<String, dynamic> lightstoneData = {};
 
   var jobDetails = JobFinderModel(
     name: '',
@@ -65,6 +69,52 @@ class _SideNavBarState extends State<SideNavBar> {
     });
   }
 
+  getLightStoneData() async {
+    print("LightSTONE");
+    StoredUser? user = await getUserInfo();
+    print(user!.id);
+    if (user != null) {
+      print("USER SUCCESSSSSS");
+      int listingIdInt = int.parse(user.id);
+
+      // Fetch registration data in parallel
+      final futures = await Future.wait([
+        _firestore
+            .collection('registration_numbers')
+            .where('listingsId', isEqualTo: listingIdInt)
+            .get(),
+      ]);
+
+      final registrationDataSnapshot = futures[0] as QuerySnapshot;
+      List<Map<String, dynamic>> registrationData = registrationDataSnapshot
+          .docs
+          .map((doc) => doc.data() as Map<String, dynamic>)
+          .toList();
+
+      List<Map<String, dynamic>> filteredRegistrationData =
+          registrationData.where((e) => e['registrationTypeId'] == 8).toList();
+
+      print("REGISTERLight");
+      print(filteredRegistrationData[0]['registrationNumbers']);
+      if (registrationDataSnapshot.docs.isNotEmpty) {
+        QuerySnapshot lightstoneSnapshot = await _firestore
+            .collection('lightstone')
+            .where('brid',
+                isEqualTo: (filteredRegistrationData[0]['registrationNumbers'])
+                    .toString())
+            .limit(1)
+            .get();
+        print(lightstoneSnapshot.docs[0]['brid']);
+        if (lightstoneSnapshot.docs.isNotEmpty) {
+          setState(() {
+            lightstoneData =
+                lightstoneSnapshot.docs.first.data() as Map<String, dynamic>;
+          });
+        }
+      }
+    }
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -77,6 +127,12 @@ class _SideNavBarState extends State<SideNavBar> {
       _selectedIndex = index;
     });
     _pageController.jumpToPage(index);
+  }
+
+  @override
+  void initState() {
+    getLightStoneData();
+    super.initState();
   }
 
   @override
@@ -98,7 +154,7 @@ class _SideNavBarState extends State<SideNavBar> {
       ),
       //JobFinderDetails(),
       AdminLightStone(
-        data: null,
+        data: lightstoneData,
       ),
       PerformanceAndStats(),
       OwnersContactUs(),
@@ -249,7 +305,7 @@ class _SideNavBarState extends State<SideNavBar> {
                   controller: _pageController,
                   children: pages,
                 ),
-              ),
+              ), /**/
             ],
           ),
         ),
