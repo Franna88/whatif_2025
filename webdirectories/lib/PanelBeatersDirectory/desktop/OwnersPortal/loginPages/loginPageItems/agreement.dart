@@ -40,46 +40,56 @@ class _AgreementState extends State<Agreement> {
   String paystackUrl = "";
   String paymentStatus = "";
 
+  final selectedAgreement = TextEditingController();
+
   getPaystackUrl() {
     switch (widget.membershipType) {
       case "StarterM":
         setState(() {
           paystackUrl = "";
+          selectedAgreement.text = "Starter Monthly";
         });
         break;
       case "StarterA":
         setState(() {
           paystackUrl = "";
+          selectedAgreement.text = "Starter Annual";
         });
         break;
       case "CoreM":
         setState(() {
           paystackUrl = "https://paystack.com/pay/dmpdqvg0yl";
+          selectedAgreement.text = "Core Monthly";
         });
         break;
       case "CoreA":
         setState(() {
           paystackUrl = "https://paystack.com/pay/9u-s87qg5-";
+          selectedAgreement.text = "Core Annual";
         });
         break;
       case "PremiumM":
         setState(() {
           paystackUrl = "https://paystack.com/pay/9ogv5c2nn2";
+          selectedAgreement.text = "Premium Monthly";
         });
         break;
       case "PremiumA":
         setState(() {
           paystackUrl = "https://paystack.com/pay/2v2fce2k-c";
+          selectedAgreement.text = "Premium Annual";
         });
         break;
       case "Premium+M":
         setState(() {
           paystackUrl = "https://paystack.com/pay/98jc3yw4yg";
+          selectedAgreement.text = "Premium + Monthly";
         });
         break;
       case "Premium+A":
         setState(() {
           paystackUrl = "https://paystack.com/pay/lg1hrdqwba";
+          selectedAgreement.text = "Premium + Annual";
         });
         break;
 
@@ -531,7 +541,7 @@ class _AgreementState extends State<Agreement> {
                             AgreementTextField(
                               hintText: '',
                               width: 1110,
-                              controller: TextEditingController(),
+                              controller: selectedAgreement,
                             ),
                             SizedBox(
                               height: 20,

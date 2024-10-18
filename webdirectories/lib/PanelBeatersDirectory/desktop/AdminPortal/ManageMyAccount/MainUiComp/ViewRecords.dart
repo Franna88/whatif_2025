@@ -20,6 +20,29 @@ class ViewRecords extends StatefulWidget {
 }
 
 class _ViewRecordsState extends State<ViewRecords> {
+  getClientListFromBilDozer() {
+    return http.get(
+      Uri.parse('https://secure.billdozer.com/api/rest/client/list'),
+      headers: {
+        'apiKey': 'cacd3efb-518e-4711-bb7d-2da461a9dfaf',
+        'password': 'bills',
+        'page': '1',
+        'perPage': '100',
+        'type': 'INVOICE',
+        'rfromDateTime': '2015-06-01T00:00:00UTC',
+        'emailAddress': 'tny@applord.co.za'
+      },
+    );
+  }
+
+  displayData() async {
+    final response = await getClientListFromBilDozer();
+
+    final decode =
+        jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    print(decode);
+  }
+
   getRegKeyForBillDozer() {
     return http.get(
       Uri.parse(
@@ -105,7 +128,7 @@ class _ViewRecordsState extends State<ViewRecords> {
               AddButton(
                   text: "View Invoices",
                   onPressed: () {
-                    displayInvoices();
+                    displayData();
                   }),
             ],
           ),

@@ -168,7 +168,7 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                       child: Text(
                         widget.description,
                         style: TextStyle(
-                            fontSize: MyUtility(context). width < 1500 ? 16 : 18,
+                            fontSize: MyUtility(context).width < 1500 ? 16 : 18,
                             fontFamily: 'raleway',
                             color: const Color.fromARGB(255, 255, 255, 255)),
                         textAlign: TextAlign.center,
@@ -183,13 +183,13 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
-
                   ),
-                  
+
                   // width: MediaQuery.of(context).size.width * 0.1,
                   // height: MediaQuery.of(context).size.height * 0.05,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: TextButton(
                       onPressed: () {
                         widget.Title2 == "WATIF"

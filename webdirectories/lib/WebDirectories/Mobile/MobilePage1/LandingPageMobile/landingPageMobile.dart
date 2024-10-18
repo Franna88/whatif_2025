@@ -156,9 +156,7 @@ class _LandingPageMobileState extends State<LandingPageMobile>
             menuIndex: menuIndex,
             changeMenu: changeMenu,
             url: directoriesInfo[menuIndex]['url'],
-            onpress: () {
-              ;
-            },
+            onpress: () {},
             pageController: _pageController,
           ),
           // Uncomment the code below if CircleTextBoxMobile is needed

@@ -15,6 +15,7 @@ import 'package:webdirectories/myutility.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:excel/excel.dart';
 
+import '../../PanelBeatersDirectory/desktop/AdminPortal/CommonReuseable/IconSearchBox.dart';
 import 'ui/lightStoneContainer.dart';
 
 class LightStoneExcelProcess extends StatefulWidget {
@@ -30,7 +31,7 @@ class _LightStoneExcelProcessState extends State<LightStoneExcelProcess> {
   var selectedExcel;
   var uploadStatus = "";
   final search = TextEditingController();
-
+  String _searchQuery = '';
 //remove old data in Firebase
   removeOldData() {
     setState(() {
@@ -140,15 +141,23 @@ class _LightStoneExcelProcessState extends State<LightStoneExcelProcess> {
   }
 
   getSearchValue(document) {
-    if ((search.text) == "") {
+    if ((_searchQuery) == "") {
       return true;
-    } else if ((search.text.toLowerCase())
-            .contains(document['mbrCompanyName'].split(",")[0].toLowerCase()) ||
-        (search.text.toLowerCase()).contains(document['brid'].toLowerCase())) {
+    } else if ((_searchQuery.toLowerCase())
+            .contains(document['mbrCompanyName'].toLowerCase()) ||
+        (_searchQuery.toLowerCase()).contains(document['brid'].toLowerCase()) ||
+        (_searchQuery.toLowerCase())
+            .contains(document['mbrTradingName'].toLowerCase())) {
       return true;
     } else {
       return false;
     }
+  }
+
+  void _onSearchChanged(String query) {
+    setState(() {
+      _searchQuery = query;
+    });
   }
 
   @override
@@ -224,8 +233,8 @@ class _LightStoneExcelProcessState extends State<LightStoneExcelProcess> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconSearchBoxB(
-                        search: search,
+                      IconSearchBox(
+                        onChanged: _onSearchChanged,
                       ),
                     ],
                   ),

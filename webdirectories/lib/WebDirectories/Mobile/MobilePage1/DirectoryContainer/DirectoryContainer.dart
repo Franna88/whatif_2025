@@ -198,14 +198,14 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                               builder: (context) => Material(
                                     child: MobilePage3(),
                                   )))
-                      : widget.Title1 == "PANEL BEATER\n"
+                      /* : widget.Title1 == "PANEL BEATER\n"
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Material(
                                         child: MobileView(),
-                                      )))
-                          : goToLink(widget.url);
+                                      )))*/
+                      : goToLink(widget.url);
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.white,
