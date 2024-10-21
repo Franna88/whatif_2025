@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../ProfileSocialIconContactMobile.dart';
 
 class ProfileSocialsMobile extends StatefulWidget {
-  const ProfileSocialsMobile({super.key});
+  final Map<String, String> socialsLinks;
+  const ProfileSocialsMobile({super.key, required this.socialsLinks});
 
   @override
   State<ProfileSocialsMobile> createState() => _ProfileSocialsMobileState();
@@ -12,6 +13,11 @@ class ProfileSocialsMobile extends StatefulWidget {
 class _ProfileSocialsMobileState extends State<ProfileSocialsMobile> {
   @override
   Widget build(BuildContext context) {
+    /*
+     'telephone': listingData['businessTelephone'],
+            'email': listingData['businessEmail'],
+            'whatsapp': listingData['whatsappNumber'],
+     */
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

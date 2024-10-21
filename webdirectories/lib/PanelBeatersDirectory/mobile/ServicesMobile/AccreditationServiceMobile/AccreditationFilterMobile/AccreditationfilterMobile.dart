@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../../desktop/Services/AccreditationService/AccreditationFilter/AccreditationFilterComp/FilterButton.dart';
 import '../AccreditationImageContainerMobile/AccreditationImageContainerMobile.dart';
 import 'AccreditationFilterCompMobile/FilterButtonMobile.dart';
 
 class AccreditationfilterMobile extends StatefulWidget {
-  const AccreditationfilterMobile({super.key});
+  final String? selectedFilter;
+  final void Function(String filter) onFilterSelected;
+  final List<String> filterOptions;
+  const AccreditationfilterMobile(
+      {Key? key,
+      required this.onFilterSelected,
+      required this.filterOptions,
+      this.selectedFilter})
+      : super(key: key);
 
   @override
   State<AccreditationfilterMobile> createState() =>
@@ -14,6 +23,11 @@ class AccreditationfilterMobile extends StatefulWidget {
 
 class _AccreditationfilterMobileState extends State<AccreditationfilterMobile> {
   final ValueNotifier<int?> _selectedIndex = ValueNotifier<int?>(null);
+  String? _selectedFilter;
+
+  void _onFilterSelected(String filter) {
+    widget.onFilterSelected(filter);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +68,17 @@ class _AccreditationfilterMobileState extends State<AccreditationfilterMobile> {
                   ),
                 ],
               ),
-              FilterButtonMobile(
-                index: 0,
-                servicesText: 'Specialist Services',
-                content: AccreditationImageContainerMobile(),
-                selectedIndexNotifier: _selectedIndex,
-              ),
-              FilterButtonMobile(
+              Column(
+                children: widget.filterOptions
+                    .map((filter) => FilterButtonMobile(
+                          servicesText: filter,
+                          onFilterSelected: _onFilterSelected,
+                          isSelected: widget.selectedFilter == filter,
+                        ))
+                    .toList(),
+              )
+
+              /* FilterButtonMobile(
                 index: 1,
                 servicesText: 'Insurance Panels',
                 content: AccreditationImageContainerMobile(),
@@ -113,7 +131,7 @@ class _AccreditationfilterMobileState extends State<AccreditationfilterMobile> {
                 servicesText: 'Finance Options',
                 content: AccreditationImageContainerMobile(),
                 selectedIndexNotifier: _selectedIndex,
-              ),
+              ),*/
             ],
           ),
         ),

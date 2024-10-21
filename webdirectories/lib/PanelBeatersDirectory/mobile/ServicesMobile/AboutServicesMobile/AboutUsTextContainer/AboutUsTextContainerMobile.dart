@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'package:webdirectories/myutility.dart';
 
 class AboutUsTextContainerMobile extends StatefulWidget {
-  const AboutUsTextContainerMobile({super.key});
+  final String aboutUsText;
+  const AboutUsTextContainerMobile({super.key, required this.aboutUsText});
 
   @override
   State<AboutUsTextContainerMobile> createState() =>
@@ -14,6 +16,7 @@ class AboutUsTextContainerMobile extends StatefulWidget {
 
 class _AboutUsTextContainerMobileState
     extends State<AboutUsTextContainerMobile> {
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,14 +52,22 @@ class _AboutUsTextContainerMobileState
             ),
             SizedBox(
               width: MyUtility(context).width * 0.72,
-              child: Text(
-                'N4 Autocraft Panelbeaters was established in 1983 and is based in George, Western Cape. With our 38 years of experience, N4 Autocraft Panelbeaters is a trusted collision repair specialist, specializing in panel beating, spray painting, and major structural repairs. We provide a full-service offering to repair all motor vehicle types and are RMI and insurance approved. Throughout our history, a key aspect ofN4 Autocraft philosophy has been to acquire and maintain a reputation for high-quality customer service. Honesty, integrity, and quality are the 3 pillars on which the company is built and will remain the pillars as the company continues to grow.',
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.64,
-                  fontFamily: 'Raleway',
-                  fontWeight: FontWeight.w400,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 35),
+                child: Html(
+                  data: widget.aboutUsText == ''
+                      ? '<p>No more information found<p>'
+                      : widget.aboutUsText,
+                  style: {
+                    "h1": Style(
+                      color: Colors.white,
+                      fontFamily: 'raleway',
+                    ),
+                    "p": Style(
+                      color: Colors.white,
+                      fontFamily: 'raleway',
+                    ),
+                  },
                 ),
               ),
             )

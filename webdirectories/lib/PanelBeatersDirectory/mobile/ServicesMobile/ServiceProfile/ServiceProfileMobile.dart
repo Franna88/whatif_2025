@@ -5,7 +5,14 @@ import 'ServiceProfileComp/ProfileIconContact/ProfileIconConactButton/ProfileSoc
 import 'ServiceProfileComp/ProfileTextContainerMobile.dart';
 
 class ServiceProfileMobile extends StatefulWidget {
-  const ServiceProfileMobile({super.key});
+  final List<String> imagesData;
+  final Map<String, String> linkData;
+  final Map<String, String> contactData;
+  const ServiceProfileMobile(
+      {super.key,
+      required this.imagesData,
+      required this.linkData,
+      required this.contactData});
 
   @override
   State<ServiceProfileMobile> createState() => _ServiceProfileMobileState();
@@ -19,14 +26,17 @@ class _ServiceProfileMobileState extends State<ServiceProfileMobile> {
         SizedBox(
           height: 20,
         ),
-        ImageScrollContainerMobile(),
+        ImageScrollContainerMobile(images: widget.imagesData),
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(child: ProfileSocialsMobile()),
-              ProfileTextContainerMobile(),
+              Center(
+                  child: ProfileSocialsMobile(socialsLinks: widget.linkData)),
+              ProfileTextContainerMobile(
+                contactData: widget.contactData,
+              ),
             ],
           ),
         )

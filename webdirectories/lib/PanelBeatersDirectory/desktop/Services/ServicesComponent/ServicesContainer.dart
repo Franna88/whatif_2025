@@ -9,6 +9,7 @@ class ServiceFeaturedContainer extends StatefulWidget {
   final String businessName;
   final String businessAddress;
   final VoidCallback OnPressed;
+  final VoidCallback navigateMe;
   final String views;
   final String distance;
 
@@ -18,6 +19,7 @@ class ServiceFeaturedContainer extends StatefulWidget {
       required this.businessName,
       required this.businessAddress,
       required this.OnPressed,
+      required this.navigateMe,
       required this.views,
       required this.distance})
       : super(key: key);
@@ -128,7 +130,9 @@ class _ServiceFeaturedContainerState extends State<ServiceFeaturedContainer> {
               height: 18,
               width: 157.76,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.navigateMe();
+                },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),

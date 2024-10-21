@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../../../desktop/Services/AboutServices/AboutUsLeftConten/AboutUsLeftContentComp/SvgPictureButton.dart';
 import 'SvgPictureButtonMobile.dart';
 
 class SocialIconsMobile extends StatefulWidget {
-  const SocialIconsMobile({super.key});
+  final List<Map<String, dynamic>> socialIconsList;
+  const SocialIconsMobile({super.key, required this.socialIconsList});
 
   @override
   State<SocialIconsMobile> createState() => _SocialIconsMobileState();
@@ -19,16 +21,31 @@ class _SocialIconsMobileState extends State<SocialIconsMobile> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPictureButtonMobile(imagePath: 'images/xt.svg', onPress: () {}),
-          SvgPictureButtonMobile(
-              imagePath: 'images/facebook.svg', onPress: () {}),
-          SvgPictureButtonMobile(imagePath: 'images/insta.svg', onPress: () {}),
-          SvgPictureButtonMobile(
-              imagePath: 'images/youtube.svg', onPress: () {}),
-          SvgPictureButtonMobile(imagePath: 'images/in.svg', onPress: () {}),
-          SvgPictureButtonMobile(
-              imagePath: 'images/tictok.svg', onPress: () {}),
-          SvgPictureButtonMobile(imagePath: 'images/xt.svg', onPress: () {}),
+          ...widget.socialIconsList.map((e) {
+            switch (e['linkTitle']) {
+              case 'Facebook':
+                return SvgPictureButtonMobile(
+                    imagePath: 'images/facebook.svg', onPress: () {});
+              case 'Instagram':
+                return SvgPictureButtonMobile(
+                    imagePath: 'images/insta.svg', onPress: () {});
+              case 'Youtube':
+                return SvgPictureButtonMobile(
+                    imagePath: 'images/youtube.svg', onPress: () {});
+              case 'LinkedIn':
+                return SvgPictureButtonMobile(
+                    imagePath: 'images/in.svg', onPress: () {});
+              case 'TikTok':
+                return SvgPictureButtonMobile(
+                    imagePath: 'images/tictok.svg', onPress: () {});
+              case 'Twitter':
+                return SvgPictureButtonMobile(
+                    imagePath: 'images/xt.svg', onPress: () {});
+              default:
+                return SvgPictureButtonMobile(
+                    imagePath: 'images/xt.svg', onPress: () {});
+            }
+          }).toList(),
         ],
       ),
     );

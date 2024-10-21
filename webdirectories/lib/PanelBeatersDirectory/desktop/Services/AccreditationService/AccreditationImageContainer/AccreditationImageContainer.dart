@@ -35,9 +35,14 @@ class _AccreditationImageContainerState
 
   @override
   Widget build(BuildContext context) {
+    var isMobile = MyUtility(context).width < 600;
     return Container(
-      width: MyUtility(context).width * 0.42,
-      height: MyUtility(context).height * 0.715,
+      width: isMobile
+          ? MyUtility(context).width - 25
+          : MyUtility(context).width * 0.42,
+      height: isMobile
+          ? MyUtility(context).height * 0.45
+          : MyUtility(context).height * 0.715,
       decoration: ShapeDecoration(
         color: Color(0xFF181B1D),
         shape: RoundedRectangleBorder(
@@ -56,8 +61,8 @@ class _AccreditationImageContainerState
           alwaysVisibleScrollThumb: true,
           child: GridView.builder(
             controller: _scrollController,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4, // Number of columns in the grid
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: isMobile ? 2 : 4, // Number of columns in the grid
               childAspectRatio: 3 / 3, // Aspect ratio for each grid item
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,

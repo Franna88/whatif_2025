@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/DocumentsServicesMobile/ViewDocumentsMobile/ViewDocumentscompMobile/DocumentButton.dart';
 import 'package:webdirectories/myutility.dart';
 
 class ViewDocumentsMobile extends StatefulWidget {
-  const ViewDocumentsMobile({Key? key}) : super(key: key);
+  final int id;
+  const ViewDocumentsMobile({Key? key, required this.id}) : super(key: key);
 
   @override
   State<ViewDocumentsMobile> createState() => _ViewDocumentsMobileState();
@@ -13,11 +15,39 @@ class ViewDocumentsMobile extends StatefulWidget {
 class _ViewDocumentsMobileState extends State<ViewDocumentsMobile> {
   late ScrollController _scrollController;
   int? selectedIndex;
+  final _firestore = FirebaseFirestore.instance;
+  List<Map<String, dynamic>> _documentData = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    _fetchDocuments();
+  }
+
+  Future<void> _fetchDocuments() async {
+    try {
+      QuerySnapshot documentsSnapshot = await _firestore
+          .collection('listings_documents')
+          .where('listingsId', isEqualTo: widget.id)
+          .get();
+
+      if (documentsSnapshot.docs.isNotEmpty) {
+        List<Map<String, dynamic>> documentsData = documentsSnapshot.docs
+            .map((doc) => doc.data() as Map<String, dynamic>)
+            .toList();
+        setState(() {
+          _documentData = documentsData;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error fetching documents: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   void _handleDocumentSelection(int index) {
@@ -50,28 +80,56 @@ class _ViewDocumentsMobileState extends State<ViewDocumentsMobile> {
             children: [
               Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: SizedBox(
-                      width: 1065,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'View Available Documents:',
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.9),
-                              fontSize: 20.4,
-                              fontFamily: 'raleway',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          ),
-                        ],
+                  Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: SizedBox(
+                        width: 1065,
+                        child: _isLoading
+                            ? SizedBox(
+                                height: MyUtility(context).height * 0.8,
+                                child: Center(
+                                  child: SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ))
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'View Available Documents:',
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.9),
+                                      fontSize: 20.4,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ],
+                              ),
                       ),
                     ),
-                  ),
-                  DocumentButtonMobile(
+                    ..._documentData
+                        .map(
+                          (doc) => DocumentButtonMobile(
+                            documentText: doc['documentTitle'],
+                            isSelected: selectedIndex == 0,
+                            onPressedDownload: () {},
+                            onPressPreview: () {},
+                            onTap: () {
+                              _handleDocumentSelection(
+                                  _documentData.indexOf(doc));
+                            },
+                          ),
+                        )
+                        .toList()
+                  ]),
+                  /*   DocumentButtonMobile(
                     documentText: 'B-BBEE Verification Level 1',
                     isSelected: selectedIndex == 0,
                     onPressedDownload: () {},
@@ -179,7 +237,7 @@ class _ViewDocumentsMobileState extends State<ViewDocumentsMobile> {
                     onTap: () {
                       _handleDocumentSelection(11);
                     },
-                  ),
+                  ),*/
                 ],
               ),
             ],

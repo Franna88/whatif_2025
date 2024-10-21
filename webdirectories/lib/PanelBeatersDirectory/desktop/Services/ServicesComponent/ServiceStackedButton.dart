@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class ServicesStackedButton extends StatefulWidget {
   final VoidCallback showFeatured;
   final VoidCallback showOther;
+  final bool isFeaturedSelected;
 
-  const ServicesStackedButton({
-    Key? key,
-    required this.showFeatured,
-    required this.showOther,
-  }) : super(key: key);
+  const ServicesStackedButton(
+      {Key? key,
+      required this.showFeatured,
+      required this.showOther,
+      required this.isFeaturedSelected})
+      : super(key: key);
 
   @override
   _ServicesStackedButtonState createState() => _ServicesStackedButtonState();
@@ -35,8 +37,9 @@ class _ServicesStackedButtonState extends State<ServicesStackedButton> {
                 widget.showOther();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    isFeaturedSelected ? Colors.black : Color(0xFFFF8728),
+                backgroundColor: widget.isFeaturedSelected
+                    ? Colors.black
+                    : Color(0xFFFF8728),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
@@ -45,7 +48,8 @@ class _ServicesStackedButtonState extends State<ServicesStackedButton> {
               child: Text(
                 'Other',
                 style: TextStyle(
-                  color: isFeaturedSelected ? Colors.white : Colors.black,
+                  color:
+                      widget.isFeaturedSelected ? Colors.white : Colors.black,
                   fontSize: 20.4,
                   fontFamily: 'raleway',
                   fontWeight: FontWeight.w400,
@@ -65,8 +69,9 @@ class _ServicesStackedButtonState extends State<ServicesStackedButton> {
                 widget.showFeatured();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    isFeaturedSelected ? Color(0xFFFF8728) : Colors.black,
+                backgroundColor: widget.isFeaturedSelected
+                    ? Color(0xFFFF8728)
+                    : Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
@@ -75,7 +80,8 @@ class _ServicesStackedButtonState extends State<ServicesStackedButton> {
               child: Text(
                 'Featured',
                 style: TextStyle(
-                  color: isFeaturedSelected ? Colors.black : Colors.white,
+                  color:
+                      widget.isFeaturedSelected ? Colors.black : Colors.white,
                   fontSize: 20.4,
                   fontFamily: 'raleway',
                   fontWeight: FontWeight.w400,

@@ -35,54 +35,56 @@ class _CommentContainerState extends State<CommentContainer> {
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 4),
-                  child: StarRating(
-                    stars: widget.starRating,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 4),
+                    child: StarRating(
+                      stars: widget.starRating,
+                    ),
                   ),
-                ),
-                Text(
-                  '${widget.starRating} out of 5 stars',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MyUtility(context).width * 0.0105,
-                    fontFamily: 'raleway',
-                    fontWeight: FontWeight.w400,
+                  Text(
+                    '${widget.starRating} out of 5 stars',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: MyUtility(context).width * 0.0105,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Text(
-              '${widget.reviewName} - ${widget.reviewDate}',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: MyUtility(context).width * 0.0105,
-                fontFamily: 'ralewaysemi',
-                fontWeight: FontWeight.w600,
+                ],
               ),
-            ),
-            Container(
-              height: 100,
-              child: SingleChildScrollView(
-                child: Text(
-                  widget.review,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: MyUtility(context).width * 0.0105,
-                    fontFamily: 'raleway',
-                    fontWeight: FontWeight.w400,
-                  ),
+              Text(
+                '${widget.reviewName} - ${widget.reviewDate}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: MyUtility(context).width * 0.0105,
+                  fontFamily: 'ralewaysemi',
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-            )
-          ],
+              Container(
+                height: 100,
+                child: SingleChildScrollView(
+                  child: Text(
+                    widget.review,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: MyUtility(context).width * 0.0105,
+                      fontFamily: 'raleway',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

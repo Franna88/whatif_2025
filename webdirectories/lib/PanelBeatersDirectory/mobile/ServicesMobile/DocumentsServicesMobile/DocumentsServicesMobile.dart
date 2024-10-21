@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/DocumentsServicesMobile/ViewDocumentsMobile/ViewDocumentsMobile.dart';
 
 class DocumentsServicesMobile extends StatefulWidget {
-  const DocumentsServicesMobile({super.key});
+  final int listingsId;
+  const DocumentsServicesMobile({super.key, required this.listingsId});
 
   @override
   State<DocumentsServicesMobile> createState() =>
@@ -20,7 +21,7 @@ class _DocumentsServicesMobileState extends State<DocumentsServicesMobile> {
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
-          child: ViewDocumentsMobile(),
+          child: ViewDocumentsMobile(id: widget.listingsId),
         ),
       ],
     );

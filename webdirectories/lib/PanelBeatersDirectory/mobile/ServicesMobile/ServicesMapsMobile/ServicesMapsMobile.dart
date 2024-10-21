@@ -5,7 +5,16 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/Servi
 import 'package:webdirectories/myutility.dart';
 
 class ServicesMapsMobile extends StatefulWidget {
-  const ServicesMapsMobile({super.key});
+  final int listingId;
+  final String listingAddress;
+  final double listinglatitude;
+  final double listinglongitude;
+  const ServicesMapsMobile(
+      {super.key,
+      required this.listingId,
+      required this.listingAddress,
+      required this.listinglatitude,
+      required this.listinglongitude});
 
   @override
   State<ServicesMapsMobile> createState() => _ServicesMapsMobileState();
@@ -20,7 +29,10 @@ class _ServicesMapsMobileState extends State<ServicesMapsMobile> {
           SizedBox(
             height: 20,
           ),
-          MapsContainerMobile(),
+          MapsContainerMobile(
+              address: widget.listingAddress,
+              latitude: widget.listinglatitude,
+              longitude: widget.listinglongitude),
           Padding(
             padding: const EdgeInsets.only(bottom: 15),
             child: SizedBox(
@@ -38,7 +50,9 @@ class _ServicesMapsMobileState extends State<ServicesMapsMobile> {
               ),
             ),
           ),
-          BusinessHoursMobile(),
+          BusinessHoursMobile(
+            listingId: widget.listingId,
+          ),
           SizedBox(
             height: 20,
           ),

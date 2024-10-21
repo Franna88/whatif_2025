@@ -9,7 +9,11 @@ import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
 
 import 'package:dart_ipify/dart_ipify.dart';
 
+import 'WebDirectories/Page1/Page1.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+
 void main() async {
+  usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
@@ -33,8 +37,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const MyHome(),
+        '/panelTest': (context) => Material(child: PanelBeatersHome()),
+      },
       title: 'Web Directories',
-      home: const MyHome(),
     );
   }
 }

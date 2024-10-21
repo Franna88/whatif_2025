@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Locations/LocationFeaturedComponents/BuisnessImageContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServiceStackedButton.dart';
@@ -24,7 +25,7 @@ class ServicesFeatured extends StatefulWidget {
 
 class _ServicesFeaturedState extends State<ServicesFeatured> {
   bool showOtherServices = false;
-
+  final TextEditingController search = TextEditingController();
   late Future<List<Map<String, dynamic>>> _listingsFuture;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -82,7 +83,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
         .collection('listings')
         .where('featured', isEqualTo: 1)
         // .where('authId', isEqualTo: "QV7frChverVoYOCSpETX58jhVt33")
-        // .limit(5)
+        .limit(20)
         .get();
 
     List<Future<Map<String, dynamic>>> listingFutures =
@@ -93,6 +94,9 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
       if (imageUrl != null) {
         data['displayphoto'] = imageUrl;
       }
+      data['distance'] = _userPosition?.latitude != null
+          ? '${_calculateDistance(_userPosition?.latitude, _userPosition?.longitude, data['latitude'], data['longitude'])}'
+          : '0 km';
       return data;
     }).toList();
 
@@ -102,6 +106,8 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
     // Filter out listings with null displayphoto
     listings =
         listings.where((listing) => listing['displayphoto'] != null).toList();
+
+    //  listings.sort((a, b) => a['distance'].compareTo(b['distance']));
 
     return listings;
   }
@@ -116,6 +122,21 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
     setState(() {
       showOtherServices = true;
     });
+  }
+
+//filter data on search value
+  getSearchValue(document) {
+    var title = document['title'].split(' ');
+
+    if ((search.text) == "") {
+      return true;
+    } else if ((search.text).contains(title[0])) {
+      return true;
+    } else if (title[1] != null && (search.text).contains(title[1])) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -146,6 +167,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                               ServicesStackedButton(
                                 showFeatured: toggleToFeatured,
                                 showOther: toggleToOther,
+                                isFeaturedSelected: true,
                               ),
                               Row(
                                 children: [
@@ -185,7 +207,10 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                 ],
                               ),
                               child: TextField(
-                                controller: TextEditingController(),
+                                controller: search,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: 'Search Featured',
                                   hintStyle: TextStyle(
@@ -269,31 +294,41 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                     Map<String, dynamic> listing =
                                         listings[index];
 
-                                    return ServiceFeaturedContainer(
-                                      businessImage: listing['displayphoto'],
-                                      businessName: listing['title'],
-                                      businessAddress: listing['postaladdress'],
-                                      OnPressed: () {
-                                        storage.write(
-                                            key: 'id',
-                                            value: listing['listingsId']
-                                                .toString());
-                                        storage.write(
-                                            key: 'title',
-                                            value: listing['title'].toString());
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => Services(
-                                                  listingId:
-                                                      (listing['listingsId'])
-                                                          .toString())),
-                                        );
-                                      },
-                                      views: '${200 + Random().nextInt(801)}',
-                                      distance: _userPosition?.latitude != null
-                                          ? '${_calculateDistance(_userPosition?.latitude, _userPosition?.longitude, listing['latitude'], listing['longitude'])}km'
-                                          : '0 km',
+                                    /**/
+                                    print(listing);
+                                    return Visibility(
+                                      visible: getSearchValue(listing),
+                                      child: ServiceFeaturedContainer(
+                                        businessImage: listing['displayphoto'],
+                                        businessName: listing['title'],
+                                        businessAddress:
+                                            listing['postaladdress'],
+                                        OnPressed: () {
+                                          storage.write(
+                                              key: 'id',
+                                              value: listing['listingsId']
+                                                  .toString());
+                                          storage.write(
+                                              key: 'title',
+                                              value:
+                                                  listing['title'].toString());
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Services(
+                                                    listingId:
+                                                        (listing['listingsId'])
+                                                            .toString())),
+                                          );
+                                        },
+                                        navigateMe: () async {
+                                          final Uri uri = Uri.parse(
+                                              "https://www.google.com/maps/search/${listing['streetaddress']}");
+                                          await launchUrl(uri);
+                                        },
+                                        views: '${200 + Random().nextInt(801)}',
+                                        distance: listing['distance'],
+                                      ),
                                     );
                                   },
                                 ),

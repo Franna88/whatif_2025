@@ -298,7 +298,7 @@ class _LeaveReviewState extends State<LeaveReview> {
                                   minimumSize: Size(100.8, 39),
                                 ),
                                 child: Text(
-                                  'Post Review',
+                                  'Post Review1',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: MyUtility(context).width * 0.01,

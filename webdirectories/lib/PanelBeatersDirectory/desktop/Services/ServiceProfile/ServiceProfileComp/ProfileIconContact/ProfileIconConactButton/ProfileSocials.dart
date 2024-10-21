@@ -13,6 +13,7 @@ class ProfileSocials extends StatefulWidget {
 class _ProfileSocialsState extends State<ProfileSocials> {
   @override
   Widget build(BuildContext context) {
+    print(widget.socialsLinks);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
