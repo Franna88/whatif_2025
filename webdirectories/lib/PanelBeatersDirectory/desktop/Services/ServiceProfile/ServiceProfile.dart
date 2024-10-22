@@ -12,11 +12,13 @@ class ServiceProfile extends StatefulWidget {
   final List<String> imagesData;
   final Map<String, String> linkData;
   final Map<String, String> contactData;
+  final Function(int) updatePageIndex;
   const ServiceProfile(
       {super.key,
       required this.imagesData,
       required this.linkData,
-      required this.contactData});
+      required this.contactData,
+      required this.updatePageIndex});
 
   @override
   State<ServiceProfile> createState() => _ServiceProfileState();
@@ -58,8 +60,8 @@ class _ServiceProfileState extends State<ServiceProfile> {
               Column(
                 children: [
                   ProfileSocials(
-                    socialsLinks: widget.linkData,
-                  ),
+                      socialsLinks: widget.linkData,
+                      updatePageIndex: widget.updatePageIndex),
                   ProfileTextContainer(
                     contactData: widget.contactData,
                   ),

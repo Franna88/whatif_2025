@@ -54,6 +54,12 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '*Value is required';
+                    }
+                    return null;
+                  },
                   cursorColor: Colors.black,
                   controller: widget.controller,
                   decoration: InputDecoration(

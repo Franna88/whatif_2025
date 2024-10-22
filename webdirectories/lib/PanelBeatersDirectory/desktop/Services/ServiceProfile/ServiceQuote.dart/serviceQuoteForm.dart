@@ -22,6 +22,7 @@ class _ServiceQuoteFormState extends State<ServiceQuoteForm> {
   List<XFile> quoteItems = [];
   List<Map<String, dynamic>> galleryItems = [];
   XFile? _selectedImage;
+  final _formKey = GlobalKey<FormState>();
 
   //Dialog for notification popup
   Future descriptionDialog(description) => showDialog(
@@ -54,20 +55,24 @@ class _ServiceQuoteFormState extends State<ServiceQuoteForm> {
     });
   }
 
+  submitQuote() {}
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: MyUtility(context).width * 0.8,
-        height: MyUtility(context).height * 0.8,
-        decoration: ShapeDecoration(
-          color: Color(0xFFD9D9D9),
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              strokeAlign: BorderSide.strokeAlignOutside,
-            ),
-            borderRadius: BorderRadius.circular(15),
+      width: MyUtility(context).width * 0.8,
+      height: MyUtility(context).height * 0.8,
+      decoration: ShapeDecoration(
+        color: Color(0xFFD9D9D9),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            strokeAlign: BorderSide.strokeAlignOutside,
           ),
+          borderRadius: BorderRadius.circular(15),
         ),
+      ),
+      child: Form(
+        key: _formKey,
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Container(
             width: MyUtility(context).width,
@@ -332,7 +337,11 @@ class _ServiceQuoteFormState extends State<ServiceQuoteForm> {
                         children: [
                           AddButton(
                             text: 'Send',
-                            onPressed: () {},
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                submitQuote();
+                              }
+                            },
                           ),
                         ],
                       ),
@@ -344,8 +353,10 @@ class _ServiceQuoteFormState extends State<ServiceQuoteForm> {
                 ),
               ),
             ],
-          )
-        ]));
+          ),
+        ]),
+      ),
+    );
   }
 
   Widget QuoteImageStyle(imagePath, index) {

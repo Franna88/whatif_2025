@@ -18,6 +18,6 @@ class _PanelBeatersHomeState extends State<PanelBeatersHome> {
   Widget build(BuildContext context) {
     return MyUtility(context).width < 600
         ? MobileView()
-        : SideNavBar(); //Nav();
+        : Nav(); //SideNavBar();
   }
 }

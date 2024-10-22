@@ -33,11 +33,12 @@ class ServiceQuoteDetails {
     make.dispose();
     model.dispose();
     year.dispose();
-    year.dispose();
+
     insuranceCompany.dispose();
     vin.dispose();
     message.dispose();
   }
+
 /*
   void setValues(Map<String, dynamic> userData) {
     tradingNameController.text = userData['title'] ?? '';
@@ -55,17 +56,21 @@ class ServiceQuoteDetails {
     afterHoursController.text = userData['businessAfterhours'] ?? '';
     moreInfoController.text = userData['moreInfo'] ?? '';
   }
+*/
 
   getValues() {
     return {
-      "title": tradingNameController.text,
-      "registeredBussinessName": registeredNameController.text,
-      "beerating": bEEElevelController.text,
-      "businessTelephone": customerCareController.text,
-      "whatsappNumber": whatsappController.text,
-      "alternativeNumber": businessAlternativeController.text,
-      "businessFaxnumber": businessFaxController.text,
-      "businessAfterhours": afterHoursController.text
+      "name": name.text,
+      "surname": surname.text,
+      "email": email.text,
+      "contact": contact.text,
+      "make": make.text,
+      "model": model.text,
+      "year": year.text,
+      "insuranceCompany": insuranceCompany.text,
+      "vin": insuranceCompany.text,
+      "message": insuranceCompany.text,
+      "date": DateTime.now()
     };
-  }*/
+  }
 }

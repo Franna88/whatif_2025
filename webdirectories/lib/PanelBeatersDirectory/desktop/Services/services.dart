@@ -182,7 +182,8 @@ class _ServicesState extends State<Services> {
       ServiceProfile(
           imagesData: _galleryData,
           linkData: _linkData,
-          contactData: _contactData),
+          contactData: _contactData,
+          updatePageIndex: updatePageIndex),
       ServiceContact(
         listingData: _listingData,
       ),
