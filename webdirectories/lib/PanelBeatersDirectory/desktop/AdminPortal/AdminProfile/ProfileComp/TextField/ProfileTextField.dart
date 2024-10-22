@@ -4,12 +4,16 @@ import 'package:webdirectories/myutility.dart';
 class ProfileTextField extends StatefulWidget {
   final TextEditingController controller;
   final String headline;
+  final Color? customColor;
+  final double? customWidth;
 
-  const ProfileTextField({
-    Key? key,
-    required this.controller,
-    required this.headline,
-  }) : super(key: key);
+  const ProfileTextField(
+      {Key? key,
+      required this.controller,
+      required this.headline,
+      this.customColor,
+      this.customWidth})
+      : super(key: key);
 
   @override
   State<ProfileTextField> createState() => _ProfileTextFieldState();
@@ -26,7 +30,9 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
           Text(
             widget.headline,
             style: TextStyle(
-              color: Colors.white,
+              color: widget.customColor != null
+                  ? widget.customColor
+                  : Colors.white,
               fontSize: 14.7364,
               fontFamily: 'raleway',
               height: 1,
@@ -34,7 +40,9 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
           ),
           SizedBox(height: 8),
           Container(
-            width: MyUtility(context).width * 0.5,
+            width: widget.customWidth != null
+                ? widget.customWidth
+                : MyUtility(context).width * 0.5,
             height: MyUtility(context).height * 0.045,
             decoration: ShapeDecoration(
               color: Colors.white,

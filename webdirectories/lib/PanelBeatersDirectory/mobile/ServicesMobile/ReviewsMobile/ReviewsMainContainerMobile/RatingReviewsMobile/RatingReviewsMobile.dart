@@ -6,7 +6,13 @@ import 'package:webdirectories/myutility.dart';
 
 class RatingReviewsMobile extends StatefulWidget {
   Function(int) changePageIndex;
-  RatingReviewsMobile({Key? key, required this.changePageIndex})
+  final List<Map<String, dynamic>> reviewsData;
+  final bool waiting;
+  RatingReviewsMobile(
+      {Key? key,
+      required this.changePageIndex,
+      required this.reviewsData,
+      required this.waiting})
       : super(key: key);
 
   @override

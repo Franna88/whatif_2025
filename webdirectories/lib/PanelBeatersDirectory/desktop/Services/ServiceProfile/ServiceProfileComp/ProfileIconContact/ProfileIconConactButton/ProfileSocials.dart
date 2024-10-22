@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../ServiceQuote.dart/serviceQuoteForm.dart';
 import '../ProfileIconContact.dart';
 
 class ProfileSocials extends StatefulWidget {
@@ -11,6 +12,12 @@ class ProfileSocials extends StatefulWidget {
 }
 
 class _ProfileSocialsState extends State<ProfileSocials> {
+  //Dialog for notification popup
+  Future openQuoteForm() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(child: ServiceQuoteForm());
+      });
   @override
   Widget build(BuildContext context) {
     print(widget.socialsLinks);
@@ -53,7 +60,9 @@ class _ProfileSocialsState extends State<ProfileSocials> {
         ProfileSocialIconContact(
             profileIcon: 'images/GetQuote.svg',
             socialdescription: 'Get Quote',
-            onPress: () {}),
+            onPress: () {
+              openQuoteForm();
+            }),
         ProfileSocialIconContact(
             profileIcon: 'images/Contact5.svg',
             socialdescription: 'Leave Review',
