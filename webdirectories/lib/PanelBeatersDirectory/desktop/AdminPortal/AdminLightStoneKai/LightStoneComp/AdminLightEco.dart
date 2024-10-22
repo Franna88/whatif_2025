@@ -15,7 +15,32 @@ class AdminLightEco extends StatefulWidget {
   State<AdminLightEco> createState() => _AdminLightEcoState();
 }
 
-class _AdminLightEcoState extends State<AdminLightEco> {
+class _AdminLightEcoState extends State<AdminLightEco>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    // Animation start
+    _controller = AnimationController(
+      lowerBound: 0.0,
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
+    var percent = (double.parse(widget.percentage)) / 100;
+    print("PERCENT");
+    print(percent);
+    _controller.animateTo(percent);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // End animation
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,16 +68,29 @@ class _AdminLightEcoState extends State<AdminLightEco> {
                 height: MyUtility(context).height * 0.55,
                 width: MyUtility(context).width * 0.4),
             Positioned(
-              top: 115,
-              left: 75,
+              top: MyUtility(context).height * 0.08,
               right: 0,
-              child: SvgPicture.asset('images/needle.svg',
-                  height: MyUtility(context).height * 0.3,
-                  width: MyUtility(context).width * 0.2),
+              left: 0,
+              child: Container(
+                child: RotationTransition(
+                  alignment: Alignment.center,
+                  turns: Tween(begin: 0.0, end: 1.4).animate(_controller),
+                  child: Container(
+                    height: MyUtility(context).height * 0.40,
+                    width: MyUtility(context).width * 0.2,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('images/red1.png'),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
             Positioned(
                 bottom: MyUtility(context).height * 0.08,
-                left: MyUtility(context).width * 0.1,
+                left: MyUtility(context).width * 0.09,
                 child: AdminPercentageText(percentage: widget.percentage)),
           ],
         )

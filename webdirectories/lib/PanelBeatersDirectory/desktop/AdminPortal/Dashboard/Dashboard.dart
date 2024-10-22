@@ -106,14 +106,13 @@ class _DashboardState extends State<Dashboard> {
         .update({"listingLogo": image}).whenComplete(() {});
   }
 
+//Get notification based off listingId
   getNotifictions(userId) async {
     final notificationsFuture = _firestore
         .collection('notifications')
         .where('listingsId', isEqualTo: userId)
         .orderBy('notificationDate', descending: true)
         .get();
-
-    //TODO fix listing id
 
     final notificationsQuoteFuture = _firestore
         .collection('notification_quote')
@@ -125,13 +124,12 @@ class _DashboardState extends State<Dashboard> {
         await Future.wait([notificationsFuture, notificationsQuoteFuture]);
     final notificationSnapshot = results[0];
     final notificationQuoteSnapshot = results[1];
-    print("NOTIFICATIONS");
+
     setState(() {
       notifications = notificationSnapshot.docs;
       quotesOutstandingNumber =
           (notificationQuoteSnapshot.docs.length).toString();
     });
-    print(notificationSnapshot.docs[0]['notificationTitle']);
   }
 
   @override

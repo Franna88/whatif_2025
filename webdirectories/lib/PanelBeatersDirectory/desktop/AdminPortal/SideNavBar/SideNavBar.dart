@@ -37,6 +37,7 @@ class _SideNavBarState extends State<SideNavBar> {
   final PageController _pageController = PageController(initialPage: 0);
   final _firestore = FirebaseFirestore.instance;
   int _selectedIndex = 0;
+  int listingsId = 0;
   Map<String, dynamic> lightstoneData = {};
 
   var jobDetails = JobFinderModel(
@@ -70,13 +71,13 @@ class _SideNavBarState extends State<SideNavBar> {
   }
 
   getLightStoneData() async {
-    print("LightSTONE");
     StoredUser? user = await getUserInfo();
     print(user!.id);
     if (user != null) {
-      print("USER SUCCESSSSSS");
       int listingIdInt = int.parse(user.id);
-
+      setState(() {
+        listingsId = listingIdInt;
+      });
       // Fetch registration data in parallel
       final futures = await Future.wait([
         _firestore
@@ -153,9 +154,7 @@ class _SideNavBarState extends State<SideNavBar> {
         getJobDetails: getJobDetails,
       ),
       //JobFinderDetails(),
-      AdminLightStone(
-        data: lightstoneData,
-      ),
+      AdminLightStone(data: lightstoneData, listingsId: listingsId),
       PerformanceAndStats(),
       OwnersContactUs(),
       IndustryNews(),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminLightStoneKai/LightStoneComp/AdminLightEco.dart';
@@ -6,21 +7,68 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/Li
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/LightStone/LightStone/WhoIsLightStone/WhoIsLightStone.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../components/descriptionDialog.dart';
 import 'LightStoneComp/AdminWhoIsLight.dart';
 
 class AdminLightStone extends StatefulWidget {
   final dynamic data;
+  final int listingsId;
 
-  const AdminLightStone({
-    super.key,
-    this.data, // Made data optional to allow null values
-  });
+  const AdminLightStone({super.key, this.data, required this.listingsId});
 
   @override
   State<AdminLightStone> createState() => _AdminLightStoneState();
 }
 
 class _AdminLightStoneState extends State<AdminLightStone> {
+  var displayLightStoneData = false;
+  final _firestore = FirebaseFirestore.instance;
+  //Dialog for notification popup
+  Future descriptionDialog(description) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: DescriptionDialog(
+          description: description,
+        ));
+      });
+
+  updateListData(description) async {
+    QuerySnapshot userDoc = await _firestore
+        .collection('listings')
+        .where('listingsId', isEqualTo: widget.listingsId)
+        .get();
+
+    if (userDoc.docs.isNotEmpty) {
+      _firestore
+          .collection('listings')
+          .doc(userDoc.docs[0].id)
+          .update({"displayLightStone": displayLightStoneData}).whenComplete(
+              () => descriptionDialog(description));
+    }
+  }
+
+  getLightstonePermission() async {
+    QuerySnapshot userDoc = await _firestore
+        .collection('listings')
+        .where('listingsId', isEqualTo: widget.listingsId)
+        .get();
+
+    if (userDoc.docs.isNotEmpty) {
+      setState(() {
+        if (userDoc.docs[0]['displayLightStone'] != null) {
+          displayLightStoneData = userDoc.docs[0]['displayLightStone'];
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getLightstonePermission();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Cast or convert the data to Map<String, dynamic>
@@ -78,10 +126,60 @@ class _AdminLightStoneState extends State<AdminLightStone> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              AdminLightEco(
-                                percentage: data.containsKey('keyAttIndex')
-                                    ? data['keyAttIndex'].toString()
-                                    : '50', // Default value if key is missing or data is null
+                              Column(
+                                children: [
+                                  AdminLightEco(
+                                    percentage: data.containsKey('keyAttIndex')
+                                        ? data['keyAttIndex'].toString()
+                                        : '50', // Default value if key is missing or data is null
+                                  ),
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                        value: displayLightStoneData,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            print(widget.listingsId);
+                                            if (displayLightStoneData ==
+                                                false) {
+                                              displayLightStoneData = true;
+                                              updateListData(
+                                                  "Lightstone data will be displayed on profile");
+                                            } else {
+                                              displayLightStoneData = false;
+                                              updateListData(
+                                                  "Lightstone data will NOT be displayed on profile");
+                                            }
+
+                                            //  _isSelected = value ?? false;
+                                          });
+                                        },
+                                        activeColor: Colors
+                                            .transparent, // Remove default active color
+                                        checkColor: Color(
+                                            0xFFEF9040), // Inside color when selected
+
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              2.0), // Square shape
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        'Click to display your result on business profile',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontFamily: 'raleway',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
                               AdminWhoisLight(
                                 data: data,
