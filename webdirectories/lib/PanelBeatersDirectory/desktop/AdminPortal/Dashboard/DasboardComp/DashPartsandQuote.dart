@@ -7,11 +7,13 @@ class Dashpartsandquote extends StatefulWidget {
   final String containerText;
   final String containerNumber;
   final String svgImage;
+  final String? customText;
   const Dashpartsandquote(
       {super.key,
       required this.containerText,
       required this.containerNumber,
-      required this.svgImage});
+      required this.svgImage,
+      this.customText});
 
   @override
   State<Dashpartsandquote> createState() => _DashpartsandquoteState();
@@ -82,7 +84,9 @@ class _DashpartsandquoteState extends State<Dashpartsandquote> {
                   ),
                 ),
                 Text(
-                  'New Requests',
+                  widget.customText != null
+                      ? widget.customText!
+                      : 'New Requests',
                   style: TextStyle(
                     color: Color(0xFFFF8728),
                     fontSize: 10.2,

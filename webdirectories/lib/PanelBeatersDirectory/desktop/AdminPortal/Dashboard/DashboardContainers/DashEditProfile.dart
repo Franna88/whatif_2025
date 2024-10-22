@@ -268,7 +268,7 @@ class _DashEditProfileState extends State<DashEditProfile> {
                             _pickImage("Logo");
                           },
                           child: const Text(
-                            'Update My Logo2',
+                            'Update My Logo',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10.2,

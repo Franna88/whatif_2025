@@ -5,8 +5,10 @@ import 'package:webdirectories/myutility.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 
 class DashNotificationsUp extends StatefulWidget {
+  List notificationsList;
   final VoidCallback onTap;
-  const DashNotificationsUp({super.key, required this.onTap});
+  DashNotificationsUp(
+      {super.key, required this.notificationsList, required this.onTap});
 
   @override
   State<DashNotificationsUp> createState() => _DashNotificationsUpState();
@@ -14,6 +16,10 @@ class DashNotificationsUp extends StatefulWidget {
 
 class _DashNotificationsUpState extends State<DashNotificationsUp> {
   final ScrollController _scrollController = ScrollController();
+
+  formatDate(date) {
+    return "${date.toDate().year.toString()} - ${date.toDate().month.toString()} - ${date.toDate().day.toString()}";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +82,14 @@ class _DashNotificationsUpState extends State<DashNotificationsUp> {
                   child: ListView(
                     controller: _scrollController,
                     children: [
-                      DashNotificationReuse(
-                        date: '2024-12-01',
-                        position:
-                            'Lightstone EchoMBR CSI in the Panelbeaters Directory',
-                      ),
-                      DashNotificationReuse(
+                      for (var i = 0; i < widget.notificationsList.length; i++)
+                        DashNotificationReuse(
+                          date: formatDate(
+                              widget.notificationsList[i]['notificationDate']),
+                          position: widget.notificationsList[i]
+                              ['notificationTitle'],
+                        ),
+                      /*      DashNotificationReuse(
                         date: '2024-10-22',
                         position:
                             'Move forward with the Panel Beater Directory!',
@@ -105,7 +113,7 @@ class _DashNotificationsUpState extends State<DashNotificationsUp> {
                         date: '2024-05-30',
                         position:
                             'Aer-O-Cure: GYS DENTPULLING WORKSTATIONS Improve your repair time',
-                      ),
+                      ),*/
                     ],
                   ),
                 ),

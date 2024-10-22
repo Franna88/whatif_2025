@@ -119,12 +119,10 @@ class _DashGraphState extends State<DashGraph> {
 
     (viewList).forEach((viewData) {
       DateTime date = (viewData['date'].toDate());
-      print("DATE");
-      print(date);
+
       var viewDate =
           DateFormat('MMMM yyyy').format(DateTime(date.year, date.month));
-      print(viewDate);
-      print(currentMonth);
+
       if (viewDate == currentMonth) {
         setState(() {
           currentMonthViews++;

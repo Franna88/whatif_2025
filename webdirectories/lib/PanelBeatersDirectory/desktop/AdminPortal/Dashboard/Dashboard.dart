@@ -33,6 +33,8 @@ class _DashboardState extends State<Dashboard> {
   String docId = "";
   String businessLogo = "";
   String userId = "";
+  List notifications = [];
+  String quotesOutstandingNumber = "0";
 
   @override
   void initState() {
@@ -40,6 +42,7 @@ class _DashboardState extends State<Dashboard> {
     _fetchUserData(); // Fetch the user data when the Dashboard initializes
   }
 
+//check if id is old or new id
   bool _isNumeric(String str) {
     if (str == null) {
       return false;
@@ -52,10 +55,10 @@ class _DashboardState extends State<Dashboard> {
         await getUserInfo(); // Assuming you have this method to get the user
 
     if (user != null) {
-      print(user.id);
+      // print(user.id);
       try {
         var docId = _isNumeric(user.id) ? int.parse(user.id) : user.id;
-
+        getNotifictions(docId);
         // Fetch the user's document from Firestore based on their ID
         QuerySnapshot userDoc = await _firestore
             .collection('listings')
@@ -77,11 +80,11 @@ class _DashboardState extends State<Dashboard> {
             _isLoading = false; // Stop loading once data is fetched
             docId = userDoc.docs[0].id;
             businessLogo = userData['listingLogo'];
-            print(userData['listingLogo']);
+            //  print(userData['listingLogo']);
           });
         }
       } catch (e) {
-        print('Error fetching user data: $e');
+        //   print('Error fetching user data: $e');
         setState(() {
           _isLoading = false;
         });
@@ -101,6 +104,34 @@ class _DashboardState extends State<Dashboard> {
         .collection('listings')
         .doc(docId) // Use document ID to update
         .update({"listingLogo": image}).whenComplete(() {});
+  }
+
+  getNotifictions(userId) async {
+    final notificationsFuture = _firestore
+        .collection('notifications')
+        .where('listingsId', isEqualTo: userId)
+        .orderBy('notificationDate', descending: true)
+        .get();
+
+    //TODO fix listing id
+
+    final notificationsQuoteFuture = _firestore
+        .collection('notification_quote')
+        .where('listingMembersId', isEqualTo: userId)
+        .get();
+
+    // Run both queries in parallel
+    List<QuerySnapshot<Map<String, dynamic>>> results =
+        await Future.wait([notificationsFuture, notificationsQuoteFuture]);
+    final notificationSnapshot = results[0];
+    final notificationQuoteSnapshot = results[1];
+    print("NOTIFICATIONS");
+    setState(() {
+      notifications = notificationSnapshot.docs;
+      quotesOutstandingNumber =
+          (notificationQuoteSnapshot.docs.length).toString();
+    });
+    print(notificationSnapshot.docs[0]['notificationTitle']);
   }
 
   @override
@@ -167,23 +198,23 @@ class _DashboardState extends State<Dashboard> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Dashpartsandquote(
+                        containerText: 'Request a\nQuote',
+                        containerNumber: '*${quotesOutstandingNumber}',
+                        svgImage: 'images/quote.svg',
+                      ),
+                      Dashpartsandquote(
+                        svgImage: 'images/lightStoneLogoSvg.svg',
+                        containerText: 'View My Latest\nLightstone Results',
+                        containerNumber: '',
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 3),
                         child: Dashpartsandquote(
-                          containerText: 'Parts & Equipment\nPlatform',
-                          containerNumber: '*51',
-                          svgImage: 'images/gear1.svg',
-                        ),
-                      ),
-                      Dashpartsandquote(
-                        containerText: 'Request a\nQuote',
-                        containerNumber: '*51',
-                        svgImage: 'images/quote.svg',
-                      ),
-                      Dashpartsandquote(
-                        svgImage: 'images/quote.svg',
-                        containerText: 'View My Latest\nLightstone Results',
-                        containerNumber: '',
+                            containerText: 'Parts & Equipment\nPlatform',
+                            containerNumber: '',
+                            svgImage: 'images/gear1.svg',
+                            customText: "Comming Soon"),
                       ),
                     ],
                   ),
@@ -191,6 +222,7 @@ class _DashboardState extends State<Dashboard> {
                     width: widthDevice < 1500 ? 15 : 30,
                   ),
                   DashNotificationsUp(
+                    notificationsList: notifications,
                     onTap: () {
                       widget.navigateToPage(4);
                     },
