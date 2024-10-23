@@ -160,6 +160,7 @@ class _ServicesState extends State<Services> {
             'telephone': listingData['businessTelephone'],
             'email': listingData['businessEmail'],
             'whatsapp': listingData['whatsappNumber'],
+            'streetaddress': listingData['streetaddress'],
           });
           _contactData = Map<String, String>.from({
             'telephone': listingData['businessTelephone'],

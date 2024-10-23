@@ -151,14 +151,14 @@ class _ManageUserInfoState extends State<ManageUserInfo> {
                     ),
                   ),
                   SizedBox(width: 10),
-                  GestureDetector(
+                  /*GestureDetector(
                     onTap: widget.pressDelete,
                     child: Icon(
                       Icons.delete,
                       color: Colors.white,
                       size: 20.0,
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),

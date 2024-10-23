@@ -11,6 +11,8 @@ import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../../components/descriptionDialog.dart';
+
 class AdminHoursAlt extends StatefulWidget {
   const AdminHoursAlt({super.key});
 
@@ -20,8 +22,10 @@ class AdminHoursAlt extends StatefulWidget {
 
 class _AdminHoursAltState extends State<AdminHoursAlt> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final hRemarks = TextEditingController();
   Businessprofilehours? _listingHours;
-
+  String docId = "";
+  String listingId = "";
   @override
   void initState() {
     super.initState();
@@ -30,26 +34,129 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
 
   Future<void> _fetchHoursData() async {
     StoredUser? user = await getUserInfo();
-
-    String? lisitingId = user?.id;
+    setState(() {
+      listingId = user!.id;
+    });
 
     QuerySnapshot hoursDoc = await _firestore
         .collection('listing_hours')
-        .where('listingsId', isEqualTo: int.parse(lisitingId!))
+        .where('listingsId', isEqualTo: int.parse(listingId!))
         .get();
-
+    print("HOURS1");
     if (hoursDoc.docs.isNotEmpty) {
+      print("HOURS");
       try {
         Map<String, dynamic> data =
             hoursDoc.docs.first.data() as Map<String, dynamic>;
         // set hours data
         setState(() {
+          docId = hoursDoc.docs[0].id;
           _listingHours = Businessprofilehours.fromMap(data);
+          hRemarks.text = hoursDoc.docs[0]['hRemarks'];
         });
       } catch (e) {
         print('Error fetching listing hours: $e');
       }
     }
+  }
+
+  //Dialog for notification popup
+  Future descriptionDialog(description) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: DescriptionDialog(
+          description: description,
+        ));
+      });
+
+  getValues(docId) {
+    return {
+      'mOpen': _listingHours!.mOpen,
+      'mClosed': _listingHours!.mClosed,
+      'tOpen': _listingHours!.tOpen,
+      'tClosed': _listingHours!.tClosed,
+      'wClosed': _listingHours!.wClosed,
+      'wOpen': _listingHours!.wOpen,
+      'thOpen': _listingHours!.thOpen,
+      'thClosed': _listingHours!.thClosed,
+      'fOpen': _listingHours!.fOpen,
+      'fClosed': _listingHours!.fClosed,
+      'saOpen': _listingHours!.saOpen,
+      'saClosed': _listingHours!.saClosed,
+      'suOpen': _listingHours!.suOpen,
+      'suClosed': _listingHours!.suClosed,
+      'pOpen': _listingHours!.pClosed,
+      'pClosed': _listingHours!.pClosed,
+      'listingsId': listingId,
+      'hRemarks': hRemarks.text
+    };
+  }
+
+  updateHours() async {
+    print(getValues(docId));
+
+    await _firestore
+        .collection('listing_hours')
+        .doc(docId)
+        .update(getValues(docId))
+        .whenComplete(() => descriptionDialog("Hours Data Saved")); /* */
+  }
+
+  updateMonday(start, end) {
+    setState(() {
+      _listingHours!.mOpen = start;
+      _listingHours!.mClosed = end;
+    });
+  }
+
+  updateTuesday(start, end) {
+    setState(() {
+      _listingHours!.tOpen = start;
+      _listingHours!.tClosed = end;
+    });
+  }
+
+  updateWednesDay(start, end) {
+    setState(() {
+      _listingHours!.wOpen = start;
+      _listingHours!.wClosed = end;
+    });
+  }
+
+  updateThursday(start, end) {
+    setState(() {
+      _listingHours!.thOpen = start;
+      _listingHours!.thClosed = end;
+    });
+  }
+
+  updateFriday(start, end) {
+    setState(() {
+      _listingHours!.fOpen = start;
+      _listingHours!.fClosed = end;
+    });
+  }
+
+  updateSaturday(start, end) {
+    setState(() {
+      _listingHours!.saOpen = start;
+      _listingHours!.saClosed = end;
+    });
+  }
+
+  updateSunday(start, end) {
+    setState(() {
+      _listingHours!.suOpen = start;
+      _listingHours!.suClosed = end;
+    });
+  }
+
+  updatePublic(start, end) {
+    setState(() {
+      _listingHours!.pOpen = start;
+      _listingHours!.pClosed = end;
+    });
   }
 
   @override
@@ -101,19 +208,27 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Text(
-                        'Business Hours & Useful Information ',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.6064,
-                          fontFamily: 'ralewaybold',
+                      child: InkWell(
+                        onTap: () {
+                          print(_listingHours!.mOpen);
+                          setState(() {
+                            _listingHours!.mOpen = "";
+                          });
+                        },
+                        child: Text(
+                          'Business Hours & Useful Information ',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.6064,
+                            fontFamily: 'ralewaybold',
+                          ),
                         ),
                       ),
                     ),
                   ),
                   Container(
                     width: MyUtility(context).width * 0.8,
-                    height: MyUtility(context).height * 0.65,
+                    //   height: MyUtility(context).height * 0.65,
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(5)),
                     child: Padding(
@@ -128,32 +243,109 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
                                 width: MyUtility(context).width * 0.185,
                               ),
                               DaysButtonAlt(
-                                  day: 'M',
-                                  isSelected: _listingHours?.mOpen != 'closed'),
+                                day: 'M',
+                                isSelected: _listingHours?.mOpen != 'closed',
+                                onChange: () {
+                                  setState(() {
+                                    if (_listingHours?.mOpen != 'closed') {
+                                      _listingHours!.mOpen = "closed";
+                                    } else {
+                                      _listingHours!.mOpen = "08:00";
+                                    }
+                                  });
+                                },
+                              ),
                               DaysButtonAlt(
-                                  day: 'T',
-                                  isSelected: _listingHours?.tOpen != 'closed'),
+                                day: 'T',
+                                isSelected: _listingHours?.tOpen != 'closed',
+                                onChange: () {
+                                  setState(() {
+                                    if (_listingHours?.tOpen != 'closed') {
+                                      _listingHours!.tOpen = "closed";
+                                    } else {
+                                      _listingHours!.tOpen = "08:00";
+                                    }
+                                  });
+                                },
+                              ),
                               DaysButtonAlt(
-                                  day: 'W',
-                                  isSelected: _listingHours?.wOpen != 'closed'),
+                                day: 'W',
+                                isSelected: _listingHours?.wOpen != 'closed',
+                                onChange: () {
+                                  setState(() {
+                                    if (_listingHours?.wOpen != 'closed') {
+                                      _listingHours!.wOpen = "closed";
+                                    } else {
+                                      _listingHours!.wOpen = "08:00";
+                                    }
+                                  });
+                                },
+                              ),
                               DaysButtonAlt(
-                                  day: 'T',
-                                  isSelected:
-                                      _listingHours?.thOpen != 'closed'),
+                                day: 'T',
+                                isSelected: _listingHours?.thOpen != 'closed',
+                                onChange: () {
+                                  setState(() {
+                                    if (_listingHours?.thOpen != 'closed') {
+                                      _listingHours!.thOpen = "closed";
+                                    } else {
+                                      _listingHours!.thOpen = "08:00";
+                                    }
+                                  });
+                                },
+                              ),
                               DaysButtonAlt(
-                                  day: 'F',
-                                  isSelected: _listingHours?.fOpen != 'closed'),
+                                day: 'F',
+                                isSelected: _listingHours?.fOpen != 'closed',
+                                onChange: () {
+                                  setState(() {
+                                    if (_listingHours?.fOpen != 'closed') {
+                                      _listingHours!.fOpen = "closed";
+                                    } else {
+                                      _listingHours!.fOpen = "08:00";
+                                    }
+                                  });
+                                },
+                              ),
                               DaysButtonAlt(
-                                  day: 'S',
-                                  isSelected:
-                                      _listingHours?.saOpen != 'closed'),
+                                day: 'S',
+                                isSelected: _listingHours?.saOpen != 'closed',
+                                onChange: () {
+                                  setState(() {
+                                    if (_listingHours?.saOpen != 'closed') {
+                                      _listingHours!.saOpen = "closed";
+                                    } else {
+                                      _listingHours!.saOpen = "08:00";
+                                    }
+                                  });
+                                },
+                              ),
                               DaysButtonAlt(
-                                  day: 'S',
-                                  isSelected:
-                                      _listingHours?.suOpen != 'closed'),
+                                day: 'S',
+                                isSelected: _listingHours?.suOpen != 'closed',
+                                onChange: () {
+                                  setState(() {
+                                    if (_listingHours?.suOpen != 'closed') {
+                                      _listingHours!.suOpen = "closed";
+                                    } else {
+                                      _listingHours!.suOpen = "08:00";
+                                    }
+                                  });
+                                },
+                              ),
                               DaysButtonAlt(
-                                  day: 'P',
-                                  isSelected: _listingHours?.pOpen != 'closed'),
+                                day: 'P',
+                                isSelected: _listingHours?.pOpen != 'closed',
+                                onChange: () {
+                                  setState(() {
+                                    if (_listingHours?.pOpen != 'closed') {
+                                      _listingHours!.pOpen = "closed";
+                                    } else {
+                                      _listingHours!.pOpen = "08:00";
+                                    }
+                                  });
+                                },
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -170,56 +362,64 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
                                       ? HoursAlt(
                                           days: 'Monday',
                                           from: _listingHours!.mOpen,
-                                          till: _listingHours!.mClosed)
+                                          till: _listingHours!.mClosed,
+                                          onTimeChange: updateMonday)
                                       : SizedBox.shrink(),
                                   _listingHours?.tOpen != null &&
                                           _listingHours?.tOpen != 'closed'
                                       ? HoursAlt(
                                           days: 'Tuesday',
                                           from: _listingHours!.tOpen,
-                                          till: _listingHours!.tClosed)
+                                          till: _listingHours!.tClosed,
+                                          onTimeChange: updateTuesday)
                                       : SizedBox.shrink(),
                                   _listingHours?.wOpen != null &&
                                           _listingHours?.wOpen != 'closed'
                                       ? HoursAlt(
                                           days: 'Wednesday',
                                           from: _listingHours!.wOpen,
-                                          till: _listingHours!.wClosed)
+                                          till: _listingHours!.wClosed,
+                                          onTimeChange: updateWednesDay)
                                       : SizedBox.shrink(),
                                   _listingHours?.thOpen != null &&
                                           _listingHours?.thOpen != 'closed'
                                       ? HoursAlt(
                                           days: 'Thursday',
                                           from: _listingHours!.thOpen,
-                                          till: _listingHours!.thClosed)
+                                          till: _listingHours!.thClosed,
+                                          onTimeChange: updateThursday)
                                       : SizedBox.shrink(),
                                   _listingHours?.fOpen != null &&
                                           _listingHours?.fOpen != 'closed'
                                       ? HoursAlt(
                                           days: 'Friday',
                                           from: _listingHours!.fOpen,
-                                          till: _listingHours!.fClosed)
+                                          till: _listingHours!.fClosed,
+                                          onTimeChange: updateFriday)
                                       : SizedBox.shrink(),
                                   _listingHours?.saOpen != null &&
                                           _listingHours?.saOpen != 'closed'
                                       ? HoursAlt(
                                           days: 'Saturday',
                                           from: _listingHours!.saOpen,
-                                          till: _listingHours!.saClosed)
+                                          till: _listingHours!.saClosed,
+                                          onTimeChange: updateSaturday)
                                       : SizedBox.shrink(),
                                   _listingHours?.suOpen != null &&
                                           _listingHours?.suOpen != 'closed'
                                       ? HoursAlt(
                                           days: 'Sunday',
                                           from: _listingHours!.suOpen,
-                                          till: _listingHours!.suClosed)
+                                          till: _listingHours!.suClosed,
+                                          onTimeChange: updateSunday)
                                       : SizedBox.shrink(),
                                   _listingHours?.pOpen != null &&
                                           _listingHours?.pOpen != 'closed'
                                       ? HoursAlt(
                                           days: 'Public Holidays',
                                           from: _listingHours!.pOpen,
-                                          till: _listingHours!.pClosed)
+                                          till: _listingHours!.pClosed,
+                                          onTimeChange: updatePublic)
                                       : SizedBox.shrink(),
                                 ],
                               ),
@@ -230,11 +430,11 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 15.0),
                             child: TextField(
+                              controller: hRemarks,
                               maxLines: 5,
                               minLines: 3,
                               decoration: InputDecoration(
-                                hintText:
-                                    "We are closed between Christmas & New Year...",
+                                hintText: "Add more info",
                                 hintStyle: TextStyle(color: Colors.white),
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
@@ -256,7 +456,11 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
 
                           Align(
                             alignment: Alignment.centerRight,
-                            child: AddButton(text: 'Save', onPressed: () {}),
+                            child: AddButton(
+                                text: 'Save',
+                                onPressed: () {
+                                  updateHours();
+                                }),
                           ),
                         ],
                       ),

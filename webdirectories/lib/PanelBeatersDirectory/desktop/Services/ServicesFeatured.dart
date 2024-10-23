@@ -69,7 +69,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
     });
   }
 
-  String _calculateDistance(userLat, userLong, listingLat, listingLong) {
+  _calculateDistance(userLat, userLong, listingLat, listingLong) {
     // Calculate the distance
     double distance =
         Geolocator.distanceBetween(userLat, userLong, listingLat, listingLong);
@@ -81,9 +81,9 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
     // Fetch featured listings
     QuerySnapshot querySnapshot = await _firestore
         .collection('listings')
-        .where('featured', isEqualTo: 1)
-        // .where('authId', isEqualTo: "QV7frChverVoYOCSpETX58jhVt33")
-        .limit(20)
+        //.where('featured', isEqualTo: 1)
+        .where('authId', isEqualTo: "YHg7m6rx5RxD01wvotTZ")
+        // .limit(20)YHg7m6rx5RxD01wvotTZ
         .get();
 
     List<Future<Map<String, dynamic>>> listingFutures =
@@ -94,9 +94,11 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
       if (imageUrl != null) {
         data['displayphoto'] = imageUrl;
       }
+
       data['distance'] = _userPosition?.latitude != null
           ? '${_calculateDistance(_userPosition?.latitude, _userPosition?.longitude, data['latitude'], data['longitude'])}'
-          : '0 km';
+          : /**/
+          '0 km';
       return data;
     }).toList();
 
@@ -327,7 +329,8 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                           await launchUrl(uri);
                                         },
                                         views: '${200 + Random().nextInt(801)}',
-                                        distance: listing['distance'],
+                                        distance:
+                                            (listing['distance']).toString(),
                                       ),
                                     );
                                   },

@@ -27,6 +27,19 @@ class _ProfileSocialsState extends State<ProfileSocials> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Row(children: [
+          ProfileSocialIconContact(
+              profileIcon: 'images/maps.svg',
+              socialdescription: 'Navigate Me',
+              onPress: () async {
+                final Uri uri = Uri.parse(
+                    "https://www.google.com/maps/search/${widget.socialsLinks['streetaddress']}");
+                await launchUrl(uri);
+              }),
+          SizedBox(
+            width: 4,
+          )
+        ]),
         widget.socialsLinks['telephone'] != null
             ? Row(children: [
                 ProfileSocialIconContact(

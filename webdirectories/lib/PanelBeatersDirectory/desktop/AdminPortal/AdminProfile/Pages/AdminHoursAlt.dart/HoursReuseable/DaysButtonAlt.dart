@@ -4,7 +4,12 @@ import 'package:webdirectories/myutility.dart';
 class DaysButtonAlt extends StatefulWidget {
   final String day;
   bool isSelected;
-  DaysButtonAlt({super.key, required this.day, required this.isSelected});
+  VoidCallback onChange;
+  DaysButtonAlt(
+      {super.key,
+      required this.day,
+      required this.isSelected,
+      required this.onChange});
 
   @override
   State<DaysButtonAlt> createState() => _DaysButtonAltState();
@@ -14,6 +19,7 @@ class _DaysButtonAltState extends State<DaysButtonAlt> {
   void _toggleSelected() {
     setState(() {
       widget.isSelected = !widget.isSelected;
+      widget.onChange();
     });
   }
 

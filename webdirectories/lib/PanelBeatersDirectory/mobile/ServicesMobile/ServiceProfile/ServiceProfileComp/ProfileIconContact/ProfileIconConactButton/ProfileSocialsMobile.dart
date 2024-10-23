@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../serviceQuoteMobile/serviceQuoteMobile.dart';
 import '../ProfileSocialIconContactMobile.dart';
@@ -28,6 +29,14 @@ class _ProfileSocialsMobileState extends State<ProfileSocialsMobile> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        ProfileSocialIconContactMobile(
+            profileIcon: 'images/maps.svg',
+            socialdescription: 'Navigate Me',
+            onPress: () async {
+              final Uri uri = Uri.parse(
+                  "https://www.google.com/maps/search/${widget.socialsLinks['streetaddress']}");
+              await launchUrl(uri);
+            }),
         ProfileSocialIconContactMobile(
             profileIcon: 'images/Contact1.svg',
             socialdescription: 'Call',

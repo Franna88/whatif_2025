@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageUsers/ManageUserComp/ManageUserInfo.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageUsers/userDetails.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/NewUserPopup/NewUserPopup.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/users.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
+
+import '../../components/descriptionDialog.dart';
 
 class ManageUsers extends StatefulWidget {
   const ManageUsers({super.key});
@@ -19,13 +23,32 @@ class ManageUsers extends StatefulWidget {
 class _ManageUsersState extends State<ManageUsers> {
   final _firestore = FirebaseFirestore.instance;
   List<Map<String, dynamic>> usersData = []; // Store user and documentId
+  final UserDetailsController _controller = UserDetailsController();
   bool _isLoading = true;
   final ScrollController _scrollController = ScrollController();
+  final auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     _fetchUserData();
     super.initState();
+  }
+
+  //Dialog for notification popup
+  Future descriptionDialog(description) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: DescriptionDialog(
+          description: description,
+        ));
+      });
+
+  //Send link to reset password
+  sendResetPasswordLink(email) {
+    auth
+        .sendPasswordResetEmail(email: email)
+        .whenComplete(() => descriptionDialog("Reset link sent"));
   }
 
   // Fetch user data from Firestore and handle errors
@@ -43,7 +66,7 @@ class _ManageUsersState extends State<ManageUsers> {
 
       QuerySnapshot<Map<String, dynamic>> usersSnapshot = await _firestore
           .collection('listing_members')
-          .where('listingMembersId', isEqualTo: 1218)
+          .where('listingMembersId', isEqualTo: user.id)
           .get();
 
       List<Map<String, dynamic>> users = [];
@@ -75,12 +98,13 @@ class _ManageUsersState extends State<ManageUsers> {
               doc.data()['displayOnProfile']?.toString() ?? 'false';
 
           UserModel userData = UserModel(
-            dateAdded: dateAdded,
-            firstName: firstName,
-            surname: surname,
-            email: doc.data()['email']?.toString() ?? '',
-            status: doc.data()['status']?.toString() ?? 'Active',
-          );
+              dateAdded: dateAdded,
+              firstName: firstName,
+              surname: surname,
+              email: doc.data()['email']?.toString() ?? '',
+              status: doc.data()['status']?.toString() ?? 'Active',
+              cell: doc.data()['usercell'],
+              id: doc.id);
 
           // Store user data and documentId
           users.add({
@@ -112,48 +136,48 @@ class _ManageUsersState extends State<ManageUsers> {
     }
   }
 
-  // Handle the submission of new user data from NewUserPopup
-  void _addNewUser(Map<String, String> userData) {
-    // Safely split fullName into firstName and surname
-    List<String> nameParts = userData['fullName']!.split(' ');
-    String firstName =
-        nameParts.isNotEmpty ? nameParts[0] : ''; // Use first part as firstName
-    String surname = nameParts.length > 1
-        ? nameParts[1]
-        : ''; // Use second part as surname, if available
+  createUser(dummy, dummy2) async {
+    try {
+      StoredUser? user = await getUserInfo();
 
-    // Add new user to local usersData list
-    setState(() {
-      usersData.add({
-        'user': UserModel(
-          firstName: firstName,
-          surname: surname,
-          email: userData['email']!,
-          status: 'Active',
-          dateAdded: DateTime.now(),
-        ),
-        'documentId': null, // No document ID for new users
-        'mobile': userData['mobile'],
-        'displayOnProfile': userData['displayOnProfile'],
+      //  print(widget.controller.getValues());
+      //create User
+      UserCredential userDocRef = await auth.createUserWithEmailAndPassword(
+          email: _controller.email.text, password: _controller.password.text);
+
+      var myNewDoc = await FirebaseFirestore.instance
+          .collection("listing_members")
+          .doc(userDocRef.user!.uid)
+          .set(_controller.getValues(user!.id))
+          .whenComplete(() => descriptionDialog("New User Created"));
+    } catch (e) {
+      print('Error fetching listing data: $e');
+      setState(() {
+        //  _isLoading = false;
       });
-    });
+    }
+    _fetchUserData();
+    Navigator.pop(context);
+  }
 
-    // Save new user to Firestore
-    _firestore.collection('listing_members').add({
-      'firstName': firstName,
-      'surname': surname,
-      'email': userData['email'],
-      'status': 'Active',
-      'dateAdded': DateTime.now(), // Firestore converts to Timestamp
-    }).then((_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('New user added successfully')),
-      );
-    }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error adding user: $error')),
-      );
-    });
+  editUser(status, id) async {
+    StoredUser? user = await getUserInfo();
+    var data = _controller.getValues(user!.id);
+    data['userActive'] = status;
+    if (status == 1) {
+      data['status'] = "Active";
+    } else {
+      data['status'] = "InActive";
+    }
+
+    print(data);
+    await FirebaseFirestore.instance
+        .collection("listing_members")
+        .doc(id)
+        .update(data)
+        .whenComplete(() => descriptionDialog("Details Updated")); /* */
+    _fetchUserData();
+    Navigator.pop(context); /**/
   }
 
   // Handle editing a user
@@ -163,7 +187,7 @@ class _ManageUsersState extends State<ManageUsers> {
       'surname': updatedUserData['fullName']?.split(' ')[1],
       'email': updatedUserData['email'],
       'mobile': updatedUserData['mobile'],
-      'displayOnProfile': updatedUserData['displayOnProfile'],
+      // 'displayOnProfile': updatedUserData['displayOnProfile'],
     }).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('User updated successfully')),
@@ -232,7 +256,7 @@ class _ManageUsersState extends State<ManageUsers> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 AddButton(
-                                  text: 'Request New User',
+                                  text: 'Add New User',
                                   onPressed: () {
                                     showDialog(
                                       context: context,
@@ -245,7 +269,16 @@ class _ManageUsersState extends State<ManageUsers> {
                                           insetPadding:
                                               const EdgeInsets.all(10),
                                           child: NewUserPopup(
-                                            onSubmit: _addNewUser,
+                                            onSubmit: createUser,
+                                            fullNameController:
+                                                _controller.fullname,
+                                            emailController: _controller.email,
+                                            mobileController:
+                                                _controller.usercell,
+                                            passwordController:
+                                                _controller.password,
+                                            confirmPasswordController:
+                                                _controller.confirmPassword,
                                           ),
                                         );
                                       },
@@ -401,24 +434,24 @@ class _ManageUsersState extends State<ManageUsers> {
                                                           const EdgeInsets.all(
                                                               10),
                                                       child: NewUserPopup(
-                                                        initialData: {
-                                                          'fullName':
-                                                              '${user.firstName} ${user.surname}', // Pre-fill with user's full name
-                                                          'email': user
-                                                              .email, // Pre-fill with user's email
-                                                          'mobile': userMap[
-                                                                  'mobile'] ??
-                                                              '',
-                                                          'displayOnProfile':
-                                                              userMap['displayOnProfile'] ??
-                                                                  'false',
-                                                        },
-                                                        onSubmit:
-                                                            (updatedUserData) {
-                                                          // Pass the document ID and updated user data to edit the user
-                                                          _editUser(documentId,
-                                                              updatedUserData);
-                                                        },
+                                                        sendResetLink:
+                                                            sendResetPasswordLink,
+                                                        onSubmit: editUser,
+                                                        editUser: user,
+                                                        fullNameController:
+                                                            _controller
+                                                                .fullname,
+                                                        emailController:
+                                                            _controller.email,
+                                                        mobileController:
+                                                            _controller
+                                                                .usercell,
+                                                        passwordController:
+                                                            _controller
+                                                                .password,
+                                                        confirmPasswordController:
+                                                            _controller
+                                                                .confirmPassword,
                                                       ),
                                                     );
                                                   },

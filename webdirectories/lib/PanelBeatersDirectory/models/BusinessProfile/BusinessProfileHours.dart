@@ -32,6 +32,7 @@ class Businessprofilehours {
       this.suClosed,
       this.pOpen,
       this.pClosed);
+
   // Add a factory constructor for easier instantiation from a map
   factory Businessprofilehours.fromMap(Map<String, dynamic> data) {
     return Businessprofilehours(
