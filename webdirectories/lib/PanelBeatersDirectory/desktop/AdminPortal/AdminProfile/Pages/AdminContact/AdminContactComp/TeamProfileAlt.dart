@@ -84,7 +84,7 @@ class _TeamProfileAltState extends State<TeamProfileAlt> {
             ],
           ),
           const SizedBox(height: 10),
-          CircleAvatar(
+          /*  CircleAvatar(
             radius: widthDevice < 1500 ? 45 : 80,
             backgroundColor: Colors.white,
             child: CircleAvatar(
@@ -95,6 +95,15 @@ class _TeamProfileAltState extends State<TeamProfileAlt> {
                 mapKey: 'background',
                 fit: BoxFit.cover,
               ),
+            ),
+          ),*/
+
+          ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: RemotePicture(
+              imagePath: imageUrl,
+              mapKey: 'background',
+              fit: BoxFit.cover,
             ),
           ),
         ],

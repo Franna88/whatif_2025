@@ -13,19 +13,20 @@ class ManageUserInfo extends StatefulWidget {
   final VoidCallback pressEdit;
   final VoidCallback pressDelete;
   final bool isEven;
+  final bool showEdit;
 
-  const ManageUserInfo({
-    super.key,
-    required this.year,
-    required this.month,
-    required this.day,
-    required this.email,
-    required this.fullName,
-    required this.status,
-    required this.pressEdit,
-    required this.pressDelete,
-    required this.isEven,
-  });
+  const ManageUserInfo(
+      {super.key,
+      required this.year,
+      required this.month,
+      required this.day,
+      required this.email,
+      required this.fullName,
+      required this.status,
+      required this.pressEdit,
+      required this.pressDelete,
+      required this.isEven,
+      required this.showEdit});
 
   @override
   State<ManageUserInfo> createState() => _ManageUserInfoState();
@@ -142,12 +143,15 @@ class _ManageUserInfoState extends State<ManageUserInfo> {
               flex: 1,
               child: Row(
                 children: [
-                  GestureDetector(
-                    onTap: widget.pressEdit,
-                    child: Icon(
-                      Icons.edit,
-                      color: Colors.white,
-                      size: 20.0,
+                  Visibility(
+                    visible: !widget.showEdit,
+                    child: GestureDetector(
+                      onTap: widget.pressEdit,
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 20.0,
+                      ),
                     ),
                   ),
                   SizedBox(width: 10),

@@ -39,8 +39,8 @@ class _OwnerloginformmobileState extends State<Ownerloginformmobile> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  const AdminPortal()), // Replace with your destination screen
+              builder: (context) => AdminPortal(
+                  normalUser: false)), // Replace with your destination screen
         );
       } on FirebaseAuthMultiFactorException catch (e) {
         print('Incorrect credentials. Please try again.');

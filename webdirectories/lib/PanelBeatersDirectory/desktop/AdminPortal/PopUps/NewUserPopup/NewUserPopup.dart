@@ -47,37 +47,6 @@ class _NewUserPopupState extends State<NewUserPopup> {
       widget.emailController.text = widget.editUser!.email;
       widget.mobileController.text = widget.editUser!.cell;
     }
-    /* if (widget.initialData != null) {
-      
-      // Pre-fill data if initialData is provided
-      _fullNameController.text = widget.initialData!['fullName'] ?? '';
-      _emailController.text = widget.initialData!['email'] ?? '';
-      _mobileController.text = widget.initialData!['mobile'] ?? '';
-      displayOnProfile =
-          widget.initialData!['displayOnProfile']?.toLowerCase() == 'true';
-    }*/
-  }
-
-  // Handle the "Send" button press
-  void _submitForm() {
-    /* final fullName = _fullNameController.text;
-    final email = _emailController.text;
-    final mobile = _mobileController.text;
-
-    // Check if the fields are filled
-    if (fullName.isNotEmpty && email.isNotEmpty && mobile.isNotEmpty) {
-      widget.onSubmit({
-        'fullName': fullName,
-        'email': email,
-        'mobile': mobile,
-        'displayOnProfile': displayOnProfile.toString(),
-      });
-      Navigator.pop(context);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all the fields')),
-      );
-    }*/
   }
 
   @override

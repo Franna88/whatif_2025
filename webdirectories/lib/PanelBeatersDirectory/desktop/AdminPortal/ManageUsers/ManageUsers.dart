@@ -14,7 +14,8 @@ import 'package:webdirectories/myutility.dart';
 import '../../components/descriptionDialog.dart';
 
 class ManageUsers extends StatefulWidget {
-  const ManageUsers({super.key});
+  bool normalUser;
+  ManageUsers({super.key, required this.normalUser});
 
   @override
   State<ManageUsers> createState() => _ManageUsersState();
@@ -54,8 +55,12 @@ class _ManageUsersState extends State<ManageUsers> {
   // Fetch user data from Firestore and handle errors
   void _fetchUserData() async {
     print('loading users...');
+
+    List<Map<String, dynamic>> users = [];
+    var listingId = "";
     try {
       StoredUser? user = await getUserInfo();
+
       if (user == null) {
         print('User not found');
         setState(() {
@@ -63,15 +68,84 @@ class _ManageUsersState extends State<ManageUsers> {
         });
         return;
       }
+      QuerySnapshot<Map<String, dynamic>> data = await _firestore
+          .collection('listing_allocation')
+          .where('listingsId', isEqualTo: int.parse(user.id))
+          .get();
 
-      QuerySnapshot<Map<String, dynamic>> usersSnapshot = await _firestore
+      print(user.id);
+      QuerySnapshot<Map<String, dynamic>> listMemberIds = await _firestore
+          .collection('listing_allocation')
+          .where('listingsId', isEqualTo: data.docs[0]['listingsId'])
+          .get();
+
+      print(listMemberIds.docs.length);
+      if (listMemberIds.docs.isNotEmpty) {
+        print('loading user123');
+        for (var i = 0; i < listMemberIds.docs.length; i++) {
+          print(listMemberIds.docs[i]['listingMembersId']);
+          final data = await _firestore
+              .collection('listing_members')
+              .where('listingMembersId',
+                  isEqualTo: listMemberIds.docs[i]['listingMembersId'])
+              .get();
+
+          if (data.docs.isNotEmpty) {
+            var doc = data.docs[0];
+
+            //  users.add(data.docs[0].data());
+
+            /*  Timestamp? timestamp =
+                listMemberIds.docs[i]['dateAdded'] as Timestamp?;
+            DateTime dateAdded =
+                timestamp != null ? timestamp.toDate() : DateTime.now(); */
+
+// Safely split fullname into firstName and surname
+            String fullName = doc.data()['fullname']?.toString() ?? '';
+            List<String> nameParts =
+                fullName.split(' '); // Split full name by spaces
+            String firstName = nameParts.isNotEmpty
+                ? nameParts[0]
+                : ''; // First part as firstName
+            String surname = nameParts.length > 1
+                ? nameParts.sublist(1).join(' ')
+                : ''; // Combine remaining parts as surname
+
+            // Optional fields
+            String? mobile = doc.data()['mobile'];
+            String displayOnProfile =
+                doc.data()['displayOnProfile']?.toString() ?? 'false';
+
+            UserModel userData = UserModel(
+                dateAdded: DateTime.now(),
+                firstName: firstName,
+                surname: surname,
+                email: doc['email']?.toString() ?? '',
+                status: doc['status']?.toString() ?? 'Active',
+                cell: doc['usercell'],
+                id: doc.id);
+
+            // Store user data and documentId
+            users.add({
+              'user': userData,
+              'documentId': doc.id,
+              'mobile': mobile,
+              'displayOnProfile': displayOnProfile,
+            });
+          }
+        }
+        setState(() {
+          _isLoading = false;
+          usersData = users;
+        });
+      }
+
+      /*    QuerySnapshot<Map<String, dynamic>> usersSnapshot = await _firestore
           .collection('listing_members')
           .where('listingMembersId', isEqualTo: user.id)
           .get();
 
       List<Map<String, dynamic>> users = [];
-
-      print(usersSnapshot.docs[0].get('fullname'));
 
       if (usersSnapshot.docs.isNotEmpty) {
         print('loading users... ${usersSnapshot.docs.length} users found');
@@ -124,7 +198,7 @@ class _ManageUsersState extends State<ManageUsers> {
           _isLoading = false;
         });
         print('No users found');
-      }
+      }*/
     } catch (e) {
       print('Error fetching user data: $e');
       if (!mounted) return;
@@ -136,6 +210,26 @@ class _ManageUsersState extends State<ManageUsers> {
     }
   }
 
+//add user to listing allocation DB
+  addUserToListingAllocation(listingMembersId, listingsId, membersId) async {
+    var data = {
+      "allocationId": "",
+      "dateAdded": DateTime.now(),
+      "listingMembersId": listingMembersId,
+      "listingsId": listingsId,
+      "membersId": membersId,
+    };
+    var myNewDoc = await FirebaseFirestore.instance
+        .collection("listing_allocation")
+        .add(data);
+
+    await FirebaseFirestore.instance
+        .collection("listing_allocation")
+        .doc(myNewDoc.id)
+        .update({"allocationId": myNewDoc.id}).whenComplete(
+            () => descriptionDialog("New User Created"));
+  }
+
   createUser(dummy, dummy2) async {
     try {
       StoredUser? user = await getUserInfo();
@@ -144,12 +238,18 @@ class _ManageUsersState extends State<ManageUsers> {
       //create User
       UserCredential userDocRef = await auth.createUserWithEmailAndPassword(
           email: _controller.email.text, password: _controller.password.text);
+      _controller.authId.text = userDocRef.user!.uid;
 
       var myNewDoc = await FirebaseFirestore.instance
           .collection("listing_members")
           .doc(userDocRef.user!.uid)
-          .set(_controller.getValues(user!.id))
-          .whenComplete(() => descriptionDialog("New User Created"));
+          .set(_controller.getValues(userDocRef.user!.uid));
+
+      await addUserToListingAllocation(
+        userDocRef.user!.uid,
+        user!.id, //listing id
+        userDocRef.user!.uid,
+      );
     } catch (e) {
       print('Error fetching listing data: $e');
       setState(() {
@@ -163,6 +263,7 @@ class _ManageUsersState extends State<ManageUsers> {
   editUser(status, id) async {
     StoredUser? user = await getUserInfo();
     var data = _controller.getValues(user!.id);
+    _controller.authId.text = id;
     data['userActive'] = status;
     if (status == 1) {
       data['status'] = "Active";
@@ -252,40 +353,44 @@ class _ManageUsersState extends State<ManageUsers> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                AddButton(
-                                  text: 'Add New User',
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      barrierColor:
-                                          Colors.black.withOpacity(0.5),
-                                      builder: (BuildContext context) {
-                                        return Dialog(
-                                          backgroundColor: Colors.transparent,
-                                          insetPadding:
-                                              const EdgeInsets.all(10),
-                                          child: NewUserPopup(
-                                            onSubmit: createUser,
-                                            fullNameController:
-                                                _controller.fullname,
-                                            emailController: _controller.email,
-                                            mobileController:
-                                                _controller.usercell,
-                                            passwordController:
-                                                _controller.password,
-                                            confirmPasswordController:
-                                                _controller.confirmPassword,
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ],
+                            Visibility(
+                              visible: !widget.normalUser,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  AddButton(
+                                    text: 'Add New User',
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        barrierColor:
+                                            Colors.black.withOpacity(0.5),
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                            backgroundColor: Colors.transparent,
+                                            insetPadding:
+                                                const EdgeInsets.all(10),
+                                            child: NewUserPopup(
+                                              onSubmit: createUser,
+                                              fullNameController:
+                                                  _controller.fullname,
+                                              emailController:
+                                                  _controller.email,
+                                              mobileController:
+                                                  _controller.usercell,
+                                              passwordController:
+                                                  _controller.password,
+                                              confirmPasswordController:
+                                                  _controller.confirmPassword,
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                             const Padding(
                               padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -458,6 +563,7 @@ class _ManageUsersState extends State<ManageUsers> {
                                                 );
                                               },
                                               pressDelete: () {},
+                                              showEdit: widget.normalUser,
                                             );
                                           }
                                           return const SizedBox.shrink();

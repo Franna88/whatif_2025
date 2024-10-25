@@ -11,7 +11,7 @@ class UserDetailsController {
   late TextEditingController usercell;
   late TextEditingController password;
   late TextEditingController confirmPassword;
-
+  late TextEditingController authId;
   UserDetailsController() {
     dateReg = TextEditingController();
     dateUpdate = TextEditingController();
@@ -23,6 +23,7 @@ class UserDetailsController {
     usercell = TextEditingController();
     password = TextEditingController();
     confirmPassword = TextEditingController();
+    authId = TextEditingController();
   }
 
   void dispose() {
@@ -36,19 +37,20 @@ class UserDetailsController {
     usercell.dispose();
     password.dispose();
     confirmPassword.dispose();
+    authId.dispose();
   }
 
   void setValues(Map<String, dynamic> userData) {
     dateReg.text = userData['dateReg'] ?? '';
   }
 
-  getValues(listingId) {
+  getValues(listingMembersId) {
     return {
       "dateReg": DateTime.now(),
       "dateUpdate": "dateReg.text",
       "email": email.text,
       "fullname": fullname.text,
-      "listingMembersId": listingId,
+      "listingMembersId": listingMembersId,
       "loginCount": 0,
       "password": "",
       "secKey": secKey.text,
@@ -59,7 +61,9 @@ class UserDetailsController {
       "userLogoutTime": "",
       "usercell": usercell.text,
       "username": "",
-      "usertell": ""
+      "usertell": "",
+      "authId": authId.text,
+      "normalUser": true
     };
   }
 }

@@ -63,6 +63,7 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
   Future<void> _login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       try {
+        var normalUser = true;
         setState(() {
           _isLoading = true;
         });
@@ -78,7 +79,7 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
 
         if (user != null) {
           print("User signed in: ${user.email} ${user.uid}");
-
+          print(user.uid.toString());
           // Fetch user details from Firestore
           QuerySnapshot<Map<String, dynamic>> userDoc = await _firestore
               .collection('listing_members')
@@ -89,7 +90,14 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
           if (userDoc.docs.isNotEmpty) {
 //check if user admin
             await checkUserAdmin(user);
-
+            //check user Type
+            if (userDoc.docs.first.data().containsKey('normalUser')) {
+              normalUser = true;
+            } else {
+              normalUser = false;
+            }
+            print("ID");
+            print(userDoc.docs.first.data()['listingMembersId']);
             QuerySnapshot<Map<String, dynamic>> listingAllocationSnapshot =
                 await _firestore
                     .collection('listing_allocation')
@@ -127,8 +135,9 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    AdminPortal(), // Replace with your destination screen
+                builder: (context) => AdminPortal(
+                    normalUser:
+                        normalUser), // Replace with your destination screen
               ),
             );
           } else {

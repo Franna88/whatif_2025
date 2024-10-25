@@ -27,7 +27,8 @@ import '../Notifications/SystemAlert.dart/SystemAlert.dart';
 import '../PerformanceandStats/PerformanceandStats.dart';
 
 class SideNavBar extends StatefulWidget {
-  const SideNavBar({Key? key}) : super(key: key);
+  bool normalUser;
+  SideNavBar({Key? key, required this.normalUser}) : super(key: key);
 
   @override
   State<SideNavBar> createState() => _SideNavBarState();
@@ -144,7 +145,7 @@ class _SideNavBarState extends State<SideNavBar> {
       AdminProfile(),
       //Advertisement(),
       AdvertisementAlt(),
-      ManageUsers(),
+      ManageUsers(normalUser: widget.normalUser),
       AdminNotificationsAlt(navigateToPage: navigateToPage),
       SystemAlert(navigateToPage: navigateToPage),
       DocumentExpired(navigateToPage: navigateToPage),
