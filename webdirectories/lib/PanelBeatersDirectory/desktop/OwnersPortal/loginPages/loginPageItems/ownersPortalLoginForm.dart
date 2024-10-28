@@ -136,8 +136,8 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
               context,
               MaterialPageRoute(
                 builder: (context) => AdminPortal(
-                    normalUser:
-                        normalUser), // Replace with your destination screen
+                    normalUser: normalUser,
+                    listingsId: ""), // Replace with your destination screen
               ),
             );
           } else {

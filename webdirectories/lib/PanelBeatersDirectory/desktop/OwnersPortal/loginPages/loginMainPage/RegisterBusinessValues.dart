@@ -20,6 +20,14 @@ class RegisterBusinessValues {
   late TextEditingController ip;
   late TextEditingController date;
 
+  late TextEditingController bankAccName;
+  late TextEditingController bankName;
+  late TextEditingController branchCode;
+  late TextEditingController accNumber;
+  late TextEditingController accType;
+  late TextEditingController commenceDate;
+  late TextEditingController paymentDate;
+
   RegisterBusinessValues() {
     memberShipType = TextEditingController();
     membershipRef = TextEditingController();
@@ -40,6 +48,14 @@ class RegisterBusinessValues {
 
     ip = TextEditingController();
     date = TextEditingController();
+
+    bankAccName = TextEditingController();
+    bankName = TextEditingController();
+    branchCode = TextEditingController();
+    accNumber = TextEditingController();
+    accType = TextEditingController();
+    commenceDate = TextEditingController();
+    paymentDate = TextEditingController();
   }
 
   void dispose() {
@@ -60,6 +76,14 @@ class RegisterBusinessValues {
 
     ip.dispose();
     date.dispose();
+
+    bankAccName.dispose();
+    bankName.dispose();
+    branchCode.dispose();
+    accNumber.dispose();
+    accType.dispose();
+    commenceDate.dispose();
+    paymentDate.dispose();
   }
 
   void setValues(Map<String, dynamic> userData) {
@@ -108,14 +132,14 @@ class RegisterBusinessValues {
   getValues() {
     return {
       "accountTypeId": "",
-      "accountname": "",
-      "accountnumber": "",
+      "accountname": bankAccName.text,
+      "accountnumber": accNumber.text,
       "afterHoursClicks": 0,
       "alternativeNumber": "",
-      "bank": "",
+      "bank": bankName.text,
       "beecertexpirydate": "",
       "beerating": "",
-      "branchcode": null,
+      "branchcode": branchCode.text,
       "businessAfterhours": "",
       "businessEmail": "",
       "businessFaxnumber": "",
@@ -147,7 +171,7 @@ class RegisterBusinessValues {
       "mapStatus": 0,
       "membersId": "",
       "listingsId": "",
-      "authId": "",
+      "auth_id": "",
       "provinceId": "",
       "registeredBussinessName": "",
       "isActive": 0,
@@ -173,7 +197,8 @@ class RegisterBusinessValues {
       "ip": ip.text,
       "dateAdded": DateTime.now(),
       "memberShipType": memberShipType.text,
-      "membershipRef": membershipRef.text
+      "membershipRef": membershipRef.text,
+      "newRegistration": 1
     };
   }
 }/*

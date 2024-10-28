@@ -10,7 +10,8 @@ import 'package:intl/intl.dart';
 
 class DashGraph extends StatefulWidget {
   String userId;
-  DashGraph({super.key, required this.userId});
+  String? adminListingsId;
+  DashGraph({super.key, required this.userId, this.adminListingsId});
 
   @override
   State<DashGraph> createState() => _DashGraphState();

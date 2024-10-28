@@ -6,12 +6,14 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutilit
 class NewDeleteButton extends StatefulWidget {
   final String? documentId; // Allow the document ID to be nullable
   final String? collectionName;
+  final bool? changeActive;
   final VoidCallback? refreshList;
 
   const NewDeleteButton(
       {Key? key,
       required this.documentId,
       this.collectionName,
+      this.changeActive,
       this.refreshList})
       : super(key: key);
 
@@ -33,6 +35,25 @@ class _NewDeleteButtonState extends State<NewDeleteButton> {
     });
   }
 
+  deleteAsInactive() async {
+    try {
+      await _firestore
+          .collection(widget.collectionName!)
+          .doc(widget.documentId)
+          .update({"isActive": 0}).whenComplete(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Record set as InActive Successfully!')),
+        );
+        Navigator.of(context).pop(); // Close the popup after deleting
+        widget.refreshList!();
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete record: $e')),
+      );
+    }
+  }
+
   // Function to delete the document from Firestore
   Future<void> _deleteDocument() async {
     if (widget.documentId == null) {
@@ -41,6 +62,8 @@ class _NewDeleteButtonState extends State<NewDeleteButton> {
       );
       return;
     }
+
+    deleteAsInactive();
 
     try {
       await _firestore
@@ -123,7 +146,9 @@ class _NewDeleteButtonState extends State<NewDeleteButton> {
                       SizedBox(
                         width: MyUtility(context).width * 0.12,
                         child: Text(
-                          'Are you sure you want to delete this record?',
+                          widget.changeActive != null
+                              ? 'Are you sure you want to set record as InActive'
+                              : 'Are you sure you want to delete this record?',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
@@ -142,8 +167,13 @@ class _NewDeleteButtonState extends State<NewDeleteButton> {
                         padding: const EdgeInsets.only(right: 8),
                         child: PopUpsCancel(
                           text: 'Delete',
-                          onTap:
-                              _deleteDocument, // Call the delete function here
+                          onTap: () {
+                            if (widget.changeActive != null) {
+                              deleteAsInactive();
+                            } else {
+                              _deleteDocument(); // Call the delete function here
+                            }
+                          },
                           buttonColor: Color(0xFFE52F2F),
                         ),
                       ),

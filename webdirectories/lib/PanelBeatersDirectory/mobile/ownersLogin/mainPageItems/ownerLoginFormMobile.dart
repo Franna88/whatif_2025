@@ -40,7 +40,9 @@ class _OwnerloginformmobileState extends State<Ownerloginformmobile> {
           context,
           MaterialPageRoute(
               builder: (context) => AdminPortal(
-                  normalUser: false)), // Replace with your destination screen
+                    normalUser: false,
+                    listingsId: '',
+                  )), // Replace with your destination screen
         );
       } on FirebaseAuthMultiFactorException catch (e) {
         print('Incorrect credentials. Please try again.');

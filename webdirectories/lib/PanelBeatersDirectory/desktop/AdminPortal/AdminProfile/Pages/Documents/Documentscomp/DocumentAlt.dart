@@ -12,7 +12,8 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class DocumentAlt extends StatefulWidget {
-  const DocumentAlt({super.key});
+  Function getListingId;
+  DocumentAlt({super.key, required this.getListingId});
 
   @override
   State<DocumentAlt> createState() => _DocumentAltState();
@@ -23,16 +24,12 @@ class _DocumentAltState extends State<DocumentAlt> {
   final _firestore = FirebaseFirestore.instance;
 
   Future<List<Map<String, dynamic>>> _fetchDocumentData() async {
-    StoredUser? user = await getUserInfo();
-    if (user == null) {
-      return [];
-    }
-
     // Fetch documents
     try {
+      var userId = await widget.getListingId();
       QuerySnapshot documentsSnapshot = await _firestore
           .collection('listings_documents')
-          .where('listingsId', isEqualTo: int.parse(user.id))
+          .where('listingsId', isEqualTo: userId)
           .get();
       List<Map<String, dynamic>> documentData = documentsSnapshot.docs
           .map((doc) => doc.data() as Map<String, dynamic>)

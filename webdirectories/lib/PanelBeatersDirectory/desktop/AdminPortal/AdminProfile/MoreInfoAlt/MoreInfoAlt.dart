@@ -3,7 +3,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/myutility.dart';
 
 class MoreInfoALt extends StatefulWidget {
-  const MoreInfoALt({super.key});
+  Function getListingId;
+  MoreInfoALt({super.key, required this.getListingId});
 
   @override
   State<MoreInfoALt> createState() => _MoreInfoALtState();

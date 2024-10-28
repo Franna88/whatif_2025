@@ -28,7 +28,10 @@ import '../PerformanceandStats/PerformanceandStats.dart';
 
 class SideNavBar extends StatefulWidget {
   bool normalUser;
-  SideNavBar({Key? key, required this.normalUser}) : super(key: key);
+  String adminListingsId;
+  SideNavBar(
+      {Key? key, required this.normalUser, required this.adminListingsId})
+      : super(key: key);
 
   @override
   State<SideNavBar> createState() => _SideNavBarState();
@@ -40,6 +43,7 @@ class _SideNavBarState extends State<SideNavBar> {
   int _selectedIndex = 0;
   int listingsId = 0;
   Map<String, dynamic> lightstoneData = {};
+  var adminListingsId;
 
   var jobDetails = JobFinderModel(
     name: '',
@@ -69,6 +73,36 @@ class _SideNavBarState extends State<SideNavBar> {
         dateSubmitted: value.dateSubmitted,
       );
     });
+  }
+
+  //check if id is old or new id
+  bool _isNumeric(String str) {
+    if (str == null) {
+      return false;
+    }
+    return double.tryParse(str) is double;
+  }
+
+  getListingId() async {
+    if (widget.adminListingsId != "") {
+      print("Next");
+      //Admin View
+      //get old/ new Id
+      var docId = _isNumeric(widget.adminListingsId!)
+          ? int.parse(widget.adminListingsId!)
+          : widget.adminListingsId!;
+      print(docId);
+      print(docId);
+      return docId;
+    } else {
+      StoredUser? user = await getUserInfo();
+      if (user != null) {
+        var docId = _isNumeric(user.id) ? int.parse(user.id) : user.id;
+        print(docId);
+        print(docId);
+        return docId;
+      }
+    }
   }
 
   getLightStoneData() async {
@@ -133,7 +167,9 @@ class _SideNavBarState extends State<SideNavBar> {
 
   @override
   void initState() {
-    getLightStoneData();
+    //   getListingId();
+    // getLightStoneData();
+
     super.initState();
   }
 
@@ -141,8 +177,13 @@ class _SideNavBarState extends State<SideNavBar> {
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
     var pages = [
-      Dashboard(navigateToPage: navigateToPage),
-      AdminProfile(),
+      Dashboard(
+        navigateToPage: navigateToPage,
+        adminListingsId: widget.adminListingsId,
+      ),
+      AdminProfile(
+        getListingId: getListingId,
+      ),
       //Advertisement(),
       AdvertisementAlt(),
       ManageUsers(normalUser: widget.normalUser),

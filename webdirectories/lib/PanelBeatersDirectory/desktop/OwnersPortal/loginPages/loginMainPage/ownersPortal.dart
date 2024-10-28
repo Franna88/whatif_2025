@@ -105,7 +105,9 @@ class _OwnersPortalState extends State<OwnersPortal> {
           openAgreementPopup: openAgreementPopup,
           changePageIndex: changePageIndex,
           controller: _controller),
-      WhatsNext()
+      WhatsNext(
+        changeIndex: changeIndex,
+      )
     ];
     return Material(
       child: SingleChildScrollView(

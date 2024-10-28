@@ -15,7 +15,8 @@ import 'package:webdirectories/myutility.dart';
 import '../../../../PopUps/PopUpsCommon/NewDeletePopUp.dart';
 
 class GalleryAlt extends StatefulWidget {
-  const GalleryAlt({super.key});
+  Function getListingId;
+  GalleryAlt({super.key, required this.getListingId});
 
   @override
   State<GalleryAlt> createState() => _GalleryAltState();
@@ -34,16 +35,11 @@ class _GalleryAltState extends State<GalleryAlt> {
 
   // Fetch the gallery data only once and store it locally
   Future<void> _loadGalleryData() async {
-    StoredUser? user = await getUserInfo();
-
-    if (user == null) {
-      return;
-    }
-
     try {
+      var userId = await widget.getListingId();
       QuerySnapshot gallerySnapshot = await _firestore
           .collection('gallery')
-          .where('listingsId', isEqualTo: int.parse(user.id))
+          .where('listingsId', isEqualTo: userId)
           .get();
 
       if (gallerySnapshot.docs.isNotEmpty) {

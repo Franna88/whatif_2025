@@ -6,13 +6,16 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/RegistrationNumbers/RegistrationNumbersComp/RegistrationAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/ProfileButton.dart';
 
+import '../../../models/storedUser.dart';
+import '../../../utils/loginUtils.dart';
 import 'AdminMediaLinks.dart/AdminMediaLink.dart';
 import 'MoreInfoAlt/MoreInfoAlt.dart';
 import 'Pages/AdminBusinessSetup/adminBusinessSetup.dart';
 import 'Pages/Gallery/GalleryComp/GalaryAlt.dart';
 
 class AdminProfile extends StatefulWidget {
-  const AdminProfile({Key? key}) : super(key: key);
+  Function getListingId;
+  AdminProfile({Key? key, required this.getListingId}) : super(key: key);
 
   @override
   State<AdminProfile> createState() => _AdminProfileState();
@@ -34,18 +37,18 @@ class _AdminProfileState extends State<AdminProfile> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     var pages = [
-      AdminusinessSetup(),
+      AdminusinessSetup(getListingId: widget.getListingId),
       //RegistrationNumbers(),
-      RegistrationAlit(),
+      RegistrationAlit(getListingId: widget.getListingId),
       //Documents(),
-      DocumentAlt(),
+      DocumentAlt(getListingId: widget.getListingId),
       //AdminContact(),
-      AdminContactAlt(),
-      Approvals(),
-      MoreInfoALt(),
-      GalleryAlt(),
-      AdminHoursAlt(),
-      AdminMediaLink()
+      AdminContactAlt(getListingId: widget.getListingId),
+      Approvals(getListingId: widget.getListingId),
+      MoreInfoALt(getListingId: widget.getListingId),
+      GalleryAlt(getListingId: widget.getListingId),
+      AdminHoursAlt(getListingId: widget.getListingId),
+      AdminMediaLink(getListingId: widget.getListingId)
     ];
     return CustomScrollView(
       slivers: <Widget>[

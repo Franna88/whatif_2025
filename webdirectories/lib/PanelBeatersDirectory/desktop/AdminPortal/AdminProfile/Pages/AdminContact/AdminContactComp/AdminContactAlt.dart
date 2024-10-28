@@ -13,7 +13,8 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class AdminContactAlt extends StatefulWidget {
-  const AdminContactAlt({super.key});
+  Function getListingId;
+  AdminContactAlt({super.key, required this.getListingId});
 
   @override
   State<AdminContactAlt> createState() => _AdminContactAltState();
@@ -24,16 +25,10 @@ class _AdminContactAltState extends State<AdminContactAlt> {
   final _firestore = FirebaseFirestore.instance;
 
   Future<List<Map<String, dynamic>>> _fetchContactData() async {
-    StoredUser? user = await getUserInfo();
-
-    if (user == null) {
-      return [];
-    }
-
+    var userId = await widget.getListingId();
     QuerySnapshot contactSnapshot = await _firestore
         .collection('contact_person')
-        .where('listingsId',
-            isEqualTo: int.parse(user.id)) // Make sure 'user.id' is an int
+        .where('listingsId', isEqualTo: userId) // Make sure 'user.id' is an int
         .get();
 
     if (contactSnapshot.docs.isNotEmpty) {

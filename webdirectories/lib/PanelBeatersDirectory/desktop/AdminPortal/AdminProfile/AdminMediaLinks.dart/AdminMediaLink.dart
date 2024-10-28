@@ -34,7 +34,8 @@ class MediaLink {
 }
 
 class AdminMediaLink extends StatefulWidget {
-  const AdminMediaLink({super.key});
+  Function getListingId;
+  AdminMediaLink({super.key, required this.getListingId});
 
   @override
   State<AdminMediaLink> createState() => _AdminMediaLinkState();
@@ -52,31 +53,27 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
 
   Future<void> _fetchMediaData() async {
     _mediaList.clear();
-    StoredUser? user = await getUserInfo();
-    if (user != null) {
-      int listingId = int.tryParse(user.id) ?? 0; // Ensure correct ID parsing
-      try {
-        QuerySnapshot mediaDoc = await _firestore
-            .collection('listings_links')
-            .where('listingsId', isEqualTo: listingId)
-            .get();
 
-        if (mediaDoc.docs.isNotEmpty) {
-          setState(() {
-            _mediaList = mediaDoc.docs
-                .map((docs) =>
-                    MediaLink.fromMap(docs.data() as Map<String, dynamic>))
-                .toList();
-          });
-          print('Fetched Media Data: $_mediaList'); // Debugging print
-        } else {
-          print('No media found'); // Debugging print
-        }
-      } catch (e) {
-        print('Error fetching media data: $e'); // Debugging print
+    try {
+      var listingId = await widget.getListingId();
+      QuerySnapshot mediaDoc = await _firestore
+          .collection('listings_links')
+          .where('listingsId', isEqualTo: listingId)
+          .get();
+
+      if (mediaDoc.docs.isNotEmpty) {
+        setState(() {
+          _mediaList = mediaDoc.docs
+              .map((docs) =>
+                  MediaLink.fromMap(docs.data() as Map<String, dynamic>))
+              .toList();
+        });
+        print('Fetched Media Data: $_mediaList'); // Debugging print
+      } else {
+        print('No media found'); // Debugging print
       }
-    } else {
-      print('User not found'); // Debugging print
+    } catch (e) {
+      print('Error fetching media data: $e'); // Debugging print
     }
   }
 

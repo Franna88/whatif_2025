@@ -42,7 +42,7 @@ class _AgreementState extends State<Agreement> {
 
   final selectedAgreement = TextEditingController();
 
-  getPaystackUrl() {
+  getMemberShipType() {
     switch (widget.membershipType) {
       case "StarterM":
         setState(() {
@@ -97,7 +97,7 @@ class _AgreementState extends State<Agreement> {
         print(' invalid entry');
     }
   }
-
+/*
   checkSubscription() {
     return http.get(
       Uri.parse(
@@ -147,7 +147,7 @@ class _AgreementState extends State<Agreement> {
         launchUrl(Uri.parse(paystackUrl));
       });
     }
-  }
+  }*/
 
   //Register new user
   submitAgreement() async {
@@ -156,13 +156,12 @@ class _AgreementState extends State<Agreement> {
       UserCredential userDocRef = await auth.createUserWithEmailAndPassword(
           email: widget.controller.email.text,
           password: widget.controller.password.text);
-
-      var myNewDoc = await FirebaseFirestore.instance
+      print(userDocRef.user!.uid);
+      await FirebaseFirestore.instance
           .collection("listings")
           .doc(userDocRef.user!.uid)
           .set(widget.controller.getValues());
-      print(widget.controller);
-
+      print(userDocRef.user!.uid);
       await FirebaseFirestore.instance
           .collection("listings")
           .doc(userDocRef.user!.uid)
@@ -170,7 +169,7 @@ class _AgreementState extends State<Agreement> {
         "authId": userDocRef.user!.uid,
         "listingsId": userDocRef.user!.uid,
       });
-
+      print(userDocRef.user!.uid);
       await FirebaseFirestore.instance
           .collection("listing_allocation")
           .doc(userDocRef.user!.uid)
@@ -181,8 +180,7 @@ class _AgreementState extends State<Agreement> {
           .doc(userDocRef.user!.uid)
           .set(widget.controller.getListingMembersValue(userDocRef.user!.uid))
           .whenComplete(() {
-        //  widget.closeDialog();
-        widget.changePageIndex();
+        widget.closeDialog();
       });
     } catch (e) {
       print('Error fetching listing data: $e');
@@ -194,7 +192,7 @@ class _AgreementState extends State<Agreement> {
 
   @override
   void initState() {
-    getPaystackUrl();
+    getMemberShipType();
     var todayDate = DateTime.now();
     widget.controller.date.text = DateFormat('yyyy/MM/dd')
         .format(DateTime(todayDate.year, todayDate.month, todayDate.day));
@@ -546,8 +544,22 @@ class _AgreementState extends State<Agreement> {
                             SizedBox(
                               height: 20,
                             ),
+                            Text(
+                              'Debit Order Information:',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                                height: 1,
+                              ),
+                            ),
                             SizedBox(
-                              width: 1110,
+                              height: 5,
+                            ),
+
+                            /*       SizedBox(
+                              width: 500,
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
@@ -566,9 +578,188 @@ class _AgreementState extends State<Agreement> {
                               hintText: '',
                               width: 1110,
                               controller: TextEditingController(),
-                            ),
+                            ),*/
                             SizedBox(
                               height: 20,
+                            ),
+                            SizedBox(
+                              width: 540,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '*Bank Account Name',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  AgreementTextField(
+                                      hintText: '',
+                                      width: 300,
+                                      controller: widget.controller.city),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: 540,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '*Bank Name',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  AgreementTextField(
+                                      hintText: '',
+                                      width: 300,
+                                      controller: widget.controller.city),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: 540,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '*Branch Code',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  AgreementTextField(
+                                      hintText: '',
+                                      width: 300,
+                                      controller: widget.controller.city),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: 540,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '*Account Number',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  AgreementTextField(
+                                      hintText: '',
+                                      width: 300,
+                                      controller: widget.controller.city),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: 540,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '*Account Type ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  AgreementTextField(
+                                      hintText: '',
+                                      width: 300,
+                                      controller: widget.controller.city),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: 540,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '*Commencement Date ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  AgreementTextField(
+                                      hintText: '',
+                                      width: 300,
+                                      controller: widget.controller.city),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: 540,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '*Payment Date ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                    ),
+                                  ),
+                                  AgreementTextField(
+                                      hintText: '',
+                                      width: 300,
+                                      controller: widget.controller.city),
+                                ],
+                              ),
                             ),
                             SizedBox(
                               width: 1110,
@@ -1418,7 +1609,8 @@ class _AgreementState extends State<Agreement> {
 
                             InkWell(
                               onTap: () {
-                                callPaystack();
+                                //   callPaystack();
+                                submitAgreement();
                               },
                               child: Container(
                                 padding: const EdgeInsets.only(

@@ -3,7 +3,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminApprovals/SelectaCategory.dart';
 
 class Approvals extends StatefulWidget {
-  const Approvals({super.key});
+  Function getListingId;
+  Approvals({super.key, required this.getListingId});
 
   @override
   State<Approvals> createState() => _ApprovalsState();

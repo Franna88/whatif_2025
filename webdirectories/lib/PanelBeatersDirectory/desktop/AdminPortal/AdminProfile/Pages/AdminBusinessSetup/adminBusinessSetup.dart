@@ -13,7 +13,8 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class AdminusinessSetup extends StatefulWidget {
-  AdminusinessSetup({super.key});
+  Function getListingId;
+  AdminusinessSetup({super.key, required this.getListingId});
 
   @override
   State<AdminusinessSetup> createState() => _AdminusinessSetupState();
@@ -44,75 +45,73 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
       _isLoading = true;
     });
 
-    StoredUser? user = await getUserInfo();
-    print('User Id: ${user?.id}');
-    if (user != null) {
-      QuerySnapshot userDoc = await _firestore
-          .collection('listings')
-          .where('listingsId', isEqualTo: int.parse(user.id))
-          .get();
+    var userId = await widget.getListingId();
 
-      if (userDoc.docs.isNotEmpty) {
-        try {
-          // Fetch user data
-          Map<String, dynamic> userData =
-              userDoc.docs[0].data() as Map<String, dynamic>;
+    QuerySnapshot userDoc = await _firestore
+        .collection('listings')
+        .where('listingsId', isEqualTo: userId)
+        .get();
 
-          // Fetch country data
-          QuerySnapshot countrySnapshot = await _firestore
-              .collection('country')
-              .where('countryId', isEqualTo: userData['countryId'])
-              .get();
-          Map<String, dynamic> countryData =
-              countrySnapshot.docs[0].data() as Map<String, dynamic>;
+    if (userDoc.docs.isNotEmpty) {
+      try {
+        // Fetch user data
+        Map<String, dynamic> userData =
+            userDoc.docs[0].data() as Map<String, dynamic>;
 
-          // Fetch city data
-          QuerySnapshot citySnapshot = await _firestore
-              .collection('city')
-              .where('cityId', isEqualTo: userData['cityId'])
-              .get();
-          Map<String, dynamic> cityData =
-              citySnapshot.docs[0].data() as Map<String, dynamic>;
+        // Fetch country data
+        QuerySnapshot countrySnapshot = await _firestore
+            .collection('country')
+            .where('countryId', isEqualTo: userData['countryId'])
+            .get();
+        Map<String, dynamic> countryData =
+            countrySnapshot.docs[0].data() as Map<String, dynamic>;
 
-          // Fetch province data
-          QuerySnapshot provinceSnapshot = await _firestore
-              .collection('province')
-              .where('provinceId', isEqualTo: userData['provinceId'])
-              .get();
-          Map<String, dynamic> provinceData =
-              provinceSnapshot.docs[0].data() as Map<String, dynamic>;
+        // Fetch city data
+        QuerySnapshot citySnapshot = await _firestore
+            .collection('city')
+            .where('cityId', isEqualTo: userData['cityId'])
+            .get();
+        Map<String, dynamic> cityData =
+            citySnapshot.docs[0].data() as Map<String, dynamic>;
 
-          // Fetch suburb data
-          QuerySnapshot suburbSnapshot = await _firestore
-              .collection('suburb')
-              .where('suburbId', isEqualTo: userData['suburbId'])
-              .get();
-          Map<String, dynamic> suburbData =
-              suburbSnapshot.docs[0].data() as Map<String, dynamic>;
+        // Fetch province data
+        QuerySnapshot provinceSnapshot = await _firestore
+            .collection('province')
+            .where('provinceId', isEqualTo: userData['provinceId'])
+            .get();
+        Map<String, dynamic> provinceData =
+            provinceSnapshot.docs[0].data() as Map<String, dynamic>;
 
-          // merge data into userData
-          userData.addAll({
-            'country': countryData['country'],
-            'city': cityData['city'],
-            'province': provinceData['province'],
-            'suburb': suburbData['suburb'],
-          });
+        // Fetch suburb data
+        QuerySnapshot suburbSnapshot = await _firestore
+            .collection('suburb')
+            .where('suburbId', isEqualTo: userData['suburbId'])
+            .get();
+        Map<String, dynamic> suburbData =
+            suburbSnapshot.docs[0].data() as Map<String, dynamic>;
 
-          if (!mounted) return;
+        // merge data into userData
+        userData.addAll({
+          'country': countryData['country'],
+          'city': cityData['city'],
+          'province': provinceData['province'],
+          'suburb': suburbData['suburb'],
+        });
 
-          setState(() {
-            lat = userData['latitude'];
-            long = userData['longitude'];
-            _controller.setValues(userData);
-            docId = userDoc.docs[0].id;
-            print(userData['displayphoto']);
+        if (!mounted) return;
 
-            _userDisplayImageName = "${userData['displayphoto']}";
-            businessLogo = "${userData['listingLogo']}";
-          });
-        } catch (e) {
-          print(e);
-        }
+        setState(() {
+          lat = userData['latitude'];
+          long = userData['longitude'];
+          _controller.setValues(userData);
+          docId = userDoc.docs[0].id;
+          print(userData['displayphoto']);
+
+          _userDisplayImageName = "${userData['displayphoto']}";
+          businessLogo = "${userData['listingLogo']}";
+        });
+      } catch (e) {
+        print(e);
       }
     }
 

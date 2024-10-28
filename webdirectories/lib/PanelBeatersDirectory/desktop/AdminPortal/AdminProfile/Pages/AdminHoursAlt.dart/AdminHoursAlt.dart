@@ -14,7 +14,8 @@ import 'package:webdirectories/myutility.dart';
 import '../../../../components/descriptionDialog.dart';
 
 class AdminHoursAlt extends StatefulWidget {
-  const AdminHoursAlt({super.key});
+  Function getListingId;
+  AdminHoursAlt({super.key, required this.getListingId});
 
   @override
   State<AdminHoursAlt> createState() => _AdminHoursAltState();
@@ -25,7 +26,7 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
   final hRemarks = TextEditingController();
   Businessprofilehours? _listingHours;
   String docId = "";
-  String listingId = "";
+
   @override
   void initState() {
     super.initState();
@@ -33,14 +34,11 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
   }
 
   Future<void> _fetchHoursData() async {
-    StoredUser? user = await getUserInfo();
-    setState(() {
-      listingId = user!.id;
-    });
+    var listingsId = await widget.getListingId();
 
     QuerySnapshot hoursDoc = await _firestore
         .collection('listing_hours')
-        .where('listingsId', isEqualTo: int.parse(listingId!))
+        .where('listingsId', isEqualTo: listingsId)
         .get();
     print("HOURS1");
     if (hoursDoc.docs.isNotEmpty) {
@@ -70,7 +68,7 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
         ));
       });
 
-  getValues(docId) {
+  getValues(docId) async {
     return {
       'mOpen': _listingHours!.mOpen,
       'mClosed': _listingHours!.mClosed,
@@ -88,7 +86,7 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       'suClosed': _listingHours!.suClosed,
       'pOpen': _listingHours!.pClosed,
       'pClosed': _listingHours!.pClosed,
-      'listingsId': listingId,
+      'listingsId': await widget.getListingId(),
       'hRemarks': hRemarks.text
     };
   }

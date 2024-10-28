@@ -18,9 +18,11 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class Dashboard extends StatefulWidget {
+  String adminListingsId;
   final Function(int) navigateToPage;
 
-  const Dashboard({super.key, required this.navigateToPage});
+  Dashboard(
+      {super.key, required this.navigateToPage, required this.adminListingsId});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -42,6 +44,25 @@ class _DashboardState extends State<Dashboard> {
     _fetchUserData(); // Fetch the user data when the Dashboard initializes
   }
 
+  getListingId() async {
+    if (widget.adminListingsId != "") {
+      //Admin View
+      //get old/ new Id
+      var docId = _isNumeric(widget.adminListingsId)
+          ? int.parse(widget.adminListingsId)
+          : widget.adminListingsId;
+
+      return docId;
+    } else {
+      StoredUser? user = await getUserInfo();
+      if (user != null) {
+        var docId = _isNumeric(user.id) ? int.parse(user.id) : user.id;
+
+        return docId;
+      }
+    }
+  }
+
 //check if id is old or new id
   bool _isNumeric(String str) {
     if (str == null) {
@@ -51,44 +72,38 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Future<void> _fetchUserData() async {
-    StoredUser? user =
-        await getUserInfo(); // Assuming you have this method to get the user
+    // print(user.id);
 
-    if (user != null) {
-      // print(user.id);
-      try {
-        var docId = _isNumeric(user.id) ? int.parse(user.id) : user.id;
-        getNotifictions(docId);
-        // Fetch the user's document from Firestore based on their ID
-        QuerySnapshot userDoc = await _firestore
-            .collection('listings')
-            .where('listingsId', isEqualTo: docId)
-            .get();
+    try {
+      var listingsId = await getListingId();
+      getNotifictions((listingsId));
+      // Fetch the user's document from Firestore based on their ID
+      QuerySnapshot userDoc = await _firestore
+          .collection('listings')
+          .where('listingsId', isEqualTo: listingsId)
+          .get();
 
-        if (userDoc.docs.isNotEmpty) {
-          Map<String, dynamic> userData =
-              userDoc.docs[0].data() as Map<String, dynamic>;
+      if (userDoc.docs.isNotEmpty) {
+        Map<String, dynamic> userData =
+            userDoc.docs[0].data() as Map<String, dynamic>;
 
-          // Assuming 'displayphoto' is a field that stores the image path
-          String? imageUrl = userData['displayphoto'];
+        // Assuming 'displayphoto' is a field that stores the image path
+        String? imageUrl = userData['displayphoto'];
 
-          setState(() {
-            userId = user.id;
-
-            _userDisplayImageName =
-                userData['displayphoto']; // Store image URL in state
-            _isLoading = false; // Stop loading once data is fetched
-            docId = userDoc.docs[0].id;
-            businessLogo = userData['listingLogo'];
-            //  print(userData['listingLogo']);
-          });
-        }
-      } catch (e) {
-        //   print('Error fetching user data: $e');
         setState(() {
-          _isLoading = false;
+          _userDisplayImageName =
+              userData['displayphoto']; // Store image URL in state
+          _isLoading = false; // Stop loading once data is fetched
+          docId = userDoc.docs[0].id;
+          businessLogo = userData['listingLogo'];
+          //  print(userData['listingLogo']);
         });
       }
+    } catch (e) {
+      //   print('Error fetching user data: $e');
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -169,7 +184,8 @@ class _DashboardState extends State<Dashboard> {
                   width: widthDevice < 1500 ? 15 : 30,
                 ),
                 DashGraph(
-                  userId: userId,
+                  adminListingsId: widget.adminListingsId,
+                  userId: docId,
                 ) /**/
               ],
             ),

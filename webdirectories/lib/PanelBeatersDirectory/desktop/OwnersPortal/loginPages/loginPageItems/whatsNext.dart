@@ -7,7 +7,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/progressBarNumbers.dart';
 
 class WhatsNext extends StatelessWidget {
-  const WhatsNext({super.key});
+  Function(int) changeIndex;
+  WhatsNext({super.key, required this.changeIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -110,11 +111,7 @@ class WhatsNext extends StatelessWidget {
         ),
         LongOrangeButton(
             onPressed: () {
-              //ADD LOGIC HERE
-              /*         Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AdminPortal()),
-              );*/
+              changeIndex(0);
             },
             buttonText: 'Login to Owners Portal'),
         SizedBox(

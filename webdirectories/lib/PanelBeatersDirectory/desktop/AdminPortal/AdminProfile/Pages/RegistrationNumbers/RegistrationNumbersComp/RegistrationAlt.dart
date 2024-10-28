@@ -14,7 +14,8 @@ import 'package:webdirectories/myutility.dart';
 import '../../../../../components/descriptionDialog.dart';
 
 class RegistrationAlit extends StatefulWidget {
-  const RegistrationAlit({super.key});
+  Function getListingId;
+  RegistrationAlit({super.key, required this.getListingId});
 
   @override
   State<RegistrationAlit> createState() => _RegistrationAlitState();
@@ -27,65 +28,64 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
 
   Future<List<Map<String, dynamic>>> _fetchRegistrationData() async {
     StoredUser? user = await getUserInfo();
-    if (user != null) {
-      try {
-        // Fetch the registration numbers related to the listing
-        QuerySnapshot registrationSnapshot = await _firestore
-            .collection('registration_numbers')
-            .where('listingsId', isEqualTo: int.parse(user.id))
-            .get();
 
-        if (registrationSnapshot.docs.isEmpty) return [];
+    try {
+      var userId = await widget.getListingId();
+      // Fetch the registration numbers related to the listing
+      QuerySnapshot registrationSnapshot = await _firestore
+          .collection('registration_numbers')
+          .where('listingsId', isEqualTo: userId)
+          .get();
 
-        List<Map<String, dynamic>> registrationData =
-            registrationSnapshot.docs.map((doc) {
-          var data = doc.data() as Map<String, dynamic>;
-          data['id'] = doc.id; // Add Firestore document ID here
-          return data;
-        }).toList();
+      if (registrationSnapshot.docs.isEmpty) return [];
 
-        // Fetch and map registration types (already present in your code)
-        Set<int?> registrationTypeIds = registrationData
-            .map((registration) => registration['registrationTypeId'] as int?)
-            .toSet();
+      List<Map<String, dynamic>> registrationData =
+          registrationSnapshot.docs.map((doc) {
+        var data = doc.data() as Map<String, dynamic>;
+        data['id'] = doc.id; // Add Firestore document ID here
+        return data;
+      }).toList();
 
-        registrationTypeIds.removeWhere((i) => i == null);
+      // Fetch and map registration types (already present in your code)
+      Set<int?> registrationTypeIds = registrationData
+          .map((registration) => registration['registrationTypeId'] as int?)
+          .toSet();
 
-        QuerySnapshot registrationTypeSnapshot = await _firestore
-            .collection('registration_type')
-            .where('registrationTypeId', whereIn: registrationTypeIds)
-            .get();
+      registrationTypeIds.removeWhere((i) => i == null);
 
-        Map<int, Map<String, dynamic>> registrationTypeMap = {
-          for (var doc in registrationTypeSnapshot.docs)
-            doc['registrationTypeId']: {
-              'type': doc['registrationType'],
-              'show': doc['registrationShow'],
-            }
-        };
+      QuerySnapshot registrationTypeSnapshot = await _firestore
+          .collection('registration_type')
+          .where('registrationTypeId', whereIn: registrationTypeIds)
+          .get();
 
-        for (var registration in registrationData) {
-          int? registrationTypeId = registration['registrationTypeId'];
-
-          if (registrationTypeId != null &&
-              registrationTypeMap.containsKey(registrationTypeId)) {
-            registration['registrationType'] =
-                registrationTypeMap[registrationTypeId]!['type'];
-            registration['displayProfile'] = registrationTypeMap[
-                        registrationTypeId]!['registrationDisplay'] ==
-                    1
-                ? 'Yes'
-                : 'No';
+      Map<int, Map<String, dynamic>> registrationTypeMap = {
+        for (var doc in registrationTypeSnapshot.docs)
+          doc['registrationTypeId']: {
+            'type': doc['registrationType'],
+            'show': doc['registrationShow'],
           }
-        }
+      };
 
-        return registrationData;
-      } catch (e) {
-        print(e);
+      for (var registration in registrationData) {
+        int? registrationTypeId = registration['registrationTypeId'];
+
+        if (registrationTypeId != null &&
+            registrationTypeMap.containsKey(registrationTypeId)) {
+          registration['registrationType'] =
+              registrationTypeMap[registrationTypeId]!['type'];
+          registration['displayProfile'] =
+              registrationTypeMap[registrationTypeId]!['registrationDisplay'] ==
+                      1
+                  ? 'Yes'
+                  : 'No';
+        }
       }
-    } else {
-      throw "User not found";
+
+      return registrationData;
+    } catch (e) {
+      print(e);
     }
+
     return [];
   }
 

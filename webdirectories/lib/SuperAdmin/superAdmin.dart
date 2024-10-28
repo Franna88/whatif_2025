@@ -7,6 +7,7 @@ import '../PanelBeatersDirectory/desktop/AdminPortal/SideNavBar/SideNavButton/Si
 import '../WebDirectories/Page1/Page1.dart';
 import '../myutility.dart';
 import 'ligtstoneExcelProcess/ligtstoneExcelProces.dart';
+import 'listings/listings.dart';
 
 class SuperAdmin extends StatefulWidget {
   const SuperAdmin({super.key});
@@ -46,7 +47,7 @@ class _SuperAdminState extends State<SuperAdmin> {
   @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
-    var pages = [LightStoneExcelProcess()];
+    var pages = [Listings(), LightStoneExcelProcess()];
     return Row(
       children: [
         Container(
@@ -68,11 +69,18 @@ class _SuperAdminState extends State<SuperAdmin> {
                 child: ListView(
                   children: [
                     SideNavButton(
+                      icon: 'images/listings.svg',
+                      selectedIcon: 'images/listings.svg',
+                      label: 'Listings',
+                      isSelected: _selectedIndex == 0,
+                      onTap: () => _onItemTapped(0),
+                    ),
+                    SideNavButton(
                       icon: 'images/dash1.svg',
                       selectedIcon: 'images/dash1.1.svg',
                       label: 'LightStone Uploads',
-                      isSelected: _selectedIndex == 0,
-                      onTap: () => _onItemTapped(0),
+                      isSelected: _selectedIndex == 1,
+                      onTap: () => _onItemTapped(1),
                     ),
                     SideNavButton(
                       icon: 'images/Logout.svg',
