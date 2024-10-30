@@ -92,7 +92,10 @@ class _OwnersPortalState extends State<OwnersPortal> {
         },
       ),
       EnterVerificationCode(
-          changePageIndex: changePageIndex, email: _controller.email.text),
+        changePageIndex: changePageIndex,
+        email: _controller.email.text,
+        cell: _controller.phone.text,
+      ),
       CreateProfile(
         changePageIndex: changePageIndex,
         email: _controller.email,

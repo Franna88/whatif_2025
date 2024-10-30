@@ -20,6 +20,25 @@ class LeftReviews extends StatefulWidget {
 }
 
 class _LeftReviewsState extends State<LeftReviews> {
+  Map data = {};
+  @override
+  void initState() {
+//Map out data to use
+    /* (widget.reviews).forEach((dynamic key, dynamic value) {
+      setState(() {
+        data.addAll({key: value});
+      });
+    });*/
+    print("REVIEW");
+
+    print(widget.reviews);
+    widget.reviews.map((review) {
+      print(review);
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -57,11 +76,13 @@ class _LeftReviewsState extends State<LeftReviews> {
             ],
           ),
           ...widget.reviews.map((review) {
+            print(review['data']['ratingMessage']);
+            print(review['data']);
             return CommentContainer(
               starRating: review['rating'].toString(),
-              reviewName: review['ratingFrom'],
-              reviewDate: review['ratingDate'],
-              review: review['ratingMessage'],
+              reviewName: review['data']['ratingFrom'],
+              reviewDate: review['data']['ratingMessage'],
+              review: review['data']['ratingDate'],
             );
           }).toList(),
         ],

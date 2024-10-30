@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminJobFinder/AdminJobFinder.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminLightStoneKai/AdminLightStone.dart';
@@ -9,9 +10,11 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notific
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/SideNavBar/SideNavButton/SideNavButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
+import 'package:webdirectories/WebDirectories/Page1/Page1.dart';
 import 'package:webdirectories/myutility.dart';
 
 import '../../../models/storedUser.dart';
+import '../../../panelBeatersHome.dart';
 import '../../../utils/loginUtils.dart';
 import '../AdminJobFinder/JobFinderDetails.dart';
 import '../Advertisement/AdvertisementAlt.dart';
@@ -167,6 +170,17 @@ class _SideNavBarState extends State<SideNavBar> {
     setState(() {
       notificationData = quoteData;
     });
+  }
+
+  void _handleLogout() {
+    // Implement your logout logic here
+    print('Executing logout...');
+    FirebaseAuth.instance.signOut();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PanelBeatersHome()),
+    );
   }
 
   @override
@@ -329,7 +343,9 @@ class _SideNavBarState extends State<SideNavBar> {
                       selectedIcon: 'images/Logout.svg',
                       label: 'Logout',
                       isSelected: _selectedIndex == 6,
-                      onTap: () => _onItemTapped(6),
+                      onTap: () {
+                        _handleLogout();
+                      },
                     ),
                   ],
                 ),

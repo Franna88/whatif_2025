@@ -40,11 +40,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyHome(),
-        '/panelTest': (context) => Material(
-                child: AdminPortal(
-              normalUser: false,
-              listingsId: '',
-            )),
+        '/panelTest': (context) => Material(child: PanelBeatersHome()),
       },
       title: 'Web Directories',
     );

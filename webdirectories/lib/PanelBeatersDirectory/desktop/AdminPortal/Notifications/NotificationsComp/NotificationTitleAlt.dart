@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/icons/NotificationDelete.dart';
 import 'package:webdirectories/myutility.dart';
 
-import '../NotificationMessage.dart/NotificationMessage.dart';
 import 'icons/LabelImportant.dart';
 import 'icons/NotificationLetter.dart';
 import 'icons/NotificationSelect.dart';
@@ -17,6 +16,9 @@ class NotificationTitleAlt extends StatefulWidget {
   final String day;
   final String personInterested;
   final String make;
+  final String type;
+  final double? rate;
+  final String? message;
   final VoidCallback onPress;
 
   const NotificationTitleAlt(
@@ -28,6 +30,9 @@ class NotificationTitleAlt extends StatefulWidget {
       required this.day,
       required this.personInterested,
       required this.make,
+      required this.type,
+      this.rate,
+      this.message,
       required this.onPress});
 
   @override
@@ -68,80 +73,173 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
-              width: MyUtility(context).width * 0.65,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Row(
-                      children: [
-                        NotificationSelect(
-                          boxColor:
-                              _isSelected ? Colors.white : Color(0xFF757575),
+            if (widget.type == "Documents")
+              SizedBox(
+                  child: Row(children: [
+                Expanded(
+                    flex: 7,
+                    child: Row(children: [
+                      Text(
+                        widget.make,
+                        style: TextStyle(
+                          color: _isSelected ? Colors.white : Color(0xFF202124),
+                          fontSize: 14.54,
+                          fontFamily: 'ralewaybold',
                         ),
-                        NotificationStar(
-                          onStarChanged: _handleStarChanged,
-                          iconColor:
-                              _isSelected ? Colors.white : Color(0xFF757575),
-                          iconColorChange:
-                              _isSelected ? Colors.white : Color(0xFFEF9040),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "Please Update",
+                        style: TextStyle(
+                          color: _isSelected ? Colors.white : Color(0xFF202124),
+                          fontSize: 14.54,
+                          fontFamily: 'ralewaybold',
                         ),
-                        LabelImportant(
-                          iconColorChange:
-                              _isSelected ? Colors.white : Color(0xFFEF9040),
-                          iconColor:
-                              _isSelected ? Colors.white : Color(0xFF757575),
-                        ),
-                        Text(
-                          widget.personInterested,
-                          style: TextStyle(
-                            color:
-                                _isSelected ? Colors.white : Color(0xFF202124),
-                            fontSize: 14.54,
-                            fontFamily: _isTextBold ? 'ralewaybold' : 'raleway',
+                      ),
+                    ]))
+              ])),
+            if (widget.type == "Reviews")
+              SizedBox(
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: Row(
+                        children: [
+                          Text(
+                            widget.rate == 1
+                                ? 'Angry | '
+                                : widget.rate! < 3
+                                    ? 'Good | '
+                                    : 'Great |',
+                            style: TextStyle(
+                              color: _isSelected
+                                  ? Colors.white
+                                  : Color(0xFF202124),
+                              fontSize: 14.54,
+                              fontFamily: 'ralewaybold',
+                            ),
                           ),
-                        ),
-                      ],
+                          Text(
+                            '${widget.personInterested} | ',
+                            style: TextStyle(
+                              color: _isSelected
+                                  ? Colors.white
+                                  : Color(0xFF202124),
+                              fontSize: 14.54,
+                              fontFamily: 'raleway',
+                            ),
+                          ),
+                          Text(
+                            widget.notificationTitle,
+                            style: TextStyle(
+                              color: _isSelected
+                                  ? Colors.white
+                                  : Color(0xFF202124),
+                              fontSize: 14.54,
+                              fontFamily: 'ralewaybold',
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 6,
-                    child: Row(
-                      children: [
-                        Text(
-                          'Make -   ',
-                          style: TextStyle(
-                            color:
-                                _isSelected ? Colors.white : Color(0xFF202124),
-                            fontSize: 14.54,
-                            fontFamily: widget.read ? 'raleway' : 'ralewaybold',
-                          ),
-                        ),
-                        Text(
-                          widget.make,
-                          style: TextStyle(
-                            color:
-                                _isSelected ? Colors.white : Color(0xFF202124),
-                            fontSize: 14.54,
-                            fontFamily: 'raleway',
-                          ),
-                        ),
-                        Text(
-                          "   ${widget.notificationTitle}",
-                          style: TextStyle(
-                            color:
-                                _isSelected ? Colors.white : Color(0xFF202124),
-                            fontSize: 14.54,
-                            fontFamily: widget.read ? 'raleway' : 'ralewaybold',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+            if (widget.type == "Quote")
+              SizedBox(
+                width: MyUtility(context).width * 0.65,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Row(
+                        children: [
+                          NotificationSelect(
+                            boxColor:
+                                _isSelected ? Colors.white : Color(0xFF757575),
+                          ),
+                          NotificationStar(
+                            onStarChanged: _handleStarChanged,
+                            iconColor:
+                                _isSelected ? Colors.white : Color(0xFF757575),
+                            iconColorChange:
+                                _isSelected ? Colors.white : Color(0xFFEF9040),
+                          ),
+                          LabelImportant(
+                            iconColorChange:
+                                _isSelected ? Colors.white : Color(0xFFEF9040),
+                            iconColor:
+                                _isSelected ? Colors.white : Color(0xFF757575),
+                          ),
+                          Text(
+                            widget.personInterested,
+                            style: TextStyle(
+                              color: _isSelected
+                                  ? Colors.white
+                                  : Color(0xFF202124),
+                              fontSize: 14.54,
+                              fontFamily:
+                                  _isTextBold ? 'ralewaybold' : 'raleway',
+                            ),
+                          ),
+                          Text(
+                            widget.notificationTitle,
+                            style: TextStyle(
+                              color: _isSelected
+                                  ? Colors.white
+                                  : Color(0xFF202124),
+                              fontSize: 14.54,
+                              fontFamily: 'ralewaybold',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: Row(
+                        children: [
+                          Text(
+                            'Make -   ',
+                            style: TextStyle(
+                              color: _isSelected
+                                  ? Colors.white
+                                  : Color(0xFF202124),
+                              fontSize: 14.54,
+                              fontFamily:
+                                  widget.read ? 'raleway' : 'ralewaybold',
+                            ),
+                          ),
+                          Text(
+                            widget.make,
+                            style: TextStyle(
+                              color: _isSelected
+                                  ? Colors.white
+                                  : Color(0xFF202124),
+                              fontSize: 14.54,
+                              fontFamily: 'raleway',
+                            ),
+                          ),
+                          Text(
+                            " ${widget.message!}",
+                            style: TextStyle(
+                              color: _isSelected
+                                  ? Colors.white
+                                  : Color(0xFF202124),
+                              fontSize: 14.54,
+                              fontFamily:
+                                  widget.read ? 'raleway' : 'ralewaybold',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             Expanded(
               flex: 2,
               child: _isSelected

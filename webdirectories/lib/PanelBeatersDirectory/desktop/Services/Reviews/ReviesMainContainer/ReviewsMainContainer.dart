@@ -31,7 +31,7 @@ class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
     List<Map<String, dynamic>> filtered = widget.reviewsData;
 
     // Apply search filter
-    if (_searchQuery.isNotEmpty) {
+    /* if (_searchQuery.isNotEmpty) {
       filtered = filtered.where((review) {
         return review['ratingMessage']
             .toLowerCase()
@@ -47,7 +47,7 @@ class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
     } else if (_filterType == 'Date Posted') {
       filtered.sort((a, b) => b['ratingDate'].compareTo(a['ratingDate']));
     }
-
+*/
     return filtered;
   }
 
@@ -185,7 +185,7 @@ class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
                 reviews: _currentPageReviews,
                 onFilter: _onFilterChanged,
                 onSearch: _onSearchChanged,
-              )
+              ) /**/
             ],
           ),
           SizedBox(

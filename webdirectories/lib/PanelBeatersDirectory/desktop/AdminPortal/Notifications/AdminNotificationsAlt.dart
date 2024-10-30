@@ -48,6 +48,7 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
     final notificationsFuture = _firestore
         .collection('notificationMessages')
         .where('listingsId', isEqualTo: int.parse(user.id))
+        .where('type', isEqualTo: "Quote")
         .orderBy('date', descending: true)
         .get();
 
@@ -279,6 +280,9 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
                                                 padding: const EdgeInsets.only(
                                                     left: 16, right: 16),
                                                 child: NotificationTitleAlt(
+                                                  type: "Quote",
+                                                  message:
+                                                      notification.notification,
                                                   read: notification.read!,
                                                   onPress: () {
                                                     widget.getQuoteDetails(

@@ -26,8 +26,83 @@ class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
 
   @override
   void initState() {
-    _getReviewData();
+    //_getReviewData();
+    getReviewList();
     super.initState();
+  }
+
+  getReviewList() async {
+    List<Map<String, dynamic>> reviewData = [];
+    Map<String, dynamic> lightstoneData = {};
+    String? listingId = await GetListingId();
+
+    if (listingId != null) {
+      int listingIdInt = int.parse(listingId);
+
+      final futures = await Future.wait([
+        _firestore
+            .collection('notificationMessages')
+            .where('listingsId', isEqualTo: listingIdInt)
+            .where('type', isEqualTo: "Rating")
+            .get(),
+        _firestore
+            .collection('registration_numbers')
+            .where('listingsId', isEqualTo: listingIdInt)
+            .get(),
+      ]);
+
+      final reviewsSnapshot = futures[0] as QuerySnapshot;
+
+      if (reviewsSnapshot.docs.isNotEmpty) {
+        reviewData = reviewsSnapshot.docs
+            .map((doc) => doc.data() as Map<String, dynamic>)
+            .toList();
+      }
+
+      final registrationDataSnapshot = futures[1] as QuerySnapshot;
+      if (registrationDataSnapshot.docs.isNotEmpty) {
+        List<Map<String, dynamic>> registrationData = registrationDataSnapshot
+            .docs
+            .map((doc) => doc.data() as Map<String, dynamic>)
+            .toList();
+
+        List<Map<String, dynamic>> filteredRegistrationData = registrationData
+            .where((e) => e['registrationTypeId'] == 8)
+            .toList();
+
+        if (filteredRegistrationData.isNotEmpty) {
+          QuerySnapshot lightstoneSnapshot = await _firestore
+              .collection('lightstone')
+              .where('brid',
+                  isEqualTo:
+                      filteredRegistrationData.first['registrationNumbers'])
+              .limit(1)
+              .get();
+
+          if (lightstoneSnapshot.docs.isNotEmpty) {
+            lightstoneData =
+                lightstoneSnapshot.docs.first.data() as Map<String, dynamic>;
+          }
+        }
+      }
+
+      setState(() {
+        id = listingId;
+        _reviews = reviewData;
+        _lightStoneData = lightstoneData;
+        _isloading = false;
+      });
+      /*    final notificationDocs = _firestore
+          .collection('notificationMessages')
+          .where('listingsId', isEqualTo: listingIdInt)
+          .where("type", isEqualTo: "Quote")
+          //.orderBy('date', descending: true)
+          .get();
+          if(notificationDocs.)
+          {
+
+          }*/
+    }
   }
 
   Future<void> _getReviewData() async {
@@ -105,12 +180,13 @@ class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
   }
 
   void _onReviewsUpdated(Map<String, dynamic> newReview) {
-    List<Map<String, dynamic>> reviewsData = _reviews;
+    getReviewList();
+/*    List<Map<String, dynamic>> reviewsData = _reviews;
     reviewsData.add(newReview);
 
     setState(() {
       _reviews = reviewsData;
-    });
+    });*/
   }
 
   @override
@@ -118,7 +194,7 @@ class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
     List<Widget> reviewPages = [
       ReviewsMainContainer(
           reviewsData: _reviews,
-          waiting: _isloading,
+          waiting: false,
           onLeaveReview: _onReviewsUpdated),
       LightStone(data: _lightStoneData),
     ];

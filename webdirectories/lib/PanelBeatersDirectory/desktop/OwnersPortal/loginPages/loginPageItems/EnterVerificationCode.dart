@@ -1,20 +1,74 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/blackIconButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/oTPWidget.dart';
+import 'package:webdirectories/PanelBeatersDirectory/emails/otpVerification/sendOtpVerification.dart';
 
 class EnterVerificationCode extends StatefulWidget {
   Function changePageIndex;
   String email;
+  String cell;
   EnterVerificationCode(
-      {super.key, required this.changePageIndex, required this.email});
+      {super.key,
+      required this.changePageIndex,
+      required this.email,
+      required this.cell});
 
   @override
   State<EnterVerificationCode> createState() => _EnterVerificationCodeState();
 }
 
 class _EnterVerificationCodeState extends State<EnterVerificationCode> {
+  var otpEntered = "";
+  var randomOtp = "";
+  var showError = false;
+  var showSmsNotification = false;
+  var otpType = "email";
+  final auth = FirebaseAuth.instance;
+  late ConfirmationResult confirmationResult;
+//ToDo change phone number
+  sendSmsForOtp() async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      confirmationResult = await auth.signInWithPhoneNumber('+27716769584');
+      setState(() {
+        showSmsNotification = true;
+        otpType = "mobile";
+      });
+    } catch (e) {
+      print('error sending otp $e');
+    }
+  }
+
+  @override
+  void initState() {
+    randomOtp = Random().nextInt(999999).toString().padLeft(6, '0');
+
+    //sendOtpEmail(otp: randomOtp, email: "chrispotjnr@gmail.com");
+    super.initState();
+  }
+
+  getOtpEntered(value) {
+    setState(() {
+      otpEntered = value;
+
+      if (randomOtp == otpEntered && otpType == "email") {
+        widget.changePageIndex();
+      } else if (randomOtp == otpEntered && otpType == "mobile") {
+        confirmationResult
+            .confirm(otpEntered)
+            .then((value) => {widget.changePageIndex()})
+            .catchError((e) => {showError = true});
+      } else {
+        showError = true;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
@@ -188,20 +242,36 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
         SizedBox(
           height: heightDevice / 20,
         ),
-        OTPWidget(),
+        OTPWidget(getOtpEntered: getOtpEntered),
         SizedBox(
           height: 20,
         ),
-        BlackIconButton(
-            backgroundColor1: Colors.black,
-            circleColor1: Colors.green,
-            iconColor1: Colors.white,
-            text1: 'Successful Authentification',
-            textColor1: Colors.white,
-            icon: Icons.check,
-            onPress: () {
-              widget.changePageIndex();
-            }),
+        Visibility(
+          visible: showError,
+          child: BlackIconButton(
+              backgroundColor1: Colors.black,
+              circleColor1: Colors.red,
+              iconColor1: Colors.white,
+              text1: 'Failed Authentication',
+              textColor1: Colors.white,
+              icon: Icons.one_x_mobiledata,
+              onPress: () {
+                widget.changePageIndex();
+              }),
+        ),
+        Visibility(
+          visible: showSmsNotification,
+          child: BlackIconButton(
+              backgroundColor1: Colors.black,
+              circleColor1: Colors.green,
+              iconColor1: Colors.white,
+              text1: 'Otp sms sent',
+              textColor1: Colors.white,
+              icon: Icons.check,
+              onPress: () {
+                widget.changePageIndex();
+              }),
+        ),
         SizedBox(
           height: 15,
         ),
@@ -224,7 +294,7 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
                       )),
             TextButton(
               onPressed: () {
-                //ADD LOGIC HERE
+                sendSmsForOtp();
               },
               child: Text(
                 'Send OTP to phone',

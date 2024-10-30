@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -32,7 +33,7 @@ class _LeaveReviewState extends State<LeaveReview> {
   final _reviewController = TextEditingController();
   XFile? _selectedImage;
   bool _isLoading = false;
-
+  final _firestorage = FirebaseStorage.instance;
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -50,6 +51,21 @@ class _LeaveReviewState extends State<LeaveReview> {
     setState(() {
       _selectedImage = image;
     });
+  }
+
+  Future<String?> _uploadImageToFirebase(XFile imageFile, String name) async {
+    try {
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('ratings/${DateTime.now().millisecondsSinceEpoch}.jpg');
+
+      await storageRef.putFile(File(imageFile.path));
+
+      return await storageRef.getDownloadURL();
+    } catch (e) {
+      print('Error uploading image: $e');
+      return null;
+    }
   }
 
   void _submitForm() async {
@@ -71,15 +87,17 @@ class _LeaveReviewState extends State<LeaveReview> {
           "${now.year.toString().padLeft(4, '0')}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
 
       final String? id = await storage.read(key: 'id');
+
       // Upload image to Firebase Storage if selected
-      if (image != null) {
+      /*     if (image != null) {
         try {
           if (id != null) {
-            final storageRef = FirebaseStorage.instance.ref().child(
+            /*    final storageRef = FirebaseStorage.instance.ref().child(
                 'ratings/${id}/${DateTime.now().millisecondsSinceEpoch}_${image.name}');
             final uploadTask = storageRef.putFile(File(image.path));
-            final snapshot = await uploadTask;
-            imageUrl = await snapshot.ref.getDownloadURL();
+            final snapshot = await uploadTask;*/
+            imageUrl = await _uploadImageToFirebase(image,
+                '${id}/${DateTime.now().millisecondsSinceEpoch}_${image.name}');
           } else {
             print('Error uploading image: listingsId is null');
             setState(() {
@@ -97,36 +115,67 @@ class _LeaveReviewState extends State<LeaveReview> {
           return;
         }
       }
-
+*/
       // Save review data to Firestore
       try {
+        if (image != null && id != null) {
+          Uint8List data = await image!.readAsBytes();
+          final storageRef = _firestorage.ref().child('ratings/${image!.name}');
+          final uploadTask = storageRef.putData(data);
+          await uploadTask;
+          imageUrl = image.name;
+        }
         Map<String, dynamic> newData = {
           'listingsId': id,
           'ratingFrom': '$firstName $lastName',
           'ratingEmail': email,
-          'rating': int.parse(rating),
           'ratingMessage': review,
           'imageUrl': imageUrl,
           'ratingDate': formattedDate,
         };
-        DocumentReference ratingDoc =
+        var notificationData = {
+          "id": "",
+          "listingsId": id,
+          "type": "Rating",
+          "data": newData,
+          "title": "New Review added",
+          "from": '$firstName $lastName',
+          "priority": "low",
+          "date": DateTime.now(),
+          "read": false,
+          'rating': int.parse(rating),
+        };
+
+        print(notificationData);
+
+        var doc = await FirebaseFirestore.instance
+            .collection("notificationMessages")
+            .add(notificationData);
+        await FirebaseFirestore.instance
+            .collection("notificationMessages")
+            .doc(doc.id)
+            .update({"id": doc.id}).whenComplete(() {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Review submitted successfully')));
+          _formKey.currentState!.reset();
+          widget.onReviewSubmit({...newData, 'ratingId': doc.id});
+
+          setState(() {
+            _selectedImage = null;
+            _isLoading = false;
+            widget.changePageIndex(0);
+          });
+        });
+        /*
+         DocumentReference ratingDoc =
             await FirebaseFirestore.instance.collection('rating').add(newData);
 
         await FirebaseFirestore.instance
             .collection('rating')
             .doc(ratingDoc.id)
-            .update({'ratingId': ratingDoc.id});
+            .update({'ratingId': ratingDoc.id});*/
 
         // Show success message and reset the form
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Review submitted successfully')));
-        _formKey.currentState!.reset();
-        widget.onReviewSubmit({...newData, 'ratingId': ratingDoc.id});
-
-        setState(() {
-          _selectedImage = null;
-          _isLoading = false;
-        });
       } catch (e) {
         print('Error saving review: $e');
         ScaffoldMessenger.of(context).showSnackBar(
@@ -287,6 +336,7 @@ class _LeaveReviewState extends State<LeaveReview> {
                               padding: const EdgeInsets.only(bottom: 10),
                               child: ElevatedButton(
                                 onPressed: () {
+                                  print("SUbmit");
                                   _submitForm();
                                 },
                                 style: ElevatedButton.styleFrom(

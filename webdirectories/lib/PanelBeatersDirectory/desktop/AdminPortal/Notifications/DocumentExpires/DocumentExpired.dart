@@ -45,24 +45,25 @@ class _DocumentExpiredState extends State<DocumentExpired> {
     }
 
     final notificationsFuture = _firestore
-        .collection('notifications')
+        .collection('notificationMessages')
         .where('listingsId', isEqualTo: int.parse(user.id))
-        .orderBy('notificationDate', descending: true)
+        .where('type', isEqualTo: "Documents")
+        .orderBy('date', descending: true)
         .get();
 
-    final generalNotificationsFuture = _firestore
+    /* final generalNotificationsFuture = _firestore
         .collection('notifications')
         .where('listingsId', isEqualTo: 0)
         .orderBy('notificationDate', descending: true)
-        .get();
+        .get();*/
 
     // Run both queries in parallel
     List<QuerySnapshot<Map<String, dynamic>>> results =
-        await Future.wait([notificationsFuture, generalNotificationsFuture]);
+        await Future.wait([notificationsFuture]);
 
     List<NotificationsModel> notificationList = [];
 
-    final generalNotificationSnapshot = results[1];
+    /*  final generalNotificationSnapshot = results[1];
     if (generalNotificationSnapshot.docs.isNotEmpty) {
       for (var doc in generalNotificationSnapshot.docs) {
         notificationList.add(NotificationsModel(
@@ -74,18 +75,22 @@ class _DocumentExpiredState extends State<DocumentExpired> {
           listingsId: doc['listingsId'],
         ));
       }
-    }
+    }*/
 
     final notificationSnapshot = results[0];
     if (notificationSnapshot.docs.isNotEmpty) {
       for (var doc in notificationSnapshot.docs) {
         notificationList.add(NotificationsModel(
-          notificationsId: doc['notificationId'],
-          notificationTypeId: doc['notificationTypeId'],
-          notificationTitle: doc['notificationTitle'],
-          notificationDate: doc['notificationDate'],
-          notification: doc['notification'],
+          notificationsId: doc['id'],
+          notificationTypeId: doc['type'],
+          notificationTitle: doc['title'],
+          data: doc['data'],
+          notificationDate: doc['date'],
+          notification: "",
+          personInterested: "",
+          make: doc['date.docName'],
           listingsId: doc['listingsId'],
+          read: doc['read'],
         ));
       }
     }
@@ -273,7 +278,9 @@ class _DocumentExpiredState extends State<DocumentExpired> {
                                               return Padding(
                                                 padding: const EdgeInsets.only(
                                                     left: 16, right: 16),
-                                                child: Documentexpiredcontainer(
+                                                child: NotificationTitleAlt(
+                                                  type: "Documents",
+                                                  read: notification.read!,
                                                   notificationTitle: limitString(
                                                       notification
                                                           .notificationTitle,
@@ -293,6 +300,9 @@ class _DocumentExpiredState extends State<DocumentExpired> {
                                                       .toDate()
                                                       .day
                                                       .toString(),
+                                                  personInterested: '',
+                                                  make: notification.make!,
+                                                  onPress: () {},
                                                 ),
                                               );
                                             },

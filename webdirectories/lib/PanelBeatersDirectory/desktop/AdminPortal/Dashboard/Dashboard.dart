@@ -48,12 +48,55 @@ class _DashboardState extends State<Dashboard> {
     _fetchUserData(); // Fetch the user data when the Dashboard initializes
   }
 
+  checkUserDocumentsExpired(listingsId) async {
+    QuerySnapshot documentsSnapshot = await _firestore
+        .collection('listings_documents')
+        .where('listingsId', isEqualTo: listingsId)
+        .get();
+
+    if (documentsSnapshot.docs.isNotEmpty) {
+      for (var i = 0; i < documentsSnapshot.docs.length; i++) {
+//check Date
+        var docExpiryDate =
+            DateTime.parse(documentsSnapshot.docs[i]['expiryDate']);
+
+//document has expired/ send notification
+        if (DateTime.now().difference(docExpiryDate).inDays >= 1) {
+          var notificationData = {
+            "id": "",
+            "listingsId": listingsId,
+            "type": "Documents",
+            "data": {
+              "docName": documentsSnapshot.docs[i]['documentTitle'],
+            },
+            "title": "Document Expired",
+            "from": "System",
+            "priority": "low",
+            "date": DateTime.now(),
+            "read": false
+          };
+
+          var doc = await _firestore
+              .collection("notificationMessages")
+              .add(notificationData);
+          await FirebaseFirestore.instance
+              .collection("notificationMessages")
+              .doc(doc.id)
+              .update({"id": doc.id});
+
+          print(notificationData);
+        }
+      }
+    }
+  }
+
   Future<void> _fetchUserData() async {
     // print(user.id);
 
     try {
       var listingsId = await widget.getListingsId();
       getNotifictions((listingsId));
+      //  checkUserDocumentsExpired(listingsId);
       // Fetch the user's document from Firestore based on their ID
       QuerySnapshot userDoc = await _firestore
           .collection('listings')
@@ -103,7 +146,7 @@ class _DashboardState extends State<Dashboard> {
     final notificationsFuture = _firestore
         .collection('notificationMessages')
         .where('listingsId', isEqualTo: userId)
-        //.orderBy('date', descending: true)
+        .orderBy('date', descending: true)
         .get();
 
     /* final notificationsQuoteFuture = _firestore
