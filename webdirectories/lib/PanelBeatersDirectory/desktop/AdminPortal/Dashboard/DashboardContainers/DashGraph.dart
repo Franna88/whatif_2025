@@ -11,7 +11,12 @@ import 'package:intl/intl.dart';
 class DashGraph extends StatefulWidget {
   String userId;
   String? adminListingsId;
-  DashGraph({super.key, required this.userId, this.adminListingsId});
+  Function getListingsId;
+  DashGraph(
+      {super.key,
+      required this.userId,
+      this.adminListingsId,
+      required this.getListingsId});
 
   @override
   State<DashGraph> createState() => _DashGraphState();
@@ -45,8 +50,10 @@ class _DashGraphState extends State<DashGraph> {
   Future<void> _fetchViewData() async {
     try {
       // Fetch the user's document from Firestore based on their ID
+      var doc = await widget.getListingsId();
+      print(doc.toString());
       final viewData =
-          await _firestore.collection('views').doc(widget.userId).get();
+          await _firestore.collection('views').doc(doc.toString()).get();
 
       if (viewData.exists) {
         setState(() {

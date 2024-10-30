@@ -84,10 +84,8 @@ class _DashNotificationsUpState extends State<DashNotificationsUp> {
                     children: [
                       for (var i = 0; i < widget.notificationsList.length; i++)
                         DashNotificationReuse(
-                          date: formatDate(
-                              widget.notificationsList[i]['notificationDate']),
-                          position: widget.notificationsList[i]
-                              ['notificationTitle'],
+                          date: formatDate(widget.notificationsList[i]['date']),
+                          position: widget.notificationsList[i]['title'],
                         ),
                       /*      DashNotificationReuse(
                         date: '2024-10-22',

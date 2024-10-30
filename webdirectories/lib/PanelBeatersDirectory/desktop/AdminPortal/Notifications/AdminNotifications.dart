@@ -205,15 +205,15 @@ class _AdminNotificationsState extends State<AdminNotifications> {
                                   return NotificationTitle(
                                     notificationTitle: limitString(
                                         notification.notificationTitle, 40),
-                                    year: notification.notificationDate
+                                    year: notification.notificationDate!
                                         .toDate()
                                         .year
                                         .toString(),
-                                    month: notification.notificationDate
+                                    month: notification.notificationDate!
                                         .toDate()
                                         .month
                                         .toString(),
-                                    day: notification.notificationDate
+                                    day: notification.notificationDate!
                                         .toDate()
                                         .day
                                         .toString(),

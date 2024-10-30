@@ -10,18 +10,24 @@ import 'icons/NotificationStar.dart';
 import 'icons/NotificationTimeIcon.dart';
 
 class NotificationTitleAlt extends StatefulWidget {
+  final bool read;
   final String notificationTitle;
   final String year;
   final String month;
   final String day;
+  final String personInterested;
+  final String make;
   final VoidCallback onPress;
 
   const NotificationTitleAlt(
       {super.key,
+      required this.read,
       required this.notificationTitle,
       required this.year,
       required this.month,
       required this.day,
+      required this.personInterested,
+      required this.make,
       required this.onPress});
 
   @override
@@ -88,7 +94,7 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                               _isSelected ? Colors.white : Color(0xFF757575),
                         ),
                         Text(
-                          'Theresa Webb',
+                          widget.personInterested,
                           style: TextStyle(
                             color:
                                 _isSelected ? Colors.white : Color(0xFF202124),
@@ -104,16 +110,16 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                     child: Row(
                       children: [
                         Text(
-                          'Make -',
+                          'Make -   ',
                           style: TextStyle(
                             color:
                                 _isSelected ? Colors.white : Color(0xFF202124),
                             fontSize: 14.54,
-                            fontFamily: 'ralewaybold',
+                            fontFamily: widget.read ? 'raleway' : 'ralewaybold',
                           ),
                         ),
                         Text(
-                          'Hyundai | ',
+                          widget.make,
                           style: TextStyle(
                             color:
                                 _isSelected ? Colors.white : Color(0xFF202124),
@@ -122,12 +128,12 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                           ),
                         ),
                         Text(
-                          widget.notificationTitle,
+                          "   ${widget.notificationTitle}",
                           style: TextStyle(
                             color:
                                 _isSelected ? Colors.white : Color(0xFF202124),
                             fontSize: 14.54,
-                            fontFamily: 'ralewaybold',
+                            fontFamily: widget.read ? 'raleway' : 'ralewaybold',
                           ),
                         ),
                       ],

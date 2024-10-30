@@ -175,7 +175,7 @@ class _NotificationscontainerState extends State<Notificationscontainer> {
                   itemBuilder: (context, index) {
                     NotificationsModel notification = _notificationData[index];
                     String date = DateFormat('yyyy-MM-dd')
-                        .format(notification.notificationDate.toDate());
+                        .format(notification.notificationDate!.toDate());
                     return Notifications(
                         notification:
                             limitString(notification.notificationTitle, 20),

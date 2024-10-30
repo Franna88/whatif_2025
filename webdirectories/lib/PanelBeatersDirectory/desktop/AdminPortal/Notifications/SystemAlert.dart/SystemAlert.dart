@@ -279,17 +279,17 @@ class _SystemAlertState extends State<SystemAlert> {
                                                           .notificationTitle,
                                                       40),
                                                   year: notification
-                                                      .notificationDate
+                                                      .notificationDate!
                                                       .toDate()
                                                       .year
                                                       .toString(),
                                                   month: notification
-                                                      .notificationDate
+                                                      .notificationDate!
                                                       .toDate()
                                                       .month
                                                       .toString(),
                                                   day: notification
-                                                      .notificationDate
+                                                      .notificationDate!
                                                       .toDate()
                                                       .day
                                                       .toString(),

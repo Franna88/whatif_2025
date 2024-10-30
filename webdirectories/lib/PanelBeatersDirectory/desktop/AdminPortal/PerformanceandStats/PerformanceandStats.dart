@@ -11,7 +11,8 @@ import 'package:intl/intl.dart';
 import '../Dashboard/DashboardContainers/DashProfileView.dart';
 
 class PerformanceAndStats extends StatefulWidget {
-  const PerformanceAndStats({super.key});
+  Function getListingsId;
+  PerformanceAndStats({super.key, required this.getListingsId});
 
   @override
   State<PerformanceAndStats> createState() => _PerformanceAndStatsState();
@@ -23,26 +24,22 @@ class _PerformanceAndStatsState extends State<PerformanceAndStats> {
   bool _isLoading = true; // Track loading
   List viewList = [];
   Future<void> _fetchViewData() async {
-    StoredUser? user =
-        await getUserInfo(); // Assuming you have this method to get the user
+    try {
+      var doc = await widget.getListingsId();
+      // Fetch the user's document from Firestore based on their ID
+      final viewData =
+          await _firestore.collection('views').doc(doc.toString()).get();
 
-    if (user != null) {
-      try {
-        // Fetch the user's document from Firestore based on their ID
-        final viewData =
-            await _firestore.collection('views').doc(user.id).get();
-
-        if (viewData.exists) {
-          setState(() {
-            viewList = (viewData.get('views'));
-          });
-        }
-      } catch (e) {
-        print('Error fetching user data: $e');
+      if (viewData.exists) {
         setState(() {
-          _isLoading = false;
+          viewList = (viewData.get('views'));
         });
       }
+    } catch (e) {
+      print('Error fetching user data: $e');
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 

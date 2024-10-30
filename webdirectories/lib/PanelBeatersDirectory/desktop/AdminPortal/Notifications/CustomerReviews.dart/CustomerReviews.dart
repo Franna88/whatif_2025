@@ -281,17 +281,17 @@ class _CustomerReviewsState extends State<CustomerReviews> {
                                                           .notificationTitle,
                                                       40),
                                                   year: notification
-                                                      .notificationDate
+                                                      .notificationDate!
                                                       .toDate()
                                                       .year
                                                       .toString(),
                                                   month: notification
-                                                      .notificationDate
+                                                      .notificationDate!
                                                       .toDate()
                                                       .month
                                                       .toString(),
                                                   day: notification
-                                                      .notificationDate
+                                                      .notificationDate!
                                                       .toDate()
                                                       .day
                                                       .toString(),

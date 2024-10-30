@@ -82,7 +82,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
     QuerySnapshot querySnapshot = await _firestore
         .collection('listings')
         //.where('featured', isEqualTo: 1)
-        //  .where('authId', isEqualTo: "YHg7m6rx5RxD01wvotTZ")
+        .where('authId', isEqualTo: "YHg7m6rx5RxD01wvotTZ")
         .limit(20)
         .get();
 

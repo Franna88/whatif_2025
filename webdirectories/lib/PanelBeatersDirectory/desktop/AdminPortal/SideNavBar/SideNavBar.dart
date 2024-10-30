@@ -8,6 +8,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageU
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/AdminNotificationsAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/SideNavBar/SideNavButton/SideNavButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
 import 'package:webdirectories/myutility.dart';
 
 import '../../../models/storedUser.dart';
@@ -43,7 +44,12 @@ class _SideNavBarState extends State<SideNavBar> {
   int _selectedIndex = 0;
   int listingsId = 0;
   Map<String, dynamic> lightstoneData = {};
-  var adminListingsId;
+
+  NotificationsModel notificationData = NotificationsModel(
+      notificationTypeId: '',
+      listingsId: 0,
+      notification: '',
+      notificationTitle: '');
 
   var jobDetails = JobFinderModel(
     name: '',
@@ -106,47 +112,39 @@ class _SideNavBarState extends State<SideNavBar> {
   }
 
   getLightStoneData() async {
-    StoredUser? user = await getUserInfo();
-    print(user!.id);
-    if (user != null) {
-      int listingIdInt = int.parse(user.id);
-      setState(() {
-        listingsId = listingIdInt;
-      });
-      // Fetch registration data in parallel
-      final futures = await Future.wait([
-        _firestore
-            .collection('registration_numbers')
-            .where('listingsId', isEqualTo: listingIdInt)
-            .get(),
-      ]);
+    var id = await getListingId();
+    // Fetch registration data in parallel
+    final futures = await Future.wait([
+      _firestore
+          .collection('registration_numbers')
+          .where('listingsId', isEqualTo: id)
+          .get(),
+    ]);
 
-      final registrationDataSnapshot = futures[0] as QuerySnapshot;
-      List<Map<String, dynamic>> registrationData = registrationDataSnapshot
-          .docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
-          .toList();
+    final registrationDataSnapshot = futures[0] as QuerySnapshot;
+    List<Map<String, dynamic>> registrationData = registrationDataSnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
 
-      List<Map<String, dynamic>> filteredRegistrationData =
-          registrationData.where((e) => e['registrationTypeId'] == 8).toList();
+    List<Map<String, dynamic>> filteredRegistrationData =
+        registrationData.where((e) => e['registrationTypeId'] == 8).toList();
 
-      print("REGISTERLight");
-      print(filteredRegistrationData[0]['registrationNumbers']);
-      if (registrationDataSnapshot.docs.isNotEmpty) {
-        QuerySnapshot lightstoneSnapshot = await _firestore
-            .collection('lightstone')
-            .where('brid',
-                isEqualTo: (filteredRegistrationData[0]['registrationNumbers'])
-                    .toString())
-            .limit(1)
-            .get();
-        print(lightstoneSnapshot.docs[0]['brid']);
-        if (lightstoneSnapshot.docs.isNotEmpty) {
-          setState(() {
-            lightstoneData =
-                lightstoneSnapshot.docs.first.data() as Map<String, dynamic>;
-          });
-        }
+    print("REGISTERLight");
+    print(filteredRegistrationData[0]['registrationNumbers']);
+    if (registrationDataSnapshot.docs.isNotEmpty) {
+      QuerySnapshot lightstoneSnapshot = await _firestore
+          .collection('lightstone')
+          .where('brid',
+              isEqualTo: (filteredRegistrationData[0]['registrationNumbers'])
+                  .toString())
+          .limit(1)
+          .get();
+      print(lightstoneSnapshot.docs[0]['brid']);
+      if (lightstoneSnapshot.docs.isNotEmpty) {
+        setState(() {
+          lightstoneData =
+              lightstoneSnapshot.docs.first.data() as Map<String, dynamic>;
+        });
       }
     }
   }
@@ -165,10 +163,15 @@ class _SideNavBarState extends State<SideNavBar> {
     _pageController.jumpToPage(index);
   }
 
+  getQuoteDetails(quoteData) {
+    setState(() {
+      notificationData = quoteData;
+    });
+  }
+
   @override
   void initState() {
-    //   getListingId();
-    // getLightStoneData();
+    getLightStoneData();
 
     super.initState();
   }
@@ -180,6 +183,7 @@ class _SideNavBarState extends State<SideNavBar> {
       Dashboard(
         navigateToPage: navigateToPage,
         adminListingsId: widget.adminListingsId,
+        getListingsId: getListingId,
       ),
       AdminProfile(
         getListingId: getListingId,
@@ -187,7 +191,9 @@ class _SideNavBarState extends State<SideNavBar> {
       //Advertisement(),
       AdvertisementAlt(),
       ManageUsers(normalUser: widget.normalUser),
-      AdminNotificationsAlt(navigateToPage: navigateToPage),
+      AdminNotificationsAlt(
+          navigateToPage: navigateToPage,
+          getQuoteDetails: getQuoteDetails), //Quotes
       SystemAlert(navigateToPage: navigateToPage),
       DocumentExpired(navigateToPage: navigateToPage),
       CustomerReviews(navigateToPage: navigateToPage),
@@ -197,7 +203,9 @@ class _SideNavBarState extends State<SideNavBar> {
       ),
       //JobFinderDetails(),
       AdminLightStone(data: lightstoneData, listingsId: listingsId),
-      PerformanceAndStats(),
+      PerformanceAndStats(
+        getListingsId: getListingId,
+      ),
       OwnersContactUs(),
       IndustryNews(),
       ManageAccount(),
@@ -206,7 +214,8 @@ class _SideNavBarState extends State<SideNavBar> {
       NotificationWelcome(
         navigateToPage: navigateToPage,
       ),
-      NotificationMessage(navigateToPage: navigateToPage),
+      NotificationMessage(
+          navigateToPage: navigateToPage, notificationData: notificationData),
 
       JobFinderDetails(
         job: jobDetails,

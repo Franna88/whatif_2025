@@ -1,3 +1,4 @@
+import 'package:cached_firestorage/lib.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,11 @@ import 'NotMessageReuseable/CircleAvitarReuseable.dart';
 
 class NotificationMessage extends StatefulWidget {
   final Function(int) navigateToPage;
-  const NotificationMessage({super.key, required this.navigateToPage});
+  NotificationsModel notificationData;
+  NotificationMessage(
+      {super.key,
+      required this.navigateToPage,
+      required this.notificationData});
 
   @override
   State<NotificationMessage> createState() => _NotificationMessageState();
@@ -24,99 +29,57 @@ class NotificationMessage extends StatefulWidget {
 
 class _NotificationMessageState extends State<NotificationMessage> {
   final _firestore = FirebaseFirestore.instance;
-  List<NotificationsModel> _notificationData = [];
-  String _searchQuery = '';
-  bool _isLoading = true;
+  var from = "";
+  var email = "";
+  var contact = "";
+  var make = "";
+  var model = "";
+  var images = [];
+
+  Map data = {};
+  changeReadTrue() {
+    _firestore
+        .collection('notificationMessages')
+        .doc(widget.notificationData.notificationsId)
+        .update({"read": true});
+  }
+
+  getTimeDifference() {
+    var notificationDate = DateTime.parse(
+        widget.notificationData.notificationDate!.toDate().toString());
+    var timeHour = DateTime.now().difference(notificationDate).inHours;
+
+    return "${timeHour} hours ago";
+  }
+
+  getDate() {
+    var day = widget.notificationData.notificationDate!.toDate().day.toString();
+    var month =
+        widget.notificationData.notificationDate!.toDate().month.toString();
+    var year =
+        widget.notificationData.notificationDate!.toDate().year.toString();
+
+    return "${day} / ${month} / ${year}";
+  }
+
   @override
   void initState() {
-    _fetchNotificationData();
+    changeReadTrue();
+
+//Map out data to use
+    widget.notificationData.data!.forEach((dynamic key, dynamic value) {
+      setState(() {
+        data.addAll({key: value});
+      });
+    });
+    print(data);
+
     super.initState();
   }
 
-  void _fetchNotificationData() async {
-    StoredUser? user = await getUserInfo();
-
-    if (user == null) {
-      return;
-    }
-
-    final notificationsFuture = _firestore
-        .collection('notifications')
-        .where('listingsId', isEqualTo: int.parse(user.id))
-        .orderBy('notificationDate', descending: true)
-        .get();
-
-    final generalNotificationsFuture = _firestore
-        .collection('notifications')
-        .where('listingsId', isEqualTo: 0)
-        .orderBy('notificationDate', descending: true)
-        .get();
-
-    // Run both queries in parallel
-    List<QuerySnapshot<Map<String, dynamic>>> results =
-        await Future.wait([notificationsFuture, generalNotificationsFuture]);
-
-    List<NotificationsModel> notificationList = [];
-
-    final generalNotificationSnapshot = results[1];
-    if (generalNotificationSnapshot.docs.isNotEmpty) {
-      for (var doc in generalNotificationSnapshot.docs) {
-        notificationList.add(NotificationsModel(
-          notificationsId: doc['notificationId'],
-          notificationTypeId: doc['notificationTypeId'],
-          notificationTitle: doc['notificationTitle'],
-          notificationDate: doc['notificationDate'],
-          notification: doc['notification'],
-          listingsId: doc['listingsId'],
-        ));
-      }
-    }
-
-    final notificationSnapshot = results[0];
-    if (notificationSnapshot.docs.isNotEmpty) {
-      for (var doc in notificationSnapshot.docs) {
-        notificationList.add(NotificationsModel(
-          notificationsId: doc['notificationId'],
-          notificationTypeId: doc['notificationTypeId'],
-          notificationTitle: doc['notificationTitle'],
-          notificationDate: doc['notificationDate'],
-          notification: doc['notification'],
-          listingsId: doc['listingsId'],
-        ));
-      }
-    }
-
-    setState(() {
-      _notificationData = notificationList;
-      _isLoading = false;
-    });
-  }
-
-  List<NotificationsModel> get _filteredNotifications {
-    List<NotificationsModel> filtered = _notificationData;
-
-    // Apply search filter
-    if (_searchQuery.isNotEmpty) {
-      filtered = filtered.where((notification) {
-        return notification.notificationTitle
-            .toLowerCase()
-            .contains(_searchQuery.toLowerCase());
-      }).toList();
-    }
-
-    return filtered;
-  }
-
-  void _onSearchChanged(String query) {
-    setState(() {
-      _searchQuery = query;
-    });
-  }
-
-  @override
-  int _currentPage = 0;
-  final ScrollController _scrollController = ScrollController();
   Widget build(BuildContext context) {
+    var onlyValues = widget.notificationData.data!.values.toList();
+
     return Scaffold(
       body: Container(
         width: MyUtility(context).width,
@@ -151,178 +114,230 @@ class _NotificationMessageState extends State<NotificationMessage> {
                     )
                   ],
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                        width: MyUtility(context).width * 0.75,
-                        height: MyUtility(context).height * 0.065,
-                        child: BackButtonMessage(
-                          onPress: () {
-                            widget.navigateToPage(4);
-                          },
-                        )),
-                    Center(
-                      child: Container(
-                        width: MyUtility(context).width * 0.75,
-                        height: MyUtility(context).height * 0.55,
-                        decoration: ShapeDecoration(
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                          width: MyUtility(context).width * 0.75,
+                          height: MyUtility(context).height * 0.065,
+                          child: BackButtonMessage(
+                            onPress: () {
+                              widget.navigateToPage(4);
+                            },
+                          )),
+                      Center(
+                        child: Container(
+                          width: MyUtility(context).width * 0.75,
+                          height: MyUtility(context).height * 0.7,
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        CustomCircleAvatar(
+                                          imageUrl: '',
+                                          radius: 20.0,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 6, right: 6),
+                                          child: Text(
+                                            '${widget.notificationData.personInterested}',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17.64,
+                                              fontFamily: 'ralewaysemi',
+                                            ),
+                                          ),
+                                        ),
+                                        Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: '<',
+                                                style: TextStyle(
+                                                  color: Color(0xFF202124),
+                                                  fontSize: 15.7364,
+                                                  fontFamily: 'raleway',
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: onlyValues[2],
+                                                style: TextStyle(
+                                                  color: Color(0xFF202124),
+                                                  fontSize: 15.7364,
+                                                  fontFamily: 'raleway',
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: '>',
+                                                style: TextStyle(
+                                                  color: Color(0xFF202124),
+                                                  fontSize: 15.7364,
+                                                  fontFamily: 'raleway',
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 6,
+                                        ),
+                                        QuotationRequests()
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        ReuseableIconButton(
+                                          icon: Icons.delete,
+                                          size: 25.0,
+                                          iconColor: Color(0xFF757575),
+                                          tooltipMessage: 'Delete',
+                                          onPressed: () {},
+                                        ),
+                                        ReuseableIconButton(
+                                          icon: Icons.print,
+                                          size: 25.0,
+                                          iconColor: Color(0xFF757575),
+                                          tooltipMessage: 'Delete',
+                                          onPressed: () {},
+                                        ),
+                                        /*        Text(
+                                          '12:01 PM',
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                            color: Color(0xFF202124),
+                                            fontSize: 13.9272,
+                                            fontFamily: 'Roboto',
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),*/
+                                        SizedBox(
+                                          width: 6,
+                                        ),
+                                        Text(
+                                          getTimeDifference(),
+                                          style: TextStyle(
+                                            color: Color(0xFF202124),
+                                            fontSize: 15.7364,
+                                            fontFamily: 'raleway',
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(75, 16, 16, 16),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      CustomCircleAvatar(
-                                        imageUrl: '',
-                                        radius: 20.0,
-                                      ),
                                       Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 6, right: 6),
+                                            top: 15, bottom: 20),
                                         child: Text(
-                                          'Theresa Webb',
+                                          onlyValues[9],
                                           style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 17.64,
-                                            fontFamily: 'ralewaysemi',
+                                            color: Color(0xFF202124),
+                                            fontSize: 15.7364,
+                                            fontFamily: 'raleway',
                                           ),
                                         ),
                                       ),
-                                      Text.rich(
-                                        TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: '<',
+                                      MessageText(
+                                        boldText: 'From:',
+                                        normalText:
+                                            '${widget.notificationData.personInterested}',
+                                      ),
+                                      MessageText(
+                                          boldText: 'Email:',
+                                          normalText: data['email']),
+                                      MessageText(
+                                          boldText: 'Contact:',
+                                          normalText: data['contact']),
+                                      MessageText(
+                                          boldText: 'Make:',
+                                          normalText: data['make']),
+                                      MessageText(
+                                          boldText: 'Model:',
+                                          normalText: data['model']),
+                                      MessageText(
+                                          boldText: 'Date:',
+                                          normalText: getDate()),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width:
+                                                MyUtility(context).width * 0.1,
+                                            height: MyUtility(context).height *
+                                                0.045,
+                                            child: Text(
+                                              "Images",
                                               style: TextStyle(
-                                                color: Color(0xFF202124),
+                                                color: Colors.black,
                                                 fontSize: 15.7364,
-                                                fontFamily: 'raleway',
+                                                fontFamily: 'ralewaysemi',
                                               ),
                                             ),
-                                            TextSpan(
-                                              text: 'theresawebb01@gmail.com',
-                                              style: TextStyle(
-                                                color: Color(0xFF202124),
-                                                fontSize: 15.7364,
-                                                fontFamily: 'raleway',
-                                                decoration:
-                                                    TextDecoration.underline,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '>',
-                                              style: TextStyle(
-                                                color: Color(0xFF202124),
-                                                fontSize: 15.7364,
-                                                fontFamily: 'raleway',
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 6,
-                                      ),
-                                      QuotationRequests()
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      ReuseableIconButton(
-                                        icon: Icons.delete,
-                                        size: 25.0,
-                                        iconColor: Color(0xFF757575),
-                                        tooltipMessage: 'Delete',
-                                        onPressed: () {},
-                                      ),
-                                      ReuseableIconButton(
-                                        icon: Icons.print,
-                                        size: 25.0,
-                                        iconColor: Color(0xFF757575),
-                                        tooltipMessage: 'Delete',
-                                        onPressed: () {},
-                                      ),
-                                      Text(
-                                        '12:01 PM',
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                          color: Color(0xFF202124),
-                                          fontSize: 13.9272,
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 6,
-                                      ),
-                                      Text(
-                                        '(4 hours ago)',
-                                        style: TextStyle(
-                                          color: Color(0xFF202124),
-                                          fontSize: 15.7364,
-                                          fontFamily: 'raleway',
-                                        ),
+                                          ),
+                                          Wrap(
+                                            direction: Axis.horizontal,
+                                            children: [
+                                              for (var imageItem
+                                                  in data['image'])
+                                                Container(
+                                                  width: 100,
+                                                  height: 100,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                  ),
+                                                  child: RemotePicture(
+                                                    imagePath:
+                                                        "listings/${imageItem!}",
+                                                    mapKey: 'image',
+                                                    useAvatarView: false,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+
+                                              /*
+                  listings/
+                   
+                   */
+                                            ],
+                                          )
+                                        ],
                                       )
                                     ],
-                                  )
-                                ],
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(75, 16, 16, 16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 15, bottom: 20),
-                                      child: Text(
-                                        'Good day. May I request a quotation for replacement and fitment of the Sunroof on my vehicle. Thank You ',
-                                        style: TextStyle(
-                                          color: Color(0xFF202124),
-                                          fontSize: 15.7364,
-                                          fontFamily: 'raleway',
-                                        ),
-                                      ),
-                                    ),
-                                    MessageText(
-                                        boldText: 'From:',
-                                        normalText: 'Theresa Webb'),
-                                    MessageText(
-                                        boldText: 'Email:',
-                                        normalText: 'theresawebb01@gmail.com'),
-                                    MessageText(
-                                        boldText: 'Contact:',
-                                        normalText: '012 345 6789'),
-                                    MessageText(
-                                        boldText: 'Make:', normalText: 'Audi'),
-                                    MessageText(
-                                        boldText: 'Model:', normalText: 'Q5'),
-                                    MessageText(
-                                        boldText: 'Address:',
-                                        normalText:
-                                            '123 Berg Street, Eden, George, 6529 '),
-                                    MessageText(
-                                        boldText: 'Date:',
-                                        normalText: '13-08-2024'),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

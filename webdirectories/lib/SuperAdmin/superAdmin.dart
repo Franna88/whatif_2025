@@ -87,7 +87,9 @@ class _SuperAdminState extends State<SuperAdmin> {
                       selectedIcon: 'images/Logout.svg',
                       label: 'Logout',
                       isSelected: _selectedIndex == 6,
-                      onTap: () => logOut,
+                      onTap: () {
+                        logOut();
+                      },
                     ),
                   ],
                 ),

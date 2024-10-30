@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,7 +12,8 @@ import '../../../AdminPortal/PopUps/PopUpsCommon/PopUpTextField.dart';
 import '../../../components/descriptionDialog.dart';
 
 class ServiceQuoteForm extends StatefulWidget {
-  const ServiceQuoteForm({super.key});
+  String? listingsId;
+  ServiceQuoteForm({super.key, required this.listingsId});
 
   @override
   State<ServiceQuoteForm> createState() => _ServiceQuoteFormState();
@@ -23,7 +26,8 @@ class _ServiceQuoteFormState extends State<ServiceQuoteForm> {
   List<Map<String, dynamic>> galleryItems = [];
   XFile? _selectedImage;
   final _formKey = GlobalKey<FormState>();
-
+  final _firestorage = FirebaseStorage.instance;
+  final _firestore = FirebaseFirestore.instance;
   //Dialog for notification popup
   Future descriptionDialog(description) => showDialog(
       context: context,
@@ -55,7 +59,56 @@ class _ServiceQuoteFormState extends State<ServiceQuoteForm> {
     });
   }
 
-  submitQuote() {}
+  getImageUrlList() async {
+    List images = [];
+    for (var image in quoteItems) {
+      Uint8List data = await image!.readAsBytes();
+      final storageRef = _firestorage.ref().child('listings/${image!.name}');
+      final uploadTask = storageRef.putData(data);
+      await uploadTask;
+      images.add(image!.name);
+    }
+    return images;
+  }
+
+  submitQuote() async {
+    var notificationData = {
+      "id": "",
+      "listingsId": widget.listingsId,
+      "type": "Quote",
+      "data": {
+        "name": _controller.name.text,
+        "surname": _controller.surname.text,
+        "email": _controller.email.text,
+        "contact": _controller.contact.text,
+        "make": _controller.make.text,
+        "model": _controller.model.text,
+        "year": _controller.year.text,
+        "insuranceCompany": _controller.insuranceCompany.text,
+        "vin": _controller.vin.text,
+        "message": _controller.message.text,
+        "image": await getImageUrlList()
+      },
+      "title": "New Quote Request",
+      "from": "${_controller.name.text} ${_controller.surname.text}",
+      "priority": "low",
+      "date": DateTime.now(),
+      "read": false
+    };
+
+    var doc = await _firestore
+        .collection("notificationMessages")
+        .add(notificationData);
+    await FirebaseFirestore.instance
+        .collection("notificationMessages")
+        .doc(doc.id)
+        .update({"id": doc.id}).whenComplete(() {
+      Navigator.pop(context);
+      descriptionDialog("Thank you. Your Notification has been Sent");
+    });
+
+    print(notificationData);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -252,7 +305,7 @@ class _ServiceQuoteFormState extends State<ServiceQuoteForm> {
                           SizedBox(
                             width: MyUtility(context).width * 0.15,
                             child: ProfileTextField(
-                                controller: _controller.surname,
+                                controller: _controller.vin,
                                 headline: '*VIN Number',
                                 customColor: Colors.black),
                           ),

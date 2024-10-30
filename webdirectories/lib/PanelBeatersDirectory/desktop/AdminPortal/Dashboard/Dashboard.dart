@@ -18,11 +18,15 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 class Dashboard extends StatefulWidget {
+  Function getListingsId;
   String adminListingsId;
   final Function(int) navigateToPage;
 
   Dashboard(
-      {super.key, required this.navigateToPage, required this.adminListingsId});
+      {super.key,
+      required this.getListingsId,
+      required this.navigateToPage,
+      required this.adminListingsId});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -44,38 +48,11 @@ class _DashboardState extends State<Dashboard> {
     _fetchUserData(); // Fetch the user data when the Dashboard initializes
   }
 
-  getListingId() async {
-    if (widget.adminListingsId != "") {
-      //Admin View
-      //get old/ new Id
-      var docId = _isNumeric(widget.adminListingsId)
-          ? int.parse(widget.adminListingsId)
-          : widget.adminListingsId;
-
-      return docId;
-    } else {
-      StoredUser? user = await getUserInfo();
-      if (user != null) {
-        var docId = _isNumeric(user.id) ? int.parse(user.id) : user.id;
-
-        return docId;
-      }
-    }
-  }
-
-//check if id is old or new id
-  bool _isNumeric(String str) {
-    if (str == null) {
-      return false;
-    }
-    return double.tryParse(str) is double;
-  }
-
   Future<void> _fetchUserData() async {
     // print(user.id);
 
     try {
-      var listingsId = await getListingId();
+      var listingsId = await widget.getListingsId();
       getNotifictions((listingsId));
       // Fetch the user's document from Firestore based on their ID
       QuerySnapshot userDoc = await _firestore
@@ -124,26 +101,32 @@ class _DashboardState extends State<Dashboard> {
 //Get notification based off listingId
   getNotifictions(userId) async {
     final notificationsFuture = _firestore
-        .collection('notifications')
+        .collection('notificationMessages')
         .where('listingsId', isEqualTo: userId)
-        .orderBy('notificationDate', descending: true)
+        //.orderBy('date', descending: true)
         .get();
 
-    final notificationsQuoteFuture = _firestore
+    /* final notificationsQuoteFuture = _firestore
         .collection('notification_quote')
         .where('listingMembersId', isEqualTo: userId)
-        .get();
+        .get();*/
 
     // Run both queries in parallel
     List<QuerySnapshot<Map<String, dynamic>>> results =
-        await Future.wait([notificationsFuture, notificationsQuoteFuture]);
+        await Future.wait([notificationsFuture]);
     final notificationSnapshot = results[0];
-    final notificationQuoteSnapshot = results[1];
+    // final notificationQuoteSnapshot = results[1];
+
+    var unreadCounts = 0;
+    for (var notificationItem in notificationSnapshot.docs) {
+      if (notificationItem['read'] == false) {
+        unreadCounts++;
+      }
+    }
 
     setState(() {
       notifications = notificationSnapshot.docs;
-      quotesOutstandingNumber =
-          (notificationQuoteSnapshot.docs.length).toString();
+      quotesOutstandingNumber = (unreadCounts).toString(); /*   */
     });
   }
 
@@ -184,9 +167,9 @@ class _DashboardState extends State<Dashboard> {
                   width: widthDevice < 1500 ? 15 : 30,
                 ),
                 DashGraph(
-                  adminListingsId: widget.adminListingsId,
-                  userId: docId,
-                ) /**/
+                    adminListingsId: widget.adminListingsId,
+                    userId: docId,
+                    getListingsId: widget.getListingsId) /**/
               ],
             ),
             SizedBox(
