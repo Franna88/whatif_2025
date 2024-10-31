@@ -48,7 +48,7 @@ class _ContactUsMainPageState extends State<ContactUsMainPage> {
                                     padding:
                                         const EdgeInsets.only(left: 0, top: 50),
                                     child: Image.asset(
-                                      'images/logoPanel.png',
+                                      'images/panelLogo.png',
                                       height: 70,
                                     ),
                                   ),

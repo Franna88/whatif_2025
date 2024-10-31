@@ -36,18 +36,19 @@ class _JobFinderState extends State<JobFinder> {
                       Column(
                         children: [
                           Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10, top: 25, bottom: 10),
+                            padding: const EdgeInsets.only(
+                                left: 10, top: 25, bottom: 10),
                             child: SizedBox(
                               width: MyUtility(context).width / 1.15,
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
                                     child: Image.asset(
-                                      'images/logoPanel.png',
+                                      'images/panelLogo.png',
                                       //width: 225,
                                       height: 70,
                                     ),
@@ -58,7 +59,8 @@ class _JobFinderState extends State<JobFinder> {
                                       Text(
                                         'Job Finder:',
                                         style: TextStyle(
-                                          fontSize: MyUtility(context).width * 0.02,
+                                          fontSize:
+                                              MyUtility(context).width * 0.02,
                                           fontFamily: 'ralewaybold',
                                           color: Colors.white,
                                         ),
@@ -67,7 +69,8 @@ class _JobFinderState extends State<JobFinder> {
                                         'Connect with top employers for free',
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MyUtility(context).width * 0.015,
+                                          fontSize:
+                                              MyUtility(context).width * 0.015,
                                           fontFamily: 'ralewaymedium',
                                           fontWeight: FontWeight.w500,
                                         ),

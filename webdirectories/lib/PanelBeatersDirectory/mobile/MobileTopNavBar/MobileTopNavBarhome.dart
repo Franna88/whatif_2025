@@ -35,7 +35,7 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
             child: Align(
               alignment: Alignment.topLeft,
               child: Image.asset(
-                'images/logoPanel.png',
+                'images/panelLogo.png',
                 fit: BoxFit.fill,
               ),
             ),
@@ -66,7 +66,8 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
               PopupMenuDivider(), // Grey divider
               buildPopupMenuItem('Owners Portal', 'option6', OwnersloginMain()),
               PopupMenuDivider(), // Grey divider
-              buildPopupMenuItem('Contact Us', 'option7', MobileContactUsMain()),
+              buildPopupMenuItem(
+                  'Contact Us', 'option7', MobileContactUsMain()),
             ],
             onSelected: (String value) {
               setState(() {

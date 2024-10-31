@@ -70,7 +70,7 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                   Padding(
                     padding: const EdgeInsets.only(left: 50, top: 50),
                     child: Image.asset(
-                      'images/logoPanel.png',
+                      'images/panelLogo.png',
                       height: 70,
                     ),
                   ),

@@ -55,7 +55,7 @@ class _PanFooterMobileState extends State<PanFooterMobile> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Image.asset(
-                      'images/logoPanel.png',
+                      'images/panelLogo.png',
                       fit: BoxFit.fill,
                     ),
                   ),

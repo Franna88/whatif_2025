@@ -49,7 +49,7 @@ class _PricingOptionsPageState extends State<PricingOptionsPage> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Image.asset(
-                'images/logoPanel.png',
+                'images/panelLogo.png',
                 height: 70,
               ),
             ),

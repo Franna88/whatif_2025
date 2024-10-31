@@ -52,7 +52,7 @@ class _PanelFooterState extends State<PanelFooter> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(
-            'images/logoPanel.png',
+            'images/panelLogo.png',
             height: MyUtility(context).height * 0.12,
             width: MyUtility(context).width * 0.15,
           ),
@@ -213,7 +213,7 @@ class _PanelFooterState extends State<PanelFooter> {
             color: Color(0xFF717375),
           ),
           suffixIcon: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6 , horizontal: 6),
+            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
             child: Container(
               //height: 25,
               width: 85,

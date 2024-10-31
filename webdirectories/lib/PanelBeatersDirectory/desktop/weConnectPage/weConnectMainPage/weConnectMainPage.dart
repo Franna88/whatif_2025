@@ -49,9 +49,10 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left: 50, top: 50),
+                                    padding: const EdgeInsets.only(
+                                        left: 50, top: 50),
                                     child: Image.asset(
-                                      'images/logoPanel.png',
+                                      'images/panelLogo.png',
                                       height: 70,
                                     ),
                                   ),
@@ -85,7 +86,8 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                     Container(
                                       width: widthDevice / 2.8,
                                       child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
@@ -108,8 +110,9 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                                 '#WeConnect',
                                                 style: TextStyle(
                                                   color: Color(0xFFFAFAFA),
-                                                  fontSize:
-                                                      widthDevice < 1600 ? 45 : 55,
+                                                  fontSize: widthDevice < 1600
+                                                      ? 45
+                                                      : 55,
                                                   fontFamily: 'ralewaybold',
                                                   height: 1,
                                                 ),
@@ -121,8 +124,9 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                                 WeConnectText().description1,
                                                 style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize:
-                                                      widthDevice < 1600 ? 16 : 20,
+                                                  fontSize: widthDevice < 1600
+                                                      ? 16
+                                                      : 20,
                                                   fontFamily: 'raleway',
                                                   height: 1.2,
                                                 ),
@@ -137,8 +141,9 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                                 WeConnectText().description2,
                                                 style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize:
-                                                      widthDevice < 1600 ? 16 : 20,
+                                                  fontSize: widthDevice < 1600
+                                                      ? 16
+                                                      : 20,
                                                   fontFamily: 'raleway',
                                                   height: 1.2,
                                                 ),
@@ -148,10 +153,12 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                               height: 20,
                                             ),
                                             CheckMarkedText(
-                                              text: 'Find specific services fast',
+                                              text:
+                                                  'Find specific services fast',
                                             ),
                                             CheckMarkedText(
-                                              text: 'Support verified businesses',
+                                              text:
+                                                  'Support verified businesses',
                                             ),
                                             CheckMarkedText(
                                               text:
@@ -160,8 +167,10 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                           ]),
                                     ),
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Stack(
                                           children: [
@@ -170,8 +179,10 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                             ),
                                             Padding(
                                               padding: EdgeInsets.only(
-                                                  top:  widthDevice < 1600 ? 30 : 50,
-                                                  left:  30),
+                                                  top: widthDevice < 1600
+                                                      ? 30
+                                                      : 50,
+                                                  left: 30),
                                               child: Container(
                                                 height: heightDevice * 0.63,
                                                 width: widthDevice * 0.35,
@@ -184,8 +195,10 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                               ),
                                             ),
                                             Positioned(
-                                              right: widthDevice == 1440 ? 260 :   250,
-                                              top:  0,
+                                              right: widthDevice == 1440
+                                                  ? 260
+                                                  : 250,
+                                              top: 0,
                                               child: StackedInfo(),
                                             )
                                           ],
@@ -226,7 +239,8 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                           child: Icon(
                             Icons.keyboard_arrow_right_rounded,
                             size: heightDevice * 0.12,
-                            color: _isHovered ? Colors.white : Color(0xFFFF8828),
+                            color:
+                                _isHovered ? Colors.white : Color(0xFFFF8828),
                           ),
                         ),
                       ),

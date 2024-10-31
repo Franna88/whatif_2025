@@ -231,7 +231,7 @@ class _ServicesState extends State<Services> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Image.asset(
-                                  'images/logoPanel.png',
+                                  'images/panelLogo.png',
                                   height: 70,
                                 ),
                                 Row(

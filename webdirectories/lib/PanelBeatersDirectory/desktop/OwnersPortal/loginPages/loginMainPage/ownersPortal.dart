@@ -131,7 +131,7 @@ class _OwnersPortalState extends State<OwnersPortal> {
                     padding: const EdgeInsets.only(
                         left: 50, top: 15), // Halved the top padding
                     child: Image.asset(
-                      'images/logoPanel.png',
+                      'images/panelLogo.png',
                       height: 70,
                     ),
                   ),

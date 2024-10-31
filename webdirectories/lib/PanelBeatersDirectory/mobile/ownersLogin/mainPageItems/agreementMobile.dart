@@ -34,7 +34,7 @@ class AgreementMobile extends StatelessWidget {
                       width: 155,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage('images/logoPanel.png'),
+                            image: AssetImage('images/panelLogo.png'),
                             fit: BoxFit.fill),
                       ),
                     ),

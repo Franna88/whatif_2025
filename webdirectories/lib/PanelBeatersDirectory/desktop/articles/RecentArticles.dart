@@ -55,7 +55,7 @@ class _RecentArticlesState extends State<RecentArticles> {
                             Padding(
                               padding: const EdgeInsets.only(top: 25),
                               child: Image.asset(
-                                'images/logoPanel.png',
+                                'images/panelLogo.png',
                                 height: 70,
                               ),
                             ),
@@ -158,7 +158,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                   child: Row(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 10),
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
                                         child: Container(
                                           height: 35,
                                           width: 35,
@@ -196,7 +197,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             filled: true,
                                             fillColor: Colors.transparent,
-                                            contentPadding: EdgeInsets.symmetric(
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
                                               vertical: 10,
                                               horizontal: 10,
                                             ),
@@ -237,7 +239,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                           children: [
                                             ArticlesContainer(
                                               image: 'images/drive.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   'See your Lightstone EchoMBR Results for February 2024',
                                               writer: 'Wena Cronje',
@@ -254,7 +257,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             ArticlesContainer(
                                               image: 'images/drive.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   'See your Lightstone EchoMBR Results for February 2024',
                                               writer: 'Wena Cronje',
@@ -270,7 +274,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                           children: [
                                             ArticlesContainerWhite(
                                               image: 'images/articles1.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   "How to Replace Your Car's Air Filter",
                                               writer: 'Wena Cronje',
@@ -280,7 +285,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles2.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   'A Technical Look at Paintless Dent Removal',
                                               writer: 'Wena Cronje',
@@ -290,7 +296,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles1.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   "How to Replace Your Car's Air Filter",
                                               writer: 'Wena Cronje',
@@ -300,7 +307,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles2.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   'A Technical Look at Paintless Dent Removal',
                                               writer: 'Wena Cronje',
@@ -316,7 +324,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                           children: [
                                             ArticlesContainerWhite(
                                               image: 'images/articles3.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   "The Lightstone EchoMBR Rankings Awards",
                                               writer: 'Wena Cronje',
@@ -326,7 +335,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles4.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   'The Future of Panel Beating in South Africa',
                                               writer: 'Wena Cronje',
@@ -336,7 +346,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles3.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   "The Lightstone EchoMBR Rankings Awards",
                                               writer: 'Wena Cronje',
@@ -346,7 +357,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles4.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   'The Future of Panel Beating in South Africa',
                                               writer: 'Wena Cronje',
@@ -362,7 +374,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                           children: [
                                             ArticlesContainerWhite(
                                               image: 'images/articles5.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   "What do different car colours mean?",
                                               writer: 'Wena Cronje',
@@ -372,7 +385,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles6.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   "How to Replace Your Car's Windscreen Wiper Blades",
                                               writer: 'Wena Cronje',
@@ -382,7 +396,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles5.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   "What do different car colours mean?",
                                               writer: 'Wena Cronje',
@@ -392,7 +407,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                             ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles6.png',
-                                              category: 'Panel Beater Directory',
+                                              category:
+                                                  'Panel Beater Directory',
                                               headline:
                                                   "How to Replace Your Car's Windscreen Wiper Blades",
                                               writer: 'Wena Cronje',
@@ -403,7 +419,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                                           ],
                                         ),
                                         SizedBox(
-                                          width: MyUtility(context).width * 0.005,
+                                          width:
+                                              MyUtility(context).width * 0.005,
                                         )
                                       ],
                                     ),

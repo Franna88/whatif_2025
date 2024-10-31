@@ -22,7 +22,7 @@ class LoginLandingPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 50, top: 30),
               child: Image.asset(
-                'images/logoPanel.png',
+                'images/panelLogo.png',
                 width: 225,
                 height: 110,
               ),

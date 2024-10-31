@@ -29,7 +29,7 @@ class _StarterPackagePageState extends State<StarterPackagePage> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Image.asset(
-                'images/logoPanel.png',
+                'images/panelLogo.png',
                 height: 70,
               ),
             ),

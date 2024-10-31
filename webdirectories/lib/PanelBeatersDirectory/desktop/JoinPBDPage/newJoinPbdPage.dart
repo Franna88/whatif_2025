@@ -48,7 +48,7 @@ class _NewJointPbdPageState extends State<NewJointPbdPage> {
                       top: 50,
                     ),
                     child: Image.asset(
-                      'images/logoPanel.png',
+                      'images/panelLogo.png',
                       height: 70,
                     ),
                   ),
