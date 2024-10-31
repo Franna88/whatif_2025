@@ -40,12 +40,12 @@ class _AdminServicesCheckBoxState extends State<AdminServicesCheckBox> {
             width: 16,
             height: 16,
             decoration: ShapeDecoration(
-              color: _isChecked ? Colors.orange : Colors.white,
+              color: widget.initialValue ? Colors.orange : Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.21),
               ),
             ),
-            child: _isChecked
+            child: widget.initialValue
                 ? Icon(
                     Icons.check,
                     color: Colors.white,

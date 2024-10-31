@@ -4,7 +4,18 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutilit
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 
 class Adminselectservices extends StatefulWidget {
-  const Adminselectservices({super.key});
+  List services;
+  List listingApprovalsList;
+  Function getListingId;
+  Function(Map) addItemToApproveList;
+  Function(int) removeItemFromApprovalsList;
+  Adminselectservices(
+      {super.key,
+      required this.services,
+      required this.listingApprovalsList,
+      required this.getListingId,
+      required this.addItemToApproveList,
+      required this.removeItemFromApprovalsList});
 
   @override
   State<Adminselectservices> createState() => _AdminselectservicesState();
@@ -13,34 +24,42 @@ class Adminselectservices extends StatefulWidget {
 class _AdminselectservicesState extends State<Adminselectservices> {
   final ScrollController _scrollController = ScrollController();
 
-  final List<String> services = [
-    'Airbag Repair',
-    'Aircon Repair',
-    'Assessment',
-    'Audio Systems',
-    'Plastic Bumper Repair',
-    'Canopy Repair',
-    'Colour Matching',
-    'Cosmetic & Polishing',
-    'Eco Conscious Paint Line',
-    'Electronic Body Measuring System',
-    'Exhaust System',
-    'Hail Damage',
-    'Microdot ID Technology',
-    'Minor Dent & Scratch Repair',
-    'Mobile Repair Unit',
-    'Motorcycle Repair',
-    'Non Structural Repair',
-    'Paintless Dent Repair',
-    'Paint Protection',
-    'Plastic Bumper Repair', // Added twice to match your screenshot
-  ];
+  addRemoveServices(approvalsId) async {
+    //check If Service Inside collection
+    if (checkIfAlreadyMarkedApproval(approvalsId)) {
+// remove from approval list
+      setState(() {
+        int index = (widget.listingApprovalsList)
+            .indexWhere((item) => item['approvalsId'] == approvalsId);
+        widget.listingApprovalsList.removeAt(index);
+        widget.removeItemFromApprovalsList(approvalsId);
+      });
+    } else {
+      var listingId = await widget.getListingId();
+//add to approval list
+      var serviceData = {
+        "approvalsId": approvalsId,
+        "dateAdded": DateTime.now(),
+        "listingsApprovalsId": "",
+        "listingsId": listingId,
+        "membersId": ""
+      };
 
-  @override
-  void initState() {
-    super.initState();
-    // Sort the services list alphabetically
-    services.sort((a, b) => a.compareTo(b));
+      setState(() {
+        widget.addItemToApproveList(serviceData);
+      });
+    }
+  }
+
+//Mark check box as true or false
+  checkIfAlreadyMarkedApproval(approvalsId) {
+    for (var i = 0; i < widget.listingApprovalsList.length; i++) {
+      if (widget.listingApprovalsList[i]['approvalsId'] == approvalsId) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @override
@@ -100,15 +119,20 @@ class _AdminselectservicesState extends State<Adminselectservices> {
                 alwaysVisibleScrollThumb: true,
                 child: ListView.builder(
                   controller: _scrollController,
-                  itemCount: services.length,
+                  itemCount: widget.services.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: AdminServicesCheckBox(
-                        label: services[index],
-                        initialValue: false, // Adjust initial value as needed
+                        label:
+                            '${widget.services[index]['approvalsTitle']} ${widget.services[index]['approvalsId']}',
+                        initialValue: checkIfAlreadyMarkedApproval(widget
+                                .services[index]
+                            ['approvalsId']), // Adjust initial value as needed
                         onChanged: (value) {
                           setState(() {
+                            addRemoveServices(
+                                widget.services[index]['approvalsId']);
                             // Handle the selection state change
                           });
                         },

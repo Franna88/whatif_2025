@@ -1,38 +1,57 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/Pages/AdminApprovals/AdminReuseable.dart/CategoryButton.dart';
 import 'package:webdirectories/myutility.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 
 class SelectaCategory extends StatefulWidget {
-  const SelectaCategory({super.key});
+  Function(int) fetchServiceListBasedOnCategory;
+  Function(int) fetchApprovalsForListing;
+  SelectaCategory(
+      {super.key,
+      required this.fetchServiceListBasedOnCategory,
+      required this.fetchApprovalsForListing});
 
   @override
   State<SelectaCategory> createState() => _SelectaCategoryState();
 }
 
-class _SelectaCategoryState extends State<SelectaCategory> {
-  final List<String> categories = [
-    'Specialist Services',
-    'Insurance Panels',
-    'Vehicle Brands',
-    'Commercial Vehicle Brands',
-    'Commercial Vehicle Services',
-    'Regional Services',
-    'Franchise & Assessment Centres',
-    'Finance & Warranties',
-    'Industry Organisations',
-    'Industry Equipment & Services',
-  ];
+List categories = [];
 
+class _SelectaCategoryState extends State<SelectaCategory> {
   final ScrollController _scrollController = ScrollController();
 
   // Variable to track the currently selected category
   String? selectedCategory;
 
-  void onFilterSelected(String category) {
+  final _firestore = FirebaseFirestore.instance;
+
+//fetch category list and populate array
+  fetchCategoryList() async {
+    print("TEST");
+    QuerySnapshot categoryDoc =
+        await _firestore.collection('approvals_category').get();
+    if (categoryDoc.docs.isNotEmpty) {
+      setState(() {
+        categories = categoryDoc.docs;
+      });
+      print(categories);
+    }
+  }
+
+  void onFilterSelected(String category, int categoryId) async {
+    await widget.fetchApprovalsForListing(categoryId);
+    await widget.fetchServiceListBasedOnCategory(categoryId);
+
     setState(() {
       selectedCategory = category;
     });
+  }
+
+  @override
+  void initState() {
+    fetchCategoryList();
+    super.initState();
   }
 
   @override
@@ -135,14 +154,16 @@ class _SelectaCategoryState extends State<SelectaCategory> {
                   controller: _scrollController,
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
-                    String category = categories[index];
+                    var category = categories[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: Categorybutton(
-                        servicesText: category,
-                        isSelected: selectedCategory == category,
+                        servicesText: category['approvalsCategory'],
+                        isSelected:
+                            selectedCategory == category['approvalsCategory'],
                         onFilterSelected: (isSelected) {
-                          onFilterSelected(category);
+                          onFilterSelected(category['approvalsCategory'],
+                              category['approvalsCategoryId']);
                         },
                       ),
                     );
