@@ -9,11 +9,13 @@ class ReviewsMainContainer extends StatefulWidget {
   final List<Map<String, dynamic>> reviewsData;
   final Function(Map<String, dynamic>) onLeaveReview;
   final bool waiting;
+  final String listingEmail;
   const ReviewsMainContainer(
       {super.key,
       required this.reviewsData,
       required this.waiting,
-      required this.onLeaveReview});
+      required this.onLeaveReview,
+      required this.listingEmail});
 
   @override
   State<ReviewsMainContainer> createState() => _ReviewsMainContainerState();
@@ -101,6 +103,7 @@ class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
       LeaveReview(
         changePageIndex: changePageIndex,
         onReviewSubmit: widget.onLeaveReview,
+        listingEmail: widget.listingEmail,
       ),
     ];
     return Container(

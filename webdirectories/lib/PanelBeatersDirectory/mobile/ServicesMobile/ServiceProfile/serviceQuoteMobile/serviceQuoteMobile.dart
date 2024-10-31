@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,9 +9,13 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicePro
 
 import '../../../../../myutility.dart';
 import '../../../../desktop/components/descriptionDialog.dart';
+import '../../../../emails/getQuote/sendGetQuote.dart';
 
 class ServiceQuoteFormMobile extends StatefulWidget {
-  const ServiceQuoteFormMobile({super.key});
+  String? listingsId;
+  String? email;
+  ServiceQuoteFormMobile(
+      {super.key, required this.listingsId, required this.email});
 
   @override
   State<ServiceQuoteFormMobile> createState() => _ServiceQuoteFormMobileState();
@@ -21,7 +27,9 @@ class _ServiceQuoteFormMobileState extends State<ServiceQuoteFormMobile> {
   List<XFile> quoteItems = [];
   List<Map<String, dynamic>> galleryItems = [];
   XFile? _selectedImage;
-
+  final _formKey = GlobalKey<FormState>();
+  final _firestorage = FirebaseStorage.instance;
+  final _firestore = FirebaseFirestore.instance;
   //Dialog for notification popup
   Future descriptionDialog(description) => showDialog(
       context: context,
@@ -51,6 +59,64 @@ class _ServiceQuoteFormMobileState extends State<ServiceQuoteFormMobile> {
     setState(() {
       quoteItems.removeAt(index);
     });
+  }
+
+  getImageUrlList() async {
+    List images = [];
+    for (var image in quoteItems) {
+      Uint8List data = await image!.readAsBytes();
+      final storageRef = _firestorage.ref().child('listings/${image!.name}');
+      final uploadTask = storageRef.putData(data);
+      await uploadTask;
+      images.add(image!.name);
+    }
+    return images;
+  }
+
+  sendEmail() {
+    sendGetQuoteEmail(
+        message: _controller.message.text,
+        name: '${_controller.name.text} ${_controller.surname.text}',
+        email: widget.email!);
+  }
+
+  submitQuote() async {
+    var notificationData = {
+      "id": "",
+      "listingsId": widget.listingsId,
+      "type": "Quote",
+      "data": {
+        "name": _controller.name.text,
+        "surname": _controller.surname.text,
+        "email": _controller.email.text,
+        "contact": _controller.contact.text,
+        "make": _controller.make.text,
+        "model": _controller.model.text,
+        "year": _controller.year.text,
+        "insuranceCompany": _controller.insuranceCompany.text,
+        "vin": _controller.vin.text,
+        "message": _controller.message.text,
+        "image": await getImageUrlList()
+      },
+      "title": "New Quote Request",
+      "from": "${_controller.name.text} ${_controller.surname.text}",
+      "priority": "low",
+      "date": DateTime.now(),
+      "read": false
+    };
+    await sendEmail();
+    var doc = await _firestore
+        .collection("notificationMessages")
+        .add(notificationData);
+    await FirebaseFirestore.instance
+        .collection("notificationMessages")
+        .doc(doc.id)
+        .update({"id": doc.id}).whenComplete(() {
+      Navigator.pop(context);
+      descriptionDialog("Thank you. Your Notification has been Sent");
+    });
+
+    print(notificationData);
   }
 
   @override
@@ -302,7 +368,9 @@ class _ServiceQuoteFormMobileState extends State<ServiceQuoteFormMobile> {
                 ),
                 AddButton(
                   text: 'Send',
-                  onPressed: () {},
+                  onPressed: () {
+                    submitQuote();
+                  },
                 ),
               ]),
         ));

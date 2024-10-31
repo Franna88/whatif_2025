@@ -1,17 +1,56 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/emails/contactUs/sendContactUs.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../components/descriptionDialog.dart';
 import '../Dashboard/DashboardContainers/DashProfileView.dart';
 
 class OwnersContactUs extends StatefulWidget {
-  const OwnersContactUs({super.key});
+  Function getListingId;
+  OwnersContactUs({
+    super.key,
+    required this.getListingId,
+  });
 
   @override
   State<OwnersContactUs> createState() => _OwnersContactUsState();
 }
 
 class _OwnersContactUsState extends State<OwnersContactUs> {
+  final _textController = TextEditingController();
+  final _firestore = FirebaseFirestore.instance;
+
+  Future descriptionDialog(description) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: DescriptionDialog(
+          description: description,
+        ));
+      });
+
+  sendEmail() async {
+    if (_textController.text == "") {
+      return descriptionDialog("No data to send");
+    }
+    var userId = await widget.getListingId();
+
+    QuerySnapshot userDoc = await _firestore
+        .collection('listings')
+        .where('listingsId', isEqualTo: userId)
+        .get();
+
+    if (userDoc.docs.isNotEmpty) {
+      await sendContactUsEmail(
+          message: _textController.text,
+          email: userDoc.docs[0]['businessEmail'],
+          name: userDoc.docs[0]['title']);
+      await descriptionDialog("Thank you ,your email has been sent.");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -121,6 +160,7 @@ class _OwnersContactUsState extends State<OwnersContactUs> {
                       ),
                     ),
                     TextField(
+                      controller: _textController,
                       maxLines: 10,
                       minLines: 4,
                       decoration: InputDecoration(
@@ -159,7 +199,11 @@ class _OwnersContactUsState extends State<OwnersContactUs> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        AddButton(text: 'Submit', onPressed: () {}),
+                        AddButton(
+                            text: 'Submit',
+                            onPressed: () {
+                              sendEmail();
+                            }),
                       ],
                     )
                   ],

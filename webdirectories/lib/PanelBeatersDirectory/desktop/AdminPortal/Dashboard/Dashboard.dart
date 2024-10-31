@@ -163,7 +163,7 @@ class _DashboardState extends State<Dashboard> {
     var unreadCounts = 0;
     for (var notificationItem in notificationSnapshot.docs) {
       if (notificationItem['read'] == false) {
-        unreadCounts++;
+        unreadCounts = unreadCounts + 1;
       }
     }
 

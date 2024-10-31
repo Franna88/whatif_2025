@@ -13,11 +13,17 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/Reviews/Le
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../../emails/postReviewOfPanel/sendReviewPanle.dart';
+
 class LeaveReview extends StatefulWidget {
   Function(int) changePageIndex;
+  String listingEmail;
   final Function(Map<String, dynamic>) onReviewSubmit;
   LeaveReview(
-      {Key? key, required this.changePageIndex, required this.onReviewSubmit})
+      {Key? key,
+      required this.changePageIndex,
+      required this.listingEmail,
+      required this.onReviewSubmit})
       : super(key: key);
   @override
   State<LeaveReview> createState() => _LeaveReviewState();
@@ -66,6 +72,10 @@ class _LeaveReviewState extends State<LeaveReview> {
       print('Error uploading image: $e');
       return null;
     }
+  }
+
+  sendEmail(review, email) {
+    sendReviewPanel(review: review, email: email);
   }
 
   void _submitForm() async {
@@ -125,6 +135,7 @@ class _LeaveReviewState extends State<LeaveReview> {
           await uploadTask;
           imageUrl = image.name;
         }
+
         Map<String, dynamic> newData = {
           'listingsId': id,
           'ratingFrom': '$firstName $lastName',
@@ -155,6 +166,7 @@ class _LeaveReviewState extends State<LeaveReview> {
             .collection("notificationMessages")
             .doc(doc.id)
             .update({"id": doc.id}).whenComplete(() {
+          sendEmail(review, email);
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Review submitted successfully')));
           _formKey.currentState!.reset();

@@ -21,8 +21,8 @@ class _ProfileSocialsState extends State<ProfileSocials> {
       builder: (context) {
         return Dialog(
             child: ServiceQuoteForm(
-          listingsId: widget.socialsLinks['listingsId'],
-        ));
+                listingsId: widget.socialsLinks['listingsId'],
+                email: widget.socialsLinks['email']));
       });
   @override
   Widget build(BuildContext context) {

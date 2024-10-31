@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceProfile/ServiceQuote.dart/serviceQuoteDetails.dart';
 
 import '../../../../../myutility.dart';
+import '../../../../emails/getQuote/sendGetQuote.dart';
 import '../../../AdminPortal/AdminProfile/ProfileComp/TextField/ProfileTextField.dart';
 import '../../../AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import '../../../AdminPortal/PopUps/PopUpsCommon/PopUpTextField.dart';
@@ -13,7 +14,8 @@ import '../../../components/descriptionDialog.dart';
 
 class ServiceQuoteForm extends StatefulWidget {
   String? listingsId;
-  ServiceQuoteForm({super.key, required this.listingsId});
+  String? email;
+  ServiceQuoteForm({super.key, required this.listingsId, required this.email});
 
   @override
   State<ServiceQuoteForm> createState() => _ServiceQuoteFormState();
@@ -71,6 +73,13 @@ class _ServiceQuoteFormState extends State<ServiceQuoteForm> {
     return images;
   }
 
+  sendEmail() {
+    sendGetQuoteEmail(
+        message: _controller.message.text,
+        name: '${_controller.name.text} ${_controller.surname.text}',
+        email: widget.email!);
+  }
+
   submitQuote() async {
     var notificationData = {
       "id": "",
@@ -95,7 +104,7 @@ class _ServiceQuoteFormState extends State<ServiceQuoteForm> {
       "date": DateTime.now(),
       "read": false
     };
-
+    await sendEmail();
     var doc = await _firestore
         .collection("notificationMessages")
         .add(notificationData);

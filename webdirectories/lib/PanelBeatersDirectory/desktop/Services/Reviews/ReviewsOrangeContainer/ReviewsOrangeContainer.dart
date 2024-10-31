@@ -23,6 +23,7 @@ class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
   bool _isloading = true;
   final _firestore = FirebaseFirestore.instance;
   var pageIndex = 0;
+  var listingEmail = "";
 
   @override
   void initState() {
@@ -123,10 +124,16 @@ class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
             .collection('registration_numbers')
             .where('listingsId', isEqualTo: listingIdInt)
             .get(),
+        _firestore
+            .collection('listings')
+            .where('listingsId', isEqualTo: listingIdInt)
+            .limit(1)
+            .get(),
       ]);
 
       final reviewsSnapshot = futures[0] as QuerySnapshot;
       final registrationDataSnapshot = futures[1] as QuerySnapshot;
+      final listingSnapshot = futures[2] as QuerySnapshot;
 
       if (reviewsSnapshot.docs.isNotEmpty) {
         reviewData = reviewsSnapshot.docs
@@ -158,6 +165,10 @@ class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
                 lightstoneSnapshot.docs.first.data() as Map<String, dynamic>;
           }
         }
+      }
+
+      if (listingSnapshot.docs.isNotEmpty) {
+        listingEmail = listingSnapshot.docs[0]['businessEmail'];
       }
       setState(() {
         id = listingId;
@@ -193,9 +204,11 @@ class _ReviewsOrangeContainerState extends State<ReviewsOrangeContainer> {
   Widget build(BuildContext context) {
     List<Widget> reviewPages = [
       ReviewsMainContainer(
-          reviewsData: _reviews,
-          waiting: false,
-          onLeaveReview: _onReviewsUpdated),
+        reviewsData: _reviews,
+        waiting: false,
+        onLeaveReview: _onReviewsUpdated,
+        listingEmail: listingEmail,
+      ),
       LightStone(data: _lightStoneData),
     ];
     return Column(

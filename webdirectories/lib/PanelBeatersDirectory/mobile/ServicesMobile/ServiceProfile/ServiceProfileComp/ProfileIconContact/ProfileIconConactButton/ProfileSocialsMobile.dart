@@ -17,7 +17,10 @@ class _ProfileSocialsMobileState extends State<ProfileSocialsMobile> {
   Future openQuoteForm() => showDialog(
       context: context,
       builder: (context) {
-        return Dialog(child: ServiceQuoteFormMobile());
+        return Dialog(
+            child: ServiceQuoteFormMobile(
+                listingsId: widget.socialsLinks['listingsId'],
+                email: widget.socialsLinks['email']));
       });
   @override
   Widget build(BuildContext context) {

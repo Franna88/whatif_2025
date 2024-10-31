@@ -3,8 +3,10 @@ import 'package:webdirectories/myutility.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final String text;
+  final TextEditingController controller;
 
-  const CustomTextFormField({Key? key, required this.text}) : super(key: key);
+  CustomTextFormField({Key? key, required this.text, required this.controller})
+      : super(key: key);
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -32,7 +34,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           SizedBox(
             width: MyUtility(context).width * 0.19,
             child: TextFormField(
-              controller: details,
+              controller: widget.controller,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Color(0xFFDFDFDF)),

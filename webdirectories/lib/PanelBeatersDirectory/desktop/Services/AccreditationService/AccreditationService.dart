@@ -38,6 +38,8 @@ class _AccreditationServicesState extends State<AccreditationServices> {
   @override
   void initState() {
     _fetchAndOrganizeServices();
+    print('LIST');
+    print(widget.listingId);
     super.initState();
   }
 
@@ -78,6 +80,7 @@ class _AccreditationServicesState extends State<AccreditationServices> {
     List<Future<void>> futures = [];
 
     for (var approvalDoc in approvalsSnapshot.docs) {
+      print(approvalsSnapshot.docs[0]);
       futures.add(() async {
         Map<String, dynamic> approvalData =
             approvalDoc.data() as Map<String, dynamic>;

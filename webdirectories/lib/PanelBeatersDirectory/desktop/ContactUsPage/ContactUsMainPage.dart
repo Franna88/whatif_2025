@@ -45,8 +45,8 @@ class _ContactUsMainPageState extends State<ContactUsMainPage> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 0, top: 50),
+                                    padding:
+                                        const EdgeInsets.only(left: 0, top: 50),
                                     child: Image.asset(
                                       'images/logoPanel.png',
                                       height: 70,
@@ -84,12 +84,12 @@ class _ContactUsMainPageState extends State<ContactUsMainPage> {
                   ],
                 ),
                 Positioned(
-                  right: widthDevice < 1600 ? 2 : 21,
-                  bottom: heightDevice > 1049 ? 30 : 0,
+                    right: widthDevice < 1600 ? 2 : 21,
+                    bottom: heightDevice > 1049 ? 30 : 0,
                     child: SvgPicture.asset(
-                  'images/gear3.svg',
-                  height: heightDevice / 6.4,
-                )),
+                      'images/gear3.svg',
+                      height: heightDevice / 6.4,
+                    )),
               ],
             ),
             PanelFooter()

@@ -83,7 +83,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
         .collection('listings')
         //.where('featured', isEqualTo: 1)
         .where('authId', isEqualTo: "YHg7m6rx5RxD01wvotTZ")
-        .limit(20)
+        .limit(40)
         .get();
 
     List<Future<Map<String, dynamic>>> listingFutures =

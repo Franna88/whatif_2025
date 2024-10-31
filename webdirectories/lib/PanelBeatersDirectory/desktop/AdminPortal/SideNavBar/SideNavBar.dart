@@ -220,7 +220,9 @@ class _SideNavBarState extends State<SideNavBar> {
       PerformanceAndStats(
         getListingsId: getListingId,
       ),
-      OwnersContactUs(),
+      OwnersContactUs(
+        getListingId: getListingId,
+      ),
       IndustryNews(),
       ManageAccount(),
 

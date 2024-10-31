@@ -4,6 +4,9 @@ import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouchCompone
 import 'package:webdirectories/WebDirectories/Page3/OurStory/OurSotryComponents/OvalTextButton.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
+import '../../../PanelBeatersDirectory/emails/getInTouch/sendGetInTouch.dart';
+
 class GetinTouch extends StatefulWidget {
   const GetinTouch({super.key});
 
@@ -13,7 +16,43 @@ class GetinTouch extends StatefulWidget {
 
 class _GetinTouchState extends State<GetinTouch> {
   bool _isChecked = false;
+  final firstName = TextEditingController();
+  final lastName = TextEditingController();
+  final email = TextEditingController();
+  final phone = TextEditingController();
   final details = TextEditingController();
+
+  Future descriptionDialog(description) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: DescriptionDialog(
+          description: description,
+        ));
+      });
+
+  sendEmail() async {
+    if (firstName.text == "" &&
+        lastName.text == "" &&
+        email.text == "" &&
+        phone.text == "" &&
+        details.text == "") {
+      return descriptionDialog("Some Fields are required");
+    }
+
+    if (_isChecked == false) {
+      return descriptionDialog("Im not robot validation required");
+    }
+
+    await sendGetInTouch(
+        message: details.text,
+        email: email.text,
+        firstName: firstName.text,
+        lastName: lastName.text,
+        phone: phone.text);
+    await descriptionDialog("Thank you ,your email has been sent.");
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -201,23 +240,35 @@ class _GetinTouchState extends State<GetinTouch> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.only(bottom: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                CustomTextFormField(text: 'First name *'),
-                                CustomTextFormField(text: 'Last name * '),
+                                CustomTextFormField(
+                                  text: 'First name *',
+                                  controller: firstName,
+                                ),
+                                CustomTextFormField(
+                                  text: 'Last name * ',
+                                  controller: lastName,
+                                ),
                               ],
                             ),
                           ),
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.only(bottom: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                CustomTextFormField(text: 'Email *'),
-                                CustomTextFormField(text: 'Phone *'),
+                                CustomTextFormField(
+                                  text: 'Email *',
+                                  controller: email,
+                                ),
+                                CustomTextFormField(
+                                  text: 'Phone *',
+                                  controller: phone,
+                                ),
                               ],
                             ),
                           ),
@@ -305,7 +356,10 @@ class _GetinTouchState extends State<GetinTouch> {
                           Padding(
                             padding: const EdgeInsets.only(left: 10, bottom: 5),
                             child: OvalTextButton(
-                                text: 'Submit Now ', onPressed: () {}),
+                                text: 'Submit Now ',
+                                onPressed: () {
+                                  sendEmail();
+                                }),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 15, top: 15),

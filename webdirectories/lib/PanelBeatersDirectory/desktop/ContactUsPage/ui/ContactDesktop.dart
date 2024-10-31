@@ -4,6 +4,9 @@ import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouchCompone
 import 'package:webdirectories/WebDirectories/Page3/OurStory/OurSotryComponents/OvalTextButton.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../../emails/getInTouch/sendGetInTouch.dart';
+import '../../components/descriptionDialog.dart';
+
 class ContactDesktop extends StatefulWidget {
   const ContactDesktop({super.key});
 
@@ -13,7 +16,43 @@ class ContactDesktop extends StatefulWidget {
 
 class _ContactDesktopState extends State<ContactDesktop> {
   bool _isChecked = false;
+  final firstName = TextEditingController();
+  final lastName = TextEditingController();
+  final email = TextEditingController();
+  final phone = TextEditingController();
   final details = TextEditingController();
+
+  Future descriptionDialog(description) => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            child: DescriptionDialog(
+          description: description,
+        ));
+      });
+
+  sendEmail() async {
+    if (firstName.text == "" &&
+        lastName.text == "" &&
+        email.text == "" &&
+        phone.text == "" &&
+        details.text == "") {
+      return descriptionDialog("Some Fields are required");
+    }
+
+    if (_isChecked == false) {
+      return descriptionDialog("Im not robot validation required");
+    }
+
+    await sendGetInTouch(
+        message: details.text,
+        email: email.text,
+        firstName: firstName.text,
+        lastName: lastName.text,
+        phone: phone.text);
+    await descriptionDialog("Thank you ,your email has been sent.");
+  }
+
   @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
@@ -32,11 +71,10 @@ class _ContactDesktopState extends State<ContactDesktop> {
                     color: Color(0xFFF19A41),
                     fontSize: 25,
                     fontFamily: 'raleway',
-                    
                     height: 1,
                   ),
                 ),
-                 Text(
+                Text(
                   "Get in touch!",
                   style: TextStyle(
                       fontSize: widthDevice > 1600 ? 65 : 50,
@@ -45,7 +83,7 @@ class _ContactDesktopState extends State<ContactDesktop> {
                 ),
                 SizedBox(
                   width: MyUtility(context).width / 2.6,
-                  child:  Text.rich(
+                  child: Text.rich(
                     TextSpan(
                       children: [
                         TextSpan(
@@ -79,7 +117,9 @@ class _ContactDesktopState extends State<ContactDesktop> {
                   ),
                 ),
                 SizedBox(
-                  height: widthDevice < 1600 ? MyUtility(context).height * 0.03: MyUtility(context).height / 30,
+                  height: widthDevice < 1600
+                      ? MyUtility(context).height * 0.03
+                      : MyUtility(context).height / 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 25),
@@ -135,7 +175,7 @@ class _ContactDesktopState extends State<ContactDesktop> {
                         SizedBox(
                           width: MyUtility(context).width * 0.015,
                         ),
-                         Column(
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -178,7 +218,7 @@ class _ContactDesktopState extends State<ContactDesktop> {
                         SizedBox(
                           width: MyUtility(context).width * 0.015,
                         ),
-                         Column(
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -206,9 +246,9 @@ class _ContactDesktopState extends State<ContactDesktop> {
                 ),
               ],
             ),
-            Column(mainAxisAlignment: MainAxisAlignment.center,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                
                 Container(
                   width: MyUtility(context).width / 2.45,
                   height: MyUtility(context).height / 1.7,
@@ -220,23 +260,35 @@ class _ContactDesktopState extends State<ContactDesktop> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              CustomTextFormField(text: 'First name *'),
-                              CustomTextFormField(text: 'Last name * '),
+                              CustomTextFormField(
+                                text: 'First name *',
+                                controller: firstName,
+                              ),
+                              CustomTextFormField(
+                                text: 'Last name * ',
+                                controller: lastName,
+                              ),
                             ],
                           ),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              CustomTextFormField(text: 'Email *'),
-                              CustomTextFormField(text: 'Phone *'),
+                              CustomTextFormField(
+                                text: 'Email *',
+                                controller: email,
+                              ),
+                              CustomTextFormField(
+                                text: 'Phone *',
+                                controller: phone,
+                              ),
                             ],
                           ),
                         ),
@@ -322,9 +374,12 @@ class _ContactDesktopState extends State<ContactDesktop> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10, bottom: 5),
                           child: OvalTextButton(
-                              text: 'Submit Now ', onPressed: () {}),
+                              text: 'Submit Now ',
+                              onPressed: () {
+                                sendEmail();
+                              }),
                         ),
-                        Padding(
+                        /* Padding(
                           padding: const EdgeInsets.only(left: 15, top: 15),
                           child: Text(
                             '*Please fill in required fields',
@@ -335,7 +390,7 @@ class _ContactDesktopState extends State<ContactDesktop> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
