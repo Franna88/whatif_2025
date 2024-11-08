@@ -146,6 +146,8 @@ class OwnersPortalLogin extends StatelessWidget {
         SizedBox(
           height: heightDevice < 710 ? 15 : heightDevice * 0.05,
         ),
+        const Text('v1.0.0.1b'),
+        const SizedBox(height: 10.0),
       ],
     );
   }
