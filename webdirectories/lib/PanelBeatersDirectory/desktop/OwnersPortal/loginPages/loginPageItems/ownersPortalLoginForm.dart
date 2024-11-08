@@ -114,6 +114,7 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
 
     bool sent = await sendOtpEmail(
         otp: otp, email: (_emailController.text.trim()).toLowerCase());
+
     if (sent) {
       await _firestore
           .collection('listing_members')
@@ -169,26 +170,33 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
       }
       // user has not logged in before
       else {
-        final userData = userDoc.docs.first.data();
-        final listingAllocationSnapshot =
-            await _fetchListingAllocation(userData['listingMembersId']);
-        if (listingAllocationSnapshot == null) {
-          _showError(context,
-              'Could not find a listing linked to this user. Please contact support.');
-          return;
-        }
+        try {
+          final userData = userDoc.docs.first.data();
+          final listingAllocationSnapshot =
+              await _fetchListingAllocation(userData['listingMembersId']);
+          if (listingAllocationSnapshot == null) {
+            _showError(context,
+                'Could not find a listing linked to this user. Please contact support.');
+            return;
+          }
 
-        // OTP logic for resetting password
-        await storeUserInfo(StoredUser(
-          id: userData['listingMembersId'].toString(),
-          email: userData['email'],
-          fullName: userData['fullname'],
-          memberId: userData['listingMembersId'].toString(),
-          cell: userData['usercell'],
-        ));
-        widget.updateEmail(userData['email']);
-        await _generateAndSendOTP(userData['listingMembersId'].toString());
-        widget.changePageIndex(7);
+          // OTP logic for resetting password
+          await storeUserInfo(StoredUser(
+            id: listingAllocationSnapshot.data()['listingsId'].toString(),
+            email: userData['email'],
+            fullName: userData['fullname'],
+            memberId: userData['listingMembersId'].toString(),
+            cell: userData['usercell'],
+          ));
+          widget.updateEmail(userData['email']);
+          await _generateAndSendOTP(userDoc.docs.first.id);
+          widget.changePageIndex(7);
+        } catch (e) {
+          setState(() {
+            _isLoading = false;
+          });
+          _showError(context, 'Something went wrong. Please try again.');
+        }
       }
     }
   }
