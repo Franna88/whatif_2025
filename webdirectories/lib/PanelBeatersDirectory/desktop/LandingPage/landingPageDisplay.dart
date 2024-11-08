@@ -14,11 +14,17 @@ import 'package:webdirectories/myutility.dart';
 
 class LandingPageDisplay extends StatefulWidget {
   final VoidCallback viewServiceDetails;
+  final VoidCallback viewServicesByArea;
+  final VoidCallback viewServicesByAddress;
+  final VoidCallback viewServicesByKeyword;
   final VoidCallback goToWeConnectMainPage;
 
   const LandingPageDisplay(
       {super.key,
       required this.goToWeConnectMainPage,
+      required this.viewServicesByArea,
+      required this.viewServicesByAddress,
+      required this.viewServicesByKeyword,
       required this.viewServiceDetails});
 
   @override
@@ -45,6 +51,15 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
       FindAllPanelBeaters(
         viewServiceDetails: () {
           widget.viewServiceDetails();
+        },
+        viewServiceByAddress: () {
+          widget.viewServicesByAddress();
+        },
+        viewServiceByKeyword: () {
+          widget.viewServicesByKeyword();
+        },
+        viewServicebyArea: () {
+          widget.viewServicesByArea();
         },
       ),
       ApprovalsServices(),

@@ -30,7 +30,7 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   bool _isLoading = false;
-
+  bool showPassword = false;
   final storage = FlutterSecureStorage();
 
   Future<void> storeUserInfo(StoredUser user) async {
@@ -142,11 +142,54 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
           listingsId:
               listingAllocationSnapshot.data()['listingsId'].toString());
     } else {
-      // TODO: Add OTP logic for resetting password
+      // OTP logic for resetting password
       await _storeUserInfo(user, userData, listingAllocationSnapshot);
       widget.updateEmail(userData['email']);
       _generateAndSendOTP(userDoc.id);
       widget.changePageIndex(7);
+    }
+  }
+
+  Future<void> _checkEmailExists(String email) async {
+    setState(() {
+      _isLoading = true;
+    });
+    QuerySnapshot<Map<String, dynamic>> userDoc = await _firestore
+        .collection('listing_members')
+        .where('email', isEqualTo: email)
+        .limit(1)
+        .get();
+    if (userDoc.docs.isNotEmpty) {
+      // user has already logged in before
+      if (userDoc.docs[0].data()['loggedIn'] == true) {
+        setState(() {
+          showPassword = true;
+          _isLoading = false;
+        });
+      }
+      // user has not logged in before
+      else {
+        final userData = userDoc.docs.first.data();
+        final listingAllocationSnapshot =
+            await _fetchListingAllocation(userData['listingMembersId']);
+        if (listingAllocationSnapshot == null) {
+          _showError(context,
+              'Could not find a listing linked to this user. Please contact support.');
+          return;
+        }
+
+        // OTP logic for resetting password
+        await storeUserInfo(StoredUser(
+          id: userData['listingMembersId'].toString(),
+          email: userData['email'],
+          fullName: userData['fullname'],
+          memberId: userData['listingMembersId'].toString(),
+          cell: userData['usercell'],
+        ));
+        widget.updateEmail(userData['email']);
+        await _generateAndSendOTP(userData['listingMembersId'].toString());
+        widget.changePageIndex(7);
+      }
     }
   }
 
@@ -253,13 +296,16 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
             controller: _emailController,
             validator: (value) => customEmailValidator(value),
           ),
-          PasswordField(
-            hintText: 'Enter Password',
-            keyText: 'Password',
-            controller: _passwordController,
-            validator: (value) => customPasswordValidator(value),
-            widthContainer:
-                widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
+          Visibility(
+            visible: showPassword,
+            child: PasswordField(
+              hintText: 'Enter Password',
+              keyText: 'Password',
+              controller: _passwordController,
+              validator: (value) => customPasswordValidator(value),
+              widthContainer:
+                  widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
+            ),
           ),
           TextButton(
             onPressed: () => _forgotPassword(context),
@@ -289,7 +335,9 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
             ),
           ),
           LongOrangeButton(
-              onPressed: () => _login(context),
+              onPressed: () => showPassword
+                  ? _login(context)
+                  : _checkEmailExists(_emailController.text.trim()),
               buttonText: _isLoading
                   ? const SizedBox(
                       height: 24,

@@ -69,12 +69,74 @@ class _ServicesOtherState extends State<ServicesOther> {
     });
   }
 
-  String _calculateDistance(userLat, userLong, listingLat, listingLong) {
+  /// Calculates the bounding box for a given radius (in km) around a point.
+  Map<String, double> _calculateBoundingBox(
+      double userLat, double userLng, double radiusInKm) {
+    const double earthRadius = 6371.0; // Earth's radius in kilometers
+
+    // Latitude offset
+    double latOffset = radiusInKm / earthRadius;
+    double latMin = userLat - latOffset * (180 / pi);
+    double latMax = userLat + latOffset * (180 / pi);
+
+    // Longitude offset, which depends on the latitude
+    double lngOffset = radiusInKm / (earthRadius * cos(userLat * pi / 180));
+    double lngMin = userLng - lngOffset * (180 / pi);
+    double lngMax = userLng + lngOffset * (180 / pi);
+
+    return {
+      "latMin": latMin,
+      "latMax": latMax,
+      "lngMin": lngMin,
+      "lngMax": lngMax,
+    };
+  }
+
+  /// Fetches documents within a 100 km radius from the user's location.
+  Future<List<Map<String, dynamic>>> fetchNearbyLocations(
+      double userLat, double userLng, double radiusInKm) async {
+    // Calculate bounding box
+    Map<String, double> bounds =
+        _calculateBoundingBox(userLat, userLng, radiusInKm);
+    print(bounds['latMin']);
+    print(bounds['latMax']);
+    // Query Firestore by latitude range only
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('listings')
+        .where('latitude', isGreaterThanOrEqualTo: bounds['latMin'])
+        .where('latitude', isLessThanOrEqualTo: bounds['latMax'])
+        .get();
+    print(querySnapshot.docs.length);
+    //Filter results by longitude range and exact distance
+    List<Map<String, dynamic>> nearbyLocations = [];
+    for (var doc in querySnapshot.docs) {
+      double lat = doc['latitude'];
+      double lng = doc['longitude'];
+
+      // Check if the longitude is within bounds
+      if (lng >= bounds['lngMin']! && lng <= bounds['lngMax']!) {
+        // Calculate the exact distance to make sure it's within the radius
+        double distance = _calculateDistance(userLat, userLng, lat, lng);
+        if (distance <= radiusInKm) {
+          nearbyLocations.add(
+              {...doc.data() as Map<String, dynamic>, 'distance': distance});
+        }
+      }
+    }
+
+    // Sort the list by distance
+    nearbyLocations.sort((a, b) => a['distance'].compareTo(b['distance']));
+
+    // Return sorted documents only
+    return nearbyLocations;
+  }
+
+  double _calculateDistance(userLat, userLong, listingLat, listingLong) {
     // Calculate the distance
     double distance =
         Geolocator.distanceBetween(userLat, userLong, listingLat, listingLong);
 
-    return (distance / 1000).toStringAsFixed(1);
+    return (distance / 1000);
   }
 
   Future<List<Map<String, dynamic>>> _getListings() async {
@@ -249,7 +311,10 @@ class _ServicesOtherState extends State<ServicesOther> {
                         SizedBox(
                           height: MyUtility(context).height * 0.85,
                           child: FutureBuilder<List<Map<String, dynamic>>>(
-                            future: _getListings(),
+                            future: fetchNearbyLocations(
+                                _userPosition!.latitude,
+                                _userPosition!.longitude,
+                                100.0),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -268,13 +333,14 @@ class _ServicesOtherState extends State<ServicesOther> {
                               if (!snapshot.hasData || snapshot.data!.isEmpty) {
                                 return const Center(
                                   child: Text(
-                                    'No listings found',
+                                    'No listings found near you',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 );
                               }
                               List<Map<String, dynamic>> listings =
                                   snapshot.data!;
+
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 100.0, vertical: 20.0),
@@ -292,7 +358,6 @@ class _ServicesOtherState extends State<ServicesOther> {
                                   itemBuilder: (context, index) {
                                     Map<String, dynamic> listing =
                                         listings[index];
-
                                     /**/
                                     print(listing);
                                     return Visibility(
@@ -326,7 +391,8 @@ class _ServicesOtherState extends State<ServicesOther> {
                                           await launchUrl(uri);
                                         },
                                         views: '${200 + Random().nextInt(801)}',
-                                        distance: listing['distance'],
+                                        distance:
+                                            '${(listing['distance'] as double).toStringAsFixed(2)} km',
                                       ),
                                     );
                                   },

@@ -5,6 +5,9 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/landing
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/ownersPortal.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesFeatured.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesByAddressSearch.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesByArea.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesByKeywordSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticles.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/navBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/weConnectPage/weConnectMainPage/weConnectMainPage.dart';
@@ -38,6 +41,24 @@ class _NavState extends State<Nav> {
   void viewServiceDetails() {
     setState(() {
       _currentIndex = 6;
+    });
+  }
+
+  void viewServicesByKeyWordDetails() {
+    setState(() {
+      _currentIndex = 14;
+    });
+  }
+
+  void viewServicesByAreaDetails() {
+    setState(() {
+      _currentIndex = 13;
+    });
+  }
+
+  void viewServicesByAddressDetails() {
+    setState(() {
+      _currentIndex = 12;
     });
   }
 
@@ -80,29 +101,56 @@ class _NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
+      // 0
       LandingPageDisplay(
         goToWeConnectMainPage: goToWeConnectMainPage,
         viewServiceDetails: () {
           viewServiceDetails();
         },
+        viewServicesByAddress: () {
+          viewServicesByAddressDetails();
+        },
+        viewServicesByArea: () {
+          viewServicesByAreaDetails();
+        },
+        viewServicesByKeyword: () {
+          viewServicesByKeyWordDetails();
+        },
       ),
       //ServicesFeatured(viewServiceDetails: viewServiceDetails),
+      // 1
       JobFinder(),
+      // 2
       WeConnectMainPage(goToLandingPageDisplay: goToLandingPageDisplay),
+      // 3
       RecentArticles(),
+      // 4
       NewJointPbdPage(navigateToPricingOptions: navigateToPricingOptions),
+      // 5
       OwnersPortal(),
+      // 6
       ServicesFeatured(),
+      // 7
       PricingOptionsPage(
         updateContainerIndex: (int index) {},
         updatePackageType: (String packageType) {
           navigateToPackagePage(packageType);
         },
       ),
+      // 8
       PackagePage(packageType: "Starter"), // New Pages
+      // 9
       PackagePage(packageType: "Core"), // New Pages
+      // 10
       PackagePage(packageType: "Premium"), // New Pages
+      // 11
       PackagePage(packageType: "PremiumPlus"), // New Pages
+      // 12
+      ServicesByAddressSearch(),
+      // 13
+      ServicesByArea(),
+      // 14
+      ServicesByKeywordSearch()
     ];
 
     return Scaffold(

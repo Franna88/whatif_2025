@@ -69,6 +69,62 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
     });
   }
 
+  /// Calculates the bounding box for a given radius (in km) around a point.
+  Map<String, double> _calculateBoundingBox(
+      double userLat, double userLng, double radiusInKm) {
+    const double earthRadius = 6371.0; // Earth's radius in kilometers
+
+    // Latitude offset
+    double latOffset = radiusInKm / earthRadius;
+    double latMin = userLat - latOffset * (180 / pi);
+    double latMax = userLat + latOffset * (180 / pi);
+
+    // Longitude offset, which depends on the latitude
+    double lngOffset = radiusInKm / (earthRadius * cos(userLat * pi / 180));
+    double lngMin = userLng - lngOffset * (180 / pi);
+    double lngMax = userLng + lngOffset * (180 / pi);
+
+    return {
+      "latMin": latMin,
+      "latMax": latMax,
+      "lngMin": lngMin,
+      "lngMax": lngMax,
+    };
+  }
+
+  /// Fetches documents within a 100 km radius from the user's location.
+  Future<List<DocumentSnapshot>> fetchNearbyLocations(
+      double userLat, double userLng, double radiusInKm) async {
+    // Calculate bounding box
+    Map<String, double> bounds =
+        _calculateBoundingBox(userLat, userLng, radiusInKm);
+
+    // Step 1: Query Firestore by latitude range only
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('locations')
+        .where('latitude', isGreaterThanOrEqualTo: bounds['latMin'])
+        .where('latitude', isLessThanOrEqualTo: bounds['latMax'])
+        .get();
+
+    // Step 2: Filter results by longitude range and exact distance
+    List<DocumentSnapshot> nearbyLocations = [];
+    for (var doc in querySnapshot.docs) {
+      double lat = doc['latitude'];
+      double lng = doc['longitude'];
+
+      // Check if the longitude is within bounds
+      if (lng >= bounds['lngMin']! && lng <= bounds['lngMax']!) {
+        // Calculate the exact distance to make sure it's within the radius
+        double distance = _calculateDistance(userLat, userLng, lat, lng);
+        if (distance <= radiusInKm) {
+          nearbyLocations.add(doc);
+        }
+      }
+    }
+
+    return nearbyLocations;
+  }
+
   _calculateDistance(userLat, userLong, listingLat, listingLong) {
     // Calculate the distance
     double distance =
@@ -251,8 +307,11 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                         ),
                         SizedBox(
                           height: MyUtility(context).height * 0.85,
-                          child: FutureBuilder<List<Map<String, dynamic>>>(
-                            future: _getListings(),
+                          child: FutureBuilder<List<DocumentSnapshot<Object?>>>(
+                            future: fetchNearbyLocations(
+                                _userPosition!.latitude,
+                                _userPosition!.longitude,
+                                100.0),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -271,13 +330,16 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                               if (!snapshot.hasData || snapshot.data!.isEmpty) {
                                 return const Center(
                                   child: Text(
-                                    'No listings found',
+                                    'No listings found near you',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 );
                               }
-                              List<Map<String, dynamic>> listings =
-                                  snapshot.data!;
+                              List<Map<String, dynamic>> listings = snapshot
+                                  .data!
+                                  .map((doc) =>
+                                      doc.data() as Map<String, dynamic>)
+                                  .toList();
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 100.0, vertical: 20.0),

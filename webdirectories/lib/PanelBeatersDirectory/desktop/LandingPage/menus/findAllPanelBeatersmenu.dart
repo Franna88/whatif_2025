@@ -10,8 +10,17 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesFe
 
 class FindAllPanelBeaters extends StatefulWidget {
   final VoidCallback viewServiceDetails;
+  final VoidCallback viewServicebyArea;
+  final VoidCallback viewServiceByAddress;
+  final VoidCallback viewServiceByKeyword;
 
-  const FindAllPanelBeaters({super.key, required this.viewServiceDetails});
+  const FindAllPanelBeaters({
+    super.key,
+    required this.viewServiceDetails,
+    required this.viewServiceByAddress,
+    required this.viewServiceByKeyword,
+    required this.viewServicebyArea,
+  });
 
   @override
   State<FindAllPanelBeaters> createState() => _FindAllPanelBeatersState();
