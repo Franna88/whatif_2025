@@ -34,7 +34,7 @@ createOtpVerification(email, otpCode) async {
   doc.set(json);
 }
 
-Future sendOtpEmail({
+Future<bool> sendOtpEmail({
   required String otp,
   required String email,
 }) async {
@@ -53,4 +53,9 @@ Future sendOtpEmail({
       }));
 
   print(response.body);
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    return false;
+  }
 }

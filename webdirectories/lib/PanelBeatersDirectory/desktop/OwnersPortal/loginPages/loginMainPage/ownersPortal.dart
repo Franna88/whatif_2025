@@ -7,6 +7,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/membershipOptions.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/ownersPortalLogin.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/registerYourBusiness.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/resetPassword.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/resetPasswordOTPFirstLogin.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/whatsNext.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/glassContainer.dart';
 import 'package:webdirectories/myutility.dart';
@@ -25,7 +27,7 @@ class _OwnersPortalState extends State<OwnersPortal> {
   final RegisterBusinessValues _controller = RegisterBusinessValues();
   var pageIndex = 0;
   var membershipType = "";
-
+  String memberEmail = "";
   getMemberShipType(value) {
     setState(() {
       membershipType = value;
@@ -73,13 +75,21 @@ class _OwnersPortalState extends State<OwnersPortal> {
         ));
       });
 
+  void updateEmail(String email) {
+    setState(() {
+      memberEmail = email;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
 
     var pages = [
-      OwnersPortalLogin(changePageIndex: changePageIndex),
+      // 0
+      OwnersPortalLogin(changePageIndex: changeIndex, updateEmail: updateEmail),
+      // 1
       RegisterYourBusiness(
         changePageIndex: changePageIndex,
         firstName: _controller.firstName,
@@ -91,26 +101,41 @@ class _OwnersPortalState extends State<OwnersPortal> {
           descriptionDialog("Please check terms and conditions");
         },
       ),
+      // 2
       EnterVerificationCode(
         changePageIndex: changePageIndex,
         email: _controller.email.text,
         cell: _controller.phone.text,
       ),
+      // 3
       CreateProfile(
         changePageIndex: changePageIndex,
         email: _controller.email,
         password: _controller.password,
       ),
+      // 4
       MembershipOptions(
           changePageIndex: changePageIndex,
           getMemberShipType: getMemberShipType),
+      // 5
       CompleteAgreement(
           openAgreementPopup: openAgreementPopup,
           changePageIndex: changePageIndex,
           controller: _controller),
+      // 6
       WhatsNext(
         changeIndex: changeIndex,
-      )
+      ),
+      // 7
+      ResetPasswordOTPFirstLogin(
+        changePageIndex: changeIndex,
+        emailAddress: memberEmail,
+      ),
+      // 8
+      ResetPasswordFirstLogin(
+        changePageIndex: changeIndex,
+        emailAddress: memberEmail,
+      ),
     ];
     return Material(
       child: SingleChildScrollView(

@@ -10,8 +10,10 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:firebase_auth/firebase_auth.dart';
 
 class OwnersPortalLogin extends StatelessWidget {
-  Function changePageIndex;
-  OwnersPortalLogin({super.key, required this.changePageIndex});
+  final Function(int) changePageIndex;
+  final Function(String) updateEmail;
+  OwnersPortalLogin(
+      {super.key, required this.changePageIndex, required this.updateEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,10 @@ class OwnersPortalLogin extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        const OwnersPortalLoginForm(),
+        OwnersPortalLoginForm(
+          updateEmail: updateEmail,
+          changePageIndex: changePageIndex,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -92,7 +97,7 @@ class OwnersPortalLogin extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                changePageIndex();
+                changePageIndex(1);
               },
               child: Text(
                 'Not Registered Yet? ',
@@ -113,7 +118,7 @@ class OwnersPortalLogin extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                changePageIndex();
+                changePageIndex(1);
               },
               child: Text(
                 'Click here',

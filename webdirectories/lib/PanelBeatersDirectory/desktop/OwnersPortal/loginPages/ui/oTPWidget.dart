@@ -17,6 +17,17 @@ class _OTPWidgetState extends State<OTPWidget> {
   TextEditingController text6 = TextEditingController();
 
   @override
+  void dispose() {
+    text1.dispose();
+    text2.dispose();
+    text3.dispose();
+    text4.dispose();
+    text5.dispose();
+    text6.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -85,6 +96,7 @@ class _OTPWidgetState extends State<OTPWidget> {
             if (check) {
               var otp =
                   "${text1.text}${text2.text}${text3.text}${text4.text}${text5.text}${text6.text}";
+
               widget.getOtpEntered(otp);
             }
           },

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,16 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/mediumTextBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/passwordTextField.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:webdirectories/PanelBeatersDirectory/emails/otpVerification/sendOtpVerification.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 
 import '../../../../../SuperAdmin/superAdmin.dart';
 
 class OwnersPortalLoginForm extends StatefulWidget {
-  const OwnersPortalLoginForm({super.key});
+  final Function(int) changePageIndex;
+  final Function(String) updateEmail;
+  const OwnersPortalLoginForm(
+      {super.key, required this.changePageIndex, required this.updateEmail});
 
   @override
   State<OwnersPortalLoginForm> createState() => _OwnersPortalLoginFormState();
@@ -40,136 +45,152 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
         }));
   }
 
-  checkUserAdmin(user) async {
-    QuerySnapshot<Map<String, dynamic>> userDoc = await _firestore
-        .collection('listings')
-        .where('authId', isEqualTo: user.uid.toString())
-        .limit(1)
-        .get();
-
-    if (userDoc.docs.isNotEmpty) {
-      if (userDoc.docs.first.data()['admin'] != null) {
-        return // Navigate to admin screen
-            Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Material(child: SuperAdmin()),
-          ),
-        );
-      }
+  checkUserAdmin(QueryDocumentSnapshot<Map<String, dynamic>> user) async {
+    if (user.data()['admin'] != null) {
+      return // Navigate to admin screen
+          Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Material(child: SuperAdmin()),
+        ),
+      );
     }
   }
 
   Future<void> _login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
       try {
-        var normalUser = true;
-        setState(() {
-          _isLoading = true;
-        });
+        final userCredential = await _authenticateUser();
+        final user = userCredential.user;
 
-        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
-
-        User? user = userCredential.user;
-
-        print(user!.uid);
-
-        if (user != null) {
-          print("User signed in: ${user.email} ${user.uid}");
-          print(user.uid.toString());
-          // Fetch user details from Firestore
-          QuerySnapshot<Map<String, dynamic>> userDoc = await _firestore
-              .collection('listing_members')
-              .where('authId', isEqualTo: user.uid.toString())
-              .limit(1)
-              .get();
-
-          if (userDoc.docs.isNotEmpty) {
-//check if user admin
-            await checkUserAdmin(user);
-            //check user Type
-            if (userDoc.docs.first.data().containsKey('normalUser')) {
-              normalUser = true;
-            } else {
-              normalUser = false;
-            }
-            print("ID");
-            print(userDoc.docs.first.data()['listingMembersId']);
-            QuerySnapshot<Map<String, dynamic>> listingAllocationSnapshot =
-                await _firestore
-                    .collection('listing_allocation')
-                    .where('listingMembersId',
-                        isEqualTo:
-                            userDoc.docs.first.data()['listingMembersId'])
-                    .limit(1)
-                    .get();
-            Map<String, dynamic> userData = userDoc.docs.first.data();
-            if (listingAllocationSnapshot.docs.isEmpty) {
-              setState(() {
-                _isLoading = false;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('User data not found.')),
-              );
-              return;
-            }
-            // Store user information locally
-            await storeUserInfo(StoredUser(
-                id: listingAllocationSnapshot.docs.first
-                    .data()['listingsId']
-                    .toString(),
-                email: user.email!,
-                fullName: userData['fullname'],
-                memberId: userData['listingMembersId'].toString(),
-                cell: userData['usercell']));
-
-            if (!mounted) return; // Ensure the widget is still mounted
-
-            setState(() {
-              _isLoading = false;
-            });
-            // Navigate to the next screen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AdminPortal(
-                    normalUser: normalUser,
-                    listingsId: ""), // Replace with your destination screen
-              ),
-            );
-          } else {
-            setState(() {
-              _isLoading = false;
-            });
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('User data not found1.')),
-            );
-          }
-        } else {
-          setState(() {
-            _isLoading = false;
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('User data not found.')),
-          );
+        if (user == null) {
+          _showError(context, 'User data not found.');
+          return;
         }
-      } on FirebaseAuthException catch (e) {
-        setState(() {
-          _isLoading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Incorrect credentials. Please try again.')),
-        );
+
+        final userDoc = await _fetchUserDocument(user.uid);
+        if (userDoc == null) {
+          _showError(context, 'User data not found.');
+          return;
+        }
+
+        await _handleUserLogin(context, user, userDoc);
+      } on FirebaseAuthException {
+        _showError(context, 'Incorrect credentials. Please try again.');
       } catch (e) {
+        print(e);
+      } finally {
         setState(() {
           _isLoading = false;
         });
-        print(e);
       }
     }
+  }
+
+  Future<UserCredential> _authenticateUser() {
+    return _auth.signInWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+  }
+
+  Future<QueryDocumentSnapshot<Map<String, dynamic>>?> _fetchUserDocument(
+      String userId) async {
+    final snapshot = await _firestore
+        .collection('listing_members')
+        .where('authId', isEqualTo: userId)
+        .limit(1)
+        .get();
+
+    return snapshot.docs.isNotEmpty ? snapshot.docs.first : null;
+  }
+
+  Future<void> _generateAndSendOTP(String userId) async {
+    String otp = Random().nextInt(999999).toString().padLeft(6, '0');
+
+    bool sent = await sendOtpEmail(
+        otp: otp, email: (_emailController.text.trim()).toLowerCase());
+    if (sent) {
+      await _firestore
+          .collection('listing_members')
+          .doc(userId)
+          .update({'secKey': otp});
+    } else {
+      _showError(context, 'Failed to send OTP. Please try again.');
+    }
+  }
+
+  Future<void> _handleUserLogin(BuildContext context, User user,
+      QueryDocumentSnapshot<Map<String, dynamic>> userDoc) async {
+    await checkUserAdmin(userDoc);
+    final userData = userDoc.data();
+    final listingAllocationSnapshot =
+        await _fetchListingAllocation(userData['listingMembersId']);
+    if (listingAllocationSnapshot == null) {
+      _showError(context,
+          'Could not find a listing linked to this user. Please contact support.');
+      return;
+    }
+    if (userData['loggedIn'] == true) {
+      await _storeUserInfo(user, userData, listingAllocationSnapshot);
+      _navigateToAdminPortal(context,
+          normalUser: true,
+          listingsId:
+              listingAllocationSnapshot.data()['listingsId'].toString());
+    } else {
+      // TODO: Add OTP logic for resetting password
+      await _storeUserInfo(user, userData, listingAllocationSnapshot);
+      widget.updateEmail(userData['email']);
+      _generateAndSendOTP(userDoc.id);
+      widget.changePageIndex(7);
+    }
+  }
+
+  Future<QueryDocumentSnapshot<Map<String, dynamic>>?> _fetchListingAllocation(
+      int memberId) async {
+    final snapshot = await _firestore
+        .collection('listing_allocation')
+        .where('listingMembersId', isEqualTo: memberId)
+        .limit(1)
+        .get();
+
+    return snapshot.docs.isNotEmpty ? snapshot.docs.first : null;
+  }
+
+  Future<void> _storeUserInfo(
+      User user,
+      Map<String, dynamic> userData,
+      QueryDocumentSnapshot<Map<String, dynamic>>
+          listingAllocationSnapshot) async {
+    await storeUserInfo(StoredUser(
+      id: listingAllocationSnapshot.data()['listingsId'].toString(),
+      email: user.email!,
+      fullName: userData['fullname'],
+      memberId: userData['listingMembersId'].toString(),
+      cell: userData['usercell'],
+    ));
+  }
+
+  void _navigateToAdminPortal(BuildContext context,
+      {required bool normalUser, required String listingsId}) {
+    if (!mounted) return;
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            AdminPortal(normalUser: normalUser, listingsId: listingsId),
+      ),
+    );
+  }
+
+  void _showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _forgotPassword(BuildContext context) async {
