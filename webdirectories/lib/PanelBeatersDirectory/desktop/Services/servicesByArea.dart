@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/ProfileDropDown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServiceStackedButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServicesContainer.dart';
@@ -22,15 +23,23 @@ class ServicesByArea extends StatefulWidget {
 class _ServicesByAreaState extends State<ServicesByArea> {
   bool showOtherServices = false;
   final TextEditingController search = TextEditingController();
-  late Future<List<Map<String, dynamic>>> _listingsFuture;
-
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  late Future<List<Map<String, dynamic>>> _listingsFuture;
+  List<Map<String, dynamic>> countriesList = [];
+  List<Map<String, dynamic>> citiesList = [];
+  List<Map<String, dynamic>> provincesList = [];
+  List<Map<String, dynamic>> suburbsList = [];
+  String? _selectedCountry = null;
+  String? _selectedProvince = null;
+  String? _selectedCity = null;
+  String? _selectedSuburb = null;
   Position? _userPosition;
   bool _isLoading = true;
   @override
   void initState() {
     super.initState();
     _getCurrentLocation();
+    _getFilters();
   }
 
   Future<void> _getCurrentLocation() async {
@@ -110,6 +119,131 @@ class _ServicesByAreaState extends State<ServicesByArea> {
     return listings;
   }
 
+  Future<void> _getFilters() async {
+    await _getCountries();
+    await _getCities(null);
+    await _getProvinces(null);
+    await _getSuburbs(null);
+  }
+
+  Future<void> _getCountries() async {
+    QuerySnapshot querySnapshot = await _firestore.collection('country').get();
+    List<Map<String, dynamic>> countries = querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+    setState(() {
+      countriesList = countries;
+    });
+  }
+
+  Future<void> _getCities(String? province) async {
+    QuerySnapshot querySnapshot;
+
+    if (province != null) {
+      // Fetch provinces where 'countryId' matches '_selectedCountry.countryId'
+      querySnapshot = await _firestore
+          .collection('city')
+          .where('provinceId', isEqualTo: province)
+          .get();
+    } else {
+      // Fetch all provinces if '_selectedProvince' is null
+      querySnapshot = await _firestore.collection('city').get();
+    }
+
+    List<Map<String, dynamic>> cities = querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+
+    setState(() {
+      citiesList = cities;
+    });
+  }
+
+  Future<void> _getProvinces(String? country) async {
+    QuerySnapshot querySnapshot;
+    print(country);
+    if (country != null) {
+      // Fetch provinces where 'countryId' matches '_selectedCountry.countryId'
+      querySnapshot = await _firestore
+          .collection('province')
+          .where('countryId', isEqualTo: country)
+          .get();
+    } else {
+      // Fetch all provinces if '_selectedCountry' is null
+      querySnapshot = await _firestore.collection('province').get();
+    }
+
+    List<Map<String, dynamic>> provinces = querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+
+    setState(() {
+      provincesList = provinces;
+    });
+  }
+
+  Future<void> _getSuburbs(String? city) async {
+    QuerySnapshot querySnapshot;
+
+    if (city != null) {
+      // Fetch suburbs where 'countryId' matches '_selectedCountry.countryId'
+      querySnapshot = await _firestore
+          .collection('suburb')
+          .where('cityId', isEqualTo: city)
+          .get();
+    } else {
+      // Fetch all suburbs if '_selectedCountry' is null
+      querySnapshot = await _firestore.collection('suburb').get();
+    }
+
+    List<Map<String, dynamic>> suburbs = querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+
+    setState(() {
+      suburbsList = suburbs;
+    });
+  }
+
+  Future<List<Map<String, dynamic>>> _fetchFilteredDocuments({
+    String? countryId,
+    String? provinceId,
+    String? suburbId,
+    String? cityId,
+  }) async {
+    // Start the query with a reference to the collection
+    Query<Map<String, dynamic>> query =
+        FirebaseFirestore.instance.collection('your_collection_name');
+
+    // Apply filters based on non-null values
+    if (countryId != null) {
+      query = query.where('countryId', isEqualTo: countryId);
+    }
+    if (provinceId != null) {
+      query = query.where('provinceId', isEqualTo: provinceId);
+    }
+    if (suburbId != null) {
+      query = query.where('suburbId', isEqualTo: suburbId);
+    }
+    if (cityId != null) {
+      query = query.where('cityId', isEqualTo: cityId);
+    }
+
+    try {
+      // Fetch the documents with a one-time call
+      final querySnapshot = await query.get();
+
+      // Convert the documents to a List of Map<String, dynamic>
+      List<Map<String, dynamic>> documents =
+          querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      return documents;
+    } catch (e) {
+      print("Error fetching filtered documents: $e");
+      return []; // Return an empty list in case of an error
+    }
+  }
+
   void toggleToFeatured() {
     setState(() {
       showOtherServices = false;
@@ -176,6 +310,7 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -243,10 +378,91 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                       )
                     ],
                   ),
+                  const SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ProfileDropDown(
+                        width: 280.0,
+                        height: 50.0,
+                        headline: 'Select a Country',
+                        items: countriesList
+                            .map((country) => {
+                                  'value': country['countryId'].toString(),
+                                  'label': country['country']
+                                })
+                            .toList(),
+                        value: _selectedCountry,
+                        onChanged: (String? newValue) async {
+                          setState(() {
+                            _selectedCountry = newValue;
+                          });
+                          await _getProvinces(newValue);
+                        },
+                      ),
+                      ProfileDropDown(
+                        width: 280.0,
+                        height: 50.0,
+                        headline: 'Select a Province',
+                        items: provincesList
+                            .map((province) => {
+                                  'value': province['provinceId'].toString(),
+                                  'label': province['province']
+                                })
+                            .toList(),
+                        value: _selectedProvince,
+                        onChanged: (String? newValue) async {
+                          setState(() {
+                            _selectedProvince = newValue;
+                          });
+                          await _getCities(newValue);
+                        },
+                      ),
+                      ProfileDropDown(
+                        width: 280.0,
+                        height: 50.0,
+                        headline: 'Select a City',
+                        items: citiesList
+                            .map((city) => {
+                                  'value': city['cityId'].toString(),
+                                  'label': city['city']
+                                })
+                            .toList(),
+                        value: _selectedCity,
+                        onChanged: (String? newValue) async {
+                          setState(() {
+                            _selectedCity = newValue;
+                          });
+                          await _getSuburbs(newValue);
+                        },
+                      ),
+                      ProfileDropDown(
+                        width: 280.0,
+                        height: 50.0,
+                        headline: 'Select a Suburb',
+                        items: suburbsList
+                            .map((suburb) => {
+                                  'value': suburb['suburbId'].toString(),
+                                  'label': suburb['suburb']
+                                })
+                            .toList(),
+                        value: _selectedSuburb,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedSuburb = newValue;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: MyUtility(context).height * 0.85,
                     child: FutureBuilder<List<Map<String, dynamic>>>(
-                      future: _getListings(),
+                      future: _fetchFilteredDocuments(
+                          countryId: _selectedCountry,
+                          provinceId: _selectedProvince,
+                          cityId: _selectedCity,
+                          suburbId: _selectedSuburb),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {

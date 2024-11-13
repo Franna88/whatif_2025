@@ -34,29 +34,29 @@ class _BusinessDropDownState extends State<BusinessDropDown> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ProfileDropDown(
-              headline: 'Select a Category',
-              items: items,
-              value: dropdownValue,
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropdownValue = newValue;
-                });
-              },
-            ),
-            SizedBox(
-              width: MyUtility(context).width * 0.10,
-            ),
-            ProfileDropDown(
-              headline: 'Specialist Service',
-              items: items,
-              value: dropdownValue,
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropdownValue = newValue;
-                });
-              },
-            ),
+            // ProfileDropDown(
+            //   headline: 'Select a Category',
+            //   items: items,
+            //   value: dropdownValue,
+            //   onChanged: (String? newValue) {
+            //     setState(() {
+            //       dropdownValue = newValue;
+            //     });
+            //   },
+            // ),
+            // SizedBox(
+            //   width: MyUtility(context).width * 0.10,
+            // ),
+            // ProfileDropDown(
+            //   headline: 'Specialist Service',
+            //   items: items,
+            //   value: dropdownValue,
+            //   onChanged: (String? newValue) {
+            //     setState(() {
+            //       dropdownValue = newValue;
+            //     });
+            //   },
+            // ),
           ],
         ),
         Padding(

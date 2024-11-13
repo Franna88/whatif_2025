@@ -160,6 +160,7 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
         .where('email', isEqualTo: email)
         .limit(1)
         .get();
+
     if (userDoc.docs.isNotEmpty) {
       // user has already logged in before
       if (userDoc.docs[0].data()['loggedIn'] == true) {

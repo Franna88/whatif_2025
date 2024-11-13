@@ -62,10 +62,12 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
         ),
         MainButton(
           buttonTitle: 'Near Me',
-          dropdownContent: const DropDownMenuWidget(
+          dropdownContent: DropDownMenuWidget(
             topText: 'Find your nearest Panel Beater',
             widget1: SetYourLoactionButton(),
-            widget2: SearchButton(),
+            widget2: SearchButton(
+              onTap: widget.viewServiceDetails,
+            ),
           ),
           isOpen: currentOpenDropdown == 0,
           onToggle: () => toggleDropdown(0),
@@ -99,7 +101,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
           height: 15,
         ),
         MainButtonDirect(
-          onTap: widget.viewServiceDetails,
+          onTap: widget.viewServicebyArea,
           buttonTitle: 'Area Search',
         ),
         const SizedBox(
