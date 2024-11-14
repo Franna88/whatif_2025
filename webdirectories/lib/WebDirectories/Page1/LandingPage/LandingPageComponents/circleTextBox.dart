@@ -199,14 +199,7 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                                     builder: (context) => Material(
                                           child: Page4(),
                                         )))
-                            : widget.Title1 == "PANEL BEATER "
-                                ? Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Material(
-                                              child: PanelBeatersHome(),
-                                            )))
-                                : goToLink(widget.url);
+                            : goToLink(widget.url);
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.white,

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPage.dart';
 import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPageComponents/LandingPageTextButton.dart';
 import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPageComponents/categorySelect.dart';
@@ -11,6 +14,10 @@ import 'package:webdirectories/WebDirectories/Page4/Page4.dart';
 import 'package:webdirectories/WebDirectories/Page5/Page5.dart';
 import 'package:webdirectories/WebDirectories/Page7/Page7.dart';
 import 'package:webdirectories/myutility.dart';
+import 'dart:html' as html;
+
+final uri = html.window.location.href;
+final newUrl = '${uri.substring(0, uri.length - 1)}';
 
 List directoriesInfo = [
   {
@@ -39,7 +46,7 @@ List directoriesInfo = [
     "2title": "Directory",
     "description":
         "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews.",
-    "url": "https://panelbeatersdirectory.co.za/"
+    "url": "${newUrl}/panelbeaters-directory"
   },
   {
     "1title": "AUTO REPAIR ",
@@ -59,6 +66,43 @@ class LandingPageDisPlay extends StatefulWidget {
 
 class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
   int menuIndex = 0;
+  bool _isFlickering = false;
+
+  bool _iconVisible = true;
+  Timer? _flickerTimer;
+
+  void _startFlicker() {
+    if (_flickerTimer != null) return;
+
+    setState(() => _isFlickering = true);
+
+    // Set up a timer to toggle visibility for the flicker effect
+    _flickerTimer = Timer.periodic(Duration(milliseconds: 200), (timer) {
+      setState(() {
+        _iconVisible = !_iconVisible;
+      });
+    });
+
+    // Stop the flickering after a short duration
+    // Future.delayed(Duration(seconds: 3), () {
+    //   _stopFlicker();
+    // });
+  }
+
+  void _stopFlicker() {
+    _flickerTimer?.cancel();
+    _flickerTimer = null;
+    setState(() {
+      _isFlickering = false;
+      _iconVisible = true; // Ensure icon is visible when stopping
+    });
+  }
+
+  @override
+  void dispose() {
+    _flickerTimer?.cancel();
+    super.dispose();
+  }
 
 //update menu index
   changeMenu(value) {
@@ -77,7 +121,7 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/newwebcover.png"),
+          image: Image.asset("images/newwebcover_updated.png").image,
           fit: BoxFit.cover,
         ),
       ),
@@ -135,37 +179,67 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
           ),
 
           //TODO JACO Start here
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Stack(
+            alignment: Alignment.center, // Center items within the Stack
             children: [
-              Column(
+              // Main Row layout that holds the left and right columns
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 17,
+                  // Left Column
+                  Column(
+                    children: [
+                      SizedBox(height: 17),
+                      CategorySelect(
+                        startFlickering: _startFlicker,
+                        menuIndex: menuIndex,
+                        changeMenu: changeMenu,
+                      ),
+                    ],
                   ),
-                  CategorySelect(
-                    menuIndex: menuIndex,
-                    changeMenu: changeMenu,
+
+                  // Right Column
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CircleTextBox(
+                        Title1: directoriesInfo[menuIndex]['1title'],
+                        Title2: directoriesInfo[menuIndex]['2title'],
+                        url: directoriesInfo[menuIndex]['url'],
+                        description: directoriesInfo[menuIndex]['description'],
+                        changeMenu: changeMenu,
+                        menuIndex: menuIndex,
+                      ),
+                      const SizedBox(height: 100),
+                    ],
                   ),
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleTextBox(
-                    Title1: directoriesInfo[menuIndex]['1title'],
-                    Title2: directoriesInfo[menuIndex]['2title'],
-                    url: directoriesInfo[menuIndex]['url'],
-                    description: directoriesInfo[menuIndex]['description'],
-                    changeMenu: changeMenu,
-                    menuIndex: menuIndex,
+
+              // Centered Row with SVG icons, positioned absolutely within the Stack
+              Positioned(
+                top: 0, // Adjust the top position if needed
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'images/left_arrow.svg',
+                        width: 40,
+                      ),
+                      SizedBox(width: 50),
+                      SvgPicture.asset('images/light_indicator.svg', width: 35),
+                      SizedBox(width: 50),
+                      AnimatedOpacity(
+                          opacity: _iconVisible ? 1.0 : 0.2,
+                          duration: Duration(milliseconds: 100),
+                          child: SvgPicture.asset('images/right_arrow.svg',
+                              width: 40)),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 100,
-                  )
-                ],
-              )
+                ),
+              ),
             ],
           )
         ],

@@ -65,7 +65,7 @@ class _ProfileDropDownState extends State<ProfileDropDown> {
                 color: Color(0xFF0F253A),
               ),
               value: widget.value,
-              onChanged: (value) {
+              onChanged: (String? value) {
                 widget.onChanged(value);
               },
               items: widget.items.map((item) {

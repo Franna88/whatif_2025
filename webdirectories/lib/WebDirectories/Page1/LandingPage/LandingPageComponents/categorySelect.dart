@@ -6,8 +6,12 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 class CategorySelect extends StatefulWidget {
   int menuIndex;
   Function(int) changeMenu;
+  Function startFlickering;
   CategorySelect(
-      {super.key, required this.menuIndex, required this.changeMenu});
+      {super.key,
+      required this.menuIndex,
+      required this.changeMenu,
+      required this.startFlickering});
 
   @override
   State<CategorySelect> createState() => _CategorySelectState();
@@ -86,6 +90,7 @@ class _CategorySelectState extends State<CategorySelect>
               left: 27,
               child: GestureDetector(
                 onTap: () {
+                  widget.startFlickering();
                   widget.changeMenu(1);
                   _controller.animateTo(-0.165);
                 },
@@ -105,6 +110,7 @@ class _CategorySelectState extends State<CategorySelect>
               left: 72,
               child: GestureDetector(
                 onTap: () {
+                  widget.startFlickering();
                   widget.changeMenu(0);
                   _controller.animateTo(-0.33);
                 },
@@ -124,6 +130,7 @@ class _CategorySelectState extends State<CategorySelect>
               right: 52,
               child: GestureDetector(
                 onTap: () {
+                  widget.startFlickering();
                   widget.changeMenu(3);
                   _controller.animateTo(0.1755);
                 },
@@ -143,6 +150,7 @@ class _CategorySelectState extends State<CategorySelect>
               right: 4,
               child: GestureDetector(
                 onTap: () {
+                  widget.startFlickering();
                   widget.changeMenu(4);
 
                   _controller.animateTo(0.337);
@@ -180,7 +188,6 @@ class _CategorySelectState extends State<CategorySelect>
             ),
           ],
         ),
-        
       ],
     );
   }

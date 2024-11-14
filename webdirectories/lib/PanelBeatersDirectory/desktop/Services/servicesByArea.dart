@@ -26,20 +26,26 @@ class _ServicesByAreaState extends State<ServicesByArea> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late Future<List<Map<String, dynamic>>> _listingsFuture;
   List<Map<String, dynamic>> countriesList = [];
-  List<Map<String, dynamic>> citiesList = [];
   List<Map<String, dynamic>> provincesList = [];
+  List<Map<String, dynamic>> citiesList = [];
   List<Map<String, dynamic>> suburbsList = [];
-  String? _selectedCountry = null;
-  String? _selectedProvince = null;
-  String? _selectedCity = null;
-  String? _selectedSuburb = null;
+  List<Map<String, dynamic>> allCountries = [];
+  List<Map<String, dynamic>> allProvinces = [];
+  List<Map<String, dynamic>> allCities = [];
+  List<Map<String, dynamic>> allSuburbs = [];
+
+  String? _selectedCountry = '';
+  String? _selectedProvince = '';
+  String? _selectedCity = '';
+  String? _selectedSuburb = '';
+
   Position? _userPosition;
   bool _isLoading = true;
   @override
   void initState() {
     super.initState();
     _getCurrentLocation();
-    _getFilters();
+    _fetchAllFilters();
   }
 
   Future<void> _getCurrentLocation() async {
@@ -119,89 +125,95 @@ class _ServicesByAreaState extends State<ServicesByArea> {
     return listings;
   }
 
-  Future<void> _getFilters() async {
-    await _getCountries();
-    await _getCities(null);
-    await _getProvinces(null);
-    await _getSuburbs(null);
+  Future<void> _fetchAllFilters() async {
+    await Future.wait([
+      _getCountries(),
+      _getProvinces(),
+      _getCities(),
+      _getSuburbs(),
+    ]);
+    setState(() {
+      countriesList = [
+        {'countryId': '', 'country': 'All'}
+      ]..addAll(allCountries);
+      provincesList = [
+        {'provinceId': '', 'province': 'All'}
+      ];
+      citiesList = [
+        {'cityId': '', 'city': 'All'}
+      ];
+      suburbsList = [
+        {'suburbId': '', 'suburb': 'All'}
+      ];
+    });
   }
 
   Future<void> _getCountries() async {
     QuerySnapshot querySnapshot = await _firestore.collection('country').get();
-    List<Map<String, dynamic>> countries = querySnapshot.docs
+    allCountries = querySnapshot.docs
         .map((doc) => doc.data() as Map<String, dynamic>)
         .toList();
+  }
+
+  Future<void> _getProvinces() async {
+    QuerySnapshot querySnapshot = await _firestore.collection('province').get();
+    allProvinces = querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+  }
+
+  Future<void> _getCities() async {
+    QuerySnapshot querySnapshot = await _firestore.collection('city').get();
+    allCities = querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+  }
+
+  Future<void> _getSuburbs() async {
+    QuerySnapshot querySnapshot = await _firestore.collection('suburb').get();
+    allSuburbs = querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+  }
+
+  void _filterProvinces(String? countryId) {
     setState(() {
-      countriesList = countries;
+      _selectedProvince = '';
+      _selectedCity = '';
+      _selectedSuburb = '';
+      provincesList = [
+        {'provinceId': '', 'province': 'All'}
+      ];
+      if (countryId != null && countryId.isNotEmpty) {
+        provincesList
+            .addAll(allProvinces.where((p) => p['countryId'] == countryId));
+      }
     });
   }
 
-  Future<void> _getCities(String? province) async {
-    QuerySnapshot querySnapshot;
-
-    if (province != null) {
-      // Fetch provinces where 'countryId' matches '_selectedCountry.countryId'
-      querySnapshot = await _firestore
-          .collection('city')
-          .where('provinceId', isEqualTo: province)
-          .get();
-    } else {
-      // Fetch all provinces if '_selectedProvince' is null
-      querySnapshot = await _firestore.collection('city').get();
-    }
-
-    List<Map<String, dynamic>> cities = querySnapshot.docs
-        .map((doc) => doc.data() as Map<String, dynamic>)
-        .toList();
-
+  void _filterCities(String? provinceId) {
     setState(() {
-      citiesList = cities;
+      _selectedCity = '';
+      _selectedSuburb = '';
+      citiesList = [
+        {'cityId': '', 'city': 'All'}
+      ];
+      if (provinceId != null && provinceId.isNotEmpty) {
+        citiesList
+            .addAll(allCities.where((c) => c['provinceId'] == provinceId));
+      }
     });
   }
 
-  Future<void> _getProvinces(String? country) async {
-    QuerySnapshot querySnapshot;
-    print(country);
-    if (country != null) {
-      // Fetch provinces where 'countryId' matches '_selectedCountry.countryId'
-      querySnapshot = await _firestore
-          .collection('province')
-          .where('countryId', isEqualTo: country)
-          .get();
-    } else {
-      // Fetch all provinces if '_selectedCountry' is null
-      querySnapshot = await _firestore.collection('province').get();
-    }
-
-    List<Map<String, dynamic>> provinces = querySnapshot.docs
-        .map((doc) => doc.data() as Map<String, dynamic>)
-        .toList();
-
+  void _filterSuburbs(String? cityId) {
     setState(() {
-      provincesList = provinces;
-    });
-  }
-
-  Future<void> _getSuburbs(String? city) async {
-    QuerySnapshot querySnapshot;
-
-    if (city != null) {
-      // Fetch suburbs where 'countryId' matches '_selectedCountry.countryId'
-      querySnapshot = await _firestore
-          .collection('suburb')
-          .where('cityId', isEqualTo: city)
-          .get();
-    } else {
-      // Fetch all suburbs if '_selectedCountry' is null
-      querySnapshot = await _firestore.collection('suburb').get();
-    }
-
-    List<Map<String, dynamic>> suburbs = querySnapshot.docs
-        .map((doc) => doc.data() as Map<String, dynamic>)
-        .toList();
-
-    setState(() {
-      suburbsList = suburbs;
+      _selectedSuburb = '';
+      suburbsList = [
+        {'suburbId': '', 'suburb': 'All'}
+      ];
+      if (cityId != null && cityId.isNotEmpty) {
+        suburbsList.addAll(allSuburbs.where((s) => s['cityId'] == cityId));
+      }
     });
   }
 
@@ -393,11 +405,11 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                                 })
                             .toList(),
                         value: _selectedCountry,
-                        onChanged: (String? newValue) async {
+                        onChanged: (String? newValue) {
                           setState(() {
                             _selectedCountry = newValue;
                           });
-                          await _getProvinces(newValue);
+                          _filterProvinces(newValue);
                         },
                       ),
                       ProfileDropDown(
@@ -411,11 +423,11 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                                 })
                             .toList(),
                         value: _selectedProvince,
-                        onChanged: (String? newValue) async {
+                        onChanged: (String? newValue) {
                           setState(() {
                             _selectedProvince = newValue;
                           });
-                          await _getCities(newValue);
+                          _filterCities(newValue);
                         },
                       ),
                       ProfileDropDown(
@@ -429,11 +441,11 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                                 })
                             .toList(),
                         value: _selectedCity,
-                        onChanged: (String? newValue) async {
+                        onChanged: (String? newValue) {
                           setState(() {
                             _selectedCity = newValue;
                           });
-                          await _getSuburbs(newValue);
+                          _filterSuburbs(newValue);
                         },
                       ),
                       ProfileDropDown(
