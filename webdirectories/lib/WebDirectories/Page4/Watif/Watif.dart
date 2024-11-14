@@ -63,10 +63,10 @@ class _WatifState extends State<Watif> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "WATIF ",
+                                "watif ",
                                 style: TextStyle(
                                   fontSize: 115,
-                                  fontFamily: 'ralewaysemi',
+                                  fontFamily: 'Comfortaa',
                                   color: Colors.black,
                                   height: 1.1,
                                 ),
