@@ -169,11 +169,11 @@ class _WatifMobileState extends State<WatifMobile> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    "WATIF ",
+                    "watif",
                     style: TextStyle(
                       fontSize: 42,
-                      fontFamily: 'ralewaysemi',
-                      color: Colors.black,
+                      fontFamily: 'Comfortaa',
+                      color: Color(0xFFCFD300),
                       height: 1.1,
                     ),
                     textAlign: TextAlign.center,
