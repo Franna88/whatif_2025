@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SearchButton extends StatefulWidget {
-  
-  const SearchButton({super.key,});
+  final VoidCallback? onTap;
+  const SearchButton({
+    super.key,
+    this.onTap,
+  });
 
   @override
   State<SearchButton> createState() => _SearchButtonState();
@@ -20,34 +23,35 @@ class _SearchButtonState extends State<SearchButton> {
           setState(() {
             isPressed = !isPressed;
           });
+          if (widget.onTap != null) {
+            widget.onTap!();
+          }
         },
-        
         style: ElevatedButton.styleFrom(
           backgroundColor: isPressed ? Colors.black : Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
-          
           ),
           padding: EdgeInsets.zero,
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 6,bottom: 6,left: 10,right: 15),
+          padding:
+              const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.min,
-            
             children: [
               Container(
                 width: 25,
                 height: 25,
                 decoration: BoxDecoration(
-                  color:isPressed ? Colors.white: Colors.black,
+                  color: isPressed ? Colors.white : Colors.black,
                   shape: BoxShape.circle,
                 ),
                 padding: EdgeInsets.zero,
                 child: Icon(
                   Icons.keyboard_arrow_right_outlined,
-                  color:isPressed ? Colors.black : Colors.white,
+                  color: isPressed ? Colors.black : Colors.white,
                   size: 16,
                 ),
               ),
@@ -55,7 +59,7 @@ class _SearchButtonState extends State<SearchButton> {
               Text(
                 'Search',
                 style: TextStyle(
-                  color:isPressed ? Colors.white: Colors.black,
+                  color: isPressed ? Colors.white : Colors.black,
                   fontSize: 16.5,
                   fontFamily: 'Raleway',
                 ),
