@@ -30,7 +30,7 @@ class _OurEagleProclamationState extends State<OurEagleProclamation> {
                 fontSize: 48, fontFamily: 'ralewaysemi', color: Colors.white),
           ),
           Text(
-            "The first step to attain a set goal, is to write it down",
+            "Our Vision in Action",
             style: TextStyle(
                 fontSize: 24, fontFamily: 'ralewaymedium', color: Colors.white),
           ),

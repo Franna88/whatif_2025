@@ -19,8 +19,8 @@ class _LearnMoreButtonState extends State<LearnMoreButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.085,
-      height: MediaQuery.of(context).size.height * 0.045,
+      width: MediaQuery.of(context).size.width * 0.095,
+      height: MediaQuery.of(context).size.height * 0.065,
       child: ElevatedButton(
         onPressed: widget.onPressed,
         style: ElevatedButton.styleFrom(

@@ -48,7 +48,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 1.15,
-      height: 500,
+      height: 450,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
         borderRadius: BorderRadius.circular(20.0),
