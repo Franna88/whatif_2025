@@ -208,7 +208,7 @@ class _GetinTouchState extends State<GetinTouch> {
                             ),
                           ),
                           Text(
-                            "Open Google Maps",
+                            "63 Bokmakierie Street, Eden, George, 6529",
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'raleway',

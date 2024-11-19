@@ -21,7 +21,7 @@ class _AiCoDriverButtonState extends State<AiCoDriverButton> {
         onTap: widget.onpress,
         child: Image.asset(
           widget.image,
-          width: MyUtility(context).width * 0.1,
+          width: MyUtility(context).width * 0.105,
           height: 45,
           fit: BoxFit.fill,
         ),

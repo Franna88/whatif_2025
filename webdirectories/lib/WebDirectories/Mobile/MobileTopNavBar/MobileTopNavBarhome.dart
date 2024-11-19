@@ -46,10 +46,15 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
           ),
           itemBuilder: (BuildContext context) {
             return [
-              buildPopupMenuItem('Home', 'option1', MobilePage1()),
+              buildPopupMenuItem(
+                'Home',
+                'option1',
+                MobilePage1(),
+              ),
               buildPopupMenuItem('Our Story', 'option2', MobilePage2()),
               buildPopupMenuItem('Watif', 'option3', MobilePage3()),
-              buildPopupMenuItem('Articles', 'option4', MobilePage4()),
+              buildPopupMenuItem('Articles', 'option4', MobilePage4(),
+                  isComingSoon: true),
               buildPopupMenuItem('Get in Touch', 'option5', MobilePage6()),
             ];
           },
@@ -64,16 +69,31 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
   }
 
   PopupMenuItem<String> buildPopupMenuItem(
-      String text, String value, Widget route) {
+      String text, String value, Widget route,
+      {bool isComingSoon = false}) {
     final isSelected = selectedOption == value;
     return PopupMenuItem(
       onTap: () {
-        Navigator.push(
+        if (isComingSoon) {
+          // Show a Snackbar or AlertDialog indicating this is "Coming Soon"
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Coming Soon!"),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          });
+        } else {
+          Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Material(
-                      child: route,
-                    )));
+              builder: (context) => Material(
+                child: route,
+              ),
+            ),
+          );
+        }
       },
       value: value,
       child: Container(
@@ -85,7 +105,10 @@ class _MobileTopNavBarhomeState extends State<MobileTopNavBarhome> {
           title: Text(
             text,
             style: TextStyle(
-                color: Colors.black, fontFamily: 'raleway', fontSize: 18),
+              color: isComingSoon ? Colors.grey : Colors.black,
+              fontFamily: 'raleway',
+              fontSize: 18,
+            ),
           ),
         ),
       ),

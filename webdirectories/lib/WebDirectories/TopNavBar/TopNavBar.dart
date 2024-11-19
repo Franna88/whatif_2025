@@ -58,10 +58,12 @@ class _TopNavBarState extends State<TopNavBar> {
                     },
                     text: 'Watif'),
                 OurStoryTextButton(
-                    onpress: () {
-                      navigateToDifrentPage(Material(child: Page5()));
-                    },
-                    text: 'Articles'),
+                  onpress: () {
+                    navigateToDifrentPage(Material(child: Page5()));
+                  },
+                  text: 'Articles',
+                  isComingSoon: true,
+                ),
                 Spacer(),
                 OvalTextButton(
                     text: 'Get in Touch',

@@ -161,10 +161,12 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                           },
                           text: 'Watif'),
                       LandingPageTextButton(
-                          onpress: () {
-                            navigateToDifrentPage(Material(child: Page5()));
-                          },
-                          text: 'Articles'),
+                        onpress: () {
+                          navigateToDifrentPage(Material(child: Page5()));
+                        },
+                        text: 'Articles',
+                        isComingSoon: true,
+                      ),
                       Spacer(),
                       OvalTextButton(
                           text: 'Get in Touch',

@@ -29,8 +29,9 @@ class _WatifState extends State<Watif> {
       decoration: BoxDecoration(
         image: DecorationImage(
           alignment: Alignment.centerRight,
-          image: AssetImage('images/watifNew.png',),
-          
+          image: AssetImage(
+            'images/watifNew.png',
+          ),
         ),
       ),
       height: MyUtility(context).height,
@@ -173,6 +174,7 @@ class _WatifState extends State<Watif> {
                             "Access your favorite tunes, podcasts, audiobooks, messaging, and map apps through my portal.",
                         isOpen: currentOpenDropdown == 7,
                         onToggle: () => toggleDropdown(7),
+                        containerColor: Color(0xFF5F6368).withOpacity(0.47),
                       ),
                     ],
                   ),

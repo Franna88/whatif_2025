@@ -59,11 +59,19 @@ class _DownloadWatifState extends State<DownloadWatif> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "Download WATIF",
+                              "Download ",
                               style: TextStyle(
                                 fontSize: 48,
                                 fontFamily: 'ralewaysemi',
                                 color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              "watif",
+                              style: TextStyle(
+                                fontSize: 48,
+                                fontFamily: 'ralewaysemi',
+                                color: Colors.yellow,
                               ),
                             ),
                           ],
@@ -71,7 +79,7 @@ class _DownloadWatifState extends State<DownloadWatif> {
 
                         Positioned(
                           top: 0,
-                          right: 125,
+                          right: 135,
                           child: SvgPicture.asset(
                             'images/tmw.svg',
                             height: 20,
@@ -91,7 +99,7 @@ class _DownloadWatifState extends State<DownloadWatif> {
                       height: MyUtility(context).height * 0.01,
                     ),
                     const Text(
-                      "Hit the road with confidence and ditch the stress! WATIF is your free, all-in-one automotive app that empowers you with everything you need.",
+                      "Hit the road with confidence and ditch the stress! WATIF is\nyour free, all-in-one automotive app that empowers you with\neverything you need.",
                       style: TextStyle(
                           fontSize: 16,
                           fontFamily: 'raleway',
