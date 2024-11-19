@@ -210,6 +210,7 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                         description: directoriesInfo[menuIndex]['description'],
                         changeMenu: changeMenu,
                         menuIndex: menuIndex,
+                        buttonFlash: _iconVisible,
                       ),
                       const SizedBox(height: 100),
                     ],
