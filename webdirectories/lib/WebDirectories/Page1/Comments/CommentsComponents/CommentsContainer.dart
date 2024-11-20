@@ -23,7 +23,7 @@ class _CommentsContainerState extends State<CommentsContainer> {
       width: MyUtility(context).width / 1.2,
       height: MyUtility(context).height * 0.4,
       decoration: BoxDecoration(
-          color: Colors.black, borderRadius: BorderRadius.circular(10.0)),
+          color: Color(0xFF0E1013), borderRadius: BorderRadius.circular(10.0)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
