@@ -7,6 +7,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/m
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/setYourLocationButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/textfieldButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesFeatured.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/addressAutoCompleteField.dart';
 
 class FindAllPanelBeaters extends StatefulWidget {
   final VoidCallback viewServiceDetails;
@@ -79,8 +80,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
           buttonTitle: 'Any City or Street Address',
           dropdownContent: const DropDownMenuWidget(
               topText: 'Find a Panel Beater by street',
-              widget1:
-                  TextfieldButton(hintText: 'Type any street address here'),
+              widget1: AddressAutoCompleteField(),
               widget2: SearchButton()),
           isOpen: currentOpenDropdown == 1,
           onToggle: () => toggleDropdown(1),

@@ -294,7 +294,8 @@ class _ListingsState extends State<Listings> {
                         StreamBuilder<QuerySnapshot>(
                             stream: FirebaseFirestore.instance
                                 .collection('listings')
-                                //              .where("listingsId", isEqualTo: 2473)
+                                .orderBy('title', descending: false)
+                                .where('title', isNotEqualTo: "")
                                 .snapshots(),
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
