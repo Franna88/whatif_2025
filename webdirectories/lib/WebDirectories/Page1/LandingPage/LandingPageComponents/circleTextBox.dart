@@ -13,14 +13,16 @@ class CircleTextBox extends StatefulWidget {
   String url;
   int menuIndex;
   Function(int) changeMenu;
-  CircleTextBox(
-      {super.key,
-      required this.Title1,
-      required this.Title2,
-      required this.description,
-      required this.url,
-      required this.menuIndex,
-      required this.changeMenu});
+
+  CircleTextBox({
+    super.key,
+    required this.Title1,
+    required this.Title2,
+    required this.description,
+    required this.url,
+    required this.menuIndex,
+    required this.changeMenu,
+  });
 
   @override
   State<CircleTextBox> createState() => _CircleTextBoxState();
@@ -103,33 +105,60 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                   ],
                 ),
                 SizedBox(
-                  width: MyUtility(context).width / 5.5,
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: '',
-                      style: DefaultTextStyle.of(context).style,
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: widget.Title1,
-                            style: TextStyle(
-                              fontSize: 32,
-                              fontFamily: 'ralewaybold',
-                              color: const Color.fromARGB(255, 255, 255, 255),
-                            )),
-                        TextSpan(
-                          text: widget.Title2,
-                          style: TextStyle(
-                              fontSize: 32,
-                              fontFamily: 'raleway',
-                              color: const Color.fromARGB(255, 255, 255, 255)),
-                        ),
-                      ],
-                    ),
+                  width: 350,
+                  child: Container(
+                    height:
+                        90, // Fixed height for Title section to avoid hopping
+                    child: widget.Title1.trim() == "TOWING" &&
+                            widget.Title2.trim() == "Directory"
+                        ? Center(
+                            child: Text(
+                              "${widget.Title1}${widget.Title2}",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 32,
+                                fontFamily: 'ralewaybold',
+                                color: const Color.fromARGB(255, 255, 255, 255),
+                              ),
+                              softWrap: false,
+                              overflow: TextOverflow.visible,
+                            ),
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.Title1,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontFamily: 'ralewaybold',
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
+                                  height: 1.2,
+                                ),
+                              ),
+                              SizedBox(
+                                  height:
+                                      4), // Reduced gap between Title1 and Title2
+                              Text(
+                                widget.Title2,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontFamily: 'raleway',
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
+                                  height: 1.2,
+                                ),
+                              ),
+                            ],
+                          ),
                   ),
                 ),
 
-                /*     SizedBox(
+                /* Retained Commented Out Code
+                SizedBox(
                   width: MyUtility(context).width / 5.2,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -158,10 +187,11 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                     ),
                   ),
                 ),
-           */
+                */
+
                 SizedBox(
                   width: MyUtility(context).width / 4.8,
-                  height: MyUtility(context).height * 0.18,
+                  height: MyUtility(context).height * 0.195,
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -177,14 +207,13 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                   ),
                 ),
                 SizedBox(
-                  height: MyUtility(context).height * 0.05,
+                  height: MyUtility(context).height * 0.03,
                 ),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
                   ),
-
                   // width: MediaQuery.of(context).size.width * 0.1,
                   // height: MediaQuery.of(context).size.height * 0.05,
                   child: Padding(

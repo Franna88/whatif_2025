@@ -134,11 +134,20 @@ class _CategorySelectState extends State<CategorySelect>
                   widget.changeMenu(3);
                   _controller.animateTo(0.1755);
                 },
-                child: Container(
+                child: /*Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 3
                         ? 'images/hammerSvg.svg'
                         : 'images/rightb.svg',
+                    width: 1,
+                    height: 183,
+                  ),
+                ),*/
+                    Container(
+                  child: SvgPicture.asset(
+                    widget.menuIndex == 3
+                        ? 'images/revpand8.svg'
+                        : 'images/revpand7.svg',
                     width: 1,
                     height: 183,
                   ),

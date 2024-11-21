@@ -119,6 +119,8 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MyUtility(context).width,
+      height: MyUtility(context).height,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: Image.asset("images/newwebcover_updated.png").image,
