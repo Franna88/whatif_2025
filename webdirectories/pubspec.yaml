@@ -68,6 +68,7 @@ dependencies:
   geocoding: ^3.0.0
   excel: ^4.0.6
   flutter_google_places_web: ^1.0.0
+  google_places_flutter: ^2.0.6
   
 
 dev_dependencies:

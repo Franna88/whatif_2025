@@ -52,8 +52,7 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
       };
       String kPLACES_API_KEY = "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko";
       String type = '(regions)';
-      String baseURL =
-          'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json';
+      String baseURL = 'http://localhost:5000/api/places/autocomplete';
       String request =
           '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$_sessionToken';
       var response = await http.get(Uri.parse(request), headers: header);
