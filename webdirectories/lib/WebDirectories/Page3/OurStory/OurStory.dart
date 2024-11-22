@@ -99,16 +99,13 @@ class _OurStoryState extends State<OurStory> {
                               icon: Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: index == 0
-                                          ? Colors.black
-                                          : Colors.white,
-                                      width: 0.5),
+                                  color:
+                                      index == 0 ? Colors.black : Colors.white,
                                 ),
                                 child: Icon(
                                   Icons.keyboard_arrow_left,
                                   color:
-                                      index == 0 ? Colors.black : Colors.white,
+                                      index == 0 ? Colors.white : Colors.black,
                                   size: 24,
                                 ),
                               ),

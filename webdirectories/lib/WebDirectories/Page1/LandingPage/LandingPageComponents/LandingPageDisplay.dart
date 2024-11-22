@@ -119,6 +119,8 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MyUtility(context).width,
+      height: MyUtility(context).height,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: Image.asset("images/newwebcover_updated.png").image,
@@ -161,10 +163,12 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                           },
                           text: 'Watif'),
                       LandingPageTextButton(
-                          onpress: () {
-                            navigateToDifrentPage(Material(child: Page5()));
-                          },
-                          text: 'Articles'),
+                        onpress: () {
+                          navigateToDifrentPage(Material(child: Page5()));
+                        },
+                        text: 'Articles',
+                        isComingSoon: true,
+                      ),
                       Spacer(),
                       OvalTextButton(
                           text: 'Get in Touch',
