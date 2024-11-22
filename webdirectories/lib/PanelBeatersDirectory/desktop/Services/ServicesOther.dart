@@ -123,12 +123,31 @@ class _ServicesOtherState extends State<ServicesOther> {
         }
       }
     }
+    List<Future<Map<String, dynamic>>> listingFutures =
+        nearbyLocations.map((doc) async {
+      Map<String, dynamic> data = doc;
+      String? imageUrl =
+          await getImageUrl('listings/images/listings/${data['displayphoto']}');
+
+      data['displayphoto'] = imageUrl;
+
+      return data;
+    }).toList();
+
+    // Wait for all futures to complete
+    List<Map<String, dynamic>> listings = await Future.wait(listingFutures);
+
+    // Filter out listings with null displayphoto
+    listings =
+        listings.where((listing) => listing['displayphoto'] != null).toList();
+    listings =
+        listings.where((listing) => listing['distance'] != null).toList();
 
     // Sort the list by distance
-    nearbyLocations.sort((a, b) => a['distance'].compareTo(b['distance']));
+    listings.sort((a, b) => a['distance'].compareTo(b['distance']));
 
     // Return sorted documents only
-    return nearbyLocations;
+    return listings;
   }
 
   double _calculateDistance(userLat, userLong, listingLat, listingLong) {
@@ -153,12 +172,18 @@ class _ServicesOtherState extends State<ServicesOther> {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       String? imageUrl =
           await getImageUrl('listings/images/listings/${data['displayphoto']}');
-      if (imageUrl != null) {
-        data['displayphoto'] = imageUrl;
+
+      data['displayphoto'] = imageUrl;
+
+      if (data['latitude'] == null || data['longitude'] == null) {
+        data['distance'] = null;
+        return data;
       }
-      data['distance'] = _userPosition?.latitude != null
-          ? '${_calculateDistance(_userPosition?.latitude, _userPosition?.longitude, data['latitude'], data['longitude'])}'
-          : '0 km';
+
+      var distance = _calculateDistance(_userPosition?.latitude,
+          _userPosition?.longitude, data['latitude'], data['longitude']);
+
+      data['distance'] = '$distance km';
       return data;
     }).toList();
 
@@ -168,6 +193,8 @@ class _ServicesOtherState extends State<ServicesOther> {
     // Filter out listings with null displayphoto
     listings =
         listings.where((listing) => listing['displayphoto'] != null).toList();
+    listings =
+        listings.where((listing) => listing['distance'] != null).toList();
 
     //  listings.sort((a, b) => a['distance'].compareTo(b['distance']));
 

@@ -7,6 +7,7 @@ import 'package:webdirectories/WebDirectories/Page4/Page4.dart';
 import 'package:webdirectories/myutility.dart';
 
 class CircleTextBox extends StatefulWidget {
+  bool buttonFlash;
   String Title1;
   String Title2;
   String description;
@@ -228,7 +229,14 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                                     builder: (context) => Material(
                                           child: Page4(),
                                         )))
-                            : goToLink(widget.url);
+                            : widget.Title1 == "PANEL BEATER "
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Material(
+                                              child: PanelBeatersHome(),
+                                            )))
+                                : goToLink(widget.url);
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -259,8 +267,16 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                             ),
                           ),
                           SizedBox(width: 10),
-                          Text(
-                            widget.Title2 == "WATIF"
+                          AnimatedOpacity(
+                            opacity: widget.buttonFlash ? 1.0 : 0.0,
+                            duration: Duration(milliseconds: 200),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color:widget.buttonFlash ? Colors.green : Colors.white,
+                                borderRadius: BorderRadius.circular(30),
+                                ),
+                              child: Text(
+                                 widget.Title2 == "WATIF"
                                 ? 'Learn More'
                                 : 'View Directory',
                             style: TextStyle(
@@ -268,6 +284,9 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                               fontSize: 16.5,
                               fontFamily: 'Raleway',
                             ),
+                              ),
+                            ),
+                           
                           ),
                         ],
                       ),

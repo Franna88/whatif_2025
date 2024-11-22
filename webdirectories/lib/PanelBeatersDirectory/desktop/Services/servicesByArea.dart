@@ -25,10 +25,18 @@ class _ServicesByAreaState extends State<ServicesByArea> {
   final TextEditingController search = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late Future<List<Map<String, dynamic>>> _listingsFuture;
-  List<Map<String, dynamic>> countriesList = [];
-  List<Map<String, dynamic>> provincesList = [];
-  List<Map<String, dynamic>> citiesList = [];
-  List<Map<String, dynamic>> suburbsList = [];
+  List<Map<String, dynamic>> countriesList = [
+    {'countryId': '', 'country': 'All'}
+  ];
+  List<Map<String, dynamic>> provincesList = [
+    {'provinceId': '', 'province': 'All'}
+  ];
+  List<Map<String, dynamic>> citiesList = [
+    {'cityId': '', 'city': 'All'}
+  ];
+  List<Map<String, dynamic>> suburbsList = [
+    {'suburbId': '', 'suburb': 'All'}
+  ];
   List<Map<String, dynamic>> allCountries = [];
   List<Map<String, dynamic>> allProvinces = [];
   List<Map<String, dynamic>> allCities = [];
@@ -41,6 +49,7 @@ class _ServicesByAreaState extends State<ServicesByArea> {
 
   Position? _userPosition;
   bool _isLoading = true;
+  bool _isLoadingFilters = true;
   @override
   void initState() {
     super.initState();
@@ -93,7 +102,6 @@ class _ServicesByAreaState extends State<ServicesByArea> {
     QuerySnapshot querySnapshot = await _firestore
         .collection('listings')
         //.where('featured', isEqualTo: 1)
-        .where('authId', isEqualTo: "YHg7m6rx5RxD01wvotTZ")
         .limit(40)
         .get();
 
@@ -138,13 +146,14 @@ class _ServicesByAreaState extends State<ServicesByArea> {
       ]..addAll(allCountries);
       provincesList = [
         {'provinceId': '', 'province': 'All'}
-      ];
+      ]..addAll(allProvinces);
       citiesList = [
         {'cityId': '', 'city': 'All'}
-      ];
+      ]..addAll(allCities);
       suburbsList = [
         {'suburbId': '', 'suburb': 'All'}
-      ];
+      ]..addAll(allSuburbs);
+      _isLoadingFilters = false;
     });
   }
 
@@ -184,9 +193,10 @@ class _ServicesByAreaState extends State<ServicesByArea> {
       provincesList = [
         {'provinceId': '', 'province': 'All'}
       ];
+
       if (countryId != null && countryId.isNotEmpty) {
-        provincesList
-            .addAll(allProvinces.where((p) => p['countryId'] == countryId));
+        provincesList.addAll(
+            allProvinces.where((p) => p['countryId'] == int.parse(countryId)));
       }
     });
   }
@@ -199,8 +209,8 @@ class _ServicesByAreaState extends State<ServicesByArea> {
         {'cityId': '', 'city': 'All'}
       ];
       if (provinceId != null && provinceId.isNotEmpty) {
-        citiesList
-            .addAll(allCities.where((c) => c['provinceId'] == provinceId));
+        citiesList.addAll(
+            allCities.where((c) => c['provinceId'] == int.parse(provinceId)));
       }
     });
   }
@@ -212,7 +222,8 @@ class _ServicesByAreaState extends State<ServicesByArea> {
         {'suburbId': '', 'suburb': 'All'}
       ];
       if (cityId != null && cityId.isNotEmpty) {
-        suburbsList.addAll(allSuburbs.where((s) => s['cityId'] == cityId));
+        suburbsList
+            .addAll(allSuburbs.where((s) => s['cityId'] == int.parse(cityId)));
       }
     });
   }
@@ -225,31 +236,59 @@ class _ServicesByAreaState extends State<ServicesByArea> {
   }) async {
     // Start the query with a reference to the collection
     Query<Map<String, dynamic>> query =
-        FirebaseFirestore.instance.collection('your_collection_name');
+        FirebaseFirestore.instance.collection('listings');
 
     // Apply filters based on non-null values
-    if (countryId != null) {
+    if (countryId != '') {
       query = query.where('countryId', isEqualTo: countryId);
     }
-    if (provinceId != null) {
+    if (provinceId != '') {
       query = query.where('provinceId', isEqualTo: provinceId);
     }
-    if (suburbId != null) {
+    if (suburbId != '') {
       query = query.where('suburbId', isEqualTo: suburbId);
     }
-    if (cityId != null) {
+    if (cityId != '') {
       query = query.where('cityId', isEqualTo: cityId);
     }
 
     try {
       // Fetch the documents with a one-time call
       final querySnapshot = await query.get();
-
+      int index = 1;
       // Convert the documents to a List of Map<String, dynamic>
-      List<Map<String, dynamic>> documents =
-          querySnapshot.docs.map((doc) => doc.data()).toList();
+      List<Future<Map<String, dynamic>>> listingFutures =
+          querySnapshot.docs.map((doc) async {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        String? imageUrl = await getImageUrl(
+            'listings/images/listings/${data['displayphoto']}');
 
-      return documents;
+        data['displayphoto'] = imageUrl;
+
+        if (data['latitude'] == null || data['longitude'] == null) {
+          data['distance'] = null;
+          return data;
+        }
+
+        print('${data['latitude']} ${data['longitude']}');
+        var distance = _calculateDistance(_userPosition?.latitude,
+            _userPosition?.longitude, data['latitude'], data['longitude']);
+        print('${data['title']}. distance $distance');
+        index++;
+        data['distance'] = '$distance km';
+        return data;
+      }).toList();
+
+      // Wait for all futures to complete
+      List<Map<String, dynamic>> listings = await Future.wait(listingFutures);
+
+      // Filter out listings with null displayphoto
+      listings =
+          listings.where((listing) => listing['displayphoto'] != null).toList();
+      listings =
+          listings.where((listing) => listing['distance'] != null).toList();
+
+      return listings;
     } catch (e) {
       print("Error fetching filtered documents: $e");
       return []; // Return an empty list in case of an error
@@ -323,150 +362,156 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        width: MyUtility(context).width / 1.1,
-                        height: 34.68,
-                        padding: const EdgeInsets.only(
-                          top: 10.80,
-                          left: 10.80,
-                          right: 21.59,
-                          bottom: 10.80,
-                        ),
-                        decoration: ShapeDecoration(
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24.83),
-                          ),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 4),
-                              spreadRadius: 0,
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     Container(
+                  //       width: MyUtility(context).width / 1.1,
+                  //       height: 34.68,
+                  //       padding: const EdgeInsets.only(
+                  //         top: 10.80,
+                  //         left: 10.80,
+                  //         right: 21.59,
+                  //         bottom: 10.80,
+                  //       ),
+                  //       decoration: ShapeDecoration(
+                  //         color: Colors.white,
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(24.83),
+                  //         ),
+                  //         shadows: [
+                  //           BoxShadow(
+                  //             color: Color(0x3F000000),
+                  //             blurRadius: 4,
+                  //             offset: Offset(0, 4),
+                  //             spreadRadius: 0,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       child: TextField(
+                  //         controller: search,
+                  //         onChanged: (value) {
+                  //           setState(() {});
+                  //         },
+                  //         decoration: InputDecoration(
+                  //           hintText: 'Search Featured',
+                  //           hintStyle: TextStyle(
+                  //             color: Colors.black,
+                  //             fontSize: 14.6812,
+                  //             fontFamily: 'raleway',
+                  //             fontWeight: FontWeight.w400,
+                  //             height: 1.0,
+                  //           ),
+                  //           filled: true,
+                  //           fillColor: Colors.white,
+                  //           contentPadding: const EdgeInsets.only(
+                  //             top: 10.80,
+                  //             left: 10.80,
+                  //             right: 21.59,
+                  //             bottom: 10.80,
+                  //           ),
+                  //           border: OutlineInputBorder(
+                  //             borderRadius: BorderRadius.circular(24.83),
+                  //             borderSide: BorderSide.none,
+                  //           ),
+                  //         ),
+                  //         style: TextStyle(
+                  //           color: Colors.black,
+                  //           fontSize: 14.6812,
+                  //           fontFamily: 'raleway',
+                  //           fontWeight: FontWeight.w400,
+                  //         ),
+                  //         textAlign: TextAlign.left,
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       width: MyUtility(context).width * 0.01,
+                  //     )
+                  //   ],
+                  // ),
+                  const SizedBox(height: 20.0),
+                  _isLoadingFilters
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ProfileDropDown(
+                              width: 280.0,
+                              height: 50.0,
+                              headline: 'Select a Country',
+                              items: countriesList
+                                  .map((country) => {
+                                        'value':
+                                            country['countryId'].toString(),
+                                        'label': country['country']
+                                      })
+                                  .toList(),
+                              value: _selectedCountry,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedCountry = newValue;
+                                });
+                                _filterProvinces(newValue);
+                              },
+                            ),
+                            ProfileDropDown(
+                              width: 280.0,
+                              height: 50.0,
+                              headline: 'Select a Province',
+                              items: provincesList
+                                  .map((province) => {
+                                        'value':
+                                            province['provinceId'].toString(),
+                                        'label': province['province']
+                                      })
+                                  .toList(),
+                              value: _selectedProvince,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedProvince = newValue;
+                                });
+                                _filterCities(newValue);
+                              },
+                            ),
+                            ProfileDropDown(
+                              width: 280.0,
+                              height: 50.0,
+                              headline: 'Select a City',
+                              items: citiesList
+                                  .map((city) => {
+                                        'value': city['cityId'].toString(),
+                                        'label': city['city']
+                                      })
+                                  .toList(),
+                              value: _selectedCity,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedCity = newValue;
+                                });
+                                _filterSuburbs(newValue);
+                              },
+                            ),
+                            ProfileDropDown(
+                              width: 280.0,
+                              height: 50.0,
+                              headline: 'Select a Suburb',
+                              items: suburbsList
+                                  .map((suburb) => {
+                                        'value': suburb['suburbId'].toString(),
+                                        'label': suburb['suburb']
+                                      })
+                                  .toList(),
+                              value: _selectedSuburb,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedSuburb = newValue;
+                                });
+                              },
                             ),
                           ],
                         ),
-                        child: TextField(
-                          controller: search,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Search Featured',
-                            hintStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.6812,
-                              fontFamily: 'raleway',
-                              fontWeight: FontWeight.w400,
-                              height: 1.0,
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: const EdgeInsets.only(
-                              top: 10.80,
-                              left: 10.80,
-                              right: 21.59,
-                              bottom: 10.80,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24.83),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.6812,
-                            fontFamily: 'raleway',
-                            fontWeight: FontWeight.w400,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      SizedBox(
-                        width: MyUtility(context).width * 0.01,
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ProfileDropDown(
-                        width: 280.0,
-                        height: 50.0,
-                        headline: 'Select a Country',
-                        items: countriesList
-                            .map((country) => {
-                                  'value': country['countryId'].toString(),
-                                  'label': country['country']
-                                })
-                            .toList(),
-                        value: _selectedCountry,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedCountry = newValue;
-                          });
-                          _filterProvinces(newValue);
-                        },
-                      ),
-                      ProfileDropDown(
-                        width: 280.0,
-                        height: 50.0,
-                        headline: 'Select a Province',
-                        items: provincesList
-                            .map((province) => {
-                                  'value': province['provinceId'].toString(),
-                                  'label': province['province']
-                                })
-                            .toList(),
-                        value: _selectedProvince,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedProvince = newValue;
-                          });
-                          _filterCities(newValue);
-                        },
-                      ),
-                      ProfileDropDown(
-                        width: 280.0,
-                        height: 50.0,
-                        headline: 'Select a City',
-                        items: citiesList
-                            .map((city) => {
-                                  'value': city['cityId'].toString(),
-                                  'label': city['city']
-                                })
-                            .toList(),
-                        value: _selectedCity,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedCity = newValue;
-                          });
-                          _filterSuburbs(newValue);
-                        },
-                      ),
-                      ProfileDropDown(
-                        width: 280.0,
-                        height: 50.0,
-                        headline: 'Select a Suburb',
-                        items: suburbsList
-                            .map((suburb) => {
-                                  'value': suburb['suburbId'].toString(),
-                                  'label': suburb['suburb']
-                                })
-                            .toList(),
-                        value: _selectedSuburb,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedSuburb = newValue;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
                   SizedBox(
                     height: MyUtility(context).height * 0.85,
                     child: FutureBuilder<List<Map<String, dynamic>>>(
@@ -514,8 +559,6 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                             itemBuilder: (context, index) {
                               Map<String, dynamic> listing = listings[index];
 
-                              /**/
-                              print(listing);
                               return Visibility(
                                 visible: getSearchValue(listing),
                                 child: ServiceFeaturedContainer(
