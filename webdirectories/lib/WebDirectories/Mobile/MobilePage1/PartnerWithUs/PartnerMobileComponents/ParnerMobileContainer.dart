@@ -69,6 +69,7 @@ class _PartnerMobileContainerState extends State<PartnerMobileContainer> {
               child: Text(
                 widget.header,
                 style: TextStyle(fontSize: 24, fontFamily: 'ralewaysemi'),
+                textAlign: TextAlign.center,
               ),
             ),
             Padding(
@@ -78,7 +79,7 @@ class _PartnerMobileContainerState extends State<PartnerMobileContainer> {
                 child: Text(
                   widget.description,
                   style: TextStyle(fontSize: 18, fontFamily: 'raleway'),
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

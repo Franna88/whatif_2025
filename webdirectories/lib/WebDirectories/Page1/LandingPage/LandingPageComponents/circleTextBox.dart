@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
 import 'package:webdirectories/WebDirectories/Page4/Page4.dart';
 import 'package:webdirectories/myutility.dart';
+import 'dart:html' as html;
 
 class CircleTextBox extends StatefulWidget {
   bool buttonFlash;
@@ -23,6 +24,7 @@ class CircleTextBox extends StatefulWidget {
     required this.url,
     required this.menuIndex,
     required this.changeMenu,
+    this.buttonFlash = false,
   });
 
   @override
@@ -110,51 +112,33 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                   child: Container(
                     height:
                         90, // Fixed height for Title section to avoid hopping
-                    child: widget.Title1.trim() == "TOWING" &&
-                            widget.Title2.trim() == "Directory"
-                        ? Center(
-                            child: Text(
-                              "${widget.Title1}${widget.Title2}",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 32,
-                                fontFamily: 'ralewaybold',
-                                color: const Color.fromARGB(255, 255, 255, 255),
-                              ),
-                              softWrap: false,
-                              overflow: TextOverflow.visible,
-                            ),
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                widget.Title1,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontFamily: 'ralewaybold',
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255),
-                                  height: 1.2,
-                                ),
-                              ),
-                              SizedBox(
-                                  height:
-                                      4), // Reduced gap between Title1 and Title2
-                              Text(
-                                widget.Title2,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontFamily: 'raleway',
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255),
-                                  height: 1.2,
-                                ),
-                              ),
-                            ],
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.Title1,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontFamily: 'ralewaybold',
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            height: 1.2,
                           ),
+                        ),
+                        SizedBox(
+                            height: 4), // Reduced gap between Title1 and Title2
+                        Text(
+                          widget.Title2,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontFamily: 'raleway',
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            height: 1.2,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 
@@ -191,7 +175,7 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                 */
 
                 SizedBox(
-                  width: MyUtility(context).width / 4.8,
+                  width: MyUtility(context).width / 4.7,
                   height: MyUtility(context).height * 0.195,
                   child: Center(
                     child: Padding(
@@ -222,21 +206,21 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: TextButton(
                       onPressed: () {
-                        widget.Title2 == "WATIF"
-                            ? Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Material(
-                                          child: Page4(),
-                                        )))
-                            : widget.Title1 == "PANEL BEATER "
-                                ? Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Material(
-                                              child: PanelBeatersHome(),
-                                            )))
-                                : goToLink(widget.url);
+                        if (widget.Title2 == "WATIF") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Material(
+                                child: Page4(),
+                              ),
+                            ),
+                          );
+                        } else if (widget.Title1 == "PANEL BEATER ") {
+                          // Open the PanelBeatersHome page in a new tab using the named route URL
+                          html.window.open('/panelbeaters-directory', '_blank');
+                        } else {
+                          goToLink(widget.url);
+                        }
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -272,21 +256,22 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                             duration: Duration(milliseconds: 200),
                             child: Container(
                               decoration: BoxDecoration(
-                                color:widget.buttonFlash ? Colors.green : Colors.white,
+                                color: widget.buttonFlash
+                                    ? Colors.green
+                                    : Colors.white,
                                 borderRadius: BorderRadius.circular(30),
-                                ),
+                              ),
                               child: Text(
-                                 widget.Title2 == "WATIF"
-                                ? 'Learn More'
-                                : 'View Directory',
-                            style: TextStyle(
-                              color: Color(0xFF0C0C0C).withOpacity(0.9),
-                              fontSize: 16.5,
-                              fontFamily: 'Raleway',
-                            ),
+                                widget.Title2 == "WATIF"
+                                    ? 'Learn More'
+                                    : 'View Directory',
+                                style: TextStyle(
+                                  color: Color(0xFF0C0C0C).withOpacity(0.9),
+                                  fontSize: 16.5,
+                                  fontFamily: 'Raleway',
+                                ),
                               ),
                             ),
-                           
                           ),
                         ],
                       ),

@@ -24,7 +24,7 @@ List directoriesInfo = [
     "1title": "Download ",
     "2title": "WATIF",
     "description":
-        "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide.",
+        "Download the FREE WATIF App for instant access to nationwide fuel, tow, repair, and service information. Save time and money on your travels.",
     "url": ""
   },
   {
