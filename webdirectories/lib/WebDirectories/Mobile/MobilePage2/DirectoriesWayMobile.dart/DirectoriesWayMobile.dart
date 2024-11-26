@@ -110,7 +110,7 @@ class _DirectoriesWayMobileState extends State<DirectoriesWayMobile> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 15, top: 15),
             child: Text(
-              'The first step to attain a set goal, is to write it down',
+              'Our Vision in Action',
               style: TextStyle(fontSize: 22, fontFamily: 'ralewaymedium'),
               textAlign: TextAlign.center,
             ),

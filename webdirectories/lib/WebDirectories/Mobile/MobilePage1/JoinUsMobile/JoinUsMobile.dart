@@ -28,11 +28,11 @@ class _JoinUsMobileState extends State<JoinUsMobile> {
               padding: const EdgeInsets.only(right: 15),
               child: Container(
                 width: MyUtility(context).width,
-                height: MyUtility(context).height,
+                height: MyUtility(context).height * 1.1,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('images/NewJoinUs.png'),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 /* child: Column(

@@ -95,12 +95,11 @@ class _JoinUsState extends State<JoinUs> {
                 padding: const EdgeInsets.fromLTRB(75, 0, 75, 0),
                 child: Container(
                   width: MyUtility(context).width * 0.9,
-                  height: MyUtility(context).height * 0.5,
+                  height: MyUtility(context).height * 0.6,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('images/JoinUsDesk.png'),
-                      fit: BoxFit
-                          .fill, // Adjust this to your needs (cover, contain, etc.)
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
