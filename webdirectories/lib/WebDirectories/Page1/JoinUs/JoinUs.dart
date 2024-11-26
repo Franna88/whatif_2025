@@ -32,7 +32,7 @@ class _JoinUsState extends State<JoinUs> {
               style: TextStyle(
                   fontSize: 48, fontFamily: 'ralewaysemi', color: Colors.black),
             ),
-            Text.rich(
+            /*Text.rich(
               TextSpan(
                 text: 'Follow these ',
                 style: TextStyle(
@@ -87,8 +87,27 @@ class _JoinUsState extends State<JoinUs> {
                     paragraph:
                         "Log into your Owners Portal to review, update & manage all your business information in real-time."),
               ],
+            ),*/
+            Container(
+              width: MyUtility(context).width,
+              decoration: BoxDecoration(color: Colors.white),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(75, 0, 75, 0),
+                child: Container(
+                  width: MyUtility(context).width * 0.9,
+                  height: MyUtility(context).height * 0.6,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('images/JoinUsDesk.png'),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(height: 15,)
+            const SizedBox(
+              height: 15,
+            )
           ],
         ),
       ),

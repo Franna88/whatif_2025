@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouchComponents/TextFormField.dart';
 import 'package:webdirectories/WebDirectories/Page3/OurStory/OurSotryComponents/OvalTextButton.dart';
+import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouchComponents/emailPopup.dart';
 import 'package:webdirectories/myutility.dart';
-
-import '../../../PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
 import '../../../PanelBeatersDirectory/emails/getInTouch/sendGetInTouch.dart';
 
 class GetinTouch extends StatefulWidget {
@@ -22,14 +21,16 @@ class _GetinTouchState extends State<GetinTouch> {
   final phone = TextEditingController();
   final details = TextEditingController();
 
-  Future descriptionDialog(description) => showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-            child: DescriptionDialog(
-          description: description,
-        ));
-      });
+  Future<void> showEmailPopup(String description) => showDialog(
+        context: context,
+        barrierColor: Colors
+            .transparent, // Set the background behind the dialog to be transparent
+        builder: (context) {
+          return Emailpopup(
+            description: description,
+          );
+        },
+      );
 
   sendEmail() async {
     if (firstName.text == "" &&
@@ -37,11 +38,11 @@ class _GetinTouchState extends State<GetinTouch> {
         email.text == "" &&
         phone.text == "" &&
         details.text == "") {
-      return descriptionDialog("Some Fields are required");
+      return showEmailPopup("Some Fields are required");
     }
 
-    if (_isChecked == false) {
-      return descriptionDialog("Im not robot validation required");
+    if (!_isChecked) {
+      return showEmailPopup("I'm not a robot validation required");
     }
 
     await sendGetInTouch(
@@ -50,7 +51,7 @@ class _GetinTouchState extends State<GetinTouch> {
         firstName: firstName.text,
         lastName: lastName.text,
         phone: phone.text);
-    await descriptionDialog("Thank you ,your email has been sent.");
+    await showEmailPopup("Thank you, your email has been sent.");
   }
 
   @override
@@ -208,7 +209,7 @@ class _GetinTouchState extends State<GetinTouch> {
                             ),
                           ),
                           Text(
-                            "Open Google Maps",
+                            "63 Bokmakierie Street, Eden, George, 6529",
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'raleway',

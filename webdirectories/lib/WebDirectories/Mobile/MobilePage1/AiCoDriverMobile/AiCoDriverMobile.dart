@@ -57,8 +57,8 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
-              height: MyUtility(context).height * 0.045,
-              width: MyUtility(context).width * 0.28,
+              height: MyUtility(context).height * 0.0465,
+              width: MyUtility(context).width * 0.32,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('images/AppleStore.png'),
@@ -67,8 +67,8 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
               ),
             ),
             Container(
-              height: MyUtility(context).height * 0.045,
-              width: MyUtility(context).width * 0.28,
+              height: MyUtility(context).height * 0.0465,
+              width: MyUtility(context).width * 0.32,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('images/Google Play.png'),
@@ -77,8 +77,8 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
               ),
             ),
             Container(
-              height: MyUtility(context).height * 0.045,
-              width: MyUtility(context).width * 0.28,
+              height: MyUtility(context).height * 0.0465,
+              width: MyUtility(context).width * 0.32,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('images/WindowsStore.png'),
@@ -105,7 +105,7 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
           height: MyUtility(context).height * 0.02,
         ),
         Container(
-          width: MyUtility(context).height * 0.22,
+          width: MyUtility(context).width * 0.41,
           height: MyUtility(context).height * 0.05,
           decoration: BoxDecoration(
             color: Color(0xFF0E1013),
@@ -131,7 +131,7 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
                     color: Colors.white,
                   ),
                   child: Icon(
-                    Icons.keyboard_arrow_left,
+                    Icons.keyboard_arrow_right,
                     color: Colors.black,
                     size: 25,
                   ),

@@ -24,7 +24,7 @@ List directoriesInfo = [
     "1title": "Download ",
     "2title": "WATIF",
     "description":
-        "Register and Download the FREE powerful App for all up-to-date info on Fuel-, Tow-, Repair-, and Services. At your fingertips, Saving Time and Money as you travel, nationwide.",
+        "Download the FREE WATIF App for instant access to nationwide fuel, tow, repair, and service information. Save time and money on your travels.",
     "url": ""
   },
   {
@@ -70,6 +70,14 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
 
   bool _iconVisible = true;
   Timer? _flickerTimer;
+
+  @override
+  void initState() {
+    // Preload the background image
+    // precacheImage(AssetImage("images/newwebcover_updated.png"), context);
+
+    super.initState();
+  }
 
   void _startFlicker() {
     if (_flickerTimer != null) return;
@@ -119,6 +127,8 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MyUtility(context).width,
+      height: MyUtility(context).height,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: Image.asset("images/newwebcover_updated.png").image,
@@ -161,10 +171,12 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                           },
                           text: 'Watif'),
                       LandingPageTextButton(
-                          onpress: () {
-                            navigateToDifrentPage(Material(child: Page5()));
-                          },
-                          text: 'Articles'),
+                        onpress: () {
+                          navigateToDifrentPage(Material(child: Page5()));
+                        },
+                        text: 'Articles',
+                        isComingSoon: true,
+                      ),
                       Spacer(),
                       OvalTextButton(
                           text: 'Get in Touch',
@@ -210,6 +222,7 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
                         description: directoriesInfo[menuIndex]['description'],
                         changeMenu: changeMenu,
                         menuIndex: menuIndex,
+                        buttonFlash: _iconVisible,
                       ),
                       const SizedBox(height: 100),
                     ],

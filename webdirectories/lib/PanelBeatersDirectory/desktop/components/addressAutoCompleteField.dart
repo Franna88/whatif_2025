@@ -8,6 +8,9 @@ class AddressAutoCompleteField extends StatefulWidget {
   final Function(Map<String, dynamic> data) onSelected;
   const AddressAutoCompleteField({super.key, required this.onSelected});
 
+class AddressAutoCompleteField extends StatefulWidget {
+  const AddressAutoCompleteField({super.key});
+
   @override
   State<AddressAutoCompleteField> createState() =>
       _AddressAutoCompleteFieldState();
@@ -49,7 +52,6 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
         "Access-Control-Allow-Methods": "GET,POST, OPTIONS"
       };
       String kPLACES_API_KEY = "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko";
-
       String baseURL = 'http://localhost:5000/api/places/autocomplete';
       String request =
           '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$_sessionToken';

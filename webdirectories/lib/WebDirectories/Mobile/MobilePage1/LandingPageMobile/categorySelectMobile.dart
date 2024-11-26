@@ -67,25 +67,25 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                 ),
               ),
             ),
-             Positioned(
-               top: -10,
-               left: 85,
-               child: GestureDetector(
-                 onTap: () {
-                   widget.changeMenu(2);
-                   widget.animateController.animateTo(0.0);
-                 },
-                 child: Container(
-                   child: SvgPicture.asset(
-                     widget.menuIndex == 2
-                         ? 'images/fuelSvg.svg'
-                         : 'images/top1.svg',
-                     width: 1,
-                     height: 143,
-                   ),
-                 ),
-               ),
-             ),
+            Positioned(
+              top: -10,
+              left: 85,
+              child: GestureDetector(
+                onTap: () {
+                  widget.changeMenu(2);
+                  widget.animateController.animateTo(0.0);
+                },
+                child: Container(
+                  child: SvgPicture.asset(
+                    widget.menuIndex == 2
+                        ? 'images/fuelSvg.svg'
+                        : 'images/top1.svg',
+                    width: 1,
+                    height: 143,
+                  ),
+                ),
+              ),
+            ),
             Positioned(
               top: 44,
               left: -2,
@@ -126,17 +126,26 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
             ),
             Positioned(
               top: 45,
-              right: 29,
+              right: 31,
               child: GestureDetector(
                 onTap: () {
                   widget.changeMenu(3);
                   widget.animateController.animateTo(0.17);
                 },
-                child: Container(
+                child: /* Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 3
                         ? 'images/hammerSvg.svg'
                         : 'images/rightb.svg',
+                    width: 1,
+                    height: 120,
+                  ),
+                ),*/
+                    Container(
+                  child: SvgPicture.asset(
+                    widget.menuIndex == 3
+                        ? 'images/revpan2.svg'
+                        : 'images/revpan1.svg',
                     width: 1,
                     height: 120,
                   ),

@@ -7,14 +7,16 @@ class WatifDropdown extends StatelessWidget {
   final String dropdownContent;
   final bool isOpen;
   final Function() onToggle;
+  final Color containerColor;
 
-  const WatifDropdown({
-    Key? key,
-    required this.dropdownText,
-    required this.dropdownContent,
-    required this.isOpen,
-    required this.onToggle,
-  }) : super(key: key);
+  const WatifDropdown(
+      {Key? key,
+      required this.dropdownText,
+      required this.dropdownContent,
+      required this.isOpen,
+      required this.onToggle,
+      this.containerColor = Colors.black})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class WatifDropdown extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.32,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: Colors.black,
+                    color: containerColor,
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: Row(
