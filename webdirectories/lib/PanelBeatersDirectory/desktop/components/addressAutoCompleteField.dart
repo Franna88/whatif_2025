@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:webdirectories/myutility.dart';
 
-const kGoogleApiKey = "AIzaSyBFFemx-2r0ZkP7T05pJo2nIjV_RB9R_VE";
+class AddressAutoCompleteField extends StatefulWidget {
+  final Function(Map<String, dynamic> data) onSelected;
+  const AddressAutoCompleteField({super.key, required this.onSelected});
 
 class AddressAutoCompleteField extends StatefulWidget {
   const AddressAutoCompleteField({super.key});
@@ -51,12 +52,12 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
         "Access-Control-Allow-Methods": "GET,POST, OPTIONS"
       };
       String kPLACES_API_KEY = "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko";
-      String type = '(regions)';
       String baseURL = 'http://localhost:5000/api/places/autocomplete';
       String request =
           '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$_sessionToken';
       var response = await http.get(Uri.parse(request), headers: header);
       if (response.statusCode == 200) {
+        print(json.decode(response.body)['predictions']);
         setState(() {
           _placeList = json.decode(response.body)['predictions'];
         });
@@ -68,14 +69,47 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
     }
   }
 
+  void onAddressSelected(int id) async {
+    Map<String, String>? header = {
+      'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+      "Access-Control-Allow-Credentials":
+          "true", // Required for cookies, authorization headers with HTTPS
+      "Access-Control-Allow-Headers":
+          "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+      "Access-Control-Allow-Methods": "GET,POST, OPTIONS"
+    };
+    String kPLACES_API_KEY = "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko";
+
+    String baseURL = 'http://localhost:5000/api/places/get-details';
+    String request = '$baseURL?placeId=${_placeList[id]['place_id']}';
+    var response = await http.get(Uri.parse(request), headers: header);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      widget.onSelected({
+        "address": _placeList[id]["description"],
+        "lat": data['details']['lat'],
+        "lng": data['details']['lng'],
+      });
+
+      String address = _placeList[id]["description"];
+
+      setState(() {
+        _placeList = [];
+        _addressController.text = address;
+      });
+    } else {
+      throw Exception('Failed to load predictions');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Align(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.topLeft,
             child: Container(
               width: MyUtility(context).width * 0.2,
               height: 38,
@@ -128,16 +162,24 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
               ),
             ),
           ),
-          ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: _placeList.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(_placeList[index]["description"]),
-              );
-            },
-          )
+          Container(
+            width: 400, // Adjust width as needed
+            color: Colors.white, // Background color for the dropdown
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _placeList.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    onAddressSelected(index);
+                  },
+                  child: ListTile(
+                    title: Text(_placeList[index]["description"]),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SearchButton extends StatefulWidget {
-  final VoidCallback? onTap;
+  final dynamic? onTap;
   const SearchButton({
     super.key,
     this.onTap,

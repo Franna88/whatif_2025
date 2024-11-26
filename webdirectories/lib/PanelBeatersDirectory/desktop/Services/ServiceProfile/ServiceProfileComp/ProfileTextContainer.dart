@@ -68,7 +68,7 @@ class _ProfileTextContainerState extends State<ProfileTextContainer> {
               SizedBox(
                 width: 520.2,
                 child: Text(
-                  '${200 + Random().nextInt(801)} Total Unique Page Views',
+                  '${widget.contactData['views']} Total Unique Page Views',
                   style: TextStyle(
                     color: Color(0xFFFF8728),
                     fontSize: MyUtility(context).width * 0.0115,

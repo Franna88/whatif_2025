@@ -131,6 +131,15 @@ class _ServicesOtherState extends State<ServicesOther> {
 
       data['displayphoto'] = imageUrl;
 
+      int viewCount = await _firestore
+          .collection('views')
+          .doc(doc['listingsId'].toString())
+          .get()
+          .then((snapshot) => snapshot['views'].length)
+          .catchError((error) => 0);
+
+      doc['views'] = viewCount;
+
       return data;
     }).toList();
 
@@ -417,7 +426,7 @@ class _ServicesOtherState extends State<ServicesOther> {
                                               "https://www.google.com/maps/search/${listing['streetaddress']}");
                                           await launchUrl(uri);
                                         },
-                                        views: '${200 + Random().nextInt(801)}',
+                                        views: '${listing['views']}',
                                         distance:
                                             '${(listing['distance'] as double).toStringAsFixed(2)} km',
                                       ),

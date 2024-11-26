@@ -155,6 +155,14 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
           ? '${_calculateDistance(_userPosition?.latitude, _userPosition?.longitude, data['latitude'], data['longitude'])}'
           : /**/
           '0 km';
+      int viewCount = await _firestore
+          .collection('views')
+          .doc(doc['listingsId'].toString())
+          .get()
+          .then((snapshot) => snapshot['views'].length)
+          .catchError((error) => 0);
+
+      data['views'] = viewCount;
       return data;
     }).toList();
 
@@ -390,7 +398,7 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
                                               "https://www.google.com/maps/search/${listing['streetaddress']}");
                                           await launchUrl(uri);
                                         },
-                                        views: '${200 + Random().nextInt(801)}',
+                                        views: '${listing['views']}',
                                         distance:
                                             (listing['distance']).toString(),
                                       ),

@@ -15,7 +15,7 @@ import 'package:webdirectories/myutility.dart';
 class LandingPageDisplay extends StatefulWidget {
   final VoidCallback viewServiceDetails;
   final VoidCallback viewServicesByArea;
-  final VoidCallback viewServicesByAddress;
+  final Function(Map<String, dynamic>) viewServicesByAddress;
   final VoidCallback viewServicesByKeyword;
   final VoidCallback goToWeConnectMainPage;
 
@@ -52,9 +52,7 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
         viewServiceDetails: () {
           widget.viewServiceDetails();
         },
-        viewServiceByAddress: () {
-          widget.viewServicesByAddress();
-        },
+        viewServiceByAddress: widget.viewServicesByAddress,
         viewServiceByKeyword: () {
           widget.viewServicesByKeyword();
         },

@@ -12,7 +12,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/components/addressA
 class FindAllPanelBeaters extends StatefulWidget {
   final VoidCallback viewServiceDetails;
   final VoidCallback viewServicebyArea;
-  final VoidCallback viewServiceByAddress;
+  final Function(Map<String, dynamic>) viewServiceByAddress;
   final VoidCallback viewServiceByKeyword;
 
   const FindAllPanelBeaters({
@@ -31,6 +31,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
   int menuIndex = 2;
   int? currentOpenDropdown;
   String nearMeText = 'Click here to set your location';
+  Map<String, dynamic> address = {};
 
   void toggleDropdown(int index) {
     setState(() {
@@ -39,6 +40,13 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
       } else {
         currentOpenDropdown = index;
       }
+    });
+  }
+
+  void selectAddress(Map<String, dynamic> data) {
+    print(data);
+    setState(() {
+      address = data;
     });
   }
 
@@ -78,10 +86,14 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
         ),
         MainButton(
           buttonTitle: 'Any City or Street Address',
-          dropdownContent: const DropDownMenuWidget(
+          dropdownContent: DropDownMenuWidget(
               topText: 'Find a Panel Beater by street',
-              widget1: AddressAutoCompleteField(),
-              widget2: SearchButton()),
+              widget1: AddressAutoCompleteField(
+                onSelected: selectAddress,
+              ),
+              widget2: SearchButton(
+                onTap: () => widget.viewServiceByAddress(address),
+              )),
           isOpen: currentOpenDropdown == 1,
           onToggle: () => toggleDropdown(1),
         ),

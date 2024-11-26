@@ -45,29 +45,39 @@ class _AccreditationServicesState extends State<AccreditationServices> {
 
   void _fetchAndOrganizeServices() async {
     try {
+      // Initialize the map to organize services
       Map<String, List<Map<String, dynamic>>> servicesMap = {};
-      // // Fetch all service types
-      QuerySnapshot<Map<String, dynamic>> approvalsSnapshot = await _firestore
-          .collection('listing_approvals')
-          .where('listingsId', isEqualTo: widget.listingId)
-          .get();
 
-      print("APPROVALS: ${approvalsSnapshot.docs.length}");
-      if (approvalsSnapshot.docs.isNotEmpty) {
-        for (var doc in approvalsSnapshot.docs) {
-          int approvalsId = doc.data()['approvalsId'];
-          print('approvalsID: $approvalsId');
-          QuerySnapshot<Map<String, dynamic>> approvals = await _firestore
-              .collection('approvals')
-              .where('approvalsId', isEqualTo: approvalsId)
+      // Fetch approvals linked to the listing
+      QuerySnapshot<Map<String, dynamic>> listingApprovalsSnapshot =
+          await _firestore
+              .collection('listing_approvals')
+              .where('listingsId', isEqualTo: widget.listingId)
               .get();
-          print(approvals.docs.length);
-          await processApprovals(approvals, servicesMap);
-        }
 
+      print("APPROVALS: ${listingApprovalsSnapshot.docs.length}");
+      if (listingApprovalsSnapshot.docs.isNotEmpty) {
+        // Collect all approvals IDs
+        List<int> approvalIds = listingApprovalsSnapshot.docs
+            .map((doc) => doc.data()['approvalsId'] as int)
+            .toList();
+
+        // Fetch all approvals in a single query
+        QuerySnapshot<Map<String, dynamic>> approvalsSnapshot = await _firestore
+            .collection('approvals')
+            .where('approvalsId', whereIn: approvalIds)
+            .get();
+
+        await _processApprovals(approvalsSnapshot, servicesMap);
+
+        // Update state once processing is done
         setState(() {
           _selectedAccreditationType = servicesMap.keys.first;
           _accreditationData = servicesMap;
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
           _isLoading = false;
         });
       }
@@ -79,48 +89,44 @@ class _AccreditationServicesState extends State<AccreditationServices> {
     }
   }
 
-  Future<void> processApprovals(QuerySnapshot approvalsSnapshot,
+  Future<void> _processApprovals(
+      QuerySnapshot<Map<String, dynamic>> approvalsSnapshot,
       Map<String, List<Map<String, dynamic>>> servicesMap) async {
     try {
-      List<Future<void>> futures = [];
+      // Parallelize approval processing
+      await Future.wait(approvalsSnapshot.docs.map((approvalDoc) async {
+        Map<String, dynamic> approvalData = approvalDoc.data();
+        String? imageUrl =
+            await getImageUrl('images/logos/${approvalData['approvalsFile']}');
 
-      for (var approvalDoc in approvalsSnapshot.docs) {
-        futures.add(() async {
-          Map<String, dynamic> approvalData =
-              approvalDoc.data() as Map<String, dynamic>;
-          String? imageUrl = await getImageUrl(
-              'images/logos/${approvalData['approvalsFile']}');
+        if (imageUrl != null) {
           int approvalsCategoryId = approvalData['approvalsCategoryId'];
           print('approvalsCategoryID: $approvalsCategoryId');
-          QuerySnapshot approvalCategorySnapshot = await _firestore
-              .collection('approvals_category')
-              .where('approvalsCategoryId',
-                  isEqualTo: approvalData['approvalsCategoryId'])
-              .get();
-          Map<String, dynamic> approvalCategoryData =
-              approvalCategorySnapshot.docs.first.data()
-                  as Map<String, dynamic>;
-          String approvalsCategoryName =
-              approvalCategoryData['approvalsCategory'];
 
-          if (imageUrl != null) {
-            // Ensure the service type exists in the map
-            if (servicesMap.containsKey(approvalsCategoryName)) {
-              servicesMap[approvalsCategoryName]!.add(
-                  {'imageUrl': imageUrl, 'link': approvalData['approvalsUrl']});
-            } else {
-              servicesMap[approvalsCategoryName] = [
-                {'imageUrl': imageUrl, 'link': approvalData['approvalsUrl']}
-              ];
-            }
-          }
-        }());
-      }
+          // Cache category data if it repeats
+          String categoryName =
+              await _getApprovalCategoryName(approvalsCategoryId);
 
-      await Future.wait(futures);
+          // Add data to services map
+          servicesMap.putIfAbsent(categoryName, () => []).add({
+            'imageUrl': imageUrl,
+            'link': approvalData['approvalsUrl'],
+          });
+        }
+      }));
     } catch (e) {
-      print('error processing approvals: $e');
+      print('Error processing approvals: $e');
     }
+  }
+
+// Helper function to fetch approval category name
+  Future<String> _getApprovalCategoryName(int categoryId) async {
+    QuerySnapshot<Map<String, dynamic>> categorySnapshot = await _firestore
+        .collection('approvals_category')
+        .where('approvalsCategoryId', isEqualTo: categoryId)
+        .get();
+
+    return categorySnapshot.docs.first.data()['approvalsCategory'];
   }
 
   @override
