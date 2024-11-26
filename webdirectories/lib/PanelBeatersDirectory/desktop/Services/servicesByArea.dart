@@ -44,40 +44,7 @@ class _ServicesByAreaState extends State<ServicesByArea> {
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
     _fetchAllFilters();
-  }
-
-  Future<void> _getCurrentLocation() async {
-    LocationPermission permission;
-
-    // Check if location services are enabled
-    bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!isLocationServiceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    // Check for location permissions
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied.');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied.');
-    }
-
-    // Get the current position
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
-
-    setState(() {
-      _userPosition = position;
-      _isLoading = false;
-    });
   }
 
   _calculateDistance(userLat, userLong, listingLat, listingLong) {
@@ -223,33 +190,65 @@ class _ServicesByAreaState extends State<ServicesByArea> {
     String? suburbId,
     String? cityId,
   }) async {
+    print(countryId);
+    print(provinceId);
+    print(suburbId);
+    print(cityId);
+
     // Start the query with a reference to the collection
     Query<Map<String, dynamic>> query =
         FirebaseFirestore.instance.collection('your_collection_name');
 
-    // Apply filters based on non-null values
-    if (countryId != null) {
-      query = query.where('countryId', isEqualTo: countryId);
+    // Apply filters based on non-null and non-empty values
+    if (countryId != null && countryId.isNotEmpty) {
+      query = query.where('countryId', isEqualTo: int.parse(countryId));
     }
-    if (provinceId != null) {
-      query = query.where('provinceId', isEqualTo: provinceId);
+    if (provinceId != null && provinceId.isNotEmpty) {
+      query = query.where('provinceId', isEqualTo: int.parse(provinceId));
     }
-    if (suburbId != null) {
-      query = query.where('suburbId', isEqualTo: suburbId);
+    if (suburbId != null && suburbId.isNotEmpty) {
+      query = query.where('suburbId', isEqualTo: int.parse(suburbId));
     }
-    if (cityId != null) {
-      query = query.where('cityId', isEqualTo: cityId);
+    if (cityId != null && cityId.isNotEmpty) {
+      query = query.where('cityId', isEqualTo: int.parse(cityId));
     }
 
     try {
       // Fetch the documents with a one-time call
       final querySnapshot = await query.get();
+      print(querySnapshot.docs.length);
+
+      List<Map<String, dynamic>> filteredDocuments = querySnapshot.docs
+          .take(40)
+          .map((doc) => doc.data() as Map<String, dynamic>)
+          .toList();
 
       // Convert the documents to a List of Map<String, dynamic>
-      List<Map<String, dynamic>> documents =
-          querySnapshot.docs.map((doc) => doc.data()).toList();
+      List<Future<Map<String, dynamic>>> listingFutures =
+          filteredDocuments.map((doc) async {
+        String? imageUrl = await getImageUrl(
+            'listings/images/listings/${doc['displayphoto']}');
+        doc['displayphoto'] = imageUrl;
 
-      return documents;
+        int viewCount = await _firestore
+            .collection('views')
+            .doc(doc['listingsId'].toString())
+            .get()
+            .then((snapshot) => snapshot['views'].length)
+            .catchError((error) => 0);
+
+        doc['views'] = viewCount;
+        return doc;
+      }).toList();
+
+      // Wait for all futures to complete
+      List<Map<String, dynamic>> listings = await Future.wait(listingFutures);
+
+      // Filter out listings with null displayphoto
+      listings =
+          listings.where((listing) => listing['displayphoto'] != null).toList();
+
+      return listings;
     } catch (e) {
       print("Error fetching filtered documents: $e");
       return []; // Return an empty list in case of an error
@@ -290,7 +289,6 @@ class _ServicesByAreaState extends State<ServicesByArea> {
         child: Column(
           children: [
             Container(
-              height: MyUtility(context).height,
               width: MyUtility(context).width,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -543,8 +541,8 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                                         "https://www.google.com/maps/search/${listing['streetaddress']}");
                                     await launchUrl(uri);
                                   },
-                                  views: '${200 + Random().nextInt(801)}',
-                                  distance: (listing['distance']).toString(),
+                                  views: '${listing['views']}',
+                                  distance: null,
                                 ),
                               );
                             },

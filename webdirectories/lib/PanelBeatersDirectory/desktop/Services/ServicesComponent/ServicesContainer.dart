@@ -11,7 +11,7 @@ class ServiceFeaturedContainer extends StatefulWidget {
   final VoidCallback OnPressed;
   final VoidCallback navigateMe;
   final String views;
-  final String distance;
+  final String? distance;
 
   const ServiceFeaturedContainer(
       {Key? key,
@@ -174,17 +174,19 @@ class _ServiceFeaturedContainerState extends State<ServiceFeaturedContainer> {
                             height: 0,
                           ),
                         ),
-                        Text(
-                          'Distance:',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: MyUtility(context).width * 0.0093,
-                            fontFamily: 'ralewaybold',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          ),
-                        ),
+                        widget.distance != null
+                            ? Text(
+                                'Distance:',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: MyUtility(context).width * 0.0093,
+                                  fontFamily: 'ralewaybold',
+                                  fontWeight: FontWeight.w700,
+                                  height: 0,
+                                ),
+                              )
+                            : SizedBox.shrink(),
                       ],
                     ),
                   ),
@@ -200,16 +202,18 @@ class _ServiceFeaturedContainerState extends State<ServiceFeaturedContainer> {
                           height: 0,
                         ),
                       ),
-                      Text(
-                        widget.distance,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: MyUtility(context).width * 0.0093,
-                          fontWeight: FontWeight.w400,
-                          height: 0,
-                        ),
-                      ),
+                      widget.distance != null
+                          ? Text(
+                              widget.distance!,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: MyUtility(context).width * 0.0093,
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                              ),
+                            )
+                          : SizedBox.shrink(),
                     ],
                   ),
                 ],

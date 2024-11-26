@@ -25,6 +25,7 @@ class Nav extends StatefulWidget {
 
 class _NavState extends State<Nav> {
   int _currentIndex = 0;
+  Map<String, dynamic> address = {'address': '', 'lat': 0.0, 'lng': 0.0};
 
   void goToWeConnectMainPage() {
     setState(() {
@@ -56,9 +57,10 @@ class _NavState extends State<Nav> {
     });
   }
 
-  void viewServicesByAddressDetails() {
+  void viewServicesByAddressDetails(Map<String, dynamic> data) {
     setState(() {
       _currentIndex = 12;
+      address = data;
     });
   }
 
@@ -107,9 +109,7 @@ class _NavState extends State<Nav> {
         viewServiceDetails: () {
           viewServiceDetails();
         },
-        viewServicesByAddress: () {
-          viewServicesByAddressDetails();
-        },
+        viewServicesByAddress: viewServicesByAddressDetails,
         viewServicesByArea: () {
           viewServicesByAreaDetails();
         },
@@ -146,7 +146,9 @@ class _NavState extends State<Nav> {
       // 11
       PackagePage(packageType: "PremiumPlus"), // New Pages
       // 12
-      ServicesByAddressSearch(),
+      ServicesByAddressSearch(
+        addressData: address,
+      ),
       // 13
       ServicesByArea(),
       // 14

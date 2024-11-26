@@ -123,6 +123,34 @@ class _ServicesOtherState extends State<ServicesOther> {
         }
       }
     }
+    List<Future<Map<String, dynamic>>> listingFutures =
+        nearbyLocations.map((doc) async {
+      Map<String, dynamic> data = doc;
+      String? imageUrl =
+          await getImageUrl('listings/images/listings/${data['displayphoto']}');
+
+      data['displayphoto'] = imageUrl;
+
+      int viewCount = await _firestore
+          .collection('views')
+          .doc(doc['listingsId'].toString())
+          .get()
+          .then((snapshot) => snapshot['views'].length)
+          .catchError((error) => 0);
+
+      doc['views'] = viewCount;
+
+      return data;
+    }).toList();
+
+    // Wait for all futures to complete
+    List<Map<String, dynamic>> listings = await Future.wait(listingFutures);
+
+    // Filter out listings with null displayphoto
+    listings =
+        listings.where((listing) => listing['displayphoto'] != null).toList();
+    listings =
+        listings.where((listing) => listing['distance'] != null).toList();
 
     // Sort the list by distance
     nearbyLocations.sort((a, b) => a['distance'].compareTo(b['distance']));
@@ -390,7 +418,7 @@ class _ServicesOtherState extends State<ServicesOther> {
                                               "https://www.google.com/maps/search/${listing['streetaddress']}");
                                           await launchUrl(uri);
                                         },
-                                        views: '${200 + Random().nextInt(801)}',
+                                        views: '${listing['views']}',
                                         distance:
                                             '${(listing['distance'] as double).toStringAsFixed(2)} km',
                                       ),
