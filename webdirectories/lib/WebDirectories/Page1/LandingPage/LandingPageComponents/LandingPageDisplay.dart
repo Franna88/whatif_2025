@@ -71,6 +71,14 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
   bool _iconVisible = true;
   Timer? _flickerTimer;
 
+  @override
+  void initState() {
+    // Preload the background image
+    // precacheImage(AssetImage("images/newwebcover_updated.png"), context);
+
+    super.initState();
+  }
+
   void _startFlicker() {
     if (_flickerTimer != null) return;
 

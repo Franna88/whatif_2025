@@ -17,6 +17,7 @@ class CircleTextBox extends StatefulWidget {
 
   CircleTextBox({
     super.key,
+    required this.buttonFlash,
     required this.Title1,
     required this.Title2,
     required this.description,
@@ -217,9 +218,23 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                   ),
                   // width: MediaQuery.of(context).size.width * 0.1,
                   // height: MediaQuery.of(context).size.height * 0.05,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: AnimatedContainer(
+                    decoration: BoxDecoration(
+                      color: widget.buttonFlash
+                          ? Colors.white
+                          : Colors.green, // Flash colors
+                      borderRadius: BorderRadius.circular(
+                          20), // Match the button's corner radius
+                    ),
+                    duration: Duration(milliseconds: 200), // Animation duration
+                    onEnd: () {
+                      // Trigger continuous flashing by toggling the state
+                      if (widget.buttonFlash) {
+                        setState(() {
+                          widget.buttonFlash = !widget.buttonFlash;
+                        });
+                      }
+                    },
                     child: TextButton(
                       onPressed: () {
                         widget.Title2 == "WATIF"
@@ -239,13 +254,12 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                                 : goToLink(widget.url);
                       },
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide.none,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        padding: EdgeInsets.zero,
-                      ),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide.none,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 10)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -267,26 +281,17 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                             ),
                           ),
                           SizedBox(width: 10),
-                          AnimatedOpacity(
-                            opacity: widget.buttonFlash ? 1.0 : 0.0,
-                            duration: Duration(milliseconds: 200),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color:widget.buttonFlash ? Colors.green : Colors.white,
-                                borderRadius: BorderRadius.circular(30),
-                                ),
-                              child: Text(
-                                 widget.Title2 == "WATIF"
-                                ? 'Learn More'
-                                : 'View Directory',
-                            style: TextStyle(
-                              color: Color(0xFF0C0C0C).withOpacity(0.9),
-                              fontSize: 16.5,
-                              fontFamily: 'Raleway',
-                            ),
+                          Container(
+                            child: Text(
+                              widget.Title2 == "WATIF"
+                                  ? 'Learn More'
+                                  : 'View Directory',
+                              style: TextStyle(
+                                color: Color(0xFF0C0C0C).withOpacity(0.9),
+                                fontSize: 16.5,
+                                fontFamily: 'Raleway',
                               ),
                             ),
-                           
                           ),
                         ],
                       ),
