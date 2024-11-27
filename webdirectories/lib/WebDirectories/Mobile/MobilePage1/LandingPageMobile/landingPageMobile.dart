@@ -3,6 +3,7 @@ import 'package:webdirectories/WebDirectories/Mobile/MobilePage1/DirectoryContai
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage1/LandingPageMobile/categorySelectMobile.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobileTopNavBar/MobileTopNavBar.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
+import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPageComponents/splashScreen.dart';
 import 'package:webdirectories/myutility.dart';
 // Uncomment the import below if CircleTextBoxMobile is needed
 // import 'package:webdirectories/Mobile/MobilePage1/LandingPageMobile/circleTextBoxMobile.dart';
@@ -130,44 +131,47 @@ class _LandingPageMobileState extends State<LandingPageMobile>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("images/webDirMobileLanding.png"),
-          fit: BoxFit.cover,
+    return SplashScreen(
+      animationPath: 'images/webDirLogo.png',
+      child: Container(
+        width: MyUtility(context).width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/webDirMobileLanding.png"),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Column(
-        children: [
-          MobileTopNavBarhome(),
-          CategorySelectMobile(
-            menuIndex: menuIndex < 0 ? 5 : menuIndex,
-            changeMenu: changeMenu,
-            dialIndex: dialIndex,
-            animateController: _controller,
-          ),
-          SizedBox(height: 15),
-          DirectoryContainer(
-            Title1: directoriesInfo[menuIndex]['1title'],
-            Title2: directoriesInfo[menuIndex]['2title'],
-            description: directoriesInfo[menuIndex]['description'],
-            viewdirctoriesbutton: directoriesInfo[menuIndex]['buttonText'],
-            menuIndex: menuIndex,
-            changeMenu: changeMenu,
-            url: directoriesInfo[menuIndex]['url'],
-            onpress: () {},
-            pageController: _pageController,
-          ),
-          // Uncomment the code below if CircleTextBoxMobile is needed
-          // CircleTextBoxMobile(
-          //   Title1: directoriesInfo[menuIndex]['1title'],
-          //   Title2: directoriesInfo[menuIndex]['2title'],
-          //   description: directoriesInfo[menuIndex]['description'],
-          //   menuIndex: menuIndex,
-          // ),
-          SizedBox(height: 15),
-        ],
+        child: Column(
+          children: [
+            MobileTopNavBarhome(),
+            CategorySelectMobile(
+              menuIndex: menuIndex < 0 ? 5 : menuIndex,
+              changeMenu: changeMenu,
+              dialIndex: dialIndex,
+              animateController: _controller,
+            ),
+            SizedBox(height: 15),
+            DirectoryContainer(
+              Title1: directoriesInfo[menuIndex]['1title'],
+              Title2: directoriesInfo[menuIndex]['2title'],
+              description: directoriesInfo[menuIndex]['description'],
+              viewdirctoriesbutton: directoriesInfo[menuIndex]['buttonText'],
+              menuIndex: menuIndex,
+              changeMenu: changeMenu,
+              url: directoriesInfo[menuIndex]['url'],
+              onpress: () {},
+              pageController: _pageController,
+            ),
+            // Uncomment the code below if CircleTextBoxMobile is needed
+            // CircleTextBoxMobile(
+            //   Title1: directoriesInfo[menuIndex]['1title'],
+            //   Title2: directoriesInfo[menuIndex]['2title'],
+            //   description: directoriesInfo[menuIndex]['description'],
+            //   menuIndex: menuIndex,
+            // ),
+            SizedBox(height: 15),
+          ],
+        ),
       ),
     );
   }

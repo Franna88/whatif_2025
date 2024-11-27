@@ -8,9 +8,6 @@ class AddressAutoCompleteField extends StatefulWidget {
   final Function(Map<String, dynamic> data) onSelected;
   const AddressAutoCompleteField({super.key, required this.onSelected});
 
-class AddressAutoCompleteField extends StatefulWidget {
-  const AddressAutoCompleteField({super.key});
-
   @override
   State<AddressAutoCompleteField> createState() =>
       _AddressAutoCompleteFieldState();

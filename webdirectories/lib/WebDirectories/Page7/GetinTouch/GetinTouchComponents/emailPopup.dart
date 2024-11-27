@@ -16,14 +16,15 @@ class Emailpopup extends StatefulWidget {
 class _EmailpopupState extends State<Emailpopup> {
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600;
     return Dialog(
       backgroundColor: Colors.transparent, // Set the background to transparent
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(8.09)),
       ),
       child: Container(
-        width: 350,
-        height: 240,
+        width: isMobile ? MyUtility(context).width : 350,
+        height: isMobile ? MyUtility(context).height * 0.6 : 240,
         decoration: BoxDecoration(
           color: Color(0xFFF4F4F4), // Light grey background to fit CI
           borderRadius: BorderRadius.all(Radius.circular(8.09)),

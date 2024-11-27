@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage6/MessageUsMobile/MessageUsMobimeComponent/ImNotaRobot.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage6/MessageUsMobile/MessageUsMobimeComponent/MessageUsTextFieldMobile.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouchComponents/emailPopup.dart';
+import '../../../../PanelBeatersDirectory/emails/getInTouch/sendGetInTouch.dart';
 
 class MessageUsMobile extends StatefulWidget {
   const MessageUsMobile({super.key});
@@ -11,6 +13,45 @@ class MessageUsMobile extends StatefulWidget {
 }
 
 class _MessageUsMobileState extends State<MessageUsMobile> {
+  final firstName = TextEditingController();
+  final lastName = TextEditingController();
+  final email = TextEditingController();
+  final phone = TextEditingController();
+  final details = TextEditingController();
+  bool isChecked = false;
+
+  Future<void> showEmailPopup(String description) => showDialog(
+        context: context,
+        barrierColor: Colors
+            .transparent, // Set the background behind the dialog to be transparent
+        builder: (context) {
+          return Emailpopup(
+            description: description,
+          );
+        },
+      );
+  sendEmail() async {
+    if (firstName.text == "" &&
+        lastName.text == "" &&
+        email.text == "" &&
+        phone.text == "" &&
+        details.text == "") {
+      return showEmailPopup("Some Fields are required");
+    }
+
+    if (!isChecked) {
+      return showEmailPopup("I'm not a robot validation required");
+    }
+
+    await sendGetInTouch(
+        message: details.text,
+        email: email.text,
+        firstName: firstName.text,
+        lastName: lastName.text,
+        phone: phone.text);
+    await showEmailPopup("Thank you, your email has been sent.");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -67,7 +108,9 @@ class _MessageUsMobileState extends State<MessageUsMobile> {
         SizedBox(
           height: 40,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              sendEmail();
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xFF0E1013),
               shape: RoundedRectangleBorder(
