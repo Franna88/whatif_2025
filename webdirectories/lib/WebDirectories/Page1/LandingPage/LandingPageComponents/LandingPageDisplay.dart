@@ -6,6 +6,7 @@ import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPage.dart
 import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPageComponents/LandingPageTextButton.dart';
 import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPageComponents/categorySelect.dart';
 import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPageComponents/circleTextBox.dart';
+import 'package:webdirectories/WebDirectories/Page1/LandingPage/LandingPageComponents/splashScreen.dart';
 import 'package:webdirectories/WebDirectories/Page1/Page1.dart';
 import 'package:webdirectories/WebDirectories/Page2/Page2.dart';
 import 'package:webdirectories/WebDirectories/Page3/OurStory/OurSotryComponents/OvalTextButton.dart';
@@ -126,136 +127,141 @@ class _LandingPageDisPlayState extends State<LandingPageDisPlay> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MyUtility(context).width,
-      height: MyUtility(context).height,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: Image.asset("images/newwebcover_updated.png").image,
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 50, top: 15),
-                child: Image.asset(
-                  'images/webDirLogo.png',
-                  width: 225,
-                  height: 110,
-                ),
-              ),
-              Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(right: 50.0),
-                child: SizedBox(
-                  width: MyUtility(context).width * 0.3,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LandingPageTextButton(
-                          onpress: () {
-                            navigateToDifrentPage(Material(child: Page1()));
-                          },
-                          text: 'Home'),
-                      LandingPageTextButton(
-                          onpress: () {
-                            navigateToDifrentPage(Material(child: Page3()));
-                          },
-                          text: 'Our Story'),
-                      LandingPageTextButton(
-                          onpress: () {
-                            navigateToDifrentPage(Material(child: Page4()));
-                          },
-                          text: 'Watif'),
-                      LandingPageTextButton(
-                        onpress: () {
-                          navigateToDifrentPage(Material(child: Page5()));
-                        },
-                        text: 'Articles',
-                        isComingSoon: true,
-                      ),
-                      Spacer(),
-                      OvalTextButton(
-                          text: 'Get in Touch',
-                          onPressed: () {
-                            navigateToDifrentPage(Material(child: Page7()));
-                          }),
-                    ],
-                  ),
-                ),
-              )
-            ],
+    return SplashScreen(
+      animationPath: 'images/webDirLogo.png',
+      child: Container(
+        width: MyUtility(context).width,
+        height: MyUtility(context).height,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: Image.asset("images/newwebcover_updated.png").image,
+            fit: BoxFit.cover,
           ),
-
-          //TODO JACO Start here
-          Stack(
-            alignment: Alignment.center, // Center items within the Stack
-            children: [
-              // Main Row layout that holds the left and right columns
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Left Column
-                  Column(
-                    children: [
-                      SizedBox(height: 17),
-                      CategorySelect(
-                        startFlickering: _startFlicker,
-                        menuIndex: menuIndex,
-                        changeMenu: changeMenu,
-                      ),
-                    ],
-                  ),
-
-                  // Right Column
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CircleTextBox(
-                        Title1: directoriesInfo[menuIndex]['1title'],
-                        Title2: directoriesInfo[menuIndex]['2title'],
-                        url: directoriesInfo[menuIndex]['url'],
-                        description: directoriesInfo[menuIndex]['description'],
-                        changeMenu: changeMenu,
-                        menuIndex: menuIndex,
-                        buttonFlash: _iconVisible,
-                      ),
-                      const SizedBox(height: 100),
-                    ],
-                  ),
-                ],
-              ),
-
-              // Centered Row with SVG icons, positioned absolutely within the Stack
-              Positioned(
-                top: 0, // Adjust the top position if needed
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 50),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'images/left_arrow.svg',
-                        width: 40,
-                      ),
-                      SizedBox(width: 50),
-                      SvgPicture.asset('images/light_indicator.svg', width: 35),
-                      SizedBox(width: 50),
-                      AnimatedOpacity(
-                          opacity: _iconVisible ? 1.0 : 0.2,
-                          duration: Duration(milliseconds: 100),
-                          child: SvgPicture.asset('images/right_arrow.svg',
-                              width: 40)),
-                    ],
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 50, top: 15),
+                  child: Image.asset(
+                    'images/webDirLogo.png',
+                    width: 225,
+                    height: 110,
                   ),
                 ),
-              ),
-            ],
-          )
-        ],
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 50.0),
+                  child: SizedBox(
+                    width: MyUtility(context).width * 0.3,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        LandingPageTextButton(
+                            onpress: () {
+                              navigateToDifrentPage(Material(child: Page1()));
+                            },
+                            text: 'Home'),
+                        LandingPageTextButton(
+                            onpress: () {
+                              navigateToDifrentPage(Material(child: Page3()));
+                            },
+                            text: 'Our Story'),
+                        LandingPageTextButton(
+                            onpress: () {
+                              navigateToDifrentPage(Material(child: Page4()));
+                            },
+                            text: 'Watif'),
+                        LandingPageTextButton(
+                          onpress: () {
+                            navigateToDifrentPage(Material(child: Page5()));
+                          },
+                          text: 'Articles',
+                          isComingSoon: true,
+                        ),
+                        Spacer(),
+                        OvalTextButton(
+                            text: 'Get in Touch',
+                            onPressed: () {
+                              navigateToDifrentPage(Material(child: Page7()));
+                            }),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+
+            //TODO JACO Start here
+            Stack(
+              alignment: Alignment.center, // Center items within the Stack
+              children: [
+                // Main Row layout that holds the left and right columns
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Left Column
+                    Column(
+                      children: [
+                        SizedBox(height: 17),
+                        CategorySelect(
+                          startFlickering: _startFlicker,
+                          menuIndex: menuIndex,
+                          changeMenu: changeMenu,
+                        ),
+                      ],
+                    ),
+
+                    // Right Column
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CircleTextBox(
+                          Title1: directoriesInfo[menuIndex]['1title'],
+                          Title2: directoriesInfo[menuIndex]['2title'],
+                          url: directoriesInfo[menuIndex]['url'],
+                          description: directoriesInfo[menuIndex]
+                              ['description'],
+                          changeMenu: changeMenu,
+                          menuIndex: menuIndex,
+                          buttonFlash: _iconVisible,
+                        ),
+                        const SizedBox(height: 100),
+                      ],
+                    ),
+                  ],
+                ),
+
+                // Centered Row with SVG icons, positioned absolutely within the Stack
+                Positioned(
+                  top: 0, // Adjust the top position if needed
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'images/left_arrow.svg',
+                          width: 40,
+                        ),
+                        SizedBox(width: 50),
+                        SvgPicture.asset('images/light_indicator.svg',
+                            width: 35),
+                        SizedBox(width: 50),
+                        AnimatedOpacity(
+                            opacity: _iconVisible ? 1.0 : 0.2,
+                            duration: Duration(milliseconds: 100),
+                            child: SvgPicture.asset('images/right_arrow.svg',
+                                width: 40)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

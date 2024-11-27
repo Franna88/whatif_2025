@@ -18,13 +18,13 @@ class CircleTextBox extends StatefulWidget {
 
   CircleTextBox({
     super.key,
-    required this.buttonFlash,
     required this.Title1,
     required this.Title2,
     required this.description,
     required this.url,
     required this.menuIndex,
     required this.changeMenu,
+    required this.buttonFlash,
   });
 
   @override

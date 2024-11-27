@@ -4,6 +4,8 @@ import 'package:webdirectories/WebDirectories/Mobile/MobilePage6/MessageUsMobile
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage6/MessageUsMobile/MessageUsMobimeComponent/MessageUsTextFieldMobile.dart';
 import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouchComponents/emailPopup.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouchComponents/emailPopup.dart';
+import '../../../../PanelBeatersDirectory/emails/getInTouch/sendGetInTouch.dart';
 
 class MessageUsMobile extends StatefulWidget {
   const MessageUsMobile({super.key});
