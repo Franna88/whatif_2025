@@ -18,7 +18,6 @@ class CircleTextBox extends StatefulWidget {
 
   CircleTextBox({
     super.key,
-    required this.buttonFlash,
     required this.Title1,
     required this.Title2,
     required this.description,

@@ -55,7 +55,7 @@ class _CommentsMobileState extends State<CommentsMobile> {
                       widget.username,
                       style: TextStyle(
                           fontSize: 18,
-                          fontFamily: 'ralewaySemi',
+                          fontFamily: 'ralewaysemi',
                           color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
