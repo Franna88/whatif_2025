@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
 class NotARobotContainer extends StatefulWidget {
-  const NotARobotContainer({Key? key}) : super(key: key);
+  final Function(bool) onChanged;
+  bool isChecked;
+  NotARobotContainer(
+      {Key? key, required this.isChecked, required this.onChanged})
+      : super(key: key);
 
   @override
   _NotARobotContainerState createState() => _NotARobotContainerState();
 }
 
 class _NotARobotContainerState extends State<NotARobotContainer> {
-  bool _isChecked = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,11 +28,11 @@ class _NotARobotContainerState extends State<NotARobotContainer> {
           Row(
             children: [
               Checkbox(
-                value: _isChecked,
+                value: widget.isChecked,
                 onChanged: (bool? value) {
-                  setState(() {
-                    _isChecked = value ?? false;
-                  });
+                  if (value != null) {
+                    widget.onChanged(value);
+                  }
                 },
               ),
               Text(

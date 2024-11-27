@@ -11,11 +11,24 @@ class ContactUsTextBlock extends StatefulWidget {
 }
 
 class _ContactUsTextBlockState extends State<ContactUsTextBlock> {
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController messageController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  bool _isChecked = false;
+
+  void _onChanged(bool value) {
+    setState(() {
+      _isChecked = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        
         Container(
           width: MyUtility(context).width / 1.2,
           height: 600,
@@ -33,15 +46,33 @@ class _ContactUsTextBlockState extends State<ContactUsTextBlock> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              MessageUsTextFieldMobile(text: 'First Name*'),
-              MessageUsTextFieldMobile(text: 'Last Name*'),
-              MessageUsTextFieldMobile(text: 'Email*'),
-              MessageUsTextFieldMobile(text: 'Phone*'),
-              MessageUsTextFieldMobile(text: 'Message*'),
+              MessageUsTextFieldMobile(
+                text: 'First Name*',
+                controller: firstNameController,
+              ),
+              MessageUsTextFieldMobile(
+                text: 'Last Name*',
+                controller: lastNameController,
+              ),
+              MessageUsTextFieldMobile(
+                text: 'Email*',
+                controller: emailController,
+              ),
+              MessageUsTextFieldMobile(
+                text: 'Phone*',
+                controller: phoneController,
+              ),
+              MessageUsTextFieldMobile(
+                text: 'Message*',
+                controller: messageController,
+              ),
               SizedBox(
                 height: MyUtility(context).height * 0.01,
               ),
-              NotARobotContainer()
+              NotARobotContainer(
+                isChecked: _isChecked,
+                onChanged: _onChanged,
+              )
             ],
           ),
         ),

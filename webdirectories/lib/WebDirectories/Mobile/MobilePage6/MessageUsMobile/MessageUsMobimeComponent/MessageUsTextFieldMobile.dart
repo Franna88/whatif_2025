@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
 class MessageUsTextFieldMobile extends StatefulWidget {
+  final TextEditingController controller;
   final String text;
 
-  const MessageUsTextFieldMobile({Key? key, required this.text})
+  const MessageUsTextFieldMobile(
+      {Key? key, required this.text, required this.controller})
       : super(key: key);
 
   @override
@@ -13,8 +15,6 @@ class MessageUsTextFieldMobile extends StatefulWidget {
 }
 
 class _MessageUsTextFieldMobileState extends State<MessageUsTextFieldMobile> {
-  final TextEditingController details = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,7 +34,7 @@ class _MessageUsTextFieldMobileState extends State<MessageUsTextFieldMobile> {
           SizedBox(
             width: MyUtility(context).width / 1.4,
             child: TextFormField(
-              controller: details,
+              controller: widget.controller,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Color(0xFFDFDFDF)),

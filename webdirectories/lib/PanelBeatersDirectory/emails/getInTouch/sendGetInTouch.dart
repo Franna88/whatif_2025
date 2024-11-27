@@ -30,4 +30,10 @@ Future sendGetInTouch({
           'phone': phone,
         }
       }));
+
+  if (response.statusCode == 200) {
+    print('OK');
+  } else {
+    print('email error');
+  }
 }

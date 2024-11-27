@@ -25,7 +25,6 @@ class CircleTextBox extends StatefulWidget {
     required this.url,
     required this.menuIndex,
     required this.changeMenu,
-    this.buttonFlash = false,
   });
 
   @override

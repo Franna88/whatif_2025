@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/emails/getInTouch/sendGetInTouch.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage6/MessageUsMobile/MessageUsMobimeComponent/ImNotaRobot.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage6/MessageUsMobile/MessageUsMobimeComponent/MessageUsTextFieldMobile.dart';
+import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouchComponents/emailPopup.dart';
 import 'package:webdirectories/myutility.dart';
 
 class MessageUsMobile extends StatefulWidget {
@@ -11,6 +13,53 @@ class MessageUsMobile extends StatefulWidget {
 }
 
 class _MessageUsMobileState extends State<MessageUsMobile> {
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController messageController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  bool _isChecked = false;
+
+  void _onChanged(bool value) {
+    setState(() {
+      _isChecked = value;
+    });
+  }
+
+  Future<void> showEmailPopup(String description) => showDialog(
+        context: context,
+        barrierColor: Colors
+            .transparent, // Set the background behind the dialog to be transparent
+        builder: (context) {
+          return Emailpopup(
+            description: description,
+          );
+        },
+      );
+
+  sendEmail() async {
+    if (firstNameController.text == "" &&
+        lastNameController.text == "" &&
+        emailController.text == "" &&
+        phoneController.text == "" &&
+        messageController.text == "") {
+      return showEmailPopup("Some Fields are required");
+    }
+
+    if (!_isChecked) {
+      return showEmailPopup("I'm not a robot validation required");
+    }
+
+    await sendGetInTouch(
+        message: messageController.text,
+        email: emailController.text,
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        phone: phoneController.text);
+    await showEmailPopup("Thank you, your email has been sent.");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -49,15 +98,33 @@ class _MessageUsMobileState extends State<MessageUsMobile> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              MessageUsTextFieldMobile(text: 'First Name*'),
-              MessageUsTextFieldMobile(text: 'Last Name*'),
-              MessageUsTextFieldMobile(text: 'Email*'),
-              MessageUsTextFieldMobile(text: 'Phone*'),
-              MessageUsTextFieldMobile(text: 'Message*'),
+              MessageUsTextFieldMobile(
+                text: 'First Name*',
+                controller: firstNameController,
+              ),
+              MessageUsTextFieldMobile(
+                text: 'Last Name*',
+                controller: lastNameController,
+              ),
+              MessageUsTextFieldMobile(
+                text: 'Email*',
+                controller: emailController,
+              ),
+              MessageUsTextFieldMobile(
+                text: 'Phone*',
+                controller: phoneController,
+              ),
+              MessageUsTextFieldMobile(
+                text: 'Message*',
+                controller: messageController,
+              ),
               SizedBox(
                 height: MyUtility(context).height * 0.01,
               ),
-              NotARobotContainer()
+              NotARobotContainer(
+                isChecked: _isChecked,
+                onChanged: _onChanged,
+              )
             ],
           ),
         ),
@@ -67,7 +134,7 @@ class _MessageUsMobileState extends State<MessageUsMobile> {
         SizedBox(
           height: 40,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: sendEmail,
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xFF0E1013),
               shape: RoundedRectangleBorder(
