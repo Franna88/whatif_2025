@@ -33,9 +33,10 @@ class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
     List<Map<String, dynamic>> filtered = widget.reviewsData;
 
     // Apply search filter
-    /* if (_searchQuery.isNotEmpty) {
+    if (_searchQuery.isNotEmpty) {
       filtered = filtered.where((review) {
-        return review['ratingMessage']
+        print('review: $review');
+        return review['data']['ratingMessage']
             .toLowerCase()
             .contains(_searchQuery.toLowerCase());
       }).toList();
@@ -43,13 +44,16 @@ class _ReviewsMainContainerState extends State<ReviewsMainContainer> {
 
     // Apply sorting filter
     if (_filterType == 'Highest') {
-      filtered.sort((a, b) => b['rating'].compareTo(a['rating']));
+      filtered
+          .sort((a, b) => b['data']['rating'].compareTo(a['data']['rating']));
     } else if (_filterType == 'Lowest') {
-      filtered.sort((a, b) => a['rating'].compareTo(b['rating']));
+      filtered
+          .sort((a, b) => a['data']['rating'].compareTo(b['data']['rating']));
     } else if (_filterType == 'Date Posted') {
-      filtered.sort((a, b) => b['ratingDate'].compareTo(a['ratingDate']));
+      filtered.sort(
+          (a, b) => b['data']['ratingDate'].compareTo(a['data']['ratingDate']));
     }
-*/
+
     return filtered;
   }
 

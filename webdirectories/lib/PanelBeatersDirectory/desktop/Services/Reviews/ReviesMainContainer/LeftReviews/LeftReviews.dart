@@ -45,7 +45,7 @@ class _LeftReviewsState extends State<LeftReviews> {
       width: MyUtility(context).width * 0.4,
       height: MyUtility(context).height * 0.51,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,16 +75,24 @@ class _LeftReviewsState extends State<LeftReviews> {
               )
             ],
           ),
-          ...widget.reviews.map((review) {
-            print(review['data']['ratingMessage']);
-            print(review['data']);
-            return CommentContainer(
-              starRating: review['rating'].toString(),
-              reviewName: review['data']['ratingFrom'],
-              reviewDate: review['data']['ratingMessage'],
-              review: review['data']['ratingDate'],
-            );
-          }).toList(),
+          SizedBox(height: 10),
+          Column(
+            children: [
+              ...widget.reviews.map((review) {
+                print(review['data']['ratingMessage']);
+                print(review['data']);
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: CommentContainer(
+                    starRating: review['rating'].toString(),
+                    reviewName: review['data']['ratingFrom'],
+                    reviewDate: review['data']['ratingMessage'],
+                    review: review['data']['ratingDate'],
+                  ),
+                );
+              }).toList(),
+            ],
+          )
         ],
       ),
     );

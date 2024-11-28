@@ -128,7 +128,7 @@ class _LeaveReviewState extends State<LeaveReview> {
 */
       // Save review data to Firestore
       try {
-        if (image != null && id != null) {
+        if (image != null) {
           Uint8List data = await image!.readAsBytes();
           final storageRef = _firestorage.ref().child('ratings/${image!.name}');
           final uploadTask = storageRef.putData(data);
@@ -136,62 +136,63 @@ class _LeaveReviewState extends State<LeaveReview> {
           imageUrl = image.name;
         }
 
-        Map<String, dynamic> newData = {
-          'listingsId': id,
-          'ratingFrom': '$firstName $lastName',
-          'ratingEmail': email,
-          'ratingMessage': review,
-          'imageUrl': imageUrl,
-          'ratingDate': formattedDate,
-        };
-        var notificationData = {
-          "id": "",
-          "listingsId": id,
-          "type": "Rating",
-          "data": newData,
-          "title": "New Review added",
-          "from": '$firstName $lastName',
-          "priority": "low",
-          "date": DateTime.now(),
-          "read": false,
-          'rating': int.parse(rating),
-        };
+        if (id != null) {
+          Map<String, dynamic> newData = {
+            'listingsId': int.parse(id),
+            'ratingFrom': '$firstName $lastName',
+            'ratingEmail': email,
+            'ratingMessage': review,
+            'imageUrl': imageUrl,
+            'ratingDate': formattedDate,
+          };
+          var notificationData = {
+            "id": "",
+            "listingsId": int.parse(id),
+            "type": "Rating",
+            "data": newData,
+            "title": "New Review added",
+            "from": '$firstName $lastName',
+            "priority": "low",
+            "date": DateTime.now(),
+            "read": false,
+            'rating': int.parse(rating),
+          };
 
-        print(notificationData);
+          print(notificationData);
 
-        var doc = await FirebaseFirestore.instance
-            .collection("notificationMessages")
-            .add(notificationData);
-        await FirebaseFirestore.instance
-            .collection("notificationMessages")
-            .doc(doc.id)
-            .update({"id": doc.id}).whenComplete(() {
-          sendEmail(review, email);
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Review submitted successfully')));
-          _formKey.currentState!.reset();
-          widget.onReviewSubmit({...newData, 'ratingId': doc.id});
+          DocumentReference ratingDoc = await FirebaseFirestore.instance
+              .collection('rating')
+              .add(newData);
 
-          setState(() {
-            _selectedImage = null;
-            _isLoading = false;
-            widget.changePageIndex(0);
+          await FirebaseFirestore.instance
+              .collection('rating')
+              .doc(ratingDoc.id)
+              .update({'ratingId': ratingDoc.id});
+
+          var doc = await FirebaseFirestore.instance
+              .collection("notificationMessages")
+              .add(notificationData);
+          await FirebaseFirestore.instance
+              .collection("notificationMessages")
+              .doc(doc.id)
+              .update({"id": doc.id}).whenComplete(() {
+            sendEmail(review, email);
+
+            _formKey.currentState!.reset();
+            widget.onReviewSubmit({...newData, 'ratingId': doc.id});
+
+            setState(() {
+              _selectedImage = null;
+              _isLoading = false;
+              widget.changePageIndex(0);
+            });
           });
-        });
-        /*
-         DocumentReference ratingDoc =
-            await FirebaseFirestore.instance.collection('rating').add(newData);
-
-        await FirebaseFirestore.instance
-            .collection('rating')
-            .doc(ratingDoc.id)
-            .update({'ratingId': ratingDoc.id});*/
+        }
 
         // Show success message and reset the form
       } catch (e) {
         print('Error saving review: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error saving review. Please try again.')));
+
         setState(() {
           _isLoading = false;
         });
@@ -360,7 +361,7 @@ class _LeaveReviewState extends State<LeaveReview> {
                                   minimumSize: Size(100.8, 39),
                                 ),
                                 child: Text(
-                                  'Post Review1',
+                                  'Post Review',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: MyUtility(context).width * 0.01,
