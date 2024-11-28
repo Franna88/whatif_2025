@@ -49,7 +49,8 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
         "Access-Control-Allow-Methods": "GET,POST, OPTIONS"
       };
       String kPLACES_API_KEY = "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko";
-      String baseURL = 'http://localhost:5000/api/places/autocomplete';
+      String baseURL =
+          'https://webdirapi.onrender.com/api/v1/places/autocomplete';
       String request =
           '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$_sessionToken';
       var response = await http.get(Uri.parse(request), headers: header);
@@ -77,7 +78,7 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
     };
     String kPLACES_API_KEY = "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko";
 
-    String baseURL = 'http://localhost:5000/api/places/get-details';
+    String baseURL = 'https://webdirapi.onrender.com/api/v1/places/get-details';
     String request = '$baseURL?placeId=${_placeList[id]['place_id']}';
     var response = await http.get(Uri.parse(request), headers: header);
     if (response.statusCode == 200) {

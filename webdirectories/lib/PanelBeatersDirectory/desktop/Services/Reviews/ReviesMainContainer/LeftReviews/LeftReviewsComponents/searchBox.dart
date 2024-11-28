@@ -72,6 +72,7 @@ class _SearchBoxState extends State<SearchBox> {
           IconButton(
             onPressed: () {
               search.clear();
+              widget.onSearch('');
             },
             icon: Icon(
               Icons.close,
