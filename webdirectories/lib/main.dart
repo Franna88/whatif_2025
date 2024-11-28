@@ -39,8 +39,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        // '/': (context) => const MyHome(),
-        '/': (context) => Services(listingId: "755"),
+        '/': (context) => const MyHome(),
         '/panelTest': (context) => Material(
                 child: AdminPortal(
               listingsId: '',
