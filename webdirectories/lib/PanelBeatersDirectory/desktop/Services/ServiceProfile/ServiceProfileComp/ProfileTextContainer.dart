@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/CommonButtonR.dart';
 import 'package:webdirectories/myutility.dart';
 
 class ProfileTextContainer extends StatefulWidget {
@@ -78,54 +79,12 @@ class _ProfileTextContainerState extends State<ProfileTextContainer> {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  width: MyUtility(context).width * 0.15,
-                  height: MyUtility(context).height * 0.05,
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32.10),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 26.5744,
-                        height: 26.5744,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black,
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.keyboard_arrow_right,
-                            size: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 4),
-                        child: Text(
-                          'Approvals & Services',
-                          style: TextStyle(
-                            color: Colors.black.withOpacity(0.8999999761581421),
-                            fontSize: MyUtility(context).width * 0.0113,
-                            fontFamily: 'raleway',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )
+              CommonButtonR(
+                buttonText: 'Approvals and Services',
+                isComingSoon: true,
+                onPress: () {},
+                width: MyUtility(context).width * 0.18,
+              ),
             ],
           ),
         ),
