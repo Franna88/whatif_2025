@@ -92,14 +92,23 @@ class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
     List<Future<Map<String, dynamic>>> listingFutures =
         querySnapshot.docs.map((doc) async {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      String? imageUrl =
-          await getImageUrl('listings/images/listings/${data['displayphoto']}');
-      if (imageUrl != null) {
-        data['displayphoto'] = imageUrl;
-      }
+      // String? imageUrl =
+      //     await getImageUrl('listings/images/listings/${data['displayphoto']}');
+      // if (imageUrl != null) {
+      //   data['displayphoto'] = imageUrl;
+      // }
       data['distance'] = _userPosition?.latitude != null
           ? '${_calculateDistance(_userPosition?.latitude, _userPosition?.longitude, data['latitude'], data['longitude'])}'
           : '0 km';
+
+      int viewCount = await _firestore
+          .collection('views')
+          .doc(doc['listingsId'].toString())
+          .get()
+          .then((snapshot) => snapshot['views'].length)
+          .catchError((error) => 0);
+
+      data['views'] = viewCount;
       return data;
     }).toList();
 
@@ -107,8 +116,10 @@ class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
     List<Map<String, dynamic>> listings = await Future.wait(listingFutures);
 
     // Filter out listings with null displayphoto
-    listings =
-        listings.where((listing) => listing['displayphoto'] != null).toList();
+    listings = listings
+        .where((listing) => (listing['displayphoto'] as String)
+            .contains('https://firebasestorage.googleapis.com'))
+        .toList();
 
     //  listings.sort((a, b) => a['distance'].compareTo(b['distance']));
 
@@ -308,8 +319,8 @@ class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
                                               .toString())),
                                 );
                               },
-                              views: '${200 + Random().nextInt(801)}',
-                              distance: listing['distance'],
+                              views: (listing['views'] as int).toString(),
+                              distance: '${listing['distance']} km',
                               navigateMe: () async {
                                 final Uri uri = Uri.parse(
                                     "https://www.google.com/maps/search/${listing['streetaddress']}");

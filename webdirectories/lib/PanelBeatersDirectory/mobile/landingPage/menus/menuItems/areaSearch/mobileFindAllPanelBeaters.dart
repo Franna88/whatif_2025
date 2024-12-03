@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesByAddressSearch.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/addressAutoCompleteField.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeatureMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/directOrangeButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileDropDown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileMenuIndex.dart';
@@ -6,9 +9,13 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobil
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileSearchButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileSetLocationButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileTextField.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByAddress/mobileServicesByAddressFeatured.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByArea/mobileServicesByAreaFeatured.dart';
 
 class MobileFindAllPanelBeaters extends StatefulWidget {
-  const MobileFindAllPanelBeaters({Key? key}) : super(key: key);
+  const MobileFindAllPanelBeaters({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MobileFindAllPanelBeaters> createState() =>
@@ -18,6 +25,7 @@ class MobileFindAllPanelBeaters extends StatefulWidget {
 class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
   int menuIndex = 2;
   int? currentOpenDropdown;
+  Map<String, dynamic> address = {};
 
   void toggleDropdown(int index) {
     setState(() {
@@ -26,6 +34,13 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
       } else {
         currentOpenDropdown = index;
       }
+    });
+  }
+
+  void selectAddress(Map<String, dynamic> data) {
+    print(data);
+    setState(() {
+      address = data;
     });
   }
 
@@ -45,7 +60,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child:  Text(
+          child: Text(
             'Find All Panel Beaters',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -68,10 +83,18 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
         ),
         MobileOrangeButton(
           buttonTitle: 'Near Me',
-          dropdownContent: const MobileDropDown(
+          dropdownContent: MobileDropDown(
             topText: 'Find your nearest Panel Beater',
             widget1: MobileSetLocationButton(),
-            widget2: MobileSearchButton(),
+            widget2: MobileSearchButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const LocationFeatureMobile()),
+                );
+              },
+            ),
           ),
           isOpen: currentOpenDropdown == 0,
           onToggle: () => toggleDropdown(0),
@@ -81,11 +104,20 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
         ),
         MobileOrangeButton(
           buttonTitle: 'Any City or Street Address',
-          dropdownContent: const MobileDropDown(
+          dropdownContent: MobileDropDown(
               topText: 'Find a Panel Beater by street',
-              widget1:
-                  MobileTextfield(hintText: 'Type any street address here'),
-              widget2: MobileSearchButton()),
+              widget1: AddressAutoCompleteField(onSelected: selectAddress),
+              widget2: MobileSearchButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MobileServicesByAddressFeatured(
+                              addressData: address,
+                            )),
+                  );
+                },
+              )),
           isOpen: currentOpenDropdown == 1,
           onToggle: () => toggleDropdown(1),
         ),
@@ -105,7 +137,14 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
         const SizedBox(
           height: 15,
         ),
-        const DirectOrangeButton(
+        DirectOrangeButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const MobileServicesByAreaFeatured()),
+            );
+          },
           buttonTitle: 'Area Search',
         ),
         const SizedBox(

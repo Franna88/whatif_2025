@@ -53,7 +53,7 @@ class _LocationMobileContainerState extends State<LocationMobileContainer> {
               ),
               child: Image.network(
                 width: MyUtility(context).width,
-                height: MyUtility(context).height * 0.164,
+                height: MyUtility(context).height * 0.194,
                 widget.businessImage,
                 fit: BoxFit
                     .fill, // This ensures the image covers the entire aspect ratio area

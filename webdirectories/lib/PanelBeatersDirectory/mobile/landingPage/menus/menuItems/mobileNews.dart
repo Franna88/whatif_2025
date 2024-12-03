@@ -19,7 +19,7 @@ class MobileNews extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-         Text(
+        Text(
           'Info & Finance',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -30,7 +30,7 @@ class MobileNews extends StatelessWidget {
                   offset: Offset(1.0, 1.0),
                 ),
               ],
-              fontSize: widthDevice <400 ? 30 : 34,
+              fontSize: widthDevice < 400 ? 30 : 34,
               height: 1.15,
               fontFamily: 'ralewaybold',
               color: Color.fromARGB(255, 255, 255, 255)),
@@ -54,19 +54,31 @@ class MobileNews extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        const DirectOrangeButton(buttonTitle: 'News & Articles'),
+        DirectOrangeButton(
+          buttonTitle: 'News & Articles',
+          onPressed: () {},
+        ),
         const SizedBox(
           height: 15,
         ),
-        const DirectOrangeButton(buttonTitle: 'CSI Lightstone EchoMBR'),
+        DirectOrangeButton(
+          buttonTitle: 'CSI Lightstone EchoMBR',
+          onPressed: () {},
+        ),
         const SizedBox(
           height: 15,
         ),
-        const DirectOrangeButton(buttonTitle: 'Industry News'),
+        DirectOrangeButton(
+          buttonTitle: 'Industry News',
+          onPressed: () {},
+        ),
         const SizedBox(
           height: 15,
         ),
-        const DirectOrangeButton(buttonTitle: 'Repair Finance'),
+        DirectOrangeButton(
+          buttonTitle: 'Repair Finance',
+          onPressed: () {},
+        ),
         const SizedBox(
           height: 15,
         ),
