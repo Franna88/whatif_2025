@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/ContactUsPage/ContactUsMainPage.dart';
 import 'package:webdirectories/WebDirectories/Footer/FooterComponents/FooterTextButton.dart';
 import 'package:webdirectories/WebDirectories/Page1/Page1.dart';
 import 'package:webdirectories/WebDirectories/Page2/Page2.dart';
@@ -23,7 +24,6 @@ class _PanelFooterState extends State<PanelFooter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MyUtility(context).height * 0.5,
       decoration: const BoxDecoration(
         color: Color(0xFF0E1013),
       ),
@@ -147,7 +147,7 @@ class _PanelFooterState extends State<PanelFooter> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => Material(
-                            child: Page7(),
+                            child: ContactUsMainPage(),
                           )));
             }),
         FooterTextButton(

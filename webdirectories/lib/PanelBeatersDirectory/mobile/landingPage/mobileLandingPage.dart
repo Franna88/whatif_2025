@@ -13,7 +13,9 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobil
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/weConnectMainPage/weConnectMainPage.dart';
 
 class Mobilelandingpage extends StatefulWidget {
-  const Mobilelandingpage({super.key});
+  const Mobilelandingpage({
+    super.key,
+  });
 
   @override
   State<Mobilelandingpage> createState() => _MobilelandingpageState();
@@ -21,14 +23,19 @@ class Mobilelandingpage extends StatefulWidget {
 
 class _MobilelandingpageState extends State<Mobilelandingpage> {
   int menuIndex = 0;
+  late List<Widget> menuContainers;
 
-  List<Widget> menuContainers = [
-    const Mobilewatifmenu(),
-    const MobileFindAllPanelBeaters(),
-    const MobileApprovalsServices(),
-    const MobileNews(),
-    const MobileFuelTowing()
-  ];
+  @override
+  void initState() {
+    menuContainers = [
+      const Mobilewatifmenu(),
+      const MobileFindAllPanelBeaters(),
+      const MobileApprovalsServices(),
+      const MobileNews(),
+      const MobileFuelTowing()
+    ];
+    super.initState();
+  }
 
   PageController _pageController = PageController(initialPage: 1);
 
@@ -45,7 +52,8 @@ class _MobilelandingpageState extends State<Mobilelandingpage> {
               width: widthDevice,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('images/mobileLanding.png'), fit: BoxFit.cover),
+                    image: AssetImage('images/mobileLanding.png'),
+                    fit: BoxFit.cover),
               ),
               child: PageView(
                 controller: _pageController,
@@ -68,8 +76,8 @@ class _MobilelandingpageState extends State<Mobilelandingpage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10),
-                          child:
-                              Mobileglasscontainer(child: menuContainers[menuIndex]),
+                          child: Mobileglasscontainer(
+                              child: menuContainers[menuIndex]),
                         ),
                       ],
                     ),

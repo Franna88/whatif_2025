@@ -95,10 +95,10 @@ class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
     List<Future<Map<String, dynamic>>> listingFutures =
         nearbyLocations.map((doc) async {
       Map<String, dynamic> data = doc;
-      String? imageUrl =
-          await getImageUrl('listings/images/listings/${data['displayphoto']}');
+      // String? imageUrl =
+      //     await getImageUrl('listings/images/listings/${data['displayphoto']}');
 
-      data['displayphoto'] = imageUrl;
+      // data['displayphoto'] = imageUrl;
 
       int viewCount = await _firestore
           .collection('views')
@@ -116,8 +116,11 @@ class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
     List<Map<String, dynamic>> listings = await Future.wait(listingFutures);
 
     // Filter out listings with null displayphoto
-    listings =
-        listings.where((listing) => listing['displayphoto'] != null).toList();
+    listings = listings
+        .where((listing) => (listing['displayphoto'] as String)
+            .contains('https://firebasestorage.googleapis.com'))
+        .toList();
+
     listings =
         listings.where((listing) => listing['distance'] != null).toList();
 

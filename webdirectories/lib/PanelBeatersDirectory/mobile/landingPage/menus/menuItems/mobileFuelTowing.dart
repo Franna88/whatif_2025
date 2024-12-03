@@ -21,7 +21,7 @@ class MobileFuelTowing extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child:  Text(
+          child: Text(
             'Fuel, Towing & Repair',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -58,19 +58,21 @@ class MobileFuelTowing extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        const DirectOrangeButton(buttonTitle: 'Fuel, Food & Pricing'),
+        DirectOrangeButton(
+            buttonTitle: 'Fuel, Food & Pricing', onPressed: () {}),
         const SizedBox(
           height: 15,
         ),
-        const DirectOrangeButton(buttonTitle: 'Repair, Parts & Tyres'),
+        DirectOrangeButton(
+            buttonTitle: 'Repair, Parts & Tyres', onPressed: () {}),
         const SizedBox(
           height: 15,
         ),
-        const DirectOrangeButton(buttonTitle: 'Towing Services'),
+        DirectOrangeButton(buttonTitle: 'Towing Services', onPressed: () {}),
         const SizedBox(
           height: 15,
         ),
-        const DirectOrangeButton(buttonTitle: 'Emergency on Call'),
+        DirectOrangeButton(buttonTitle: 'Emergency on Call', onPressed: () {}),
         const SizedBox(
           height: 15,
         ),

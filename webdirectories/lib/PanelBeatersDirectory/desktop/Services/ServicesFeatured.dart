@@ -145,11 +145,11 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
     List<Future<Map<String, dynamic>>> listingFutures =
         querySnapshot.docs.map((doc) async {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      String? imageUrl =
-          await getImageUrl('listings/images/listings/${data['displayphoto']}');
-      if (imageUrl != null) {
-        data['displayphoto'] = imageUrl;
-      }
+      // String? imageUrl =
+      //     await getImageUrl('listings/images/listings/${data['displayphoto']}');
+      // if (imageUrl != null) {
+      //   data['displayphoto'] = imageUrl;
+      // }
 
       data['distance'] = _userPosition?.latitude != null
           ? '${_calculateDistance(_userPosition?.latitude, _userPosition?.longitude, data['latitude'], data['longitude'])}'
@@ -170,8 +170,10 @@ class _ServicesFeaturedState extends State<ServicesFeatured> {
     List<Map<String, dynamic>> listings = await Future.wait(listingFutures);
 
     // Filter out listings with null displayphoto
-    listings =
-        listings.where((listing) => listing['displayphoto'] != null).toList();
+    listings = listings
+        .where((listing) => (listing['displayphoto'] as String)
+            .contains('https://firebasestorage.googleapis.com'))
+        .toList();
 
     //  listings.sort((a, b) => a['distance'].compareTo(b['distance']));
 

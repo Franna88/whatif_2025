@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouchComponents/TextFormField.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
+import 'package:webdirectories/PanelBeatersDirectory/emails/getInTouch/sendGetInTouch.dart';
+import 'package:webdirectories/WebDirectories/Mobile/MobilePage6/MessageUsMobile/MessageUsMobimeComponent/ImNotaRobot.dart';
+import 'package:webdirectories/WebDirectories/Mobile/MobilePage6/MessageUsMobile/MessageUsMobimeComponent/MessageUsTextFieldMobile.dart';
 import 'package:webdirectories/WebDirectories/Page3/OurStory/OurSotryComponents/OvalTextButton.dart';
+import 'package:webdirectories/WebDirectories/Page7/GetinTouch/GetinTouchComponents/TextFormField.dart';
 import 'package:webdirectories/myutility.dart';
 
-import '../../../emails/getInTouch/sendGetInTouch.dart';
-import '../../components/descriptionDialog.dart';
-
-class ContactDesktop extends StatefulWidget {
-  const ContactDesktop({super.key});
+class MobileContactForm extends StatefulWidget {
+  const MobileContactForm({super.key});
 
   @override
-  State<ContactDesktop> createState() => _ContactDesktopState();
+  State<MobileContactForm> createState() => _MobileContactFormState();
 }
 
-class _ContactDesktopState extends State<ContactDesktop> {
+class _MobileContactFormState extends State<MobileContactForm> {
   bool _isChecked = false;
-  final firstName = TextEditingController();
-  final lastName = TextEditingController();
-  final email = TextEditingController();
-  final phone = TextEditingController();
-  final details = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final messageController = TextEditingController();
 
   Future descriptionDialog(description) => showDialog(
       context: context,
@@ -31,12 +32,18 @@ class _ContactDesktopState extends State<ContactDesktop> {
         ));
       });
 
+  void _onChanged(bool value) {
+    setState(() {
+      _isChecked = value;
+    });
+  }
+
   sendEmail() async {
-    if (firstName.text == "" &&
-        lastName.text == "" &&
-        email.text == "" &&
-        phone.text == "" &&
-        details.text == "") {
+    if (firstNameController.text == "" &&
+        lastNameController.text == "" &&
+        emailController.text == "" &&
+        phoneController.text == "" &&
+        messageController.text == "") {
       return descriptionDialog("Some Fields are required");
     }
 
@@ -45,11 +52,11 @@ class _ContactDesktopState extends State<ContactDesktop> {
     }
 
     await sendGetInTouch(
-        message: details.text,
-        email: email.text,
-        firstName: firstName.text,
-        lastName: lastName.text,
-        phone: phone.text);
+        message: messageController.text,
+        email: emailController.text,
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        phone: phoneController.text);
     await descriptionDialog("Thank you ,your email has been sent.");
   }
 
@@ -57,10 +64,10 @@ class _ContactDesktopState extends State<ContactDesktop> {
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
     return SizedBox(
-      width: MyUtility(context).width / 1.15,
+      width: MyUtility(context).width * 0.9,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 25, left: 25, top: 25),
-        child: Row(
+        padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+        child: Column(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +89,7 @@ class _ContactDesktopState extends State<ContactDesktop> {
                       color: Colors.white),
                 ),
                 SizedBox(
-                  width: MyUtility(context).width / 2.6,
+                  width: MyUtility(context).width * 0.9,
                   child: Text.rich(
                     TextSpan(
                       children: [
@@ -124,8 +131,7 @@ class _ContactDesktopState extends State<ContactDesktop> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 25),
                   child: SizedBox(
-                    width: MyUtility(context).width / 2.2,
-                    height: MyUtility(context).height / 10,
+                    width: MyUtility(context).width * 0.88,
                     child: Row(
                       children: [
                         SizedBox(
@@ -164,8 +170,6 @@ class _ContactDesktopState extends State<ContactDesktop> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 25),
                   child: SizedBox(
-                    width: MyUtility(context).width / 2.2,
-                    height: MyUtility(context).height / 8,
                     child: Row(
                       children: [
                         SizedBox(
@@ -204,8 +208,6 @@ class _ContactDesktopState extends State<ContactDesktop> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 25),
                   child: SizedBox(
-                    width: MyUtility(context).width / 2.2,
-                    height: MyUtility(context).height / 11,
                     child: Row(
                       children: [
                         SizedBox(
@@ -250,150 +252,105 @@ class _ContactDesktopState extends State<ContactDesktop> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: MyUtility(context).width / 2.45,
-                  height: MyUtility(context).height / 1.7,
                   decoration: BoxDecoration(
                       color: const Color(0xFFF4F4F4),
                       borderRadius: BorderRadius.circular(20)),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 30, left: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              CustomTextFormField(
-                                text: 'First name *',
-                                controller: firstName,
-                              ),
-                              CustomTextFormField(
-                                text: 'Last name * ',
-                                controller: lastName,
-                              ),
-                            ],
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 10.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Message Us',
+                            style: TextStyle(
+                                fontSize: 24,
+                                color: Color(0xFF0E1013),
+                                fontFamily: 'ralewaysemi'),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              CustomTextFormField(
-                                text: 'Email *',
-                                controller: email,
-                              ),
-                              CustomTextFormField(
-                                text: 'Phone *',
-                                controller: phone,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Message * ',
-                                style: TextStyle(
-                                  fontFamily: 'raleway',
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(
-                                width: MyUtility(context).width * 0.4,
-                                child: TextFormField(
-                                  controller: details,
-                                  decoration: const InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xFFDFDFDF)),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xFFDFDFDF)),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.025,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Container(
-                            width: MyUtility(context).width * 0.16,
-                            height: MyUtility(context).height * 0.07,
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFFAFAFA),
-                              borderRadius: BorderRadius.circular(10.0),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              '*Please fill in required fields',
+                              style: TextStyle(
+                                  fontFamily: 'ralewaymedium',
+                                  fontSize: 14,
+                                  color: Color.fromRGBO(0, 0, 0, 0.35)),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          ),
+                          Container(
+                            width: MyUtility(context).width / 1.2,
+                            height: 600,
+                            decoration: BoxDecoration(
+                                color: Color(0x14ebebeb),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.09),
+                                    spreadRadius: 0,
+                                    blurRadius: 0,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(10.0)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Row(
-                                  children: [
-                                    Checkbox(
-                                      value: _isChecked,
-                                      onChanged: (bool? value) {
-                                        setState(() {
-                                          _isChecked = value ?? false;
-                                        });
-                                      },
-                                    ),
-                                    const Text(
-                                      "I'm not a robot",
-                                      style: TextStyle(
-                                          fontSize: 18.0, color: Colors.black),
-                                    ),
-                                  ],
+                                MessageUsTextFieldMobile(
+                                  text: 'First Name*',
+                                  controller: firstNameController,
                                 ),
-                                Image.asset(
-                                  'images/notarobot1.png',
-                                  height: 50,
-                                  width: 35,
-                                  fit: BoxFit.fill,
+                                MessageUsTextFieldMobile(
+                                  text: 'Last Name*',
+                                  controller: lastNameController,
+                                ),
+                                MessageUsTextFieldMobile(
+                                  text: 'Email*',
+                                  controller: emailController,
+                                ),
+                                MessageUsTextFieldMobile(
+                                  text: 'Phone*',
+                                  controller: phoneController,
+                                ),
+                                MessageUsTextFieldMobile(
+                                  text: 'Message*',
+                                  controller: messageController,
+                                ),
+                                SizedBox(
+                                  height: MyUtility(context).height * 0.01,
+                                ),
+                                NotARobotContainer(
+                                  isChecked: _isChecked,
+                                  onChanged: _onChanged,
                                 )
                               ],
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: MyUtility(context).height * 0.025,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, bottom: 5),
-                          child: OvalTextButton(
-                              text: 'Submit Now ',
-                              onPressed: () {
-                                sendEmail();
-                              }),
-                        ),
-                        /* Padding(
-                          padding: const EdgeInsets.only(left: 15, top: 15),
-                          child: Text(
-                            '*Please fill in required fields',
-                            style: TextStyle(
-                              fontFamily: 'raleway',
-                              fontSize: 13,
-                              color: const Color(0xFF000000).withOpacity(0.35),
-                              fontWeight: FontWeight.bold,
+                          SizedBox(
+                            height: MyUtility(context).height * 0.025,
+                          ),
+                          SizedBox(
+                            height: 40,
+                            child: ElevatedButton(
+                              onPressed: sendEmail,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xFF0E1013),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              child: Text(
+                                'Submit Now ',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'raleway',
+                                    color: Colors.white),
+                              ),
                             ),
                           ),
-                        ),*/
-                      ],
-                    ),
-                  ),
+                          SizedBox(
+                            height: MyUtility(context).height * 0.025,
+                          ),
+                        ],
+                      )),
                 ),
               ],
             ),

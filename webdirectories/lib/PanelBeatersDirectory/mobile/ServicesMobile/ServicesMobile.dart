@@ -61,42 +61,55 @@ class _ServicesMobileState extends State<ServicesMobile> {
         .collection('views')
         .doc(widget.listingId)
         .get();
-
     if (doc.exists) {
-      setState(() {
-        businessViews.addAll(doc.get('views'));
-
-        for (var doc in businessViews) {
-          DateTime dateViewAdded = doc['date'].toDate();
-          var todayDate = DateTime.now();
-          Duration difference = todayDate.difference(dateViewAdded);
-          int days = difference.inDays % 24;
-          if (days >= 1) {
-            //add view
-            updateViews(ipv4);
-          }
-        }
-        /* businessViews.map((e) {
-            DateTime dateViewAdded = e['date'].toDate();
-          var todayDate = DateTime.now();
-          //check if view added on same day
-          Duration difference = todayDate.difference(dateViewAdded);
-          int days = difference.inDays % 24;
-          if (days >= 1) {
-            print("ADD");
-            //add view
-            updateViews(ipv4);
-          }
-        });*/
-      });
+      checkAndUpdateBusinessViews(doc.data() as Map<String, dynamic>, ipv4);
     } else {
-      print("NOTEXISTS");
       //create business listing
       FirebaseFirestore.instance
           .collection('views')
           .doc(widget.listingId)
           .set(busnessDetails)
           .whenComplete(updateViews(ipv4));
+    }
+  }
+
+  void checkAndUpdateBusinessViews(Map<String, dynamic> doc, String ipv4) {
+    try {
+      // Extract views and filter by IP address
+      List<Map<String, dynamic>> views = (doc['views'] as List<dynamic>)
+          .cast<Map<String, dynamic>>()
+          .where((view) => view['ip'] == ipv4)
+          .toList();
+
+      if (views.isEmpty) {
+        print("No existing views for this IP.");
+        updateViews(ipv4); // Add a new view if no records exist
+        return;
+      }
+
+      // Find the most recent record by date
+      Map<String, dynamic> mostRecentRecord = views.reduce((a, b) =>
+          (a['date'] as Timestamp)
+                  .toDate()
+                  .isAfter((b['date'] as Timestamp).toDate())
+              ? a
+              : b);
+
+      DateTime dateViewAdded = (mostRecentRecord['date'] as Timestamp).toDate();
+      DateTime todayDate = DateTime.now();
+
+      // Calculate difference in days
+      int daysDifference = todayDate.difference(dateViewAdded).inDays;
+
+      if (daysDifference >= 1) {
+        print("ADD");
+        updateViews(
+            ipv4); // Add a new view if the last record is older than a day
+      } else {
+        print("View already exists within the past day.");
+      }
+    } catch (e) {
+      print("Error checking and updating views: $e");
     }
   }
 

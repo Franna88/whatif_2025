@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileContactUsPage/mobileContactUsPage.dart';
 import 'package:webdirectories/WebDirectories/Mobile/FooterMobile/FooterMobileComponents/FooterMobileTextButton.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage1/MobilePage1.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage2/MobilePage2.dart';
@@ -122,7 +123,7 @@ class _PanFooterMobileState extends State<PanFooterMobile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Material(
-                                      child: MobilePage6(),
+                                      child: MobileContactUsPage(),
                                     )));
                       }),
                   FooterMobileTextButton(
