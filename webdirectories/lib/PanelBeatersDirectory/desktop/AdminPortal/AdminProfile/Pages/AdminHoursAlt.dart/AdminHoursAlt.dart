@@ -84,7 +84,7 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       'saClosed': _listingHours!.saClosed,
       'suOpen': _listingHours!.suOpen,
       'suClosed': _listingHours!.suClosed,
-      'pOpen': _listingHours!.pClosed,
+      'pOpen': _listingHours!.pOpen,
       'pClosed': _listingHours!.pClosed,
       'listingsId': await widget.getListingId(),
       'hRemarks': hRemarks.text
@@ -92,13 +92,19 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
   }
 
   updateHours() async {
-    print(getValues(docId));
+    try {
+      Map<String, dynamic> hoursData = await getValues(docId);
 
-    await _firestore
-        .collection('listing_hours')
-        .doc(docId)
-        .update(getValues(docId))
-        .whenComplete(() => descriptionDialog("Hours Data Saved")); /* */
+      print(hoursData);
+      await _firestore
+          .collection('listing_hours')
+          .doc(docId)
+          .update(hoursData)
+          .whenComplete(() => descriptionDialog("Hours Data Saved"));
+    } catch (e) {
+      print('error updating hours: $e');
+      descriptionDialog("Something went wrong. Try again");
+    }
   }
 
   updateMonday(start, end) {
@@ -106,6 +112,8 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       _listingHours!.mOpen = start;
       _listingHours!.mClosed = end;
     });
+
+    Navigator.pop(context);
   }
 
   updateTuesday(start, end) {
@@ -113,6 +121,8 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       _listingHours!.tOpen = start;
       _listingHours!.tClosed = end;
     });
+
+    Navigator.pop(context);
   }
 
   updateWednesDay(start, end) {
@@ -120,6 +130,8 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       _listingHours!.wOpen = start;
       _listingHours!.wClosed = end;
     });
+
+    Navigator.pop(context);
   }
 
   updateThursday(start, end) {
@@ -127,6 +139,8 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       _listingHours!.thOpen = start;
       _listingHours!.thClosed = end;
     });
+
+    Navigator.pop(context);
   }
 
   updateFriday(start, end) {
@@ -134,6 +148,8 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       _listingHours!.fOpen = start;
       _listingHours!.fClosed = end;
     });
+
+    Navigator.pop(context);
   }
 
   updateSaturday(start, end) {
@@ -141,6 +157,8 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       _listingHours!.saOpen = start;
       _listingHours!.saClosed = end;
     });
+
+    Navigator.pop(context);
   }
 
   updateSunday(start, end) {
@@ -148,6 +166,8 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       _listingHours!.suOpen = start;
       _listingHours!.suClosed = end;
     });
+
+    Navigator.pop(context);
   }
 
   updatePublic(start, end) {
@@ -155,6 +175,8 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
       _listingHours!.pOpen = start;
       _listingHours!.pClosed = end;
     });
+
+    Navigator.pop(context);
   }
 
   @override
@@ -337,8 +359,10 @@ class _AdminHoursAltState extends State<AdminHoursAlt> {
                                 onChange: () {
                                   setState(() {
                                     if (_listingHours?.pOpen != 'closed') {
+                                      print("pOpen is closed");
                                       _listingHours!.pOpen = "closed";
                                     } else {
+                                      print("pOpen is 08:00");
                                       _listingHours!.pOpen = "08:00";
                                     }
                                   });
