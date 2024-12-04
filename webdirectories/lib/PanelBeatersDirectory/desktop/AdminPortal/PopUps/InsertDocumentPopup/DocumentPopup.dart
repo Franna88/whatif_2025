@@ -57,10 +57,7 @@ class _DocumentPopupState extends State<DocumentPopup> {
       print(widget.existingDocument);
 
       fileStatus = widget.existingDocument!['documentFile'];
-      _categoryController.text =
-          widget.existingDocument!['documentCategory'] ?? '';
-      _subCategoryController.text =
-          widget.existingDocument!['documentSubCategory'] ?? '';
+
       _titleController.text = widget.existingDocument!['documentTitle'] ?? '';
       _expiryController.text = widget.existingDocument!['expiryDate'] ?? '';
       emailNotification = widget.existingDocument!['expEmail'] ?? false;
@@ -102,6 +99,10 @@ class _DocumentPopupState extends State<DocumentPopup> {
       _documentSubCategoryData =
           docSubCategorySnapShot.docs.map((doc) => doc.data()).toList();
       _documentSubCategoryMenuData = documentSubCategoryData;
+      _categoryController.text =
+          widget.existingDocument!['documentCategory'] ?? '';
+      _subCategoryController.text =
+          widget.existingDocument!['documentSubCategory'] ?? '';
       print(_documentSubCategoryMenuData);
     });
   }
@@ -129,6 +130,9 @@ class _DocumentPopupState extends State<DocumentPopup> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Document updated successfully')),
           );
+
+          widget.refreshList();
+          Navigator.pop(context);
         } else {
           // Adding a new document
           if (_pickedFiles['file'] == null || _pickedFiles['fileName'] == '') {
@@ -190,11 +194,15 @@ class _DocumentPopupState extends State<DocumentPopup> {
       int category = _documentCategoryData
           .where((cat) => cat['documentCategory'] == _categoryController.text)
           .first['documentCategoryId'];
+      int subCategory = _documentSubCategoryData
+          .where((cat) =>
+              cat['documentSubCategory'] == _subCategoryController.text)
+          .first['documentSubCategoryId'];
       await _firestore.collection('listings_documents').add({
         'listingsId': int.parse(user.id),
         'membersId': int.parse(user.memberId),
         'documentCategoryId': category,
-        'documentSubCategoryId': int.parse(_subCategoryController.text),
+        'documentSubCategoryId': subCategory,
         'documentFile': fileName,
         'documentTitle': _titleController.text,
         'expiryDate': _expiryController.text,
@@ -449,7 +457,9 @@ class _DocumentPopupState extends State<DocumentPopup> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         PopUpsButton(
-                          text: 'Insert',
+                          text: widget.existingDocument != null
+                              ? 'Update'
+                              : "Insert",
                           onTap: _saveForm,
                           waiting: _isLoading,
                         ),

@@ -29,8 +29,8 @@ class CommonButtonR extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 26.5744,
-                  height: 26.5744,
+                  width: 20,
+                  height: 20,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.black,

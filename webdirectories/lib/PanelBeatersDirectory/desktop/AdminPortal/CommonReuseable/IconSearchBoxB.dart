@@ -4,7 +4,8 @@ import 'package:webdirectories/myutility.dart';
 
 class IconSearchBoxB extends StatefulWidget {
   TextEditingController search;
-  IconSearchBoxB({super.key, required this.search});
+  final Function(String?)? onSearch;
+  IconSearchBoxB({super.key, required this.search, this.onSearch});
 
   @override
   State<IconSearchBoxB> createState() => _IconSearchBoxBState();
@@ -43,6 +44,11 @@ class _IconSearchBoxBState extends State<IconSearchBoxB> {
             ),
             Expanded(
               child: TextField(
+                onChanged: (String? value) {
+                  if (widget.onSearch != null) {
+                    widget.onSearch!(value);
+                  }
+                },
                 decoration: InputDecoration(
                   hintText: 'Search here...',
                   hintStyle: TextStyle(

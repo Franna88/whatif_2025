@@ -22,9 +22,22 @@ class RegistrationAlit extends StatefulWidget {
 }
 
 class _RegistrationAlitState extends State<RegistrationAlit> {
-  List<Map<String, dynamic>> _registrationInfo = [];
+  List<Map<String, dynamic>> _registrationInfo = []; // Original data
   final _firestore = FirebaseFirestore.instance;
+  final searchController = TextEditingController();
+  String searchText = "";
   bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchRegistrationData().then((data) {
+      setState(() {
+        _registrationInfo = data;
+        _isLoading = false;
+      });
+    });
+  }
 
   Future<List<Map<String, dynamic>>> _fetchRegistrationData() async {
     StoredUser? user = await getUserInfo();
@@ -80,7 +93,7 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
                   : 'No';
         }
       }
-
+      print(registrationData);
       return registrationData;
     } catch (e) {
       print(e);
@@ -95,6 +108,17 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
     setState(() {
       _registrationInfo = regData;
     });
+  }
+
+  void updateRegistrationNumber(
+      String id, Map<String, dynamic> newRegistration) {
+    // print(id);
+    // List<Map<String, dynamic>> regData = _registrationInfo;
+    // int index = regData.indexWhere((item) => item['id'] == id);
+    // regData[index] = newRegistration;
+    // setState(() {
+    //   _registrationInfo = regData;
+    // });
   }
 
   removeRegItem(docId) {
@@ -179,7 +203,12 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconSearchBoxB(
-                        search: TextEditingController(),
+                        onSearch: (String? value) {
+                          setState(() {
+                            searchText = value ?? '';
+                          });
+                        },
+                        search: searchController,
                       ),
                     ],
                   ),
@@ -253,7 +282,10 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(
+                              child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ));
                         } else if (snapshot.hasError) {
                           return Center(
                               child: Text('Error: ${snapshot.error}'));
@@ -272,63 +304,104 @@ class _RegistrationAlitState extends State<RegistrationAlit> {
                               itemCount: registrationInfo.length,
                               itemBuilder: (context, index) {
                                 final registration = registrationInfo[index];
-                                print(registrationInfo[index]);
-                                return RegistrationAltContainer(
-                                  registrationType:
-                                      registration['registrationType']!,
-                                  registrationNumber:
-                                      registration['registrationNumbers']!
-                                          .toString(),
-                                  displayProfile:
-                                      registration['displayProfile']!,
-                                  pressEdit: () {
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      barrierColor:
-                                          Colors.black.withOpacity(0.5),
-                                      builder: (BuildContext context) {
-                                        return Dialog(
-                                          backgroundColor: Colors.transparent,
-                                          insetPadding: EdgeInsets.all(10),
-                                          child: RegistrationPopup(
-                                            existingRegistration:
-                                                registration, // Now contains the document ID
-                                            onAddRegistration:
-                                                (updatedRegistration) {
-                                              setState(() {
-                                                // Update the list with new values
-                                                registrationInfo[index] =
-                                                    updatedRegistration;
-                                              });
+                                // Determine whether the item matches the search query
+                                final filteredRegistrations =
+                                    registrationInfo.where((registration) {
+                                  return registration['registrationType']
+                                          ?.toLowerCase()
+                                          .contains(searchText) ??
+                                      false ||
+                                          (registration[
+                                                      'registrationNumbers'] !=
+                                                  null &&
+                                              registration[
+                                                      'registrationNumbers']
+                                                  .toString()
+                                                  .contains(searchText));
+                                }).toList();
+                                return Column(
+                                  children: [
+                                    Visibility(
+                                      visible: filteredRegistrations.isEmpty &&
+                                          index == 0,
+                                      child: Center(
+                                        child: Text(
+                                          'No matching records found',
+                                          style: TextStyle(
+                                              fontSize: 16, color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: filteredRegistrations.isNotEmpty,
+                                      child: RegistrationAltContainer(
+                                        registrationType:
+                                            registration['registrationType']!,
+                                        registrationNumber:
+                                            registration['registrationNumbers']!
+                                                .toString(),
+                                        displayProfile: registration[
+                                                    'registrationDisplay']! ==
+                                                1
+                                            ? 'Yes'
+                                            : 'No',
+                                        pressEdit: () {
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.5),
+                                            builder: (BuildContext context) {
+                                              return Dialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                insetPadding:
+                                                    EdgeInsets.all(10),
+                                                child: RegistrationPopup(
+                                                  existingRegistration:
+                                                      registration, // Now contains the document ID
+                                                  onAddRegistration:
+                                                      (updatedRegistration) {
+                                                    setState(() {
+                                                      // Update the list with new values
+                                                      registrationInfo[index] =
+                                                          updatedRegistration;
+                                                    });
+                                                  },
+                                                  onUpdateRegistration:
+                                                      updateRegistrationNumber,
+                                                ),
+                                              );
                                             },
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  pressDelete: () {
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      barrierColor:
-                                          Colors.black.withOpacity(0.5),
-                                      builder: (BuildContext context) {
-                                        return Dialog(
-                                          backgroundColor: Colors.transparent,
-                                          insetPadding: EdgeInsets.all(10),
-                                          child: PopUpsDeleteEntry(
-                                            onDelete: () {
-                                              removeRegItem(
-                                                  registrationInfo[index]
-                                                      ['id']); /* */
+                                          );
+                                        },
+                                        pressDelete: () {
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.5),
+                                            builder: (BuildContext context) {
+                                              return Dialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                insetPadding:
+                                                    EdgeInsets.all(10),
+                                                child: PopUpsDeleteEntry(
+                                                  onDelete: () {
+                                                    removeRegItem(
+                                                        registrationInfo[index]
+                                                            ['id']); /* */
+                                                  },
+                                                ),
+                                              );
                                             },
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  isEven: index % 2 == 0,
+                                          );
+                                        },
+                                        isEven: index % 2 == 0,
+                                      ),
+                                    ),
+                                  ],
                                 );
                               },
                             ),
