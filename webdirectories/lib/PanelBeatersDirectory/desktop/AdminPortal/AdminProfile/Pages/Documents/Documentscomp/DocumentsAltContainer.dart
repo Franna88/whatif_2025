@@ -43,7 +43,7 @@ class DocumentAltContainer extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Text(
-                title,
+                category,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   color: Colors.white,
@@ -63,7 +63,7 @@ class DocumentAltContainer extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Text(
-                category,
+                subCategory,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   color: Colors.white,
@@ -83,7 +83,7 @@ class DocumentAltContainer extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Text(
-                subCategory,
+                title,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   color: Colors.white,

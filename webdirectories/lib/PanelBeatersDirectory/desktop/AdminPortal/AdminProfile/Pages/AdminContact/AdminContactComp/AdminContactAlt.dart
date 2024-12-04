@@ -22,10 +22,13 @@ class AdminContactAlt extends StatefulWidget {
 
 class _AdminContactAltState extends State<AdminContactAlt> {
   late List<Map<String, String>> contactInfo;
+  List<Map<String, dynamic>> filteredRegistrationInfo = [];
   final _firestore = FirebaseFirestore.instance;
+  String searchText = "";
 
   Future<List<Map<String, dynamic>>> _fetchContactData() async {
     var userId = await widget.getListingId();
+
     QuerySnapshot contactSnapshot = await _firestore
         .collection('contact_person')
         .where('listingsId', isEqualTo: userId) // Make sure 'user.id' is an int
@@ -182,6 +185,11 @@ class _AdminContactAltState extends State<AdminContactAlt> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconSearchBoxB(
+                      onSearch: (String? value) {
+                        setState(() {
+                          searchText = value ?? '';
+                        });
+                      },
                       search: TextEditingController(),
                     ),
                   ],
@@ -283,65 +291,102 @@ class _AdminContactAltState extends State<AdminContactAlt> {
                             itemCount: contactInfo.length,
                             itemBuilder: (context, index) {
                               final contact = contactInfo[index];
-                              print(contact);
-                              return AdminContactAltContainer(
-                                type: contact['contactPersonDesignation'],
-                                contactPerson: contact['contactPerson'],
-                                phone: contact['contactPersonCell'],
-                                email: contact['contactPersonEmail'],
-                                pressEdit: () {
-                                  showDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    barrierColor: Colors.black.withOpacity(0.5),
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                        backgroundColor: Colors.transparent,
-                                        insetPadding: EdgeInsets.all(10),
-                                        child: ContactPopup(
-                                          existingContact: {
-                                            'id': contact[
-                                                'id'], // Pass the correct document ID
-                                            'contactPerson':
-                                                contact['contactPerson'],
-                                            'contactPersonCell':
-                                                contact['contactPersonCell'],
-                                            'contactPersonEmail':
-                                                contact['contactPersonEmail'],
-                                            'contactPersonDesignation': contact[
-                                                'contactPersonDesignation'],
+                              final filteredContacts =
+                                  contactInfo.where((contact) {
+                                return [
+                                  contact['contactPersonDesignation'],
+                                  contact['contactPerson'],
+                                  contact['contactPersonCell'],
+                                  contact['contactPersonEmail']
+                                ].any((value) =>
+                                    (value as String?)
+                                        ?.toLowerCase()
+                                        .contains(searchText) ??
+                                    false);
+                              }).toList();
+                              return Column(
+                                children: [
+                                  Visibility(
+                                    visible:
+                                        filteredContacts.isEmpty && index == 0,
+                                    child: Center(
+                                      child: Text(
+                                        'No matching records found',
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.grey),
+                                      ),
+                                    ),
+                                  ),
+                                  Visibility(
+                                    visible: filteredContacts.isNotEmpty,
+                                    child: AdminContactAltContainer(
+                                      type: contact['contactPersonDesignation'],
+                                      contactPerson: contact['contactPerson'],
+                                      phone: contact['contactPersonCell'],
+                                      email: contact['contactPersonEmail'],
+                                      pressEdit: () {
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: true,
+                                          barrierColor:
+                                              Colors.black.withOpacity(0.5),
+                                          builder: (BuildContext context) {
+                                            return Dialog(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              insetPadding: EdgeInsets.all(10),
+                                              child: ContactPopup(
+                                                existingContact: {
+                                                  'id': contact[
+                                                      'id'], // Pass the correct document ID
+                                                  'contactPerson':
+                                                      contact['contactPerson'],
+                                                  'contactPersonCell': contact[
+                                                      'contactPersonCell'],
+                                                  'contactPersonEmail': contact[
+                                                      'contactPersonEmail'],
+                                                  'contactPersonDesignation':
+                                                      contact[
+                                                          'contactPersonDesignation'],
+                                                },
+                                                onAddContact:
+                                                    (Map<String, dynamic>
+                                                        updatedContact) {},
+                                                refreshList: () {
+                                                  setState(() {});
+                                                },
+                                              ),
+                                            );
                                           },
-                                          onAddContact: (Map<String, dynamic>
-                                              updatedContact) {},
-                                          refreshList: () {
-                                            setState(() {});
+                                        );
+                                      },
+                                      pressDelete: () {
+                                        // Open the delete confirmation dialog
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: true,
+                                          barrierColor:
+                                              Colors.black.withOpacity(0.5),
+                                          builder: (BuildContext context) {
+                                            return Dialog(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              insetPadding: EdgeInsets.all(10),
+                                              child: NewDeleteButton(
+                                                  documentId: contact['id'],
+                                                  collectionName:
+                                                      "contact_person",
+                                                  refreshList: () {
+                                                    setState(() {});
+                                                  }),
+                                            );
                                           },
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                                pressDelete: () {
-                                  // Open the delete confirmation dialog
-                                  showDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    barrierColor: Colors.black.withOpacity(0.5),
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                        backgroundColor: Colors.transparent,
-                                        insetPadding: EdgeInsets.all(10),
-                                        child: NewDeleteButton(
-                                            documentId: contact['id'],
-                                            collectionName: "contact_person",
-                                            refreshList: () {
-                                              setState(() {});
-                                            }),
-                                      );
-                                    },
-                                  );
-                                },
-                                isEven: index % 2 == 0,
+                                        );
+                                      },
+                                      isEven: index % 2 == 0,
+                                    ),
+                                  ),
+                                ],
                               );
                             },
                           ),

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
 
 class DashDropDown extends StatelessWidget {
   final Function(int)? onSelect; // Function to navigate
@@ -22,7 +23,14 @@ class DashDropDown extends StatelessWidget {
             break;
           case 'Logout':
             print('Logout selected');
-            _handleLogout(); // Call a method to handle logout logic
+            // Implement your logout logic here
+            print('Executing logout...');
+            FirebaseAuth.instance.signOut();
+            // For example, call your authentication service to log out
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PanelBeatersHome()),
+            );
             break;
         }
       },
@@ -50,6 +58,5 @@ class DashDropDown extends StatelessWidget {
     // Implement your logout logic here
     print('Executing logout...');
     FirebaseAuth.instance.signOut();
-    // For example, call your authentication service to log out
   }
 }

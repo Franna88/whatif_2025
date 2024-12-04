@@ -11,10 +11,14 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 
 class RegistrationPopup extends StatefulWidget {
   final Function(Map<String, dynamic>) onAddRegistration;
+  final Function(String, Map<String, dynamic>)? onUpdateRegistration;
   final Map<String, dynamic>? existingRegistration;
 
   const RegistrationPopup(
-      {super.key, required this.onAddRegistration, this.existingRegistration});
+      {super.key,
+      required this.onAddRegistration,
+      this.existingRegistration,
+      this.onUpdateRegistration});
 
   @override
   State<RegistrationPopup> createState() => _RegistrationPopupState();
@@ -117,6 +121,9 @@ class _RegistrationPopupState extends State<RegistrationPopup> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Registration updated successfully')),
           );
+
+          widget.onUpdateRegistration!(
+              widget.existingRegistration!['id'], registrationData);
         } else {
           // Add new registration
           await _firestore

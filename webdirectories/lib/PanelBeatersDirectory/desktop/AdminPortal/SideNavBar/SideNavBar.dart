@@ -133,6 +133,9 @@ class _SideNavBarState extends State<SideNavBar> {
         registrationData.where((e) => e['registrationTypeId'] == 8).toList();
 
     print("REGISTERLight");
+    if (filteredRegistrationData.isEmpty) {
+      print('No lightstone found');
+    }
     print(filteredRegistrationData[0]['registrationNumbers']);
     if (registrationDataSnapshot.docs.isNotEmpty) {
       QuerySnapshot lightstoneSnapshot = await _firestore

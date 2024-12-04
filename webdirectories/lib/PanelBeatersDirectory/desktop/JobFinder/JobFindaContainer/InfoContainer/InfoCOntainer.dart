@@ -24,7 +24,7 @@ class _InfoContainerState extends State<InfoContainer> {
         ButtonInfoContainer(
             headlineText: 'Employee Platform',
             paragraph:
-                "Submit your details and we promise to publish it to our exclusive employer's database. You will be contacted by interested employers directly as we have no influence in the application and interview process.",
+                "Submit your details and we promise to publish it to our exclusive employer's database. You will be contacted by interested employers directly as we have no influence in the application and interview process.",
             buttonText: 'Submit CV here',
             onPressed: () {}),
         Column(

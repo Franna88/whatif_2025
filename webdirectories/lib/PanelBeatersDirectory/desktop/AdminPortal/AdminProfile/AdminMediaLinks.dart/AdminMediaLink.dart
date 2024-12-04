@@ -43,6 +43,7 @@ class AdminMediaLink extends StatefulWidget {
 
 class _AdminMediaLinkState extends State<AdminMediaLink> {
   final _firestore = FirebaseFirestore.instance;
+  String searchText = "";
   List<MediaLink> _mediaList = [];
 
   @override
@@ -74,6 +75,30 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
       }
     } catch (e) {
       print('Error fetching media data: $e'); // Debugging print
+    }
+  }
+
+  Future<List<MediaLink>> getMediaData() async {
+    try {
+      var listingId = await widget.getListingId();
+      QuerySnapshot mediaDoc = await _firestore
+          .collection('listings_links')
+          .where('listingsId', isEqualTo: listingId)
+          .get();
+
+      if (mediaDoc.docs.isNotEmpty) {
+        print('Fetched Media Data: $_mediaList'); // Debugging print
+        return mediaDoc.docs
+            .map((docs) =>
+                MediaLink.fromMap(docs.data() as Map<String, dynamic>))
+            .toList();
+      } else {
+        print('No media found'); // Debugging print
+        return [];
+      }
+    } catch (e) {
+      print('Error fetching media data: $e'); // Debugging print
+      return [];
     }
   }
 
@@ -140,6 +165,11 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
                         },
                       ),
                       IconSearchBoxB(
+                        onSearch: (String? value) {
+                          setState(() {
+                            searchText = value ?? '';
+                          });
+                        },
                         search: TextEditingController(),
                       ),
                     ],
@@ -193,84 +223,156 @@ class _AdminMediaLinkState extends State<AdminMediaLink> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: _mediaList.length,
-                      itemBuilder: (context, index) {
-                        final media = _mediaList[index];
-                        print(media);
-                        return MediaLinkContainer(
-                          mediaType: media.linkTitle,
-                          mediaLink: media.linkUrl,
-                          pressEdit: () async {
-                            // Fetch the document ID for the media being edited
-                            QuerySnapshot mediaDoc = await _firestore
-                                .collection('listings_links')
-                                .where('urlLink', isEqualTo: media.linkUrl)
-                                .get();
+                  SizedBox(
+                    height: MyUtility(context).height * 0.25,
+                    child: FutureBuilder<List<MediaLink>>(
+                      future: getMediaData(), // Fetch the media list
+                      builder: (context, snapshot) {
+                        // Check the state of the future
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          // Show a loading indicator while the data is being fetched
+                          return Center(
+                              child: CircularProgressIndicator(
+                                  color: Colors.white));
+                        } else if (snapshot.hasError) {
+                          // Handle errors during the fetch
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
+                          // Handle the case where no data is returned
+                          return Center(
+                              child: Text('No media links found',
+                                  style: TextStyle(color: Colors.grey)));
+                        } else {
+                          // Data successfully fetched
+                          final mediaList =
+                              snapshot.data!; // Access the fetched media list
+                          final filteredMediaLinks =
+                              mediaList.where((document) {
+                            return [
+                              document.linkTitle,
+                              document.linkUrl,
+                            ].any((value) =>
+                                value.toLowerCase().contains(searchText));
+                          }).toList();
+                          return ListView.builder(
+                            itemCount: filteredMediaLinks.length,
+                            itemBuilder: (context, index) {
+                              final media = filteredMediaLinks[index];
 
-                            if (mediaDoc.docs.isNotEmpty) {
-                              String docId = mediaDoc.docs.first.id;
-
-                              showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                barrierColor: Colors.black.withOpacity(0.5),
-                                builder: (BuildContext context) {
-                                  return Dialog(
-                                    backgroundColor: Colors.transparent,
-                                    insetPadding: EdgeInsets.all(10),
-                                    child: AddMediaPopup(
-                                      existingTitle: media
-                                          .linkTitle, // Pass title for editing
-                                      existingUrl:
-                                          media.linkUrl, // Pass URL for editing
-                                      documentId:
-                                          docId, // Pass doc ID for editing
-                                      onMediaAdded:
-                                          _fetchMediaData, // Refresh after editing
+                              return Column(
+                                children: [
+                                  Visibility(
+                                    visible: filteredMediaLinks.isEmpty &&
+                                        index == 0,
+                                    child: Center(
+                                      child: Text(
+                                        'No matching records found',
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.grey),
+                                      ),
                                     ),
-                                  );
-                                },
-                              );
-                            } else {
-                              print('No document found for editing');
-                            }
-                          },
-                          isEven: index % 2 == 0,
-                          pressDelete: () async {
-                            // Fetch the document ID for the media being edited
-                            QuerySnapshot mediaDoc = await _firestore
-                                .collection('listings_links')
-                                .where('urlLink', isEqualTo: media.linkUrl)
-                                .get();
-
-                            String docId = mediaDoc.docs.first.id;
-
-                            // Open the delete confirmation dialog
-                            showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              barrierColor: Colors.black.withOpacity(0.5),
-                              builder: (BuildContext context) {
-                                return Dialog(
-                                  backgroundColor: Colors.transparent,
-                                  insetPadding: EdgeInsets.all(10),
-                                  child: NewDeleteButton(
-                                    documentId: docId,
-                                    collectionName: 'listings_links',
-                                    refreshList: () {
-                                      _fetchMediaData();
-                                    },
                                   ),
-                                );
-                              },
-                            );
-                          },
-                        );
+                                  Visibility(
+                                    visible: filteredMediaLinks.isNotEmpty,
+                                    child: MediaLinkContainer(
+                                      mediaType: media.linkTitle,
+                                      mediaLink: media.linkUrl,
+                                      pressEdit: () async {
+                                        // Fetch the document ID for the media being edited
+                                        QuerySnapshot mediaDoc =
+                                            await _firestore
+                                                .collection('listings_links')
+                                                .where('urlLink',
+                                                    isEqualTo: media.linkUrl)
+                                                .get();
+
+                                        if (mediaDoc.docs.isNotEmpty) {
+                                          String docId = mediaDoc.docs.first.id;
+
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.5),
+                                            builder: (BuildContext context) {
+                                              return Dialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                insetPadding:
+                                                    EdgeInsets.all(10),
+                                                child: AddMediaPopup(
+                                                  existingTitle: media
+                                                      .linkTitle, // Pass title for editing
+                                                  existingUrl: media
+                                                      .linkUrl, // Pass URL for editing
+                                                  documentId:
+                                                      docId, // Pass doc ID for editing
+                                                  onMediaAdded:
+                                                      _fetchMediaData, // Refresh after editing
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        } else {
+                                          print(
+                                              'No document found for editing');
+                                        }
+                                      },
+                                      isEven: index % 2 == 0,
+                                      pressDelete: () async {
+                                        // Fetch the document ID for the media being deleted
+                                        QuerySnapshot mediaDoc =
+                                            await _firestore
+                                                .collection('listings_links')
+                                                .where('urlLink',
+                                                    isEqualTo: media.linkUrl)
+                                                .get();
+
+                                        if (mediaDoc.docs.isNotEmpty) {
+                                          String docId = mediaDoc.docs.first.id;
+
+                                          // Open the delete confirmation dialog
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.5),
+                                            builder: (BuildContext context) {
+                                              return Dialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                insetPadding:
+                                                    EdgeInsets.all(10),
+                                                child: NewDeleteButton(
+                                                  documentId: docId,
+                                                  collectionName:
+                                                      'listings_links',
+                                                  refreshList: () {
+                                                    setState(
+                                                        () {}); // Refresh UI after deletion
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        } else {
+                                          print(
+                                              'No document found for deletion');
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

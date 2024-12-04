@@ -26,6 +26,7 @@ class _GalleryAltState extends State<GalleryAlt> {
   List<Map<String, dynamic>> galleryItems = [];
   final _firestore = FirebaseFirestore.instance;
   bool _isLoading = true;
+  String searchText = "";
 
   @override
   void initState() {
@@ -108,6 +109,13 @@ class _GalleryAltState extends State<GalleryAlt> {
     );
   }
 
+  List<Map<String, dynamic>> get _filteredGalleryItems => galleryItems
+      .where((element) => element['immageTitle']
+          .toString()
+          .toLowerCase()
+          .contains(searchText.toLowerCase()))
+      .toList();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -185,6 +193,11 @@ class _GalleryAltState extends State<GalleryAlt> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             IconSearchBoxB(
+                              onSearch: (String? value) {
+                                setState(() {
+                                  searchText = value ?? '';
+                                });
+                              },
                               search: TextEditingController(),
                             ),
                           ],
@@ -193,7 +206,10 @@ class _GalleryAltState extends State<GalleryAlt> {
                     ),
                     SizedBox(height: 25),
                     _isLoading
-                        ? Center(child: CircularProgressIndicator())
+                        ? Center(
+                            child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ))
                         : galleryItems.isEmpty
                             ? const Center(
                                 child: Text(
@@ -206,103 +222,137 @@ class _GalleryAltState extends State<GalleryAlt> {
                                   gridDelegate:
                                       const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 4,
-                                    mainAxisSpacing: 8.0,
-                                    crossAxisSpacing: 8.0,
-                                    childAspectRatio: 4 / 3.5,
+                                    mainAxisSpacing: 4.0,
+                                    crossAxisSpacing: 4.0,
+                                    childAspectRatio: 4 / 4,
                                   ),
-                                  itemCount: galleryItems.length,
+                                  itemCount: _filteredGalleryItems.length,
                                   itemBuilder: (context, index) {
                                     Map<String, dynamic> image =
-                                        galleryItems[index];
-                                    print(image);
-                                    return Draggable<Map<String, dynamic>>(
-                                      data: image,
-                                      feedback: Material(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.orange, width: 1),
-                                          ),
-                                          child: GalleryAltContainer(
-                                            galleryImage: image['immageFile'],
-                                            description: image['immageTitle'],
-                                            editButton: () {
-                                              _showImagePopup(
-                                                  existingImage:
-                                                      image); // Pass existingImage for editing
-                                            },
-                                            deleteButton: () {},
+                                        _filteredGalleryItems[index];
+                                    return Column(
+                                      children: [
+                                        Visibility(
+                                          visible:
+                                              _filteredGalleryItems.isEmpty &&
+                                                  index == 0,
+                                          child: Center(
+                                            child: Text(
+                                              'No matching records found',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.grey),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      childWhenDragging: Opacity(
-                                        opacity: 0.3,
-                                        child: GalleryAltContainer(
-                                          galleryImage: image['immageFile'],
-                                          description: image['immageTitle'],
-                                          editButton: () {
-                                            _showImagePopup(
-                                                existingImage:
-                                                    image); // Pass existingImage for editing
-                                          },
-                                          deleteButton: () {},
-                                        ),
-                                      ),
-                                      child: DragTarget<Map<String, dynamic>>(
-                                        onAccept: (draggedImage) {
-                                          setState(() {
-                                            int oldIndex = galleryItems
-                                                .indexOf(draggedImage);
-                                            int newIndex =
-                                                galleryItems.indexOf(image);
-
-                                            if (oldIndex != newIndex) {
-                                              galleryItems.removeAt(oldIndex);
-                                              galleryItems.insert(
-                                                  newIndex, draggedImage);
-                                            }
-                                          });
-                                        },
-                                        builder: (BuildContext context,
-                                            List<Map<String, dynamic>?>
-                                                candidateData,
-                                            rejectedData) {
-                                          return GalleryAltContainer(
-                                            galleryImage: image['immageFile'],
-                                            description: image['immageTitle'],
-                                            editButton: () {
-                                              _showImagePopup(
-                                                  existingImage:
-                                                      image); // Pass existingImage for editing
-                                            },
-                                            deleteButton: () {
-                                              showDialog(
-                                                context: context,
-                                                barrierDismissible: true,
-                                                barrierColor: Colors.black
-                                                    .withOpacity(0.5),
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return Dialog(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    insetPadding:
-                                                        EdgeInsets.all(10),
-                                                    child: NewDeleteButton(
-                                                      documentId:
-                                                          image['docId'],
-                                                      collectionName: 'gallery',
-                                                      refreshList: () {
-                                                        _loadGalleryData();
-                                                      },
-                                                    ),
-                                                  );
+                                        Visibility(
+                                          visible:
+                                              _filteredGalleryItems.isNotEmpty,
+                                          child:
+                                              Draggable<Map<String, dynamic>>(
+                                            data: image,
+                                            feedback: Material(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.orange,
+                                                      width: 1),
+                                                ),
+                                                child: GalleryAltContainer(
+                                                  galleryImage:
+                                                      image['immageFile'],
+                                                  description:
+                                                      image['immageTitle'],
+                                                  editButton: () {
+                                                    _showImagePopup(
+                                                        existingImage:
+                                                            image); // Pass existingImage for editing
+                                                  },
+                                                  deleteButton: () {},
+                                                ),
+                                              ),
+                                            ),
+                                            childWhenDragging: Opacity(
+                                              opacity: 0.3,
+                                              child: GalleryAltContainer(
+                                                galleryImage:
+                                                    image['immageFile'],
+                                                description:
+                                                    image['immageTitle'],
+                                                editButton: () {
+                                                  _showImagePopup(
+                                                      existingImage:
+                                                          image); // Pass existingImage for editing
                                                 },
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
+                                                deleteButton: () {},
+                                              ),
+                                            ),
+                                            child: DragTarget<
+                                                Map<String, dynamic>>(
+                                              onAccept: (draggedImage) {
+                                                setState(() {
+                                                  int oldIndex = galleryItems
+                                                      .indexOf(draggedImage);
+                                                  int newIndex = galleryItems
+                                                      .indexOf(image);
+
+                                                  if (oldIndex != newIndex) {
+                                                    galleryItems
+                                                        .removeAt(oldIndex);
+                                                    galleryItems.insert(
+                                                        newIndex, draggedImage);
+                                                  }
+                                                });
+                                              },
+                                              builder: (BuildContext context,
+                                                  List<Map<String, dynamic>?>
+                                                      candidateData,
+                                                  rejectedData) {
+                                                return GalleryAltContainer(
+                                                  galleryImage:
+                                                      image['immageFile'],
+                                                  description:
+                                                      image['immageTitle'],
+                                                  editButton: () {
+                                                    _showImagePopup(
+                                                        existingImage:
+                                                            image); // Pass existingImage for editing
+                                                  },
+                                                  deleteButton: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      barrierDismissible: true,
+                                                      barrierColor: Colors.black
+                                                          .withOpacity(0.5),
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Dialog(
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          insetPadding:
+                                                              EdgeInsets.all(
+                                                                  10),
+                                                          child:
+                                                              NewDeleteButton(
+                                                            documentId:
+                                                                image['docId'],
+                                                            collectionName:
+                                                                'gallery',
+                                                            refreshList: () {
+                                                              _loadGalleryData();
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     );
                                   },
                                 ),
