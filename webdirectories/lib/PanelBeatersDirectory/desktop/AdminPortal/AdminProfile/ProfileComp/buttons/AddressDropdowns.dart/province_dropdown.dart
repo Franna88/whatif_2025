@@ -6,7 +6,10 @@ class ProvinceDropdown extends StatelessWidget {
   final Function(String) onStateChanged;
 
   const ProvinceDropdown(
-      {Key? key, required this.countryValue, required this.onStateChanged})
+      {Key? key,
+      required this.countryValue,
+      required this.onStateChanged,
+      required void Function(String country) onProvinceChanged})
       : super(key: key);
 
   @override

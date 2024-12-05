@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFindaContainer/InfoContainer/InfoContainerComp/ButtonInfoContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/SubmitCV/SubmitCVContainer.dart';
 import 'package:webdirectories/myutility.dart';
 
 class InfoContainer extends StatefulWidget {
