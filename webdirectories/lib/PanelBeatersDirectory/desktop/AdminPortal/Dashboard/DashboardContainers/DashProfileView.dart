@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
@@ -8,10 +9,11 @@ import '../DasboardComp/DashPropdown.dart';
 class DashProfileView extends StatefulWidget {
   bool? admin;
   final Function(int)? onSelect; // Function to handle navigation
-
+  final Function? onViewProfile;
   DashProfileView({
     super.key,
     this.onSelect,
+    this.onViewProfile,
     this.admin,
   });
 
@@ -155,7 +157,9 @@ class _DashProfileViewState extends State<DashProfileView> {
                       ),
                       padding: EdgeInsets.symmetric(horizontal: 8.0),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.onViewProfile!();
+                    },
                     child: Text(
                       'View Directory Profile',
                       style: TextStyle(
