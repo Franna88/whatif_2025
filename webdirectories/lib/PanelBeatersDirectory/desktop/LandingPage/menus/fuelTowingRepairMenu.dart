@@ -53,6 +53,7 @@ class FuelTowingRepairMenu extends StatelessWidget {
         MainButtonDirect(
           buttonTitle: 'Fuel, Food & Pricing',
           onTap: () {},
+          isComingSoon: true,
         ),
         const SizedBox(
           height: 15,
@@ -60,6 +61,7 @@ class FuelTowingRepairMenu extends StatelessWidget {
         MainButtonDirect(
           buttonTitle: 'Repair, Parts & Tyres',
           onTap: () {},
+          isComingSoon: true,
         ),
         const SizedBox(
           height: 15,
@@ -67,6 +69,7 @@ class FuelTowingRepairMenu extends StatelessWidget {
         MainButtonDirect(
           buttonTitle: 'Towing Services',
           onTap: () {},
+          isComingSoon: true,
         ),
         const SizedBox(
           height: 15,
@@ -74,6 +77,7 @@ class FuelTowingRepairMenu extends StatelessWidget {
         MainButtonDirect(
           buttonTitle: 'Emergency on Call',
           onTap: () {},
+          isComingSoon: true,
         ),
         const SizedBox(
           height: 25,

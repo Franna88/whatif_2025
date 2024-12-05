@@ -64,12 +64,14 @@ class _ServiceFeaturedContainerState extends State<ServiceFeaturedContainer> {
           Padding(
             padding: const EdgeInsets.only(top: 5),
             child: Text(
+              
               widget.businessName,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: MyUtility(context).width * 0.0085,
                 fontFamily: 'ralewaysemi',
+
               ),
             ),
           ),
@@ -77,6 +79,7 @@ class _ServiceFeaturedContainerState extends State<ServiceFeaturedContainer> {
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: SizedBox(
               width: 208.08,
+              height: 45,
               child: Text(
                 widget.businessAddress,
                 textAlign: TextAlign.center,

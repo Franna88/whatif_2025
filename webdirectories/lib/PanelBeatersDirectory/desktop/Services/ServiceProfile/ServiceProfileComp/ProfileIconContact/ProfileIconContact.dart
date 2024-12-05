@@ -25,9 +25,11 @@ class _ProfileSocialIconContactState extends State<ProfileSocialIconContact> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
+      // cursor: SystemMouseCursors.click,
       cursor: widget.isComingSoon
           ? SystemMouseCursors.forbidden
           : SystemMouseCursors.click,
+
       onEnter: (_) {
         if (widget.isComingSoon) {
           setState(() {
