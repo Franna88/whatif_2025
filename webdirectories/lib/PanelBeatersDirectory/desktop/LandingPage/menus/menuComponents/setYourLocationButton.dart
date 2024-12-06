@@ -87,27 +87,30 @@ class _SetYourLoactionButtonState extends State<SetYourLoactionButton> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 25,
-                height: 25,
-                decoration: const BoxDecoration(
-                  color: Colors.black,
-                  shape: BoxShape.circle,
-                ),
-                padding: EdgeInsets.zero,
-                child: const Icon(
-                  Icons.keyboard_arrow_right_outlined,
-                  color: Colors.white,
-                  size: 16,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                nearMeText,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.5,
-                  fontFamily: 'Raleway',
+              // Container(
+              //   width: 25,
+              //   height: 25,
+              //   decoration: const BoxDecoration(
+              //     color: Colors.black,
+              //     shape: BoxShape.circle,
+              //   ),
+              //   padding: EdgeInsets.zero,
+              //   child: const Icon(
+              //     Icons.keyboard_arrow_right_outlined,
+              //     color: Colors.white,
+              //     size: 16,
+              //   ),
+              // ),
+              // const SizedBox(width: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  nearMeText,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.5,
+                    fontFamily: 'Raleway',
+                  ),
                 ),
               ),
             ],

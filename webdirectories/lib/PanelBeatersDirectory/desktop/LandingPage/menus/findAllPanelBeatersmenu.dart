@@ -76,6 +76,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
             widget1: SetYourLoactionButton(),
             widget2: SearchButton(
               onTap: widget.viewServiceDetails,
+              isComingSoon: true,
             ),
           ),
           isOpen: currentOpenDropdown == 0,
@@ -93,6 +94,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
               ),
               widget2: SearchButton(
                 onTap: () => widget.viewServiceByAddress(address),
+                isComingSoon: true,
               )),
           isOpen: currentOpenDropdown == 1,
           onToggle: () => toggleDropdown(1),
@@ -105,7 +107,9 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
           dropdownContent: const DropDownMenuWidget(
               topText: 'Search by keywords within Panel Beater Directory',
               widget1: TextfieldButton(hintText: 'Type here'),
-              widget2: SearchButton()),
+              widget2: SearchButton(
+                isComingSoon: true,
+              )),
           isOpen: currentOpenDropdown == 2,
           onToggle: () => toggleDropdown(2),
         ),

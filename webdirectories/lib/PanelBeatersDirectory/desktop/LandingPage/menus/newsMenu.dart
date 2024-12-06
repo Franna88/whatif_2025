@@ -17,9 +17,10 @@ class NewsMenu extends StatelessWidget {
         const Text(
           'Info & Finance',
           style: TextStyle(
-              fontSize: 34,
-              fontFamily: 'ralewaybold',
-              color: Color.fromARGB(255, 255, 255, 255),),
+            fontSize: 34,
+            fontFamily: 'ralewaybold',
+            color: Color.fromARGB(255, 255, 255, 255),
+          ),
         ),
         const SizedBox(
           width: 430,
@@ -40,19 +41,35 @@ class NewsMenu extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-         MainButtonDirect(buttonTitle: 'Articles', onTap: () {  },),
+        MainButtonDirect(
+          buttonTitle: 'Articles',
+          onTap: () {},
+          isComingSoon: true,
+        ),
         const SizedBox(
           height: 15,
         ),
-         MainButtonDirect(buttonTitle: 'CSI Lightstone EchoMBR', onTap: () {  },),
+        MainButtonDirect(
+          buttonTitle: 'CSI Lightstone EchoMBR',
+          onTap: () {},
+          isComingSoon: true,
+        ),
         const SizedBox(
           height: 15,
         ),
-         MainButtonDirect(buttonTitle: 'Industry News', onTap: () {  },),
+        MainButtonDirect(
+          buttonTitle: 'Industry News',
+          onTap: () {},
+          isComingSoon: true,
+        ),
         const SizedBox(
           height: 15,
         ),
-         MainButtonDirect(buttonTitle: 'Repair Finance', onTap: () {  },),
+        MainButtonDirect(
+          buttonTitle: 'Repair Finance',
+          onTap: () {},
+          isComingSoon: true,
+        ),
         const SizedBox(
           height: 25,
         ),

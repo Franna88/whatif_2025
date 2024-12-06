@@ -323,10 +323,13 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                           showFeatured: toggleToFeatured,
                           showOther: toggleToOther,
                           isFeaturedSelected: true,
+                          isComingSoon: true,
                         ),
                         Row(
                           children: [
-                            IconButtons(),
+                            IconButtons(
+                              isComingSoon: true,
+                            ),
                             SizedBox(
                               width: MyUtility(context).width * 0.03,
                             )

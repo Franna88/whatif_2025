@@ -215,38 +215,38 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                     ),
                   ],
                 ),
-                Positioned(
-                  top: 0,
-                  bottom: 0,
-                  right: widthDevice < 1600 ? 40 : 60,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: MouseRegion(
-                        onEnter: (_) {
-                          setState(() {
-                            _isHovered = true;
-                          });
-                        },
-                        onExit: (_) {
-                          setState(() {
-                            _isHovered = false;
-                          });
-                        },
-                        child: GestureDetector(
-                          onTap: widget.goToLandingPageDisplay,
-                          child: Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            size: heightDevice * 0.12,
-                            color:
-                                _isHovered ? Colors.white : Color(0xFFFF8828),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   top: 0,
+                //   bottom: 0,
+                //   right: widthDevice < 1600 ? 40 : 60,
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(left: 0),
+                //     child: Align(
+                //       alignment: Alignment.centerLeft,
+                //       child: MouseRegion(
+                //         onEnter: (_) {
+                //           setState(() {
+                //             _isHovered = true;
+                //           });
+                //         },
+                //         onExit: (_) {
+                //           setState(() {
+                //             _isHovered = false;
+                //           });
+                //         },
+                //         child: GestureDetector(
+                //           onTap: widget.goToLandingPageDisplay,
+                //           child: Icon(
+                //             Icons.keyboard_arrow_right_rounded,
+                //             size: heightDevice * 0.12,
+                //             color:
+                //                 _isHovered ? Colors.white : Color(0xFFFF8828),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             PanelFooter()
