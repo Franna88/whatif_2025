@@ -45,7 +45,10 @@ class MyApp extends StatelessWidget {
               listingsId: '',
               normalUser: false,
             )),
-        '/panelbeaters-directory': (context) => const PanelBeatersHome(),
+        '/panelbeaters-directory': (context) => PanelBeatersHome(),
+
+        // '/panelbeaters-directory': (context) =>
+        //     AdminPortal(normalUser: true, listingsId: '2473'),
       },
       title: 'Web Directories',
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/SubmitCV/SubmitCVContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFindaContainer/JobFinderContainer.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -106,7 +107,9 @@ class _JobFinderState extends State<JobFinder> {
                               ],
                             ),
                             child: Center(
-                              child: JobFinderContainer(),
+                              child:
+                                  // JobFinderContainer(),
+                                  SubmitCVContainer(),
                             ),
                           ),
                         ],

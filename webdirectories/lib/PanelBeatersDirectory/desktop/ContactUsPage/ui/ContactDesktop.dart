@@ -125,7 +125,7 @@ class _ContactDesktopState extends State<ContactDesktop> {
                   padding: const EdgeInsets.symmetric(vertical: 25),
                   child: SizedBox(
                     width: MyUtility(context).width / 2.2,
-                    height: MyUtility(context).height / 11,
+                    height: MyUtility(context).height / 10,
                     child: Row(
                       children: [
                         SizedBox(

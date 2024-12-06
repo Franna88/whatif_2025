@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashProfileView.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationMessage.dart/NotMessageReuseable/BackButtonMessage.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
+import 'package:webdirectories/PanelBeatersDirectory/emails/jobFinder/sendJobFinderDataOP.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
+import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 
 import 'JobFinderComp/ReqruitDetails.dart';
@@ -14,6 +18,45 @@ class JobFinderDetails extends StatelessWidget {
   const JobFinderDetails(
       {Key? key, required this.job, required this.navigateToPage})
       : super(key: key);
+
+  Future<void> sendEmailData(BuildContext context) async {
+    StoredUser? userData = await getUserInfo();
+
+    if (userData == null) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: DescriptionDialog(
+                description: "Cannot get user data to send email"),
+          );
+        },
+      );
+      return;
+    }
+
+    await sendJobFinderDataOP(
+        userName: userData.fullName,
+        userEmail: userData.email,
+        jobFinderName: job.name,
+        datePublished:
+            '${job.dateSubmitted.toDate().year}-${job.dateSubmitted.toDate().month}-${job.dateSubmitted.toDate().day}',
+        occupation: job.occupation,
+        yearsExperience: job.years,
+        areaOfWork: '${job.province} ${job.city} ${job.country}',
+        contactNumber: job.contactNumber,
+        jobFinderEmail: job.email);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: DescriptionDialog(
+              description: "Email has been successfully to ${userData.email}"),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +106,12 @@ class JobFinderDetails extends StatelessWidget {
                                 navigateToPage(8);
                               },
                             ),
-                            AddButton(text: 'Email Data', onPressed: () {})
+                            AddButton(
+                              text: 'Email Data',
+                              onPressed: () {
+                                sendEmailData(context);
+                              },
+                            )
                           ],
                         ),
                       ),

@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future sendWelcomeOwnersPortalEmail({
-  required String message,
-  required String name,
-  required String email,
+  required String userName,
+  required String userEmail,
 }) async {
   final serviceId = 'service_qxhqzd9';
   final templateId = 'template_ownersPortal';
@@ -21,9 +20,8 @@ Future sendWelcomeOwnersPortalEmail({
         'template_id': templateId,
         'user_id': userId,
         'template_params': {
-          'message': message,
-          'user_email': email,
-          'requester_name': name
+          'user_name': userName,
+          'user_email': userEmail,
         }
       }));
 }

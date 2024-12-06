@@ -6,6 +6,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPr
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageUsers/ManageUserComp/ManageUserInfo.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageUsers/userDetails.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/PopUps/NewUserPopup/NewUserPopup.dart';
+import 'package:webdirectories/PanelBeatersDirectory/emails/welcomeOwnersPortal/sendWelcomeOwnersPanel.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/users.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
@@ -55,6 +56,7 @@ class _ManageUsersState extends State<ManageUsers> {
   // Fetch user data from Firestore and handle errors
   void _fetchUserData() async {
     print('loading users...');
+    print('normal user: ${widget.normalUser}');
 
     List<Map<String, dynamic>> users = [];
     var listingId = "";
@@ -250,6 +252,11 @@ class _ManageUsersState extends State<ManageUsers> {
         user!.id, //listing id
         userDocRef.user!.uid,
       );
+
+      // send welcome email
+      await sendWelcomeOwnersPortalEmail(
+          userName: _controller.fullname.text,
+          userEmail: _controller.email.text);
     } catch (e) {
       print('Error fetching listing data: $e');
       setState(() {
@@ -353,44 +360,40 @@ class _ManageUsersState extends State<ManageUsers> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Visibility(
-                              visible: !widget.normalUser,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  AddButton(
-                                    text: 'Add New User',
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        barrierDismissible: true,
-                                        barrierColor:
-                                            Colors.black.withOpacity(0.5),
-                                        builder: (BuildContext context) {
-                                          return Dialog(
-                                            backgroundColor: Colors.transparent,
-                                            insetPadding:
-                                                const EdgeInsets.all(10),
-                                            child: NewUserPopup(
-                                              onSubmit: createUser,
-                                              fullNameController:
-                                                  _controller.fullname,
-                                              emailController:
-                                                  _controller.email,
-                                              mobileController:
-                                                  _controller.usercell,
-                                              passwordController:
-                                                  _controller.password,
-                                              confirmPasswordController:
-                                                  _controller.confirmPassword,
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                AddButton(
+                                  text: 'Add New User',
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      barrierColor:
+                                          Colors.black.withOpacity(0.5),
+                                      builder: (BuildContext context) {
+                                        return Dialog(
+                                          backgroundColor: Colors.transparent,
+                                          insetPadding:
+                                              const EdgeInsets.all(10),
+                                          child: NewUserPopup(
+                                            onSubmit: createUser,
+                                            fullNameController:
+                                                _controller.fullname,
+                                            emailController: _controller.email,
+                                            mobileController:
+                                                _controller.usercell,
+                                            passwordController:
+                                                _controller.password,
+                                            confirmPasswordController:
+                                                _controller.confirmPassword,
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
                             const Padding(
                               padding: EdgeInsets.only(top: 10, bottom: 10),

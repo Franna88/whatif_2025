@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/extensions.dart';
 import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -18,7 +19,7 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
   var uuid = new Uuid();
   String _sessionToken = '';
   List<dynamic> _placeList = [];
-
+  bool showDropDown = false;
   @override
   void initState() {
     super.initState();
@@ -29,6 +30,16 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
       if (_sessionToken == '') {
         setState(() {
           _sessionToken = uuid.v4();
+        });
+      }
+
+      if (_addressController.text.length == 0 && showDropDown == true) {
+        setState(() {
+          showDropDown = false;
+        });
+      } else if (_addressController.text.length > 0 && showDropDown == false) {
+        setState(() {
+          showDropDown = true;
         });
       }
       getSuggestion(_addressController.text);
@@ -49,7 +60,8 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
         "Access-Control-Allow-Methods": "GET,POST, OPTIONS"
       };
       String kPLACES_API_KEY = "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko";
-      String baseURL = 'http://localhost:5000/api/places/autocomplete';
+      String baseURL =
+          'https://webdirapi.onrender.com/api/v1/places/autocomplete';
       String request =
           '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$_sessionToken';
       var response = await http.get(Uri.parse(request), headers: header);
@@ -77,7 +89,7 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
     };
     String kPLACES_API_KEY = "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko";
 
-    String baseURL = 'http://localhost:5000/api/places/get-details';
+    String baseURL = 'https://webdirapi.onrender.com/api/v1/places/get-details';
     String request = '$baseURL?placeId=${_placeList[id]['place_id']}';
     var response = await http.get(Uri.parse(request), headers: header);
     if (response.statusCode == 200) {
@@ -101,14 +113,17 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = MyUtility(context).width < 600;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Align(
-            alignment: Alignment.topLeft,
+            alignment: isMobile ? Alignment.topCenter : Alignment.topLeft,
             child: Container(
-              width: MyUtility(context).width * 0.2,
+              width: isMobile
+                  ? MyUtility(context).width * 0.65
+                  : MyUtility(context).width * 0.2,
               height: 38,
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 247, 246, 246),
@@ -167,7 +182,7 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
             color: Colors.white, // Background color for the dropdown
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: _placeList.length,
+              itemCount: showDropDown ? _placeList.length : 0,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {

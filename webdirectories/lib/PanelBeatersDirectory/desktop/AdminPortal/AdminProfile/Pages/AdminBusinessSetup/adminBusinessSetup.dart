@@ -131,12 +131,17 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
       });
 
   saveData() async {
-    await _firestore
-        .collection('listings')
-        .doc(docId)
-        .update(_controller.getValues())
-        .whenComplete(
-            () => descriptionDialog("Details have been saved successfully!"));
+    print('saving...');
+    try {
+      await _firestore
+          .collection('listings')
+          .doc(docId)
+          .update(_controller.getValues())
+          .whenComplete(
+              () => descriptionDialog("Details have been saved successfully!"));
+    } catch (e) {
+      descriptionDialog(e);
+    }
   }
 
   @override
@@ -165,6 +170,7 @@ class _AdminusinessSetupState extends State<AdminusinessSetup> {
                 registeredNameController: _controller.registeredNameController,
                 bEEElevelController: _controller.bEEElevelController,
                 imageChange: () {},
+                saveData: saveData,
               ),
               BusinessAddress(
                 imageName: businessLogo != null ? businessLogo! : '',

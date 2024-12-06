@@ -4,7 +4,9 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileRecentArticles
 
 class DirectOrangeButton extends StatelessWidget {
   final String buttonTitle;
-  const DirectOrangeButton({super.key, required this.buttonTitle});
+  final Function onPressed;
+  const DirectOrangeButton(
+      {super.key, required this.buttonTitle, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +16,7 @@ class DirectOrangeButton extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const LocationFeatureMobile()),
-            );
+            onPressed();
           },
           child: Container(
             width: widthDevice * 0.85,

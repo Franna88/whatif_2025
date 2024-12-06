@@ -8,6 +8,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboa
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageUsers/ManageUsers.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/AdminNotificationsAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/SideNavBar/SideNavButton/SideNavButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
 import 'package:webdirectories/WebDirectories/Page1/Page1.dart';
@@ -133,6 +134,9 @@ class _SideNavBarState extends State<SideNavBar> {
         registrationData.where((e) => e['registrationTypeId'] == 8).toList();
 
     print("REGISTERLight");
+    if (filteredRegistrationData.isEmpty) {
+      print('No lightstone found');
+    }
     print(filteredRegistrationData[0]['registrationNumbers']);
     if (registrationDataSnapshot.docs.isNotEmpty) {
       QuerySnapshot lightstoneSnapshot = await _firestore
@@ -170,6 +174,23 @@ class _SideNavBarState extends State<SideNavBar> {
     setState(() {
       notificationData = quoteData;
     });
+  }
+
+  viewProfile() {
+    //Open owners portal
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (BuildContext context) {
+        return Dialog.fullscreen(
+          backgroundColor: Colors.transparent,
+          child: Services(
+            listingId: widget.adminListingsId,
+          ),
+        );
+      },
+    );
   }
 
   void _handleLogout() {
@@ -364,6 +385,7 @@ class _SideNavBarState extends State<SideNavBar> {
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 20),
                 child: DashProfileView(
+                  onViewProfile: viewProfile,
                   onSelect: (index) =>
                       navigateToPage(index), // Ensure this is correct
                 ),

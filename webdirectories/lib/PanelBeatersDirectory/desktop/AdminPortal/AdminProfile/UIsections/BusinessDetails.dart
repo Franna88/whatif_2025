@@ -11,14 +11,15 @@ class BusinessDetails extends StatefulWidget {
   final TextEditingController registeredNameController;
   final TextEditingController bEEElevelController;
   final VoidCallback imageChange;
-
+  final VoidCallback saveData;
   const BusinessDetails(
       {super.key,
       required this.imageName,
       required this.tradingNameController,
       required this.registeredNameController,
       required this.bEEElevelController,
-      required this.imageChange});
+      required this.imageChange,
+      required this.saveData});
 
   @override
   State<BusinessDetails> createState() => _BusinessDetailsState();
@@ -68,7 +69,7 @@ class _BusinessDetailsState extends State<BusinessDetails> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            AddButton(text: 'Save', onPressed: () {}),
+                            AddButton(text: 'Save', onPressed: widget.saveData),
                           ],
                         ),
                       ),

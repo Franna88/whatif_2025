@@ -4,11 +4,13 @@ import 'package:webdirectories/myutility.dart';
 class LongTextField extends StatefulWidget {
   final TextEditingController controller;
   final String headline;
+  final double? width; // Optional width parameter
 
   const LongTextField({
     Key? key,
     required this.controller,
     required this.headline,
+    this.width, // Include the optional parameter
   }) : super(key: key);
 
   @override
@@ -33,7 +35,9 @@ class _LongTextFieldState extends State<LongTextField> {
           ),
           SizedBox(height: 8),
           Container(
-            width: MyUtility(context).width * 0.497,
+            width: widget.width ??
+                MyUtility(context).width *
+                    0.497, // Use the provided width or default to the specified value
             height: MyUtility(context).height * 0.13,
             decoration: ShapeDecoration(
               color: Colors.white,

@@ -22,6 +22,8 @@ class DocumentAlt extends StatefulWidget {
 class _DocumentAltState extends State<DocumentAlt> {
   late List<Map<String, dynamic>> registrationInfo;
   final _firestore = FirebaseFirestore.instance;
+  final searchController = TextEditingController();
+  String searchText = "";
 
   Future<List<Map<String, dynamic>>> _fetchDocumentData() async {
     // Fetch documents
@@ -73,7 +75,7 @@ class _DocumentAltState extends State<DocumentAlt> {
             doc['documentSubCategory'] = documentSubCategoryData;
           }
         }
-
+        print(documentData);
         return documentData;
       } else {
         return [];
@@ -151,6 +153,11 @@ class _DocumentAltState extends State<DocumentAlt> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconSearchBoxB(
+                        onSearch: (String? value) {
+                          setState(() {
+                            searchText = value ?? '';
+                          });
+                        },
                         search: TextEditingController(),
                       ),
                     ],
@@ -236,7 +243,9 @@ class _DocumentAltState extends State<DocumentAlt> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(
+                              child: CircularProgressIndicator(
+                                  color: Colors.white));
                         } else if (snapshot.hasError) {
                           return Center(
                               child: Text('Error: ${snapshot.error}'));
@@ -255,56 +264,90 @@ class _DocumentAltState extends State<DocumentAlt> {
                               itemCount: documentInfo.length,
                               itemBuilder: (context, index) {
                                 final document = documentInfo[index];
-                                print(document);
-                                return DocumentAltContainer(
-                                  title: document['documentTitle'],
-                                  category: document['documentCategory'],
-                                  subCategory: document['documentSubCategory'],
-                                  pressEdit: () {
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      barrierColor:
-                                          Colors.black.withOpacity(0.5),
-                                      builder: (BuildContext context) {
-                                        return Dialog(
-                                          backgroundColor: Colors.transparent,
-                                          insetPadding: EdgeInsets.all(10),
-                                          child: DocumentPopup(
-                                            existingDocument:
-                                                document, // Pass the document data for editing
-                                            refreshList: () {
-                                              setState(() {});
+                                final filteredDocuments =
+                                    documentInfo.where((document) {
+                                  return [
+                                    document['documentTitle'],
+                                    document['documentCategory'],
+                                    document['documentSubCategory'],
+                                  ].any((value) =>
+                                      value
+                                          ?.toLowerCase()
+                                          .contains(searchText) ??
+                                      false);
+                                }).toList();
+                                return Column(
+                                  children: [
+                                    Visibility(
+                                      visible: filteredDocuments.isEmpty &&
+                                          index == 0,
+                                      child: Center(
+                                        child: Text(
+                                          'No matching records found',
+                                          style: TextStyle(
+                                              fontSize: 16, color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: filteredDocuments.isNotEmpty,
+                                      child: DocumentAltContainer(
+                                        title: document['documentTitle'],
+                                        category: document['documentCategory'],
+                                        subCategory:
+                                            document['documentSubCategory'],
+                                        pressEdit: () {
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.5),
+                                            builder: (BuildContext context) {
+                                              return Dialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                insetPadding:
+                                                    EdgeInsets.all(10),
+                                                child: DocumentPopup(
+                                                  existingDocument:
+                                                      document, // Pass the document data for editing
+                                                  refreshList: () {
+                                                    setState(() {});
+                                                  },
+                                                ),
+                                              );
                                             },
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  pressDelete: () {
-                                    // Open the delete confirmation dialog
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      barrierColor:
-                                          Colors.black.withOpacity(0.5),
-                                      builder: (BuildContext context) {
-                                        return Dialog(
-                                          backgroundColor: Colors.transparent,
-                                          insetPadding: EdgeInsets.all(10),
-                                          child: NewDeleteButton(
-                                            documentId: document['docId'],
-                                            collectionName:
-                                                'listings_documents',
-                                            refreshList: () {
-                                              setState(() {});
+                                          );
+                                        },
+                                        pressDelete: () {
+                                          // Open the delete confirmation dialog
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.5),
+                                            builder: (BuildContext context) {
+                                              return Dialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                insetPadding:
+                                                    EdgeInsets.all(10),
+                                                child: NewDeleteButton(
+                                                  documentId: document['docId'],
+                                                  collectionName:
+                                                      'listings_documents',
+                                                  refreshList: () {
+                                                    setState(() {});
+                                                  },
+                                                ),
+                                              );
                                             },
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  isEven: index % 2 == 0,
+                                          );
+                                        },
+                                        isEven: index % 2 == 0,
+                                      ),
+                                    ),
+                                  ],
                                 );
                               },
                             ),
