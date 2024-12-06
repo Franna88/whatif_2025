@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeatureMobile.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesNearMe/mobileServicesNearMe.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ServicesMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/mobileLandingPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileContactUs/mobileContactUsMain.dart';

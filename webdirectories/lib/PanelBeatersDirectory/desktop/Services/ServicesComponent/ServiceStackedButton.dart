@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ServicesStackedButton extends StatefulWidget {
-  final VoidCallback showFeatured;
-  final VoidCallback showOther;
+  final VoidCallback toggleFeatured;
   final bool isFeaturedSelected;
 
   const ServicesStackedButton(
       {Key? key,
-      required this.showFeatured,
-      required this.showOther,
+      required this.toggleFeatured,
       required this.isFeaturedSelected})
       : super(key: key);
 
@@ -31,10 +29,7 @@ class _ServicesStackedButtonState extends State<ServicesStackedButton> {
             left: 110,
             child: ElevatedButton(
               onPressed: () {
-                setState(() {
-                  isFeaturedSelected = false;
-                });
-                widget.showOther();
+                widget.toggleFeatured();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: widget.isFeaturedSelected
@@ -63,10 +58,7 @@ class _ServicesStackedButtonState extends State<ServicesStackedButton> {
             left: 0,
             child: ElevatedButton(
               onPressed: () {
-                setState(() {
-                  isFeaturedSelected = true;
-                });
-                widget.showFeatured();
+                widget.toggleFeatured();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: widget.isFeaturedSelected

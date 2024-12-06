@@ -6,7 +6,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/m
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/searchButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/setYourLocationButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/textfieldButton.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesFeatured.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesNearMe/ServicesNearMe.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/addressAutoCompleteField.dart';
 
 class FindAllPanelBeaters extends StatefulWidget {
