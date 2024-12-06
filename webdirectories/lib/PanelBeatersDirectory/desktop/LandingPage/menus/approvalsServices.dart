@@ -51,7 +51,9 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
           dropdownContent: const DropDownMenuWidget(
               topText: 'Find your nearest Panel Beater',
               widget1: SetYourLoactionButton(),
-              widget2: SearchButton()),
+              widget2: SearchButton(
+                isComingSoon: true,
+              )),
           isOpen: currentOpenDropdown == 0,
           onToggle: () => toggleDropdown(0),
         ),
@@ -64,7 +66,9 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
               topText: 'Find a Panel Beater by street',
               widget1:
                   TextfieldButton(hintText: 'Type any street address here'),
-              widget2: SearchButton()),
+              widget2: SearchButton(
+                isComingSoon: true,
+              )),
           isOpen: currentOpenDropdown == 1,
           onToggle: () => toggleDropdown(1),
         ),

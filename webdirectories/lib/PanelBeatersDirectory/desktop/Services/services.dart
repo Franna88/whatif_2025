@@ -129,6 +129,7 @@ class _ServicesState extends State<Services> {
   }
 
   Future<void> _getListingData() async {
+    print('listing id: ${widget.listingId}');
     try {
       setState(() {
         _isLoading = true;
@@ -140,6 +141,7 @@ class _ServicesState extends State<Services> {
           .get();
 
       if (data.docs.isNotEmpty) {
+        print('getting data...');
         Map<String, dynamic> listingData =
             data.docs.first.data() as Map<String, dynamic>;
 
@@ -155,10 +157,14 @@ class _ServicesState extends State<Services> {
         List<String> urls = [];
 
         for (var element in images) {
-          String? url = await getImageUrl('listings/${element['immageFile']}');
-          if (url != null) {
-            urls.add(url);
+          if ((element['immageFile'] as String).contains('firebase')) {
+            urls.add(element['immageFile']);
           }
+
+          // String? url = await getImageUrl('listings/${element['immageFile']}');
+          // if (url != null) {
+          //   urls.add(url);
+          // }
         }
 
         int viewCount = await _firestore

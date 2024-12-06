@@ -78,10 +78,13 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    height: heightDevice * 0.05,
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 50, top: 50),
+                    padding: const EdgeInsets.only(left: 50, top: 0),
                     child: Image.asset(
                       'images/panelLogo.png',
                       height: 70,
@@ -91,35 +94,35 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                     height: heightDevice * 0.03,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: MouseRegion(
-                            onEnter: (_) => setState(() {
-                              _isHovered = true;
-                            }),
-                            onExit: (_) => setState(() {
-                              _isHovered = false;
-                            }),
-                            child: GestureDetector(
-                              onTap: () {
-                                widget.goToWeConnectMainPage();
-                              },
-                              child: Icon(
-                                Icons.keyboard_arrow_left_rounded,
-                                size: heightDevice * 0.12,
-                                color: _isHovered
-                                    ? Colors.white
-                                    : Color(0xFFFF8828),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 15),
+                      //   child: Align(
+                      //     alignment: Alignment.centerLeft,
+                      //     child: MouseRegion(
+                      //       onEnter: (_) => setState(() {
+                      //         _isHovered = true;
+                      //       }),
+                      //       onExit: (_) => setState(() {
+                      //         _isHovered = false;
+                      //       }),
+                      //       child: GestureDetector(
+                      //         onTap: () {
+                      //           widget.goToWeConnectMainPage();
+                      //         },
+                      //         child: Icon(
+                      //           Icons.keyboard_arrow_left_rounded,
+                      //           size: heightDevice * 0.12,
+                      //           color: _isHovered
+                      //               ? Colors.white
+                      //               : Color(0xFFFF8828),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       if (widthDevice > 1477)
                         SizedBox(
                           width: widthDevice * 0.06,

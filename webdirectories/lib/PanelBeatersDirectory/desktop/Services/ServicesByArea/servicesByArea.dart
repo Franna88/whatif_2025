@@ -327,7 +327,9 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                         ),
                         Row(
                           children: [
-                            IconButtons(),
+                            IconButtons(
+                              isComingSoon: true,
+                            ),
                             SizedBox(
                               width: MyUtility(context).width * 0.03,
                             )

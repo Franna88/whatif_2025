@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesMaps/BusinessHours/BusinessHours.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesMaps/MapsContainercomp/MapButtons.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesMaps/MapsContainercomp/MapsContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/CommonButtonR.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/commonButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
 
@@ -49,8 +50,11 @@ class _ServicesMapsState extends State<ServicesMaps> {
               Align(alignment: Alignment.topLeft, child: MapButtons()),
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 15),
-                child:
-                    CommonButton(buttonText: 'Navigate Me Now', onPress: () {}),
+                child: CommonButtonR(
+                  buttonText: 'Navigate Me Now',
+                  onPress: () {},
+                  isComingSoon: true,
+                ),
               ),
             ],
           ),

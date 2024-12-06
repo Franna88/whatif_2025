@@ -6,6 +6,7 @@ class ButtonInfoContainer extends StatefulWidget {
   final String headlineText;
   final String paragraph;
   final String buttonText;
+  final double? buttonWidth;
   final VoidCallback onPressed;
 
   const ButtonInfoContainer(
@@ -13,6 +14,7 @@ class ButtonInfoContainer extends StatefulWidget {
       required this.headlineText,
       required this.paragraph,
       required this.buttonText,
+      this.buttonWidth,
       required this.onPressed});
 
   @override
@@ -81,7 +83,11 @@ class _ButtonInfoContainerState extends State<ButtonInfoContainer> {
           bottom: 10,
           right: 16,
           child: CommonButtonR(
-              buttonText: widget.buttonText, onPress: widget.onPressed),
+            buttonText: widget.buttonText,
+            onPress: widget.onPressed,
+            width: widget.buttonWidth ?? MyUtility(context).width * 0.14,
+            isComingSoon: true,
+          ),
         )
       ],
     );

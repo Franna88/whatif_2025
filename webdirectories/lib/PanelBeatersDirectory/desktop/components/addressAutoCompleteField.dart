@@ -131,22 +131,25 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
               ),
               child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Container(
-                      width: 25,
-                      height: 25,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        shape: BoxShape.circle,
-                      ),
-                      padding: EdgeInsets.zero,
-                      child: Icon(
-                        Icons.keyboard_arrow_right_outlined,
-                        color: Colors.white,
-                        size: 16,
-                      ),
-                    ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 10),
+                  //   child: Container(
+                  //     width: 25,
+                  //     height: 25,
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.black,
+                  //       shape: BoxShape.circle,
+                  //     ),
+                  //     padding: EdgeInsets.zero,
+                  //     child: Icon(
+                  //       Icons.keyboard_arrow_right_outlined,
+                  //       color: Colors.white,
+                  //       size: 16,
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    width: 6,
                   ),
                   Expanded(
                     child: TextFormField(
