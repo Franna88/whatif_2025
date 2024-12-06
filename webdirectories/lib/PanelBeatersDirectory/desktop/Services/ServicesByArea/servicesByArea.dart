@@ -49,7 +49,7 @@ class _ServicesByAreaState extends State<ServicesByArea> {
   String? _selectedSuburb = '';
 
   Position? _userPosition;
-  bool _isLoadingFilters = true;
+  bool _isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -122,7 +122,7 @@ class _ServicesByAreaState extends State<ServicesByArea> {
       suburbsList = [
         {'suburbId': '', 'suburb': 'All'}
       ]..addAll(allSuburbs);
-      _isLoadingFilters = false;
+      _isLoading = false;
     });
   }
 
@@ -204,11 +204,6 @@ class _ServicesByAreaState extends State<ServicesByArea> {
     String? suburbId,
     String? cityId,
   }) async {
-    print(countryId);
-    print(provinceId);
-    print(suburbId);
-    print(cityId);
-
     // Start the query with a reference to the collection
     Query<Map<String, dynamic>> query = FirebaseFirestore.instance
         .collection('listings')
@@ -339,10 +334,8 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  _isLoadingFilters
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
+                  _isLoading
+                      ? SizedBox.shrink()
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
