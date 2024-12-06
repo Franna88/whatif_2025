@@ -3,10 +3,10 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFiner.
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/newJoinPbdPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/landingPageDisplay.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/ownersPortal.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesFeatured.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesNearMe/ServicesNearMe.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesByAddressSearch.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesByArea.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByAddress/servicesByAddressSearch.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByArea/servicesByArea.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesByKeywordSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticles.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/navBar.dart';
@@ -129,7 +129,7 @@ class _NavState extends State<Nav> {
       // 5
       OwnersPortal(),
       // 6
-      ServicesFeatured(),
+      ServicesNearMe(),
       // 7
       PricingOptionsPage(
         updateContainerIndex: (int index) {},

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/myutility.dart';
 
 class StackedMobileButtons extends StatelessWidget {
-  final Function(int) onButtonPressed;
-  final int selectedIndex;
+  final VoidCallback toggleFeatured;
+  final bool isFeaturedSelected;
 
   const StackedMobileButtons({
     Key? key,
-    required this.selectedIndex,
-    required this.onButtonPressed,
+    required this.isFeaturedSelected,
+    required this.toggleFeatured,
   }) : super(key: key);
 
   @override
@@ -22,10 +22,10 @@ class StackedMobileButtons extends StatelessWidget {
             top: 15,
             left: 90,
             child: ElevatedButton(
-              onPressed: () => onButtonPressed(1),
+              onPressed: toggleFeatured,
               style: ElevatedButton.styleFrom(
                 backgroundColor:
-                    selectedIndex == 1 ? Color(0xFFFF8728) : Colors.black,
+                    isFeaturedSelected ? Color(0xFFFF8728) : Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
@@ -34,7 +34,7 @@ class StackedMobileButtons extends StatelessWidget {
               child: Text(
                 'Other',
                 style: TextStyle(
-                  color: selectedIndex == 1 ? Colors.black : Colors.white,
+                  color: isFeaturedSelected ? Colors.white : Colors.black,
                   fontSize: 20.4,
                   fontFamily: 'raleway',
                   fontWeight: FontWeight.w400,
@@ -47,10 +47,10 @@ class StackedMobileButtons extends StatelessWidget {
             top: 15,
             left: 0,
             child: ElevatedButton(
-              onPressed: () => onButtonPressed(0),
+              onPressed: toggleFeatured,
               style: ElevatedButton.styleFrom(
                 backgroundColor:
-                    selectedIndex == 0 ? Color(0xFFFF8728) : Colors.black,
+                    isFeaturedSelected ? Color(0xFFFF8728) : Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
@@ -65,7 +65,7 @@ class StackedMobileButtons extends StatelessWidget {
               child: Text(
                 'Featured',
                 style: TextStyle(
-                  color: selectedIndex == 0 ? Colors.black : Colors.white,
+                  color: isFeaturedSelected ? Colors.black : Colors.white,
                   fontSize: 20.4,
                   fontFamily: 'raleway',
                   fontWeight: FontWeight.w400,

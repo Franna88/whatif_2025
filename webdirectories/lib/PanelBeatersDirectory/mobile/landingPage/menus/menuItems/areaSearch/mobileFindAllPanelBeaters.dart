@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesByAddressSearch.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByAddress/servicesByAddressSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/addressAutoCompleteField.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeatureMobile.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesNearMe/mobileServicesNearMe.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/directOrangeButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileDropDown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileMenuIndex.dart';
@@ -9,8 +9,8 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobil
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileSearchButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileSetLocationButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileTextField.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByAddress/mobileServicesByAddressFeatured.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByArea/mobileServicesByAreaFeatured.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByAddress/mobileServicesByAddress.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByArea/mobileServicesByArea.dart';
 
 class MobileFindAllPanelBeaters extends StatefulWidget {
   const MobileFindAllPanelBeaters({
@@ -91,7 +91,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const LocationFeatureMobile()),
+                      builder: (context) => const MobileServicesNearMe()),
                 );
               },
             ),
@@ -112,7 +112,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MobileServicesByAddressFeatured(
+                        builder: (context) => MobileServicesByAddress(
                               addressData: address,
                             )),
                   );
@@ -142,7 +142,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const MobileServicesByAreaFeatured()),
+                  builder: (context) => const MobileServicesByArea()),
             );
           },
           buttonTitle: 'Area Search',
