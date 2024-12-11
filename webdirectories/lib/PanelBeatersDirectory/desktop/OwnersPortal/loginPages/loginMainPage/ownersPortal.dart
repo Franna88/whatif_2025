@@ -157,7 +157,8 @@ class _OwnersPortalState extends State<OwnersPortal> {
                         left: 50, top: 15), // Halved the top padding
                     child: Image.asset(
                       'images/panelLogo.png',
-                      height: 70,
+                      // height: 70,
+                      width: MyUtility(context).width * 0.23,
                     ),
                   ),
                   Row(

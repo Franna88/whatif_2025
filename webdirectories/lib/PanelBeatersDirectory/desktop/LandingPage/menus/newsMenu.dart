@@ -25,15 +25,20 @@ class NewsMenu extends StatelessWidget {
         const SizedBox(
           width: 430,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
-            child: Text(
-              'Discover the latest updates in the Auto Body Repair industry. Stay informed with our informative articles.',
-              style: TextStyle(
-                color: Color.fromARGB(255, 206, 205, 205),
-                fontSize: 16,
-                fontFamily: 'raleway',
-                fontWeight: FontWeight.w400,
-                height: 0,
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 5),
+              child: Text(
+                'Discover the latest updates in the Auto Body Repair industry. Stay informed with our informative articles.',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 206, 205, 205),
+                  fontSize: 15.64,
+                  fontFamily: 'raleway',
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
               ),
             ),
           ),

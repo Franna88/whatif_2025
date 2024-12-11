@@ -56,7 +56,8 @@ class _RecentArticlesState extends State<RecentArticles> {
                               padding: const EdgeInsets.only(top: 25),
                               child: Image.asset(
                                 'images/panelLogo.png',
-                                height: 70,
+                                // height: 70,
+                                width: MyUtility(context).width * 0.23,
                               ),
                             ),
                             Text(

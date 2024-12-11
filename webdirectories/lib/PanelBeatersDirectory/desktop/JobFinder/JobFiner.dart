@@ -51,7 +51,8 @@ class _JobFinderState extends State<JobFinder> {
                                     child: Image.asset(
                                       'images/panelLogo.png',
                                       //width: 225,
-                                      height: 70,
+                                      // height: 70,
+                                      width: MyUtility(context).width * 0.23,
                                     ),
                                   ),
                                   Column(
