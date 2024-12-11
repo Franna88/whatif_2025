@@ -181,20 +181,47 @@ class _CategorySelectState extends State<CategorySelect>
               right: 191,
               child: Container(
                 child: RotationTransition(
-                    alignment: Alignment.center,
-                    turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
-                    child: Container(
-                      height: 265.0,
-                      width: 150.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('images/red1.png'),
-                          fit: BoxFit.cover,
-                        ),
+                  alignment: Alignment.center,
+                  turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+                  child: Container(
+                    height: 265.0,
+                    width: 150.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('images/red1.png'),
+                        fit: BoxFit.cover,
                       ),
-                    )),
+                    ),
+                  ),
+                ),
               ),
             ),
+            //ADD BLINK TEXT
+            // Positioned(
+            //   bottom: 135,
+            //    right: 200,
+            //   child: Text.rich(textAlign: TextAlign.center,
+            //     TextSpan(
+            //       children: [
+            //         TextSpan(text: 'Click to\n',
+            //           style: TextStyle(
+            //             color: Color.fromRGBO(0, 128, 4, 1),
+            //             fontFamily: 'ralewaymedium',
+            //             fontSize: 25
+            //           ),),
+            //         TextSpan(
+            //           text: 'NAVIGATE',
+            //           style: TextStyle(
+            //             color: Color.fromRGBO(0, 128, 4, 1),
+            //             fontFamily: 'ralewaybold',
+            //             fontSize: 28,
+            //             height: 0.8
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ],

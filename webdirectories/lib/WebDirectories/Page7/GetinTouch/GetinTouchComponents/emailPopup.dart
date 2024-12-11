@@ -79,7 +79,7 @@ class _EmailpopupState extends State<Emailpopup> {
                       Navigator.pop(context); // Close the dialog when tapped
                     },
                     child: Container(
-                      height: MyUtility(context).height * 0.05,
+                      height: 45,
                       decoration: BoxDecoration(
                         color: Colors
                             .black, // Button color (black to match the theme)

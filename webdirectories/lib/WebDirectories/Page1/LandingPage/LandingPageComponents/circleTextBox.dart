@@ -175,7 +175,7 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                 */
 
                 SizedBox(
-                  width: MyUtility(context).width / 4.7,
+                  width: MyUtility(context).width / 4.5,
                   height: MyUtility(context).height * 0.195,
                   child: Center(
                     child: Padding(

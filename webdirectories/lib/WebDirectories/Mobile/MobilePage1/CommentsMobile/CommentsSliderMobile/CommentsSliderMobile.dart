@@ -27,7 +27,7 @@ class _CommentsSliderMobileState extends State<CommentsSliderMobile> {
                     profileImage: 'images/pfp.png',
                     comment:
                         "“I've been taking my car to the same panel beater for years, and I've always been happy with their service. Johan and his team is always honest and upfront about the cost, and they do a great job. I highly recommend the Panel Beater Directory to anyone looking to find a reliable auto body repairer.”",
-                    username: 'Stephan Joubert'),
+                    username: 'Stefan Joubert'),
                 CommentsMobile(
                     profileImage: 'images/avatar5.png',
                     comment:
@@ -37,7 +37,7 @@ class _CommentsSliderMobileState extends State<CommentsSliderMobile> {
                     profileImage: 'images/pfp3.png',
                     comment:
                         "“ I was in a car accident and my car was completely totaled. i had no idea how I was going to get it towed and what to do next. A quick Google search led me to your Towing Directory. The tow truck driver I contacted was very understanding and helpful. He towed my car to a nearby garage and even helped me to file a claim from my insurance company. I was so impressed with the service I received, and I’m really glad I found them on your website! Thanks. “",
-                    username: 'Stephan Williams'),
+                    username: 'Chris Stevens'),
               ],
             ),
           ),
