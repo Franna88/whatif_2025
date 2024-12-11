@@ -51,42 +51,46 @@ class _DownloadWatifState extends State<DownloadWatif> {
                     SizedBox(
                       height: MyUtility(context).height * 0.06,
                     ),
-                    Stack(
-                      alignment: Alignment.topCenter, // Center align the stack
-                      children: [
-                        // Row containing the text
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Download ",
-                              style: TextStyle(
-                                fontSize: 48,
-                                fontFamily: 'ralewaysemi',
-                                color: Colors.white,
+                    SizedBox(
+                      width: 400,
+                      child: Stack(
+                        alignment:
+                            Alignment.topCenter, // Center align the stack
+                        children: [
+                          // Row containing the text
+                          const Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Download ",
+                                style: TextStyle(
+                                  fontSize: 48,
+                                  fontFamily: 'ralewaysemi',
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            Text(
-                              "watif",
-                              style: TextStyle(
-                                fontSize: 48,
-                                fontFamily: 'ralewaysemi',
-                                color: Colors.yellow,
+                              Text(
+                                "watif",
+                                style: TextStyle(
+                                  fontSize: 48,
+                                  fontFamily: 'comfortaaMedium',
+                                  color: Color.fromRGBO(207, 211, 0, 1),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-
-                        Positioned(
-                          top: 0,
-                          right: 135,
-                          child: SvgPicture.asset(
-                            'images/tmw.svg',
-                            height: 20,
-                            width: 20,
+                            ],
                           ),
-                        ),
-                      ],
+
+                          Positioned(
+                            top: 0,
+                            right: 5,
+                            child: SvgPicture.asset(
+                              'images/tmw.svg',
+                              height: 20,
+                              width: 20,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     const Text(
                       "for mahala, free, verniet...",

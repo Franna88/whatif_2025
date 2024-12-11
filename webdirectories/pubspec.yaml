@@ -149,3 +149,16 @@ flutter:
   - family: Gloria
     fonts:
       - asset: fonts/GloriaHallelujah-Regular.ttf
+  - family: comfortaaBold
+    fonts:
+      - asset: fonts/Comfortaa-Bold.ttf
+  - family: comfortaaLight
+    fonts:
+      - asset: fonts/Comfortaa-Light.ttf
+  - family: comfortaaMedium
+    fonts:
+      - asset: fonts/Comfortaa-Medium.ttf
+  - family: comfortaaRegular
+    fonts:
+      - asset: fonts/Comfortaa-Regular.ttf
+  

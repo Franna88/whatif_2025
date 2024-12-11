@@ -67,7 +67,7 @@ class _WatifState extends State<Watif> {
                                 "watif ",
                                 style: TextStyle(
                                   fontSize: 115,
-                                  fontFamily: 'Comfortaa',
+                                  fontFamily: 'comfortaaBold',
                                   color: Colors.black,
                                   height: 1.1,
                                 ),
@@ -79,8 +79,8 @@ class _WatifState extends State<Watif> {
                             right: 0,
                             child: SvgPicture.asset(
                               'images/tm.svg',
-                              height: 20,
-                              width: 20,
+                              height: 25,
+                              width: 25,
                             ),
                           ),
                         ],
