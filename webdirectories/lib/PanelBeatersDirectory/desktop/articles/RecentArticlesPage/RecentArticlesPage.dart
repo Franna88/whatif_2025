@@ -62,7 +62,8 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                               padding: const EdgeInsets.only(top: 25),
                               child: Image.asset(
                                 'images/panelLogo.png', // Check the path
-                                height: 70,
+                                // height: 70,
+                                width: MyUtility(context).width * 0.23,
                               ),
                             ),
                             Text(

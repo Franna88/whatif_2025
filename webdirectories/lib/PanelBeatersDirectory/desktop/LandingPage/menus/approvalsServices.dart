@@ -107,7 +107,7 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
               Padding(
                 padding: const EdgeInsets.only(left: 30.0, bottom: 10),
                 child: const Text(
-                  'Please select one option',
+                  'Please select one option from the drop down list below',
                   style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'raleway',
