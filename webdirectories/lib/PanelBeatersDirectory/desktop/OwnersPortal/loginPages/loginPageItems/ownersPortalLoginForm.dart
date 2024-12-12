@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPortal.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/forgot_password_popup.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/longOrangeButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/mediumTextBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/passwordTextField.dart';
@@ -16,8 +17,14 @@ import '../../../../../SuperAdmin/superAdmin.dart';
 class OwnersPortalLoginForm extends StatefulWidget {
   final Function(int) changePageIndex;
   final Function(String) updateEmail;
-  const OwnersPortalLoginForm(
-      {super.key, required this.changePageIndex, required this.updateEmail});
+  final bool initialValue;
+
+  const OwnersPortalLoginForm({
+    super.key,
+    required this.changePageIndex,
+    required this.updateEmail,
+    this.initialValue = false,
+  });
 
   @override
   State<OwnersPortalLoginForm> createState() => _OwnersPortalLoginFormState();
@@ -291,6 +298,28 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
     return null;
   }
 
+  late bool _isChecked;
+
+  @override
+  void initState() {
+    super.initState();
+    _isChecked = widget.initialValue;
+  }
+
+  void _toggleCheckbox(bool? value) {
+    setState(() {
+      _isChecked = value ?? false;
+    });
+  }
+
+  Future openForgotPasswordPopup() => showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: ForgotPasswordPopup(),
+        );
+      });
+
   @override
   Widget build(BuildContext context) {
     var heightDevice = MediaQuery.of(context).size.height;
@@ -305,40 +334,69 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
             controller: _emailController,
             validator: (value) => customEmailValidator(value),
           ),
-          Visibility(
-            visible: showPassword,
-            child: PasswordField(
-              hintText: 'Enter Password',
-              keyText: 'Password',
-              controller: _passwordController,
-              validator: (value) => customPasswordValidator(value),
-              widthContainer:
-                  widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
-            ),
+          PasswordField(
+            hintText: 'Enter Password',
+            keyText: 'Password',
+            controller: _passwordController,
+            validator: (value) => customPasswordValidator(value),
+            widthContainer:
+                widthDevice < 1500 ? widthDevice * 0.30 : widthDevice * 0.24,
           ),
           TextButton(
             onPressed: () => _forgotPassword(context),
             child: SizedBox(
               //width: 450,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: EdgeInsets.only(right: widthDevice * 0.03),
-                  child: Text(
-                    'Forgot Password?',
-                    textAlign: TextAlign.right,
-                    style: widthDevice < 1500
-                        ? const TextStyle(
-                            color: Color(0xFFEF9040),
-                            fontSize: 14,
-                            fontFamily: 'ralewaymedium',
-                          )
-                        : const TextStyle(
-                            color: Color(0xFFEF9040),
-                            fontSize: 16,
-                            fontFamily: 'ralewaymedium',
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: widthDevice * 0.02),
+                      child: Checkbox(
+                        fillColor: MaterialStateProperty.all(Colors.white),
+                        side: BorderSide(color: Colors.white),
+                        checkColor: Color(0xFFEF9040),
+                        value: _isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            _isChecked = value ?? false;
+                          });
+                        },
+                      ),
+                    ),
+                    const Text(
+                      "Remember Me",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'ralewaymedium',
+                          color: Colors.white),
+                    ),
+                    Spacer(),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: EdgeInsets.only(right: widthDevice * 0.02),
+                        child: InkWell(
+                          onTap: openForgotPasswordPopup,
+                          child: Text(
+                            'Forgot Password?',
+                            textAlign: TextAlign.right,
+                            style: widthDevice < 1500
+                                ? const TextStyle(
+                                    color: Color(0xFFEF9040),
+                                    fontSize: 14,
+                                    fontFamily: 'ralewaymedium',
+                                  )
+                                : const TextStyle(
+                                    color: Color(0xFFEF9040),
+                                    fontSize: 16,
+                                    fontFamily: 'ralewaymedium',
+                                  ),
                           ),
-                  ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
