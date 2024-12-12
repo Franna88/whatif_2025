@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/dropDownMenus/dropDownMenuWidget.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/mainButtonDirect.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/mainButtonDropdown.dart';
@@ -8,6 +9,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/m
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/textfieldButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesNearMe/ServicesNearMe.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/addressAutoCompleteField.dart';
+import 'package:webdirectories/main.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 class FindAllPanelBeaters extends StatefulWidget {
   final VoidCallback viewServiceDetails;
@@ -31,7 +34,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
   int menuIndex = 2;
   int? currentOpenDropdown;
   String nearMeText = 'Click here to set your location';
-  Map<String, dynamic> address = {};
+  Map<String, String> address = {};
 
   void toggleDropdown(int index) {
     setState(() {
@@ -43,7 +46,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
     });
   }
 
-  void selectAddress(Map<String, dynamic> data) {
+  void selectAddress(Map<String, String> data) {
     print(data);
     setState(() {
       address = data;
@@ -75,7 +78,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
             topText: 'Find your nearest Panel Beater',
             widget1: SetYourLoactionButton(),
             widget2: SearchButton(
-              onTap: widget.viewServiceDetails,
+              onTap: () => context.goNamed(Routernames.panelbeatersNearMe),
               isComingSoon: true,
             ),
           ),
@@ -93,7 +96,8 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
                 onSelected: selectAddress,
               ),
               widget2: SearchButton(
-                onTap: () => widget.viewServiceByAddress(address),
+                onTap: () => context.goNamed(Routernames.panelbeatersByAddress,
+                    pathParameters: address),
                 isComingSoon: true,
               )),
           isOpen: currentOpenDropdown == 1,

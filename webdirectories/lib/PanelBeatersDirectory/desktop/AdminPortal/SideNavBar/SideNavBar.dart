@@ -229,9 +229,15 @@ class _SideNavBarState extends State<SideNavBar> {
       AdminNotificationsAlt(
           navigateToPage: navigateToPage,
           getQuoteDetails: getQuoteDetails), //Quotes
-      SystemAlert(navigateToPage: navigateToPage),
-      DocumentExpired(navigateToPage: navigateToPage),
-      CustomerReviews(navigateToPage: navigateToPage),
+      SystemAlert(
+        navigateToPage: navigateToPage,
+      ),
+      DocumentExpired(
+        navigateToPage: navigateToPage,
+      ),
+      CustomerReviews(
+        navigateToPage: navigateToPage,
+      ),
       AdminJobFinder(
         navigateToPage: navigateToPage,
         getJobDetails: getJobDetails,

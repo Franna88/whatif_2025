@@ -18,9 +18,21 @@ import 'package:webdirectories/WebDirectories/Footer/Footer.dart';
 import 'package:webdirectories/myutility.dart';
 import 'package:intl/intl.dart';
 
+enum ServicesPages {
+  profile,
+  contact,
+  maps,
+  accreditation,
+  about,
+  documents,
+  reviews,
+  finance
+}
+
 class Services extends StatefulWidget {
+  final ServicesPages? page;
   final String listingId;
-  const Services({super.key, required this.listingId});
+  const Services({super.key, required this.listingId, this.page});
 
   @override
   State<Services> createState() => _ServicesState();
@@ -40,6 +52,34 @@ class _ServicesState extends State<Services> {
   @override
   void initState() {
     super.initState();
+    if (widget.page != null) {
+      switch (widget.page!) {
+        case ServicesPages.profile:
+          pageIndex = 0;
+          break;
+        case ServicesPages.contact:
+          pageIndex = 1;
+          break;
+        case ServicesPages.maps:
+          pageIndex = 2;
+          break;
+        case ServicesPages.accreditation:
+          pageIndex = 3;
+          break;
+        case ServicesPages.about:
+          pageIndex = 4;
+          break;
+        case ServicesPages.documents:
+          pageIndex = 5;
+          break;
+        case ServicesPages.reviews:
+          pageIndex = 6;
+          break;
+        case ServicesPages.finance:
+          pageIndex = 7;
+          break;
+      }
+    }
     checkViewExist();
     _getListingData();
   }
