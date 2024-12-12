@@ -38,17 +38,18 @@ class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
   /// Calculates the bounding box for a given radius (in km) around a point.
   Map<String, double> _calculateBoundingBox(double radiusInKm) {
     const double earthRadius = 6371.0; // Earth's radius in kilometers
+    double lat = double.parse(widget.addressData['lat']);
+    double lng = double.parse(widget.addressData['lng']);
 
     // Latitude offset
     double latOffset = radiusInKm / earthRadius;
-    double latMin = widget.addressData['lat'] - latOffset * (180 / pi);
-    double latMax = widget.addressData['lat'] + latOffset * (180 / pi);
+    double latMin = lat - latOffset * (180 / pi);
+    double latMax = lat + latOffset * (180 / pi);
 
     // Longitude offset, which depends on the latitude
-    double lngOffset =
-        radiusInKm / (earthRadius * cos(widget.addressData['lat'] * pi / 180));
-    double lngMin = widget.addressData['lng'] - lngOffset * (180 / pi);
-    double lngMax = widget.addressData['lng'] + lngOffset * (180 / pi);
+    double lngOffset = radiusInKm / (earthRadius * cos(lat * pi / 180));
+    double lngMin = lng - lngOffset * (180 / pi);
+    double lngMax = lng + lngOffset * (180 / pi);
 
     return {
       "latMin": latMin,
@@ -78,12 +79,12 @@ class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
     for (var doc in querySnapshot.docs) {
       double lat = doc['latitude'];
       double lng = doc['longitude'];
-
+      double addresslat = double.parse(widget.addressData['lat']);
+      double addresslng = double.parse(widget.addressData['lng']);
       // Check if the longitude is within bounds
       if (lng >= bounds['lngMin']! && lng <= bounds['lngMax']!) {
         // Calculate the exact distance to make sure it's within the radius
-        double distance = _calculateDistance(
-            widget.addressData['lat'], widget.addressData['lng'], lat, lng);
+        double distance = _calculateDistance(addresslat, addresslng, lat, lng);
         if (distance <= radiusInKm) {
           nearbyLocations.add(
               {...doc.data() as Map<String, dynamic>, 'distance': distance});

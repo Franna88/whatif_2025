@@ -1,6 +1,7 @@
 import 'package:cached_firestorage/cached_firestorage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webdirectories/MyHome.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPortal.dart';
@@ -8,6 +9,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.d
 import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
 
 import 'package:dart_ipify/dart_ipify.dart';
+import 'package:webdirectories/router.dart';
+import 'package:webdirectories/routes/routerConfig.dart';
 
 import 'WebDirectories/Page1/Page1.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -38,20 +41,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MyHome(),
-        '/panelTest': (context) => Material(
-                child: AdminPortal(
-              listingsId: '',
-              normalUser: false,
-            )),
-        '/panelbeaters-directory': (context) => PanelBeatersHome(),
-
-        // '/panelbeaters-directory': (context) =>
-        //     AdminPortal(normalUser: true, listingsId: '2473'),
-      },
+    GoRouter _router = Routerconfig.returnRouter();
+    return MaterialApp.router(
+      routeInformationParser: _router.routeInformationParser,
+      routeInformationProvider: _router.routeInformationProvider,
+      routerDelegate: _router.routerDelegate,
       title: 'Web Directories',
     );
   }

@@ -16,8 +16,21 @@ import 'package:webdirectories/myutility.dart';
 import '../../../components/descriptionDialog.dart';
 import 'registerBusinessValues.dart';
 
+enum PanelLoginPages {
+  login,
+  register,
+  code,
+  createprofile,
+  options,
+  agreement,
+  whatsnext,
+  resetotp,
+  reset
+}
+
 class OwnersPortal extends StatefulWidget {
-  const OwnersPortal({super.key});
+  final PanelLoginPages? pageIndex;
+  const OwnersPortal({super.key, this.pageIndex});
 
   @override
   State<OwnersPortal> createState() => _OwnersPortalState();
@@ -28,6 +41,61 @@ class _OwnersPortalState extends State<OwnersPortal> {
   var pageIndex = 0;
   var membershipType = "";
   String memberEmail = "";
+
+  @override
+  void initState() {
+    if (widget.pageIndex != null) {
+      switch (widget.pageIndex!) {
+        case PanelLoginPages.login:
+          setState(() {
+            pageIndex = 0;
+          });
+          break;
+        case PanelLoginPages.register:
+          setState(() {
+            pageIndex = 1;
+          });
+          break;
+        case PanelLoginPages.code:
+          setState(() {
+            pageIndex = 2;
+          });
+          break;
+        case PanelLoginPages.createprofile:
+          setState(() {
+            pageIndex = 3;
+          });
+          break;
+        case PanelLoginPages.options:
+          setState(() {
+            pageIndex = 4;
+          });
+          break;
+        case PanelLoginPages.agreement:
+          setState(() {
+            pageIndex = 5;
+          });
+          break;
+        case PanelLoginPages.whatsnext:
+          setState(() {
+            pageIndex = 6;
+          });
+          break;
+        case PanelLoginPages.resetotp:
+          setState(() {
+            pageIndex = 7;
+          });
+          break;
+        case PanelLoginPages.reset:
+          setState(() {
+            pageIndex = 8;
+          });
+          break;
+      }
+    }
+    super.initState();
+  }
+
   getMemberShipType(value) {
     setState(() {
       membershipType = value;
