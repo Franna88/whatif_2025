@@ -71,6 +71,8 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                   );
                 },
                 child: Container(
+                   height: 40,
+                  width: 40,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
@@ -110,6 +112,9 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                   );
                 },
                 child: Container(
+                  height: 40,
+                  width: 40,
+
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
@@ -143,7 +148,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                 text: TextSpan(
                   style: TextStyle(
                     fontFamily: 'raleway',
-                    fontSize: 42,
+                    fontSize: 40,
                     color: Colors.white,
                   ),
                   children: [
@@ -151,7 +156,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                       text: widget.Title1,
                       style: TextStyle(
                         fontFamily: 'ralewaybold',
-                        fontSize: 42,
+                        fontSize: 40,
                         color: Colors.white,
                       ),
                     ),
@@ -159,7 +164,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                       text: widget.Title2,
                       style: TextStyle(
                         fontFamily: 'raleway',
-                        fontSize: 42,
+                        fontSize: 40,
                         color: Colors.white,
                       ),
                     ),
@@ -180,7 +185,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                 decoration: BoxDecoration(
                   color: widget.buttonFlash
                       ? Colors.white
-                      : Colors.green, // Toggle colors
+                      : Color.fromRGBO(101, 218, 255, 1), // Toggle colors
                   borderRadius: BorderRadius.circular(20),
                 ),
                 duration: Duration(

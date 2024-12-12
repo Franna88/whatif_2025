@@ -45,7 +45,7 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
 
     _blinkAnimation = ColorTween(
       begin: Colors.white,
-      end: Color.fromRGBO(0, 128, 4, 1),
+      end: Color.fromRGBO(101, 218, 255, 1),
     ).animate(_blinkController);
   }
 
