@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/myutility.dart';
 
+import '../../MobilePage3/MobilePage3.dart';
+
 class CategorySelectMobile extends StatefulWidget {
   int menuIndex;
   Function(int) changeMenu;
@@ -71,6 +73,16 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
               top: -10,
               left: 85,
               child: GestureDetector(
+                // onDoubleTap: () {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => Material(
+                //         child: MobilePage3(),
+                //       ),
+                //     ),
+                //   );
+                // },
                 onTap: () {
                   widget.changeMenu(2);
                   widget.animateController.animateTo(0.0);
