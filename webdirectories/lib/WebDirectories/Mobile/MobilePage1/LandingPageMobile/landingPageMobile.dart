@@ -39,7 +39,7 @@ List directoriesInfo = [
     "description":
         "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews.",
     "buttonText": "View Directory",
-    "url": "https://panelbeatersdirectory.co.za/"
+    "url": "/panelbeaters-directory"
   },
   {
     "1title": "AUTO REPAIR\n",

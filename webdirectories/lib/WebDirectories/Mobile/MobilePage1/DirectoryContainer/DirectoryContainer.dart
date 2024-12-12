@@ -5,6 +5,7 @@ import 'package:webdirectories/WebDirectories/Mobile/MobilePage3/MobilePage3.dar
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage4/MobilePage4.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage5/MobilePage5.dart';
 import 'package:webdirectories/myutility.dart';
+import 'dart:html' as html;
 
 class DirectoryContainer extends StatefulWidget {
   String Title1;
@@ -190,6 +191,11 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
               Spacer(),
               TextButton(
                 onPressed: () {
+                  if (widget.Title1 == "PANEL BEATER\n") {
+                    // Open the PanelBeatersHome page in a new tab using the named route URL
+                    html.window.open('/panelbeaters-directory', '_blank');
+                    return;
+                  }
                   //PANEL BEATER
                   widget.Title2 == "WATIF"
                       ? Navigator.push(
