@@ -106,16 +106,20 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
         const SizedBox(
           height: 15,
         ),
-        MainButton(
+        // MainButton(
+        //   buttonTitle: 'Keyword Search',
+        //   dropdownContent: const DropDownMenuWidget(
+        //       topText: 'Search by keywords within Panel Beater Directory',
+        //       widget1: TextfieldButton(hintText: 'Type here'),
+        //       widget2: SearchButton(
+        //         isComingSoon: true,
+        //       )),
+        //   isOpen: currentOpenDropdown == 2,
+        //   onToggle: () => toggleDropdown(2),
+        // ),
+        MainButtonDirect(
+          onTap: () => context.goNamed(Routernames.panelbeatersKeyword),
           buttonTitle: 'Keyword Search',
-          dropdownContent: const DropDownMenuWidget(
-              topText: 'Search by keywords within Panel Beater Directory',
-              widget1: TextfieldButton(hintText: 'Type here'),
-              widget2: SearchButton(
-                isComingSoon: true,
-              )),
-          isOpen: currentOpenDropdown == 2,
-          onToggle: () => toggleDropdown(2),
         ),
         const SizedBox(
           height: 15,

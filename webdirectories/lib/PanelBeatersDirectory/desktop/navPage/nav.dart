@@ -23,6 +23,7 @@ enum panelNavPages {
   jointpbd,
   ownersportal,
   servicesnearme,
+  pricingoptions,
   starterpackage,
   corepackage,
   premiumppackage,
@@ -145,39 +146,44 @@ class _NavState extends State<Nav> {
             _currentIndex = 6;
           });
           break;
-        case panelNavPages.starterpackage:
+        case panelNavPages.pricingoptions:
           setState(() {
             _currentIndex = 7;
           });
           break;
-        case panelNavPages.corepackage:
+        case panelNavPages.starterpackage:
           setState(() {
             _currentIndex = 8;
           });
           break;
-        case panelNavPages.premiumppackage:
+        case panelNavPages.corepackage:
           setState(() {
             _currentIndex = 9;
           });
           break;
-        case panelNavPages.premiumpluspackage:
+        case panelNavPages.premiumppackage:
           setState(() {
             _currentIndex = 10;
           });
           break;
-        case panelNavPages.servicesaddress:
+        case panelNavPages.premiumpluspackage:
           setState(() {
             _currentIndex = 11;
           });
           break;
-        case panelNavPages.servicesarea:
+        case panelNavPages.servicesaddress:
           setState(() {
             _currentIndex = 12;
           });
           break;
-        case panelNavPages.serviceskeyword:
+        case panelNavPages.servicesarea:
           setState(() {
             _currentIndex = 13;
+          });
+          break;
+        case panelNavPages.serviceskeyword:
+          setState(() {
+            _currentIndex = 14;
           });
           break;
         default:
