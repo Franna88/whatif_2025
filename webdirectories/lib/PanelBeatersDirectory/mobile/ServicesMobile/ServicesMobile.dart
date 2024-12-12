@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
+import 'package:seo/head_tag.dart';
+import 'package:seo/html/seo_widget.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/AboutServicesMobile/AboutServicesMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/AccreditationServiceMobile/AccreditationServiceMobile.dart';
@@ -187,26 +189,124 @@ class _ServicesMobileState extends State<ServicesMobile> {
   @override
   Widget build(BuildContext context) {
     var servicesPages = [
-      ServiceProfileMobile(
-          imagesData: _galleryData,
-          linkData: _linkData,
-          contactData: _contactData),
-      ServiceContactMobile(
-        listingData: _listingData,
+      Seo.head(
+        tags: [
+          MetaTag(
+            name: 'description',
+            content: 'Panel Beaters Directory - ${_listingsTitle}',
+          ),
+          LinkTag(
+            rel: 'canonical',
+            href:
+                'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
+          ),
+        ],
+        child: ServiceProfileMobile(
+            imagesData: _galleryData,
+            linkData: _linkData,
+            contactData: _contactData),
       ),
-      ServicesMapsMobile(
-        listingId: _listingData['listingsId'] ?? 0,
-        listingAddress: _listingData['streetaddress'] ?? 'No listing address',
-        listinglatitude: _listingData['latitude'] ?? 0.0,
-        listinglongitude: _listingData['longitude'] ?? 0.0,
+      Seo.head(
+        tags: [
+          MetaTag(
+            name: 'description',
+            content: 'Panel Beaters Directory - ${_listingsTitle}',
+          ),
+          LinkTag(
+            rel: 'canonical',
+            href:
+                'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
+          ),
+        ],
+        child: ServiceContactMobile(
+          listingData: _listingData,
+        ),
       ),
-      AccreditationServiceMobile(listingId: int.parse(widget.listingId)),
-      AboutServicesMobile(
-          listingsId: int.parse(widget.listingId),
-          beeLevel: _listingData['beerating'] ?? ''),
-      DocumentsServicesMobile(listingsId: int.parse(widget.listingId)),
-      ReviewsMobile(),
-      FinanceMobile(),
+      Seo.head(
+        tags: [
+          MetaTag(
+            name: 'description',
+            content: 'Panel Beaters Directory - ${_listingsTitle}',
+          ),
+          LinkTag(
+            rel: 'canonical',
+            href:
+                'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
+          ),
+        ],
+        child: ServicesMapsMobile(
+          listingId: _listingData['listingsId'] ?? 0,
+          listingAddress: _listingData['streetaddress'] ?? 'No listing address',
+          listinglatitude: _listingData['latitude'] ?? 0.0,
+          listinglongitude: _listingData['longitude'] ?? 0.0,
+        ),
+      ),
+      Seo.head(
+          tags: [
+            MetaTag(
+              name: 'description',
+              content: 'Panel Beaters Directory - ${_listingsTitle}',
+            ),
+            LinkTag(
+              rel: 'canonical',
+              href:
+                  'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
+            ),
+          ],
+          child: AccreditationServiceMobile(
+              listingId: int.parse(widget.listingId))),
+      Seo.head(
+        tags: [
+          MetaTag(
+            name: 'description',
+            content: 'Panel Beaters Directory - ${_listingsTitle}',
+          ),
+          LinkTag(
+            rel: 'canonical',
+            href:
+                'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
+          ),
+        ],
+        child: AboutServicesMobile(
+            listingsId: int.parse(widget.listingId),
+            beeLevel: _listingData['beerating'] ?? ''),
+      ),
+      Seo.head(
+          tags: [
+            MetaTag(
+              name: 'description',
+              content: 'Panel Beaters Directory - ${_listingsTitle}',
+            ),
+            LinkTag(
+              rel: 'canonical',
+              href:
+                  'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
+            ),
+          ],
+          child:
+              DocumentsServicesMobile(listingsId: int.parse(widget.listingId))),
+      Seo.head(tags: [
+        MetaTag(
+          name: 'description',
+          content: 'Panel Beaters Directory - ${_listingsTitle}',
+        ),
+        LinkTag(
+          rel: 'canonical',
+          href:
+              'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
+        ),
+      ], child: const ReviewsMobile()),
+      Seo.head(tags: [
+        MetaTag(
+          name: 'description',
+          content: 'Panel Beaters Directory - ${_listingsTitle}',
+        ),
+        LinkTag(
+          rel: 'canonical',
+          href:
+              'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
+        ),
+      ], child: const FinanceMobile()),
     ];
     return Material(
       child: Container(
