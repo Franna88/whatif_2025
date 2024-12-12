@@ -16,6 +16,7 @@ class DirectoryContainer extends StatefulWidget {
   final VoidCallback onpress;
   final PageController pageController;
   String viewdirctoriesbutton;
+  bool buttonFlash;
 
   DirectoryContainer(
       {Key? key,
@@ -27,7 +28,8 @@ class DirectoryContainer extends StatefulWidget {
       required this.onpress,
       required this.pageController,
       required this.url,
-      required this.viewdirctoriesbutton})
+      required this.viewdirctoriesbutton,
+      required this.buttonFlash})
       : super(key: key);
 
   @override
@@ -48,7 +50,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: MyUtility(context).width / 1.15,
-      height: 450,
+      //height: 465,
       decoration: BoxDecoration(
         color: Color(0xFF0E1013),
         borderRadius: BorderRadius.circular(20.0),
@@ -131,10 +133,11 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
               ),
             ],
           ),
+
           Center(
             child: SizedBox(
               width: MyUtility(context).width / 1.15,
-              height: MyUtility(context).height * 0.14,
+              //height: MyUtility(context).height * 0.14,
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
@@ -166,7 +169,75 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
             ),
           ),
           SizedBox(
-            height: MyUtility(context).height * 0.01,
+            height: 20,
+          ),
+          // Learn more button
+          //blink button
+          Row(
+            children: [
+              Spacer(),
+              AnimatedContainer(
+                decoration: BoxDecoration(
+                  color: widget.buttonFlash
+                      ? Colors.white
+                      : Colors.green, // Toggle colors
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                duration: Duration(
+                    milliseconds: 500), // Match the periodic timer duration
+                child: TextButton(
+                  onPressed: () {
+                    widget.Title2 == "WATIF"
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  Material(child: MobilePage3()),
+                            ),
+                          )
+                        : goToLink(widget.url);
+                  },
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.black,
+                          ),
+                          padding: EdgeInsets.all(1),
+                          child: Icon(
+                            Icons.keyboard_arrow_right,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          widget.viewdirctoriesbutton,
+                          style: TextStyle(
+                            fontFamily: 'raleway',
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Spacer()
+            ],
+          ),
+          SizedBox(
+            height: 20,
           ),
           SizedBox(
             width: MyUtility(context).width / 1.25,
@@ -182,73 +253,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
             ),
           ),
           SizedBox(
-            height: MyUtility(context).height * 0.02,
-          ),
-          // Learn more button
-          Row(
-            children: [
-              Spacer(),
-              TextButton(
-                onPressed: () {
-                  //PANEL BEATER
-                  widget.Title2 == "WATIF"
-                      ? Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Material(
-                                    child: MobilePage3(),
-                                  )))
-                      /* : widget.Title1 == "PANEL BEATER\n"
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Material(
-                                        child: MobileView(),
-                                      )))*/
-                      : goToLink(widget.url);
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // Center the content
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black,
-                        ),
-                        padding:
-                            EdgeInsets.all(1), // Reduce padding around the icon
-                        child: Icon(
-                          Icons.keyboard_arrow_right,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(
-                          width: 8), // Adjust space between the icon and text
-                      Text(
-                        widget.viewdirctoriesbutton,
-                        style: TextStyle(
-                          fontFamily: 'raleway',
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Spacer()
-            ],
+            height: 10,
           ),
         ],
       ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage1/DirectoryContainer/DirectoryContainer.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage1/LandingPageMobile/categorySelectMobile.dart';
@@ -65,6 +67,37 @@ class _LandingPageMobileState extends State<LandingPageMobile>
   int menuIndex = 0;
 
   final PageController _pageController = PageController();
+  bool _iconVisible = true;
+  Timer? _flickerTimer;
+  bool _buttonFlash = false;
+
+void _startButtonBlinking() {
+  Timer.periodic(Duration(milliseconds: 500), (timer) {
+    setState(() {
+      _buttonFlash = !_buttonFlash;
+    });
+  });
+}
+
+@override
+void initState() {
+  super.initState();
+  _controller = AnimationController(
+    lowerBound: -0.6,
+    duration: const Duration(milliseconds: 2000),
+    vsync: this,
+  );
+  _controller.animateTo(-0.35);
+
+  // Start blinking when the page loads
+  _startButtonBlinking();
+}
+
+@override
+void dispose() {
+  _controller.dispose();
+  super.dispose();
+}
   // Update menu index
   changeMenu(int value) {
     print(value);
@@ -112,22 +145,23 @@ class _LandingPageMobileState extends State<LandingPageMobile>
     /* */
   }
 
-  @override
-  void initState() {
-    _controller = AnimationController(
-      lowerBound: -0.6,
-      duration: const Duration(milliseconds: 2000),
-      vsync: this,
-    );
-    _controller.animateTo(-0.35);
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   _controller = AnimationController(
+  //     lowerBound: -0.6,
+  //     duration: const Duration(milliseconds: 2000),
+  //     vsync: this,
+  //   );
+  //   _controller.animateTo(-0.35);
+  //   super.initState();
+  // }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _flickerTimer?.cancel();
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -161,6 +195,7 @@ class _LandingPageMobileState extends State<LandingPageMobile>
               url: directoriesInfo[menuIndex]['url'],
               onpress: () {},
               pageController: _pageController,
+              buttonFlash: _buttonFlash, // Pass the updated blinking state
             ),
             // Uncomment the code below if CircleTextBoxMobile is needed
             // CircleTextBoxMobile(

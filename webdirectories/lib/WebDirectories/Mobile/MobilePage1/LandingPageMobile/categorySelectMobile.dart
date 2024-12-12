@@ -21,8 +21,10 @@ class CategorySelectMobile extends StatefulWidget {
 }
 
 class _CategorySelectMobileState extends State<CategorySelectMobile>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _controller;
+  late AnimationController _blinkController;
+  late Animation<Color?> _blinkAnimation;
 
   double top = 100;
   double right = 130;
@@ -35,11 +37,22 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
     );
     _controller.animateTo(-0.31);
     super.initState();
+     // Blink animation
+    _blinkController = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _blinkAnimation = ColorTween(
+      begin: Colors.white,
+      end: Color.fromRGBO(0, 128, 4, 1),
+    ).animate(_blinkController);
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _blinkController.dispose();
     super.dispose();
   }
 
@@ -201,6 +214,40 @@ class _CategorySelectMobileState extends State<CategorySelectMobile>
                         ),
                       ),
                     )),
+              ),
+            ),
+            // BLINKING TEXT
+            Positioned(
+              bottom: 60,
+              right: 120,
+              child: AnimatedBuilder(
+                animation: _blinkAnimation,
+                builder: (context, child) {
+                  return Text.rich(
+                    textAlign: TextAlign.center,
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Tap to\n',
+                          style: TextStyle(
+                            color: _blinkAnimation.value,
+                            fontFamily: 'ralewaymedium',
+                            fontSize: 18,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'NAVIGATE',
+                          style: TextStyle(
+                            color: _blinkAnimation.value,
+                            fontFamily: 'ralewaybold',
+                            fontSize: 20,
+                            height: 0.8,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
             /* */

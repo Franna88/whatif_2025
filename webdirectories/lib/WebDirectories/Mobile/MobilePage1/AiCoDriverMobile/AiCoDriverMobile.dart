@@ -21,9 +21,27 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
-          child: Text(
-            'Download your WATIF App today!',
-            style: TextStyle(fontSize: 20, fontFamily: 'ralewaymedium'),
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Download your ',
+                  style: TextStyle(fontSize: 20, fontFamily: 'ralewaymedium'),
+                ),
+                TextSpan(
+                  text: 'WATIF App ',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'comfortaaBold',
+                    color: Color.fromRGBO(149, 160, 4, 1),
+                  ),
+                ),
+                TextSpan(
+                  text: 'today!',
+                  style: TextStyle(fontSize: 20, fontFamily: 'ralewaymedium'),
+                ),
+              ],
+            ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -36,15 +54,15 @@ class _AiCoDriverMobileState extends State<AiCoDriverMobile> {
                   fontSize: 18, fontFamily: 'raleway', color: Colors.black),
               children: [
                 TextSpan(
-                  text: 'Hit the road with confidence and ditch the stress! ',
+                  text: 'Hit the road with confidence and ditch the stress with  ',
                 ),
                 TextSpan(
-                  text: 'WATIF',
-                  style: TextStyle(fontFamily: 'ralewaysemi'),
+                  text: 'watif!',
+                  style: TextStyle(fontFamily: 'comfortaaMedium'),
                 ),
                 TextSpan(
                   text:
-                      ' is your free, all-in-one automotive app that empowers you with everything you need.',
+                      ' This is your free, all-in-one automotive app that empowers you with everything you need.',
                 ),
               ],
             ),
