@@ -66,6 +66,7 @@ class PasswordFieldState extends State<PasswordField> {
               ),
               Container(
                 width: widthDevice * 0.14,
+
                 height: heightDevice < 710 ? 35 : 43,
                 decoration: ShapeDecoration(
                   color: Colors.white,

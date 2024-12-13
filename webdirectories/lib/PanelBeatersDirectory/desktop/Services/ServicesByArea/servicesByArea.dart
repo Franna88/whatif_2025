@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/extensions.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/ProfileDropDown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
@@ -13,6 +14,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButt
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
+
+import '../../../../routes/routerNames.dart';
 
 class ServicesByArea extends StatefulWidget {
   const ServicesByArea({super.key});
@@ -311,6 +314,64 @@ class _ServicesByAreaState extends State<ServicesByArea> {
               child: Column(
                 children: [
                   SizedBox(height: MyUtility(context).height * 0.025),
+                  SizedBox(
+                    width: MyUtility(context).width / 1.06,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(
+                          'images/panelLogo.png',
+                          width: MyUtility(context).width * 0.21,
+                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     InkWell(
+                        //       onTap: () {
+                        //         context.goNamed(Routernames.panelbeatersHome);
+                        //       },
+                        //       child: Row(
+                        //         children: [
+                        //           Container(
+                        //             padding: const EdgeInsets.all(1),
+                        //             decoration: BoxDecoration(
+                        //               shape: BoxShape.circle,
+                        //               border: Border.all(
+                        //                 color: Colors.white,
+                        //                 width: 0.5,
+                        //               ),
+                        //             ),
+                        //             child: const Center(
+                        //               child: Icon(
+                        //                 Icons.keyboard_arrow_left,
+                        //                 color: Colors.white,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           const SizedBox(
+                        //             width: 8,
+                        //           ),
+                        //           const Text(
+                        //             'Go Back',
+                        //             style: TextStyle(
+                        //               color: Colors.white,
+                        //               fontSize: 17.68,
+                        //               fontFamily: 'raleway',
+                        //               fontWeight: FontWeight.w400,
+                        //             ),
+                        //             textAlign: TextAlign.center,
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //      SizedBox(
+                        //       width: MyUtility(context).width * 0.04,
+                        //     )
+                        //   ],
+                        // ),
+                      ],
+                    ),
+                  ),
                   SizedBox(
                     width: MyUtility(context).width / 1.06,
                     child: Row(

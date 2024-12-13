@@ -35,7 +35,7 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
         child: Column(
           children: [
             Container(
-              height: MyUtility(context).height,
+              // height: MyUtility(context).height,
               width: MyUtility(context).width,
               decoration: BoxDecoration(
                 image: DecorationImage(

@@ -5,6 +5,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByAddress/servicesByAddressSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/nav.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/navBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
 import 'package:webdirectories/routes/routerNames.dart';
 
@@ -116,6 +117,13 @@ class Routerconfig {
                   ),
                 ),
                 GoRoute(
+                  path: 'we-connect',
+                  name: Routernames.panelbeatersWeConnect,
+                  builder: (BuildContext context, GoRouterState state) => Nav(
+                    pageIndex: panelNavPages.weconnect,
+                  ),
+                ),
+                GoRoute(
                   path: 'register',
                   name: Routernames.panelbeatersOPRegister,
                   builder: (BuildContext context, GoRouterState state) =>
@@ -177,6 +185,27 @@ class Routerconfig {
                   builder: (BuildContext context, GoRouterState state) =>
                       const OwnersPortal(
                     pageIndex: PanelLoginPages.reset,
+                  ),
+                ),
+                GoRoute(
+                  path: 'articles',
+                  name: Routernames.panelbeatersArticles,
+                  builder: (BuildContext context, GoRouterState state) => Nav(
+                    pageIndex: panelNavPages.articles,
+                  ),
+                ),
+                GoRoute(
+                  path: 'lightstone-article',
+                  name: Routernames.panelbeatersRecentArticlesPage,
+                  builder: (BuildContext context, GoRouterState state) => Nav(
+                    pageIndex: panelNavPages.RecentArticlesPage,
+                  ),
+                ),
+                GoRoute(
+                  path: 'we-can-help',
+                  name: Routernames.panelbeatersWeCanHelp,
+                  builder: (BuildContext context, GoRouterState state) => Nav(
+                    pageIndex: panelNavPages.WeCanHelp,
                   ),
                 ),
               ],
