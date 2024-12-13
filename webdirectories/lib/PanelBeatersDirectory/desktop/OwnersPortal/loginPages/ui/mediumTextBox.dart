@@ -54,7 +54,7 @@ class MediumTextBox extends StatelessWidget {
               ),
               Container(
                 width: widthDevice * 0.30,
-                height: heightDevice < 710 ? 28 : 35,
+                height: heightDevice < 710 ? 35 : 43,
                 // decoration: ShapeDecoration(
                 //   color: Colors.white,
                 //   shape: RoundedRectangleBorder(
@@ -66,11 +66,13 @@ class MediumTextBox extends StatelessWidget {
                   validator: validator,
                   controller: controller,
                   style: TextStyle(
-                    fontSize: heightDevice < 710 ? 14 : 16,
+                    fontSize: heightDevice < 710 ? 15 : 17,
                     fontFamily: 'raleway',
                   ),
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
                     hintText: hintText,
                     hintStyle: const TextStyle(color: Colors.grey),
                     contentPadding: const EdgeInsets.symmetric(

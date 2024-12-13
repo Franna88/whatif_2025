@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:webdirectories/myutility.dart';
 
 class AddressAutoCompleteField extends StatefulWidget {
-  final Function(Map<String, dynamic> data) onSelected;
+  final Function(Map<String, String> data) onSelected;
   const AddressAutoCompleteField({super.key, required this.onSelected});
 
   @override
@@ -61,7 +61,7 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
       };
       String kPLACES_API_KEY = "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko";
       String baseURL =
-          'https://webdirapi.onrender.com/api/v1/places/autocomplete';
+          'https://us-central1-web-directories.cloudfunctions.net/app/api/v1/places/autocomplete';
       String request =
           '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$_sessionToken';
       var response = await http.get(Uri.parse(request), headers: header);
@@ -88,16 +88,19 @@ class _AddressAutoCompleteFieldState extends State<AddressAutoCompleteField> {
       "Access-Control-Allow-Methods": "GET,POST, OPTIONS"
     };
     String kPLACES_API_KEY = "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko";
-
-    String baseURL = 'https://webdirapi.onrender.com/api/v1/places/get-details';
-    String request = '$baseURL?placeId=${_placeList[id]['place_id']}';
+    print(_placeList[id]['place_id']);
+    String baseURL =
+        'https://us-central1-web-directories.cloudfunctions.net/app/api/v1/places/get-details';
+    String request =
+        '$baseURL?placeId=${_placeList[id]['place_id']}&key=$kPLACES_API_KEY&sessiontoken=$_sessionToken}';
     var response = await http.get(Uri.parse(request), headers: header);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
+      print(_placeList[id]["description"]);
       widget.onSelected({
         "address": _placeList[id]["description"],
-        "lat": data['details']['lat'],
-        "lng": data['details']['lng'],
+        "lat": data['details']['lat'].toString(),
+        "lng": data['details']['lng'].toString(),
       });
 
       String address = _placeList[id]["description"];

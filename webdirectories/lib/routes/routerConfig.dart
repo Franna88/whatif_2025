@@ -1,0 +1,189 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:webdirectories/MyHome.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/ownersPortal.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByAddress/servicesByAddressSearch.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/nav.dart';
+import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
+import 'package:webdirectories/routes/routerNames.dart';
+
+class Routerconfig {
+  static GoRouter returnRouter() {
+    return GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          name: Routernames.home,
+          builder: (context, state) => const MyHome(),
+          routes: [
+            GoRoute(
+              path: 'panelbeaters',
+              name: Routernames.panelbeatersHome,
+              builder: (BuildContext context, GoRouterState state) =>
+                  const PanelBeatersHome(),
+              routes: [
+                GoRoute(
+                  path: ':id/profile',
+                  name: Routernames.panelbeatersServicesProfile,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      Services(
+                    listingId: state.pathParameters['id']!,
+                    page: ServicesPages.profile,
+                  ),
+                ),
+                GoRoute(
+                  path: ':id/contact',
+                  name: Routernames.panelbeatersServicesContact,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      Services(
+                    listingId: state.pathParameters['id']!,
+                    page: ServicesPages.contact,
+                  ),
+                ),
+                GoRoute(
+                  path: ':id/reviews',
+                  name: Routernames.panelbeatersServicesReviews,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      Services(
+                    listingId: state.pathParameters['id']!,
+                    page: ServicesPages.reviews,
+                  ),
+                ),
+                GoRoute(
+                  path: ':id/maps',
+                  name: Routernames.panelbeatersServicesMaps,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      Services(
+                    listingId: state.pathParameters['id']!,
+                    page: ServicesPages.maps,
+                  ),
+                ),
+                GoRoute(
+                  path: ':id/documents',
+                  name: Routernames.panelbeatersServicesDocuments,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      Services(
+                    listingId: state.pathParameters['id']!,
+                    page: ServicesPages.documents,
+                  ),
+                ),
+                GoRoute(
+                  path: ':id/finance',
+                  name: Routernames.panelbeatersServicesFinance,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      Services(
+                    listingId: state.pathParameters['id']!,
+                    page: ServicesPages.finance,
+                  ),
+                ),
+                GoRoute(
+                  path: 'listings-near-me',
+                  name: Routernames.panelbeatersNearMe,
+                  builder: (BuildContext context, GoRouterState state) => Nav(
+                    pageIndex: panelNavPages.servicesnearme,
+                  ),
+                ),
+                GoRoute(
+                  path: 'listings-by-area',
+                  name: Routernames.panelbeatersByArea,
+                  builder: (BuildContext context, GoRouterState state) => Nav(
+                    pageIndex: panelNavPages.servicesarea,
+                  ),
+                ),
+                GoRoute(
+                  path:
+                      'listings-by-address/address=:address&lat=:lat&lng=:lng',
+                  name: Routernames.panelbeatersByAddress,
+                  builder: (context, state) {
+                    return ServicesByAddressSearch(
+                        addressData: state.pathParameters);
+                  },
+                ),
+                GoRoute(
+                  path: 'listings-keyword/search-data=:searchData',
+                  name: Routernames.panelbeatersKeyword,
+                  builder: (BuildContext context, GoRouterState state) => Nav(
+                    pageIndex: panelNavPages.serviceskeyword,
+                    searchData: state.pathParameters['searchData'],
+                  ),
+                ),
+                GoRoute(
+                  path: 'login',
+                  name: Routernames.panelbeatersOPLogin,
+                  builder: (BuildContext context, GoRouterState state) => Nav(
+                    pageIndex: panelNavPages.ownersportal,
+                  ),
+                ),
+                GoRoute(
+                  path: 'register',
+                  name: Routernames.panelbeatersOPRegister,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const OwnersPortal(
+                    pageIndex: PanelLoginPages.register,
+                  ),
+                ),
+                GoRoute(
+                  path: 'verify-code',
+                  name: Routernames.panelbeatersOPCode,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const OwnersPortal(
+                    pageIndex: PanelLoginPages.code,
+                  ),
+                ),
+                GoRoute(
+                  path: 'create-profile',
+                  name: Routernames.panelbeatersOPCreateProfile,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const OwnersPortal(
+                    pageIndex: PanelLoginPages.createprofile,
+                  ),
+                ),
+                GoRoute(
+                  path: 'membership-options',
+                  name: Routernames.panelbeatersOPOption,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const OwnersPortal(
+                    pageIndex: PanelLoginPages.options,
+                  ),
+                ),
+                GoRoute(
+                  path: 'agreement',
+                  name: Routernames.panelbeatersOPAgreement,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const OwnersPortal(
+                    pageIndex: PanelLoginPages.agreement,
+                  ),
+                ),
+                GoRoute(
+                  path: 'whats-next',
+                  name: Routernames.panelbeatersOPWhatsNext,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const OwnersPortal(
+                    pageIndex: PanelLoginPages.whatsnext,
+                  ),
+                ),
+                GoRoute(
+                  path: 'reset-otp',
+                  name: Routernames.panelbeatersOPResetOTP,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const OwnersPortal(
+                    pageIndex: PanelLoginPages.resetotp,
+                  ),
+                ),
+                GoRoute(
+                  path: 'reset-password',
+                  name: Routernames.panelbeatersOPResetPassword,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const OwnersPortal(
+                    pageIndex: PanelLoginPages.reset,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}

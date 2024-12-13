@@ -10,6 +10,7 @@ class SetYourLoactionButton extends StatefulWidget {
 
 class _SetYourLoactionButtonState extends State<SetYourLoactionButton> {
   String nearMeText = 'Find your nearest Panel Beater';
+  bool isLocationSet = false;
 
   @override
   void initState() {
@@ -22,6 +23,7 @@ class _SetYourLoactionButtonState extends State<SetYourLoactionButton> {
     if (permission != LocationPermission.denied) {
       setState(() {
         nearMeText = 'Location set! Click search';
+        isLocationSet = true;
       });
     }
   }
@@ -36,6 +38,7 @@ class _SetYourLoactionButtonState extends State<SetYourLoactionButton> {
     if (!serviceEnabled) {
       setState(() {
         nearMeText = 'Location services are disabled.';
+        isLocationSet = false;
       });
 
       return;
@@ -48,6 +51,7 @@ class _SetYourLoactionButtonState extends State<SetYourLoactionButton> {
       if (permission == LocationPermission.denied) {
         setState(() {
           nearMeText = 'Location permissions are denied';
+          isLocationSet = false;
         });
         return;
       }
@@ -56,6 +60,7 @@ class _SetYourLoactionButtonState extends State<SetYourLoactionButton> {
     if (permission == LocationPermission.deniedForever) {
       setState(() {
         nearMeText = 'Location permissions are permanently denied';
+        isLocationSet = false;
       });
       return;
     }
@@ -74,7 +79,9 @@ class _SetYourLoactionButtonState extends State<SetYourLoactionButton> {
       child: ElevatedButton(
         onPressed: _checkPermissionAndGetLocation,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 196, 195, 195),
+          backgroundColor: isLocationSet
+              ? Colors.black
+              : const Color.fromARGB(255, 196, 195, 195),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -87,29 +94,32 @@ class _SetYourLoactionButtonState extends State<SetYourLoactionButton> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Container(
-              //   width: 25,
-              //   height: 25,
-              //   decoration: const BoxDecoration(
-              //     color: Colors.black,
-              //     shape: BoxShape.circle,
-              //   ),
-              //   padding: EdgeInsets.zero,
-              //   child: const Icon(
-              //     Icons.keyboard_arrow_right_outlined,
-              //     color: Colors.white,
-              //     size: 16,
-              //   ),
-              // ),
-              // const SizedBox(width: 8),
+              Container(
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                  color: isLocationSet ? Colors.green : Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                padding: EdgeInsets.zero,
+                child: Icon(
+                  Icons.check,
+                  color: isLocationSet
+                      ? Colors.white // Change to green when location is set
+                      : Colors.black,
+                  size: 16,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
                   nearMeText,
-                  style: const TextStyle(
-                    color: Colors.black,
+                  style: TextStyle(
+                    color: isLocationSet
+                        ? Colors.white // Change to green when location is set
+                        : Colors.black,
                     fontSize: 16.5,
-                    fontFamily: 'Raleway',
+                    fontFamily: 'raleway',
                   ),
                 ),
               ),

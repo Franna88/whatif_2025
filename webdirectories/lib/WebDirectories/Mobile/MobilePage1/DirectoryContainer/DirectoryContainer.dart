@@ -5,6 +5,7 @@ import 'package:webdirectories/WebDirectories/Mobile/MobilePage3/MobilePage3.dar
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage4/MobilePage4.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage5/MobilePage5.dart';
 import 'package:webdirectories/myutility.dart';
+import 'dart:html' as html;
 
 class DirectoryContainer extends StatefulWidget {
   String Title1;

@@ -87,7 +87,8 @@ class _LandingPageDisplayState extends State<LandingPageDisplay> {
                     padding: const EdgeInsets.only(left: 50, top: 0),
                     child: Image.asset(
                       'images/panelLogo.png',
-                      height: 70,
+                      // height: 70,
+                      width: MyUtility(context).width * 0.23,
                     ),
                   ),
                   SizedBox(
