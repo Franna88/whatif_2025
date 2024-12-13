@@ -8,6 +8,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/smallCheckBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/smallTextBox.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/whiteBallpointText.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
 
 class CreateProfile extends StatefulWidget {
   Function changePageIndex;
@@ -111,13 +112,13 @@ class _CreateProfileState extends State<CreateProfile> {
               style: heightDevice < 710
                   ? TextStyle(
                       color: Colors.white,
-                      fontSize: 12,
+                      fontSize: widthDevice < 1500 ? 13 : 15,
                       fontFamily: 'raleway',
                       height: 1.3,
                     )
                   : TextStyle(
                       color: Colors.white,
-                      fontSize: widthDevice < 1500 ? 14 : 18,
+                      fontSize: widthDevice < 1500 ? 15 : 19,
                       fontFamily: 'raleway',
                       height: 1.3,
                     )),
@@ -125,39 +126,50 @@ class _CreateProfileState extends State<CreateProfile> {
         SizedBox(
           height: widthDevice < 1500 ? 10 : 15,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SmallTextBox(
-              hintText: 'Name',
-              keyText: 'Username',
-              textController: widget.email,
+        Center(
+          child: SizedBox(
+            width: MyUtility(context).width * 0.3,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SmallTextBox(
+                      hintText: 'Name',
+                      keyText: 'Username',
+                      textController: widget.email,
+                    ),
+                    SizedBox(
+                      width: widthDevice < 1500 ? 200 : 230,
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: widthDevice < 1500 ? 10 : 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    PasswordField(
+                        hintText: 'Password',
+                        keyText: 'Password',
+                        controller: widget.password,
+                        widthContainer:
+                            widthDevice < 1500 ? widthDevice * 0.14 : 215),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    PasswordField(
+                        hintText: 'Password',
+                        keyText: 'Confirm Password',
+                        controller: confirmPassword,
+                        widthContainer:
+                            widthDevice < 1500 ? widthDevice * 0.14 : 215),
+                  ],
+                ),
+              ],
             ),
-            SizedBox(
-              width: widthDevice < 1500 ? 200 : 230,
-            )
-          ],
-        ),
-        SizedBox(
-          height: widthDevice < 1500 ? 10 : 15,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            PasswordField(
-                hintText: 'Password1',
-                keyText: 'Password',
-                controller: widget.password,
-                widthContainer: widthDevice < 1500 ? widthDevice * 0.14 : 215),
-            SizedBox(
-              width: 20,
-            ),
-            PasswordField(
-                hintText: 'Password',
-                keyText: 'Confirm Password',
-                controller: confirmPassword,
-                widthContainer: widthDevice < 1500 ? widthDevice * 0.14 : 215),
-          ],
+          ),
         ),
         Visibility(
           visible: passwordStatus.text != "",
@@ -183,7 +195,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   style: heightDevice < 710
                       ? TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: widthDevice < 1500 ? 12 : 15,
                           fontFamily: 'raleway',
                           height: 1,
                         )
@@ -204,7 +216,10 @@ class _CreateProfileState extends State<CreateProfile> {
         SizedBox(
           height: heightDevice < 710 ? 5 : 10,
         ),
-        SmallCheckBox(description: 'Remember me', checkboxValue: false),
+        SizedBox(
+            width: MyUtility(context).width * 0.3,
+            child: SmallCheckBox(
+                description: 'Remember me', checkboxValue: false)),
         SizedBox(
           height: widthDevice < 1500 ? 15 : 25,
         ),

@@ -127,7 +127,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                         )),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: Text(
                 'Monthly',
                 textAlign: TextAlign.start,
@@ -147,7 +147,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
               ),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: Text(
                 'Annual',
                 textAlign: TextAlign.start,
@@ -195,7 +195,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
               ),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
                       groupValue: onceOffValue,
@@ -221,7 +221,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       value: MembershipOnceOff.onceOff),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
                       groupValue: onceOffValue,
@@ -274,7 +274,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
               ),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
                       groupValue: _radioValue,
@@ -304,7 +304,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       value: MembershipValues.starterM),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
                       groupValue: _radioValue,
@@ -362,7 +362,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
               ),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
                       groupValue: _radioValue,
@@ -392,7 +392,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       value: MembershipValues.coreM),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
                       groupValue: _radioValue,
@@ -449,7 +449,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
               ),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
                       groupValue: _radioValue,
@@ -479,7 +479,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       value: MembershipValues.premiumM),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
                       groupValue: _radioValue,
@@ -536,7 +536,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
               ),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
                       groupValue: _radioValue,
@@ -566,7 +566,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                       value: MembershipValues.premiumPlusM),
             ),
             GreyTable(
-              width: widthDevice < 1500 ? 105 : 125,
+              width: widthDevice < 1500 ? 115 : 130,
               child: widthDevice < 1500
                   ? SmallScreenRadioButton(
                       groupValue: _radioValue,
@@ -610,7 +610,7 @@ class _MembershipOptionsState extends State<MembershipOptions> {
                   ballText: 'Calendar month cancellation notice'),
               WhiteBallpointText(
                   ballText:
-                      'Monthly on advance via Debit\n Order to limit costs'),
+                      'Monthly on advance via Debit Order to limit costs'),
             ],
           ),
         ),
