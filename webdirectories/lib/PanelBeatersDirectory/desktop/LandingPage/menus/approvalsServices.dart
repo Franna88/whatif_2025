@@ -218,6 +218,7 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
                   widget1: const SetYourLoactionButton(),
                   widget2: SearchButton(
                     onTap: onSearchButtonPressed, // Trigger state change
+                    isComingSoon: true,
                   ),
                 ),
                 isOpen: currentOpenDropdown == 0,
@@ -234,6 +235,7 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
                       hintText: 'Type any street address here'),
                   widget2: SearchButton(
                     onTap: onSearchButtonPressed, // Trigger state change
+                    isComingSoon: true,
                   ),
                 ),
                 isOpen: currentOpenDropdown == 1,

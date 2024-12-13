@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileView.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage3/MobilePage3.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage4/MobilePage4.dart';
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage5/MobilePage5.dart';
+import 'package:webdirectories/main.dart';
 import 'package:webdirectories/myutility.dart';
 import 'dart:html' as html;
+
+import 'package:webdirectories/routes/routerNames.dart';
 
 class DirectoryContainer extends StatefulWidget {
   String Title1;
@@ -72,7 +76,7 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                   );
                 },
                 child: Container(
-                   height: 40,
+                  height: 40,
                   width: 40,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -115,7 +119,6 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                 child: Container(
                   height: 40,
                   width: 40,
-
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
@@ -193,6 +196,11 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                     milliseconds: 500), // Match the periodic timer duration
                 child: TextButton(
                   onPressed: () {
+                    if (widget.Title1 == "PANEL BEATER\n") {
+                      // Open the PanelBeatersHome page in a new tab using the named route URL
+                      html.window.open('/panelbeaters-directory', '_blank');
+                      return;
+                    }
                     widget.Title2 == "WATIF"
                         ? Navigator.push(
                             context,

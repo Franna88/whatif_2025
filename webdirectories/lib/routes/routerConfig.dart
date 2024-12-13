@@ -19,7 +19,7 @@ class Routerconfig {
           builder: (context, state) => const MyHome(),
           routes: [
             GoRoute(
-              path: 'panelbeaters',
+              path: 'panelbeaters-directory',
               name: Routernames.panelbeatersHome,
               builder: (BuildContext context, GoRouterState state) =>
                   const PanelBeatersHome(),

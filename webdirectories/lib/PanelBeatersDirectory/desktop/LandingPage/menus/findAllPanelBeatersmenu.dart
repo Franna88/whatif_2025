@@ -92,7 +92,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
             widget1: SetYourLoactionButton(),
             widget2: SearchButton(
               onTap: () => context.goNamed(Routernames.panelbeatersNearMe),
-              isComingSoon: true,
+              isComingSoon: false,
             ),
           ),
           isOpen: currentOpenDropdown == 0,
@@ -111,7 +111,7 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
               widget2: SearchButton(
                 onTap: () => context.goNamed(Routernames.panelbeatersByAddress,
                     pathParameters: address),
-                isComingSoon: true,
+                isComingSoon: false,
               )),
           isOpen: currentOpenDropdown == 1,
           onToggle: () => toggleDropdown(1),
