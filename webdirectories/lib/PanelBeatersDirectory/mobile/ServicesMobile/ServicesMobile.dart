@@ -16,6 +16,7 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/Servi
 import 'package:webdirectories/myutility.dart';
 
 import '../../utils/firebaseImageUtils.dart';
+import 'dart:html' as html;
 
 class ServicesMobile extends StatefulWidget {
   String listingId;
@@ -117,7 +118,8 @@ class _ServicesMobileState extends State<ServicesMobile> {
 
 //Update businessViews
   updateViews(ip) async {
-    var viewDetails = {"ip": ip, "date": DateTime.now()};
+    final currentUrl = html.window.location.href;
+    var viewDetails = {"ip": ip, "url": currentUrl, "date": DateTime.now()};
     setState(() {
       businessViews.add(viewDetails);
     });

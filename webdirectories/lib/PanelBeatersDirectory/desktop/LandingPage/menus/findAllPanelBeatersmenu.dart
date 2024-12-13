@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/dropDownMenus/dropDownMenuWidget.dart';
@@ -9,6 +11,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/m
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/textfieldButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesNearMe/ServicesNearMe.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/addressAutoCompleteField.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/googleSearchWidget.dart';
 import 'package:webdirectories/main.dart';
 import 'package:webdirectories/routes/routerNames.dart';
 
@@ -31,10 +34,20 @@ class FindAllPanelBeaters extends StatefulWidget {
 }
 
 class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
+  final searchController = TextEditingController();
   int menuIndex = 2;
   int? currentOpenDropdown;
   String nearMeText = 'Click here to set your location';
   Map<String, String> address = {};
+  List<dynamic> searchResults = [];
+  bool isLoading = false;
+
+  void updateIsLoading(bool value) {
+    print('value: $value');
+    setState(() {
+      isLoading = value;
+    });
+  }
 
   void toggleDropdown(int index) {
     setState(() {
@@ -106,21 +119,33 @@ class _FindAllPanelBeatersState extends State<FindAllPanelBeaters> {
         const SizedBox(
           height: 15,
         ),
-        // MainButton(
-        //   buttonTitle: 'Keyword Search',
-        //   dropdownContent: const DropDownMenuWidget(
-        //       topText: 'Search by keywords within Panel Beater Directory',
-        //       widget1: TextfieldButton(hintText: 'Type here'),
-        //       widget2: SearchButton(
-        //         isComingSoon: true,
-        //       )),
-        //   isOpen: currentOpenDropdown == 2,
-        //   onToggle: () => toggleDropdown(2),
-        // ),
-        MainButtonDirect(
-          onTap: () => context.goNamed(Routernames.panelbeatersKeyword),
+        MainButton(
           buttonTitle: 'Keyword Search',
+          dropdownContent: DropDownMenuWidget(
+              topText: 'Search by keywords within Panel Beater Directory',
+              widget1: GoogleSearchWidget(
+                  updateIsLoading: updateIsLoading,
+                  onSearchResultsChanged: (value) {
+                    searchResults = value;
+                  },
+                  searchController: searchController),
+              widget2: SearchButton(
+                waiting: isLoading,
+                onTap: () async {
+                  context.goNamed(Routernames.panelbeatersKeyword,
+                      pathParameters: {
+                        "searchData": jsonEncode(searchResults)
+                      });
+                },
+                isComingSoon: false,
+              )),
+          isOpen: currentOpenDropdown == 2,
+          onToggle: () => toggleDropdown(2),
         ),
+        // MainButtonDirect(
+        //   onTap: () => context.goNamed(Routernames.panelbeatersKeyword),
+        //   buttonTitle: 'Keyword Search',
+        // ),
         const SizedBox(
           height: 15,
         ),

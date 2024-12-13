@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class SearchButton extends StatefulWidget {
   final dynamic? onTap;
   final bool isComingSoon;
-  const SearchButton({
+  bool? waiting;
+  SearchButton({
     super.key,
     this.onTap,
     this.isComingSoon = false,
+    this.waiting,
   });
 
   @override
@@ -33,6 +35,11 @@ class _SearchButtonState extends State<SearchButton> {
             /*height: MediaQuery.of(context).size.height * 0.05,*/
             child: ElevatedButton(
               onPressed: () {
+                if (widget.waiting != null) {
+                  if (widget.waiting == true) {
+                    return;
+                  }
+                }
                 setState(() {
                   isPressed = !isPressed;
                 });
@@ -77,6 +84,20 @@ class _SearchButtonState extends State<SearchButton> {
                         fontFamily: 'Raleway',
                       ),
                     ),
+                    if (widget.waiting != null && widget.waiting == true)
+                      Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Container(
+                            width: 25,
+                            height: 25,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: isPressed ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        ],
+                      )
                   ],
                 ),
               ),

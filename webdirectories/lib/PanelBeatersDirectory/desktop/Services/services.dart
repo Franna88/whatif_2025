@@ -19,6 +19,7 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.da
 import 'package:webdirectories/WebDirectories/Footer/Footer.dart';
 import 'package:webdirectories/myutility.dart';
 import 'package:intl/intl.dart';
+import 'dart:html' as html;
 
 enum ServicesPages {
   profile,
@@ -159,7 +160,8 @@ class _ServicesState extends State<Services> {
 
 //Update businessViews
   updateViews(ip) async {
-    var viewDetails = {"ip": ip, "date": DateTime.now()};
+    final currentUrl = html.window.location.href;
+    var viewDetails = {"ip": ip, "url": currentUrl, "date": DateTime.now()};
     setState(() {
       businessViews.add(viewDetails);
     });

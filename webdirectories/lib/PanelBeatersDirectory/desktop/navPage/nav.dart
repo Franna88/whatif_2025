@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFiner.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/newJoinPbdPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/landingPageDisplay.dart';
@@ -11,6 +14,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesBy
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticles.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/navBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/weConnectPage/weConnectMainPage/weConnectMainPage.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 import '../JoinPBDPage/packageInfoPages/packagePagesOptions/packagePage.dart'; // Additional pages
 import '../JoinPBDPage/pricingOptions/pricingOptionsPage.dart'; // Additional pages
@@ -35,7 +39,8 @@ enum panelNavPages {
 
 class Nav extends StatefulWidget {
   panelNavPages? pageIndex;
-  Nav({super.key, this.pageIndex});
+  final String? searchData;
+  Nav({super.key, this.pageIndex, this.searchData});
 
   @override
   State<Nav> createState() => _NavState();
@@ -44,6 +49,7 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   int _currentIndex = 0;
   Map<String, dynamic> address = {'address': '', 'lat': 0.0, 'lng': 0.0};
+  List<dynamic> keywordResultData = [];
 
   void goToWeConnectMainPage() {
     setState(() {
@@ -249,7 +255,10 @@ class _NavState extends State<Nav> {
       // 13
       ServicesByArea(),
       // 14
-      ServicesByKeywordSearch()
+      ServicesByKeywordSearch(
+        searchResults:
+            widget.searchData != null ? jsonDecode(widget.searchData!) : [],
+      )
     ];
 
     return Scaffold(
