@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlesPage/RecentArticlesPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlescomponents/ArticlesContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlescomponents/ArticlesContainerWhite.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 class RecentArticles extends StatefulWidget {
   const RecentArticles({Key? key}) : super(key: key);
@@ -30,7 +32,7 @@ class _RecentArticlesState extends State<RecentArticles> {
         child: Column(
           children: [
             Container(
-              height: MyUtility(context).height,
+              // height: MyUtility(context).height,
               width: MyUtility(context).width,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -248,53 +250,22 @@ class _RecentArticlesState extends State<RecentArticles> {
                                               description:
                                                   'Your CSI success contributes to your business success and assists both prospects and industry users.',
                                               onpress: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const RecentArticlesPage()),
-                                                );
+                                                context.goNamed(Routernames
+                                                    .panelbeatersRecentArticlesPage);
+                                                // Navigator.push(
+                                                //   context,
+                                                //   MaterialPageRoute(
+                                                //       builder: (context) =>
+                                                //           const RecentArticlesPage()),
+                                                // );
                                               },
                                             ),
-                                            ArticlesContainer(
-                                              image: 'images/drive.png',
-                                              category:
-                                                  'Panel Beater Directory',
-                                              headline:
-                                                  'See your Lightstone EchoMBR Results for February 2024',
-                                              writer: 'Wena Cronje',
-                                              description:
-                                                  'Your CSI success contributes to your business success and assists both prospects and industry users.',
-                                              onpress: () {},
-                                            ),
                                           ],
                                         ),
                                         Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            ArticlesContainerWhite(
-                                              image: 'images/articles1.png',
-                                              category:
-                                                  'Panel Beater Directory',
-                                              headline:
-                                                  "How to Replace Your Car's Air Filter",
-                                              writer: 'Wena Cronje',
-                                              description:
-                                                  "It's important to replace your car's air filter regularly, according to your manufacturer's recommended maintenance...",
-                                              onPress: () {},
-                                            ),
-                                            ArticlesContainerWhite(
-                                              image: 'images/articles2.png',
-                                              category:
-                                                  'Panel Beater Directory',
-                                              headline:
-                                                  'A Technical Look at Paintless Dent Removal',
-                                              writer: 'Wena Cronje',
-                                              description:
-                                                  "Today, we'll share 7 tips to drive your online presence and revenue to new heights.",
-                                              onPress: () {},
-                                            ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles1.png',
                                               category:
@@ -345,56 +316,12 @@ class _RecentArticlesState extends State<RecentArticles> {
                                                   "The panelbeating industry is constantly evolving, as new technologies and materials are developed.",
                                               onPress: () {},
                                             ),
-                                            ArticlesContainerWhite(
-                                              image: 'images/articles3.png',
-                                              category:
-                                                  'Panel Beater Directory',
-                                              headline:
-                                                  "The Lightstone EchoMBR Rankings Awards",
-                                              writer: 'Wena Cronje',
-                                              description:
-                                                  "Congratulations to the winners and top performers in each of the categories!",
-                                              onPress: () {},
-                                            ),
-                                            ArticlesContainerWhite(
-                                              image: 'images/articles4.png',
-                                              category:
-                                                  'Panel Beater Directory',
-                                              headline:
-                                                  'The Future of Panel Beating in South Africa',
-                                              writer: 'Wena Cronje',
-                                              description:
-                                                  "The panelbeating industry is constantly evolving, as new technologies and materials are developed.",
-                                              onPress: () {},
-                                            ),
                                           ],
                                         ),
                                         Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            ArticlesContainerWhite(
-                                              image: 'images/articles5.png',
-                                              category:
-                                                  'Panel Beater Directory',
-                                              headline:
-                                                  "What do different car colours mean?",
-                                              writer: 'Wena Cronje',
-                                              description:
-                                                  "Dive into the fascinating world of car colour psychology and discover what your ride reveals about your personality...",
-                                              onPress: () {},
-                                            ),
-                                            ArticlesContainerWhite(
-                                              image: 'images/articles6.png',
-                                              category:
-                                                  'Panel Beater Directory',
-                                              headline:
-                                                  "How to Replace Your Car's Windscreen Wiper Blades",
-                                              writer: 'Wena Cronje',
-                                              description:
-                                                  "Replacing your car wiper blades is a simple and inexpensive maintenance task that can help to improve...",
-                                              onPress: () {},
-                                            ),
                                             ArticlesContainerWhite(
                                               image: 'images/articles5.png',
                                               category:

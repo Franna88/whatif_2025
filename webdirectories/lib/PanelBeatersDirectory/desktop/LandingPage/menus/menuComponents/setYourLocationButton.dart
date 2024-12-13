@@ -9,7 +9,7 @@ class SetYourLoactionButton extends StatefulWidget {
 }
 
 class _SetYourLoactionButtonState extends State<SetYourLoactionButton> {
-  String nearMeText = 'Find your nearest Panel Beater';
+  String nearMeText = 'Click here to set your location';
   bool isLocationSet = false;
 
   @override

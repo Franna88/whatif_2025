@@ -23,12 +23,9 @@ class _MainButtonDirectState extends State<MainButtonDirect> {
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
 
-    return GestureDetector(
+    return InkWell(
       onTap: widget.isComingSoon ? null : widget.onTap,
       child: MouseRegion(
-        cursor: widget.isComingSoon
-            ? SystemMouseCursors.forbidden
-            : SystemMouseCursors.click,
         onEnter: (_) {
           if (widget.isComingSoon) {
             setState(() {
@@ -108,7 +105,7 @@ class _MainButtonDirectState extends State<MainButtonDirect> {
             ),
             if (widget.isComingSoon && isHovered)
               Positioned(
-                bottom: -30,
+                bottom: 25,
                 child: Material(
                   color: Colors.transparent,
                   child: Container(

@@ -21,6 +21,7 @@ class Routernames {
   static const String panelbeatersByAddress = 'panelbeaters-address-search';
   static const String panelbeatersKeyword = 'panelbeaters-keyword-search';
   static const String panelbeatersOPLogin = 'login';
+  static const String panelbeatersWeConnect = 'we-connect';
   static const String panelbeatersOPRegister = 'register';
   static const String panelbeatersOPCode = 'code';
   static const String panelbeatersOPCreateProfile = 'create-profile';
@@ -29,4 +30,7 @@ class Routernames {
   static const String panelbeatersOPWhatsNext = 'whats-next';
   static const String panelbeatersOPResetOTP = 'reset-otp';
   static const String panelbeatersOPResetPassword = 'reset-password';
+  static const String panelbeatersArticles = 'panelbeaters-articles';
+  static const String panelbeatersRecentArticlesPage = 'recent-articles';
+  static const String panelbeatersWeCanHelp = 'we-can-help';
 }

@@ -6,15 +6,9 @@ import 'package:seo/html/seo_controller.dart';
 import 'package:seo/html/tree/widget_tree.dart';
 import 'package:webdirectories/MyHome.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPortal.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
-import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
 
-import 'package:dart_ipify/dart_ipify.dart';
-import 'package:webdirectories/router.dart';
 import 'package:webdirectories/routes/routerConfig.dart';
 
-import 'WebDirectories/Page1/Page1.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() async {
