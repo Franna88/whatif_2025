@@ -50,7 +50,7 @@ class _ApprovalServicesSearchDropdownState
         ),
         MainButton(
           buttonTitle: 'Special Services',
-          dropdownContent: const DropDownMenuWidget(
+          dropdownContent: DropDownMenuWidget(
               topText: 'Find your nearest Panel Beater',
               widget1: SetYourLoactionButton(),
               widget2: SearchButton(
@@ -64,7 +64,7 @@ class _ApprovalServicesSearchDropdownState
         ),
         MainButton(
           buttonTitle: 'Any City or Street Address',
-          dropdownContent: const DropDownMenuWidget(
+          dropdownContent: DropDownMenuWidget(
               topText: 'Find a Panel Beater by street',
               widget1:
                   TextfieldButton(hintText: 'Type any street address here'),

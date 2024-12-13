@@ -126,7 +126,7 @@ class _RegisterYourBusinessState extends State<RegisterYourBusiness> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => Nav(
-                            pageIndex: 5,
+                            pageIndex: panelNavPages.ownersportal,
                           )),
                 ); /**/
               },
