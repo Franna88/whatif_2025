@@ -172,7 +172,7 @@ class _WatifMobileState extends State<WatifMobile> {
                     "watif",
                     style: TextStyle(
                       fontSize: 42,
-                      fontFamily: 'Comfortaa',
+                      fontFamily: 'comfortaaBold',
                       color: Color(0xFFCFD300),
                       height: 1.1,
                     ),

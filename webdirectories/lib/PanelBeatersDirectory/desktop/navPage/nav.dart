@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/WeCanHelp.dart/WeCanHelp.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFiner.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/newJoinPbdPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/landingPageDisplay.dart';
@@ -12,6 +15,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArti
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlesPage/RecentArticlesPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/navBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/weConnectPage/weConnectMainPage/weConnectMainPage.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 import '../JoinPBDPage/packageInfoPages/packagePagesOptions/packagePage.dart'; // Additional pages
 import '../JoinPBDPage/pricingOptions/pricingOptionsPage.dart'; // Additional pages
@@ -24,6 +28,7 @@ enum panelNavPages {
   jointpbd,
   ownersportal,
   servicesnearme,
+  pricingoptions,
   starterpackage,
   corepackage,
   premiumppackage,
@@ -37,7 +42,8 @@ enum panelNavPages {
 
 class Nav extends StatefulWidget {
   panelNavPages? pageIndex;
-  Nav({super.key, this.pageIndex});
+  final String? searchData;
+  Nav({super.key, this.pageIndex, this.searchData});
 
   @override
   State<Nav> createState() => _NavState();
@@ -46,6 +52,7 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   int _currentIndex = 0;
   Map<String, dynamic> address = {'address': '', 'lat': 0.0, 'lng': 0.0};
+  List<dynamic> keywordResultData = [];
 
   void goToWeConnectMainPage() {
     setState(() {
@@ -148,37 +155,37 @@ class _NavState extends State<Nav> {
             _currentIndex = 6;
           });
           break;
-        case panelNavPages.starterpackage:
+        case panelNavPages.pricingoptions:
           setState(() {
             _currentIndex = 7;
           });
           break;
-        case panelNavPages.corepackage:
+        case panelNavPages.starterpackage:
           setState(() {
             _currentIndex = 8;
           });
           break;
-        case panelNavPages.premiumppackage:
+        case panelNavPages.corepackage:
           setState(() {
             _currentIndex = 9;
           });
           break;
-        case panelNavPages.premiumpluspackage:
+        case panelNavPages.premiumppackage:
           setState(() {
             _currentIndex = 10;
           });
           break;
-        case panelNavPages.servicesaddress:
+        case panelNavPages.premiumpluspackage:
           setState(() {
             _currentIndex = 11;
           });
           break;
-        case panelNavPages.servicesarea:
+        case panelNavPages.servicesaddress:
           setState(() {
             _currentIndex = 12;
           });
           break;
-        case panelNavPages.serviceskeyword:
+        case panelNavPages.servicesarea:
           setState(() {
             _currentIndex = 13;
           });
@@ -190,6 +197,11 @@ class _NavState extends State<Nav> {
         case panelNavPages.WeCanHelp:
           setState(() {
             _currentIndex = 16;
+          });
+          break;
+        case panelNavPages.serviceskeyword:
+          setState(() {
+            _currentIndex = 14;
           });
           break;
         default:
@@ -268,7 +280,10 @@ class _NavState extends State<Nav> {
       // 13
       ServicesByArea(),
       // 14
-      ServicesByKeywordSearch(),
+      ServicesByKeywordSearch(
+        searchResults:
+            widget.searchData != null ? jsonDecode(widget.searchData!) : [],
+      )
       // 15
       RecentArticlesPage(),
       //16

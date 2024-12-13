@@ -2,6 +2,9 @@ import 'package:cached_firestorage/cached_firestorage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:seo/html/seo_controller.dart';
+import 'package:seo/html/tree/widget_tree.dart';
+import 'package:webdirectories/MyHome.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:webdirectories/routes/routerConfig.dart';
@@ -35,11 +38,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GoRouter _router = Routerconfig.returnRouter();
-    return MaterialApp.router(
-      routeInformationParser: _router.routeInformationParser,
-      routeInformationProvider: _router.routeInformationProvider,
-      routerDelegate: _router.routerDelegate,
-      title: 'Web Directories',
+    return SeoController(
+      enabled: true,
+      tree: WidgetTree(context: context),
+      child: MaterialApp.router(
+        routeInformationParser: _router.routeInformationParser,
+        routeInformationProvider: _router.routeInformationProvider,
+        routerDelegate: _router.routerDelegate,
+        title: 'Web Directories',
+      ),
     );
   }
 }

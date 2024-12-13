@@ -67,27 +67,30 @@ class OwnersPortalLogin extends StatelessWidget {
         SizedBox(
           height: heightDevice < 710 ? 10 : 20,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: heightDevice < 710 ? 25 : 40,
-              height: heightDevice < 710 ? 25 : 40,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('images/googleicon.png'))),
-            ),
-            Text(
-              'Sign in with Google',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: heightDevice < 710 ? 16 : 18,
-                fontFamily: 'raleway',
-                fontWeight: FontWeight.w400,
-                //height: 0.05,
+        InkWell(
+          onTap: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: heightDevice < 710 ? 25 : 40,
+                height: heightDevice < 710 ? 25 : 40,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('images/googleicon.png'))),
               ),
-            ),
-          ],
+              Text(
+                'Sign in with Google',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: heightDevice < 710 ? 16 : 18,
+                  fontFamily: 'raleway',
+                  fontWeight: FontWeight.w400,
+                  //height: 0.05,
+                ),
+              ),
+            ],
+          ),
         ),
         SizedBox(
           height: heightDevice < 710 ? 10 : 20,

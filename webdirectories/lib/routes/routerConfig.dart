@@ -102,10 +102,11 @@ class Routerconfig {
                   },
                 ),
                 GoRoute(
-                  path: 'listings-keyword',
+                  path: 'listings-keyword/search-data=:searchData',
                   name: Routernames.panelbeatersKeyword,
                   builder: (BuildContext context, GoRouterState state) => Nav(
                     pageIndex: panelNavPages.serviceskeyword,
+                    searchData: state.pathParameters['searchData'],
                   ),
                 ),
                 GoRoute(
