@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Locations/LocationFeaturedComponents/BuisnessImageContainer.dart';
@@ -10,6 +11,7 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.da
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 import 'ServicesNearMeOther.dart';
 import '../services.dart';
 import 'dart:math';
@@ -366,13 +368,12 @@ class _ServicesNearMeState extends State<ServicesNearMe> {
                                     storage.write(
                                         key: 'title',
                                         value: listing['title'].toString());
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Services(
-                                              listingId: (listing['listingsId'])
-                                                  .toString())),
-                                    );
+
+                                    context.goNamed(
+                                        Routernames.panelbeatersServicesProfile,
+                                        pathParameters: {
+                                          'id': listing['listingsId'].toString()
+                                        });
                                   },
                                   navigateMe: () async {
                                     final Uri uri = Uri.parse(

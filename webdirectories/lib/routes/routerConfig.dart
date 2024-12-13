@@ -93,6 +93,20 @@ class Routerconfig {
                   ),
                 ),
                 GoRoute(
+                  path: 'services-approvals-near-me',
+                  name: Routernames.panelbeatersServicesNearMe,
+                  builder: (BuildContext context, GoRouterState state) => Nav(
+                    pageIndex: panelNavPages.servicesapprovalsnearme,
+                  ),
+                ),
+                GoRoute(
+                  path: 'services-approvals-address',
+                  name: Routernames.panelbeatersServicesByAddress,
+                  builder: (BuildContext context, GoRouterState state) => Nav(
+                    pageIndex: panelNavPages.servicesapprovalbyaddress,
+                  ),
+                ),
+                GoRoute(
                   path:
                       'listings-by-address/address=:address&lat=:lat&lng=:lng',
                   name: Routernames.panelbeatersByAddress,

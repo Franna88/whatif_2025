@@ -1,57 +1,109 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Locations/LocationFeaturedComponents/BuisnessImageContainer.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServiceStackedButton.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServicesContainer.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButton.dart';
-import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.dart';
-import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
-import 'package:webdirectories/myutility.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:webdirectories/routes/routerNames.dart';
-import '../ServicesNearMe/ServicesNearMeOther.dart';
-import '../services.dart';
 import 'dart:math';
 
-class ServicesByAddressSearch extends StatefulWidget {
-  final Map<String, dynamic> addressData;
-  ServicesByAddressSearch({
-    Key? key,
-    required this.addressData,
-  }) : super(key: key);
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServiceStackedButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServicesContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
+import 'package:webdirectories/myutility.dart';
 
-  @override
-  _ServicesByAddressSearchState createState() =>
-      _ServicesByAddressSearchState();
+class searchDataNearMe {
+  final String? specialServiceId;
+  final String? insuranceId;
+  final String? vehicleBrandId;
+  final String? commercialBrandId;
+  final String? commercialServicsId;
+
+  searchDataNearMe({
+    required this.specialServiceId,
+    required this.insuranceId,
+    required this.vehicleBrandId,
+    required this.commercialBrandId,
+    required this.commercialServicsId,
+  });
 }
 
-class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
+class ListingsByServicesApprovalsNearMe extends StatefulWidget {
+  final Map<String, String> searchData;
+  const ListingsByServicesApprovalsNearMe(
+      {super.key, required this.searchData});
+
+  @override
+  State<ListingsByServicesApprovalsNearMe> createState() =>
+      _ListingsByServicesApprovalsNearMeState();
+}
+
+class _ListingsByServicesApprovalsNearMeState
+    extends State<ListingsByServicesApprovalsNearMe> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController search = TextEditingController();
+  bool showOtherServices = false;
+  Position? _userPosition;
   bool isFeatured = true;
+  late searchDataNearMe searchData;
   @override
   void initState() {
     super.initState();
+    searchData = searchDataNearMe(
+      specialServiceId: widget.searchData['specialServices'] ?? '',
+      insuranceId: widget.searchData['insurancePanel'] ?? '',
+      vehicleBrandId: widget.searchData['vehicleBrand'] ?? '',
+      commercialBrandId: widget.searchData['commercialVehicleBrand'] ?? '',
+      commercialServicsId: widget.searchData['commercialVehicleService'] ?? '',
+    );
+    _getCurrentLocation();
+  }
+
+  Future<void> _getCurrentLocation() async {
+    LocationPermission permission;
+
+    // Check if location services are enabled
+    bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!isLocationServiceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    // Check for location permissions
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied.');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error('Location permissions are permanently denied.');
+    }
+
+    // Get the current position
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
+
+    setState(() {
+      _userPosition = position;
+    });
   }
 
   /// Calculates the bounding box for a given radius (in km) around a point.
-  Map<String, double> _calculateBoundingBox(double radiusInKm) {
+  Map<String, double> _calculateBoundingBox(
+      double userLat, double userLng, double radiusInKm) {
     const double earthRadius = 6371.0; // Earth's radius in kilometers
-    double lat = double.parse(widget.addressData['lat']);
-    double lng = double.parse(widget.addressData['lng']);
 
     // Latitude offset
     double latOffset = radiusInKm / earthRadius;
-    double latMin = lat - latOffset * (180 / pi);
-    double latMax = lat + latOffset * (180 / pi);
+    double latMin = userLat - latOffset * (180 / pi);
+    double latMax = userLat + latOffset * (180 / pi);
 
     // Longitude offset, which depends on the latitude
-    double lngOffset = radiusInKm / (earthRadius * cos(lat * pi / 180));
-    double lngMin = lng - lngOffset * (180 / pi);
-    double lngMax = lng + lngOffset * (180 / pi);
+    double lngOffset = radiusInKm / (earthRadius * cos(userLat * pi / 180));
+    double lngMin = userLng - lngOffset * (180 / pi);
+    double lngMax = userLng + lngOffset * (180 / pi);
 
     return {
       "latMin": latMin,
@@ -63,36 +115,36 @@ class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
 
   /// Fetches documents within a 100 km radius from the user's location.
   Future<List<Map<String, dynamic>>> fetchNearbyLocations(
-      double radiusInKm) async {
+      double userLat, double userLng, double radiusInKm) async {
     // Calculate bounding box
-    Map<String, double> bounds = _calculateBoundingBox(radiusInKm);
-    print(bounds['latMin']);
-    print(bounds['latMax']);
-    // Query Firestore by latitude range only
+    Map<String, double> bounds =
+        _calculateBoundingBox(userLat, userLng, radiusInKm);
+
+    // Step 1: Query Firestore by latitude range only
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('listings')
         .where('featured', isEqualTo: isFeatured == true ? 1 : 0)
         .where('latitude', isGreaterThanOrEqualTo: bounds['latMin'])
         .where('latitude', isLessThanOrEqualTo: bounds['latMax'])
         .get();
-    print(querySnapshot.docs.length);
-    //Filter results by longitude range and exact distance
+
+    // Step 2: Filter results by longitude range and exact distance
     List<Map<String, dynamic>> nearbyLocations = [];
     for (var doc in querySnapshot.docs) {
       double lat = doc['latitude'];
       double lng = doc['longitude'];
-      double addresslat = double.parse(widget.addressData['lat']);
-      double addresslng = double.parse(widget.addressData['lng']);
+
       // Check if the longitude is within bounds
       if (lng >= bounds['lngMin']! && lng <= bounds['lngMax']!) {
         // Calculate the exact distance to make sure it's within the radius
-        double distance = _calculateDistance(addresslat, addresslng, lat, lng);
+        double distance = _calculateDistance(userLat, userLng, lat, lng);
         if (distance <= radiusInKm) {
           nearbyLocations.add(
               {...doc.data() as Map<String, dynamic>, 'distance': distance});
         }
       }
     }
+
     List<Future<Map<String, dynamic>>> listingFutures =
         nearbyLocations.map((doc) async {
       Map<String, dynamic> data = doc;
@@ -148,18 +200,17 @@ class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
   void toggleFeatured() {
     setState(() {
       isFeatured = !isFeatured;
-      // showOtherServices = false;
     });
   }
 
-  // void toggleToOther() {
-  //   setState(() {
-  //     showOtherServices = true;
-  //   });
-  // }
+  void toggleToOther() {
+    setState(() {
+      showOtherServices = true;
+    });
+  }
 
-//filter data on search value
-  getSearchValue(document) {
+  //filter data on search value
+  bool getSearchValue(document) {
     var title = document['title'].split(' ');
 
     if ((search.text) == "") {
@@ -281,7 +332,8 @@ class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
                   SizedBox(
                     height: MyUtility(context).height * 0.85,
                     child: FutureBuilder<List<Map<String, dynamic>>>(
-                      future: fetchNearbyLocations(100.0),
+                      future: fetchNearbyLocations(_userPosition!.latitude,
+                          _userPosition!.longitude, 100.0),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -321,6 +373,8 @@ class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
                             itemCount: listings.length,
                             itemBuilder: (context, index) {
                               Map<String, dynamic> listing = listings[index];
+
+                              // print(listing);
                               return Visibility(
                                 visible: getSearchValue(listing),
                                 child: ServiceFeaturedContainer(
@@ -335,11 +389,12 @@ class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
                                     storage.write(
                                         key: 'title',
                                         value: listing['title'].toString());
-                                    context.goNamed(
-                                      Routernames.panelbeatersServicesProfile,
-                                      pathParameters: {
-                                        'id': listing['listingsId'].toString()
-                                      },
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Services(
+                                              listingId: (listing['listingsId'])
+                                                  .toString())),
                                     );
                                   },
                                   navigateMe: () async {

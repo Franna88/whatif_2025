@@ -28,7 +28,7 @@ class _ApprovalsState extends State<Approvals> {
     }
   }
 
-//get approvals for checkBoxes
+  //get approvals for checkBoxes
   fetchApprovalsForListing(approvalsId) async {
     print("GOT DATA");
     print(approvalsId);

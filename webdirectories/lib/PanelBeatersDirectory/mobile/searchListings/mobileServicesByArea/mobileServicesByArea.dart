@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/ProfileDropDown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/LocationMobileContainer.dart';
@@ -10,6 +11,7 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/Loca
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ServicesMobile.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 class MobileServicesByArea extends StatefulWidget {
   const MobileServicesByArea({super.key});
@@ -495,14 +497,13 @@ class _MobileServicesByAreaState extends State<MobileServicesByArea> {
                                         businessAddress:
                                             listing['postaladdress'],
                                         OnPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ServicesMobile(
-                                                        listingId: (listing[
-                                                                'listingsId'])
-                                                            .toString())),
+                                          context.goNamed(
+                                            Routernames
+                                                .panelbeatersServicesProfile,
+                                            pathParameters: {
+                                              'id': listing['listingsId']
+                                                  .toString()
+                                            },
                                           );
                                         },
                                         views: (listing['views'] as int)

@@ -7,6 +7,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFiner.
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/newJoinPbdPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/landingPageDisplay.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/ownersPortal.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ListingsByServicesApprovals/ListingsByServicesApprovalsAddress.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ListingsByServicesApprovals/ListingsByServicesApprovalsNearMe.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesNearMe/ServicesNearMe.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByAddress/servicesByAddressSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByArea/servicesByArea.dart';
@@ -37,13 +39,22 @@ enum panelNavPages {
   servicesarea,
   serviceskeyword,
   RecentArticlesPage,
-  WeCanHelp
+  WeCanHelp,
+  servicesapprovalsnearme,
+  servicesapprovalbyaddress,
 }
 
 class Nav extends StatefulWidget {
   panelNavPages? pageIndex;
   final String? searchData;
-  Nav({super.key, this.pageIndex, this.searchData});
+  final String? approvalsNearMeData;
+  final String? approvalsAddressData;
+  Nav(
+      {super.key,
+      this.pageIndex,
+      this.searchData,
+      this.approvalsNearMeData,
+      this.approvalsAddressData});
 
   @override
   State<Nav> createState() => _NavState();
@@ -189,6 +200,12 @@ class _NavState extends State<Nav> {
           setState(() {
             _currentIndex = 13;
           });
+
+        case panelNavPages.serviceskeyword:
+          setState(() {
+            _currentIndex = 14;
+          });
+          break;
         case panelNavPages.RecentArticlesPage:
           setState(() {
             _currentIndex = 15;
@@ -199,9 +216,14 @@ class _NavState extends State<Nav> {
             _currentIndex = 16;
           });
           break;
-        case panelNavPages.serviceskeyword:
+        case panelNavPages.servicesapprovalsnearme:
           setState(() {
-            _currentIndex = 14;
+            _currentIndex = 17;
+          });
+          break;
+        case panelNavPages.servicesapprovalbyaddress:
+          setState(() {
+            _currentIndex = 18;
           });
           break;
         default:
@@ -288,6 +310,18 @@ class _NavState extends State<Nav> {
       RecentArticlesPage(),
       //16
       WeCanHelp(),
+      //17
+      // ListingsByServicesApprovalsNearMe(
+      //   searchData: widget.approvalsNearMeData != null
+      //       ? jsonDecode(widget.approvalsNearMeData!)
+      //       : [],
+      // ),
+      // //18
+      // ListingsByServicesApprovalsAddress(
+      //   searchData: widget.approvalsAddressData != null
+      //       ? jsonDecode(widget.approvalsAddressData!)
+      //       : [],
+      // ),
     ];
 
     return Scaffold(

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class CustomMenuScrollDropdown extends StatefulWidget {
   final void Function(String)? onSelection; // Callback for selection
-
-  const CustomMenuScrollDropdown({Key? key, this.onSelection})
+  final List<Map<String, dynamic>> dropdownItems;
+  const CustomMenuScrollDropdown(
+      {Key? key, this.onSelection, required this.dropdownItems})
       : super(key: key);
 
   @override
@@ -56,9 +57,11 @@ class _CustomMenuScrollDropdownState extends State<CustomMenuScrollDropdown> {
                 ),
                 dropdownColor: Colors.grey[700], // Dropdown list background
                 icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
-                items: options.map((String option) {
+                items: widget.dropdownItems.map((Map<String, dynamic> item) {
+                  String option = item['name'];
+                  String value = item['value'];
                   return DropdownMenuItem<String>(
-                    value: option,
+                    value: value,
                     child: Text(
                       option,
                       style: const TextStyle(color: Colors.white),
@@ -82,9 +85,9 @@ class _CustomMenuScrollDropdownState extends State<CustomMenuScrollDropdown> {
   }
 }
 
-void main() => runApp(MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.grey[900],
-        body: CustomMenuScrollDropdown(),
-      ),
-    ));
+// void main() => runApp(MaterialApp(
+//       home: Scaffold(
+//         backgroundColor: Colors.grey[900],
+//         body: CustomMenuScrollDropdown(),
+//       ),
+//     ));

@@ -19,6 +19,10 @@ class Routernames {
   static const String panelbeatersNearMe = 'panelbeaters-near-me';
   static const String panelbeatersByArea = 'panelbeaters-area-search';
   static const String panelbeatersByAddress = 'panelbeaters-address-search';
+  static const String panelbeatersServicesNearMe =
+      'panelbeaters-services-near-me';
+  static const String panelbeatersServicesByAddress =
+      'panelbeaters-services-address-search';
   static const String panelbeatersKeyword = 'panelbeaters-keyword-search';
   static const String panelbeatersOPLogin = 'login';
   static const String panelbeatersWeConnect = 'we-connect';
