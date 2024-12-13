@@ -283,7 +283,7 @@ class _NavState extends State<Nav> {
       ServicesByKeywordSearch(
         searchResults:
             widget.searchData != null ? jsonDecode(widget.searchData!) : [],
-      )
+      ),
       // 15
       RecentArticlesPage(),
       //16
