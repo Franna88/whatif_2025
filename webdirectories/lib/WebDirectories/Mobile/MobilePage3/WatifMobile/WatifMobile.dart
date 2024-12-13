@@ -151,45 +151,42 @@ class _WatifMobileState extends State<WatifMobile> {
           SizedBox(
             height: MyUtility(context).height * 0.03,
           ),
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Download",
-                    style: TextStyle(
-                      fontSize: 42,
-                      fontFamily: 'ralewaysemi',
-                      color: Colors.black,
-                      height: 1.1,
-                    ),
-                    textAlign: TextAlign.center,
+          Text(
+            "Download",
+            style: TextStyle(
+              fontSize: 42,
+              fontFamily: 'ralewaysemi',
+              color: Colors.black,
+              height: 1.1,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          Container(
+            width: 150,
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Text(
+                  "watif",
+                  style: TextStyle(
+                    fontSize: 42,
+                    fontFamily: 'comfortaaBold',
+                    color: Color(0xFFCFD300),
+                    height: 1.1,
                   ),
-                  Text(
-                    "watif",
-                    style: TextStyle(
-                      fontSize: 42,
-                      fontFamily: 'comfortaaBold',
-                      color: Color(0xFFCFD300),
-                      height: 1.1,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-              Positioned(
-                top: 45,
-                right: 17,
-                child: SvgPicture.asset(
-                  'images/tm.svg',
-                  height: 15,
-                  width: 15,
+                  textAlign: TextAlign.center,
                 ),
-              ),
-            ],
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: SvgPicture.asset(
+                    'images/tm.svg',
+                    height: 15,
+                    width: 15,
+                  ),
+                ),
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 5, bottom: 5),
@@ -204,12 +201,28 @@ class _WatifMobileState extends State<WatifMobile> {
           ),
           SizedBox(
             width: MyUtility(context).width / 1.1,
-            child: Text(
-              "Hit the road with confidence and ditch the stress! Watif is your free, all-in-one automotive app that empowers you with everything you need.",
-              style: TextStyle(
-                  fontSize: 16, fontFamily: 'raleway', color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
+            child: const Text.rich(TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Hit the road with confidence and ditch the stress! ',
+                  style: TextStyle(
+                      fontSize: 16, fontFamily: 'raleway', color: Colors.black),
+                ),
+                TextSpan(
+                  text: 'watif ',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'comfortaaMedium',
+                      color: Colors.black),
+                ),
+                TextSpan(
+                  text:
+                      "is your free, all-in-one automotive app that empowers you with everything you need.",
+                  style: TextStyle(
+                      fontSize: 16, fontFamily: 'raleway', color: Colors.black),
+                )
+              ],
+            )),
           ),
           SizedBox(
             height: MyUtility(context).height * 0.025,
