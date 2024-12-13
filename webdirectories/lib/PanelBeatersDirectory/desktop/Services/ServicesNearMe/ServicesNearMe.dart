@@ -224,6 +224,64 @@ class _ServicesNearMeState extends State<ServicesNearMe> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Image.asset(
+                          'images/panelLogo.png',
+                          width: MyUtility(context).width * 0.21,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(1),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 0.5,
+                                      ),
+                                    ),
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.keyboard_arrow_left,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  const Text(
+                                    'Go Back',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 17.68,
+                                      fontFamily: 'raleway',
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                             SizedBox(
+                              width: MyUtility(context).width * 0.04,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: MyUtility(context).width / 1.06,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         ServicesStackedButton(
                           toggleFeatured: toggleFeatured,
                           isFeaturedSelected: isFeatured,
@@ -307,7 +365,7 @@ class _ServicesNearMeState extends State<ServicesNearMe> {
                     ],
                   ),
                   SizedBox(
-                    height: MyUtility(context).height * 0.85,
+                    height: MyUtility(context).height * 0.85 - 48,
                     child: FutureBuilder<List<Map<String, dynamic>>>(
                       future: fetchNearbyLocations(_userPosition!.latitude,
                           _userPosition!.longitude, 100.0),
