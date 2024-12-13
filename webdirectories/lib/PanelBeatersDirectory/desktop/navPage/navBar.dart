@@ -11,7 +11,6 @@ class NavBar extends StatefulWidget {
   // Define a list of icon paths
   final List<String> iconPaths = [
     'images/home.svg',
-    
     'images/business.svg',
     'images/gears.svg',
     'images/BPD.svg',
@@ -21,7 +20,6 @@ class NavBar extends StatefulWidget {
 
   final List<String> menuTooltips = [
     'PBD Home',
-    
     'Job Finder',
     'More Services',
     'Info & Articles',
@@ -71,7 +69,7 @@ class _NavBarState extends State<NavBar> {
         children: [
           Column(
             children: List.generate(
-              3,
+              4,
               (index) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
                 child: Tooltip(

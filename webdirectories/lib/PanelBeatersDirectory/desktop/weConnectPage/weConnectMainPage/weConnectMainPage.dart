@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/ui/checkMarkedText.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/ui/stackedInfo.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/ui/weConnectText.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 class WeConnectMainPage extends StatefulWidget {
   final VoidCallback goToLandingPageDisplay;
@@ -199,7 +201,8 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                               Positioned(
                                                 right: widthDevice == 1440
                                                     ? 260
-                                                    : 285,
+                                                    : MyUtility(context).width *
+                                                        0.19,
                                                 top: 0,
                                                 child: StackedInfo(),
                                               )
@@ -218,38 +221,74 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                     ),
                   ],
                 ),
-                // Positioned(
-                //   top: 0,
-                //   bottom: 0,
-                //   right: widthDevice < 1600 ? 40 : 60,
-                //   child: Padding(
-                //     padding: const EdgeInsets.only(left: 0),
-                //     child: Align(
-                //       alignment: Alignment.centerLeft,
-                //       child: MouseRegion(
-                //         onEnter: (_) {
-                //           setState(() {
-                //             _isHovered = true;
-                //           });
-                //         },
-                //         onExit: (_) {
-                //           setState(() {
-                //             _isHovered = false;
-                //           });
-                //         },
-                //         child: GestureDetector(
-                //           onTap: widget.goToLandingPageDisplay,
-                //           child: Icon(
-                //             Icons.keyboard_arrow_right_rounded,
-                //             size: heightDevice * 0.12,
-                //             color:
-                //                 _isHovered ? Colors.white : Color(0xFFFF8828),
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                Positioned(
+                  top: 0,
+                  bottom: 0,
+                  right: widthDevice < 1600 ? 40 : 60,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: MouseRegion(
+                        onEnter: (_) {
+                          setState(() {
+                            _isHovered = true;
+                          });
+                        },
+                        onExit: (_) {
+                          setState(() {
+                            _isHovered = false;
+                          });
+                        },
+                        child: GestureDetector(
+                          onTap: () {
+                            context.goNamed(Routernames.panelbeatersHome);
+                          },
+                          child: Icon(
+                            Icons.keyboard_arrow_right_rounded,
+                            size: heightDevice * 0.12,
+                            color:
+                                _isHovered ? Colors.white : Color(0xFFFF8828),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  bottom: 0,
+                  left: widthDevice < 1600 ? 40 : 60,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: MouseRegion(
+                        onEnter: (_) {
+                          setState(() {
+                            _isHovered = true;
+                          });
+                        },
+                        onExit: (_) {
+                          setState(() {
+                            _isHovered = false;
+                          });
+                        },
+                        child: GestureDetector(
+                          onTap: () {
+                            context.goNamed(Routernames.panelbeatersWeCanHelp);
+                          },
+                          child: Icon(
+                            Icons.keyboard_arrow_left_rounded,
+                            size: heightDevice * 0.12,
+                            color:
+                                _isHovered ? Colors.white : Color(0xFFFF8828),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             PanelFooter()

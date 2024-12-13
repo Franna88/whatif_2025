@@ -46,9 +46,7 @@ class _CategorySelectState extends State<CategorySelect>
     var devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
 
     bool isScaled125 = devicePixelRatio == 1.25;
-    double scaleFactor = isScaled125
-        ? 0.90
-        : 1.0; 
+    double scaleFactor = isScaled125 ? 0.90 : 1.0;
 
     return widthDevice < 1500
         ? Column(

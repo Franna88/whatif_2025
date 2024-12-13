@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/WebDirectories/Page4/Page4.dart';
 
 class Button extends StatelessWidget {
   Color backgroundColor;
@@ -17,9 +18,13 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Page4()),
+          );
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           shape: RoundedRectangleBorder(
@@ -28,7 +33,8 @@ class Button extends StatelessWidget {
           padding: EdgeInsets.zero,
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 6,bottom: 6,left: 10,right: 15),
+          padding:
+              const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 15),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/mainButtonDirect.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/menuIndexWidget.dart';
+import 'package:webdirectories/routes/routerNames.dart';
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsMenu extends StatelessWidget {
   const NewsMenu({super.key});
@@ -48,24 +52,33 @@ class NewsMenu extends StatelessWidget {
         ),
         MainButtonDirect(
           buttonTitle: 'Articles',
-          onTap: () {},
-          isComingSoon: true,
+          onTap: () {
+            context.goNamed(Routernames.panelbeatersArticles);
+          },
         ),
         const SizedBox(
           height: 15,
         ),
         MainButtonDirect(
           buttonTitle: 'CSI Lightstone EchoMBR',
-          onTap: () {},
-          isComingSoon: true,
+          onTap: () {
+            context.goNamed(Routernames.panelbeatersRecentArticlesPage);
+          },
         ),
         const SizedBox(
           height: 15,
         ),
         MainButtonDirect(
           buttonTitle: 'Industry News',
-          onTap: () {},
-          isComingSoon: true,
+          onTap: () async {
+            final url = Uri.parse('https://autoref.co.za/');
+            if (await canLaunchUrl(url)) {
+              await launchUrl(url, mode: LaunchMode.externalApplication);
+            } else {
+              // Handle error if URL can't be launched
+              debugPrint('Could not launch $url');
+            }
+          },
         ),
         const SizedBox(
           height: 15,

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/WeCanHelp.dart/WeCanHelp.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFiner.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/newJoinPbdPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/landingPageDisplay.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/ownersPortal.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesNearMe/ServicesNearMe.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByAddress/servicesByAddressSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByArea/servicesByArea.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesByKeywordSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticles.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/articles/RecentArticlesPage/RecentArticlesPage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/navBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/weConnectPage/weConnectMainPage/weConnectMainPage.dart';
 
@@ -29,7 +30,9 @@ enum panelNavPages {
   premiumpluspackage,
   servicesaddress,
   servicesarea,
-  serviceskeyword
+  serviceskeyword,
+  RecentArticlesPage,
+  WeCanHelp
 }
 
 class Nav extends StatefulWidget {
@@ -179,6 +182,15 @@ class _NavState extends State<Nav> {
           setState(() {
             _currentIndex = 13;
           });
+        case panelNavPages.RecentArticlesPage:
+          setState(() {
+            _currentIndex = 15;
+          });
+          break;
+        case panelNavPages.WeCanHelp:
+          setState(() {
+            _currentIndex = 16;
+          });
           break;
         default:
           setState(() {
@@ -213,6 +225,19 @@ class _NavState extends State<Nav> {
       JobFinder(),
       // 2
       WeConnectMainPage(goToLandingPageDisplay: goToLandingPageDisplay),
+      // LandingPageDisplay(
+      //   goToWeConnectMainPage: goToWeConnectMainPage,
+      //   viewServiceDetails: () {
+      //     viewServiceDetails();
+      //   },
+      //   viewServicesByAddress: viewServicesByAddressDetails,
+      //   viewServicesByArea: () {
+      //     viewServicesByAreaDetails();
+      //   },
+      //   viewServicesByKeyword: () {
+      //     viewServicesByKeyWordDetails();
+      //   },
+      // ),
       // 3
       RecentArticles(),
       // 4
@@ -243,7 +268,11 @@ class _NavState extends State<Nav> {
       // 13
       ServicesByArea(),
       // 14
-      ServicesByKeywordSearch()
+      ServicesByKeywordSearch(),
+      // 15
+      RecentArticlesPage(),
+      //16
+      WeCanHelp(),
     ];
 
     return Scaffold(

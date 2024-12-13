@@ -16,15 +16,19 @@ class SearchButton extends StatefulWidget {
 class _SearchButtonState extends State<SearchButton> {
   bool isHovered = false;
   bool isPressed = false;
+
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       onEnter: (_) {
-        if (widget.isComingSoon) {
-          setState(() {
-            isHovered = true;
-          });
-        }
+        setState(() {
+          isHovered = true;
+        });
+      },
+      onExit: (_) {
+        setState(() {
+          isHovered = false;
+        });
       },
       child: Stack(
         children: [
@@ -41,7 +45,9 @@ class _SearchButtonState extends State<SearchButton> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: isPressed ? Colors.black : Colors.white,
+                backgroundColor: isHovered
+                    ? (isPressed ? Colors.white : Colors.black)
+                    : (isPressed ? Colors.black : Colors.white),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -58,13 +64,17 @@ class _SearchButtonState extends State<SearchButton> {
                       width: 25,
                       height: 25,
                       decoration: BoxDecoration(
-                        color: isPressed ? Colors.white : Colors.black,
+                        color: isHovered
+                            ? (isPressed ? Colors.black : Colors.white)
+                            : (isPressed ? Colors.white : Colors.black),
                         shape: BoxShape.circle,
                       ),
                       padding: EdgeInsets.zero,
                       child: Icon(
                         Icons.keyboard_arrow_right_outlined,
-                        color: isPressed ? Colors.black : Colors.white,
+                        color: isHovered
+                            ? (isPressed ? Colors.white : Colors.black)
+                            : (isPressed ? Colors.black : Colors.white),
                         size: 16,
                       ),
                     ),
@@ -72,9 +82,11 @@ class _SearchButtonState extends State<SearchButton> {
                     Text(
                       'Search',
                       style: TextStyle(
-                        color: isPressed ? Colors.white : Colors.black,
+                        color: isHovered
+                            ? (isPressed ? Colors.black : Colors.white)
+                            : (isPressed ? Colors.white : Colors.black),
                         fontSize: 16.5,
-                        fontFamily: 'Raleway',
+                        fontFamily: 'raleway',
                       ),
                     ),
                   ],
