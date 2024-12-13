@@ -216,70 +216,65 @@ class _OwnersPortalState extends State<OwnersPortal> {
                     image: AssetImage('images/effortlessManagement.png'),
                     fit: BoxFit.fill),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 50, top: 15), // Halved the top padding
-                    child: Image.asset(
-                      'images/panelLogo.png',
-                      // height: 70,
-                      width: MyUtility(context).width * 0.23,
+                  SizedBox(
+                    height: heightDevice,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.05,
+                        bottom: MediaQuery.of(context).size.height * 0.06,
+                        top: MediaQuery.of(context).size.height * 0.06,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.02,
+                            ),
+                            child: Image.asset(
+                              'images/panelLogo.png',
+                              // height: 70,
+                              width: MyUtility(context).width * 0.23,
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            'Effortless \nManagement',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: widthDevice / 20,
+                                fontFamily: 'ralewaybold',
+                                height: 1),
+                          ),
+                          Text(
+                            '\nMore time for repairs, less time on admin. Customize and \nmanage your online profile anytime, anywhere!',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: widthDevice / 80,
+                              fontFamily: 'raleway',
+                              fontWeight: FontWeight.w400,
+                              height: 1,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                  SizedBox(width: widthDevice * 0.15),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: heightDevice / 1.3,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 40),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Effortless \nManagement',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: widthDevice / 20,
-                                    fontFamily: 'ralewaybold',
-                                    height: 1),
-                              ),
-                              Text(
-                                '\nMore time for repairs, less time on admin. Customize and \nmanage your online profile anytime, anywhere!',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: widthDevice / 80,
-                                  fontFamily: 'raleway',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1,
-                                ),
-                              ),
-                            ],
+                      // SizedBox(
+                      //     height: widthDevice < 1500
+                      //         ? heightDevice * 0.015 // Halved the height
+                      //         : heightDevice * 0.05), // Halved the height
+                      GlassContainer(child: pages[pageIndex]
+                          //MembershipOptions()
                           ),
-                        ),
-                      ),
-                      SizedBox(width: widthDevice * 0.15),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                              height: widthDevice < 1500
-                                  ? heightDevice * 0.015 // Halved the height
-                                  : heightDevice * 0.05), // Halved the height
-                          GlassContainer(child: pages[pageIndex]
-                              //MembershipOptions()
-                              ),
-                        ],
-                      )
                     ],
-                  ),
-                  SizedBox(
-                    height:
-                        MyUtility(context).height * 0.05, // Halved the height
                   )
                 ],
               ),
