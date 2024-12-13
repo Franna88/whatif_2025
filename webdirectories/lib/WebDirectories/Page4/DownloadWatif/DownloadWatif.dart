@@ -102,13 +102,33 @@ class _DownloadWatifState extends State<DownloadWatif> {
                     SizedBox(
                       height: MyUtility(context).height * 0.01,
                     ),
-                    const Text(
-                      "Hit the road with confidence and ditch the stress! WATIF is\nyour free, all-in-one automotive app that empowers you with\neverything you need.",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'raleway',
-                          color: Colors.white),
-                    ),
+                    const Text.rich(TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              'Hit the road with confidence and ditch the stress! ',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'raleway',
+                              color: Colors.white),
+                        ),
+                        TextSpan(
+                          text: 'watif ',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'comfortaaMedium',
+                              color: Colors.white),
+                        ),
+                        TextSpan(
+                          text:
+                              "is\nyour free, all-in-one automotive app that empowers you with\neverything you need.",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'raleway',
+                              color: Colors.white),
+                        )
+                      ],
+                    )),
                     SizedBox(
                       height: MyUtility(context).height * 0.04,
                     ),

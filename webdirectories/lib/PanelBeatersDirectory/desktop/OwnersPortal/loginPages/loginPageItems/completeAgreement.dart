@@ -64,7 +64,8 @@ class _CompleteAgreementState extends State<CompleteAgreement> {
           height: 10,
         ),
         Text(
-            'Please complete the following online application form. \nYour completed contract will be available to view and \ndownload in your Owners Portal.',
+            'Please complete the following online application form. Your completed contract will be available to view and download in your Owners Portal.',
+            maxLines: 3,
             textAlign: TextAlign.center,
             style: widthDevice < 1500
                 ? TextStyle(

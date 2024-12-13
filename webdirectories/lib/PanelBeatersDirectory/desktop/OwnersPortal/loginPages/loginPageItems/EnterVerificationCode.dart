@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/blackIconButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/oTPWidget.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
 import 'package:webdirectories/PanelBeatersDirectory/emails/otpVerification/sendOtpVerification.dart';
 
 class EnterVerificationCode extends StatefulWidget {
@@ -201,6 +202,7 @@ class _EnterVerificationCodeState extends State<EnterVerificationCode> {
         Text(
             'To ensure the security of our platform and provide the \nbest experience for all users, we require account \nverification. A verification email has been sent to',
             textAlign: TextAlign.center,
+            maxLines: 3,
             style: widthDevice < 1500
                 ? TextStyle(
                     color: Colors.white,
