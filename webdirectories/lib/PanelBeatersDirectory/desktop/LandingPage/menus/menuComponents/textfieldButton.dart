@@ -3,7 +3,8 @@ import 'package:webdirectories/myutility.dart';
 
 class TextfieldButton extends StatelessWidget {
   final String hintText;
-  const TextfieldButton({super.key, required this.hintText});
+  final TextEditingController? controller;
+  const TextfieldButton({super.key, required this.hintText, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,7 @@ class TextfieldButton extends StatelessWidget {
           SizedBox(width: 6),
           Expanded(
             child: TextFormField(
+              controller: controller,
               style: const TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 hintText: hintText,

@@ -47,8 +47,8 @@ enum panelNavPages {
 class Nav extends StatefulWidget {
   panelNavPages? pageIndex;
   final String? searchData;
-  final String? approvalsNearMeData;
-  final String? approvalsAddressData;
+  final Map<String, dynamic>? approvalsNearMeData;
+  final Map<String, dynamic>? approvalsAddressData;
   Nav(
       {super.key,
       this.pageIndex,
@@ -311,17 +311,17 @@ class _NavState extends State<Nav> {
       //16
       WeCanHelp(),
       //17
-      // ListingsByServicesApprovalsNearMe(
-      //   searchData: widget.approvalsNearMeData != null
-      //       ? jsonDecode(widget.approvalsNearMeData!)
-      //       : [],
-      // ),
+      ListingsByServicesApprovalsNearMe(
+        searchData: widget.approvalsNearMeData != null
+            ? widget.approvalsNearMeData!
+            : {},
+      ),
       // //18
-      // ListingsByServicesApprovalsAddress(
-      //   searchData: widget.approvalsAddressData != null
-      //       ? jsonDecode(widget.approvalsAddressData!)
-      //       : [],
-      // ),
+      ListingsByServicesApprovalsAddress(
+        searchData: widget.approvalsAddressData != null
+            ? widget.approvalsAddressData!
+            : {},
+      ),
     ];
 
     return Scaffold(

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesComponent/ServiceStackedButton.dart';
@@ -11,6 +12,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.d
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 class searchDataNearMe {
   final String? specialServiceId;
@@ -29,7 +31,7 @@ class searchDataNearMe {
 }
 
 class ListingsByServicesApprovalsNearMe extends StatefulWidget {
-  final Map<String, String> searchData;
+  final Map<String, dynamic> searchData;
   const ListingsByServicesApprovalsNearMe(
       {super.key, required this.searchData});
 
@@ -45,17 +47,23 @@ class _ListingsByServicesApprovalsNearMeState
   bool showOtherServices = false;
   Position? _userPosition;
   bool isFeatured = true;
-  late searchDataNearMe searchData;
+  searchDataNearMe? searchData;
   @override
   void initState() {
     super.initState();
-    searchData = searchDataNearMe(
-      specialServiceId: widget.searchData['specialServices'] ?? '',
-      insuranceId: widget.searchData['insurancePanel'] ?? '',
-      vehicleBrandId: widget.searchData['vehicleBrand'] ?? '',
-      commercialBrandId: widget.searchData['commercialVehicleBrand'] ?? '',
-      commercialServicsId: widget.searchData['commercialVehicleService'] ?? '',
+    setState(
+      () {
+        searchData = searchDataNearMe(
+          specialServiceId: widget.searchData['specialServices'] ?? '',
+          insuranceId: widget.searchData['insurancePanel'] ?? '',
+          vehicleBrandId: widget.searchData['vehicleBrand'] ?? '',
+          commercialBrandId: widget.searchData['commercialVehicleBrand'] ?? '',
+          commercialServicsId:
+              widget.searchData['commercialVehicleService'] ?? '',
+        );
+      },
     );
+
     _getCurrentLocation();
   }
 
@@ -145,13 +153,32 @@ class _ListingsByServicesApprovalsNearMeState
       }
     }
 
+    // Fetch approvals from Firestore
+    QuerySnapshot<Map<String, dynamic>> approvalsSnapshot =
+        await _firestore.collection('listing_approvals').get();
+
+    // Safely access the searchData parameters
+    List<String> approvalIds = [
+      searchData?.specialServiceId ?? '',
+      searchData?.insuranceId ?? '',
+      searchData?.vehicleBrandId ?? '',
+      searchData?.commercialBrandId ?? '',
+      searchData?.commercialServicsId ?? '',
+    ]..removeWhere((id) => id.isEmpty); // Remove any empty strings
+
+    print('approvalIds: $approvalIds');
+
+    // Call the filter function
+    nearbyLocations = filterNearbyLocations(
+      nearbyLocations: nearbyLocations,
+      approvalsSnapshot: approvalsSnapshot,
+      approvalIds: approvalIds,
+    );
+
+    // Fetch views for each listing
     List<Future<Map<String, dynamic>>> listingFutures =
         nearbyLocations.map((doc) async {
       Map<String, dynamic> data = doc;
-      // String? imageUrl =
-      //     await getImageUrl('listings/images/listings/${data['displayphoto']}');
-
-      // data['displayphoto'] = imageUrl;
 
       int viewCount = await _firestore
           .collection('views')
@@ -186,6 +213,32 @@ class _ListingsByServicesApprovalsNearMeState
               ...doc,
               'distance': '${(doc['distance'] as double).toStringAsFixed(1)} km'
             })
+        .toList();
+  }
+
+  // Function to filter nearby locations based on approvals
+  List<Map<String, dynamic>> filterNearbyLocations({
+    required List<Map<String, dynamic>> nearbyLocations,
+    required QuerySnapshot<Map<String, dynamic>> approvalsSnapshot,
+    required List<String> approvalIds, // Passed in as Strings
+  }) {
+    // Convert approvalIds to integers, ignoring invalid or non-parsable values
+    Set<int> approvalIdsInt = approvalIds
+        .map((id) => int.tryParse(id))
+        .where((id) => id != null)
+        .cast<int>()
+        .toSet();
+
+    // Extract approved listings where approvalId matches
+    Set<int> approvedListings = approvalsSnapshot.docs
+        .where(
+            (doc) => approvalIdsInt.contains(doc.data()['approvalsId'] as int?))
+        .map((doc) => doc.data()['listingsId'] as int)
+        .toSet();
+
+    // Filter nearbyLocations based on approved listings
+    return nearbyLocations
+        .where((el) => approvedListings.contains(el['listingsId'] as int?))
         .toList();
   }
 
@@ -389,12 +442,11 @@ class _ListingsByServicesApprovalsNearMeState
                                     storage.write(
                                         key: 'title',
                                         value: listing['title'].toString());
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Services(
-                                              listingId: (listing['listingsId'])
-                                                  .toString())),
+                                    context.goNamed(
+                                      Routernames.panelbeatersServicesProfile,
+                                      pathParameters: {
+                                        'id': listing['listingsId'].toString()
+                                      },
                                     );
                                   },
                                   navigateMe: () async {

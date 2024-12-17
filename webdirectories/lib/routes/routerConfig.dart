@@ -95,16 +95,24 @@ class Routerconfig {
                 GoRoute(
                   path: 'services-approvals-near-me',
                   name: Routernames.panelbeatersServicesNearMe,
-                  builder: (BuildContext context, GoRouterState state) => Nav(
-                    pageIndex: panelNavPages.servicesapprovalsnearme,
-                  ),
+                  builder: (BuildContext context, GoRouterState state) {
+                    final params = state.extra as Map<String, dynamic>;
+                    return Nav(
+                      pageIndex: panelNavPages.servicesapprovalsnearme,
+                      approvalsNearMeData: params,
+                    );
+                  },
                 ),
                 GoRoute(
                   path: 'services-approvals-address',
                   name: Routernames.panelbeatersServicesByAddress,
-                  builder: (BuildContext context, GoRouterState state) => Nav(
-                    pageIndex: panelNavPages.servicesapprovalbyaddress,
-                  ),
+                  builder: (BuildContext context, GoRouterState state) {
+                    final params = state.extra as Map<String, dynamic>;
+                    return Nav(
+                      pageIndex: panelNavPages.servicesapprovalbyaddress,
+                      approvalsAddressData: params,
+                    );
+                  },
                 ),
                 GoRoute(
                   path:
@@ -116,13 +124,14 @@ class Routerconfig {
                   },
                 ),
                 GoRoute(
-                  path: 'listings-keyword/search-data=:searchData',
-                  name: Routernames.panelbeatersKeyword,
-                  builder: (BuildContext context, GoRouterState state) => Nav(
-                    pageIndex: panelNavPages.serviceskeyword,
-                    searchData: state.pathParameters['searchData'],
-                  ),
-                ),
+                    path: 'listings-keyword/search-data=:searchData',
+                    name: Routernames.panelbeatersKeyword,
+                    builder: (BuildContext context, GoRouterState state) {
+                      return Nav(
+                        pageIndex: panelNavPages.serviceskeyword,
+                        searchData: state.pathParameters['searchData'],
+                      );
+                    }),
                 GoRoute(
                   path: 'login',
                   name: Routernames.panelbeatersOPLogin,

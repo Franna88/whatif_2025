@@ -13,18 +13,32 @@ class CustomMenuScrollDropdown extends StatefulWidget {
 }
 
 class _CustomMenuScrollDropdownState extends State<CustomMenuScrollDropdown> {
-  String? selectedValue; // Holds the current selection
-  final List<String> options = [
-    "Air Conditioning Repair",
-    "Airbag Repair",
-    "All Vehicles Outside Factory Warranty",
-    "Assessments"
-  ]; // Dropdown items
+  final TextEditingController _searchController = TextEditingController();
+  String searchTerm = "";
+
+  void onSearchChanged(String value) {
+    setState(() {
+      searchTerm = value;
+    });
+  }
+
+  List<Map<String, dynamic>> get filteredDropdownItems {
+    if (searchTerm.isEmpty) {
+      return widget.dropdownItems;
+    } else {
+      return widget.dropdownItems
+          .where((item) => item['name']
+              .toString()
+              .toLowerCase()
+              .contains(_searchController.text.toLowerCase()))
+          .toList();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,8 +46,7 @@ class _CustomMenuScrollDropdownState extends State<CustomMenuScrollDropdown> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
             decoration: BoxDecoration(
-              color: Colors.grey[800], // Dropdown background color
-              borderRadius: BorderRadius.circular(12.0), // Rounded corners
+              borderRadius: BorderRadius.circular(6.0), // Rounded corners
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
@@ -42,39 +55,82 @@ class _CustomMenuScrollDropdownState extends State<CustomMenuScrollDropdown> {
                 ),
               ],
             ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: selectedValue,
-                hint: Row(
-                  children: [
-                    const Icon(Icons.search, color: Colors.white),
-                    const SizedBox(width: 10),
-                    const Text(
-                      "Select",
-                      style: TextStyle(color: Colors.white),
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: Offset(0, 3),
                     ),
                   ],
                 ),
-                dropdownColor: Colors.grey[700], // Dropdown list background
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
-                items: widget.dropdownItems.map((Map<String, dynamic> item) {
-                  String option = item['name'];
-                  String value = item['value'];
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      option,
-                      style: const TextStyle(color: Colors.white),
+                child: Row(
+                  children: [
+                    Container(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                          size: 16.0,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.black,
+                      ),
                     ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: TextField(
+                        controller: _searchController,
+                        onChanged: onSearchChanged,
+                        decoration: InputDecoration(
+                          hintText: 'Select',
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(108, 255, 255, 255),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(12.0),
+                  bottomRight: Radius.circular(12.0),
+                ),
+              ),
+              height: 150, // Scrollable height
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemCount: filteredDropdownItems.length,
+                itemBuilder: (context, index) {
+                  final option = filteredDropdownItems[index];
+                  return ListTile(
+                    title: Text(
+                      option['name'],
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontFamily: 'raleway',
+                      ),
+                    ),
+                    onTap: () {
+                      widget.onSelection!(option['value']);
+                    },
                   );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedValue = value;
-                  });
-                  if (widget.onSelection != null && value != null) {
-                    widget.onSelection!(value); // Notify parent of selection
-                  }
                 },
               ),
             ),

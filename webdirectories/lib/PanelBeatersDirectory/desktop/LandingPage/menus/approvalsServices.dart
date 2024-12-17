@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +11,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/m
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/searchButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/setYourLocationButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/textfieldButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/addressAutoCompleteField.dart';
 import 'package:webdirectories/main.dart';
 import 'package:webdirectories/routes/routerNames.dart';
 
@@ -20,6 +23,11 @@ enum ApprovalsServicesCategory {
   commercialVehicleService
 }
 
+enum SearchType {
+  nearme,
+  address,
+}
+
 class ApprovalsServices extends StatefulWidget {
   const ApprovalsServices({super.key});
 
@@ -29,6 +37,7 @@ class ApprovalsServices extends StatefulWidget {
 
 class _ApprovalsServicesState extends State<ApprovalsServices> {
   final firestore = FirebaseFirestore.instance;
+  final TextEditingController addressFieldController = TextEditingController();
   int menuIndex = 3;
   int? currentOpenDropdown;
   bool isOrangeColumnVisible = true;
@@ -47,6 +56,10 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
   String selectedVehicleBrandDropdownItems = "";
   String selectedCommercialVehicleBrandDropdownItems = "";
   String selectedCommercialVehicleServiceDropdownItems = "";
+
+  Map<String, dynamic> address = {};
+
+  SearchType searchType = SearchType.nearme;
 
   @override
   void initState() {
@@ -86,6 +99,12 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
         selectedCommercialVehicleServiceDropdownItems = value;
         break;
     }
+  }
+
+  void setSearchType(SearchType searchType) {
+    setState(() {
+      this.searchType = searchType;
+    });
   }
 
   void onSearchButtonPressed() {
@@ -217,8 +236,11 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
                   topText: 'Find your nearest Panel Beater',
                   widget1: const SetYourLoactionButton(),
                   widget2: SearchButton(
-                    onTap: onSearchButtonPressed, // Trigger state change
-                    isComingSoon: true,
+                    onTap: () {
+                      setSearchType(SearchType.nearme);
+                      onSearchButtonPressed();
+                    },
+                    isComingSoon: false,
                   ),
                 ),
                 isOpen: currentOpenDropdown == 0,
@@ -231,10 +253,16 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
                 buttonTitle: 'Any City or Street Address',
                 dropdownContent: DropDownMenuWidget(
                   topText: 'Find a Panel Beater by street',
-                  widget1: const TextfieldButton(
-                      hintText: 'Type any street address here'),
+                  widget1: AddressAutoCompleteField(onSelected: (data) {
+                    setState(() {
+                      address = data;
+                    });
+                  }),
                   widget2: SearchButton(
-                    onTap: onSearchButtonPressed, // Trigger state change
+                    onTap: () {
+                      setSearchType(SearchType.address);
+                      onSearchButtonPressed();
+                    },
                     isComingSoon: true,
                   ),
                 ),
@@ -252,9 +280,9 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 30.0, bottom: 10),
-                child: const Text(
+              const Padding(
+                padding: EdgeInsets.only(left: 30.0, bottom: 10),
+                child: Text(
                   'Please select one option from the drop down list below',
                   style: TextStyle(
                       fontSize: 16,
@@ -343,20 +371,27 @@ class _ApprovalsServicesState extends State<ApprovalsServices> {
                   visible: isBlackDropdownSelected,
                   child: SearchButton(
                     onTap: () {
-                      context.goNamed(Routernames.panelbeatersServicesNearMe,
-                          pathParameters: {
-                            'specialServices':
-                                selectedSpecialServicesDropdownItems,
-                            'insurancePanel':
-                                selectedInsurancePanelDropdownItems,
-                            'vehicleBrand': selectedVehicleBrandDropdownItems,
-                            'commercialVehicleBrand':
-                                selectedCommercialVehicleBrandDropdownItems,
-                            'commercialVehicleService':
-                                selectedCommercialVehicleServiceDropdownItems,
-                          });
+                      String pathName = searchType == SearchType.nearme
+                          ? Routernames.panelbeatersServicesNearMe
+                          : Routernames.panelbeatersServicesByAddress;
+                      context.goNamed(
+                        pathName,
+                        extra: {
+                          "address": address['address'],
+                          "lat": address['lat'],
+                          "lng": address['lng'],
+                          "specialServices":
+                              selectedSpecialServicesDropdownItems,
+                          "insurancePanel": selectedInsurancePanelDropdownItems,
+                          "vehicleBrand": selectedVehicleBrandDropdownItems,
+                          "commercialVehicleBrand":
+                              selectedCommercialVehicleBrandDropdownItems,
+                          "commercialVehicleService":
+                              selectedCommercialVehicleServiceDropdownItems
+                        },
+                      );
                     },
-                    isComingSoon: true,
+                    isComingSoon: false,
                   ),
                 ),
               ),
