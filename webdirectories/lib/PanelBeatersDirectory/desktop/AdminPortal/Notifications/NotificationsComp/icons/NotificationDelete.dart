@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/confirmDialog.dart';
 
 class NotificationDelete extends StatefulWidget {
+  final Function onSelected;
   final Color iconColor;
-  const NotificationDelete({super.key, required this.iconColor});
+  const NotificationDelete(
+      {super.key, required this.iconColor, required this.onSelected});
 
   @override
   State<NotificationDelete> createState() => _NotificationDeleteState();
@@ -15,9 +18,7 @@ class _NotificationDeleteState extends State<NotificationDelete> {
       message: 'Delete',
       preferBelow: false,
       child: IconButton(
-        onPressed: () {
-          setState(() {});
-        },
+        onPressed: () => widget.onSelected(),
         icon: Icon(
           Icons.delete,
           color: widget.iconColor,

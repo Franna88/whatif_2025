@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/icons/NotificationDelete.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -20,6 +21,9 @@ class NotificationTitleAlt extends StatefulWidget {
   final double? rate;
   final String? message;
   final VoidCallback onPress;
+  final bool isSelected;
+  final Function(bool?) onSelected;
+  final Function onDelete;
 
   const NotificationTitleAlt(
       {super.key,
@@ -31,6 +35,9 @@ class NotificationTitleAlt extends StatefulWidget {
       required this.personInterested,
       required this.make,
       required this.type,
+      required this.isSelected,
+      required this.onSelected,
+      required this.onDelete,
       this.rate,
       this.message,
       required this.onPress});
@@ -41,7 +48,6 @@ class NotificationTitleAlt extends StatefulWidget {
 
 class _NotificationTitleAltState extends State<NotificationTitleAlt> {
   bool _isTextBold = false;
-  bool _isSelected = false; // Track whether the notification is selected
 
   void _handleStarChanged(bool isStarred) {
     setState(() {
@@ -50,9 +56,10 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
   }
 
   void _toggleSelection() {
-    setState(() {
-      _isSelected = !_isSelected;
-    });
+    // setState(() {
+    //   widget.isSelected = !widget.isSelected;
+    // });
+    widget.onSelected(!widget.isSelected);
   }
 
   @override
@@ -62,7 +69,7 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
       child: Container(
         height: MyUtility(context).height * 0.05,
         decoration: BoxDecoration(
-          color: _isSelected ? Color(0xFFEF9040) : Colors.white,
+          color: widget.isSelected ? Color(0xFFEF9040) : Colors.white,
           border: Border(
             bottom: BorderSide(
               color: Colors.black.withOpacity(0.5400000214576721),
@@ -71,43 +78,103 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             if (widget.type == "Documents")
               SizedBox(
-                  child: Row(children: [
-                Expanded(
-                    flex: 7,
-                    child: Row(children: [
-                      Text(
-                        widget.make,
-                        style: TextStyle(
-                          color: _isSelected ? Colors.white : Color(0xFF202124),
-                          fontSize: 14.54,
-                          fontFamily: 'ralewaybold',
-                        ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        "Please Update",
-                        style: TextStyle(
-                          color: _isSelected ? Colors.white : Color(0xFF202124),
-                          fontSize: 14.54,
-                          fontFamily: 'ralewaybold',
-                        ),
-                      ),
-                    ]))
-              ])),
-            if (widget.type == "Reviews")
-              SizedBox(
+                width: MyUtility(context).width * 0.55,
                 child: Row(
                   children: [
                     Expanded(
                       flex: 7,
                       child: Row(
                         children: [
+                          NotificationSelect(
+                            onSelected: widget.onSelected,
+                            isSelected: widget.isSelected,
+                            boxColor: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF757575),
+                          ),
+                          NotificationStar(
+                            onStarChanged: _handleStarChanged,
+                            iconColor: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF757575),
+                            iconColorChange: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFFEF9040),
+                          ),
+                          LabelImportant(
+                            iconColorChange: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFFEF9040),
+                            iconColor: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF757575),
+                          ),
+                          Text(
+                            widget.make,
+                            style: TextStyle(
+                              color: widget.isSelected
+                                  ? Colors.white
+                                  : Color(0xFF202124),
+                              fontSize: 14.54,
+                              fontFamily: 'ralewaybold',
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            "Please Update",
+                            style: TextStyle(
+                              color: widget.isSelected
+                                  ? Colors.white
+                                  : Color(0xFF202124),
+                              fontSize: 14.54,
+                              fontFamily: 'ralewaybold',
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            if (widget.type == "Reviews")
+              SizedBox(
+                width: MyUtility(context).width * 0.65,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: Row(
+                        children: [
+                          NotificationSelect(
+                            onSelected: widget.onSelected,
+                            isSelected: widget.isSelected,
+                            boxColor: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF757575),
+                          ),
+                          NotificationStar(
+                            onStarChanged: _handleStarChanged,
+                            iconColor: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF757575),
+                            iconColorChange: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFFEF9040),
+                          ),
+                          LabelImportant(
+                            iconColorChange: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFFEF9040),
+                            iconColor: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF757575),
+                          ),
                           Text(
                             widget.rate == 1
                                 ? 'Angry | '
@@ -115,7 +182,7 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                                     ? 'Good | '
                                     : 'Great |',
                             style: TextStyle(
-                              color: _isSelected
+                              color: widget.isSelected
                                   ? Colors.white
                                   : Color(0xFF202124),
                               fontSize: 14.54,
@@ -125,7 +192,7 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                           Text(
                             '${widget.personInterested} | ',
                             style: TextStyle(
-                              color: _isSelected
+                              color: widget.isSelected
                                   ? Colors.white
                                   : Color(0xFF202124),
                               fontSize: 14.54,
@@ -135,7 +202,7 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                           Text(
                             widget.notificationTitle,
                             style: TextStyle(
-                              color: _isSelected
+                              color: widget.isSelected
                                   ? Colors.white
                                   : Color(0xFF202124),
                               fontSize: 14.54,
@@ -158,26 +225,33 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                       child: Row(
                         children: [
                           NotificationSelect(
-                            boxColor:
-                                _isSelected ? Colors.white : Color(0xFF757575),
+                            onSelected: widget.onSelected,
+                            isSelected: widget.isSelected,
+                            boxColor: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF757575),
                           ),
                           NotificationStar(
                             onStarChanged: _handleStarChanged,
-                            iconColor:
-                                _isSelected ? Colors.white : Color(0xFF757575),
-                            iconColorChange:
-                                _isSelected ? Colors.white : Color(0xFFEF9040),
+                            iconColor: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF757575),
+                            iconColorChange: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFFEF9040),
                           ),
                           LabelImportant(
-                            iconColorChange:
-                                _isSelected ? Colors.white : Color(0xFFEF9040),
-                            iconColor:
-                                _isSelected ? Colors.white : Color(0xFF757575),
+                            iconColorChange: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFFEF9040),
+                            iconColor: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF757575),
                           ),
                           Text(
                             widget.personInterested,
                             style: TextStyle(
-                              color: _isSelected
+                              color: widget.isSelected
                                   ? Colors.white
                                   : Color(0xFF202124),
                               fontSize: 14.54,
@@ -188,7 +262,7 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                           Text(
                             widget.notificationTitle,
                             style: TextStyle(
-                              color: _isSelected
+                              color: widget.isSelected
                                   ? Colors.white
                                   : Color(0xFF202124),
                               fontSize: 14.54,
@@ -205,7 +279,7 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                           Text(
                             'Make -   ',
                             style: TextStyle(
-                              color: _isSelected
+                              color: widget.isSelected
                                   ? Colors.white
                                   : Color(0xFF202124),
                               fontSize: 14.54,
@@ -216,7 +290,7 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                           Text(
                             widget.make,
                             style: TextStyle(
-                              color: _isSelected
+                              color: widget.isSelected
                                   ? Colors.white
                                   : Color(0xFF202124),
                               fontSize: 14.54,
@@ -226,7 +300,7 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                           Text(
                             " ${widget.message!}",
                             style: TextStyle(
-                              color: _isSelected
+                              color: widget.isSelected
                                   ? Colors.white
                                   : Color(0xFF202124),
                               fontSize: 14.54,
@@ -242,10 +316,13 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
               ),
             Expanded(
               flex: 2,
-              child: _isSelected
+              child: widget.isSelected
                   ? Row(
                       children: [
-                        NotificationDelete(iconColor: Colors.white),
+                        NotificationDelete(
+                          iconColor: Colors.white,
+                          onSelected: widget.onDelete,
+                        ),
                         NotificationLetter(
                           iconColor: Colors.white,
                           onPress: widget.onPress,
@@ -253,13 +330,23 @@ class _NotificationTitleAltState extends State<NotificationTitleAlt> {
                         NotificationTimeIcon(iconColor: Colors.white),
                       ],
                     )
-                  : Text(
-                      '${widget.day}/${widget.month}/${widget.year}',
-                      style: TextStyle(
-                        color: Color(0xFF202124),
-                        fontSize: 14.54,
-                        fontFamily: 'raleway',
-                      ),
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        if (widget.type == "Documents")
+                          AddButton(text: 'Update Now', onPressed: () {}),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '${widget.day}/${widget.month}/${widget.year}',
+                          style: TextStyle(
+                            color: Color(0xFF202124),
+                            fontSize: 14.54,
+                            fontFamily: 'raleway',
+                          ),
+                        ),
+                      ],
                     ),
             ),
           ],

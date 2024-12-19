@@ -2,28 +2,32 @@ import 'package:flutter/material.dart';
 
 class NotificationSelect extends StatefulWidget {
   final Color boxColor;
-  const NotificationSelect({super.key, required this.boxColor});
+  bool isSelected;
+  final Function(bool?) onSelected;
+  NotificationSelect(
+      {super.key,
+      required this.boxColor,
+      required this.isSelected,
+      required this.onSelected});
 
   @override
   State<NotificationSelect> createState() => _NotificationSelectState();
 }
 
 class _NotificationSelectState extends State<NotificationSelect> {
-  bool _isSelected = false;
-
   @override
   Widget build(BuildContext context) {
     return Tooltip(
       message: 'Select', // Tooltip text
       preferBelow: false, // Tooltip appears above the checkbox
       child: Checkbox(
-        value: _isSelected,
+        value: widget.isSelected,
         onChanged: (bool? value) {
-          setState(() {
-            _isSelected = value ?? false;
-          });
+          widget.onSelected(value);
         },
-        activeColor: Colors.transparent, // Remove default active color
+        activeColor: widget.isSelected
+            ? Colors.white
+            : Colors.transparent, // Remove default active color
         checkColor: Color(0xFFEF9040), // Inside color when selected
         side: WidgetStateBorderSide.resolveWith(
           (states) => BorderSide(
