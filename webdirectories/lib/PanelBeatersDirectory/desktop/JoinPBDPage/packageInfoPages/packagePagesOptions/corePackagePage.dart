@@ -31,7 +31,8 @@ class _CorePackagePageState extends State<CorePackagePage> {
               alignment: Alignment.centerLeft,
               child: Image.asset(
                 'images/panelLogo.png',
-                height: 70,
+                // height: 70,
+                width: MyUtility(context).width * 0.23,
               ),
             ),
           ),

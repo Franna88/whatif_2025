@@ -46,6 +46,7 @@ class _ProfileSocialsState extends State<ProfileSocials> {
         widget.socialsLinks['telephone'] != null
             ? Row(children: [
                 ProfileSocialIconContact(
+                    isComingSoon: true,
                     profileIcon: 'images/Contact1.svg',
                     socialdescription: 'Call',
                     onPress: () {}),
@@ -72,6 +73,7 @@ class _ProfileSocialsState extends State<ProfileSocials> {
         widget.socialsLinks['whatsapp'] != null
             ? Row(children: [
                 ProfileSocialIconContact(
+                    isComingSoon: true,
                     profileIcon: 'images/Contact6.svg',
                     socialdescription: 'WhatsApp',
                     onPress: () async {}),

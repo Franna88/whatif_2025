@@ -31,15 +31,17 @@ class WhiteBallpointText extends StatelessWidget {
             heightDevice < 710
                 ? Text(
                     ballText,
+                    maxLines: 1,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 12,
+                      fontSize: widthDevice < 1500 ? 12 : 15,
                       fontFamily: 'raleway',
                       height: 1,
                     ),
                   )
                 : Text(
                     ballText,
+                    maxLines: 1,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: widthDevice < 1500 ? 14 : 18,

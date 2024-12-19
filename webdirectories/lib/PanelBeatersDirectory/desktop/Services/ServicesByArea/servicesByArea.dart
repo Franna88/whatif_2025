@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/extensions.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/ProfileDropDown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
@@ -12,6 +14,9 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButt
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/loginUtils.dart';
+import 'package:webdirectories/routes/routerNames.dart';
+
+import '../../../../routes/routerNames.dart';
 
 class ServicesByArea extends StatefulWidget {
   const ServicesByArea({super.key});
@@ -21,10 +26,10 @@ class ServicesByArea extends StatefulWidget {
 }
 
 class _ServicesByAreaState extends State<ServicesByArea> {
-  bool showOtherServices = false;
-  final TextEditingController search = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  late Future<List<Map<String, dynamic>>> _listingsFuture;
+  final TextEditingController search = TextEditingController();
+  bool showOtherServices = false;
+  bool isFeatured = true;
   List<Map<String, dynamic>> countriesList = [
     {'countryId': '', 'country': 'All'}
   ];
@@ -49,7 +54,6 @@ class _ServicesByAreaState extends State<ServicesByArea> {
 
   Position? _userPosition;
   bool _isLoading = true;
-  bool _isLoadingFilters = true;
   @override
   void initState() {
     super.initState();
@@ -122,7 +126,7 @@ class _ServicesByAreaState extends State<ServicesByArea> {
       suburbsList = [
         {'suburbId': '', 'suburb': 'All'}
       ]..addAll(allSuburbs);
-      _isLoadingFilters = false;
+      _isLoading = false;
     });
   }
 
@@ -131,6 +135,7 @@ class _ServicesByAreaState extends State<ServicesByArea> {
     allCountries = querySnapshot.docs
         .map((doc) => doc.data() as Map<String, dynamic>)
         .toList();
+    allCountries.sort((a, b) => a['orderCountry'].compareTo(b['orderCountry']));
   }
 
   Future<void> _getProvinces() async {
@@ -203,14 +208,10 @@ class _ServicesByAreaState extends State<ServicesByArea> {
     String? suburbId,
     String? cityId,
   }) async {
-    print(countryId);
-    print(provinceId);
-    print(suburbId);
-    print(cityId);
-
     // Start the query with a reference to the collection
-    Query<Map<String, dynamic>> query =
-        FirebaseFirestore.instance.collection('listings');
+    Query<Map<String, dynamic>> query = FirebaseFirestore.instance
+        .collection('listings')
+        .where('featured', isEqualTo: isFeatured ? 1 : 0);
 
     // Apply filters based on non-null and non-empty values
     if (countryId != null && countryId.isNotEmpty) {
@@ -270,17 +271,17 @@ class _ServicesByAreaState extends State<ServicesByArea> {
     }
   }
 
-  void toggleToFeatured() {
+  void toggleFeatured() {
     setState(() {
-      showOtherServices = false;
+      isFeatured = !isFeatured;
     });
   }
 
-  void toggleToOther() {
-    setState(() {
-      showOtherServices = true;
-    });
-  }
+  // void toggleToOther() {
+  //   setState(() {
+  //     showOtherServices = true;
+  //   });
+  // }
 
 //filter data on search value
   getSearchValue(document) {
@@ -319,14 +320,73 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Image.asset(
+                          'images/panelLogo.png',
+                          width: MyUtility(context).width * 0.21,
+                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     InkWell(
+                        //       onTap: () {
+                        //         context.goNamed(Routernames.panelbeatersHome);
+                        //       },
+                        //       child: Row(
+                        //         children: [
+                        //           Container(
+                        //             padding: const EdgeInsets.all(1),
+                        //             decoration: BoxDecoration(
+                        //               shape: BoxShape.circle,
+                        //               border: Border.all(
+                        //                 color: Colors.white,
+                        //                 width: 0.5,
+                        //               ),
+                        //             ),
+                        //             child: const Center(
+                        //               child: Icon(
+                        //                 Icons.keyboard_arrow_left,
+                        //                 color: Colors.white,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           const SizedBox(
+                        //             width: 8,
+                        //           ),
+                        //           const Text(
+                        //             'Go Back',
+                        //             style: TextStyle(
+                        //               color: Colors.white,
+                        //               fontSize: 17.68,
+                        //               fontFamily: 'raleway',
+                        //               fontWeight: FontWeight.w400,
+                        //             ),
+                        //             textAlign: TextAlign.center,
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //      SizedBox(
+                        //       width: MyUtility(context).width * 0.04,
+                        //     )
+                        //   ],
+                        // ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: MyUtility(context).width / 1.06,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         ServicesStackedButton(
-                          showFeatured: toggleToFeatured,
-                          showOther: toggleToOther,
-                          isFeaturedSelected: true,
+                          toggleFeatured: toggleFeatured,
+                          isFeaturedSelected: isFeatured,
                         ),
                         Row(
                           children: [
-                            IconButtons(),
+                            IconButtons(
+                              isComingSoon: true,
+                            ),
                             SizedBox(
                               width: MyUtility(context).width * 0.03,
                             )
@@ -336,78 +396,8 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: [
-                  //     Container(
-                  //       width: MyUtility(context).width / 1.1,
-                  //       height: 34.68,
-                  //       padding: const EdgeInsets.only(
-                  //         top: 10.80,
-                  //         left: 10.80,
-                  //         right: 21.59,
-                  //         bottom: 10.80,
-                  //       ),
-                  //       decoration: ShapeDecoration(
-                  //         color: Colors.white,
-                  //         shape: RoundedRectangleBorder(
-                  //           borderRadius: BorderRadius.circular(24.83),
-                  //         ),
-                  //         shadows: [
-                  //           BoxShadow(
-                  //             color: Color(0x3F000000),
-                  //             blurRadius: 4,
-                  //             offset: Offset(0, 4),
-                  //             spreadRadius: 0,
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       child: TextField(
-                  //         controller: search,
-                  //         onChanged: (value) {
-                  //           setState(() {});
-                  //         },
-                  //         decoration: InputDecoration(
-                  //           hintText: 'Search Featured',
-                  //           hintStyle: TextStyle(
-                  //             color: Colors.black,
-                  //             fontSize: 14.6812,
-                  //             fontFamily: 'raleway',
-                  //             fontWeight: FontWeight.w400,
-                  //             height: 1.0,
-                  //           ),
-                  //           filled: true,
-                  //           fillColor: Colors.white,
-                  //           contentPadding: const EdgeInsets.only(
-                  //             top: 10.80,
-                  //             left: 10.80,
-                  //             right: 21.59,
-                  //             bottom: 10.80,
-                  //           ),
-                  //           border: OutlineInputBorder(
-                  //             borderRadius: BorderRadius.circular(24.83),
-                  //             borderSide: BorderSide.none,
-                  //           ),
-                  //         ),
-                  //         style: TextStyle(
-                  //           color: Colors.black,
-                  //           fontSize: 14.6812,
-                  //           fontFamily: 'raleway',
-                  //           fontWeight: FontWeight.w400,
-                  //         ),
-                  //         textAlign: TextAlign.left,
-                  //       ),
-                  //     ),
-                  //     SizedBox(
-                  //       width: MyUtility(context).width * 0.01,
-                  //     )
-                  //   ],
-                  // ),
-                  const SizedBox(height: 20.0),
-                  _isLoadingFilters
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
+                  _isLoading
+                      ? SizedBox.shrink()
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -547,12 +537,11 @@ class _ServicesByAreaState extends State<ServicesByArea> {
                                     storage.write(
                                         key: 'title',
                                         value: listing['title'].toString());
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Services(
-                                              listingId: (listing['listingsId'])
-                                                  .toString())),
+                                    context.goNamed(
+                                      Routernames.panelbeatersServicesProfile,
+                                      pathParameters: {
+                                        'id': listing['listingsId'].toString()
+                                      },
                                     );
                                   },
                                   navigateMe: () async {

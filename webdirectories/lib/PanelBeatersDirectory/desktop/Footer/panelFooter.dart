@@ -160,6 +160,19 @@ class _PanelFooterState extends State<PanelFooter> {
                             child: Page2(),
                           )));
             }),
+        FooterTextButton(
+          text: 'Review Us',
+          onpress: () async {
+            const url =
+                'https://www.google.com/maps/place//data=!4m3!3m2!1s0x1dd61bca4d9a3c2b:0xd1d13c920dd8bf98!12e1?source=g.page.m._&laa=merchant-review-solicitation'; // Replace with your desired URL
+            if (await canLaunchUrl(Uri.parse(url))) {
+              await launchUrl(Uri.parse(url),
+                  mode: LaunchMode.externalApplication);
+            } else {
+              debugPrint('Could not launch $url');
+            }
+          },
+        ),
       ],
     );
   }
@@ -330,12 +343,24 @@ class _PanelFooterState extends State<PanelFooter> {
             color: Color(0xFFF4F4F4),
           ),
         ),
-        const Text(
-          'Web Directories',
-          style: TextStyle(
-            fontSize: 13,
-            fontFamily: 'RalewaySemi',
-            color: Color(0xFFF4F4F4),
+        InkWell(
+          onTap: () async {
+            const url =
+                'https://webdirectories.co.za/'; // Replace with your desired URL
+            if (await canLaunchUrl(Uri.parse(url))) {
+              await launchUrl(Uri.parse(url),
+                  mode: LaunchMode.externalApplication);
+            } else {
+              debugPrint('Could not launch $url');
+            }
+          },
+          child: const Text(
+            'Web Directories',
+            style: TextStyle(
+              fontSize: 13,
+              fontFamily: 'RalewaySemi',
+              color: Color(0xFFF4F4F4),
+            ),
           ),
         ),
       ],

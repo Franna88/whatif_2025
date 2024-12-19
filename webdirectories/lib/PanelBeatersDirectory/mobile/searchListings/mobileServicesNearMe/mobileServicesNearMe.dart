@@ -3,37 +3,36 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/BuisnessImageContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/LocationMobileContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/stackedMobilebutton.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationMobileOther.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
-import '../../desktop/Services/ServicesComponent/ServicesContainer.dart';
-import '../../desktop/Services/services.dart';
-import '../../utils/firebaseImageUtils.dart';
-import '../../utils/loginUtils.dart';
-import '../ServicesMobile/ServicesMobile.dart';
+import '../../../desktop/Services/ServicesComponent/ServicesContainer.dart';
+import '../../../desktop/Services/services.dart';
+import '../../../utils/firebaseImageUtils.dart';
+import '../../../utils/loginUtils.dart';
+import '../../ServicesMobile/ServicesMobile.dart';
 
-class LocationFeatureMobile extends StatefulWidget {
-  const LocationFeatureMobile({Key? key}) : super(key: key);
+class MobileServicesNearMe extends StatefulWidget {
+  const MobileServicesNearMe({Key? key}) : super(key: key);
 
   @override
-  State<LocationFeatureMobile> createState() => _LocationFeatureMobileState();
+  State<MobileServicesNearMe> createState() => _MobileServicesNearMeState();
 }
 
-class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
-  int selectedIndex = 0;
-  bool showOtherServices = false;
-  final TextEditingController search = TextEditingController();
-  late Future<List<Map<String, dynamic>>> _listingsFuture;
-
+class _MobileServicesNearMeState extends State<MobileServicesNearMe> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final TextEditingController search = TextEditingController();
+  int selectedIndex = 0;
   Position? _userPosition;
-  bool _isLoading = true;
+  bool isFeatured = true;
+
   @override
   void initState() {
     super.initState();
@@ -68,7 +67,6 @@ class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
 
     setState(() {
       _userPosition = position;
-      _isLoading = false;
     });
   }
 
@@ -126,17 +124,17 @@ class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
     return listings;
   }
 
-  void toggleToFeatured() {
+  void toggleFeatured() {
     setState(() {
-      showOtherServices = false;
+      isFeatured = !isFeatured;
     });
   }
 
-  void toggleToOther() {
-    setState(() {
-      showOtherServices = true;
-    });
-  }
+  // void toggleToOther() {
+  //   setState(() {
+  //     showOtherServices = true;
+  //   });
+  // }
 
 //filter data on search value
   getSearchValue(document) {
@@ -176,21 +174,8 @@ class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     StackedMobileButtons(
-                      selectedIndex: selectedIndex,
-                      onButtonPressed: (index) {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-
-                        if (index == 1) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LocationMobileOther(),
-                            ),
-                          );
-                        }
-                      },
+                      isFeaturedSelected: isFeatured,
+                      toggleFeatured: toggleFeatured,
                     ),
                   ],
                 ),
@@ -311,12 +296,11 @@ class _LocationFeatureMobileState extends State<LocationFeatureMobile> {
                               businessName: listing['title'],
                               businessAddress: listing['postaladdress'],
                               OnPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ServicesMobile(
-                                          listingId: (listing['listingsId'])
-                                              .toString())),
+                                context.goNamed(
+                                  Routernames.panelbeatersServicesProfile,
+                                  pathParameters: {
+                                    'id': listing['listingsId'].toString()
+                                  },
                                 );
                               },
                               views: (listing['views'] as int).toString(),

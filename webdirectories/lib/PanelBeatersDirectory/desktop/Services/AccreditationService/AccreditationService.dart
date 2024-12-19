@@ -38,8 +38,8 @@ class _AccreditationServicesState extends State<AccreditationServices> {
   @override
   void initState() {
     _fetchAndOrganizeServices();
-    print('LIST');
-    print(widget.listingId);
+    // print('LIST');
+    // print(widget.listingId);
     super.initState();
   }
 
@@ -55,20 +55,26 @@ class _AccreditationServicesState extends State<AccreditationServices> {
               .where('listingsId', isEqualTo: widget.listingId)
               .get();
 
-      print("APPROVALS: ${listingApprovalsSnapshot.docs.length}");
       if (listingApprovalsSnapshot.docs.isNotEmpty) {
         // Collect all approvals IDs
         List<int> approvalIds = listingApprovalsSnapshot.docs
             .map((doc) => doc.data()['approvalsId'] as int)
             .toList();
 
-        // Fetch all approvals in a single query
-        QuerySnapshot<Map<String, dynamic>> approvalsSnapshot = await _firestore
-            .collection('approvals')
-            .where('approvalsId', whereIn: approvalIds)
-            .get();
+        for (int i = 0; i < approvalIds.length; i += 30) {
+          List<int> chunk = approvalIds.sublist(
+            i,
+            i + 30 > approvalIds.length ? approvalIds.length : i + 30,
+          );
 
-        await _processApprovals(approvalsSnapshot, servicesMap);
+          // Fetch approvals for the current chunk
+          QuerySnapshot<Map<String, dynamic>> approvalsSnapshot =
+              await _firestore
+                  .collection('approvals')
+                  .where('approvalsId', whereIn: chunk)
+                  .get();
+          await _processApprovals(approvalsSnapshot, servicesMap);
+        }
 
         // Update state once processing is done
         setState(() {
@@ -101,7 +107,7 @@ class _AccreditationServicesState extends State<AccreditationServices> {
 
         if (imageUrl != null) {
           int approvalsCategoryId = approvalData['approvalsCategoryId'];
-          print('approvalsCategoryID: $approvalsCategoryId');
+          //print('approvalsCategoryID: $approvalsCategoryId');
 
           // Cache category data if it repeats
           String categoryName =

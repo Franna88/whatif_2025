@@ -3,29 +3,29 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/ProfileDropDown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/LocationMobileContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/stackedMobilebutton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ServicesMobile.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByAddress/mobileServicesByAddressOther.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByArea/mobileServicesByAreaOther.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
-class MobileServicesByAreaFeatured extends StatefulWidget {
-  const MobileServicesByAreaFeatured({super.key});
+class MobileServicesByArea extends StatefulWidget {
+  const MobileServicesByArea({super.key});
 
   @override
-  State<MobileServicesByAreaFeatured> createState() =>
-      _MobileServicesByAreaFeaturedState();
+  State<MobileServicesByArea> createState() => _MobileServicesByAreaState();
 }
 
-class _MobileServicesByAreaFeaturedState
-    extends State<MobileServicesByAreaFeatured> {
-  bool showOtherServices = false;
-  final TextEditingController search = TextEditingController();
+class _MobileServicesByAreaState extends State<MobileServicesByArea> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final TextEditingController search = TextEditingController();
+  bool showOtherServices = false;
+  bool isFeatured = true;
+
   List<Map<String, dynamic>> countriesList = [
     {'countryId': '', 'country': 'All'}
   ];
@@ -86,6 +86,7 @@ class _MobileServicesByAreaFeaturedState
     allCountries = querySnapshot.docs
         .map((doc) => doc.data() as Map<String, dynamic>)
         .toList();
+    allCountries.sort((a, b) => a['orderCountry'].compareTo(b['orderCountry']));
   }
 
   Future<void> _getProvinces() async {
@@ -166,7 +167,7 @@ class _MobileServicesByAreaFeaturedState
     // Start the query with a reference to the collection
     Query<Map<String, dynamic>> query = FirebaseFirestore.instance
         .collection('listings')
-        .where('featured', isEqualTo: 1);
+        .where('featured', isEqualTo: isFeatured ? 1 : 0);
 
     // Apply filters based on non-null and non-empty values
     if (countryId != null && countryId.isNotEmpty) {
@@ -226,17 +227,17 @@ class _MobileServicesByAreaFeaturedState
     }
   }
 
-  void toggleToFeatured() {
+  void toggleFeatured() {
     setState(() {
-      showOtherServices = false;
+      isFeatured = !isFeatured;
     });
   }
 
-  void toggleToOther() {
-    setState(() {
-      showOtherServices = true;
-    });
-  }
+  // void toggleToOther() {
+  //   setState(() {
+  //     showOtherServices = true;
+  //   });
+  // }
 
 //filter data on search value
   getSearchValue(document) {
@@ -276,21 +277,8 @@ class _MobileServicesByAreaFeaturedState
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     StackedMobileButtons(
-                      selectedIndex: selectedIndex,
-                      onButtonPressed: (index) {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-
-                        if (index == 1) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MobileServicesByAreaOther(),
-                            ),
-                          );
-                        }
-                      },
+                      isFeaturedSelected: isFeatured,
+                      toggleFeatured: toggleFeatured,
                     ),
                   ],
                 ),
@@ -509,14 +497,13 @@ class _MobileServicesByAreaFeaturedState
                                         businessAddress:
                                             listing['postaladdress'],
                                         OnPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ServicesMobile(
-                                                        listingId: (listing[
-                                                                'listingsId'])
-                                                            .toString())),
+                                          context.goNamed(
+                                            Routernames
+                                                .panelbeatersServicesProfile,
+                                            pathParameters: {
+                                              'id': listing['listingsId']
+                                                  .toString()
+                                            },
                                           );
                                         },
                                         views: (listing['views'] as int)

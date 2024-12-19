@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/ui/checkMarkedText.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/ui/stackedInfo.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/ui/weConnectText.dart';
+import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 class WeConnectMainPage extends StatefulWidget {
   final VoidCallback goToLandingPageDisplay;
@@ -29,7 +32,7 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                 Row(
                   children: [
                     Container(
-                      height: heightDevice,
+                      height: heightDevice * 1.05,
                       width: widthDevice,
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -53,7 +56,8 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                                         left: 50, top: 50),
                                     child: Image.asset(
                                       'images/panelLogo.png',
-                                      height: 70,
+                                      // height: 70,
+                                      width: MyUtility(context).width * 0.23,
                                     ),
                                   ),
                                 ),
@@ -78,134 +82,136 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 25),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: widthDevice / 2.8,
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Need a Panel Beater?',
-                                              style: TextStyle(
-                                                color: Color(0xFFF19A41),
-                                                fontSize: 22,
-                                                fontFamily: 'ralewaybold',
-                                                height: 1,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 15, top: 10),
-                                              child: Text(
-                                                '#WeConnect',
+                                  horizontal: 15,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: widthDevice / 2.8,
+                                        child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Need a Panel Beater?',
                                                 style: TextStyle(
-                                                  color: Color(0xFFFAFAFA),
-                                                  fontSize: widthDevice < 1600
-                                                      ? 45
-                                                      : 55,
+                                                  color: Color(0xFFF19A41),
+                                                  fontSize: 21,
                                                   fontFamily: 'ralewaybold',
-                                                  height: 1,
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: widthDevice * 0.38,
-                                              child: Text(
-                                                WeConnectText().description1,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: widthDevice < 1600
-                                                      ? 16
-                                                      : 20,
-                                                  fontFamily: 'raleway',
-                                                  height: 1.2,
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 15, top: 0),
+                                                child: Text(
+                                                  '#WeConnect',
+                                                  style: TextStyle(
+                                                    color: Color(0xFFFAFAFA),
+                                                    fontSize: widthDevice < 1600
+                                                        ? 45
+                                                        : 55,
+                                                    fontFamily: 'ralewaysemi',
+                                                    height: 1,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            SizedBox(
-                                              width: widthDevice * 0.38,
-                                              child: Text(
-                                                WeConnectText().description2,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: widthDevice < 1600
-                                                      ? 16
-                                                      : 20,
-                                                  fontFamily: 'raleway',
-                                                  height: 1.2,
+                                              SizedBox(
+                                                width: widthDevice * 0.38,
+                                                child: Text(
+                                                  WeConnectText().description1,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: widthDevice < 1600
+                                                        ? 16
+                                                        : 20,
+                                                    fontFamily: 'raleway',
+                                                    height: 1.2,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            CheckMarkedText(
-                                              text:
-                                                  'Find specific services fast',
-                                            ),
-                                            CheckMarkedText(
-                                              text:
-                                                  'Support verified businesses',
-                                            ),
-                                            CheckMarkedText(
-                                              text:
-                                                  'Make informed decisions based on accurate information',
-                                            ),
-                                          ]),
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Stack(
-                                          children: [
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: widthDevice < 1600
-                                                      ? 30
-                                                      : 50,
-                                                  left: 30),
-                                              child: Container(
-                                                height: heightDevice * 0.63,
-                                                width: widthDevice * 0.35,
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage(
-                                                          'images/WeConnect.png'),
-                                                      fit: BoxFit.cover),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              SizedBox(
+                                                width: widthDevice * 0.38,
+                                                child: Text(
+                                                  WeConnectText().description2,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: widthDevice < 1600
+                                                        ? 16
+                                                        : 20,
+                                                    fontFamily: 'raleway',
+                                                    height: 1.2,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            Positioned(
-                                              right: widthDevice == 1440
-                                                  ? 260
-                                                  : 250,
-                                              top: 0,
-                                              child: StackedInfo(),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              CheckMarkedText(
+                                                text:
+                                                    'Find specific services fast',
+                                              ),
+                                              CheckMarkedText(
+                                                text:
+                                                    'Support verified businesses',
+                                              ),
+                                              CheckMarkedText(
+                                                text:
+                                                    'Make informed decisions based on accurate information',
+                                              ),
+                                            ]),
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: widthDevice < 1600
+                                                        ? 80
+                                                        : 50,
+                                                    left: 30),
+                                                child: Container(
+                                                  height: heightDevice * 0.63,
+                                                  width: widthDevice * 0.35,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                            'images/WeConnect.png'),
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                right: widthDevice == 1440
+                                                    ? 260
+                                                    : MyUtility(context).width *
+                                                        0.19,
+                                                top: 0,
+                                                child: StackedInfo(),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -235,9 +241,45 @@ class _WeConnectMainPageState extends State<WeConnectMainPage> {
                           });
                         },
                         child: GestureDetector(
-                          onTap: widget.goToLandingPageDisplay,
+                          onTap: () {
+                            context.goNamed(Routernames.panelbeatersHome);
+                          },
                           child: Icon(
                             Icons.keyboard_arrow_right_rounded,
+                            size: heightDevice * 0.12,
+                            color:
+                                _isHovered ? Colors.white : Color(0xFFFF8828),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  bottom: 0,
+                  left: widthDevice < 1600 ? 40 : 60,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: MouseRegion(
+                        onEnter: (_) {
+                          setState(() {
+                            _isHovered = true;
+                          });
+                        },
+                        onExit: (_) {
+                          setState(() {
+                            _isHovered = false;
+                          });
+                        },
+                        child: GestureDetector(
+                          onTap: () {
+                            context.goNamed(Routernames.panelbeatersWeCanHelp);
+                          },
+                          child: Icon(
+                            Icons.keyboard_arrow_left_rounded,
                             size: heightDevice * 0.12,
                             color:
                                 _isHovered ? Colors.white : Color(0xFFFF8828),

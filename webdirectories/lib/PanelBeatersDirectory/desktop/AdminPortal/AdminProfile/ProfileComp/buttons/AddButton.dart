@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class AddButton extends StatefulWidget {
   final String text;
   final VoidCallback onPressed;
+  final Color? textColor; // Optional parameter for text color
+  final double? width; // Optional parameter for custom width
 
   const AddButton({
     Key? key,
     required this.text,
     required this.onPressed,
+    this.textColor, // Default is null if not provided
+    this.width, // Default is null if not provided
   }) : super(key: key);
 
   @override
@@ -36,6 +40,8 @@ class _AddButtonState extends State<AddButton> {
           child: GestureDetector(
             onTap: widget.onPressed,
             child: Container(
+              width: widget.width ??
+                  null, // Use custom width if provided, else default to null
               decoration: ShapeDecoration(
                 color: Color(0xFFFF8728),
                 shape: RoundedRectangleBorder(
@@ -54,10 +60,12 @@ class _AddButtonState extends State<AddButton> {
               child: Text(
                 widget.text,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: widget.textColor ??
+                      Colors.white, // Default to white if no color is specified
                   fontSize: 14.24,
-                  fontFamily: 'raleway',
+                  fontFamily: 'ralewaymedium',
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
           ),

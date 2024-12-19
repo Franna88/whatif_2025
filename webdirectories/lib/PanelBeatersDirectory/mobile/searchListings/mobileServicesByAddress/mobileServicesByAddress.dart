@@ -1,99 +1,100 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/components/iconButton.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeatureMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/LocationMobileContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeaturedComponents/stackedMobilebutton.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationOtherMobileFeature/ImageMobileContainer.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationOtherMobileFeature/LocationOtherContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/ServicesMobile.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
-class LocationMobileOther extends StatefulWidget {
-  const LocationMobileOther({Key? key}) : super(key: key);
+class MobileServicesByAddress extends StatefulWidget {
+  final Map<String, dynamic> addressData;
+  const MobileServicesByAddress({super.key, required this.addressData});
 
   @override
-  State<LocationMobileOther> createState() => _LocationMobileOtherState();
+  State<MobileServicesByAddress> createState() =>
+      _MobileServicesByAddressState();
 }
 
-class _LocationMobileOtherState extends State<LocationMobileOther> {
-  int selectedIndex = 0;
-  bool showOtherServices = false;
-  final TextEditingController search = TextEditingController();
-  late Future<List<Map<String, dynamic>>> _listingsFuture;
-
+class _MobileServicesByAddressState extends State<MobileServicesByAddress> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  Position? _userPosition;
-  bool _isLoading = true;
+  final TextEditingController search = TextEditingController();
+  bool showOtherServices = false;
+  bool isFeatured = true;
+  int selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
   }
 
-  Future<void> _getCurrentLocation() async {
-    LocationPermission permission;
+  /// Calculates the bounding box for a given radius (in km) around a point.
+  Map<String, double> _calculateBoundingBox(double radiusInKm) {
+    const double earthRadius = 6371.0; // Earth's radius in kilometers
 
-    // Check if location services are enabled
-    bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!isLocationServiceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
+    // Latitude offset
+    double latOffset = radiusInKm / earthRadius;
+    double latMin = widget.addressData['lat'] - latOffset * (180 / pi);
+    double latMax = widget.addressData['lat'] + latOffset * (180 / pi);
 
-    // Check for location permissions
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied.');
+    // Longitude offset, which depends on the latitude
+    double lngOffset =
+        radiusInKm / (earthRadius * cos(widget.addressData['lat'] * pi / 180));
+    double lngMin = widget.addressData['lng'] - lngOffset * (180 / pi);
+    double lngMax = widget.addressData['lng'] + lngOffset * (180 / pi);
+
+    return {
+      "latMin": latMin,
+      "latMax": latMax,
+      "lngMin": lngMin,
+      "lngMax": lngMax,
+    };
+  }
+
+  /// Fetches documents within a 100 km radius from the user's location.
+  Future<List<Map<String, dynamic>>> fetchNearbyLocations(
+      double radiusInKm) async {
+    // Calculate bounding box
+    Map<String, double> bounds = _calculateBoundingBox(radiusInKm);
+    print(bounds['latMin']);
+    print(bounds['latMax']);
+    // Query Firestore by latitude range only
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('listings')
+        .where('featured', isEqualTo: isFeatured == true ? 1 : 0)
+        .where('latitude', isGreaterThanOrEqualTo: bounds['latMin'])
+        .where('latitude', isLessThanOrEqualTo: bounds['latMax'])
+        .get();
+    print(querySnapshot.docs.length);
+    //Filter results by longitude range and exact distance
+    List<Map<String, dynamic>> nearbyLocations = [];
+    for (var doc in querySnapshot.docs) {
+      double lat = doc['latitude'];
+      double lng = doc['longitude'];
+
+      // Check if the longitude is within bounds
+      if (lng >= bounds['lngMin']! && lng <= bounds['lngMax']!) {
+        // Calculate the exact distance to make sure it's within the radius
+        double distance = _calculateDistance(
+            widget.addressData['lat'], widget.addressData['lng'], lat, lng);
+        if (distance <= radiusInKm) {
+          nearbyLocations.add(
+              {...doc.data() as Map<String, dynamic>, 'distance': distance});
+        }
       }
     }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied.');
-    }
-
-    // Get the current position
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
-
-    setState(() {
-      _userPosition = position;
-      _isLoading = false;
-    });
-  }
-
-  String _calculateDistance(userLat, userLong, listingLat, listingLong) {
-    // Calculate the distance
-    double distance =
-        Geolocator.distanceBetween(userLat, userLong, listingLat, listingLong);
-
-    return (distance / 1000).toStringAsFixed(1);
-  }
-
-  Future<List<Map<String, dynamic>>> _getListings() async {
-    // Fetch featured listings
-    QuerySnapshot querySnapshot = await _firestore
-        .collection('listings')
-        .where('featured', isEqualTo: 1)
-        // .where('authId', isEqualTo: "QV7frChverVoYOCSpETX58jhVt33")
-        .limit(20)
-        .get();
-
     List<Future<Map<String, dynamic>>> listingFutures =
-        querySnapshot.docs.map((doc) async {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        nearbyLocations.map((doc) async {
+      Map<String, dynamic> data = doc;
       // String? imageUrl =
       //     await getImageUrl('listings/images/listings/${data['displayphoto']}');
-      // if (imageUrl != null) {
-      //   data['displayphoto'] = imageUrl;
-      // }
-      data['distance'] = _userPosition?.latitude != null
-          ? '${_calculateDistance(_userPosition?.latitude, _userPosition?.longitude, data['latitude'], data['longitude'])}'
-          : '0 km';
+
+      // data['displayphoto'] = imageUrl;
 
       int viewCount = await _firestore
           .collection('views')
@@ -102,7 +103,8 @@ class _LocationMobileOtherState extends State<LocationMobileOther> {
           .then((snapshot) => snapshot['views'].length)
           .catchError((error) => 0);
 
-      data['views'] = viewCount;
+      doc['views'] = viewCount;
+
       return data;
     }).toList();
 
@@ -114,23 +116,41 @@ class _LocationMobileOtherState extends State<LocationMobileOther> {
         .where((listing) => (listing['displayphoto'] as String)
             .contains('https://firebasestorage.googleapis.com'))
         .toList();
+    ;
+    listings =
+        listings.where((listing) => listing['distance'] != null).toList();
 
-    //  listings.sort((a, b) => a['distance'].compareTo(b['distance']));
+    // Sort the list by distance
+    listings.sort((a, b) => a['distance'].compareTo(b['distance']));
 
-    return listings;
+    // Return sorted documents only
+    return listings
+        .map((doc) => {
+              ...doc,
+              'distance': '${(doc['distance'] as double).toStringAsFixed(1)} km'
+            })
+        .toList();
   }
 
-  void toggleToFeatured() {
+  _calculateDistance(userLat, userLong, listingLat, listingLong) {
+    // Calculate the distance
+    double distance =
+        Geolocator.distanceBetween(userLat, userLong, listingLat, listingLong);
+
+    return (distance / 1000);
+  }
+
+  void toggleFeatured() {
     setState(() {
-      showOtherServices = false;
+      isFeatured = !isFeatured;
     });
   }
 
-  void toggleToOther() {
-    setState(() {
-      showOtherServices = true;
-    });
-  }
+  // void toggleToOther() {
+  //   setState(() {
+  //     showOtherServices = true;
+  //   });
+  // }
 
 //filter data on search value
   getSearchValue(document) {
@@ -170,21 +190,8 @@ class _LocationMobileOtherState extends State<LocationMobileOther> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     StackedMobileButtons(
-                      selectedIndex: selectedIndex,
-                      onButtonPressed: (index) {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-
-                        if (index == 1) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LocationMobileOther(),
-                            ),
-                          );
-                        }
-                      },
+                      toggleFeatured: toggleFeatured,
+                      isFeaturedSelected: isFeatured,
                     ),
                   ],
                 ),
@@ -256,7 +263,7 @@ class _LocationMobileOtherState extends State<LocationMobileOther> {
               SizedBox(
                 height: MyUtility(context).height * 0.85,
                 child: FutureBuilder<List<Map<String, dynamic>>>(
-                  future: _getListings(),
+                  future: fetchNearbyLocations(100.0),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -296,6 +303,8 @@ class _LocationMobileOtherState extends State<LocationMobileOther> {
                         itemBuilder: (context, index) {
                           Map<String, dynamic> listing = listings[index];
 
+                          /**/
+                          print(listing);
                           return Visibility(
                             visible: getSearchValue(listing),
                             child: LocationMobileContainer(
@@ -303,12 +312,11 @@ class _LocationMobileOtherState extends State<LocationMobileOther> {
                               businessName: listing['title'],
                               businessAddress: listing['postaladdress'],
                               OnPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ServicesMobile(
-                                          listingId: (listing['listingsId'])
-                                              .toString())),
+                                context.goNamed(
+                                  Routernames.panelbeatersServicesProfile,
+                                  pathParameters: {
+                                    'id': listing['listingsId'].toString()
+                                  },
                                 );
                               },
                               views: (listing['views'] as int).toString(),
@@ -319,39 +327,6 @@ class _LocationMobileOtherState extends State<LocationMobileOther> {
                                 await launchUrl(uri);
                               },
                             ),
-
-                            /*        ServiceFeaturedContainer(
-                                        businessImage: listing['displayphoto'],
-                                        businessName: listing['title'],
-                                        businessAddress:
-                                            listing['postaladdress'],
-                                        OnPressed: () {
-                                          storage.write(
-                                              key: 'id',
-                                              value: listing['listingsId']
-                                                  .toString());
-                                          storage.write(
-                                              key: 'title',
-                                              value:
-                                                  listing['title'].toString());
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => Services(
-                                                    listingId:
-                                                        (listing['listingsId'])
-                                                            .toString())),
-                                          );
-                                        },
-                                        navigateMe: () async {
-                                          final Uri uri = Uri.parse(
-                                              "https://www.google.com/maps/search/${listing['streetaddress']}");
-                                          await launchUrl(uri);
-                                        },
-                                        views: '${200 + Random().nextInt(801)}',
-                                        distance: listing['distance'],
-                                      ),
-                                   */
                           );
                         },
                       ),
@@ -359,54 +334,6 @@ class _LocationMobileOtherState extends State<LocationMobileOther> {
                   },
                 ),
               ),
-
-              /*     SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-
-
-
-
-
-
-
-
-
-
-                    SizedBox(height: MyUtility(context).height * 0.025),
-                    LocationMobileContainer(
-                      businessImage: 'images/southcity.jpeg',
-                      businessName: 'South City Motors Auto Body Repair',
-                      businessAddress:
-                          '6 Lances Street, Cannon Hill, Kariega, Eastern Cape, 6229',
-                      OnPressed: () {},
-                      views: '16 133',
-                      distance: '12km',
-                    ),
-                    LocationMobileContainer(
-                      businessImage: 'images/denys.png',
-                      businessName: 'Denys Edwardes',
-                      businessAddress:
-                          'c/o PW Botha Blv & Ossie Urban Street, Tamsui, George, Western Cape, 6529',
-                      OnPressed: () {},
-                      views: '16 133',
-                      distance: '12km',
-                    ),
-                    BuisnessImageMobileContainer(
-                      topImage: 'images/hurricane.png',
-                      bottomImage: 'images/hurricane2.png',
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Center(child: IconButtons()),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-          */
             ],
           ),
         ),

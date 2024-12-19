@@ -35,7 +35,7 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
         child: Column(
           children: [
             Container(
-              height: MyUtility(context).height,
+              // height: MyUtility(context).height,
               width: MyUtility(context).width,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -62,7 +62,8 @@ class _RecentArticlesPageState extends State<RecentArticlesPage> {
                               padding: const EdgeInsets.only(top: 25),
                               child: Image.asset(
                                 'images/panelLogo.png', // Check the path
-                                height: 70,
+                                // height: 70,
+                                width: MyUtility(context).width * 0.23,
                               ),
                             ),
                             Text(

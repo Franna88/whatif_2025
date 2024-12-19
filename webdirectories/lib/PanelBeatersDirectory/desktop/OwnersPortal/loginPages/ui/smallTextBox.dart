@@ -49,7 +49,7 @@ class SmallTextBox extends StatelessWidget {
               ),
               Container(
                 width: widthDevice * 0.14,
-                height: heightDevice < 710 ? 28 : 35,
+                height: heightDevice < 710 ? 35 : 43,
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(

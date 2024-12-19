@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/SubmitCV/SubmitCVContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFindaContainer/JobFinderContainer.dart';
 import 'package:webdirectories/myutility.dart';
 
@@ -50,7 +51,8 @@ class _JobFinderState extends State<JobFinder> {
                                     child: Image.asset(
                                       'images/panelLogo.png',
                                       //width: 225,
-                                      height: 70,
+                                      // height: 70,
+                                      width: MyUtility(context).width * 0.23,
                                     ),
                                   ),
                                   Column(
@@ -106,7 +108,9 @@ class _JobFinderState extends State<JobFinder> {
                               ],
                             ),
                             child: Center(
-                              child: JobFinderContainer(),
+                              child:
+                                  // JobFinderContainer(),
+                                  SubmitCVContainer(),
                             ),
                           ),
                         ],

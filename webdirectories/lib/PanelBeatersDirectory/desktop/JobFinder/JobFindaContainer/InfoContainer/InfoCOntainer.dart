@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/JobFindaContainer/InfoContainer/InfoContainerComp/ButtonInfoContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JobFinder/SubmitCV/SubmitCVContainer.dart';
 import 'package:webdirectories/myutility.dart';
 
 class InfoContainer extends StatefulWidget {
@@ -34,6 +35,7 @@ class _InfoContainerState extends State<InfoContainer> {
                 paragraph:
                     'Want to have quick access to a pool of qualified candidates? Register your business on the Panel Beater Directory via our easy sign up process. ',
                 buttonText: 'Register your business here',
+                buttonWidth: MyUtility(context).width * 0.2,
                 onPressed: () {}),
             SizedBox(
               width: MyUtility(context).width * 0.45,

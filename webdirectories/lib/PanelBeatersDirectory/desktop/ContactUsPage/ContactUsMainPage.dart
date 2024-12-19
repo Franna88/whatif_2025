@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
+import 'package:webdirectories/myutility.dart';
 
 import 'ui/ContactDesktop.dart';
 
@@ -49,7 +50,8 @@ class _ContactUsMainPageState extends State<ContactUsMainPage> {
                                         const EdgeInsets.only(left: 0, top: 50),
                                     child: Image.asset(
                                       'images/panelLogo.png',
-                                      height: 70,
+                                      // height: 70,
+                                      width: MyUtility(context).width * 0.23,
                                     ),
                                   ),
                                 ),

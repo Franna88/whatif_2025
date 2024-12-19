@@ -67,7 +67,7 @@ class _OTPWidgetState extends State<OTPWidget> {
       decoration: ShapeDecoration(
         color: Color(0xFFD9D9D9),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       child: Center(

@@ -48,11 +48,11 @@ class _GalleryAltState extends State<GalleryAlt> {
         for (var doc in gallerySnapshot.docs) {
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
           String fileName = data['immageFile'];
-          String? url = await getImageUrl('listings/$fileName');
+          // String? url = await getImageUrl('listings/$fileName');
 
-          if (url != null) {
-            data['immageFile'] = url;
-          }
+          // if (url != null) {
+          //   data['immageFile'] = url;
+          // }
 
           processedData
               .add({...data, 'docId': doc.id}); // Add docId for updating

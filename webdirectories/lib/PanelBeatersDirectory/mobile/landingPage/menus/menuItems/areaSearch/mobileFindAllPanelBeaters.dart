@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/servicesByAddressSearch.dart';
+import 'package:go_router/go_router.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByAddress/servicesByAddressSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/addressAutoCompleteField.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/LocationsMobile/LocationFeatureMobile.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/googleSearchWidget.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesNearMe/mobileServicesNearMe.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/directOrangeButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileDropDown.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileMenuIndex.dart';
@@ -9,8 +13,9 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobil
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileSearchButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileSetLocationButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileTextField.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByAddress/mobileServicesByAddressFeatured.dart';
-import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByArea/mobileServicesByAreaFeatured.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByAddress/mobileServicesByAddress.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/searchListings/mobileServicesByArea/mobileServicesByArea.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 class MobileFindAllPanelBeaters extends StatefulWidget {
   const MobileFindAllPanelBeaters({
@@ -23,10 +28,12 @@ class MobileFindAllPanelBeaters extends StatefulWidget {
 }
 
 class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
+  final searchController = TextEditingController();
   int menuIndex = 2;
   int? currentOpenDropdown;
   Map<String, dynamic> address = {};
-
+  bool isLoading = false;
+  List<dynamic> searchResults = [];
   void toggleDropdown(int index) {
     setState(() {
       if (currentOpenDropdown == index) {
@@ -41,6 +48,13 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
     print(data);
     setState(() {
       address = data;
+    });
+  }
+
+  void updateIsLoading(bool value) {
+    print('value: $value');
+    setState(() {
+      isLoading = value;
     });
   }
 
@@ -91,7 +105,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const LocationFeatureMobile()),
+                      builder: (context) => const MobileServicesNearMe()),
                 );
               },
             ),
@@ -112,7 +126,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MobileServicesByAddressFeatured(
+                        builder: (context) => MobileServicesByAddress(
                               addressData: address,
                             )),
                   );
@@ -126,11 +140,22 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
         ),
         MobileOrangeButton(
           buttonTitle: 'Keyword Search',
-          dropdownContent: const MobileDropDown(
-              topText: 'Find a Panel Beater by street',
-              widget1:
-                  MobileTextfield(hintText: 'Type any street address here'),
-              widget2: MobileSearchButton()),
+          dropdownContent: MobileDropDown(
+              topText: 'Search by keywords within Panel Beater Directory',
+              widget1: GoogleSearchWidget(
+                  updateIsLoading: updateIsLoading,
+                  onSearchResultsChanged: (value) {
+                    searchResults = value;
+                  },
+                  searchController: searchController),
+              widget2: MobileSearchButton(
+                onPressed: () async {
+                  context.goNamed(Routernames.panelbeatersKeyword,
+                      pathParameters: {
+                        "searchData": jsonEncode(searchResults)
+                      });
+                },
+              )),
           isOpen: currentOpenDropdown == 2,
           onToggle: () => toggleDropdown(2),
         ),
@@ -142,7 +167,7 @@ class _MobileFindAllPanelBeatersState extends State<MobileFindAllPanelBeaters> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const MobileServicesByAreaFeatured()),
+                  builder: (context) => const MobileServicesByArea()),
             );
           },
           buttonTitle: 'Area Search',

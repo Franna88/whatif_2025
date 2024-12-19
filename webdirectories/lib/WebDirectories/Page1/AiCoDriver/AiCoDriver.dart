@@ -55,12 +55,33 @@ class _AiCoDriverState extends State<AiCoDriver> {
                           fontFamily: 'ralewaysemi',
                           color: Colors.black),
                     ),
-                    const Text(
-                      "Download your WATIF App today!",
-                      style: TextStyle(
-                          fontSize: 28,
-                          fontFamily: 'ralewaysemi',
-                          color: Colors.black),
+                    const Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Download your ",
+                            style: TextStyle(
+                                fontSize: 28,
+                                fontFamily: 'ralewaysemi',
+                                color: Colors.black),
+                          ),
+                          TextSpan(
+                            text: 'WATIF App ',
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontFamily: 'comfortaaBold',
+                              color: Color.fromRGBO(149, 160, 4, 1),
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'today!',
+                            style: TextStyle(
+                                fontSize: 28,
+                                fontFamily: 'ralewaysemi',
+                                color: Colors.black),
+                          )
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: MyUtility(context).height * 0.01,
@@ -68,7 +89,7 @@ class _AiCoDriverState extends State<AiCoDriver> {
                     Text.rich(
                       TextSpan(
                         text:
-                            'Hit the road with confidence and ditch the stress! ',
+                            'Hit the road with confidence and ditch the stress with ',
                         style: TextStyle(
                           fontSize: 16,
                           fontFamily: 'raleway',
@@ -76,16 +97,16 @@ class _AiCoDriverState extends State<AiCoDriver> {
                         ),
                         children: [
                           TextSpan(
-                            text: 'WATIF',
+                            text: 'watif!',
                             style: TextStyle(
                               fontSize: 16,
-                              fontFamily: 'ralewaysemi',
+                              fontFamily: 'comfortaaBold',
                               color: Colors.black,
                             ),
                           ),
                           TextSpan(
                             text:
-                                ' is your free, all-in-one automotive app that empowers you with everything you need.',
+                                ' This is your free, all-in-one automotive app that empowers you with everything you need.',
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'raleway',
@@ -115,11 +136,11 @@ class _AiCoDriverState extends State<AiCoDriver> {
                         buttonText: 'Learn More',
                         onPressed: () {
                           Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Material(
-                                          child: Page4(),
-                                        )));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Material(
+                                        child: Page4(),
+                                      )));
                         }),
                     SizedBox(
                       height: MyUtility(context).height * 0.01,

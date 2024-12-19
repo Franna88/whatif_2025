@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:webdirectories/myutility.dart';
@@ -7,39 +8,54 @@ class CategorySelect extends StatefulWidget {
   int menuIndex;
   Function(int) changeMenu;
   Function startFlickering;
-  CategorySelect(
-      {super.key,
-      required this.menuIndex,
-      required this.changeMenu,
-      required this.startFlickering});
+  CategorySelect({
+    super.key,
+    required this.menuIndex,
+    required this.changeMenu,
+    required this.startFlickering,
+  });
 
   @override
   State<CategorySelect> createState() => _CategorySelectState();
 }
 
 class _CategorySelectState extends State<CategorySelect>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _controller;
+  late AnimationController _blinkController;
+  late Animation<Color?> _blinkAnimation;
 
   double top = 120;
   double right = 185;
+
   @override
   void initState() {
-    //animation start
+    super.initState();
+
+    // Rotation animation
     _controller = AnimationController(
       lowerBound: -0.6,
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
     _controller.animateTo(-0.32);
-    super.initState();
+
+    // Blink animation
+    _blinkController = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _blinkAnimation = ColorTween(
+      begin: Colors.white,
+      end: Color.fromRGBO(0, 128, 4, 1),
+    ).animate(_blinkController);
   }
 
   @override
   void dispose() {
-    //end animation
     _controller.dispose();
-
+    _blinkController.dispose();
     super.dispose();
   }
 
@@ -134,16 +150,7 @@ class _CategorySelectState extends State<CategorySelect>
                   widget.changeMenu(3);
                   _controller.animateTo(0.1755);
                 },
-                child: /*Container(
-                  child: SvgPicture.asset(
-                    widget.menuIndex == 3
-                        ? 'images/hammerSvg.svg'
-                        : 'images/rightb.svg',
-                    width: 1,
-                    height: 183,
-                  ),
-                ),*/
-                    Container(
+                child: Container(
                   child: SvgPicture.asset(
                     widget.menuIndex == 3
                         ? 'images/revpand8.svg'
@@ -175,24 +182,58 @@ class _CategorySelectState extends State<CategorySelect>
                 ),
               ),
             ),
-            /**/
             Positioned(
               top: top,
               right: 191,
               child: Container(
                 child: RotationTransition(
-                    alignment: Alignment.center,
-                    turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
-                    child: Container(
-                      height: 265.0,
-                      width: 150.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('images/red1.png'),
-                          fit: BoxFit.cover,
-                        ),
+                  alignment: Alignment.center,
+                  turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+                  child: Container(
+                    height: 265.0,
+                    width: 150.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('images/red1.png'),
+                        fit: BoxFit.cover,
                       ),
-                    )),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // BLINKING TEXT
+            Positioned(
+              bottom: 135,
+              right: 198,
+              child: AnimatedBuilder(
+                animation: _blinkAnimation,
+                builder: (context, child) {
+                  return Text.rich(
+                    textAlign: TextAlign.center,
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Click to\n',
+                          style: TextStyle(
+                            color: _blinkAnimation.value,
+                            fontFamily: 'ralewaymedium',
+                            fontSize: 25,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'NAVIGATE',
+                          style: TextStyle(
+                            color: _blinkAnimation.value,
+                            fontFamily: 'ralewaybold',
+                            fontSize: 28,
+                            height: 0.8,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ],

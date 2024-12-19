@@ -65,8 +65,9 @@ class PasswordFieldState extends State<PasswordField> {
                 height: heightDevice < 710 ? 3 : 5,
               ),
               Container(
-                width: widget.widthContainer, //450 //215
-                height: heightDevice < 710 ? 28 : 35,
+                width: widthDevice * 0.14,
+
+                height: heightDevice < 710 ? 35 : 43,
                 decoration: ShapeDecoration(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
@@ -78,7 +79,7 @@ class PasswordFieldState extends State<PasswordField> {
                   validator: widget.validator,
                   controller: widget.controller,
                   style: TextStyle(
-                    fontSize: heightDevice < 710 ? 12 : 16,
+                    fontSize: heightDevice < 710 ? 15 : 17,
                     fontFamily: 'raleway',
                   ),
                   keyboardType: TextInputType.visiblePassword,

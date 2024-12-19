@@ -89,7 +89,7 @@ class _RegisterYourBusinessState extends State<RegisterYourBusiness> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 14,
                   fontFamily: 'raleway',
                   height: 1.3,
                 ))
@@ -98,7 +98,7 @@ class _RegisterYourBusinessState extends State<RegisterYourBusiness> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: widthDevice < 1500 ? 14 : 18,
+                  fontSize: widthDevice < 1500 ? 16 : 20,
                   fontFamily: 'raleway',
                   height: 1.3,
                 )),
@@ -108,7 +108,7 @@ class _RegisterYourBusinessState extends State<RegisterYourBusiness> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Already have an account? ',
+            Text('Already have an account?',
                 style: widthDevice < 1500
                     ? TextStyle(
                         color: Colors.white,
@@ -126,7 +126,7 @@ class _RegisterYourBusinessState extends State<RegisterYourBusiness> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => Nav(
-                            pageIndex: 5,
+                            pageIndex: panelNavPages.ownersportal,
                           )),
                 ); /**/
               },
@@ -203,64 +203,78 @@ class _RegisterYourBusinessState extends State<RegisterYourBusiness> {
         SizedBox(
           height: 10,
         ),
-        Align(
-          alignment:
-              widthDevice < 1500 ? Alignment.centerLeft : Alignment.center,
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            children: [
-              SmallCheckBox(
-                  description: 'By creating an account, you agree to our',
-                  checkboxValue: termsConditionsCheck,
-                  changeCheckboxValue: changeCheckboxValue),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Material(
-                                child: Page2(),
-                              )));
-                  //ADD LOGIC HERE
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      top: widthDevice < 1500 ? 0 : 16, left: 0),
-                  child: Text('Terms & Conditions',
-                      style: widthDevice < 1500
-                          ? TextStyle(
-                              color: Color(0xFFEF9040),
-                              fontSize: 11,
-                              fontFamily: 'raleway',
-                              fontWeight: FontWeight.w500,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SmallCheckBox(
+                description: 'By creating an account, you agree to our',
+                checkboxValue: termsConditionsCheck,
+                changeCheckboxValue: changeCheckboxValue),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Material(
+                              child: Page2(),
+                            )));
+                //ADD LOGIC HERE
+              },
+              child: Padding(
+                padding:
+                    EdgeInsets.only(top: widthDevice < 1500 ? 0 : 16, left: 0),
+                child: Text('Terms & Conditions',
+                    style: widthDevice < 1500
+                        ? TextStyle(
+                            color: Color(0xFFEF9040),
+                            fontSize: 13,
+                            fontFamily: 'raleway',
+                            fontWeight: FontWeight.w500,
 
-                              decoration: TextDecoration.underline,
-                              decorationColor: Color(0xFFEF9040),
-                              //height: -3
-                            )
-                          : TextStyle(
-                              color: Color(0xFFEF9040),
-                              fontSize: 14,
-                              fontFamily: 'raleway',
-                              fontWeight: FontWeight.w500,
-                              decoration: TextDecoration.underline,
-                              decorationColor: Color(0xFFEF9040),
-                              height: 0.0)),
-                ),
-              )
-            ],
-          ),
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xFFEF9040),
+                            //height: -3
+                          )
+                        : TextStyle(
+                            color: Color(0xFFEF9040),
+                            fontSize: 13,
+                            fontFamily: 'raleway',
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xFFEF9040),
+                            height: 0.0)),
+              ),
+            )
+          ],
         ),
         SizedBox(
           height: widthDevice < 1500 ? 15 : 25,
         ),
         LongOrangeButton(
             onPressed: () {
-              print(termsConditionsCheck);
-              if (termsConditionsCheck == true) {
-                widget.changePageIndex();
+              if (widget.firstName.text.isEmpty ||
+                  widget.lastName.text.isEmpty ||
+                  widget.tradingName.text.isEmpty ||
+                  widget.phone.text.isEmpty ||
+                  widget.email.text.isEmpty) {
+                // Show an error message
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Please fill out all the fields to proceed.'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              } else if (!termsConditionsCheck) {
+                // Show a message to agree to terms and conditions
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('You must agree to the Terms & Conditions.'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
               } else {
-                widget.descriptionDialog();
+                // All validations passed
+                widget.changePageIndex();
               }
             },
             buttonText: 'Start Sign Up Process'),

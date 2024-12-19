@@ -3,7 +3,8 @@ import 'package:webdirectories/myutility.dart';
 
 class TextfieldButton extends StatelessWidget {
   final String hintText;
-  const TextfieldButton({super.key, required this.hintText});
+  final TextEditingController? controller;
+  const TextfieldButton({super.key, required this.hintText, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +25,27 @@ class TextfieldButton extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Container(
-                width: 25,
-                height: 25,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  shape: BoxShape.circle,
-                ),
-                padding: EdgeInsets.zero,
-                child: Icon(
-                  Icons.keyboard_arrow_right_outlined,
-                  color: Colors.white,
-                  size: 16,
-                ),
-              ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 10),
+          //   child: Container(
+          //       width: 25,
+          //       height: 25,
+          //       decoration: BoxDecoration(
+          //         color: Colors.black,
+          //         shape: BoxShape.circle,
+          //       ),
+          //       padding: EdgeInsets.zero,
+          //       child: Icon(
+          //         Icons.keyboard_arrow_right_outlined,
+          //         color: Colors.white,
+          //         size: 16,
+          //       ),
+          //     ),
+          // ),
+          SizedBox(width: 6),
           Expanded(
             child: TextFormField(
+              controller: controller,
               style: const TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 hintText: hintText,

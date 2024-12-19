@@ -49,7 +49,8 @@ class _NewJointPbdPageState extends State<NewJointPbdPage> {
                     ),
                     child: Image.asset(
                       'images/panelLogo.png',
-                      height: 70,
+                      // height: 70,
+                      width: MyUtility(context).width * 0.23,
                     ),
                   ),
                   YoutubeVideoBlock(),
