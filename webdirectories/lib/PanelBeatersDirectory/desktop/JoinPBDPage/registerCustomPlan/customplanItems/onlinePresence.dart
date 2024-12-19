@@ -1,18 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/customPlanItems.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/checkBoxStyle.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/closePageButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/goBackButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/nextButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/progressBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/whiteContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
 
 class OnlinePresence extends StatefulWidget {
+  CustomPlanItems customItems;
   Function closeDialog;
   Function(String) updateIndex;
   OnlinePresence(
-      {super.key, required this.closeDialog, required this.updateIndex});
+      {super.key,
+      required this.closeDialog,
+      required this.updateIndex,
+      required this.customItems});
 
   @override
   State<OnlinePresence> createState() => _ClientCommunicationState();
@@ -27,7 +33,7 @@ class _ClientCommunicationState extends State<OnlinePresence> {
       // height: heightDevice * 0.75,
       child: WhiteContainer(
         child: Padding(
-          padding: const EdgeInsets.only(top: 10, right: 10),
+          padding: const EdgeInsets.only(top: 10, left: 40, right: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -36,7 +42,7 @@ class _ClientCommunicationState extends State<OnlinePresence> {
               ),
               ProgressBar(
                 orangeBar: Container(
-                  width: 225,
+                  width: 74.2 * 2,
                   height: 12,
                   decoration: ShapeDecoration(
                     color: Color(0xFFEF9040),
@@ -89,7 +95,7 @@ class _ClientCommunicationState extends State<OnlinePresence> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Would it be beneficial to your business if customers could navigate to your premises via Google Maps?',
+                      widget.customItems.items[3].question,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
@@ -106,9 +112,19 @@ class _ClientCommunicationState extends State<OnlinePresence> {
                           child: Column(
                             children: [
                               CheckBoxStyle(
-                                  checkboxValue: false, description: 'Yes'),
+                                  checkboxValue: widget
+                                      .customItems.items[3].answer
+                                      .contains('Yes'),
+                                  description: 'Yes',
+                                  onChanged:
+                                      widget.customItems.items[3].updateAnswer),
                               CheckBoxStyle(
-                                  checkboxValue: false, description: 'No')
+                                  checkboxValue: widget
+                                      .customItems.items[3].answer
+                                      .contains('No'),
+                                  description: 'No',
+                                  onChanged:
+                                      widget.customItems.items[3].updateAnswer)
                             ],
                           ),
                         )
@@ -121,7 +137,7 @@ class _ClientCommunicationState extends State<OnlinePresence> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Do you have a website or social media presence you\'d like to link to?',
+                          widget.customItems.items[4].question,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -138,9 +154,19 @@ class _ClientCommunicationState extends State<OnlinePresence> {
                               child: Column(
                                 children: [
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'Yes'),
+                                      checkboxValue: widget
+                                          .customItems.items[4].answer
+                                          .contains('Yes'),
+                                      description: 'Yes',
+                                      onChanged: widget
+                                          .customItems.items[4].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'No')
+                                      checkboxValue: widget
+                                          .customItems.items[4].answer
+                                          .contains('No'),
+                                      description: 'No',
+                                      onChanged: widget
+                                          .customItems.items[4].updateAnswer)
                                 ],
                               ),
                             )
@@ -150,7 +176,7 @@ class _ClientCommunicationState extends State<OnlinePresence> {
                           height: 20,
                         ),
                         Text(
-                          'Are you interested in showcasing positive client reviews, ratings and feedback on your profile?',
+                          widget.customItems.items[5].question,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -167,9 +193,19 @@ class _ClientCommunicationState extends State<OnlinePresence> {
                               child: Column(
                                 children: [
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'Yes'),
+                                      checkboxValue: widget
+                                          .customItems.items[5].answer
+                                          .contains('Yes'),
+                                      description: 'Yes',
+                                      onChanged: widget
+                                          .customItems.items[5].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'No')
+                                      checkboxValue: widget
+                                          .customItems.items[5].answer
+                                          .contains('No'),
+                                      description: 'No',
+                                      onChanged: widget
+                                          .customItems.items[5].updateAnswer)
                                 ],
                               ),
                             )
@@ -185,10 +221,27 @@ class _ClientCommunicationState extends State<OnlinePresence> {
                 padding: const EdgeInsets.only(bottom: 15, left: 10),
                 child: Row(
                   children: [
-                    GoBackButton(),
+                    GoBackButton(
+                      onGoBack: () => widget.updateIndex("-"),
+                    ),
                     Spacer(),
                     NextButton(
                         onPressed: () {
+                          if (widget.customItems.items[3].answer.isEmpty ||
+                              widget.customItems.items[4].answer.isEmpty ||
+                              widget.customItems.items[5].answer.isEmpty) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: DescriptionDialog(
+                                      description:
+                                          'Please answer all questions',
+                                    ),
+                                  );
+                                });
+                            return;
+                          }
                           widget.updateIndex("+");
                         },
                         buttonText: 'Next')

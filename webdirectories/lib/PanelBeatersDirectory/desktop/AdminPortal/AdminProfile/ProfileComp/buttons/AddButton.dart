@@ -5,9 +5,11 @@ class AddButton extends StatefulWidget {
   final VoidCallback onPressed;
   final Color? textColor; // Optional parameter for text color
   final double? width; // Optional parameter for custom width
+  bool? waiting;
 
-  const AddButton({
+  AddButton({
     Key? key,
+    this.waiting,
     required this.text,
     required this.onPressed,
     this.textColor, // Default is null if not provided
@@ -57,16 +59,33 @@ class _AddButtonState extends State<AddButton> {
                 ],
               ),
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-              child: Text(
-                widget.text,
-                style: TextStyle(
-                  color: widget.textColor ??
-                      Colors.white, // Default to white if no color is specified
-                  fontSize: 14.24,
-                  fontFamily: 'ralewaymedium',
-                ),
-                textAlign: TextAlign.center,
-              ),
+              child: widget.waiting != null
+                  ? widget.waiting!
+                      ? CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : Text(
+                          widget.text,
+                          style: TextStyle(
+                            color: widget.textColor ??
+                                Colors
+                                    .white, // Default to white if no color is specified
+                            fontSize: 14.24,
+                            fontFamily: 'ralewaymedium',
+                          ),
+                          textAlign: TextAlign.center,
+                        )
+                  : Text(
+                      widget.text,
+                      style: TextStyle(
+                        color: widget.textColor ??
+                            Colors
+                                .white, // Default to white if no color is specified
+                        fontSize: 14.24,
+                        fontFamily: 'ralewaymedium',
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
             ),
           ),
         ),

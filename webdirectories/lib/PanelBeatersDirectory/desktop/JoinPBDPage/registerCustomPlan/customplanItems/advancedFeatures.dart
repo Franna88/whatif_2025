@@ -1,18 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/customPlanItems.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/checkBoxStyle.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/closePageButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/goBackButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/nextButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/progressBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/whiteContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
 
 class AdvancedFeatures extends StatefulWidget {
+  CustomPlanItems customItems;
   Function closeDialog;
   Function(String) updateIndex;
   AdvancedFeatures(
-      {super.key, required this.closeDialog, required this.updateIndex});
+      {super.key,
+      required this.closeDialog,
+      required this.updateIndex,
+      required this.customItems});
 
   @override
   State<AdvancedFeatures> createState() => _ClientCommunicationState();
@@ -27,7 +33,7 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
       //  height: heightDevice * 0.75,
       child: WhiteContainer(
         child: Padding(
-          padding: const EdgeInsets.only(top: 10, right: 10),
+          padding: const EdgeInsets.only(top: 10, left: 40, right: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -36,7 +42,7 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
               ),
               ProgressBar(
                 orangeBar: Container(
-                  width: 425,
+                  width: 74.2 * 5,
                   height: 12,
                   decoration: ShapeDecoration(
                     color: Color(0xFFEF9040),
@@ -89,7 +95,7 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Do you see a benefit in having a platform to buy and sell parts and \nequipment with other panel beaters?',
+                      widget.customItems.items[13].question,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,
@@ -106,9 +112,19 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
                           child: Column(
                             children: [
                               CheckBoxStyle(
-                                  checkboxValue: false, description: 'Yes'),
+                                  checkboxValue: widget
+                                      .customItems.items[13].answer
+                                      .contains('Yes'),
+                                  description: 'Yes',
+                                  onChanged: widget
+                                      .customItems.items[13].updateAnswer),
                               CheckBoxStyle(
-                                  checkboxValue: false, description: 'No')
+                                  checkboxValue: widget
+                                      .customItems.items[13].answer
+                                      .contains('No'),
+                                  description: 'No',
+                                  onChanged:
+                                      widget.customItems.items[13].updateAnswer)
                             ],
                           ),
                         )
@@ -121,7 +137,7 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Would you utilize a Job Finder platform to connect with industry talent?',
+                          widget.customItems.items[14].question,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
@@ -138,9 +154,19 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
                               child: Column(
                                 children: [
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'Yes'),
+                                      checkboxValue: widget
+                                          .customItems.items[14].answer
+                                          .contains('Yes'),
+                                      description: 'Yes',
+                                      onChanged: widget
+                                          .customItems.items[14].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'No')
+                                      checkboxValue: widget
+                                          .customItems.items[14].answer
+                                          .contains('No'),
+                                      description: 'No',
+                                      onChanged: widget
+                                          .customItems.items[14].updateAnswer)
                                 ],
                               ),
                             )
@@ -150,7 +176,7 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
                           height: 20,
                         ),
                         Text(
-                          'Would you be interested in a professional photo and/or video shoot?',
+                          widget.customItems.items[15].question,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
@@ -167,9 +193,19 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
                               child: Column(
                                 children: [
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'Yes'),
+                                      checkboxValue: widget
+                                          .customItems.items[15].answer
+                                          .contains('Yes'),
+                                      description: 'Yes',
+                                      onChanged: widget
+                                          .customItems.items[15].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'No')
+                                      checkboxValue: widget
+                                          .customItems.items[15].answer
+                                          .contains('No'),
+                                      description: 'No',
+                                      onChanged: widget
+                                          .customItems.items[15].updateAnswer)
                                 ],
                               ),
                             )
@@ -179,7 +215,7 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
                           height: 20,
                         ),
                         Text(
-                          'Would additional advertising opportunities within our platform be of interest to you?',
+                          widget.customItems.items[16].question,
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
@@ -196,9 +232,19 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
                               child: Column(
                                 children: [
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'Yes'),
+                                      checkboxValue: widget
+                                          .customItems.items[16].answer
+                                          .contains('Yes'),
+                                      description: 'Yes',
+                                      onChanged: widget
+                                          .customItems.items[16].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'No')
+                                      checkboxValue: widget
+                                          .customItems.items[16].answer
+                                          .contains('No'),
+                                      description: 'No',
+                                      onChanged: widget
+                                          .customItems.items[16].updateAnswer)
                                 ],
                               ),
                             )
@@ -214,10 +260,27 @@ class _ClientCommunicationState extends State<AdvancedFeatures> {
                 padding: const EdgeInsets.only(bottom: 5, left: 10),
                 child: Row(
                   children: [
-                    GoBackButton(),
+                    GoBackButton(
+                      onGoBack: () => widget.updateIndex("-"),
+                    ),
                     Spacer(),
                     NextButton(
                       onPressed: () {
+                        if (widget.customItems.items[13].answer.isEmpty ||
+                            widget.customItems.items[14].answer.isEmpty ||
+                            widget.customItems.items[15].answer.isEmpty ||
+                            widget.customItems.items[16].answer.isEmpty) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                  child: DescriptionDialog(
+                                    description: 'Please answer all questions',
+                                  ),
+                                );
+                              });
+                          return;
+                        }
                         widget.updateIndex("+");
                       },
                       buttonText: 'Next',

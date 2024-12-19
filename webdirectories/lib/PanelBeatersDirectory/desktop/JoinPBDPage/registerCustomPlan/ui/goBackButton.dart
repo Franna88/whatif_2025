@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class GoBackButton extends StatelessWidget {
-  
-  GoBackButton({super.key});
+  final VoidCallback onGoBack;
+  GoBackButton({super.key, required this.onGoBack});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class GoBackButton extends StatelessWidget {
           /*width: MediaQuery.of(context).size.width * 0.08,*/
           /*height: MediaQuery.of(context).size.height * 0.05,*/
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: onGoBack,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.grey,
               shape: RoundedRectangleBorder(
@@ -28,8 +28,13 @@ class GoBackButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.keyboard_backspace, color: Colors.white,),
-                  SizedBox(width: 4,),
+                  Icon(
+                    Icons.keyboard_backspace,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 4,
+                  ),
                   Text(
                     'Go Back',
                     style: TextStyle(
@@ -41,7 +46,6 @@ class GoBackButton extends StatelessWidget {
                   const SizedBox(
                     width: 8,
                   ),
-                  
                 ],
               ),
             ),

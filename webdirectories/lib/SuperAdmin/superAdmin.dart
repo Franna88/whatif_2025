@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/SuperAdmin/newMemberships/newMemberships.dart';
+import 'package:webdirectories/SuperAdmin/newPlanSubmissions/NewPlanSubmissions.dart';
 
 import '../PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashProfileView.dart';
 import '../PanelBeatersDirectory/desktop/AdminPortal/SideNavBar/SideNavButton/SideNavButton.dart';
@@ -45,9 +47,20 @@ class _SuperAdminState extends State<SuperAdmin> {
   }
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var widthDevice = MediaQuery.of(context).size.width;
-    var pages = [Listings(), LightStoneExcelProcess()];
+    var pages = [
+      Listings(),
+      LightStoneExcelProcess(),
+      NewMemberships(),
+      NewPlanSubmissions()
+    ];
     return Row(
       children: [
         Container(
@@ -81,6 +94,20 @@ class _SuperAdminState extends State<SuperAdmin> {
                       label: 'LightStone Uploads',
                       isSelected: _selectedIndex == 1,
                       onTap: () => _onItemTapped(1),
+                    ),
+                    SideNavButton(
+                      icon: 'images/dash1.svg',
+                      selectedIcon: 'images/dash1.1.svg',
+                      label: 'New Memberships',
+                      isSelected: _selectedIndex == 2,
+                      onTap: () => _onItemTapped(2),
+                    ),
+                    SideNavButton(
+                      icon: 'images/dash1.svg',
+                      selectedIcon: 'images/dash1.1.svg',
+                      label: 'New Plan Submission',
+                      isSelected: _selectedIndex == 3,
+                      onTap: () => _onItemTapped(3),
                     ),
                     SideNavButton(
                       icon: 'images/Logout.svg',

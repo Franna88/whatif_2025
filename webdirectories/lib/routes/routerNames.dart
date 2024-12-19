@@ -37,4 +37,5 @@ class Routernames {
   static const String panelbeatersArticles = 'panelbeaters-articles';
   static const String panelbeatersRecentArticlesPage = 'recent-articles';
   static const String panelbeatersWeCanHelp = 'we-can-help';
+  static const String panelbeatersAdminPortal = 'admin-portal';
 }

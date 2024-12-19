@@ -7,6 +7,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.d
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/nav.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/navBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
+import 'package:webdirectories/SuperAdmin/superAdmin.dart';
 import 'package:webdirectories/routes/routerNames.dart';
 
 class Routerconfig {
@@ -230,6 +231,12 @@ class Routerconfig {
                   builder: (BuildContext context, GoRouterState state) => Nav(
                     pageIndex: panelNavPages.WeCanHelp,
                   ),
+                ),
+                GoRoute(
+                  path: 'admin-portal',
+                  name: Routernames.panelbeatersAdminPortal,
+                  builder: (BuildContext context, GoRouterState state) =>
+                      Material(child: const SuperAdmin()),
                 ),
               ],
             ),

@@ -3,6 +3,8 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registe
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/ClientManagement.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/advancedFeatures.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/clientCommunication.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/clientInfo.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/customPlanItems.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/letsFindYourCustomPlan.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/onlinePresence.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/weAreDone.dart';
@@ -16,9 +18,9 @@ class CustomPlans extends StatefulWidget {
 }
 
 class _CustomPlansState extends State<CustomPlans> {
-  //var
+//var
   int pageIndex = 0;
-
+  CustomPlanItems customPlanItems = CustomPlanItems();
 //changePageIndex
   updateIndex(value) {
     setState(() {
@@ -36,14 +38,29 @@ class _CustomPlansState extends State<CustomPlans> {
       LetsFindYourCustomPlan(
           closeDialog: widget.closeDialog, updateIndex: updateIndex),
       ClientCommunication(
-          closeDialog: widget.closeDialog, updateIndex: updateIndex),
-      OnlinePresence(closeDialog: widget.closeDialog, updateIndex: updateIndex),
+          closeDialog: widget.closeDialog,
+          updateIndex: updateIndex,
+          customItems: customPlanItems),
+      OnlinePresence(
+          closeDialog: widget.closeDialog,
+          updateIndex: updateIndex,
+          customItems: customPlanItems),
       BusinessOperations(
-          closeDialog: widget.closeDialog, updateIndex: updateIndex),
+          closeDialog: widget.closeDialog,
+          updateIndex: updateIndex,
+          customItems: customPlanItems),
       ClientManagement(
-          closeDialog: widget.closeDialog, updateIndex: updateIndex),
+          closeDialog: widget.closeDialog,
+          updateIndex: updateIndex,
+          customItems: customPlanItems),
       AdvancedFeatures(
-          closeDialog: widget.closeDialog, updateIndex: updateIndex),
+          closeDialog: widget.closeDialog,
+          updateIndex: updateIndex,
+          customItems: customPlanItems),
+      ClientInfo(
+          closeDialog: widget.closeDialog,
+          updateIndex: updateIndex,
+          customItems: customPlanItems),
       WeAreDone(closeDialog: widget.closeDialog, updateIndex: updateIndex),
     ];
     return Container(

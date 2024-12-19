@@ -32,7 +32,7 @@ class _LetsFindYourCustomPlanState extends State<WeAreDone> {
               ),
               ProgressBar(
                 orangeBar: Container(
-                  width: 520,
+                  width: 74.2 * 7,
                   height: 12,
                   decoration: ShapeDecoration(
                     color: Color(0xFFEF9040),
@@ -97,7 +97,7 @@ class _LetsFindYourCustomPlanState extends State<WeAreDone> {
                       onPressed: () {
                         widget.closeDialog();
                       },
-                      buttonText: 'Please take me to my results'),
+                      buttonText: 'Close'),
                 ],
               )
             ],

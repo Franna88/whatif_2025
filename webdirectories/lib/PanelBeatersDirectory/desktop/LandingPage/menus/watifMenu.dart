@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminProfile/ProfileComp/buttons/AddButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/button.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/menuIndexWidget.dart';
 
@@ -46,11 +47,10 @@ class WatifMenu extends StatelessWidget {
                 TextSpan(
                   text: 'WATIF',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontFamily: 'ralewaymeduim',
-                    fontWeight: FontWeight.bold
-                  ),
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontFamily: 'ralewaymeduim',
+                      fontWeight: FontWeight.bold),
                 ),
                 TextSpan(
                   text:
@@ -70,13 +70,7 @@ class WatifMenu extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        Button(
-          backgroundColor: Colors.white,
-          circleColor: Colors.black,
-          iconColor: Colors.white,
-          text1: 'Learn More',
-          textColor: Colors.black,
-        ),
+        AddButton(text: "Approve Membership", onPressed: () {}),
         const SizedBox(
           height: 20,
         ),

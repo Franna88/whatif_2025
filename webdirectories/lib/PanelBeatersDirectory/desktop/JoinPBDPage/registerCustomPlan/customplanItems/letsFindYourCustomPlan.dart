@@ -33,7 +33,7 @@ class _LetsFindYourCustomPlanState extends State<LetsFindYourCustomPlan> {
                 closeDialog: widget.closeDialog,
               ),
               Text(
-                'Let’s find your custom \nplan!',
+                'Let’s find your \nplan!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,

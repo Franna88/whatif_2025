@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPortal.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginPageItems/forgot_password_popup.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/longOrangeButton.dart';
@@ -11,6 +12,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginP
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:webdirectories/PanelBeatersDirectory/emails/otpVerification/sendOtpVerification.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 import '../../../../../SuperAdmin/superAdmin.dart';
 
@@ -54,18 +56,19 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
 
   checkUserAdmin(QueryDocumentSnapshot<Map<String, dynamic>> user) async {
     if (user.data()['admin'] != null) {
-      return // Navigate to admin screen
-          Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Material(child: SuperAdmin()),
-        ),
-      );
+      context.goNamed(Routernames.panelbeatersAdminPortal);
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => Material(child: SuperAdmin()),
+      //   ),
+      // );
     }
   }
 
   Future<void> _login(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
+      print('logging in...');
       setState(() {
         _isLoading = true;
       });
@@ -136,13 +139,40 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
       QueryDocumentSnapshot<Map<String, dynamic>> userDoc) async {
     await checkUserAdmin(userDoc);
     final userData = userDoc.data();
-    final listingAllocationSnapshot =
-        await _fetchListingAllocation(userData['listingMembersId']);
+    int id = userData['listingMembersId'];
+    QueryDocumentSnapshot<Map<String, dynamic>>? listingAllocationSnapshot =
+        await _fetchListingAllocation(id);
+    // if (id is int) {
+    //   listingAllocationSnapshot = await _fetchListingAllocation(id);
+    // } else {
+    //   listingAllocationSnapshot = await _fetchListingAllocationString(id);
+    // }
+
     if (listingAllocationSnapshot == null) {
       _showError(context,
           'Could not find a listing linked to this user. Please contact support.');
       return;
     }
+
+    QuerySnapshot<Map<String, dynamic>> listingsSnapshot = await _firestore
+        .collection('listings')
+        .where('listingsId',
+            isEqualTo: listingAllocationSnapshot.data()['listingsId'])
+        .limit(1)
+        .get();
+
+    if (listingsSnapshot.docs.isEmpty) {
+      _showError(context,
+          'Could not find a listing linked to this user. Please contact support.');
+      return;
+    }
+
+    if (listingsSnapshot.docs.first.data()['pendingApproval'] == 1) {
+      _showError(context,
+          'Your profile is pending approval. Thank you for your patience');
+      return;
+    }
+
     if (userData['loggedIn'] == true) {
       await _storeUserInfo(user, userData, listingAllocationSnapshot);
       _navigateToAdminPortal(context,
@@ -180,8 +210,15 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
       else {
         try {
           final userData = userDoc.docs.first.data();
-          final listingAllocationSnapshot =
-              await _fetchListingAllocation(userData['listingMembersId']);
+          final id = userData['listingMembersId'];
+          QueryDocumentSnapshot<Map<String, dynamic>>?
+              listingAllocationSnapshot = await _fetchListingAllocation(id);
+          // if (id is int) {
+          //   listingAllocationSnapshot = await _fetchListingAllocation(id);
+          // } else {
+          //   listingAllocationSnapshot = await _fetchListingAllocationString(id);
+          // }
+
           if (listingAllocationSnapshot == null) {
             _showError(context,
                 'Could not find a listing linked to this user. Please contact support.');
@@ -211,14 +248,26 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
 
   Future<QueryDocumentSnapshot<Map<String, dynamic>>?> _fetchListingAllocation(
       int memberId) async {
-    final snapshot = await _firestore
+    print('memberId: $memberId');
+    QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
         .collection('listing_allocation')
         .where('listingMembersId', isEqualTo: memberId)
         .limit(1)
         .get();
-
+    print('snapshot: ${snapshot.docs.isNotEmpty}');
     return snapshot.docs.isNotEmpty ? snapshot.docs.first : null;
   }
+
+  // Future<QueryDocumentSnapshot<Map<String, dynamic>>?>
+  //     _fetchListingAllocationString(String memberId) async {
+  //   final snapshot = await _firestore
+  //       .collection('listing_allocation')
+  //       .where('listingMembersId', isEqualTo: memberId)
+  //       .limit(1)
+  //       .get();
+
+  //   return snapshot.docs.isNotEmpty ? snapshot.docs.first : null;
+  // }
 
   Future<void> _storeUserInfo(
       User user,
@@ -238,7 +287,7 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
       {required bool normalUser, required String listingsId}) {
     if (!mounted) return;
 
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) =>
@@ -402,9 +451,10 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
             ),
           ),
           LongOrangeButton(
-              onPressed: () => showPassword
-                  ? _login(context)
-                  : _checkEmailExists(_emailController.text.trim()),
+              // onPressed: () => showPassword
+              //     ? _login(context)
+              //     : _checkEmailExists(_emailController.text.trim()),
+              onPressed: () => _login(context),
               buttonText: _isLoading
                   ? const SizedBox(
                       height: 24,

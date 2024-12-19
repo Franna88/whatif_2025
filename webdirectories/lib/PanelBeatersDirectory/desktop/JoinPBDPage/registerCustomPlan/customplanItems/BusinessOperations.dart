@@ -1,18 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/customPlanItems.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/checkBoxStyle.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/closePageButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/goBackButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/nextButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/progressBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/whiteContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
 
 class BusinessOperations extends StatefulWidget {
+  CustomPlanItems customItems;
   Function closeDialog;
   Function(String) updateIndex;
   BusinessOperations(
-      {super.key, required this.closeDialog, required this.updateIndex});
+      {super.key,
+      required this.closeDialog,
+      required this.updateIndex,
+      required this.customItems});
 
   @override
   State<BusinessOperations> createState() => _ClientCommunicationState();
@@ -27,7 +33,7 @@ class _ClientCommunicationState extends State<BusinessOperations> {
       //height: heightDevice * 0.75,
       child: WhiteContainer(
         child: Padding(
-          padding: const EdgeInsets.only(top: 10, right: 10),
+          padding: const EdgeInsets.only(top: 10, left: 40, right: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -36,7 +42,7 @@ class _ClientCommunicationState extends State<BusinessOperations> {
               ),
               ProgressBar(
                 orangeBar: Container(
-                  width: 300,
+                  width: 74.2 * 3,
                   height: 12,
                   decoration: ShapeDecoration(
                     color: Color(0xFFEF9040),
@@ -92,7 +98,7 @@ class _ClientCommunicationState extends State<BusinessOperations> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Would having your services, OEM accreditations, insurance panels and staff information readily available online be beneficial?',
+                      widget.customItems.items[6].question,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
@@ -109,9 +115,19 @@ class _ClientCommunicationState extends State<BusinessOperations> {
                           child: Column(
                             children: [
                               CheckBoxStyle(
-                                  checkboxValue: false, description: 'Yes'),
+                                  checkboxValue: widget
+                                      .customItems.items[6].answer
+                                      .contains('Yes'),
+                                  description: 'Yes',
+                                  onChanged:
+                                      widget.customItems.items[6].updateAnswer),
                               CheckBoxStyle(
-                                  checkboxValue: false, description: 'No')
+                                  checkboxValue: widget
+                                      .customItems.items[6].answer
+                                      .contains('No'),
+                                  description: 'No',
+                                  onChanged:
+                                      widget.customItems.items[6].updateAnswer)
                             ],
                           ),
                         )
@@ -124,7 +140,7 @@ class _ClientCommunicationState extends State<BusinessOperations> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Does your customers have access to your updated business hours and other essential information?',
+                          widget.customItems.items[7].question,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -141,9 +157,19 @@ class _ClientCommunicationState extends State<BusinessOperations> {
                               child: Column(
                                 children: [
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'Yes'),
+                                      checkboxValue: widget
+                                          .customItems.items[7].answer
+                                          .contains('Yes'),
+                                      description: 'Yes',
+                                      onChanged: widget
+                                          .customItems.items[7].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'No')
+                                      checkboxValue: widget
+                                          .customItems.items[7].answer
+                                          .contains('No'),
+                                      description: 'No',
+                                      onChanged: widget
+                                          .customItems.items[7].updateAnswer)
                                 ],
                               ),
                             )
@@ -153,7 +179,7 @@ class _ClientCommunicationState extends State<BusinessOperations> {
                           height: 20,
                         ),
                         Text(
-                          'Are you currently a member of:',
+                          widget.customItems.items[8].question,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -170,16 +196,33 @@ class _ClientCommunicationState extends State<BusinessOperations> {
                               child: Column(
                                 children: [
                                   CheckBoxStyle(
-                                      checkboxValue: false,
-                                      description: 'SAMBRA'),
+                                      checkboxValue: widget
+                                          .customItems.items[8].answer
+                                          .contains('SAMBRA'),
+                                      description: 'SAMBRA',
+                                      onChanged: widget
+                                          .customItems.items[8].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'CRA'),
+                                      checkboxValue: widget
+                                          .customItems.items[8].answer
+                                          .contains('CRA'),
+                                      description: 'CRA',
+                                      onChanged: widget
+                                          .customItems.items[8].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false,
-                                      description: 'SAARSA'),
+                                      checkboxValue: widget
+                                          .customItems.items[8].answer
+                                          .contains('SAARSA'),
+                                      description: 'SAARSA',
+                                      onChanged: widget
+                                          .customItems.items[8].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false,
-                                      description: 'Lightstone EchoMBR')
+                                      checkboxValue: widget
+                                          .customItems.items[8].answer
+                                          .contains('Lightstone EchoMBR'),
+                                      description: 'Lightstone EchoMBR',
+                                      onChanged: widget
+                                          .customItems.items[8].updateAnswer)
                                 ],
                               ),
                             )
@@ -195,10 +238,26 @@ class _ClientCommunicationState extends State<BusinessOperations> {
                 padding: const EdgeInsets.only(bottom: 15, left: 10),
                 child: Row(
                   children: [
-                    GoBackButton(),
+                    GoBackButton(
+                      onGoBack: () => widget.updateIndex("-"),
+                    ),
                     Spacer(),
                     NextButton(
                       onPressed: () {
+                        if (widget.customItems.items[6].answer.isEmpty ||
+                            widget.customItems.items[7].answer.isEmpty ||
+                            widget.customItems.items[8].answer.isEmpty) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                  child: DescriptionDialog(
+                                    description: 'Please answer all questions',
+                                  ),
+                                );
+                              });
+                          return;
+                        }
                         widget.updateIndex("+");
                       },
                       buttonText: 'Next',

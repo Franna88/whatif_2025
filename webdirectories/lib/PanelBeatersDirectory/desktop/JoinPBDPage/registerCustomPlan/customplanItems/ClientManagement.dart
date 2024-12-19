@@ -1,18 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/customPlanItems.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/checkBoxStyle.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/closePageButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/goBackButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/nextButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/progressBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/whiteContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
 
 class ClientManagement extends StatefulWidget {
+  CustomPlanItems customItems;
   Function closeDialog;
   Function(String) updateIndex;
   ClientManagement(
-      {super.key, required this.closeDialog, required this.updateIndex});
+      {super.key,
+      required this.closeDialog,
+      required this.updateIndex,
+      required this.customItems});
 
   @override
   State<ClientManagement> createState() => _ClientCommunicationState();
@@ -27,7 +33,7 @@ class _ClientCommunicationState extends State<ClientManagement> {
       //height: heightDevice * 0.75,
       child: WhiteContainer(
         child: Padding(
-          padding: const EdgeInsets.only(top: 10, right: 10),
+          padding: const EdgeInsets.only(top: 10, left: 40, right: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -36,7 +42,7 @@ class _ClientCommunicationState extends State<ClientManagement> {
               ),
               ProgressBar(
                 orangeBar: Container(
-                  width: 325,
+                  width: 74.2 * 4,
                   height: 12,
                   decoration: ShapeDecoration(
                     color: Color(0xFFEF9040),
@@ -92,7 +98,7 @@ class _ClientCommunicationState extends State<ClientManagement> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'How do you currently manage your booking schedule?',
+                      widget.customItems.items[9].question,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
@@ -109,16 +115,29 @@ class _ClientCommunicationState extends State<ClientManagement> {
                           child: Column(
                             children: [
                               CheckBoxStyle(
-                                  checkboxValue: false,
+                                  checkboxValue:
+                                      widget.customItems.items[9].answer.contains(
+                                          'We manage it manually (calendar/appointment book).'),
                                   description:
-                                      'We manage it manually (calendar/appointment book).'),
+                                      'We manage it manually (calendar/appointment book).',
+                                  onChanged:
+                                      widget.customItems.items[9].updateAnswer),
                               CheckBoxStyle(
-                                  checkboxValue: false,
-                                  description: 'We have an online system'),
+                                  checkboxValue: widget
+                                      .customItems.items[9].answer
+                                      .contains('We have an online system'),
+                                  description: 'We have an online system',
+                                  onChanged:
+                                      widget.customItems.items[9].updateAnswer),
                               CheckBoxStyle(
-                                  checkboxValue: false,
+                                  checkboxValue: widget
+                                      .customItems.items[9].answer
+                                      .contains(
+                                          'We\'re interested in a solution.'),
                                   description:
-                                      'We\'re interested in a solution.')
+                                      'We\'re interested in a solution.',
+                                  onChanged:
+                                      widget.customItems.items[9].updateAnswer)
                             ],
                           ),
                         )
@@ -131,7 +150,7 @@ class _ClientCommunicationState extends State<ClientManagement> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Does your customers have access to your updated business hours and other essential information?',
+                          widget.customItems.items[10].question,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -148,9 +167,19 @@ class _ClientCommunicationState extends State<ClientManagement> {
                               child: Column(
                                 children: [
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'Yes'),
+                                      checkboxValue: widget
+                                          .customItems.items[10].answer
+                                          .contains('Yes'),
+                                      description: 'Yes',
+                                      onChanged: widget
+                                          .customItems.items[10].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'No')
+                                      checkboxValue: widget
+                                          .customItems.items[10].answer
+                                          .contains('No'),
+                                      description: 'No',
+                                      onChanged: widget
+                                          .customItems.items[10].updateAnswer)
                                 ],
                               ),
                             )
@@ -160,7 +189,7 @@ class _ClientCommunicationState extends State<ClientManagement> {
                           height: 20,
                         ),
                         Text(
-                          'Should customers be able to request a quotation online?',
+                          widget.customItems.items[11].question,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -177,9 +206,19 @@ class _ClientCommunicationState extends State<ClientManagement> {
                               child: Column(
                                 children: [
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'Yes'),
+                                      checkboxValue: widget
+                                          .customItems.items[11].answer
+                                          .contains('Yes'),
+                                      description: 'Yes',
+                                      onChanged: widget
+                                          .customItems.items[11].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'No')
+                                      checkboxValue: widget
+                                          .customItems.items[11].answer
+                                          .contains('No'),
+                                      description: 'No',
+                                      onChanged: widget
+                                          .customItems.items[11].updateAnswer)
                                 ],
                               ),
                             )
@@ -189,7 +228,7 @@ class _ClientCommunicationState extends State<ClientManagement> {
                           height: 20,
                         ),
                         Text(
-                          'Should customers be able to submit car photos for estimates?',
+                          widget.customItems.items[12].question,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -206,9 +245,19 @@ class _ClientCommunicationState extends State<ClientManagement> {
                               child: Column(
                                 children: [
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'Yes'),
+                                      checkboxValue: widget
+                                          .customItems.items[12].answer
+                                          .contains('Yes'),
+                                      description: 'Yes',
+                                      onChanged: widget
+                                          .customItems.items[12].updateAnswer),
                                   CheckBoxStyle(
-                                      checkboxValue: false, description: 'No')
+                                      checkboxValue: widget
+                                          .customItems.items[12].answer
+                                          .contains('No'),
+                                      description: 'No',
+                                      onChanged: widget
+                                          .customItems.items[12].updateAnswer)
                                 ],
                               ),
                             )
@@ -224,10 +273,28 @@ class _ClientCommunicationState extends State<ClientManagement> {
                 padding: const EdgeInsets.only(bottom: 5, left: 10),
                 child: Row(
                   children: [
-                    GoBackButton(),
+                    GoBackButton(
+                      onGoBack: () => widget.updateIndex("-"),
+                    ),
                     Spacer(),
                     NextButton(
                         onPressed: () {
+                          if (widget.customItems.items[9].answer.isEmpty ||
+                              widget.customItems.items[10].answer.isEmpty ||
+                              widget.customItems.items[11].answer.isEmpty ||
+                              widget.customItems.items[12].answer.isEmpty) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: DescriptionDialog(
+                                      description:
+                                          'Please answer all questions',
+                                    ),
+                                  );
+                                });
+                            return;
+                          }
                           widget.updateIndex("+");
                         },
                         buttonText: 'Next')

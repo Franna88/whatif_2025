@@ -1,17 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/customplanItems/customPlanItems.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/checkBoxStyle.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/closePageButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/nextButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/progressBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/JoinPBDPage/registerCustomPlan/ui/whiteContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
 
 class ClientCommunication extends StatefulWidget {
+  CustomPlanItems customItems;
   Function closeDialog;
   Function(String) updateIndex;
   ClientCommunication(
-      {super.key, required this.closeDialog, required this.updateIndex});
+      {super.key,
+      required this.closeDialog,
+      required this.updateIndex,
+      required this.customItems});
 
   @override
   State<ClientCommunication> createState() => _ClientCommunicationState();
@@ -35,7 +41,7 @@ class _ClientCommunicationState extends State<ClientCommunication> {
               ),
               ProgressBar(
                 orangeBar: Container(
-                  width: 152,
+                  width: 74.2,
                   height: 12,
                   decoration: ShapeDecoration(
                     color: Color(0xFFEF9040),
@@ -86,7 +92,7 @@ class _ClientCommunicationState extends State<ClientCommunication> {
                 height: 10,
               ),
               Text(
-                'How do you currently connect with potential customers?',
+                widget.customItems.items[0].question,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -103,13 +109,29 @@ class _ClientCommunicationState extends State<ClientCommunication> {
                     child: Column(
                       children: [
                         CheckBoxStyle(
-                            checkboxValue: false, description: 'Phone Call'),
+                            checkboxValue: widget.customItems.items[0].answer
+                                .contains('Phone Call'),
+                            description: 'Phone Call',
+                            onChanged:
+                                widget.customItems.items[0].updateAnswer),
                         CheckBoxStyle(
-                            description: 'Email', checkboxValue: false),
-                        CheckBoxStyle(description: 'SMS', checkboxValue: false),
+                            description: 'Email',
+                            checkboxValue: widget.customItems.items[0].answer
+                                .contains('Email'),
+                            onChanged:
+                                widget.customItems.items[0].updateAnswer),
+                        CheckBoxStyle(
+                            description: 'SMS',
+                            checkboxValue: widget.customItems.items[0].answer
+                                .contains('SMS'),
+                            onChanged:
+                                widget.customItems.items[0].updateAnswer),
                         CheckBoxStyle(
                             description: 'Online contact form',
-                            checkboxValue: false),
+                            checkboxValue: widget.customItems.items[0].answer
+                                .contains('Online contact form'),
+                            onChanged:
+                                widget.customItems.items[0].updateAnswer),
                       ],
                     ),
                   )
@@ -119,7 +141,7 @@ class _ClientCommunicationState extends State<ClientCommunication> {
                 height: 20,
               ),
               Text(
-                'Do you offer after hours support or towing services?',
+                widget.customItems.items[1].question,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -135,8 +157,17 @@ class _ClientCommunicationState extends State<ClientCommunication> {
                     width: 200,
                     child: Column(
                       children: [
-                        CheckBoxStyle(checkboxValue: false, description: 'Yes'),
-                        CheckBoxStyle(checkboxValue: false, description: 'No')
+                        CheckBoxStyle(
+                            checkboxValue: widget.customItems.items[1].answer
+                                .contains('Yes'),
+                            description: 'Yes',
+                            onChanged:
+                                widget.customItems.items[1].updateAnswer),
+                        CheckBoxStyle(
+                            checkboxValue: widget.customItems.items[1].answer
+                                .contains('No'),
+                            description: 'No',
+                            onChanged: widget.customItems.items[1].updateAnswer)
                       ],
                     ),
                   )
@@ -146,7 +177,7 @@ class _ClientCommunicationState extends State<ClientCommunication> {
                 height: 20,
               ),
               Text(
-                'Would features like Whatsapp integration be valuable to you?',
+                widget.customItems.items[2].question,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -162,8 +193,17 @@ class _ClientCommunicationState extends State<ClientCommunication> {
                     width: 200,
                     child: Column(
                       children: [
-                        CheckBoxStyle(checkboxValue: false, description: 'Yes'),
-                        CheckBoxStyle(checkboxValue: false, description: 'No')
+                        CheckBoxStyle(
+                            checkboxValue: widget.customItems.items[2].answer
+                                .contains('Yes'),
+                            description: 'Yes',
+                            onChanged:
+                                widget.customItems.items[2].updateAnswer),
+                        CheckBoxStyle(
+                            checkboxValue: widget.customItems.items[2].answer
+                                .contains('No'),
+                            description: 'No',
+                            onChanged: widget.customItems.items[2].updateAnswer)
                       ],
                     ),
                   )
@@ -178,6 +218,21 @@ class _ClientCommunicationState extends State<ClientCommunication> {
                     Spacer(),
                     NextButton(
                         onPressed: () {
+                          if (widget.customItems.items[0].answer.isEmpty ||
+                              widget.customItems.items[1].answer.isEmpty ||
+                              widget.customItems.items[2].answer.isEmpty) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    child: DescriptionDialog(
+                                      description:
+                                          'Please answer all questions',
+                                    ),
+                                  );
+                                });
+                            return;
+                          }
                           widget.updateIndex("+");
                         },
                         buttonText: 'Next')

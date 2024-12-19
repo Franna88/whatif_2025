@@ -10,11 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/LandingPage/menus/menuComponents/glassContainer.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/RegisterBusinessValues.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/agreementBallPoint.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/agreementTextField.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/ui/blackIconButton.dart';
-
-import '../loginMainPage/registerBusinessValues.dart';
+import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseIdUtils.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
@@ -156,6 +156,9 @@ class _AgreementState extends State<Agreement> {
       UserCredential userDocRef = await auth.createUserWithEmailAndPassword(
           email: widget.controller.email.text,
           password: widget.controller.password.text);
+      int listingId = await getHighestListingsId() + 1;
+      int listingMembersId = await getHighestListingMembersId() + 1;
+      int allocationId = await getHighestAllocationId() + 1;
       print(userDocRef.user!.uid);
       await FirebaseFirestore.instance
           .collection("listings")
@@ -167,18 +170,21 @@ class _AgreementState extends State<Agreement> {
           .doc(userDocRef.user!.uid)
           .update({
         "authId": userDocRef.user!.uid,
-        "listingsId": userDocRef.user!.uid,
+        "listingsId": listingId,
       });
       print(userDocRef.user!.uid);
       await FirebaseFirestore.instance
           .collection("listing_allocation")
           .doc(userDocRef.user!.uid)
-          .set(widget.controller.getListingAllocations(userDocRef.user!.uid));
+          .set(widget.controller.getListingAllocations(
+              listingid: listingId,
+              memberlistingId: listingMembersId,
+              allocationId: allocationId));
 
       await FirebaseFirestore.instance
           .collection("listing_members")
           .doc(userDocRef.user!.uid)
-          .set(widget.controller.getListingMembersValue(userDocRef.user!.uid))
+          .set(widget.controller.getListingMembersValue(listingMembersId))
           .whenComplete(() {
         widget.closeDialog();
       });

@@ -300,16 +300,26 @@ class _ListingsState extends State<Listings> {
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (snapshot.hasError) {
-                                return Text('Error: snapshot error');
+                                return Text('Error: snapshot error',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold));
                               }
                               if (!snapshot.hasData) {
-                                return const Text('Loading...');
+                                return const Text('Loading...',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold));
                               }
 
                               final List<DocumentSnapshot> documents =
                                   snapshot.data!.docs;
                               if (documents.isEmpty) {
-                                return Center(child: Text('No data yet'));
+                                return Center(
+                                    child: Text('No data yet',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold)));
                               }
 
                               return Container(

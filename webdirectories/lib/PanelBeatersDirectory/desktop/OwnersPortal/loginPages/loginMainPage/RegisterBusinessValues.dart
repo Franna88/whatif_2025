@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class RegisterBusinessValues {
@@ -94,13 +95,16 @@ class RegisterBusinessValues {
     email.text = userData['email'] ?? '';
   }
 
-  getListingAllocations(id) {
+  getListingAllocations(
+      {required int listingid,
+      required int memberlistingId,
+      required int allocationId}) {
     return {
-      "allocationId": id,
+      "allocationId": allocationId,
       "dateAdded": DateTime.now(),
-      "listingMembersId": id,
-      "listingsId": id,
-      "membersId": id,
+      "listingMembersId": memberlistingId,
+      "listingsId": listingid,
+      "membersId": null,
     };
   }
 
@@ -141,9 +145,9 @@ class RegisterBusinessValues {
       "beerating": "",
       "branchcode": branchCode.text,
       "businessAfterhours": "",
-      "businessEmail": "",
+      "businessEmail": email.text,
       "businessFaxnumber": "",
-      "businessTelephone": "",
+      "businessTelephone": phone.text,
       "cap": "",
       "cityId": "",
       "consultantId": "",
@@ -185,8 +189,6 @@ class RegisterBusinessValues {
       "registeredBussinessName": registeredBussinessName.text,
       "firstName": firstName.text,
       "lastName": lastName.text,
-      "phone": phone.text,
-      "email": email.text,
       "country": country.text,
       "suburb": suburb.text,
       "province": province.text,
@@ -195,10 +197,11 @@ class RegisterBusinessValues {
       "postal": postal.text,
       "postaladdress": postal.text,
       "ip": ip.text,
-      "dateAdded": DateTime.now(),
-      "memberShipType": memberShipType.text,
+      "dateAdded": Timestamp.fromDate(DateTime.now()),
+      "membershipType": memberShipType.text,
       "membershipRef": membershipRef.text,
-      "newRegistration": 1
+      "newRegistration": 1,
+      "pendingApproval": 1
     };
   }
 }/*
