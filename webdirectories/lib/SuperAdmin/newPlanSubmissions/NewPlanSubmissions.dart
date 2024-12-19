@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
 import 'package:webdirectories/SuperAdmin/newPlanSubmissions/models/NewPlanSubmissionsModel.dart';
 import 'package:webdirectories/SuperAdmin/newPlanSubmissions/ui/NewPlanSubmissionsPopup.dart';
 import 'package:webdirectories/SuperAdmin/newPlanSubmissions/ui/newPlanSubmissionsContainer.dart';
 import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/confirmDialog.dart';
 
 class NewPlanSubmissions extends StatefulWidget {
   const NewPlanSubmissions({super.key});
@@ -26,6 +28,20 @@ class _NewPlanSubmissionsState extends State<NewPlanSubmissions> {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<void> deleteSubmission(String id) async {
+    try {
+      await FirebaseFirestore.instance.collection('plan_info').doc(id).delete();
+    } catch (e) {
+      print('Error deleting submission: $e');
+      showDialog(
+        context: context,
+        builder: (context) => Dialog(
+            child: DescriptionDialog(
+                description: 'Something went wrong. Please try again.')),
+      );
     }
   }
 
@@ -201,7 +217,33 @@ class _NewPlanSubmissionsState extends State<NewPlanSubmissions> {
                                     },
                                   );
                                 },
-                                onDeleteTap: () {},
+                                onDeleteTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Dialog(
+                                          child: ConfirmDialog(
+                                        description:
+                                            "Are you sure you want to delete this submission?",
+                                        onConfirm: () async {
+                                          await deleteSubmission(document.id);
+                                          Navigator.pop(context);
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => Dialog(
+                                              child: DescriptionDialog(
+                                                  description:
+                                                      'Submission deleted successfully.'),
+                                            ),
+                                          );
+                                        },
+                                        onCancel: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ));
+                                    },
+                                  );
+                                },
                               ),
                             );
                           },

@@ -236,6 +236,7 @@ class _SideNavBarState extends State<SideNavBar> {
         navigateToPage: navigateToPage,
       ),
       CustomerReviews(
+        getQuoteDetails: getQuoteDetails,
         navigateToPage: navigateToPage,
       ),
       AdminJobFinder(
