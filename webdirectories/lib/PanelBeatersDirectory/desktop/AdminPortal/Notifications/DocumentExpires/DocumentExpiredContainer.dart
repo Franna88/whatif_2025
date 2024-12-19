@@ -10,18 +10,21 @@ import '../NotificationsComp/icons/NotificationStar.dart';
 import '../NotificationsComp/icons/NotificationTimeIcon.dart';
 
 class Documentexpiredcontainer extends StatefulWidget {
+  final bool isSelected;
+  final Function(bool?) onSelected;
   final String notificationTitle;
   final String year;
   final String month;
   final String day;
 
-  const Documentexpiredcontainer({
-    super.key,
-    required this.notificationTitle,
-    required this.year,
-    required this.month,
-    required this.day,
-  });
+  const Documentexpiredcontainer(
+      {super.key,
+      required this.notificationTitle,
+      required this.year,
+      required this.month,
+      required this.day,
+      required this.onSelected,
+      required this.isSelected});
 
   @override
   State<Documentexpiredcontainer> createState() =>
@@ -30,7 +33,6 @@ class Documentexpiredcontainer extends StatefulWidget {
 
 class _DocumentexpiredcontainerState extends State<Documentexpiredcontainer> {
   bool _isTextBold = false;
-  bool _isSelected = false; // Track whether the notification is selected
 
   void _handleStarChanged(bool isStarred) {
     setState(() {
@@ -39,9 +41,7 @@ class _DocumentexpiredcontainerState extends State<Documentexpiredcontainer> {
   }
 
   void _toggleSelection() {
-    setState(() {
-      _isSelected = !_isSelected;
-    });
+    widget.onSelected(!widget.isSelected);
   }
 
   @override
@@ -51,7 +51,7 @@ class _DocumentexpiredcontainerState extends State<Documentexpiredcontainer> {
       child: Container(
         height: MyUtility(context).height * 0.05,
         decoration: BoxDecoration(
-          color: _isSelected ? Color(0xFFEF9040) : Colors.white,
+          color: widget.isSelected ? Color(0xFFEF9040) : Colors.white,
           border: Border(
             bottom: BorderSide(
               color: Colors.black.withOpacity(0.5400000214576721),
@@ -71,21 +71,28 @@ class _DocumentexpiredcontainerState extends State<Documentexpiredcontainer> {
                     child: Row(
                       children: [
                         NotificationSelect(
-                          boxColor:
-                              _isSelected ? Colors.white : Color(0xFF757575),
+                          onSelected: widget.onSelected,
+                          isSelected: widget.isSelected,
+                          boxColor: widget.isSelected
+                              ? Colors.white
+                              : Color(0xFF757575),
                         ),
                         NotificationStar(
                           onStarChanged: _handleStarChanged,
-                          iconColor:
-                              _isSelected ? Colors.white : Color(0xFF757575),
-                          iconColorChange:
-                              _isSelected ? Colors.white : Color(0xFFEF9040),
+                          iconColor: widget.isSelected
+                              ? Colors.white
+                              : Color(0xFF757575),
+                          iconColorChange: widget.isSelected
+                              ? Colors.white
+                              : Color(0xFFEF9040),
                         ),
                         LabelImportant(
-                          iconColorChange:
-                              _isSelected ? Colors.white : Color(0xFFEF9040),
-                          iconColor:
-                              _isSelected ? Colors.white : Color(0xFF757575),
+                          iconColorChange: widget.isSelected
+                              ? Colors.white
+                              : Color(0xFFEF9040),
+                          iconColor: widget.isSelected
+                              ? Colors.white
+                              : Color(0xFF757575),
                         ),
                       ],
                     ),
@@ -97,8 +104,9 @@ class _DocumentexpiredcontainerState extends State<Documentexpiredcontainer> {
                         Text(
                           'Tata Approval ',
                           style: TextStyle(
-                            color:
-                                _isSelected ? Colors.white : Color(0xFF202124),
+                            color: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF202124),
                             fontSize: 14.54,
                             fontFamily: 'ralewaybold',
                           ),
@@ -106,8 +114,9 @@ class _DocumentexpiredcontainerState extends State<Documentexpiredcontainer> {
                         Text(
                           'Please Update',
                           style: TextStyle(
-                            color:
-                                _isSelected ? Colors.white : Color(0xFF202124),
+                            color: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF202124),
                             fontSize: 14.54,
                             fontFamily: 'raleway',
                           ),
@@ -116,7 +125,7 @@ class _DocumentexpiredcontainerState extends State<Documentexpiredcontainer> {
                           widget.notificationTitle,
                           style: TextStyle(
                             color:
-                                _isSelected ? Colors.white : Color(0xFF202124),
+                                widget.isSelected ? Colors.white : Color(0xFF202124),
                             fontSize: 14.54,
                             fontFamily: 'raleway',
                           ),
@@ -129,13 +138,16 @@ class _DocumentexpiredcontainerState extends State<Documentexpiredcontainer> {
             ),
             Expanded(
               flex: 3,
-              child: _isSelected
+              child: widget.isSelected
                   ? Row(
                       children: [
                         SizedBox(
                           width: MyUtility(context).width * 0.061,
                         ),
-                        NotificationDelete(iconColor: Colors.white),
+                        NotificationDelete(
+                          iconColor: Colors.white,
+                          onSelected: () {},
+                        ),
                         NotificationLetter(
                           iconColor: Colors.white,
                           onPress: () {},
@@ -143,23 +155,18 @@ class _DocumentexpiredcontainerState extends State<Documentexpiredcontainer> {
                         NotificationTimeIcon(iconColor: Colors.white),
                       ],
                     )
-                  : SizedBox(
-                      child: Row(
-                        children: [
-                          SizedBox(
-                              height: 30,
-                              child: AddButton(
-                                  text: 'update Now', onPressed: () {})),
-                          Text(
-                            '${widget.day}/${widget.month}/${widget.year}',
-                            style: TextStyle(
-                              color: Color(0xFF202124),
-                              fontSize: 14.54,
-                              fontFamily: 'raleway',
-                            ),
+                  : Row(
+                      children: [
+                        AddButton(text: 'update Now', onPressed: () {}),
+                        Text(
+                          '${widget.day}/${widget.month}/${widget.year}',
+                          style: TextStyle(
+                            color: Color(0xFF202124),
+                            fontSize: 14.54,
+                            fontFamily: 'raleway',
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
             ),
           ],

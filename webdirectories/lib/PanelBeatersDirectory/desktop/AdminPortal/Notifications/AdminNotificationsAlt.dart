@@ -6,6 +6,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboa
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/NotificationFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/icons/NotificationSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/NotificationTitleAlt.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/confirmDialog.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/formatUtils.dart';
@@ -30,6 +31,7 @@ class AdminNotificationsAlt extends StatefulWidget {
 class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
   final _firestore = FirebaseFirestore.instance;
   List<NotificationsModel> _notificationData = [];
+  List<bool> isSelectedList = [];
   String _searchQuery = '';
   bool _isLoading = true;
   @override
@@ -39,6 +41,12 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
   }
 
   void _fetchNotificationData() async {
+    if (_isLoading == false) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
+
     StoredUser? user = await getUserInfo();
 
     if (user == null) {
@@ -81,6 +89,7 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
     final notificationSnapshot = results[0];
     if (notificationSnapshot.docs.isNotEmpty) {
       for (var doc in notificationSnapshot.docs) {
+        isSelectedList.add(false);
         notificationList.add(NotificationsModel(
           notificationsId: doc['id'],
           notificationTypeId: doc['type'],
@@ -123,6 +132,37 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
     });
   }
 
+  void onSelectAll(bool? value) {
+    setState(() {
+      if (value != null) {
+        isSelectedList = isSelectedList.map((el) => el = value).toList();
+      }
+    });
+  }
+
+  Future<void> removeAllSelectedNotifications() async {
+    for (int index = 0; index < isSelectedList.length; index++) {
+      if (isSelectedList[index]) {
+        removeSelectedNotifications(index);
+      }
+    }
+  }
+
+  void removeSelectedNotifications(int index) async {
+    print('deleting... $index');
+    try {
+      await _firestore
+          .collection('notificationMessages')
+          .doc(_filteredNotifications[index].notificationsId)
+          .delete();
+      setState(() {
+        _filteredNotifications.removeAt(index);
+      });
+    } catch (e) {
+      print('Error deleting notification: $e');
+    }
+  }
+
   @override
   int _currentPage = 0;
   final ScrollController _scrollController = ScrollController();
@@ -133,7 +173,7 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
         height: MyUtility(context).height,
         decoration: BoxDecoration(color: Color(0xFF171616)),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
+          padding: const EdgeInsets.only(left: 20, top: 0),
           child: Column(
             children: [
               Container(
@@ -190,10 +230,32 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
                               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                               child: Row(
                                 children: [
-                                  Selectall(),
-                                  NotificationRefresh(),
+                                  Selectall(
+                                    onSelected: onSelectAll,
+                                  ),
+                                  NotificationRefresh(
+                                    refresh: _fetchNotificationData,
+                                  ),
                                   NotificationDelete(
                                     iconColor: Color(0xFF757575),
+                                    onSelected: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: ConfirmDialog(
+                                              description:
+                                                  "Are you sure you want to delete all notifications?",
+                                              onConfirm:
+                                                  removeAllSelectedNotifications,
+                                              onCancel: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
                                   )
                                 ],
                               ),
@@ -275,7 +337,7 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
                                                 _filteredNotifications.length,
                                             itemBuilder: (context, index) {
                                               final notification =
-                                                  _notificationData[index];
+                                                  _filteredNotifications[index];
                                               return Padding(
                                                 padding: const EdgeInsets.only(
                                                     left: 16, right: 16),
@@ -311,6 +373,23 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
                                                   personInterested: notification
                                                       .personInterested!,
                                                   make: notification.make!,
+                                                  isSelected:
+                                                      isSelectedList[index],
+                                                  onSelected: (bool? value) {
+                                                    if (value == null) {
+                                                      return;
+                                                    }
+                                                    setState(
+                                                      () {
+                                                        isSelectedList[index] =
+                                                            value;
+                                                      },
+                                                    );
+                                                  },
+                                                  onDelete: () {
+                                                    removeSelectedNotifications(
+                                                        index);
+                                                  },
                                                 ),
                                               );
                                             },

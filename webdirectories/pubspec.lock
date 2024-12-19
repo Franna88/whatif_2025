@@ -1610,7 +1610,9 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.2.5"
+  web:
   wakelock_plus:
+
     dependency: transitive
     description:
       name: wakelock_plus

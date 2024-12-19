@@ -10,6 +10,9 @@ import '../NotificationsComp/icons/NotificationTimeIcon.dart';
 
 class SystemAlertContainer extends StatefulWidget {
   final VoidCallback onPress;
+  final Function() onDelete;
+  final bool isSelected;
+  final Function(bool?) onSelected;
   final String notificationTitle;
   final String year;
   final String month;
@@ -18,6 +21,9 @@ class SystemAlertContainer extends StatefulWidget {
   const SystemAlertContainer({
     super.key,
     required this.onPress,
+    required this.onDelete,
+    required this.onSelected,
+    required this.isSelected,
     required this.notificationTitle,
     required this.year,
     required this.month,
@@ -30,7 +36,6 @@ class SystemAlertContainer extends StatefulWidget {
 
 class _SystemAlertContainerState extends State<SystemAlertContainer> {
   bool _isTextBold = false;
-  bool _isSelected = false; // Track whether the notification is selected
 
   void _handleStarChanged(bool isStarred) {
     setState(() {
@@ -39,9 +44,7 @@ class _SystemAlertContainerState extends State<SystemAlertContainer> {
   }
 
   void _toggleSelection() {
-    setState(() {
-      _isSelected = !_isSelected;
-    });
+    widget.onSelected(!widget.isSelected);
   }
 
   @override
@@ -51,7 +54,7 @@ class _SystemAlertContainerState extends State<SystemAlertContainer> {
       child: Container(
         height: MyUtility(context).height * 0.05,
         decoration: BoxDecoration(
-          color: _isSelected ? Color(0xFFEF9040) : Colors.white,
+          color: widget.isSelected ? Color(0xFFEF9040) : Colors.white,
           border: Border(
             bottom: BorderSide(
               color: Colors.black.withOpacity(0.5400000214576721),
@@ -71,21 +74,28 @@ class _SystemAlertContainerState extends State<SystemAlertContainer> {
                     child: Row(
                       children: [
                         NotificationSelect(
-                          boxColor:
-                              _isSelected ? Colors.white : Color(0xFF757575),
+                          onSelected: widget.onSelected,
+                          isSelected: widget.isSelected,
+                          boxColor: widget.isSelected
+                              ? Colors.white
+                              : Color(0xFF757575),
                         ),
                         NotificationStar(
                           onStarChanged: _handleStarChanged,
-                          iconColor:
-                              _isSelected ? Colors.white : Color(0xFF757575),
-                          iconColorChange:
-                              _isSelected ? Colors.white : Color(0xFFEF9040),
+                          iconColor: widget.isSelected
+                              ? Colors.white
+                              : Color(0xFF757575),
+                          iconColorChange: widget.isSelected
+                              ? Colors.white
+                              : Color(0xFFEF9040),
                         ),
                         LabelImportant(
-                          iconColorChange:
-                              _isSelected ? Colors.white : Color(0xFFEF9040),
-                          iconColor:
-                              _isSelected ? Colors.white : Color(0xFF757575),
+                          iconColorChange: widget.isSelected
+                              ? Colors.white
+                              : Color(0xFFEF9040),
+                          iconColor: widget.isSelected
+                              ? Colors.white
+                              : Color(0xFF757575),
                         ),
                       ],
                     ),
@@ -97,8 +107,9 @@ class _SystemAlertContainerState extends State<SystemAlertContainer> {
                         Text(
                           'Welcome to the Panel Beater Directory! ',
                           style: TextStyle(
-                            color:
-                                _isSelected ? Colors.white : Color(0xFF202124),
+                            color: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF202124),
                             fontSize: 14.54,
                             fontFamily: 'ralewaybold',
                           ),
@@ -106,8 +117,9 @@ class _SystemAlertContainerState extends State<SystemAlertContainer> {
                         Text(
                           widget.notificationTitle,
                           style: TextStyle(
-                            color:
-                                _isSelected ? Colors.white : Color(0xFF202124),
+                            color: widget.isSelected
+                                ? Colors.white
+                                : Color(0xFF202124),
                             fontSize: 14.54,
                             fontFamily: 'raleway',
                           ),
@@ -120,10 +132,13 @@ class _SystemAlertContainerState extends State<SystemAlertContainer> {
             ),
             Expanded(
               flex: 1,
-              child: _isSelected
+              child: widget.isSelected
                   ? Row(
                       children: [
-                        NotificationDelete(iconColor: Colors.white),
+                        NotificationDelete(
+                          iconColor: Colors.white,
+                          onSelected: widget.onDelete,
+                        ),
                         NotificationLetter(
                           iconColor: Colors.white,
                           onPress: widget.onPress,

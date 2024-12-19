@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Selectall extends StatefulWidget {
-  const Selectall({super.key});
+  final Function(bool?) onSelected;
+  const Selectall({super.key, required this.onSelected});
 
   @override
   State<Selectall> createState() => _SelectallState();
@@ -21,6 +22,7 @@ class _SelectallState extends State<Selectall> {
           setState(() {
             _isSelected = value ?? false;
           });
+          widget.onSelected(value);
         },
         activeColor: Colors.transparent, // Remove default active color
         checkColor: Color(0xFFEF9040), // Inside color when selected
