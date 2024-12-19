@@ -6,6 +6,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboa
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/NotificationFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/icons/NotificationSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/NotificationTitleAlt.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/confirmDialog.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/formatUtils.dart';
@@ -29,6 +30,7 @@ class SystemAlert extends StatefulWidget {
 class _SystemAlertState extends State<SystemAlert> {
   final _firestore = FirebaseFirestore.instance;
   List<NotificationsModel> _notificationData = [];
+  List<bool> isSelectedList = [];
   String _searchQuery = '';
   bool _isLoading = true;
   @override
@@ -38,6 +40,12 @@ class _SystemAlertState extends State<SystemAlert> {
   }
 
   void _fetchNotificationData() async {
+    if (_isLoading == false) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
+
     StoredUser? user = await getUserInfo();
 
     if (user == null) {
@@ -45,47 +53,67 @@ class _SystemAlertState extends State<SystemAlert> {
     }
 
     final notificationsFuture = _firestore
-        .collection('notifications')
+        .collection('notificationMessages')
         .where('listingsId', isEqualTo: int.parse(user.id))
-        .orderBy('notificationDate', descending: true)
+        .where('type', isEqualTo: "Alert")
+        .orderBy('date', descending: true)
         .get();
 
-    final generalNotificationsFuture = _firestore
-        .collection('notifications')
-        .where('listingsId', isEqualTo: 0)
-        .orderBy('notificationDate', descending: true)
-        .get();
+    // final generalNotificationsFuture = _firestore
+    //     .collection('notifications')
+    //     .where('listingsId', isEqualTo: 0)
+    //     .orderBy('notificationDate', descending: true)
+    //     .get();
 
     // Run both queries in parallel
     List<QuerySnapshot<Map<String, dynamic>>> results =
-        await Future.wait([notificationsFuture, generalNotificationsFuture]);
+        await Future.wait([notificationsFuture]);
 
     List<NotificationsModel> notificationList = [];
 
-    final generalNotificationSnapshot = results[1];
-    if (generalNotificationSnapshot.docs.isNotEmpty) {
-      for (var doc in generalNotificationSnapshot.docs) {
-        notificationList.add(NotificationsModel(
-          notificationsId: doc['notificationId'],
-          notificationTypeId: doc['notificationTypeId'],
-          notificationTitle: doc['notificationTitle'],
-          notificationDate: doc['notificationDate'],
-          notification: doc['notification'],
-          listingsId: doc['listingsId'],
-        ));
-      }
-    }
+    // final generalNotificationSnapshot = results[1];
+    // if (generalNotificationSnapshot.docs.isNotEmpty) {
+    //   for (var doc in generalNotificationSnapshot.docs) {
+    //     notificationList.add(NotificationsModel(
+    //       notificationsId: doc['notificationId'],
+    //       notificationTypeId: doc['notificationTypeId'],
+    //       notificationTitle: doc['notificationTitle'],
+    //       notificationDate: doc['notificationDate'],
+    //       notification: doc['notification'],
+    //       listingsId: doc['listingsId'],
+    //     ));
+    //   }
+    // }
+
+    // final notificationSnapshot = results[0];
+    // if (notificationSnapshot.docs.isNotEmpty) {
+    //   for (var doc in notificationSnapshot.docs) {
+    //     notificationList.add(NotificationsModel(
+    //       notificationsId: doc['notificationId'],
+    //       notificationTypeId: doc['notificationTypeId'],
+    //       notificationTitle: doc['notificationTitle'],
+    //       notificationDate: doc['notificationDate'],
+    //       notification: doc['notification'],
+    //       listingsId: doc['listingsId'],
+    //     ));
+    //   }
+    // }
 
     final notificationSnapshot = results[0];
     if (notificationSnapshot.docs.isNotEmpty) {
       for (var doc in notificationSnapshot.docs) {
+        isSelectedList.add(false);
         notificationList.add(NotificationsModel(
-          notificationsId: doc['notificationId'],
-          notificationTypeId: doc['notificationTypeId'],
-          notificationTitle: doc['notificationTitle'],
-          notificationDate: doc['notificationDate'],
-          notification: doc['notification'],
+          notificationsId: doc['id'],
+          notificationTypeId: doc['type'],
+          notificationTitle: doc['title'],
+          data: doc['data'],
+          notificationDate: doc['date'],
+          notification: doc['data.message'],
+          personInterested: "${doc['data.name']} ${doc['data.surname']}",
+          make: doc['data.make'],
           listingsId: doc['listingsId'],
+          read: doc['read'],
         ));
       }
     }
@@ -117,6 +145,36 @@ class _SystemAlertState extends State<SystemAlert> {
     });
   }
 
+  void onSelectAll(bool? value) {
+    setState(() {
+      if (value != null) {
+        isSelectedList = isSelectedList.map((el) => el = value).toList();
+      }
+    });
+  }
+
+  void removeAllSelectedNotifications() async {
+    for (int index = 0; index < isSelectedList.length; index++) {
+      if (isSelectedList[index]) {
+        removeSelectedNotifications(index);
+      }
+    }
+  }
+
+  void removeSelectedNotifications(int index) async {
+    try {
+      await _firestore
+          .collection('notificationMessages')
+          .doc(_notificationData[index].notificationsId)
+          .delete();
+      setState(() {
+        _notificationData.removeAt(index);
+      });
+    } catch (e) {
+      print('Error deleting notification: $e');
+    }
+  }
+
   @override
   int _currentPage = 0;
   final ScrollController _scrollController = ScrollController();
@@ -127,7 +185,7 @@ class _SystemAlertState extends State<SystemAlert> {
         height: MyUtility(context).height,
         decoration: BoxDecoration(color: Color(0xFF171616)),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20),
+          padding: const EdgeInsets.only(left: 20, top: 0),
           child: Column(
             children: [
               Container(
@@ -184,10 +242,34 @@ class _SystemAlertState extends State<SystemAlert> {
                               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                               child: Row(
                                 children: [
-                                  Selectall(),
-                                  NotificationRefresh(),
+                                  Selectall(
+                                    onSelected: onSelectAll,
+                                  ),
+                                  NotificationRefresh(
+                                    refresh: _fetchNotificationData,
+                                  ),
                                   NotificationDelete(
                                     iconColor: Color(0xFF757575),
+                                    onSelected: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: ConfirmDialog(
+                                              description:
+                                                  "Are you sure you want to delete all notifications?",
+                                              onConfirm: () {
+                                                removeAllSelectedNotifications();
+                                                Navigator.pop(context);
+                                              },
+                                              onCancel: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
                                   )
                                 ],
                               ),
@@ -295,6 +377,23 @@ class _SystemAlertState extends State<SystemAlert> {
                                                       .toString(),
                                                   onPress: () {
                                                     widget.navigateToPage(15);
+                                                  },
+                                                  isSelected:
+                                                      isSelectedList[index],
+                                                  onSelected: (bool? value) {
+                                                    if (value == null) {
+                                                      return;
+                                                    }
+                                                    setState(
+                                                      () {
+                                                        isSelectedList[index] =
+                                                            value;
+                                                      },
+                                                    );
+                                                  },
+                                                  onDelete: () {
+                                                    removeSelectedNotifications(
+                                                        index);
                                                   },
                                                 ),
                                               );

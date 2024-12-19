@@ -6,6 +6,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Dashboa
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/NotificationFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/icons/NotificationSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/NotificationTitleAlt.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/confirmDialog.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/formatUtils.dart';
@@ -29,6 +30,7 @@ class DocumentExpired extends StatefulWidget {
 class _DocumentExpiredState extends State<DocumentExpired> {
   final _firestore = FirebaseFirestore.instance;
   List<NotificationsModel> _notificationData = [];
+  List<bool> isSelectedList = [];
   String _searchQuery = '';
   bool _isLoading = true;
   @override
@@ -38,32 +40,38 @@ class _DocumentExpiredState extends State<DocumentExpired> {
   }
 
   void _fetchNotificationData() async {
+    if (_isLoading == false) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
     StoredUser? user = await getUserInfo();
 
     if (user == null) {
       return;
     }
 
-    final notificationsFuture = _firestore
-        .collection('notificationMessages')
-        .where('listingsId', isEqualTo: int.parse(user.id))
-        .where('type', isEqualTo: "Documents")
-        .orderBy('date', descending: true)
-        .get();
+    try {
+      final notificationsFuture = _firestore
+          .collection('notificationMessages')
+          .where('listingsId', isEqualTo: int.parse(user.id))
+          .where('type', isEqualTo: "Documents")
+          .orderBy('date', descending: true)
+          .get();
 
-    /* final generalNotificationsFuture = _firestore
+      /* final generalNotificationsFuture = _firestore
         .collection('notifications')
         .where('listingsId', isEqualTo: 0)
         .orderBy('notificationDate', descending: true)
         .get();*/
 
-    // Run both queries in parallel
-    List<QuerySnapshot<Map<String, dynamic>>> results =
-        await Future.wait([notificationsFuture]);
+      // Run both queries in parallel
+      List<QuerySnapshot<Map<String, dynamic>>> results =
+          await Future.wait([notificationsFuture]);
 
-    List<NotificationsModel> notificationList = [];
+      List<NotificationsModel> notificationList = [];
 
-    /*  final generalNotificationSnapshot = results[1];
+      /*  final generalNotificationSnapshot = results[1];
     if (generalNotificationSnapshot.docs.isNotEmpty) {
       for (var doc in generalNotificationSnapshot.docs) {
         notificationList.add(NotificationsModel(
@@ -77,28 +85,32 @@ class _DocumentExpiredState extends State<DocumentExpired> {
       }
     }*/
 
-    final notificationSnapshot = results[0];
-    if (notificationSnapshot.docs.isNotEmpty) {
-      for (var doc in notificationSnapshot.docs) {
-        notificationList.add(NotificationsModel(
-          notificationsId: doc['id'],
-          notificationTypeId: doc['type'],
-          notificationTitle: doc['title'],
-          data: doc['data'],
-          notificationDate: doc['date'],
-          notification: "",
-          personInterested: "",
-          make: doc['date.docName'],
-          listingsId: doc['listingsId'],
-          read: doc['read'],
-        ));
+      final notificationSnapshot = results[0];
+      if (notificationSnapshot.docs.isNotEmpty) {
+        for (var doc in notificationSnapshot.docs) {
+          isSelectedList.add(false);
+          notificationList.add(NotificationsModel(
+            notificationsId: doc['id'],
+            notificationTypeId: doc['type'],
+            notificationTitle: doc['title'],
+            data: doc['data'],
+            notificationDate: doc['date'],
+            notification: "",
+            personInterested: "",
+            make: doc['data.docName'],
+            listingsId: doc['listingsId'],
+            read: doc['read'],
+          ));
+        }
       }
+      print(notificationList.first);
+      setState(() {
+        _notificationData = notificationList;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error fetching notification data: $e');
     }
-
-    setState(() {
-      _notificationData = notificationList;
-      _isLoading = false;
-    });
   }
 
   List<NotificationsModel> get _filteredNotifications {
@@ -120,6 +132,36 @@ class _DocumentExpiredState extends State<DocumentExpired> {
     setState(() {
       _searchQuery = query;
     });
+  }
+
+  void onSelectAll(bool? value) {
+    setState(() {
+      if (value != null) {
+        isSelectedList = isSelectedList.map((el) => el = value).toList();
+      }
+    });
+  }
+
+  void removeAllSelectedNotifications() async {
+    for (int index = 0; index < isSelectedList.length; index++) {
+      if (isSelectedList[index]) {
+        removeSelectedNotifications(index);
+      }
+    }
+  }
+
+  void removeSelectedNotifications(int index) async {
+    try {
+      await _firestore
+          .collection('notificationMessages')
+          .doc(_notificationData[index].notificationsId)
+          .delete();
+      setState(() {
+        _notificationData.removeAt(index);
+      });
+    } catch (e) {
+      print('Error deleting notification: $e');
+    }
   }
 
   @override
@@ -189,10 +231,34 @@ class _DocumentExpiredState extends State<DocumentExpired> {
                               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                               child: Row(
                                 children: [
-                                  Selectall(),
-                                  NotificationRefresh(),
+                                  Selectall(
+                                    onSelected: onSelectAll,
+                                  ),
+                                  NotificationRefresh(
+                                    refresh: _fetchNotificationData,
+                                  ),
                                   NotificationDelete(
                                     iconColor: Color(0xFF757575),
+                                    onSelected: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: ConfirmDialog(
+                                              description:
+                                                  "Are you sure you want to delete all notifications?",
+                                              onConfirm: () {
+                                                removeAllSelectedNotifications();
+                                                Navigator.pop(context);
+                                              },
+                                              onCancel: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
                                   )
                                 ],
                               ),
@@ -303,6 +369,23 @@ class _DocumentExpiredState extends State<DocumentExpired> {
                                                   personInterested: '',
                                                   make: notification.make!,
                                                   onPress: () {},
+                                                  isSelected:
+                                                      isSelectedList[index],
+                                                  onSelected: (bool? value) {
+                                                    setState(
+                                                      () {
+                                                        if (value == null) {
+                                                          return;
+                                                        }
+                                                        isSelectedList[index] =
+                                                            value;
+                                                      },
+                                                    );
+                                                  },
+                                                  onDelete: () {
+                                                    removeSelectedNotifications(
+                                                        index);
+                                                  },
                                                 ),
                                               );
                                             },

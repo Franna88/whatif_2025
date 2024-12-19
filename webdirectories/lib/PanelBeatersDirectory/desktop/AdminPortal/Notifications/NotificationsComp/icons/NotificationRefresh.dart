@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NotificationRefresh extends StatefulWidget {
-  const NotificationRefresh({super.key});
+  final Function refresh;
+  const NotificationRefresh({super.key, required this.refresh});
 
   @override
   State<NotificationRefresh> createState() => _NotificationRefreshState();
@@ -15,7 +16,7 @@ class _NotificationRefreshState extends State<NotificationRefresh> {
       preferBelow: false,
       child: IconButton(
         onPressed: () {
-          setState(() {});
+          widget.refresh();
         },
         icon: Icon(
           Icons.refresh,

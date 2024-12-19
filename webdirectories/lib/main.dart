@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     GoRouter _router = Routerconfig.returnRouter();
     return SeoController(
       enabled: true,

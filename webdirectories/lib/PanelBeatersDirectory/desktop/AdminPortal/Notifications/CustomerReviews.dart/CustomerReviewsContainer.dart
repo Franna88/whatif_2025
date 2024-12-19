@@ -13,6 +13,8 @@ class Customerreviewscontainer extends StatefulWidget {
   final String year;
   final String month;
   final String day;
+  final bool isSelected;
+  final Function(bool?) onSelected;
 
   const Customerreviewscontainer({
     super.key,
@@ -20,6 +22,8 @@ class Customerreviewscontainer extends StatefulWidget {
     required this.year,
     required this.month,
     required this.day,
+    required this.isSelected,
+    required this.onSelected,
   });
 
   @override
@@ -70,6 +74,8 @@ class _CustomerreviewscontainerState extends State<Customerreviewscontainer> {
                     child: Row(
                       children: [
                         NotificationSelect(
+                          onSelected: widget.onSelected,
+                          isSelected: widget.isSelected,
                           boxColor:
                               _isSelected ? Colors.white : Color(0xFF757575),
                         ),
@@ -140,7 +146,10 @@ class _CustomerreviewscontainerState extends State<Customerreviewscontainer> {
               child: _isSelected
                   ? Row(
                       children: [
-                        NotificationDelete(iconColor: Colors.white),
+                        NotificationDelete(
+                          iconColor: Colors.white,
+                          onSelected: widget.onSelected,
+                        ),
                         NotificationLetter(
                           iconColor: Colors.white,
                           onPress: () {},

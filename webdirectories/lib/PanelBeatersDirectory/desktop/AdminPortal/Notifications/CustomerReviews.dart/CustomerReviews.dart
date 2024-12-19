@@ -8,6 +8,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notific
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/icons/NotificationSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/NotificationTitleAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/NotificationsComp/icons/NotificationsTitle.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/confirmDialog.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/storedUser.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/formatUtils.dart';
@@ -21,8 +22,10 @@ import '../NotificationsComp/icons/selectall.dart';
 import 'CustomerReviewsContainer.dart';
 
 class CustomerReviews extends StatefulWidget {
+  final Function(NotificationsModel) getQuoteDetails;
   final Function(int) navigateToPage;
-  const CustomerReviews({super.key, required this.navigateToPage});
+  const CustomerReviews(
+      {super.key, required this.navigateToPage, required this.getQuoteDetails});
 
   @override
   State<CustomerReviews> createState() => _CustomerReviewsState();
@@ -31,6 +34,7 @@ class CustomerReviews extends StatefulWidget {
 class _CustomerReviewsState extends State<CustomerReviews> {
   final _firestore = FirebaseFirestore.instance;
   List<NotificationsModel> _notificationData = [];
+  List<bool> isSelectedList = [];
   String _searchQuery = '';
   bool _isLoading = true;
   @override
@@ -40,32 +44,39 @@ class _CustomerReviewsState extends State<CustomerReviews> {
   }
 
   void _fetchNotificationData() async {
+    if (_isLoading == false) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
+
     StoredUser? user = await getUserInfo();
 
     if (user == null) {
       return;
     }
+    print('fetching');
+    try {
+      final notificationsFuture = _firestore
+          .collection('notificationMessages')
+          .where('listingsId', isEqualTo: int.parse(user.id))
+          .where('type', isEqualTo: "Rating")
+          .orderBy('date', descending: true)
+          .get();
 
-    final notificationsFuture = _firestore
-        .collection('notificationMessages')
-        .where('listingsId', isEqualTo: int.parse(user.id))
-        .where('type', isEqualTo: "Rating")
-        .orderBy('date', descending: true)
-        .get();
-
-    /* final generalNotificationsFuture = _firestore
+      /* final generalNotificationsFuture = _firestore
         .collection('notifications')
         .where('listingsId', isEqualTo: 0)
         .orderBy('notificationDate', descending: true)
         .get();*/
 
-    // Run both queries in parallel
-    List<QuerySnapshot<Map<String, dynamic>>> results =
-        await Future.wait([notificationsFuture]);
+      // Run both queries in parallel
+      List<QuerySnapshot<Map<String, dynamic>>> results =
+          await Future.wait([notificationsFuture]);
 
-    List<NotificationsModel> notificationList = [];
+      List<NotificationsModel> notificationList = [];
 
-    /*  final generalNotificationSnapshot = results[1];
+      /*  final generalNotificationSnapshot = results[1];
     if (generalNotificationSnapshot.docs.isNotEmpty) {
       for (var doc in generalNotificationSnapshot.docs) {
         notificationList.add(NotificationsModel(
@@ -79,29 +90,33 @@ class _CustomerReviewsState extends State<CustomerReviews> {
       }
     }*/
 
-    final notificationSnapshot = results[0];
-    if (notificationSnapshot.docs.isNotEmpty) {
-      for (var doc in notificationSnapshot.docs) {
-        print("NOTIFICATIONS");
-        print(doc['type']);
-        notificationList.add(NotificationsModel(
-          notificationsId: doc['id'],
-          notificationTypeId: doc['type'],
-          notificationTitle: doc['title'],
-          data: doc['data'],
-          notificationDate: doc['date'],
-          notification: doc['data.ratingMessage'],
-          personInterested: "${doc['data.ratingFrom']} ",
-          listingsId: doc['listingsId'],
-          read: doc['read'],
-        ));
+      final notificationSnapshot = results[0];
+      if (notificationSnapshot.docs.isNotEmpty) {
+        for (var doc in notificationSnapshot.docs) {
+          print("NOTIFICATIONS");
+          print(doc['type']);
+          isSelectedList.add(false);
+          notificationList.add(NotificationsModel(
+            notificationsId: doc['id'],
+            notificationTypeId: doc['type'],
+            notificationTitle: doc['title'],
+            data: doc['data'],
+            notificationDate: doc['date'],
+            notification: doc['data.ratingMessage'],
+            personInterested: "${doc['data.ratingFrom']} ",
+            listingsId: doc['listingsId'],
+            read: doc['read'],
+          ));
+        }
       }
-    }
 
-    setState(() {
-      _notificationData = notificationList;
-      _isLoading = false;
-    });
+      setState(() {
+        _notificationData = notificationList;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error getting notifications $e');
+    }
   }
 
   List<NotificationsModel> get _filteredNotifications {
@@ -123,6 +138,36 @@ class _CustomerReviewsState extends State<CustomerReviews> {
     setState(() {
       _searchQuery = query;
     });
+  }
+
+  void onSelectAll(bool? value) {
+    setState(() {
+      if (value != null) {
+        isSelectedList = isSelectedList.map((el) => el = value).toList();
+      }
+    });
+  }
+
+  void removeAllSelectedNotifications() async {
+    for (int index = 0; index < isSelectedList.length; index++) {
+      if (isSelectedList[index]) {
+        removeSelectedNotifications(index);
+      }
+    }
+  }
+
+  void removeSelectedNotifications(int index) async {
+    try {
+      await _firestore
+          .collection('notificationMessages')
+          .doc(_notificationData[index].notificationsId)
+          .delete();
+      setState(() {
+        _notificationData.removeAt(index);
+      });
+    } catch (e) {
+      print('Error deleting notification: $e');
+    }
   }
 
   @override
@@ -192,10 +237,34 @@ class _CustomerReviewsState extends State<CustomerReviews> {
                               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                               child: Row(
                                 children: [
-                                  Selectall(),
-                                  NotificationRefresh(),
+                                  Selectall(
+                                    onSelected: onSelectAll,
+                                  ),
+                                  NotificationRefresh(
+                                    refresh: _fetchNotificationData,
+                                  ),
                                   NotificationDelete(
                                     iconColor: Color(0xFF757575),
+                                    onSelected: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: ConfirmDialog(
+                                              description:
+                                                  "Are you sure you want to delete all notifications?",
+                                              onConfirm: () {
+                                                removeAllSelectedNotifications();
+                                                Navigator.pop(context);
+                                              },
+                                              onCancel: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
                                   )
                                 ],
                               ),
@@ -311,7 +380,28 @@ class _CustomerReviewsState extends State<CustomerReviews> {
                                                       .personInterested!,
                                                   make: notification
                                                       .notificationTitle,
-                                                  onPress: () {},
+                                                  onPress: () {
+                                                    widget.getQuoteDetails(
+                                                        notification);
+                                                    widget.navigateToPage(16);
+                                                  },
+                                                  isSelected:
+                                                      isSelectedList[index],
+                                                  onSelected: (bool? value) {
+                                                    if (value == null) {
+                                                      return;
+                                                    }
+                                                    setState(
+                                                      () {
+                                                        isSelectedList[index] =
+                                                            value;
+                                                      },
+                                                    );
+                                                  },
+                                                  onDelete: () {
+                                                    removeSelectedNotifications(
+                                                        index);
+                                                  },
                                                 ),
                                               );
                                             },
