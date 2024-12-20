@@ -33,7 +33,9 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
   List<NotificationsModel> _notificationData = [];
   List<bool> isSelectedList = [];
   String _searchQuery = '';
+  String membershipType = '';
   bool _isLoading = true;
+
   @override
   void initState() {
     _fetchNotificationData();
@@ -108,6 +110,7 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
     setState(() {
       _notificationData = notificationList;
       _isLoading = false;
+      membershipType = user.membershipType;
     });
   }
 
@@ -325,76 +328,88 @@ class _AdminNotificationsAltState extends State<AdminNotificationsAlt> {
                                         color: Colors.black,
                                       ),
                                     )
-                                  : _filteredNotifications.isEmpty
-                                      ? const Text('No Notifications found')
-                                      : DraggableScrollbar.rrect(
-                                          controller: _scrollController,
-                                          backgroundColor: Color(0x7F9E9E9F),
-                                          alwaysVisibleScrollThumb: true,
-                                          child: ListView.builder(
-                                            controller: _scrollController,
-                                            itemCount:
-                                                _filteredNotifications.length,
-                                            itemBuilder: (context, index) {
-                                              final notification =
-                                                  _filteredNotifications[index];
-                                              return Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 16, right: 16),
-                                                child: NotificationTitleAlt(
-                                                  type: "Quote",
-                                                  message:
-                                                      notification.notification,
-                                                  read: notification.read!,
-                                                  onPress: () {
-                                                    widget.getQuoteDetails(
-                                                        notification);
-                                                    widget.navigateToPage(16);
-                                                  },
-                                                  notificationTitle: limitString(
-                                                      notification
-                                                          .notificationTitle,
-                                                      40),
-                                                  year: notification
-                                                      .notificationDate!
-                                                      .toDate()
-                                                      .year
-                                                      .toString(),
-                                                  month: notification
-                                                      .notificationDate!
-                                                      .toDate()
-                                                      .month
-                                                      .toString(),
-                                                  day: notification
-                                                      .notificationDate!
-                                                      .toDate()
-                                                      .day
-                                                      .toString(),
-                                                  personInterested: notification
-                                                      .personInterested!,
-                                                  make: notification.make!,
-                                                  isSelected:
-                                                      isSelectedList[index],
-                                                  onSelected: (bool? value) {
-                                                    if (value == null) {
-                                                      return;
-                                                    }
-                                                    setState(
-                                                      () {
-                                                        isSelectedList[index] =
-                                                            value;
+                                  : !membershipType.contains("Premium")
+                                      ? const Text(
+                                          'You don\'t have access to this feature! Please upgrade your plan')
+                                      : _filteredNotifications.isEmpty
+                                          ? const Text('No Notifications found')
+                                          : DraggableScrollbar.rrect(
+                                              controller: _scrollController,
+                                              backgroundColor:
+                                                  Color(0x7F9E9E9F),
+                                              alwaysVisibleScrollThumb: true,
+                                              child: ListView.builder(
+                                                controller: _scrollController,
+                                                itemCount:
+                                                    _filteredNotifications
+                                                        .length,
+                                                itemBuilder: (context, index) {
+                                                  final notification =
+                                                      _filteredNotifications[
+                                                          index];
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 16,
+                                                            right: 16),
+                                                    child: NotificationTitleAlt(
+                                                      type: "Quote",
+                                                      message: notification
+                                                          .notification,
+                                                      read: notification.read!,
+                                                      onPress: () {
+                                                        widget.getQuoteDetails(
+                                                            notification);
+                                                        widget
+                                                            .navigateToPage(16);
                                                       },
-                                                    );
-                                                  },
-                                                  onDelete: () {
-                                                    removeSelectedNotifications(
-                                                        index);
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
+                                                      notificationTitle:
+                                                          limitString(
+                                                              notification
+                                                                  .notificationTitle,
+                                                              40),
+                                                      year: notification
+                                                          .notificationDate!
+                                                          .toDate()
+                                                          .year
+                                                          .toString(),
+                                                      month: notification
+                                                          .notificationDate!
+                                                          .toDate()
+                                                          .month
+                                                          .toString(),
+                                                      day: notification
+                                                          .notificationDate!
+                                                          .toDate()
+                                                          .day
+                                                          .toString(),
+                                                      personInterested:
+                                                          notification
+                                                              .personInterested!,
+                                                      make: notification.make!,
+                                                      isSelected:
+                                                          isSelectedList[index],
+                                                      onSelected:
+                                                          (bool? value) {
+                                                        if (value == null) {
+                                                          return;
+                                                        }
+                                                        setState(
+                                                          () {
+                                                            isSelectedList[
+                                                                index] = value;
+                                                          },
+                                                        );
+                                                      },
+                                                      onDelete: () {
+                                                        removeSelectedNotifications(
+                                                            index);
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
                             ),
                             NotificationFooter()
                           ],

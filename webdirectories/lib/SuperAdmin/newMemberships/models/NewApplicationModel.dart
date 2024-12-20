@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NewApplicationModel {
-  final String id;
+  final int id;
   final String accountName;
   final String accountNumber;
   final int afterHoursClicks;

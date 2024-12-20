@@ -49,20 +49,25 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
           'id': user.id,
           'member_id': user.memberId,
           'full_name': user.fullName,
+          'membership_type': user.membershipType,
           'email': user.email,
           'cell': user.cell
         }));
   }
 
-  checkUserAdmin(QueryDocumentSnapshot<Map<String, dynamic>> user) async {
+  Future<bool> checkUserAdmin(
+      QueryDocumentSnapshot<Map<String, dynamic>> user) async {
     if (user.data()['admin'] != null) {
       context.goNamed(Routernames.panelbeatersAdminPortal);
+      return true;
       // Navigator.pushReplacement(
       //   context,
       //   MaterialPageRoute(
       //     builder: (context) => Material(child: SuperAdmin()),
       //   ),
       // );
+    } else {
+      return false;
     }
   }
 
@@ -137,7 +142,10 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
 
   Future<void> _handleUserLogin(BuildContext context, User user,
       QueryDocumentSnapshot<Map<String, dynamic>> userDoc) async {
-    await checkUserAdmin(userDoc);
+    bool isAdmin = await checkUserAdmin(userDoc);
+    if (isAdmin) {
+      return;
+    }
     final userData = userDoc.data();
     int id = userData['listingMembersId'];
     QueryDocumentSnapshot<Map<String, dynamic>>? listingAllocationSnapshot =
@@ -173,15 +181,24 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
       return;
     }
 
+    if (listingsSnapshot.docs.first.data()['membershipType'] == "StarterM" ||
+        listingsSnapshot.docs.first.data()['membershipType'] == "StarterA") {
+      _showError(context,
+          'Your profile does not have access to the owners portal. Please upgrade your plan');
+      return;
+    }
+
     if (userData['loggedIn'] == true) {
-      await _storeUserInfo(user, userData, listingAllocationSnapshot);
+      await _storeUserInfo(user, userData, listingAllocationSnapshot,
+          listingsSnapshot.docs.first);
       _navigateToAdminPortal(context,
           normalUser: true,
           listingsId:
               listingAllocationSnapshot.data()['listingsId'].toString());
     } else {
       // OTP logic for resetting password
-      await _storeUserInfo(user, userData, listingAllocationSnapshot);
+      await _storeUserInfo(user, userData, listingAllocationSnapshot,
+          listingsSnapshot.docs.first);
       widget.updateEmail(userData['email']);
       _generateAndSendOTP(userDoc.id);
       widget.changePageIndex(7);
@@ -228,6 +245,7 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
           // OTP logic for resetting password
           await storeUserInfo(StoredUser(
             id: listingAllocationSnapshot.data()['listingsId'].toString(),
+            membershipType: listingAllocationSnapshot.data()['membershipType'],
             email: userData['email'],
             fullName: userData['fullname'],
             memberId: userData['listingMembersId'].toString(),
@@ -272,10 +290,12 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
   Future<void> _storeUserInfo(
       User user,
       Map<String, dynamic> userData,
-      QueryDocumentSnapshot<Map<String, dynamic>>
-          listingAllocationSnapshot) async {
+      QueryDocumentSnapshot<Map<String, dynamic>> listingAllocationSnapshot,
+      QueryDocumentSnapshot<Map<String, dynamic>> listingSnapshot) async {
+    print(listingSnapshot.data()['membershipType']);
     await storeUserInfo(StoredUser(
       id: listingAllocationSnapshot.data()['listingsId'].toString(),
+      membershipType: listingSnapshot.data()['membershipType'],
       email: user.email!,
       fullName: userData['fullname'],
       memberId: userData['listingMembersId'].toString(),
@@ -286,14 +306,17 @@ class _OwnersPortalLoginFormState extends State<OwnersPortalLoginForm> {
   void _navigateToAdminPortal(BuildContext context,
       {required bool normalUser, required String listingsId}) {
     if (!mounted) return;
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) =>
-            AdminPortal(normalUser: normalUser, listingsId: listingsId),
-      ),
+    context.goNamed(
+      Routernames.panelbeatersOwnersPortal,
+      extra: {"listingsId": listingsId, "normalUser": normalUser},
     );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) =>
+    //         AdminPortal(normalUser: normalUser, listingsId: listingsId),
+    //   ),
+    // );
   }
 
   void _showError(BuildContext context, String message) {

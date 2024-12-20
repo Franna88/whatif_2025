@@ -24,22 +24,27 @@ class _NewApplicationDialogState extends State<NewApplicationDialog> {
 
   Future<void> approveMembership() async {
     try {
-      await FirebaseFirestore.instance
+      QuerySnapshot listingsSnapshot = await FirebaseFirestore.instance
           .collection('listings')
-          .doc(widget.data.id)
-          .update({'pendingApproval': 0});
+          .where('listingsId', isEqualTo: widget.data.id)
+          .get();
+
+      if (listingsSnapshot.docs.isNotEmpty) {
+        await listingsSnapshot.docs.first.reference
+            .update({'pendingApproval': 0});
+      } else {
+        print('No matching document found for listingsId: ${widget.data.id}');
+        throw Exception('No matching document found');
+      }
 
       QuerySnapshot userSnapshot = await FirebaseFirestore.instance
           .collection('listing_members')
           .where('authId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
           .get();
       String userName = userSnapshot.docs.first['fullname'];
-      await FirebaseFirestore.instance
-          .collection('approved_listings')
-          .doc(widget.data.id)
-          .set({
+      await FirebaseFirestore.instance.collection('approved_listings').add({
         'listingsId': widget.data.id,
-        'approvalDate': Timestamp.now(),
+        'approvalDate': FieldValue.serverTimestamp(),
         'approvedBy': userName
       });
 

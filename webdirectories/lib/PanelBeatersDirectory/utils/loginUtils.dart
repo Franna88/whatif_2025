@@ -19,6 +19,7 @@ StoredUser fromJson(Map<String, dynamic> json) {
   return StoredUser(
     id: json['id'],
     email: json['email'],
+    membershipType: json['membership_type'],
     memberId: json['member_id'],
     fullName: json['full_name'],
     cell: json['cell'],

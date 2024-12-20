@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webdirectories/MyHome.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/AdminPortal.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/OwnersPortal/loginPages/loginMainPage/ownersPortal.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesByAddress/servicesByAddressSearch.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
@@ -238,6 +239,17 @@ class Routerconfig {
                   builder: (BuildContext context, GoRouterState state) =>
                       Material(child: const SuperAdmin()),
                 ),
+                GoRoute(
+                    path: 'owners-portal',
+                    name: Routernames.panelbeatersOwnersPortal,
+                    builder: (BuildContext context, GoRouterState state) {
+                      final params = state.extra as Map<String, dynamic>;
+                      return Material(
+                          child: AdminPortal(
+                        listingsId: params['listingsId'],
+                        normalUser: params['normalUser'],
+                      ));
+                    }),
               ],
             ),
           ],

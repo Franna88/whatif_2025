@@ -8,7 +8,6 @@ class SideNavButton extends StatelessWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
-
   SideNavButton({
     required this.icon,
     required this.selectedIcon, // Add selectedIcon to constructor

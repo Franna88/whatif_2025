@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webdirectories/SuperAdmin/newMemberships/newMemberships.dart';
 import 'package:webdirectories/SuperAdmin/newPlanSubmissions/NewPlanSubmissions.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 import '../PanelBeatersDirectory/desktop/AdminPortal/Dashboard/DashboardContainers/DashProfileView.dart';
 import '../PanelBeatersDirectory/desktop/AdminPortal/SideNavBar/SideNavButton/SideNavButton.dart';
@@ -38,12 +40,6 @@ class _SuperAdminState extends State<SuperAdmin> {
 
   logOut() {
     FirebaseAuth.instance.signOut();
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Material(
-                  child: Page1(),
-                )));
   }
 
   @override
@@ -116,6 +112,7 @@ class _SuperAdminState extends State<SuperAdmin> {
                       isSelected: _selectedIndex == 6,
                       onTap: () {
                         logOut();
+                        context.goNamed(Routernames.panelbeatersOPLogin);
                       },
                     ),
                   ],

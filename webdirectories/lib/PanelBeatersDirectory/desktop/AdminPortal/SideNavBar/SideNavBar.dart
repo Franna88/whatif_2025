@@ -9,6 +9,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/ManageU
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/Notifications/AdminNotificationsAlt.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/AdminPortal/SideNavBar/SideNavButton/SideNavButton.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.dart';
+import 'package:webdirectories/PanelBeatersDirectory/desktop/components/descriptionDialog.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/jobFinder.dart';
 import 'package:webdirectories/PanelBeatersDirectory/models/notifications.dart';
 import 'package:webdirectories/WebDirectories/Page1/Page1.dart';
@@ -48,7 +49,7 @@ class _SideNavBarState extends State<SideNavBar> {
   int _selectedIndex = 0;
   int listingsId = 0;
   Map<String, dynamic> lightstoneData = {};
-
+  String membershipType = "";
   NotificationsModel notificationData = NotificationsModel(
       notificationTypeId: '',
       listingsId: 0,
@@ -207,8 +208,18 @@ class _SideNavBarState extends State<SideNavBar> {
   @override
   void initState() {
     getLightStoneData();
-
+    getUserDetails();
     super.initState();
+  }
+
+  void getUserDetails() async {
+    StoredUser? user = await getUserInfo();
+    if (user != null) {
+      print('membership type: ${user.membershipType}');
+      setState(() {
+        membershipType = user.membershipType;
+      });
+    }
   }
 
   @override
@@ -306,7 +317,24 @@ class _SideNavBarState extends State<SideNavBar> {
                       selectedIcon: 'images/dash3.1.svg',
                       label: 'Edit Specials & Promotions',
                       isSelected: _selectedIndex == 2,
-                      onTap: () => _onItemTapped(2),
+                      onTap: () {
+                        if (membershipType != 'PremiumA' &&
+                            membershipType != 'PremiumM' &&
+                            membershipType != 'Premium+A' &&
+                            membershipType != 'Premium+M') {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                              child: DescriptionDialog(
+                                  description:
+                                      'You need to be a premium member to access this feature.'),
+                            ),
+                          );
+                          return;
+                        }
+
+                        _onItemTapped(2);
+                      },
                     ),
                     SideNavButton(
                       icon: 'images/dash4.svg',
