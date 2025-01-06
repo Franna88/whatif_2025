@@ -157,8 +157,8 @@ class _ClientInfoState extends State<ClientInfo> {
                         // store answers in firebase
                         await storePlanInfo();
                         // TO DO: send email to admin
-                        // await sendNewPlanSubmission(
-                        //     name: widget.customItems.nameController.text);
+                        await sendNewPlanSubmission(
+                            name: widget.customItems.nameController.text);
                         widget.updateIndex("+");
                       },
                       buttonText: 'Next',
