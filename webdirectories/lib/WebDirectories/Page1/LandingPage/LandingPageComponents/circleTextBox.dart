@@ -44,8 +44,9 @@ class _CircleTextBoxState extends State<CircleTextBox> {
     }
 
     goToLink(url) async {
-      if (await canLaunch(url)) {
-        await launch(url);
+      final Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
       } else {
         // Handle error if URL cannot be launched
         print('Could not launch $url');
@@ -231,7 +232,9 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                           );
                         } else if (widget.Title1 == "PANEL BEATER ") {
                           // Open the PanelBeatersHome page in a new tab using the named route URL
-                          html.window.open('/panelbeaters-directory', '_blank');
+                          //html.window.open('/panelbeaters-directory', '_blank');
+                          html.window.open(
+                              'https://panelbeatersdirectory.co.za', '_blank');
                         } else {
                           goToLink(widget.url);
                         }

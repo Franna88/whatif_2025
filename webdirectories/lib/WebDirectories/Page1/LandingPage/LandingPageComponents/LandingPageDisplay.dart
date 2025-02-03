@@ -39,7 +39,7 @@ List directoriesInfo = [
     "1title": "FUEL ",
     "2title": "Directory",
     "description":
-        "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM’s and all other services nationwide. Read Reviews.",
+        "Locate and Navigate to the Nearest-, Cheapest-, or Specific Fuel Brand. Get fuel prices, rewards, coffee, food, toilets, shops, ATM's and all other services nationwide. Read Reviews.",
     "url": "https://www.fueldirectory.co.za/"
   },
   {
@@ -47,7 +47,8 @@ List directoriesInfo = [
     "2title": "Directory",
     "description":
         "Find professional help nearby, or nationwide, for any type of repair, your vehicle brand, acceptable to your Insurance. Read Reviews.",
-    "url": "${newUrl}/panelbeaters-directory"
+    //"url": "${newUrl}/panelbeaters-directory"
+    "url": "https://panelbeatersdirectory.co.za/"
   },
   {
     "1title": "AUTO REPAIR ",
