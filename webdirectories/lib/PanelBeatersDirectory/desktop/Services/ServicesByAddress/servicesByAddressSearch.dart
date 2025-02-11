@@ -15,6 +15,7 @@ import 'package:webdirectories/routes/routerNames.dart';
 import '../ServicesNearMe/ServicesNearMeOther.dart';
 import '../services.dart';
 import 'dart:math';
+import '../../../seo/SeoComposer.dart';
 
 class ServicesByAddressSearch extends StatefulWidget {
   final Map<String, dynamic> addressData;
@@ -175,193 +176,198 @@ class _ServicesByAddressSearchState extends State<ServicesByAddressSearch> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: MyUtility(context).height,
-              width: MyUtility(context).width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('images/mainbackgroundPanel.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: MyUtility(context).height * 0.025),
-                  SizedBox(
-                    width: MyUtility(context).width / 1.06,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ServicesStackedButton(
-                          toggleFeatured: toggleFeatured,
-                          isFeaturedSelected: isFeatured,
-                        ),
-                        Row(
-                          children: [
-                            IconButtons(),
-                            SizedBox(
-                              width: MyUtility(context).width * 0.03,
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
+    return SeoComposer.composeListingPage(
+      location: widget.addressData['city'],
+      description:
+          'Search for qualified panel beaters in your area. Read reviews, check insurance approvals, and get instant quotes for vehicle repairs across South Africa.',
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: MyUtility(context).height,
+                width: MyUtility(context).width,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('images/mainbackgroundPanel.png'),
+                    fit: BoxFit.fill,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        width: MyUtility(context).width / 1.1,
-                        height: 34.68,
-                        padding: const EdgeInsets.only(
-                          top: 10.80,
-                          left: 10.80,
-                          right: 21.59,
-                          bottom: 10.80,
-                        ),
-                        decoration: ShapeDecoration(
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24.83),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: MyUtility(context).height * 0.025),
+                    SizedBox(
+                      width: MyUtility(context).width / 1.06,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ServicesStackedButton(
+                            toggleFeatured: toggleFeatured,
+                            isFeaturedSelected: isFeatured,
                           ),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 4),
-                              spreadRadius: 0,
+                          Row(
+                            children: [
+                              IconButtons(),
+                              SizedBox(
+                                width: MyUtility(context).width * 0.03,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: MyUtility(context).width / 1.1,
+                          height: 34.68,
+                          padding: const EdgeInsets.only(
+                            top: 10.80,
+                            left: 10.80,
+                            right: 21.59,
+                            bottom: 10.80,
+                          ),
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24.83),
                             ),
-                          ],
-                        ),
-                        child: TextField(
-                          controller: search,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Search Featured',
-                            hintStyle: TextStyle(
+                            shadows: [
+                              BoxShadow(
+                                color: Color(0x3F000000),
+                                blurRadius: 4,
+                                offset: Offset(0, 4),
+                                spreadRadius: 0,
+                              ),
+                            ],
+                          ),
+                          child: TextField(
+                            controller: search,
+                            onChanged: (value) {
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Search Featured',
+                              hintStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.6812,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                                height: 1.0,
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              contentPadding: const EdgeInsets.only(
+                                top: 10.80,
+                                left: 10.80,
+                                right: 21.59,
+                                bottom: 10.80,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(24.83),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                            style: TextStyle(
                               color: Colors.black,
                               fontSize: 14.6812,
                               fontFamily: 'raleway',
                               fontWeight: FontWeight.w400,
-                              height: 1.0,
                             ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: const EdgeInsets.only(
-                              top: 10.80,
-                              left: 10.80,
-                              right: 21.59,
-                              bottom: 10.80,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24.83),
-                              borderSide: BorderSide.none,
-                            ),
+                            textAlign: TextAlign.left,
                           ),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.6812,
-                            fontFamily: 'raleway',
-                            fontWeight: FontWeight.w400,
-                          ),
-                          textAlign: TextAlign.left,
                         ),
-                      ),
-                      SizedBox(
-                        width: MyUtility(context).width * 0.01,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.85,
-                    child: FutureBuilder<List<Map<String, dynamic>>>(
-                      future: fetchNearbyLocations(100.0),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ));
-                        }
-                        if (snapshot.hasError) {
-                          return Center(
-                            child: Text('Error: ${snapshot.error}',
-                                style: const TextStyle(color: Colors.white)),
-                          );
-                        }
-                        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                          return const Center(
-                            child: Text(
-                              'No listings found near you',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          );
-                        }
-                        List<Map<String, dynamic>> listings =
-                            snapshot.data!.map((doc) => doc).toList();
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 100.0, vertical: 20.0),
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 5, // Number of items per row
-                              mainAxisSpacing: 8.0,
-                              crossAxisSpacing: 8.0,
-                              childAspectRatio:
-                                  3 / 3.5, // Adjust the aspect ratio as needed
-                            ),
-                            itemCount: listings.length,
-                            itemBuilder: (context, index) {
-                              Map<String, dynamic> listing = listings[index];
-                              return Visibility(
-                                visible: getSearchValue(listing),
-                                child: ServiceFeaturedContainer(
-                                  businessImage: listing['displayphoto'],
-                                  businessName: listing['title'],
-                                  businessAddress: listing['postaladdress'],
-                                  OnPressed: () {
-                                    storage.write(
-                                        key: 'id',
-                                        value:
-                                            listing['listingsId'].toString());
-                                    storage.write(
-                                        key: 'title',
-                                        value: listing['title'].toString());
-                                    context.goNamed(
-                                      Routernames.panelbeatersServicesProfile,
-                                      pathParameters: {
-                                        'id': listing['listingsId'].toString()
-                                      },
-                                    );
-                                  },
-                                  navigateMe: () async {
-                                    final Uri uri = Uri.parse(
-                                        "https://www.google.com/maps/search/${listing['streetaddress']}");
-                                    await launchUrl(uri);
-                                  },
-                                  views: '${listing['views']}',
-                                  distance: (listing['distance']).toString(),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
+                        SizedBox(
+                          width: MyUtility(context).width * 0.01,
+                        )
+                      ],
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: MyUtility(context).height * 0.85,
+                      child: FutureBuilder<List<Map<String, dynamic>>>(
+                        future: fetchNearbyLocations(100.0),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ));
+                          }
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}',
+                                  style: const TextStyle(color: Colors.white)),
+                            );
+                          }
+                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                'No listings found near you',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            );
+                          }
+                          List<Map<String, dynamic>> listings =
+                              snapshot.data!.map((doc) => doc).toList();
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 100.0, vertical: 20.0),
+                            child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 5, // Number of items per row
+                                mainAxisSpacing: 8.0,
+                                crossAxisSpacing: 8.0,
+                                childAspectRatio: 3 /
+                                    3.5, // Adjust the aspect ratio as needed
+                              ),
+                              itemCount: listings.length,
+                              itemBuilder: (context, index) {
+                                Map<String, dynamic> listing = listings[index];
+                                return Visibility(
+                                  visible: getSearchValue(listing),
+                                  child: ServiceFeaturedContainer(
+                                    businessImage: listing['displayphoto'],
+                                    businessName: listing['title'],
+                                    businessAddress: listing['postaladdress'],
+                                    OnPressed: () {
+                                      storage.write(
+                                          key: 'id',
+                                          value:
+                                              listing['listingsId'].toString());
+                                      storage.write(
+                                          key: 'title',
+                                          value: listing['title'].toString());
+                                      context.goNamed(
+                                        Routernames.panelbeatersServicesProfile,
+                                        pathParameters: {
+                                          'id': listing['listingsId'].toString()
+                                        },
+                                      );
+                                    },
+                                    navigateMe: () async {
+                                      final Uri uri = Uri.parse(
+                                          "https://www.google.com/maps/search/${listing['streetaddress']}");
+                                      await launchUrl(uri);
+                                    },
+                                    views: '${listing['views']}',
+                                    distance: (listing['distance']).toString(),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            PanelFooter()
-          ],
+              PanelFooter()
+            ],
+          ),
         ),
       ),
     );

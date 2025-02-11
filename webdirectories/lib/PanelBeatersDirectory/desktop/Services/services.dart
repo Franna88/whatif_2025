@@ -20,6 +20,7 @@ import 'package:webdirectories/WebDirectories/Footer/Footer.dart';
 import 'package:webdirectories/myutility.dart';
 import 'package:intl/intl.dart';
 import 'dart:html' as html;
+import '../../seo/SeoComposer.dart';
 
 enum ServicesPages {
   profile,
@@ -363,140 +364,149 @@ class _ServicesState extends State<Services> {
         ),
       ], child: Finance()),
     ];
-    return Material(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: MyUtility(context).width,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('images/mainbackgroundPanel.png'),
-                  fit: BoxFit.fill,
+    return SeoComposer.composeProfilePage(
+      child: Material(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: MyUtility(context).width,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('images/mainbackgroundPanel.png'),
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 50.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15, bottom: 15),
-                          child: SizedBox(
-                            width: MyUtility(context).width * 0.88,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Image.asset(
-                                  'images/panelLogo.png',
-                                  // height: 70,
-                                  width: MyUtility(context).width * 0.23,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.all(1),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(
-                                                color: Colors.white,
-                                                width: 0.5,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 50.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15, bottom: 15),
+                            child: SizedBox(
+                              width: MyUtility(context).width * 0.88,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Image.asset(
+                                    'images/panelLogo.png',
+                                    // height: 70,
+                                    width: MyUtility(context).width * 0.23,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              padding: const EdgeInsets.all(1),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 0.5,
+                                                ),
+                                              ),
+                                              child: const Center(
+                                                child: Icon(
+                                                  Icons.keyboard_arrow_left,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
-                                            child: const Center(
-                                              child: Icon(
-                                                Icons.keyboard_arrow_left,
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            const Text(
+                                              'Go Back',
+                                              style: TextStyle(
                                                 color: Colors.white,
+                                                fontSize: 17.68,
+                                                fontFamily: 'raleway',
+                                                fontWeight: FontWeight.w400,
                                               ),
+                                              textAlign: TextAlign.center,
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            width: 8,
-                                          ),
-                                          const Text(
-                                            'Go Back',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 17.68,
-                                              fontFamily: 'raleway',
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        Center(
-                          child: _isLoading == true
-                              ? SizedBox(
-                                  height: MyUtility(context).height * 0.8,
-                                  child: const Center(
-                                      child: CircularProgressIndicator(
-                                          color: Colors.white)))
-                              : Container(
-                                  width: MyUtility(context).width * 0.88,
-                                  decoration: ShapeDecoration(
-                                    gradient: LinearGradient(
-                                      begin: const Alignment(-0.57, -0.83),
-                                      end: const Alignment(0.56, 0.83),
-                                      colors: [
-                                        Colors.white.withOpacity(0.1),
-                                        Colors.white.withOpacity(0.25),
+                          Center(
+                            child: _isLoading == true
+                                ? SizedBox(
+                                    height: MyUtility(context).height * 0.8,
+                                    child: const Center(
+                                        child: CircularProgressIndicator(
+                                            color: Colors.white)))
+                                : Container(
+                                    width: MyUtility(context).width * 0.88,
+                                    decoration: ShapeDecoration(
+                                      gradient: LinearGradient(
+                                        begin: const Alignment(-0.57, -0.83),
+                                        end: const Alignment(0.56, 0.83),
+                                        colors: [
+                                          Colors.white.withOpacity(0.1),
+                                          Colors.white.withOpacity(0.25),
+                                        ],
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      shadows: const [
+                                        BoxShadow(
+                                          color: Color(0xBF000000),
+                                          blurRadius: 24,
+                                          offset: Offset(0, 4),
+                                          spreadRadius: -1,
+                                        ),
                                       ],
                                     ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(height: 20),
+                                        _listingsTitle == null
+                                            ? const CircularProgressIndicator(
+                                                color: Colors.white)
+                                            : ServicesNavButton(
+                                                listingTitle: _listingsTitle!,
+                                                updatePageIndex:
+                                                    updatePageIndex),
+                                        servicesPages[pageIndex],
+                                      ],
                                     ),
-                                    shadows: const [
-                                      BoxShadow(
-                                        color: Color(0xBF000000),
-                                        blurRadius: 24,
-                                        offset: Offset(0, 4),
-                                        spreadRadius: -1,
-                                      ),
-                                    ],
                                   ),
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(height: 20),
-                                      _listingsTitle == null
-                                          ? const CircularProgressIndicator(
-                                              color: Colors.white)
-                                          : ServicesNavButton(
-                                              listingTitle: _listingsTitle!,
-                                              updatePageIndex: updatePageIndex),
-                                      servicesPages[pageIndex],
-                                    ],
-                                  ),
-                                ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(width: 10),
-                  ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 10),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const PanelFooter(),
-          ],
+              const PanelFooter(),
+            ],
+          ),
         ),
       ),
+      businessName: _listingsTitle,
+      location: _listingData['city'],
+      description: _listingData['description'],
+      id: widget.listingId,
+      businessData: _listingData as Map<String, Object>,
     );
   }
 }
