@@ -262,6 +262,19 @@ class _ServicesState extends State<Services> {
             href:
                 'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
           ),
+          MetaTag(
+            name: 'geo.region',
+            content: 'ZA-${_listingData['province']}',
+          ),
+          MetaTag(
+            name: 'geo.position',
+            content: '${_listingData['latitude']};${_listingData['longitude']}',
+          ),
+          MetaTag(
+            name: 'geo.placename',
+            content:
+                '${_listingData['city']}, ${_listingData['province']}, South Africa',
+          ),
         ],
         child: ServiceProfile(
             imagesData: _galleryData,
@@ -674,6 +687,8 @@ class _ServicesState extends State<Services> {
         buildTestimonialsSection(),
         buildGallerySection(),
         buildLocationSection(),
+        buildFaqSection(),
+        buildHighlightsSection(),
       ],
     );
   }
@@ -889,18 +904,8 @@ class _ServicesState extends State<Services> {
                     (imageUrl) => Container(
                       width: 150,
                       height: 150,
-                      child: Image.network(
-                        imageUrl,
-                        fit: BoxFit.cover,
-                        semanticLabel:
-                            "${_listingData['title']} panel beater workshop image",
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Center(child: CircularProgressIndicator());
-                        },
-                        errorBuilder: (context, error, stackTrace) =>
-                            Icon(Icons.error),
-                      ),
+                      child: buildOptimizedImage(
+                          imageUrl, _listingData['title'] ?? ''),
                     ),
                   )
                   .toList(),
@@ -985,6 +990,105 @@ class _ServicesState extends State<Services> {
     );
   }
 
+  Widget buildFaqSection() {
+    if (_listingData['faqs'] == null)
+      return const SizedBox(); // Don't show if no FAQs
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Frequently Asked Questions',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'raleway',
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 15),
+          ..._listingData['faqs']
+              .map((faq) => Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          faq['question'],
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'raleway',
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          faq['answer'],
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.9),
+                            fontSize: 14,
+                            fontFamily: 'raleway',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ))
+              .toList(),
+        ],
+      ),
+    );
+  }
+
+  Widget buildHighlightsSection() {
+    if (_listingData['highlights'] == null)
+      return const SizedBox(); // Don't show if no highlights
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Why Choose Us',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'raleway',
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 15),
+          ..._listingData['highlights']
+              .map((highlight) => Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      highlight,
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.9),
+                        fontSize: 14,
+                        fontFamily: 'raleway',
+                      ),
+                    ),
+                  ))
+              .toList(),
+        ],
+      ),
+    );
+  }
+
   // Update the generateOpeningHoursSchema method with proper structured data
   Map<String, dynamic> generateOpeningHoursSchema() {
     return {
@@ -1019,5 +1123,20 @@ class _ServicesState extends State<Services> {
         _linkData['instagram']
       ].where((link) => link != null).toList()
     };
+  }
+
+  Widget buildOptimizedImage(String imageUrl, String alt) {
+    return Image.network(
+      imageUrl,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) return child;
+        return const Center(child: CircularProgressIndicator());
+      },
+      semanticLabel: alt,
+      cacheWidth: 800, // Optimize for web
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        return frame == null ? const SizedBox() : child;
+      },
+    );
   }
 }

@@ -10,6 +10,18 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/navBar.dart
 import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
 import 'package:webdirectories/SuperAdmin/superAdmin.dart';
 import 'package:webdirectories/routes/routerNames.dart';
+import 'package:webdirectories/PanelBeatersDirectory/seo/SeoComposer.dart';
+import '../PanelBeatersDirectory/seo/sitemap_generator.dart';
+
+class CustomRouteObserver extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    if (route.settings.name == Routernames.panelbeatersServicesProfile) {
+      final id = route.settings.arguments as String?;
+      if (id != null) SeoComposer.fetchBusinessData(id);
+    }
+  }
+}
 
 class Routerconfig {
   static GoRouter returnRouter() {
@@ -254,7 +266,31 @@ class Routerconfig {
             ),
           ],
         ),
+        GoRoute(
+          path: 'sitemap.xml',
+          builder: (context, state) => FutureBuilder<String>(
+            future: SitemapGenerator.generateSitemap(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                // Return the XML content
+                return Text(
+                  snapshot.data!,
+                  style: const TextStyle(fontFamily: 'monospace'),
+                );
+              }
+              return const CircularProgressIndicator();
+            },
+          ),
+        ),
+        GoRoute(
+          path: 'robots.txt',
+          builder: (context, state) => Text(
+            SeoComposer.generateRobotsTxt(),
+            style: const TextStyle(fontFamily: 'monospace'),
+          ),
+        ),
       ],
+      observers: [CustomRouteObserver()],
     );
   }
 }

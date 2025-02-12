@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class SeoComposer {
   static final _firestore = FirebaseFirestore.instance;
   static Map<String, dynamic> _structuredData = {};
+  static const String baseUrl = 'https://webdirectories.co.za/panelbeaters';
 
   static Widget compose({
     required Widget child,
@@ -40,7 +41,7 @@ class SeoComposer {
         ),
         MetaTag(
           name: 'og:url',
-          content: 'https://panelbeatersdirectory.co.za$path',
+          content: '$baseUrl$path',
         ),
         MetaTag(
           name: 'twitter:card',
@@ -56,7 +57,7 @@ class SeoComposer {
         ),
         LinkTag(
           rel: 'canonical',
-          href: 'https://panelbeatersdirectory.co.za$path',
+          href: '$baseUrl$path',
         ),
         MetaTag(
           name: 'robots',
@@ -68,7 +69,34 @@ class SeoComposer {
         ),
         MetaTag(
           name: 'viewport',
-          content: 'width=device-width, initial-scale=1.0, maximum-scale=5.0',
+          content:
+              'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes',
+        ),
+        MetaTag(
+          httpEquiv: 'content-language',
+          content: 'en-ZA',
+        ),
+        MetaTag(
+          name: 'og:image',
+          content:
+              'https://panelbeatersdirectory.co.za/images/social-preview.jpg',
+        ),
+        MetaTag(
+          name: 'twitter:image',
+          content:
+              'https://panelbeatersdirectory.co.za/images/social-preview.jpg',
+        ),
+        MetaTag(
+          name: 'theme-color',
+          content: '#FF8828',
+        ),
+        MetaTag(
+          name: 'apple-mobile-web-app-capable',
+          content: 'yes',
+        ),
+        MetaTag(
+          name: 'format-detection',
+          content: 'telephone=yes',
         ),
       ],
       child: child,
@@ -96,7 +124,7 @@ class SeoComposer {
     required String id,
     required Map<String, Object> businessData,
   }) {
-    String jsonLd = generateJsonLd(businessData);
+    String jsonLd = generateLocalBusinessSchema(businessData);
     injectJsonLd(jsonLd);
     return compose(
       child: child,
@@ -106,13 +134,22 @@ class SeoComposer {
     );
   }
 
-  static String generateJsonLd(Map<String, Object> businessData) {
-    final structuredData = {
+  static String generateLocalBusinessSchema(Map<String, Object> businessData) {
+    final localSchema = {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@type": "AutoBodyShop", // More specific than AutoRepairShop
       "name": businessData['name'],
       "description": businessData['description'],
       "url": businessData['url'],
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": businessData['latitude'],
+          "longitude": businessData['longitude']
+        },
+        "geoRadius": "50km"
+      },
       "address": {
         "@type": "PostalAddress",
         "streetAddress": businessData['streetAddress'],
@@ -127,10 +164,30 @@ class SeoComposer {
         "longitude": businessData['longitude']
       },
       "telephone": businessData['telephone'],
-      "openingHours": businessData['openingHours'],
+      "openingHoursSpecification": businessData['openingHours'],
+      "hasMap":
+          "https://www.google.com/maps?q=${businessData['latitude']},${businessData['longitude']}",
+      "paymentAccepted": ["cash", "credit card"],
+      "currenciesAccepted": "ZAR",
+      "priceRange": businessData['priceRange'] ?? "₱₱",
+      "makesOffer": {
+        "@type": "Offer",
+        "itemOffered": {"@type": "Service", "name": "Auto Body Repair"}
+      },
+      "serviceArea": businessData['serviceArea'] ?? "South Africa",
+      "availableLanguage": ["English", "Afrikaans"],
+      "isMobile": true,
+      "acceptsReservations": "Yes",
+      "potentialAction": {
+        "@type": "ViewAction",
+        "target": [
+          "https://panelbeatersdirectory.co.za/profile/${businessData['id']}",
+          "android-app://com.panelbeaters/profile/${businessData['id']}",
+          "ios-app://com.panelbeaters/profile/${businessData['id']}"
+        ]
+      }
     };
-
-    return jsonEncode(structuredData);
+    return jsonEncode(localSchema);
   }
 
   static void injectJsonLd(String jsonLd) {
@@ -162,6 +219,9 @@ class SeoComposer {
         'longitude': data['longitude'] ?? 0,
         'telephone': data['businessTelephone'] ?? '',
         'openingHours': data['businessHours'] ?? '',
+        'priceRange': data['priceRange'] ?? '',
+        'serviceArea': '${data['city']}, ${data['province']}',
+        'makesOffer': data['specializedServices'] ?? [],
       };
     } catch (e) {
       print('Error fetching business data: $e');
@@ -189,5 +249,21 @@ class SeoComposer {
       print('Error building profile page: $e');
       rethrow;
     }
+  }
+
+  static String generateRobotsTxt() {
+    return '''
+User-agent: *
+Allow: /
+Disallow: /admin-portal
+Disallow: /owners-portal
+Disallow: /reset-password
+
+# Mobile-specific paths
+Allow: /*?m=1
+Allow: /*mobile=1
+
+Sitemap: https://panelbeatersdirectory.co.za/sitemap.xml
+''';
   }
 }

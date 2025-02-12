@@ -73,6 +73,9 @@ dependencies:
   seo: ^0.0.8
   web: ^1.1.0
   flutter_widget_from_html: ^0.15.3
+  xml: ^6.5.0
+  http: ^1.1.0
+  #firebase_analytics: ^10.10.7
   
 
 dev_dependencies:
