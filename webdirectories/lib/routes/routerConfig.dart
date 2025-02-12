@@ -8,6 +8,7 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/services.d
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/nav.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/navPage/navBar.dart';
 import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
+import 'package:webdirectories/PanelBeatersDirectory/seo/seo_checklist.dart';
 import 'package:webdirectories/SuperAdmin/superAdmin.dart';
 import 'package:webdirectories/routes/routerNames.dart';
 import 'package:webdirectories/PanelBeatersDirectory/seo/SeoComposer.dart';
@@ -262,32 +263,43 @@ class Routerconfig {
                         normalUser: params['normalUser'],
                       ));
                     }),
+                GoRoute(
+                  path: 'seo-test',
+                  builder: (context, state) => FutureBuilder(
+                    future: SeoChecklist.runTests(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+                      return const Text('SEO Tests Complete - Check Console');
+                    },
+                  ),
+                ),
+                GoRoute(
+                  path: 'sitemap.xml',
+                  builder: (context, state) => FutureBuilder<String>(
+                    future: SitemapGenerator.generateSitemap(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          snapshot.data!,
+                          style: const TextStyle(fontFamily: 'monospace'),
+                        );
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
+                ),
+                GoRoute(
+                  path: 'robots.txt',
+                  builder: (context, state) => Text(
+                    SeoComposer.generateRobotsTxt(),
+                    style: const TextStyle(fontFamily: 'monospace'),
+                  ),
+                ),
               ],
             ),
           ],
-        ),
-        GoRoute(
-          path: 'sitemap.xml',
-          builder: (context, state) => FutureBuilder<String>(
-            future: SitemapGenerator.generateSitemap(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                // Return the XML content
-                return Text(
-                  snapshot.data!,
-                  style: const TextStyle(fontFamily: 'monospace'),
-                );
-              }
-              return const CircularProgressIndicator();
-            },
-          ),
-        ),
-        GoRoute(
-          path: 'robots.txt',
-          builder: (context, state) => Text(
-            SeoComposer.generateRobotsTxt(),
-            style: const TextStyle(fontFamily: 'monospace'),
-          ),
         ),
       ],
       observers: [CustomRouteObserver()],

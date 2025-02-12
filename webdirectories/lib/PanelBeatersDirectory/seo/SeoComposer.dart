@@ -4,11 +4,13 @@ import 'package:seo/html/seo_widget.dart';
 import 'dart:convert';
 import 'dart:html' as html;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:webdirectories/PanelBeatersDirectory/seo/seo_checklist.dart';
 
 class SeoComposer {
   static final _firestore = FirebaseFirestore.instance;
   static Map<String, dynamic> _structuredData = {};
-  static const String baseUrl = 'https://webdirectories.co.za/panelbeaters';
+  static const String baseUrl =
+      'https://webdirectories.co.za/panelbeaters-directory';
 
   static Widget compose({
     required Widget child,
@@ -78,8 +80,7 @@ class SeoComposer {
         ),
         MetaTag(
           name: 'og:image',
-          content:
-              'https://panelbeatersdirectory.co.za/images/social-preview.jpg',
+          content: '$baseUrl/images/social-preview.jpg',
         ),
         MetaTag(
           name: 'twitter:image',
@@ -210,7 +211,7 @@ class SeoComposer {
       return {
         'name': data['title'] ?? '',
         'description': data['description'] ?? '',
-        'url': 'https://panelbeatersdirectory.co.za/profile/$businessId',
+        'url': '$baseUrl/profile/$businessId',
         'streetAddress': data['streetaddress'] ?? '',
         'city': data['city'] ?? '',
         'province': data['province'] ?? '',
@@ -263,7 +264,11 @@ Disallow: /reset-password
 Allow: /*?m=1
 Allow: /*mobile=1
 
-Sitemap: https://panelbeatersdirectory.co.za/sitemap.xml
+Sitemap: $baseUrl/sitemap.xml
 ''';
   }
+}
+
+void testSeo() async {
+  await SeoChecklist.runTests();
 }

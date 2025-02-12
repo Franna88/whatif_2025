@@ -3,7 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SitemapGenerator {
   static final _firestore = FirebaseFirestore.instance;
-  static const String baseUrl = 'https://webdirectories.co.za/panelbeaters';
+  static const String baseUrl =
+      'https://webdirectories.co.za/panelbeaters-directory';
 
   // Generate sitemap XML for all business listings
   static Future<String> generateSitemap() async {
@@ -62,13 +63,11 @@ class SitemapGenerator {
       {'url': '', 'priority': '1.0'},
       {'url': 'articles', 'priority': '0.7'},
       {'url': 'we-can-help', 'priority': '0.6'},
-      // Add other static pages
     ];
 
     for (var page in staticPages) {
       builder.element('url', nest: () {
-        builder.element('loc',
-            nest: 'https://panelbeatersdirectory.co.za/${page['url']}');
+        builder.element('loc', nest: '$baseUrl/${page['url']}');
         builder.element('changefreq', nest: 'weekly');
         builder.element('priority', nest: page['priority']);
       });
@@ -87,8 +86,7 @@ class SitemapGenerator {
     for (var page in subPages) {
       builder.element('url', nest: () {
         builder.element('loc',
-            nest:
-                'https://panelbeatersdirectory.co.za/panelbeaters-directory/$listingId/$page');
+            nest: '$baseUrl/panelbeaters-directory/$listingId/$page');
         builder.element('changefreq', nest: 'weekly');
         builder.element('priority', nest: '0.6');
       });
@@ -112,9 +110,7 @@ class SitemapGenerator {
     // Add city pages
     for (var city in cities) {
       builder.element('url', nest: () {
-        builder.element('loc',
-            nest:
-                'https://panelbeatersdirectory.co.za/panelbeaters-directory/area/${city.toLowerCase()}');
+        builder.element('loc', nest: '$baseUrl/area/${city.toLowerCase()}');
         builder.element('changefreq', nest: 'daily');
         builder.element('priority', nest: '0.7');
       });
@@ -124,8 +120,7 @@ class SitemapGenerator {
     for (var province in provinces) {
       builder.element('url', nest: () {
         builder.element('loc',
-            nest:
-                'https://panelbeatersdirectory.co.za/panelbeaters-directory/province/${province.toLowerCase()}');
+            nest: '$baseUrl/province/${province.toLowerCase()}');
         builder.element('changefreq', nest: 'daily');
         builder.element('priority', nest: '0.7');
       });
