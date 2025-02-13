@@ -17,6 +17,7 @@ class PanelBeatersHome extends StatefulWidget {
 class _PanelBeatersHomeState extends State<PanelBeatersHome> {
   @override
   Widget build(BuildContext context) {
+    print('DEBUG: Building PanelBeatersHome');
     final mainContent = MyUtility(context).width < 600 ? MobileView() : Nav();
 
     return SeoComposer.compose(

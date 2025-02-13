@@ -35,6 +35,7 @@ class _ServicesNearMeState extends State<ServicesNearMe> {
   @override
   void initState() {
     super.initState();
+    print('DEBUG: Initializing ServicesNearMe');
     _getCurrentLocation();
   }
 
@@ -205,17 +206,28 @@ class _ServicesNearMeState extends State<ServicesNearMe> {
 
   @override
   Widget build(BuildContext context) {
+    print('DEBUG: Building ServicesNearMe');
+
+    if (_userPosition == null) {
+      return const Center(
+        child: CircularProgressIndicator(color: Colors.white),
+      );
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              height: MyUtility(context).height,
               width: MyUtility(context).width,
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height -
+                    14, // Subtract overflow amount
+              ),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('images/mainbackgroundPanel.png'),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                 ),
               ),
               child: Column(
@@ -271,7 +283,7 @@ class _ServicesNearMeState extends State<ServicesNearMe> {
                                 ],
                               ),
                             ),
-                             SizedBox(
+                            SizedBox(
                               width: MyUtility(context).width * 0.04,
                             )
                           ],
@@ -366,8 +378,8 @@ class _ServicesNearMeState extends State<ServicesNearMe> {
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: MyUtility(context).height * 0.85 - 48,
+                  Container(
+                    height: MyUtility(context).height * 0.7,
                     child: FutureBuilder<List<Map<String, dynamic>>>(
                       future: fetchNearbyLocations(_userPosition!.latitude,
                           _userPosition!.longitude, 100.0),
@@ -451,7 +463,7 @@ class _ServicesNearMeState extends State<ServicesNearMe> {
                 ],
               ),
             ),
-            PanelFooter()
+            PanelFooter(),
           ],
         ),
       ),

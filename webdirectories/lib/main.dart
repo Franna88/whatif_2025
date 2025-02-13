@@ -32,11 +32,10 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  //Test
-  //Test 5
 
   @override
   Widget build(BuildContext context) {
+    print('Building MyApp');
     GoRouter _router = Routerconfig.returnRouter();
     return SeoController(
       enabled: true,

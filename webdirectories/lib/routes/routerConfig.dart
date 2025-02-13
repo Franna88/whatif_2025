@@ -18,7 +18,9 @@ class CustomRouteObserver extends NavigatorObserver {
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     if (route.settings.name == Routernames.panelbeatersServicesProfile) {
-      final id = route.settings.arguments as String?;
+      // Get id from pathParameters instead of arguments
+      final id =
+          (route.settings.arguments as Map<String, dynamic>?)?['id'] as String?;
       if (id != null) SeoComposer.fetchBusinessData(id);
     }
   }
@@ -42,11 +44,14 @@ class Routerconfig {
                 GoRoute(
                   path: ':id/profile',
                   name: Routernames.panelbeatersServicesProfile,
-                  builder: (BuildContext context, GoRouterState state) =>
-                      Services(
-                    listingId: state.pathParameters['id']!,
-                    page: ServicesPages.profile,
-                  ),
+                  builder: (BuildContext context, GoRouterState state) {
+                    print(
+                        'DEBUG: Navigating to profile with ID: ${state.pathParameters['id']}');
+                    return Services(
+                      listingId: state.pathParameters['id']!,
+                      page: ServicesPages.profile,
+                    );
+                  },
                 ),
                 GoRoute(
                   path: ':id/contact',

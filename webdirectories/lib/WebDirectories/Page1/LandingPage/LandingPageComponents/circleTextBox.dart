@@ -6,6 +6,8 @@ import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
 import 'package:webdirectories/WebDirectories/Page4/Page4.dart';
 import 'package:webdirectories/myutility.dart';
 import 'dart:html' as html;
+import 'package:go_router/go_router.dart';
+import 'package:webdirectories/routes/routerNames.dart';
 
 class CircleTextBox extends StatefulWidget {
   bool buttonFlash;
@@ -142,39 +144,6 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                     ),
                   ),
                 ),
-
-                /* Retained Commented Out Code
-                SizedBox(
-                  width: MyUtility(context).width / 5.2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          widget.Title1,
-                          style: TextStyle(
-                              fontSize: 32,
-                              fontFamily: 'ralewaybold',
-                              color: const Color.fromARGB(255, 255, 255, 255)),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          widget.Title2,
-                          style: TextStyle(
-                              fontSize: 32,
-                              fontFamily: 'raleway',
-                              color: const Color.fromARGB(255, 255, 255, 255)),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                */
-
                 SizedBox(
                   width: MyUtility(context).width / 4.5,
                   height: MyUtility(context).height * 0.195,
@@ -231,8 +200,10 @@ class _CircleTextBoxState extends State<CircleTextBox> {
                             ),
                           );
                         } else if (widget.Title1 == "PANEL BEATER ") {
-                          // Open the PanelBeatersHome page in a new tab using the named route URL
-                          html.window.open('/panelbeaters-directory', '_blank');
+                          print('DEBUG: Clicking Panel Beater button');
+                          context.goNamed(Routernames.panelbeatersHome);
+                          // Open in new tab (commented out)
+                          // html.window.open('/panelbeaters-directory', '_blank');
                           // html.window.open(
                           //     'https://panelbeatersdirectory.co.za', '_blank');
                         } else {

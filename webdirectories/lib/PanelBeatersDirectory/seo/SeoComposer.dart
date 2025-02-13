@@ -204,31 +204,63 @@ class SeoComposer {
     html.document.head?.append(script);
   }
 
-  static Future<Map<String, Object>> fetchBusinessData(
+  static Future<Map<String, dynamic>> fetchBusinessData(
       String businessId) async {
     try {
-      DocumentSnapshot doc =
-          await _firestore.collection('listings').doc(businessId).get();
-      if (!doc.exists) {
+      print('DEBUG: Querying Firestore for business ID: $businessId');
+      print('DEBUG: businessId type: ${businessId.runtimeType}');
+
+      // Try both string and int queries
+      QuerySnapshot<Map<String, dynamic>> snapshot = await _firestore
+          .collection('listings')
+          .where('listingsId', whereIn: [businessId, int.tryParse(businessId)])
+          .limit(1)
+          .get();
+
+      print('DEBUG: Query parameters:');
+      print('  - String value: $businessId');
+      print('  - Int value: ${int.tryParse(businessId)}');
+      print('DEBUG: Documents found: ${snapshot.docs.length}');
+
+      if (snapshot.docs.isEmpty) {
         throw Exception('Business not found');
       }
 
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      var data = snapshot.docs.first.data();
+      print('DEBUG: Found document data: $data');
+
+      if (data['specializedServices'] != null) {
+        print(
+            'Services Type: ${data['specializedServices'].runtimeType}'); // Debug services
+        print(
+            'Services Data: ${data['specializedServices']}'); // Debug services data
+      }
+
+      // Ensure specializedServices is a list of strings
+      List<String> services = [];
+      if (data['specializedServices'] != null) {
+        services = (data['specializedServices'] as List)
+            .map((e) => e.toString())
+            .toList();
+      }
+
+      print('Services: $services'); // Debugging: Check the services list
+
       return {
-        'name': data['title'] ?? '',
-        'description': data['description'] ?? '',
+        'name': data['title']?.toString() ?? '',
+        'description': data['description']?.toString() ?? '',
         'url': '$baseUrl/profile/$businessId',
-        'streetAddress': data['streetaddress'] ?? '',
-        'city': data['city'] ?? '',
-        'province': data['province'] ?? '',
-        'postalCode': data['postalCode'] ?? '',
+        'streetAddress': data['streetaddress']?.toString() ?? '',
+        'city': data['city']?.toString() ?? '',
+        'province': data['province']?.toString() ?? '',
+        'postalCode': data['postalCode']?.toString() ?? '',
         'latitude': data['latitude'] ?? 0,
         'longitude': data['longitude'] ?? 0,
-        'telephone': data['businessTelephone'] ?? '',
-        'openingHours': data['businessHours'] ?? '',
-        'priceRange': data['priceRange'] ?? '',
-        'serviceArea': '${data['city']}, ${data['province']}',
-        'makesOffer': data['specializedServices'] ?? [],
+        'telephone': data['businessTelephone']?.toString() ?? '',
+        'openingHours': data['businessHours']?.toString() ?? '',
+        'priceRange': data['priceRange']?.toString() ?? '',
+        'serviceArea': '${data['city'] ?? ''}, ${data['province'] ?? ''}',
+        'makesOffer': services,
       };
     } catch (e) {
       print('Error fetching business data: $e');
@@ -243,14 +275,33 @@ class SeoComposer {
   static Future<Widget> buildProfilePage(
       String businessId, Widget child) async {
     try {
-      Map<String, Object> businessData = await fetchBusinessData(businessId);
+      Map<String, dynamic> businessData = await fetchBusinessData(businessId);
+
+      // Convert the data to the expected types before passing to composeProfilePage
+      Map<String, Object> convertedData = Map<String, Object>.from({
+        'name': businessData['name'],
+        'description': businessData['description'],
+        'url': businessData['url'],
+        'streetAddress': businessData['streetAddress'],
+        'city': businessData['city'],
+        'province': businessData['province'],
+        'postalCode': businessData['postalCode'],
+        'latitude': businessData['latitude'],
+        'longitude': businessData['longitude'],
+        'telephone': businessData['telephone'],
+        'openingHours': businessData['openingHours'],
+        'priceRange': businessData['priceRange'],
+        'serviceArea': businessData['serviceArea'],
+        'makesOffer': businessData['makesOffer'],
+      });
+
       return composeProfilePage(
         child: child,
         businessName: businessData['name'] as String,
         location: businessData['city'] as String,
         description: businessData['description'] as String,
         id: businessId,
-        businessData: businessData,
+        businessData: convertedData,
       );
     } catch (e) {
       print('Error building profile page: $e');

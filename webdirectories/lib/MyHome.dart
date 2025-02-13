@@ -25,8 +25,8 @@ class _MyHomeState extends State<MyHome> {
     return Scaffold(
       body: Center(
         child: MyUtility(context).width < 600
-            ? MobilePage1()
-            : Page1(), //PanelBeatersHome()
+            ? const MobilePage1()
+            : const Page1(), //PanelBeatersHome()
         //   child: Services(
         // listingId: '396',
         // )
