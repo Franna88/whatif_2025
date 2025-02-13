@@ -20,6 +20,7 @@ import 'dart:html' as html;
 import '../../seo/SeoComposer.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webdirectories/routes/routerNames.dart';
+import 'dart:convert';
 
 enum ServicesPages {
   profile,
@@ -85,7 +86,10 @@ class _ServicesState extends State<Services> {
     }
     checkViewExist();
     _getListingData();
-    SeoComposer.addStructuredData(generateOpeningHoursSchema());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final schema = generateOpeningHoursSchema();
+      SeoComposer.injectJsonLd(jsonEncode(schema));
+    });
   }
 
   ///change page
@@ -1093,8 +1097,11 @@ class _ServicesState extends State<Services> {
   Map<String, dynamic> generateOpeningHoursSchema() {
     return {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@type": "AutoBodyShop", // Changed from LocalBusiness
       "name": _listingData['title'],
+      "description": _listingData['description'],
+      "url":
+          "https://webdirectories.co.za/panelbeaters-directory/${widget.listingId}/profile",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": _listingData['streetaddress'],
@@ -1108,21 +1115,68 @@ class _ServicesState extends State<Services> {
         "latitude": _listingData['latitude'],
         "longitude": _listingData['longitude']
       },
-      "telephone": _listingData['telephone'],
-      "openingHoursSpecification": _listingData['businessHours'],
+      "telephone": _listingData['businessTelephone'],
+      "openingHoursSpecification":
+          _parseBusinessHours(_listingData['businessHours']),
       "image": _galleryData.isNotEmpty ? _galleryData[0] : null,
-      "priceRange": "",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": _listingData['averageRating'] ?? "4.5",
-        "reviewCount": _listingData['reviewCount']?.toString() ?? "0"
-      },
-      "sameAs": [
-        _linkData['facebook'],
-        _linkData['twitter'],
-        _linkData['instagram']
-      ].where((link) => link != null).toList()
     };
+  }
+
+  // Add this helper method to properly format business hours
+  List<Map<String, dynamic>> _parseBusinessHours(String? hoursString) {
+    if (hoursString == null || hoursString.isEmpty) return [];
+
+    try {
+      // Assuming format like "Monday-Friday: 8:00 AM - 5:00 PM"
+      final parts = hoursString.split(':');
+      if (parts.length < 2) return [];
+
+      final days = parts[0].trim().split('-');
+      final times = parts[1].trim().split('-');
+
+      return [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": _expandDays(days[0].trim(),
+              days.length > 1 ? days[1].trim() : days[0].trim()),
+          "opens": _convert12To24Hour(times[0].trim()),
+          "closes": _convert12To24Hour(times[1].trim())
+        }
+      ];
+    } catch (e) {
+      print('Error parsing business hours: $e');
+      return [];
+    }
+  }
+
+  List<String> _expandDays(String start, String end) {
+    final days = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+    final startIdx = days.indexOf(start);
+    final endIdx = days.indexOf(end);
+    return days.sublist(startIdx, endIdx + 1);
+  }
+
+  String _convert12To24Hour(String time12h) {
+    // Convert "8:00 AM" to "08:00"
+    final parts = time12h.split(' ');
+    if (parts.length != 2) return time12h;
+
+    final timeParts = parts[0].split(':');
+    var hour = int.tryParse(timeParts[0]) ?? 0;
+    final minutes = timeParts[1];
+
+    if (parts[1].toUpperCase() == 'PM' && hour < 12) hour += 12;
+    if (parts[1].toUpperCase() == 'AM' && hour == 12) hour = 0;
+
+    return '${hour.toString().padLeft(2, '0')}:$minutes';
   }
 
   Widget buildOptimizedImage(String imageUrl, String alt) {

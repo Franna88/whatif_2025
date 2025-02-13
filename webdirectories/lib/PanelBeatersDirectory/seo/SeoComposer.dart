@@ -192,6 +192,12 @@ class SeoComposer {
   }
 
   static void injectJsonLd(String jsonLd) {
+    // Remove any existing schema
+    html.document
+        .querySelectorAll('script[type="application/ld+json"]')
+        .forEach((element) => element.remove());
+
+    // Add new schema
     final script = html.ScriptElement()
       ..type = 'application/ld+json'
       ..text = jsonLd;
