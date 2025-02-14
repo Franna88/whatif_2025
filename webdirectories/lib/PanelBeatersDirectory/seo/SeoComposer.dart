@@ -125,13 +125,45 @@ class SeoComposer {
     required String id,
     required Map<String, Object> businessData,
   }) {
-    String jsonLd = generateLocalBusinessSchema(businessData);
+    // Generate structured data for search engines
+    final jsonLd = generateLocalBusinessSchema(businessData);
+
+    // Inject the structured data into the page
     injectJsonLd(jsonLd);
-    return compose(
+
+    return Seo.head(
+      tags: [
+        MetaTag(
+          name: 'description',
+          content: description,
+        ),
+        MetaTag(
+          name: 'keywords',
+          content:
+              'panel beaters, $location, car repair, ${businessName.toLowerCase()}, auto body repair',
+        ),
+        MetaTag(
+          name: 'og:title',
+          content: '$businessName - Panel Beaters in $location',
+        ),
+        MetaTag(
+          name: 'og:description',
+          content: description,
+        ),
+        MetaTag(
+          name: 'og:type',
+          content: 'business.business',
+        ),
+        MetaTag(
+          name: 'og:url',
+          content: '$baseUrl/profile/$id',
+        ),
+        LinkTag(
+          rel: 'canonical',
+          href: '$baseUrl/profile/$id',
+        ),
+      ],
       child: child,
-      title: '$businessName - Panel Beaters in $location',
-      description: description,
-      path: '/profile/$id',
     );
   }
 
