@@ -7,12 +7,33 @@
         "public": "build/web",
         "rewrites": [
             {
-                "source": "/panelbeaters-directory/*/profile",
-                "function": "generateStaticProfile"
+                "source": "/panelbeaters-directory/:id/profile",
+                "function": "generateStaticProfile",
+                "region": "us-central1"
+            },
+            {
+                "source": "/sitemap.xml",
+                "function": "generateSitemap",
+                "region": "us-central1"
             },
             {
                 "source": "**",
                 "destination": "/index.html"
+            }
+        ],
+        "headers": [
+            {
+                "source": "**",
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "no-cache, no-store, must-revalidate"
+                    },
+                    {
+                        "key": "google-site-verification",
+                        "value": "YlOO70vPUqg7J4cW"
+                    }
+                ]
             }
         ]
     }

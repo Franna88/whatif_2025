@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko"></script>
   <base href="$FLUTTER_BASE_HREF">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="YlOO70vPUqg7J4cW" />
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Web Directories is your go-to platform for automotive business visibility. Connect with customers through comprehensive profiles in our niche directories.">
+  <meta name="description"
+    content="Web Directories is your go-to platform for automotive business visibility. Connect with customers through comprehensive profiles in our niche directories.">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +19,7 @@
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/ico" href="icons/favicon.ico"/>
+  <link rel="icon" type="image/ico" href="icons/favicon.ico" />
 
   <title>Webdirectories</title>
   <link rel="manifest" href="manifest.json">
@@ -26,22 +30,23 @@
     const serviceWorkerVersion = null;
   </script>
   <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko&libraries=drawing,visualization,places">
-  </script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko&libraries=drawing,visualization,places">
+    </script>
   <script src="flutter.js" defer></script>
-  
+
 </head>
+
 <body>
-  
+
   <script>
-    window.addEventListener('load', function(ev) {
+    window.addEventListener('load', function (ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
+        onEntrypointLoaded: function (engineInitializer) {
+          engineInitializer.initializeEngine().then(function (appRunner) {
             appRunner.runApp();
           });
         }
@@ -49,4 +54,5 @@
     });
   </script>
 </body>
+
 </html>

@@ -1,0 +1,10 @@
+{
+    "name": "webdirectories",
+    "scripts": {
+        "deploy:all": "cd /Users/frannanortje/development/dev/webDirectories/functions && npm run build && echo 'n' | npm run deploy && cd /Users/frannanortje/development/dev/webDirectories/webdirectories && firebase deploy --only hosting",
+        "deploy:functions": "cd /Users/frannanortje/development/dev/webDirectories/functions && npm run build && echo 'n' | npm run deploy",
+        "deploy:hosting": "cd /Users/frannanortje/development/dev/webDirectories/webdirectories && firebase deploy --only hosting",
+        "logs": "cd /Users/frannanortje/development/dev/webDirectories/functions && firebase functions:log --only generateStaticProfile",
+        "test:bot": "curl -v -A \"Googlebot\" https://webdirectories.co.za/panelbeaters-directory/1927/profile"
+    }
+}

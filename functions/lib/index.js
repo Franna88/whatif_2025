@@ -1,15 +1,41 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateStaticProfile = void 0;
+exports.app = exports.Rlistings = exports.generateSitemap = exports.generateStaticProfile = void 0;
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 // Initialize Firebase Admin
 admin.initializeApp();
 exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
     try {
-        const businessId = req.path.split('/').pop() || '';
-        console.log('DEBUG: Requested business ID:', businessId);
-        console.log('DEBUG: Business ID type:', typeof businessId);
+        console.log('Request details:', {
+            fullPath: req.path,
+            pathSegments: req.path.split('/'),
+            headers: req.headers,
+            userAgent: req.headers['user-agent']
+        });
+        console.log('Function triggered with full details:', {
+            url: req.url,
+            originalUrl: req.originalUrl,
+            path: req.path,
+            params: req.params,
+            query: req.query,
+            headers: req.headers,
+            method: req.method
+        });
+        // Extract ID using the :id parameter
+        const businessId = req.params.id || req.path.split('/').find(part => !isNaN(Number(part))) || '';
+        console.log('Business ID:', businessId);
+        // Add validation
+        if (!businessId) {
+            console.log('Invalid business ID in path:', req.path);
+            res.status(400).send('Invalid business ID');
+            return;
+        }
+        console.log('Path analysis:', {
+            originalPath: req.path,
+            pathParts: req.path.split('/'),
+            extractedId: businessId
+        });
         // Try both string and number queries
         const snapshot = await admin.firestore()
             .collection('listings')
@@ -94,12 +120,88 @@ exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
         </body>
       </html>
     `.trim();
-        res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+        // For bot requests
+        if (isBot) {
+            res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+        }
+        else {
+            res.set('Cache-Control', 'no-cache');
+        }
+        res.set('Access-Control-Allow-Origin', 'https://webdirectories.co.za');
+        res.set('Access-Control-Allow-Methods', 'GET');
         res.send(html);
     }
     catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
+        console.error('Firestore query error:', error);
+        res.status(500).send('Database error');
+    }
+});
+exports.generateSitemap = functions.https.onRequest(async (req, res) => {
+    try {
+        console.log('Sitemap function called');
+        const snapshot = await admin.firestore()
+            .collection('listings')
+            .get();
+        console.log(`Found ${snapshot.size} listings in Firestore`);
+        let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      <!-- Static Routes -->
+      <url>
+        <loc>https://webdirectories.co.za/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+      </url>
+      <url>
+        <loc>https://webdirectories.co.za/panelbeaters</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+      </url>
+
+      <!-- Dynamic Listings -->`;
+        snapshot.docs.forEach(doc => {
+            const data = doc.data();
+            sitemap += `
+      <url>
+        <loc>https://webdirectories.co.za/panelbeaters-directory/${data.listingsId}/profile</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+      </url>`;
+        });
+        sitemap += `\n</urlset>`;
+        res.set('Content-Type', 'application/xml');
+        res.send(sitemap);
+    }
+    catch (error) {
+        console.error('Error generating sitemap:', error);
+        res.status(500).send('Error generating sitemap');
+    }
+});
+// Add back the R-listings function
+exports.Rlistings = functions.https.onRequest(async (req, res) => {
+    try {
+        const snapshot = await admin.firestore()
+            .collection('listings')
+            .get();
+        const listings = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        res.json(listings);
+    }
+    catch (error) {
+        console.error('Error fetching listings:', error);
+        res.status(500).send('Error fetching listings');
+    }
+});
+// Add back the app function
+exports.app = functions.https.onRequest(async (req, res) => {
+    try {
+        // Add the original functionality of your app function here
+        res.send('App function restored');
+    }
+    catch (error) {
+        console.error('Error in app function:', error);
+        res.status(500).send('Error in app function');
     }
 });
 //# sourceMappingURL=index.js.map
