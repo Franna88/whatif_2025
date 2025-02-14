@@ -38,6 +38,25 @@ exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
         }
         // Sanitize data to prevent XSS
         const sanitize = (str) => str?.replace(/[<>]/g, '') || '';
+        // Add debug logging for city data
+        console.log('DEBUG: City data:', data.city);
+        // Extract city from address if not directly available
+        const extractCity = (address) => {
+            const parts = address.split(',');
+            return parts.length > 1 ? parts[parts.length - 3]?.trim() : '';
+        };
+        // Improve province extraction
+        const extractProvince = (address) => {
+            const parts = address.split(',');
+            return parts.length > 2 ? parts[parts.length - 2]?.trim() : '';
+        };
+        // Get city either from data.city or extract from address
+        const city = data.city || extractCity(data.streetaddress || '');
+        const province = data.province || extractProvince(data.streetaddress || '');
+        // Update getLocationText to use extracted city
+        const getLocationText = (cityName) => {
+            return cityName ? `in ${cityName}` : 'in South Africa';
+        };
         const html = `
       <!DOCTYPE html>
       <html lang="en">
@@ -45,7 +64,7 @@ exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>${sanitize(data.title)} - Panel Beaters Directory</title>
-          <meta name="description" content="${sanitize(data.description)}">
+          <meta name="description" content="${sanitize(data.description || `Professional panel beating services ${getLocationText(data.city)}`)}">
           <meta name="robots" content="index, follow">
           <link rel="canonical" href="https://webdirectories.co.za/panelbeaters-directory/${businessId}/profile">
           
@@ -54,23 +73,22 @@ exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
               "@context": "https://schema.org",
               "@type": "AutoRepair",
               "name": "${sanitize(data.title)}",
-              "description": "${sanitize(data.description)}",
+              "description": "${sanitize(data.description || `Professional panel beating services ${getLocationText(data.city)}`)}",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "${sanitize(data.streetaddress)}",
-                "addressLocality": "${sanitize(data.city)}",
-                "addressRegion": "${sanitize(data.province)}",
+                "streetAddress": "${sanitize(data.streetaddress || '')}",
+                "addressLocality": "${sanitize(city)}",
+                "addressRegion": "${sanitize(province)}",
                 "addressCountry": "ZA"
-              }
-              ${data.businessTelephone ? `,"telephone": "${sanitize(data.businessTelephone)}"` : ''}
+              }${data.businessTelephone ? `,\n    "telephone": "${sanitize(data.businessTelephone)}"` : ''}
             }
           </script>
         </head>
         <body>
           <main>
             <h1>${sanitize(data.title)}</h1>
-            <p>${sanitize(data.description)}</p>
-            ${data.streetaddress ? `<p>Address: ${sanitize(data.streetaddress)}, ${sanitize(data.city)}, ${sanitize(data.province)}</p>` : ''}
+            <p>${sanitize(data.description || `Professional panel beating services ${getLocationText(data.city)}`)}</p>
+            <p>Address: ${[data.streetaddress, data.city, data.province].filter(Boolean).join(', ')}</p>
             ${data.businessTelephone ? `<p>Phone: ${sanitize(data.businessTelephone)}</p>` : ''}
           </main>
         </body>
