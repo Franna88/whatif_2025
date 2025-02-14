@@ -7,9 +7,24 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
     try {
-        // Extract business ID from URL
-        const businessId = req.path.split('/').pop();
-        console.log('Requested business ID:', businessId);
+        const businessId = req.path.split('/').pop() || '';
+        console.log('DEBUG: Requested business ID:', businessId);
+        console.log('DEBUG: Business ID type:', typeof businessId);
+        // Try both string and number queries
+        const snapshot = await admin.firestore()
+            .collection('listings')
+            .where('listingsId', 'in', [businessId, parseInt(businessId)])
+            .limit(1)
+            .get();
+        console.log('DEBUG: Query results:', snapshot.size);
+        console.log('DEBUG: Empty?:', snapshot.empty);
+        if (snapshot.empty) {
+            console.log('DEBUG: No matching documents');
+            res.status(404).send('Profile not found');
+            return;
+        }
+        const data = snapshot.docs[0].data();
+        console.log('DEBUG: Found data:', data);
         // Check if request is from a bot
         const userAgent = req.headers['user-agent']?.toLowerCase() || '';
         const isBot = userAgent.includes('bot') ||
@@ -21,17 +36,6 @@ exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
             res.redirect(`/panelbeaters-directory/${businessId}/profile`);
             return;
         }
-        // For bots, generate static HTML
-        const snapshot = await admin.firestore()
-            .collection('listings')
-            .where('listingsId', '==', businessId)
-            .limit(1)
-            .get();
-        if (snapshot.empty) {
-            res.status(404).send('Profile not found');
-            return;
-        }
-        const data = snapshot.docs[0].data();
         // Sanitize data to prevent XSS
         const sanitize = (str) => str?.replace(/[<>]/g, '') || '';
         const html = `
