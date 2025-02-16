@@ -5,6 +5,11 @@
     },
     "hosting": {
         "public": "build/web",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
         "rewrites": [
             {
                 "source": "/panelbeaters-directory/:id/profile",
@@ -17,10 +22,16 @@
                 "region": "us-central1"
             },
             {
-                "source": "**",
+                "source": "**/*.html",
+                "destination": "/index.html"
+            },
+            {
+                "source": "**/**",
                 "destination": "/index.html"
             }
         ],
+        "cleanUrls": true,
+        "appAssociation": "AUTO",
         "headers": [
             {
                 "source": "**",
@@ -28,6 +39,10 @@
                     {
                         "key": "Cache-Control",
                         "value": "no-cache, no-store, must-revalidate"
+                    },
+                    {
+                        "key": "X-Robots-Tag",
+                        "value": "all"
                     },
                     {
                         "key": "google-site-verification",

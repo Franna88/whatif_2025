@@ -10,6 +10,8 @@ exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
         console.log('Request details:', {
             fullPath: req.path,
             pathSegments: req.path.split('/'),
+            rawBusinessId: req.path.split('/').pop(),
+            cleanedBusinessId: req.path.split('/').pop()?.replace('/', ''),
             headers: req.headers,
             userAgent: req.headers['user-agent']
         });
@@ -22,15 +24,9 @@ exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
             headers: req.headers,
             method: req.method
         });
-        // Extract ID using the :id parameter
-        const businessId = req.params.id || req.path.split('/').find(part => !isNaN(Number(part))) || '';
-        console.log('Business ID:', businessId);
-        // Add validation
-        if (!businessId) {
-            console.log('Invalid business ID in path:', req.path);
-            res.status(400).send('Invalid business ID');
-            return;
-        }
+        // Extract business ID from URL - Fix for direct function URL
+        const businessId = req.path.split('/').pop();
+        console.log('Extracted business ID:', businessId);
         console.log('Path analysis:', {
             originalPath: req.path,
             pathParts: req.path.split('/'),
@@ -39,7 +35,7 @@ exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
         // Try both string and number queries
         const snapshot = await admin.firestore()
             .collection('listings')
-            .where('listingsId', 'in', [businessId, parseInt(businessId)])
+            .where('listingsId', 'in', [businessId, parseInt(businessId || '0')])
             .limit(1)
             .get();
         console.log('DEBUG: Query results:', snapshot.size);
