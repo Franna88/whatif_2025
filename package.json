@@ -2,11 +2,17 @@
     "name": "webdirectories",
     "scripts": {
         "deploy:all": "cd /Users/frannanortje/development/dev/webDirectories/functions && npm run build && echo 'n' | npm run deploy && cd /Users/frannanortje/development/dev/webDirectories/webdirectories && firebase deploy --only hosting",
+        "build:static": "flutter build web --dart-define=GENERATE_STATIC_PAGES=true",
         "deploy:functions": "cd /Users/frannanortje/development/dev/webDirectories/functions && npm run build && echo 'n' | npm run deploy",
         "deploy:hosting": "cd /Users/frannanortje/development/dev/webDirectories/webdirectories && firebase deploy --only hosting",
         "logs": "cd /Users/frannanortje/development/dev/webDirectories/functions && firebase functions:log --only generateStaticProfile",
         "test:bot": "curl -v -A \"Googlebot\" https://webdirectories.co.za/panelbeaters-directory/1927/profile",
+        "test:server": "curl -A \"Googlebot\" https://web-directories.firebaseapp.com/panelbeaters-directory/generateStaticProfile/1927",
         "test:local": "curl -A \"Googlebot\" https://us-central1-web-directories.cloudfunctions.net/generateStaticProfile/1927",
+        "test:local:sitemap": "curl -A \"Googlebot\" https://us-central1-web-directories.cloudfunctions.net/generateSitemap",
         "test:local:verbose": "curl -v -A \"Googlebot\" https://us-central1-web-directories.cloudfunctions.net/generateStaticProfile/1927"
+    },
+    "dependencies": {
+        "puppeteer": "^24.2.1"
     }
 }

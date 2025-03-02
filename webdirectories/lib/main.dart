@@ -6,6 +6,7 @@ import 'package:seo/html/seo_controller.dart';
 import 'package:seo/html/tree/widget_tree.dart';
 import 'package:webdirectories/MyHome.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:webdirectories/PanelBeatersDirectory/seo/StaticPageGenerator.dart';
 
 import 'package:webdirectories/routes/routerConfig.dart';
 
@@ -14,6 +15,9 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 void main() async {
   usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Generate static pages during build if flag is set
+
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(

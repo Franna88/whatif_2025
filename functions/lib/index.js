@@ -1,138 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = exports.Rlistings = exports.generateSitemap = exports.generateStaticProfile = void 0;
-const functions = require("firebase-functions");
+const https_1 = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
+const puppeteer_renderer_1 = require("./puppeteer-renderer");
 // Initialize Firebase Admin
 admin.initializeApp();
-exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
+const runtimeOpts = {
+    timeoutSeconds: 120,
+    memory: '2GiB'
+};
+exports.generateStaticProfile = (0, https_1.onRequest)(runtimeOpts, async (req, res) => {
     try {
-        console.log('Request details:', {
-            fullPath: req.path,
-            pathSegments: req.path.split('/'),
-            rawBusinessId: req.path.split('/').pop(),
-            cleanedBusinessId: req.path.split('/').pop()?.replace('/', ''),
-            headers: req.headers,
-            userAgent: req.headers['user-agent']
-        });
-        console.log('Function triggered with full details:', {
-            url: req.url,
-            originalUrl: req.originalUrl,
-            path: req.path,
-            params: req.params,
-            query: req.query,
-            headers: req.headers,
-            method: req.method
-        });
-        // Extract business ID from URL - Fix for direct function URL
         const businessId = req.path.split('/').pop();
-        console.log('Extracted business ID:', businessId);
-        console.log('Path analysis:', {
-            originalPath: req.path,
-            pathParts: req.path.split('/'),
-            extractedId: businessId
-        });
-        // Try both string and number queries
-        const snapshot = await admin.firestore()
-            .collection('listings')
-            .where('listingsId', 'in', [businessId, parseInt(businessId || '0')])
-            .limit(1)
-            .get();
-        console.log('DEBUG: Query results:', snapshot.size);
-        console.log('DEBUG: Empty?:', snapshot.empty);
-        if (snapshot.empty) {
-            console.log('DEBUG: No matching documents');
-            res.status(404).send('Profile not found');
+        console.log('Processing business ID:', businessId);
+        if (!businessId) {
+            res.status(400).send('Business ID not provided');
             return;
         }
-        const data = snapshot.docs[0].data();
-        console.log('DEBUG: Found data:', data);
-        // Check if request is from a bot
         const userAgent = req.headers['user-agent']?.toLowerCase() || '';
         const isBot = userAgent.includes('bot') ||
             userAgent.includes('crawler') ||
             userAgent.includes('spider');
-        console.log('Is bot request:', isBot);
         if (!isBot) {
-            // Regular users get the dynamic app
             res.redirect(`/panelbeaters-directory/${businessId}/profile`);
             return;
         }
-        // Sanitize data to prevent XSS
-        const sanitize = (str) => str?.replace(/[<>]/g, '') || '';
-        // Add debug logging for city data
-        console.log('DEBUG: City data:', data.city);
-        // Extract city from address if not directly available
-        const extractCity = (address) => {
-            const parts = address.split(',');
-            return parts.length > 1 ? parts[parts.length - 3]?.trim() : '';
-        };
-        // Improve province extraction
-        const extractProvince = (address) => {
-            const parts = address.split(',');
-            return parts.length > 2 ? parts[parts.length - 2]?.trim() : '';
-        };
-        // Get city either from data.city or extract from address
-        const city = data.city || extractCity(data.streetaddress || '');
-        const province = data.province || extractProvince(data.streetaddress || '');
-        // Update getLocationText to use extracted city
-        const getLocationText = (cityName) => {
-            return cityName ? `in ${cityName}` : 'in South Africa';
-        };
-        const html = `
-      <!DOCTYPE html>
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>${sanitize(data.title)} - Panel Beaters Directory</title>
-          <meta name="description" content="${sanitize(data.description || `Professional panel beating services ${getLocationText(data.city)}`)}">
-          <meta name="robots" content="index, follow">
-          <link rel="canonical" href="https://webdirectories.co.za/panelbeaters-directory/${businessId}/profile">
-          
-          <script type="application/ld+json">
-            {
-              "@context": "https://schema.org",
-              "@type": "AutoRepair",
-              "name": "${sanitize(data.title)}",
-              "description": "${sanitize(data.description || `Professional panel beating services ${getLocationText(data.city)}`)}",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "${sanitize(data.streetaddress || '')}",
-                "addressLocality": "${sanitize(city)}",
-                "addressRegion": "${sanitize(province)}",
-                "addressCountry": "ZA"
-              }${data.businessTelephone ? `,\n    "telephone": "${sanitize(data.businessTelephone)}"` : ''}
-            }
-          </script>
-        </head>
-        <body>
-          <main>
-            <h1>${sanitize(data.title)}</h1>
-            <p>${sanitize(data.description || `Professional panel beating services ${getLocationText(data.city)}`)}</p>
-            <p>Address: ${[data.streetaddress, data.city, data.province].filter(Boolean).join(', ')}</p>
-            ${data.businessTelephone ? `<p>Phone: ${sanitize(data.businessTelephone)}</p>` : ''}
-          </main>
-        </body>
-      </html>
-    `.trim();
-        // For bot requests
-        if (isBot) {
-            res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-        }
-        else {
-            res.set('Cache-Control', 'no-cache');
-        }
-        res.set('Access-Control-Allow-Origin', 'https://webdirectories.co.za');
-        res.set('Access-Control-Allow-Methods', 'GET');
-        res.send(html);
+        const renderedHtml = await puppeteer_renderer_1.PuppeteerRenderer.renderPage(`https://webdirectories.co.za/panelbeaters-directory/${businessId}/profile`);
+        res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+        res.set('Content-Type', 'text/html');
+        res.send(renderedHtml);
     }
     catch (error) {
-        console.error('Firestore query error:', error);
-        res.status(500).send('Database error');
+        console.error('Error:', error);
+        res.status(500).send('Error generating static page');
     }
 });
-exports.generateSitemap = functions.https.onRequest(async (req, res) => {
+exports.generateSitemap = (0, https_1.onRequest)(async (req, res) => {
     try {
         console.log('Sitemap function called');
         const snapshot = await admin.firestore()
@@ -173,7 +77,7 @@ exports.generateSitemap = functions.https.onRequest(async (req, res) => {
     }
 });
 // Add back the R-listings function
-exports.Rlistings = functions.https.onRequest(async (req, res) => {
+exports.Rlistings = (0, https_1.onRequest)(async (req, res) => {
     try {
         const snapshot = await admin.firestore()
             .collection('listings')
@@ -190,7 +94,7 @@ exports.Rlistings = functions.https.onRequest(async (req, res) => {
     }
 });
 // Add back the app function
-exports.app = functions.https.onRequest(async (req, res) => {
+exports.app = (0, https_1.onRequest)(async (req, res) => {
     try {
         // Add the original functionality of your app function here
         res.send('App function restored');

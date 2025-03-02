@@ -1,7 +1,8 @@
 {
     "functions": {
         "source": "functions",
-        "runtime": "nodejs18"
+        "runtime": "nodejs18",
+        "memory": "2GB"
     },
     "hosting": {
         "public": "build/web",
@@ -14,6 +15,19 @@
             {
                 "source": "/panelbeaters-directory/:id/profile",
                 "function": "generateStaticProfile",
+                "region": "us-central1",
+                "pinTag": true,
+                "conditions": [
+                    {
+                        "header": "user-agent",
+                        "pattern": ".*(bot|crawler|spider).*",
+                        "caseSensitive": false
+                    }
+                ]
+            },
+            {
+                "source": "/generateStaticProfile/:id",
+                "function": "generateStaticProfile",
                 "region": "us-central1"
             },
             {
@@ -22,16 +36,17 @@
                 "region": "us-central1"
             },
             {
-                "source": "**/*.html",
-                "destination": "/index.html"
+                "source": "**/*.{js,css,png,jpg,jpeg,gif,ico,html}",
+                "destination": "/build/web/:1"
             },
             {
-                "source": "**/**",
+                "source": "**",
                 "destination": "/index.html"
             }
         ],
         "cleanUrls": true,
-        "appAssociation": "AUTO",
+        "trailingSlash": false,
+        "priority": "function",
         "headers": [
             {
                 "source": "**",

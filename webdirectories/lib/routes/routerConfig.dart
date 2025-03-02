@@ -53,6 +53,30 @@ class Routerconfig {
                     );
                   },
                 ),
+                // GoRoute(
+                //   path: 'generateStaticProfile/:id',
+                //   name: Routernames.panelbeatersServicesProfile,
+                //    builder: (context, state) => FutureBuilder<String>(
+                //     future: generateStaticProfile(state.pathParameters['id']!),
+                //     builder: (context, snapshot) {
+                //       if (snapshot.hasData) {
+                //         return Text(
+                //           snapshot.data!,
+                //           style: const TextStyle(fontFamily: 'monospace'),
+                //         );
+                //       }
+                //       return const CircularProgressIndicator();
+                //     },
+                //   ),
+                // builder: (BuildContext context, GoRouterState state) {
+                //   print(
+                //       'DEBUG: Navigating to profile with ID: ${state.pathParameters['id']}');
+                //   return Services(
+                //     listingId: state.pathParameters['id']!,
+                //     page: ServicesPages.profile,
+                //   );
+                // },
+                //),
                 GoRoute(
                   path: ':id/contact',
                   name: Routernames.panelbeatersServicesContact,
@@ -281,7 +305,7 @@ class Routerconfig {
                   ),
                 ),
                 GoRoute(
-                  path: 'sitemap.xml',
+                  path: 'sitemaps.xml',
                   builder: (context, state) => FutureBuilder<String>(
                     future: SitemapGenerator.generateSitemap(),
                     builder: (context, snapshot) {

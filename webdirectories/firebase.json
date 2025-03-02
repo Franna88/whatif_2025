@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs18",
+    "memory": "2GB"
+  },
   "hosting": {
     "public": "build/web",
     "ignore": [
@@ -8,26 +13,58 @@
     ],
     "rewrites": [
       {
+        "source": "/panelbeaters-directory/:id/profile",
+        "function": "generateStaticProfile",
+        "region": "us-central1",
+        "pinTag": true,
+        "conditions": [
+          {
+            "header": "user-agent",
+            "pattern": ".*(bot|crawler|spider).*",
+            "caseSensitive": false
+          }
+        ]
+      },
+      {
+        "source": "/generateStaticProfile/:id",
+        "function": "generateStaticProfile",
+        "region": "us-central1"
+      },
+      {
+        "source": "/sitemap.xml",
+        "function": "generateSitemap",
+        "region": "us-central1"
+      },
+      {
+        "source": "**/*.{js,css,png,jpg,jpeg,gif,ico,html}",
+        "destination": "/build/web/:1"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "priority": "function",
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          },
+          {
+            "key": "X-Robots-Tag",
+            "value": "all"
+          },
+          {
+            "key": "google-site-verification",
+            "value": "YlOO70vPUqg7J4cW"
+          }
+        ]
+      }
     ]
-  },
-  "functions": [
-    {
-      "source": "functions",
-      "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint",
-        "npm --prefix \"$RESOURCE_DIR\" run build"
-      ]
-    }
-  ]
+  }
 }
