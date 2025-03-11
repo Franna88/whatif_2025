@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import * as puppeteer from 'puppeteer-core';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -141,8 +141,6 @@ const links = [
     'https://www.webdirectories.co.za/panelbeaters/agreement',
     'https://www.webdirectories.co.za/panelbeaters',
 ];
-
-
 
 scrapeLinks(links);
 

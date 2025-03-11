@@ -1,81 +1,18 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import * as puppeteer from 'puppeteer';
 import { Response } from 'express';
 
-// Initialize Firebase Admin
-admin.initializeApp();
-
-// Cache for rendered pages to improve performance
-const pageCache: Record<string, { html: string, timestamp: number }> = {};
-const CACHE_DURATION = 3600000; // 1 hour in milliseconds
-
-/**
- * Pre-renders a page using Puppeteer
- * @param url The URL to pre-render
- * @returns The pre-rendered HTML
- */
-async function prerenderPage(url: string): Promise<string> {
-  // Check cache first
-  const now = Date.now();
-  const cachedPage = pageCache[url];
-  if (cachedPage && (now - cachedPage.timestamp) < CACHE_DURATION) {
-    console.log(`Serving cached version of ${url}`);
-    return cachedPage.html;
-  }
-
-  console.log(`Pre-rendering page: ${url}`);
-
-  // Launch headless browser
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
-
-  try {
-    const page = await browser.newPage();
-
-    // Set viewport for consistent rendering
-    await page.setViewport({
-      width: 1200,
-      height: 800
-    });
-
-    // Set user agent to identify as our renderer
-    await page.setUserAgent('WebDirectories-Renderer/1.0');
-
-    // Navigate to the URL and wait until network is idle
-    await page.goto(url, {
-      waitUntil: 'networkidle0',
-      timeout: 30000 // 30 seconds timeout
-    });
-
-    // Wait for Flutter to initialize and render content
-    await page.waitForFunction(
-      'window.flutterReady === true',
-      { timeout: 20000 }
-    ).catch(() => {
-      console.log('Flutter ready flag not found, continuing anyway');
-    });
-
-    // Wait for the main content to be available
-    await page.waitForSelector('main', { timeout: 10000 }).catch(() => {
-      console.log('Main content selector not found, continuing anyway');
-    });
-
-    // Get the fully rendered HTML
-    const html = await page.content();
-
-    // Cache the result
-    pageCache[url] = { html, timestamp: now };
-
-    return html;
-  } finally {
-    await browser.close();
-  }
+// Initialize Firebase Admin with a named app
+try {
+  admin.initializeApp({
+    credential: admin.credential.applicationDefault()
+  }, 'webDirectories');
+} catch (error) {
+  // If app already exists, use it
+  admin.app('webDirectories');
 }
 
-// Enhanced version of generateStaticProfile that uses Puppeteer for complex pages
+// Enhanced version of generateStaticProfile that generates static HTML
 export const generateStaticProfile = functions.https.onRequest(async (req: functions.https.Request, res: Response) => {
   try {
     console.log('Request details:', {
@@ -86,8 +23,10 @@ export const generateStaticProfile = functions.https.onRequest(async (req: funct
       userAgent: req.headers['user-agent']
     });
 
-    // Extract business ID from URL
-    const businessId = req.path.split('/').pop();
+    // Fix the business ID extraction
+    const pathParts = req.path.split('/').filter(part => part.length > 0);
+    const businessId = pathParts.length > 0 ? pathParts[pathParts.length - 2] : null;
+
     console.log('Extracted business ID:', businessId);
 
     if (!businessId) {
@@ -109,10 +48,6 @@ export const generateStaticProfile = functions.https.onRequest(async (req: funct
       return;
     }
 
-    // For bots, we have two options:
-    // 1. Use the existing static HTML generation (faster but less complete)
-    // 2. Use Puppeteer to pre-render the actual page (slower but more complete)
-
     // Let's check if the business exists first
     const snapshot = await admin.firestore()
       .collection('listings')
@@ -129,26 +64,7 @@ export const generateStaticProfile = functions.https.onRequest(async (req: funct
     const data = snapshot.docs[0].data();
     console.log('DEBUG: Found business data');
 
-    // Option 1: Use Puppeteer to pre-render the actual page
-    try {
-      // The URL to pre-render (your actual web app URL)
-      const urlToRender = `https://webdirectories.co.za/panelbeaters-directory/${businessId}/profile`;
-
-      // Pre-render the page
-      const renderedHtml = await prerenderPage(urlToRender);
-
-      // Set appropriate headers
-      res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-      res.set('Content-Type', 'text/html');
-      res.send(renderedHtml);
-      return;
-    } catch (prerenderError) {
-      console.error('Error pre-rendering with Puppeteer:', prerenderError);
-      console.log('Falling back to static HTML generation');
-      // Fall back to Option 2 (static HTML generation)
-    }
-
-    // Option 2: Generate static HTML (fallback if pre-rendering fails)
+    // Generate static HTML
     // Sanitize data to prevent XSS
     const sanitize = (str: string | undefined) => str?.replace(/[<>]/g, '') || '';
 
@@ -175,14 +91,15 @@ export const generateStaticProfile = functions.https.onRequest(async (req: funct
       return cityName ? `in ${cityName}` : 'in South Africa';
     };
 
-    const html = `
+    // Construct the static HTML content
+    const staticHtml = `
       <!DOCTYPE html>
       <html lang="en">
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>${sanitize(data.title)} - Panel Beaters Directory</title>
-          <meta name="description" content="${sanitize(data.description || `Professional panel beating services ${getLocationText(data.city)}`)}">
+          <title>${sanitize(data.title || data.businessname)} - Panel Beaters Directory</title>
+          <meta name="description" content="${sanitize(data.description || `Professional panel beating services ${getLocationText(city)}`)}">
           <meta name="robots" content="index, follow">
           <link rel="canonical" href="https://webdirectories.co.za/panelbeaters-directory/${businessId}/profile">
           
@@ -190,37 +107,38 @@ export const generateStaticProfile = functions.https.onRequest(async (req: funct
             {
               "@context": "https://schema.org",
               "@type": "AutoRepair",
-              "name": "${sanitize(data.title)}",
-              "description": "${sanitize(data.description || `Professional panel beating services ${getLocationText(data.city)}`)}",
+              "name": "${sanitize(data.title || data.businessname)}",
+              "description": "${sanitize(data.description || `Professional panel beating services ${getLocationText(city)}`)}",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "${sanitize(data.streetaddress || '')}",
                 "addressLocality": "${sanitize(city)}",
                 "addressRegion": "${sanitize(province)}",
                 "addressCountry": "ZA"
-              }${data.businessTelephone ? `,\n    "telephone": "${sanitize(data.businessTelephone)}"` : ''}
+              }${data.businessTelephone || data.contactnumber ? `,\n    "telephone": "${sanitize(data.businessTelephone || data.contactnumber)}"` : ''}
             }
           </script>
         </head>
         <body>
           <main>
-            <h1>${sanitize(data.title)}</h1>
-            <p>${sanitize(data.description || `Professional panel beating services ${getLocationText(data.city)}`)}</p>
+            <h1>${sanitize(data.title || data.businessname)}</h1>
+            <p>${sanitize(data.description || `Professional panel beating services ${getLocationText(city)}`)}</p>
             <p>Address: ${[data.streetaddress, data.city, data.province].filter(Boolean).join(', ')}</p>
-            ${data.businessTelephone ? `<p>Phone: ${sanitize(data.businessTelephone)}</p>` : ''}
+            ${data.businessTelephone || data.contactnumber ? `<p>Phone: ${sanitize(data.businessTelephone || data.contactnumber)}</p>` : ''}
             ${data.businessHours ? `<p>Hours: ${sanitize(data.businessHours)}</p>` : ''}
             ${data.services ? `<p>Services: ${sanitize(data.services)}</p>` : ''}
           </main>
         </body>
       </html>
-    `.trim();
+    `;
 
+    // Set appropriate headers
     res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     res.set('Content-Type', 'text/html');
-    res.send(html);
+    res.send(staticHtml);
   } catch (error) {
-    console.error('Error generating static profile:', error);
-    res.status(500).send('Server error');
+    console.error('Error in generateStaticProfile:', error);
+    res.status(500).send('Internal Server Error');
   }
 });
 
@@ -229,12 +147,26 @@ export const renderPage = functions.https.onRequest(async (req: functions.https.
   try {
     // Get the path to render from the request
     const path = req.path || '/';
-    const fullUrl = `https://webdirectories.co.za${path}`;
 
-    console.log(`Rendering page: ${fullUrl}`);
-
-    // Pre-render the page
-    const html = await prerenderPage(fullUrl);
+    // Create a simple HTML response
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Web Directories - South Africa's Premier Business Directory</title>
+          <meta name="description" content="Find trusted businesses in South Africa with Web Directories, the comprehensive online business directory.">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="robots" content="index, follow">
+          <link rel="canonical" href="https://webdirectories.co.za${path}">
+        </head>
+        <body>
+          <h1>Web Directories</h1>
+          <p>South Africa's Premier Business Directory</p>
+          <p>This is a static version of the page for search engines.</p>
+          <p>For the full interactive experience, please visit <a href="https://webdirectories.co.za${path}">Web Directories</a>.</p>
+        </body>
+      </html>
+    `;
 
     // Set appropriate headers
     res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
@@ -246,7 +178,7 @@ export const renderPage = functions.https.onRequest(async (req: functions.https.
   }
 });
 
-// Keep the existing sitemap generator
+// Generate sitemap for search engines
 export const generateSitemap = functions.https.onRequest(async (req, res) => {
   try {
     console.log('Sitemap function called');
@@ -293,7 +225,7 @@ export const generateSitemap = functions.https.onRequest(async (req, res) => {
   }
 });
 
-// Keep the existing Rlistings function
+// API to get all listings
 export const Rlistings = functions.https.onRequest(async (req, res) => {
   try {
     const snapshot = await admin.firestore()
@@ -312,7 +244,7 @@ export const Rlistings = functions.https.onRequest(async (req, res) => {
   }
 });
 
-// Keep the existing app function
+// General app function
 export const app = functions.https.onRequest(async (req, res) => {
   try {
     // Add the original functionality of your app function here
@@ -321,4 +253,4 @@ export const app = functions.https.onRequest(async (req, res) => {
     console.error('Error in app function:', error);
     res.status(500).send('Error in app function');
   }
-}); 
+});
