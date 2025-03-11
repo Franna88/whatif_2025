@@ -6,6 +6,7 @@ import 'package:seo/html/seo_controller.dart';
 import 'package:seo/html/tree/widget_tree.dart';
 import 'package:webdirectories/MyHome.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:webdirectories/routes/routerConfig.dart';
 

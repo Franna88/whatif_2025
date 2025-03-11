@@ -1,76 +1,145 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.app = exports.Rlistings = exports.generateSitemap = exports.generateStaticProfile = void 0;
+exports.app = exports.Rlistings = exports.generateSitemap = exports.renderPage = exports.generateStaticProfile = void 0;
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const puppeteer = require("puppeteer");
 // Initialize Firebase Admin
 admin.initializeApp();
+// Cache for rendered pages to improve performance
+const pageCache = {};
+const CACHE_DURATION = 3600000; // 1 hour in milliseconds
+/**
+ * Pre-renders a page using Puppeteer
+ * @param url The URL to pre-render
+ * @returns The pre-rendered HTML
+ */
+async function prerenderPage(url) {
+    // Check cache first
+    const now = Date.now();
+    const cachedPage = pageCache[url];
+    if (cachedPage && (now - cachedPage.timestamp) < CACHE_DURATION) {
+        console.log(`Serving cached version of ${url}`);
+        return cachedPage.html;
+    }
+    console.log(`Pre-rendering page: ${url}`);
+    // Launch headless browser
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+    try {
+        const page = await browser.newPage();
+        // Set viewport for consistent rendering
+        await page.setViewport({
+            width: 1200,
+            height: 800
+        });
+        // Set user agent to identify as our renderer
+        await page.setUserAgent('WebDirectories-Renderer/1.0');
+        // Navigate to the URL and wait until network is idle
+        await page.goto(url, {
+            waitUntil: 'networkidle0',
+            timeout: 30000 // 30 seconds timeout
+        });
+        // Wait for Flutter to initialize and render content
+        await page.waitForFunction('window.flutterReady === true', { timeout: 20000 }).catch(() => {
+            console.log('Flutter ready flag not found, continuing anyway');
+        });
+        // Wait for the main content to be available
+        await page.waitForSelector('main', { timeout: 10000 }).catch(() => {
+            console.log('Main content selector not found, continuing anyway');
+        });
+        // Get the fully rendered HTML
+        const html = await page.content();
+        // Cache the result
+        pageCache[url] = { html, timestamp: now };
+        return html;
+    }
+    finally {
+        await browser.close();
+    }
+}
+// Enhanced version of generateStaticProfile that uses Puppeteer for complex pages
 exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
+    var _a;
     try {
         console.log('Request details:', {
             fullPath: req.path,
             pathSegments: req.path.split('/'),
             rawBusinessId: req.path.split('/').pop(),
-            cleanedBusinessId: req.path.split('/').pop()?.replace('/', ''),
             headers: req.headers,
             userAgent: req.headers['user-agent']
         });
-        console.log('Function triggered with full details:', {
-            url: req.url,
-            originalUrl: req.originalUrl,
-            path: req.path,
-            params: req.params,
-            query: req.query,
-            headers: req.headers,
-            method: req.method
-        });
-        // Extract business ID from URL - Fix for direct function URL
+        // Extract business ID from URL
         const businessId = req.path.split('/').pop();
         console.log('Extracted business ID:', businessId);
-        console.log('Path analysis:', {
-            originalPath: req.path,
-            pathParts: req.path.split('/'),
-            extractedId: businessId
-        });
-        // Try both string and number queries
+        if (!businessId) {
+            res.status(400).send('Business ID is required');
+            return;
+        }
+        // Check if request is from a bot
+        const userAgent = ((_a = req.headers['user-agent']) === null || _a === void 0 ? void 0 : _a.toLowerCase()) || '';
+        const isBot = userAgent.includes('bot') ||
+            userAgent.includes('crawler') ||
+            userAgent.includes('spider');
+        console.log('Is bot request:', isBot);
+        if (!isBot) {
+            // Regular users get redirected to the dynamic app
+            res.redirect(`/panelbeaters-directory/${businessId}/profile`);
+            return;
+        }
+        // For bots, we have two options:
+        // 1. Use the existing static HTML generation (faster but less complete)
+        // 2. Use Puppeteer to pre-render the actual page (slower but more complete)
+        // Let's check if the business exists first
         const snapshot = await admin.firestore()
             .collection('listings')
             .where('listingsId', 'in', [businessId, parseInt(businessId || '0')])
             .limit(1)
             .get();
-        console.log('DEBUG: Query results:', snapshot.size);
-        console.log('DEBUG: Empty?:', snapshot.empty);
         if (snapshot.empty) {
             console.log('DEBUG: No matching documents');
             res.status(404).send('Profile not found');
             return;
         }
         const data = snapshot.docs[0].data();
-        console.log('DEBUG: Found data:', data);
-        // Check if request is from a bot
-        const userAgent = req.headers['user-agent']?.toLowerCase() || '';
-        const isBot = userAgent.includes('bot') ||
-            userAgent.includes('crawler') ||
-            userAgent.includes('spider');
-        console.log('Is bot request:', isBot);
-        if (!isBot) {
-            // Regular users get the dynamic app
-            res.redirect(`/panelbeaters-directory/${businessId}/profile`);
+        console.log('DEBUG: Found business data');
+        // Option 1: Use Puppeteer to pre-render the actual page
+        try {
+            // The URL to pre-render (your actual web app URL)
+            const urlToRender = `https://webdirectories.co.za/panelbeaters-directory/${businessId}/profile`;
+            // Pre-render the page
+            const renderedHtml = await prerenderPage(urlToRender);
+            // Set appropriate headers
+            res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+            res.set('Content-Type', 'text/html');
+            res.send(renderedHtml);
             return;
         }
+        catch (prerenderError) {
+            console.error('Error pre-rendering with Puppeteer:', prerenderError);
+            console.log('Falling back to static HTML generation');
+            // Fall back to Option 2 (static HTML generation)
+        }
+        // Option 2: Generate static HTML (fallback if pre-rendering fails)
         // Sanitize data to prevent XSS
-        const sanitize = (str) => str?.replace(/[<>]/g, '') || '';
-        // Add debug logging for city data
-        console.log('DEBUG: City data:', data.city);
+        const sanitize = (str) => (str === null || str === void 0 ? void 0 : str.replace(/[<>]/g, '')) || '';
         // Extract city from address if not directly available
         const extractCity = (address) => {
+            var _a;
+            if (!address)
+                return '';
             const parts = address.split(',');
-            return parts.length > 1 ? parts[parts.length - 3]?.trim() : '';
+            return parts.length > 1 ? (_a = parts[parts.length - 3]) === null || _a === void 0 ? void 0 : _a.trim() : '';
         };
         // Improve province extraction
         const extractProvince = (address) => {
+            var _a;
+            if (!address)
+                return '';
             const parts = address.split(',');
-            return parts.length > 2 ? parts[parts.length - 2]?.trim() : '';
+            return parts.length > 2 ? (_a = parts[parts.length - 2]) === null || _a === void 0 ? void 0 : _a.trim() : '';
         };
         // Get city either from data.city or extract from address
         const city = data.city || extractCity(data.streetaddress || '');
@@ -112,26 +181,41 @@ exports.generateStaticProfile = functions.https.onRequest(async (req, res) => {
             <p>${sanitize(data.description || `Professional panel beating services ${getLocationText(data.city)}`)}</p>
             <p>Address: ${[data.streetaddress, data.city, data.province].filter(Boolean).join(', ')}</p>
             ${data.businessTelephone ? `<p>Phone: ${sanitize(data.businessTelephone)}</p>` : ''}
+            ${data.businessHours ? `<p>Hours: ${sanitize(data.businessHours)}</p>` : ''}
+            ${data.services ? `<p>Services: ${sanitize(data.services)}</p>` : ''}
           </main>
         </body>
       </html>
     `.trim();
-        // For bot requests
-        if (isBot) {
-            res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-        }
-        else {
-            res.set('Cache-Control', 'no-cache');
-        }
-        res.set('Access-Control-Allow-Origin', 'https://webdirectories.co.za');
-        res.set('Access-Control-Allow-Methods', 'GET');
+        res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+        res.set('Content-Type', 'text/html');
         res.send(html);
     }
     catch (error) {
-        console.error('Firestore query error:', error);
-        res.status(500).send('Database error');
+        console.error('Error generating static profile:', error);
+        res.status(500).send('Server error');
     }
 });
+// Pre-render any page in the app for SEO
+exports.renderPage = functions.https.onRequest(async (req, res) => {
+    try {
+        // Get the path to render from the request
+        const path = req.path || '/';
+        const fullUrl = `https://webdirectories.co.za${path}`;
+        console.log(`Rendering page: ${fullUrl}`);
+        // Pre-render the page
+        const html = await prerenderPage(fullUrl);
+        // Set appropriate headers
+        res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+        res.set('Content-Type', 'text/html');
+        res.send(html);
+    }
+    catch (error) {
+        console.error('Error rendering page:', error);
+        res.status(500).send('Error rendering page');
+    }
+});
+// Keep the existing sitemap generator
 exports.generateSitemap = functions.https.onRequest(async (req, res) => {
     try {
         console.log('Sitemap function called');
@@ -172,16 +256,13 @@ exports.generateSitemap = functions.https.onRequest(async (req, res) => {
         res.status(500).send('Error generating sitemap');
     }
 });
-// Add back the R-listings function
+// Keep the existing Rlistings function
 exports.Rlistings = functions.https.onRequest(async (req, res) => {
     try {
         const snapshot = await admin.firestore()
             .collection('listings')
             .get();
-        const listings = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+        const listings = snapshot.docs.map(doc => (Object.assign({ id: doc.id }, doc.data())));
         res.json(listings);
     }
     catch (error) {
@@ -189,7 +270,7 @@ exports.Rlistings = functions.https.onRequest(async (req, res) => {
         res.status(500).send('Error fetching listings');
     }
 });
-// Add back the app function
+// Keep the existing app function
 exports.app = functions.https.onRequest(async (req, res) => {
     try {
         // Add the original functionality of your app function here
