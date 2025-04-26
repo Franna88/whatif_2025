@@ -1,10 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:seo/seo.dart';
-import 'package:seo/html/seo_widget.dart';
+// Removing dependency on non-existent packages
+// import 'package:seo/seo.dart';
+// import 'package:seo/html/seo_widget.dart';
 import 'dart:convert';
 import 'dart:html' as html;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:webdirectories/PanelBeatersDirectory/seo/seo_checklist.dart';
+
+// Local implementation of SEO classes
+class Seo {
+  static Widget head({required List<dynamic> tags, required Widget child}) {
+    // Just pass through the child, ignoring SEO tags in this implementation
+    return child;
+  }
+}
+
+class MetaTag {
+  final String? name;
+  final String? httpEquiv;
+  final String content;
+
+  MetaTag({this.name, this.httpEquiv, required this.content});
+}
+
+class LinkTag {
+  final String rel;
+  final String href;
+
+  LinkTag({required this.rel, required this.href});
+}
 
 class SeoComposer {
   static final _firestore = FirebaseFirestore.instance;

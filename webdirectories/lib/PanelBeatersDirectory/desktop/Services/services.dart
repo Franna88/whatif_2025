@@ -3,8 +3,6 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
-import 'package:seo/head_tag.dart';
-import 'package:seo/html/seo_widget.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AboutServices/AboutServices.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AccreditationService/AccreditationService.dart';
@@ -15,11 +13,13 @@ import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceCon
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServiceProfile/ServiceProfile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesMaps/ServicesMaps.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/ServicesNavButton/ServicesNavButton.dart';
+import 'package:webdirectories/PanelBeatersDirectory/seo/SeoComposer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.dart';
 import 'package:webdirectories/WebDirectories/Footer/Footer.dart';
 import 'package:webdirectories/myutility.dart';
 import 'package:intl/intl.dart';
 import 'dart:html' as html;
+import 'dart:js' as js;
 
 enum ServicesPages {
   profile,
@@ -172,12 +172,24 @@ class _ServicesState extends State<Services> {
         .update({"views": businessViews});
   }
 
+  // Notify SEO crawler that content is ready
+  void _notifyContentReady() {
+    if (html.window.document.documentElement!
+            .getAttribute('user-agent')
+            ?.contains('WebDirectories-Renderer') ??
+        false) {
+      print('SEO crawler detected, marking content as ready');
+      js.context.callMethod('markFlutterContentReady');
+    }
+  }
+
+  // Get listing data from Firestore
   Future<void> _getListingData() async {
-    print('listing id: ${widget.listingId}');
+    setState(() {
+      _isLoading = true;
+    });
     try {
-      setState(() {
-        _isLoading = true;
-      });
+      print('Fetching listing data for ID: ${widget.listingId}');
 
       QuerySnapshot data = await _firestore
           .collection('listings')
@@ -237,6 +249,9 @@ class _ServicesState extends State<Services> {
           });
           _isLoading = false;
         });
+
+        // Notify when content is ready for SEO crawler
+        _notifyContentReady();
       }
     } catch (e) {
       print('Error fetching listing data: $e');

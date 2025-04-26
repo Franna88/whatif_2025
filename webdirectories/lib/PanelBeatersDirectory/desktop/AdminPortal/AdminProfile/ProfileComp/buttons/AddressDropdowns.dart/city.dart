@@ -1,39 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:csc_picker/csc_picker.dart';
 
 class CityDropdown extends StatelessWidget {
-  final String countryValue;
-  final String stateValue;
-  final Function(String) onCityChanged;
+  final Function(String?) onCityChanged;
+  final String? selectedCity;
 
-  const CityDropdown(
-      {Key? key,
-      required this.countryValue,
-      required this.stateValue,
-      required this.onCityChanged})
-      : super(key: key);
+  const CityDropdown({
+    Key? key,
+    required this.onCityChanged,
+    this.selectedCity,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CSCPicker(
-      showStates: true,
-      showCities: true,
-      flagState: CountryFlag.ENABLE,
-      dropdownDecoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: Colors.white,
-        border: Border.all(color: Colors.grey.shade300, width: 1),
+    // List of major cities in South Africa
+    final cities = [
+      'Johannesburg',
+      'Cape Town',
+      'Durban',
+      'Pretoria',
+      'Port Elizabeth',
+      'Bloemfontein',
+      'East London',
+      'Kimberley',
+      'Polokwane',
+      'Nelspruit',
+      'Rustenburg',
+      'Other'
+    ];
+
+    return DropdownButtonFormField<String>(
+      decoration: const InputDecoration(
+        labelText: 'City',
+        border: OutlineInputBorder(),
       ),
-      cityDropdownLabel: "*City",
-      onCountryChanged: (value) {
-        // Optionally handle country change
-      },
-      onStateChanged: (value) {
-        // Optionally handle state change
-      },
-      onCityChanged: (value) {
-        onCityChanged(value!);
-      },
+      value: selectedCity ?? cities[0],
+      items: cities
+          .map((city) => DropdownMenuItem(
+                value: city,
+                child: Text(city),
+              ))
+          .toList(),
+      onChanged: onCityChanged,
     );
   }
 }

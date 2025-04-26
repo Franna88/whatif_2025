@@ -25,6 +25,19 @@
   <link rel="manifest" href="manifest.json">
   <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml" />
   <script async src="https://cse.google.com/cse.js?cx=a182b439dfdc444f4"></script>
+
+  <!-- SEO Helper Script -->
+  <script>
+    // Flag to indicate when Flutter content is fully rendered
+    window.flutterContentReady = false;
+
+    // Function to mark content as ready (will be called from Flutter)
+    window.markFlutterContentReady = function () {
+      console.log("Flutter content is fully rendered and ready");
+      window.flutterContentReady = true;
+    };
+  </script>
+
   <script>
     // The value below is injected by flutter build, do not touch.
     const serviceWorkerVersion = null;

@@ -40,13 +40,14 @@ class _SubmitCVContainerState extends State<SubmitCVContainer> {
     super.dispose();
   }
 
-  String _selectedCountry = '';
+  String? selectedCountry;
 
-  void _handleCountryChange(String country) {
-    setState(() {
-      _selectedCountry = country; // Update the state with the selected country
-    });
-    print('Selected Country: $country'); // Do something with the country
+  void _handleCountryChange(String? value) {
+    if (value != null) {
+      setState(() {
+        selectedCountry = value;
+      });
+    }
   }
 
   String selectedProvince = "";

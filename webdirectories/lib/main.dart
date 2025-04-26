@@ -1,37 +1,19 @@
 import 'package:cached_firestorage/cached_firestorage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:seo/html/seo_controller.dart';
-import 'package:seo/html/tree/widget_tree.dart';
-import 'package:webdirectories/MyHome.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:webdirectories/PanelBeatersDirectory/seo/StaticPageGenerator.dart';
-
-import 'package:webdirectories/routes/routerConfig.dart';
-
-import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:webdirectories/routes/mobileRouterConfig.dart';
 
 void main() async {
-  usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Generate static pages during build if flag is set
+  // Initialize Firebase for mobile platforms
+  await Firebase.initializeApp();
 
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-        options: const FirebaseOptions(
-            apiKey: "AIzaSyDrcaRErNxL1GhUvMj4Cx6f0r9eKDwCgko",
-            authDomain: "web-directories.firebaseapp.com",
-            projectId: "web-directories",
-            storageBucket: "web-directories.appspot.com",
-            messagingSenderId: "853657273198",
-            appId: "1:853657273198:web:d5ebc0dbaecd2023ff377f"));
-  } else {
-    await Firebase.initializeApp();
-  }
+  // Configure cache timeout for Firestorage
   CachedFirestorage.instance.cacheTimeout = 30;
-  runApp(MyApp());
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -39,16 +21,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Building MyApp');
-    GoRouter _router = Routerconfig.returnRouter();
-    return SeoController(
-      enabled: true,
-      tree: WidgetTree(context: context),
-      child: MaterialApp.router(
-        routeInformationParser: _router.routeInformationParser,
-        routeInformationProvider: _router.routeInformationProvider,
-        routerDelegate: _router.routerDelegate,
-        title: 'Web Directories',
+    print('Building Mobile App');
+    GoRouter _router = MobileRouterconfig.returnRouter();
+
+    return MaterialApp.router(
+      routeInformationParser: _router.routeInformationParser,
+      routeInformationProvider: _router.routeInformationProvider,
+      routerDelegate: _router.routerDelegate,
+      title: 'Web Directories Mobile',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
   }

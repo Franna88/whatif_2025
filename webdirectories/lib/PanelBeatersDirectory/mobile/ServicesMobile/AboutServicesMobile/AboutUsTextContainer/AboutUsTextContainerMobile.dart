@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter/widgets.dart';
-import 'package:flutter_html/flutter_html.dart';
-
 import 'package:webdirectories/myutility.dart';
 
 class AboutUsTextContainerMobile extends StatefulWidget {
@@ -17,6 +13,7 @@ class AboutUsTextContainerMobile extends StatefulWidget {
 class _AboutUsTextContainerMobileState
     extends State<AboutUsTextContainerMobile> {
   final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,24 +47,21 @@ class _AboutUsTextContainerMobileState
                 ),
               ),
             ),
-            SizedBox(
-              width: MyUtility(context).width * 0.72,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 35),
-                child: Html(
-                  data: widget.aboutUsText == ''
-                      ? '<p>No more information found<p>'
-                      : widget.aboutUsText,
-                  style: {
-                    "h1": Style(
+            Expanded(
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 35),
+                  child: Text(
+                    widget.aboutUsText.isEmpty
+                        ? 'No more information found'
+                        : _stripHtmlTags(widget.aboutUsText),
+                    style: TextStyle(
                       color: Colors.white,
+                      fontSize: 16,
                       fontFamily: 'raleway',
                     ),
-                    "p": Style(
-                      color: Colors.white,
-                      fontFamily: 'raleway',
-                    ),
-                  },
+                  ),
                 ),
               ),
             )
@@ -75,5 +69,19 @@ class _AboutUsTextContainerMobileState
         ),
       ),
     );
+  }
+
+  // Simple function to strip basic HTML tags
+  String _stripHtmlTags(String htmlText) {
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+
+    return htmlText
+        .replaceAll(exp, ' ')
+        .replaceAll('&nbsp;', ' ')
+        .replaceAll('&amp;', '&')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&quot;', '"')
+        .replaceAll('&#39;', "'");
   }
 }

@@ -1,70 +1,170 @@
 {
-    "functions": {
-        "source": "functions",
-        "runtime": "nodejs18",
-        "memory": "2GB"
-    },
-    "hosting": {
-        "public": "build/web",
-        "ignore": [
-            "firebase.json",
-            "**/.*",
-            "**/node_modules/**"
-        ],
-        "rewrites": [
-            {
-                "source": "/panelbeaters-directory/:id/profile",
-                "function": "generateStaticProfile",
-                "region": "us-central1",
-                "pinTag": true,
-                "conditions": [
-                    {
-                        "header": "user-agent",
-                        "pattern": ".*(bot|crawler|spider).*",
-                        "caseSensitive": false
-                    }
-                ]
-            },
-            {
-                "source": "/generateStaticProfile/:id",
-                "function": "generateStaticProfile",
-                "region": "us-central1"
-            },
-            {
-                "source": "/sitemap.xml",
-                "function": "generateSitemap",
-                "region": "us-central1"
-            },
-            {
-                "source": "**/*.{js,css,png,jpg,jpeg,gif,ico,html}",
-                "destination": "/build/web/:1"
-            },
-            {
-                "source": "**",
-                "destination": "/index.html"
-            }
-        ],
-        "cleanUrls": true,
-        "trailingSlash": false,
-        "priority": "function",
-        "headers": [
-            {
-                "source": "**",
-                "headers": [
-                    {
-                        "key": "Cache-Control",
-                        "value": "no-cache, no-store, must-revalidate"
-                    },
-                    {
-                        "key": "X-Robots-Tag",
-                        "value": "all"
-                    },
-                    {
-                        "key": "google-site-verification",
-                        "value": "YlOO70vPUqg7J4cW"
-                    }
-                ]
-            }
-        ]
-    }
+    "functions": [
+        {
+            "source": "functions",
+            "codebase": "default",
+            "ignore": [
+                "node_modules",
+                ".git",
+                "firebase-debug.log",
+                "firebase-debug.*.log",
+                "*.local"
+            ],
+            "predeploy": [
+                "npm --prefix \"$RESOURCE_DIR\" run build"
+            ]
+        }
+    ],
+    "hosting": [
+        {
+            "target": "app",
+            "public": "build/web",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ],
+            "rewrites": [
+                {
+                    "source": "/panelbeaters-directory",
+                    "destination": "/www.webdirectories.co.za/panelbeaters-directory/index.html"
+                },
+                {
+                    "source": "/panelbeaters-directory/",
+                    "destination": "/www.webdirectories.co.za/panelbeaters-directory/index.html"
+                },
+                {
+                    "source": "/sitemap.xml",
+                    "function": "generateSitemap",
+                    "region": "us-central1"
+                },
+                {
+                    "source": "/render/**",
+                    "function": "renderPage",
+                    "region": "us-central1"
+                },
+                {
+                    "source": "**",
+                    "destination": "/index.html"
+                }
+            ],
+            "cleanUrls": true,
+            "appAssociation": "AUTO",
+            "headers": [
+                {
+                    "source": "**/*.html",
+                    "headers": [
+                        {
+                            "key": "Cache-Control",
+                            "value": "public, max-age=300, s-maxage=600"
+                        },
+                        {
+                            "key": "X-Robots-Tag",
+                            "value": "all"
+                        },
+                        {
+                            "key": "google-site-verification",
+                            "value": "YlOO70vPUqg7J4cW"
+                        }
+                    ]
+                },
+                {
+                    "source": "**",
+                    "headers": [
+                        {
+                            "key": "Cache-Control",
+                            "value": "no-cache, no-store, must-revalidate"
+                        },
+                        {
+                            "key": "X-Robots-Tag",
+                            "value": "all"
+                        },
+                        {
+                            "key": "google-site-verification",
+                            "value": "YlOO70vPUqg7J4cW"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "target": "prerendered",
+            "public": "functions/src",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ],
+            "rewrites": [
+                {
+                    "source": "/",
+                    "destination": "/www.webdirectories.co.za/index.html"
+                },
+                {
+                    "source": "/panelbeaters-directory",
+                    "destination": "/www.webdirectories.co.za/panelbeaters-directory/index.html"
+                },
+                {
+                    "source": "/panelbeaters-directory/",
+                    "destination": "/www.webdirectories.co.za/panelbeaters-directory/index.html"
+                },
+                {
+                    "source": "/panelbeaters-directory/:id/profile",
+                    "destination": "/www.webdirectories.co.za/panelbeaters-directory/:id/profile.html"
+                },
+                {
+                    "source": "/sitemap.xml",
+                    "function": "generateSitemap",
+                    "region": "us-central1"
+                },
+                {
+                    "source": "/render/**",
+                    "function": "renderPage",
+                    "region": "us-central1"
+                },
+                {
+                    "source": "**",
+                    "destination": "/index.html"
+                }
+            ],
+            "cleanUrls": true,
+            "appAssociation": "AUTO",
+            "headers": [
+                {
+                    "source": "**/*.html",
+                    "headers": [
+                        {
+                            "key": "Cache-Control",
+                            "value": "public, max-age=300, s-maxage=600"
+                        },
+                        {
+                            "key": "X-Robots-Tag",
+                            "value": "all"
+                        },
+                        {
+                            "key": "google-site-verification",
+                            "value": "YlOO70vPUqg7J4cW"
+                        }
+                    ]
+                },
+                {
+                    "source": "**",
+                    "headers": [
+                        {
+                            "key": "Cache-Control",
+                            "value": "no-cache, no-store, must-revalidate"
+                        },
+                        {
+                            "key": "X-Robots-Tag",
+                            "value": "all"
+                        },
+                        {
+                            "key": "google-site-verification",
+                            "value": "YlOO70vPUqg7J4cW"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

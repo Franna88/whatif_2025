@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
-import 'package:seo/head_tag.dart';
-import 'package:seo/html/seo_widget.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/MobileTopNavBar/MobileTopNavBarhome.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/AboutServicesMobile/AboutServicesMobile.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/AccreditationServiceMobile/AccreditationServiceMobile.dart';
@@ -16,18 +14,35 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/ServicesMobile/Servi
 import 'package:webdirectories/myutility.dart';
 
 import '../../utils/firebaseImageUtils.dart';
-import 'dart:html' as html;
+
+// Define enum for ServicesMobile pages
+enum ServicesMobilePages {
+  profile,
+  contact,
+  maps,
+  accreditations,
+  about,
+  documents,
+  reviews,
+  finance
+}
 
 class ServicesMobile extends StatefulWidget {
-  String listingId;
-  ServicesMobile({super.key, required this.listingId});
+  final String listingId;
+  final ServicesMobilePages? page;
+
+  ServicesMobile({
+    super.key,
+    required this.listingId,
+    this.page,
+  });
 
   @override
   State<ServicesMobile> createState() => _ServicesMobileState();
 }
 
 class _ServicesMobileState extends State<ServicesMobile> {
-  var pageIndex = 0;
+  late int pageIndex;
 
   ///change page
   updatePageIndex(value) {
@@ -48,6 +63,13 @@ class _ServicesMobileState extends State<ServicesMobile> {
   @override
   void initState() {
     super.initState();
+    // Initialize pageIndex based on the provided page parameter
+    if (widget.page != null) {
+      pageIndex = widget.page!.index;
+    } else {
+      pageIndex = 0; // Default to profile page
+    }
+
     checkViewExist();
     _getListingData();
   }
@@ -72,7 +94,7 @@ class _ServicesMobileState extends State<ServicesMobile> {
           .collection('views')
           .doc(widget.listingId)
           .set(busnessDetails)
-          .whenComplete(updateViews(ipv4));
+          .whenComplete(() => updateViews(ipv4));
     }
   }
 
@@ -118,8 +140,7 @@ class _ServicesMobileState extends State<ServicesMobile> {
 
 //Update businessViews
   updateViews(ip) async {
-    final currentUrl = html.window.location.href;
-    var viewDetails = {"ip": ip, "url": currentUrl, "date": DateTime.now()};
+    var viewDetails = {"ip": ip, "date": DateTime.now()};
     setState(() {
       businessViews.add(viewDetails);
     });
@@ -190,227 +211,142 @@ class _ServicesMobileState extends State<ServicesMobile> {
 
   @override
   Widget build(BuildContext context) {
-    var servicesPages = [
-      Seo.head(
-        tags: [
-          MetaTag(
-            name: 'description',
-            content: 'Panel Beaters Directory - ${_listingsTitle}',
-          ),
-          LinkTag(
-            rel: 'canonical',
-            href:
-                'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
-          ),
-        ],
-        child: ServiceProfileMobile(
-            imagesData: _galleryData,
-            linkData: _linkData,
-            contactData: _contactData),
+    List<Widget> servicesPages = [
+      ServiceProfileMobile(
+        imagesData: _galleryData,
+        linkData: _linkData,
+        contactData: _contactData,
       ),
-      Seo.head(
-        tags: [
-          MetaTag(
-            name: 'description',
-            content: 'Panel Beaters Directory - ${_listingsTitle}',
-          ),
-          LinkTag(
-            rel: 'canonical',
-            href:
-                'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
-          ),
-        ],
-        child: ServiceContactMobile(
-          listingData: _listingData,
-        ),
+      ServiceContactMobile(
+        listingData: _listingData,
       ),
-      Seo.head(
-        tags: [
-          MetaTag(
-            name: 'description',
-            content: 'Panel Beaters Directory - ${_listingsTitle}',
-          ),
-          LinkTag(
-            rel: 'canonical',
-            href:
-                'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
-          ),
-        ],
-        child: ServicesMapsMobile(
-          listingId: _listingData['listingsId'] ?? 0,
-          listingAddress: _listingData['streetaddress'] ?? 'No listing address',
-          listinglatitude: _listingData['latitude'] ?? 0.0,
-          listinglongitude: _listingData['longitude'] ?? 0.0,
-        ),
+      ServicesMapsMobile(
+        listingId: _listingData['listingsId'] ?? 0,
+        listingAddress: _listingData['streetaddress'] ?? 'No listing address',
+        listinglatitude: _listingData['latitude'] ?? 0.0,
+        listinglongitude: _listingData['longitude'] ?? 0.0,
       ),
-      Seo.head(
-          tags: [
-            MetaTag(
-              name: 'description',
-              content: 'Panel Beaters Directory - ${_listingsTitle}',
-            ),
-            LinkTag(
-              rel: 'canonical',
-              href:
-                  'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
-            ),
-          ],
-          child: AccreditationServiceMobile(
-              listingId: int.parse(widget.listingId))),
-      Seo.head(
-        tags: [
-          MetaTag(
-            name: 'description',
-            content: 'Panel Beaters Directory - ${_listingsTitle}',
-          ),
-          LinkTag(
-            rel: 'canonical',
-            href:
-                'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
-          ),
-        ],
-        child: AboutServicesMobile(
-            listingsId: int.parse(widget.listingId),
-            beeLevel: _listingData['beerating'] ?? ''),
+      AccreditationServiceMobile(
+        listingId: int.parse(widget.listingId),
       ),
-      Seo.head(
-          tags: [
-            MetaTag(
-              name: 'description',
-              content: 'Panel Beaters Directory - ${_listingsTitle}',
-            ),
-            LinkTag(
-              rel: 'canonical',
-              href:
-                  'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
-            ),
-          ],
-          child:
-              DocumentsServicesMobile(listingsId: int.parse(widget.listingId))),
-      Seo.head(tags: [
-        MetaTag(
-          name: 'description',
-          content: 'Panel Beaters Directory - ${_listingsTitle}',
-        ),
-        LinkTag(
-          rel: 'canonical',
-          href:
-              'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
-        ),
-      ], child: const ReviewsMobile()),
-      Seo.head(tags: [
-        MetaTag(
-          name: 'description',
-          content: 'Panel Beaters Directory - ${_listingsTitle}',
-        ),
-        LinkTag(
-          rel: 'canonical',
-          href:
-              'https://webdirectories.co.za/panelbeaters/listings/${widget.listingId}',
-        ),
-      ], child: const FinanceMobile()),
+      AboutServicesMobile(
+        listingsId: int.parse(widget.listingId),
+        beeLevel: _listingData['beerating'] ?? '',
+      ),
+      DocumentsServicesMobile(
+        listingsId: int.parse(widget.listingId),
+      ),
+      const ReviewsMobile(),
+      const FinanceMobile(),
     ];
+
     return Material(
       child: Container(
-          height: MyUtility(context).height,
-          width: MyUtility(context).width,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('images/mainBackgroundpan.png'),
-              fit: BoxFit.fill,
-            ),
+        height: MyUtility(context).height,
+        width: MyUtility(context).width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/mainBackgroundpan.png'),
+            fit: BoxFit.fill,
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                MobileTopNavBarhome(),
-                if (pageIndex == 0)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: SizedBox(
-                      width: MyUtility(context).width * 0.9,
-                      child: Center(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(1),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 0.5,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.keyboard_arrow_left,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                'Go Back',
-                                style: TextStyle(
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              MobileTopNavBarhome(),
+              if (pageIndex == 0)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: SizedBox(
+                    width: MyUtility(context).width * 0.9,
+                    child: Center(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(1),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
                                   color: Colors.white,
-                                  fontSize: 17.68,
-                                  fontFamily: 'raleway',
-                                  fontWeight: FontWeight.w400,
+                                  width: 0.5,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
-                            ],
-                          ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.keyboard_arrow_left,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              'Go Back',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17.68,
+                                fontFamily: 'raleway',
+                                fontWeight: FontWeight.w400,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                Center(
-                    child: Padding(
+                ),
+              Center(
+                child: Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Container(
-                      width: MyUtility(context).width * 0.95,
-                      decoration: ShapeDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment(0.56, -0.83),
-                          end: Alignment(-0.56, 0.83),
-                          colors: [
-                            Colors.white.withOpacity(0.10000000149011612),
-                            Colors.white.withOpacity(0.4000000059604645)
-                          ],
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        shadows: [
-                          BoxShadow(
-                            color: Color(0xBF000000),
-                            blurRadius: 24,
-                            offset: Offset(0, 4),
-                            spreadRadius: -1,
-                          )
+                    width: MyUtility(context).width * 0.95,
+                    decoration: ShapeDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment(0.56, -0.83),
+                        end: Alignment(-0.56, 0.83),
+                        colors: [
+                          Colors.white.withOpacity(0.10000000149011612),
+                          Colors.white.withOpacity(0.4000000059604645)
                         ],
                       ),
-                      child: SingleChildScrollView(
-                        child: Column(children: [
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      shadows: [
+                        BoxShadow(
+                          color: Color(0xBF000000),
+                          blurRadius: 24,
+                          offset: Offset(0, 4),
+                          spreadRadius: -1,
+                        )
+                      ],
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
                           SizedBox(
                             height: 20,
                           ),
                           ServicesNavButtonMobile(
-                              updatePageIndex: updatePageIndex),
-                          servicesPages[pageIndex]
-                        ]),
-                      )),
-                )),
-              ],
-            ),
-          )),
+                            updatePageIndex: updatePageIndex,
+                          ),
+                          servicesPages[pageIndex],
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

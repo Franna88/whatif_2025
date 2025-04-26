@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PuppeteerRenderer = void 0;
 const puppeteer = require("puppeteer");
 class PuppeteerRenderer {
-    static browser = null;
     static async initialize() {
         if (!this.browser) {
             this.browser = await puppeteer.launch({
@@ -12,7 +11,8 @@ class PuppeteerRenderer {
                     '--no-sandbox',
                     '--disable-setuid-sandbox',
                     '--disable-dev-shm-usage',
-                    '--single-process'
+                    '--single-process',
+                    '--no-zygote'
                 ]
             });
         }
@@ -34,4 +34,5 @@ class PuppeteerRenderer {
     }
 }
 exports.PuppeteerRenderer = PuppeteerRenderer;
+PuppeteerRenderer.browser = null;
 //# sourceMappingURL=puppeteer-renderer.js.map

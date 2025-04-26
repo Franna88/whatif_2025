@@ -1,35 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:csc_picker/csc_picker.dart';
 
 class ProvinceDropdown extends StatelessWidget {
-  final String countryValue;
-  final Function(String) onStateChanged;
+  final Function(String?) onProvinceChanged;
+  final String? selectedProvince;
 
-  const ProvinceDropdown(
-      {Key? key,
-      required this.countryValue,
-      required this.onStateChanged,
-      required void Function(String country) onProvinceChanged})
-      : super(key: key);
+  const ProvinceDropdown({
+    Key? key,
+    required this.onProvinceChanged,
+    this.selectedProvince,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CSCPicker(
-      showStates: true,
-      showCities: false,
-      flagState: CountryFlag.ENABLE,
-      dropdownDecoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: Colors.white,
-        border: Border.all(color: Colors.grey.shade300, width: 1),
+    final provinces = [
+      'Eastern Cape',
+      'Free State',
+      'Gauteng',
+      'KwaZulu-Natal',
+      'Limpopo',
+      'Mpumalanga',
+      'North West',
+      'Northern Cape',
+      'Western Cape',
+    ];
+
+    return DropdownButtonFormField<String>(
+      decoration: const InputDecoration(
+        labelText: 'Province',
+        border: OutlineInputBorder(),
       ),
-      stateDropdownLabel: "*Province",
-      onCountryChanged: (value) {
-        // Optionally handle country change
-      },
-      onStateChanged: (value) {
-        onStateChanged(value!);
-      },
+      value: selectedProvince ?? provinces[0],
+      items: provinces
+          .map((province) => DropdownMenuItem(
+                value: province,
+                child: Text(province),
+              ))
+          .toList(),
+      onChanged: onProvinceChanged,
     );
   }
 }
