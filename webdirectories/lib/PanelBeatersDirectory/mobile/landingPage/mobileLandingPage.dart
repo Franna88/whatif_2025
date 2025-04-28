@@ -11,6 +11,7 @@ import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/menus/me
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/menus/menuItems/mobileWatifMenu.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/landingPage/ui/mobileGlassContainer.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/weConnectPage/weConnectMainPage/weConnectMainPage.dart';
+import 'dart:developer' as developer;
 
 class Mobilelandingpage extends StatefulWidget {
   const Mobilelandingpage({
@@ -27,6 +28,7 @@ class _MobilelandingpageState extends State<Mobilelandingpage> {
 
   @override
   void initState() {
+    developer.log('Mobilelandingpage: initState called');
     menuContainers = [
       const Mobilewatifmenu(),
       const MobileFindAllPanelBeaters(),
@@ -41,8 +43,12 @@ class _MobilelandingpageState extends State<Mobilelandingpage> {
 
   @override
   Widget build(BuildContext context) {
+    developer.log('Mobilelandingpage: build called');
     var heightDevice = MediaQuery.of(context).size.height;
     var widthDevice = MediaQuery.of(context).size.width;
+    developer
+        .log('Device dimensions: height=$heightDevice, width=$widthDevice');
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -57,38 +63,64 @@ class _MobilelandingpageState extends State<Mobilelandingpage> {
               ),
               child: PageView(
                 controller: _pageController,
+                onPageChanged: (index) {
+                  developer.log('PageView: page changed to index $index');
+                },
                 children: [
                   // Add the WeConnectMainPage here
-                  WeConnectMainPageMobile(),
-                  SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        MobileTopNavBarhome(),
-                        MobileCategorySelect(
-                          menuIndex: menuIndex,
-                          changeMenu: (value) {
-                            setState(() {
-                              menuIndex = value;
-                            });
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Mobileglasscontainer(
-                              child: menuContainers[menuIndex]),
-                        ),
-                      ],
-                    ),
-                  ),
+                  Builder(builder: (context) {
+                    developer.log('Building WeConnectMainPageMobile');
+                    return WeConnectMainPageMobile();
+                  }),
+                  Builder(builder: (context) {
+                    developer.log(
+                        'Building main landing page content, menuIndex=$menuIndex');
+                    return SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MobileTopNavBarhome(),
+                          MobileCategorySelect(
+                            menuIndex: menuIndex,
+                            changeMenu: (value) {
+                              developer.log(
+                                  'Menu changed from $menuIndex to $value');
+                              setState(() {
+                                menuIndex = value;
+                              });
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Builder(builder: (context) {
+                              developer.log(
+                                  'Building menu container for index $menuIndex');
+                              return Mobileglasscontainer(
+                                  child: menuContainers[menuIndex]);
+                            }),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
-            PanFooterMobile()
+            Builder(builder: (context) {
+              developer.log('Building PanFooterMobile');
+              return PanFooterMobile();
+            })
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    developer.log('Mobilelandingpage: dispose called');
+    _pageController.dispose();
+    super.dispose();
   }
 }
