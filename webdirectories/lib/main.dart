@@ -2,6 +2,7 @@ import 'package:cached_firestorage/cached_firestorage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileView.dart';
 import 'package:webdirectories/routes/mobileRouterConfig.dart';
 
 void main() async {
@@ -22,17 +23,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('Building Mobile App');
-    GoRouter _router = MobileRouterconfig.returnRouter();
 
-    return MaterialApp.router(
-      routeInformationParser: _router.routeInformationParser,
-      routeInformationProvider: _router.routeInformationProvider,
-      routerDelegate: _router.routerDelegate,
+    // For debugging purposes - we'll directly show the mobile view
+    return MaterialApp(
       title: 'Web Directories Mobile',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      home: const MobileView(),
     );
   }
 }
