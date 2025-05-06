@@ -4,6 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:webdirectories/MainAppView.dart';
+import 'package:webdirectories/Watif/watif_home.dart';
+import 'package:webdirectories/Watif/WatifLoginPages/watif_login.dart';
+import 'package:webdirectories/Watif/watif_landing.dart';
+import 'package:webdirectories/Watif/watif_routes.dart';
 import 'package:webdirectories/routes/mobileRouterConfig.dart';
 
 void main() async {
@@ -52,7 +56,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     print('Building Mobile App');
 
-    // For debugging purposes - we'll directly show the main view
     return MaterialApp(
       title: 'Web Directories Mobile',
       debugShowCheckedModeBanner: false,
@@ -60,7 +63,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MainAppView(),
+      initialRoute: WatifRoutes.landing,
+      onGenerateRoute: WatifRoutes.generateRoute,
+      navigatorKey: GlobalKey<NavigatorState>(),
     );
   }
 }
