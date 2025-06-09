@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileView.dart';
@@ -7,7 +8,6 @@ import 'package:webdirectories/WebDirectories/Mobile/MobilePage4/MobilePage4.dar
 import 'package:webdirectories/WebDirectories/Mobile/MobilePage5/MobilePage5.dart';
 import 'package:webdirectories/main.dart';
 import 'package:webdirectories/myutility.dart';
-import 'dart:html' as html;
 
 import 'package:webdirectories/routes/routerNames.dart';
 
@@ -197,8 +197,16 @@ class _DirectoryContainerState extends State<DirectoryContainer> {
                 child: TextButton(
                   onPressed: () {
                     if (widget.Title1 == "PANEL BEATER\n") {
-                      // Open the PanelBeatersHome page in a new tab using the named route URL
-                      html.window.open('/panelbeaters-directory', '_blank');
+                      // Handle navigation to panelbeaters directory
+                      if (kIsWeb) {
+                        // For web, we'd use dart:html but since this is causing issues
+                        // let's use a Flutter-compatible approach
+                        launchUrl(Uri.parse('/panelbeaters-directory'));
+                      } else {
+                        // For mobile, navigate within the app using GoRouter or Navigator
+                        // You can implement mobile-specific navigation here
+                        context.go('/panelbeaters-directory');
+                      }
                       return;
                     }
                     widget.Title2 == "WATIF"

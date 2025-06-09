@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webdirectories/PanelBeatersDirectory/panelBeatersHome.dart';
 import 'package:webdirectories/WebDirectories/Page4/Page4.dart';
 import 'package:webdirectories/myutility.dart';
-import 'dart:html' as html;
 import 'package:go_router/go_router.dart';
 import 'package:webdirectories/routes/routerNames.dart';
 

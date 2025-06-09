@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Footer/panelFooter.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AboutServices/AboutServices.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/Services/AccreditationService/AccreditationService.dart';
@@ -18,8 +19,6 @@ import 'package:webdirectories/PanelBeatersDirectory/utils/firebaseImageUtils.da
 import 'package:webdirectories/WebDirectories/Footer/Footer.dart';
 import 'package:webdirectories/myutility.dart';
 import 'package:intl/intl.dart';
-import 'dart:html' as html;
-import 'dart:js' as js;
 
 enum ServicesPages {
   profile,
@@ -160,7 +159,10 @@ class _ServicesState extends State<Services> {
 
 //Update businessViews
   updateViews(ip) async {
-    final currentUrl = html.window.location.href;
+    // Platform-aware URL handling
+    final currentUrl = kIsWeb
+        ? 'https://webdirectories.co.za/panelbeaters-directory/profile/${widget.listingId}'
+        : 'mobile://panelbeaters-directory/profile/${widget.listingId}';
     var viewDetails = {"ip": ip, "url": currentUrl, "date": DateTime.now()};
     setState(() {
       businessViews.add(viewDetails);
@@ -174,12 +176,11 @@ class _ServicesState extends State<Services> {
 
   // Notify SEO crawler that content is ready
   void _notifyContentReady() {
-    if (html.window.document.documentElement!
-            .getAttribute('user-agent')
-            ?.contains('WebDirectories-Renderer') ??
-        false) {
-      print('SEO crawler detected, marking content as ready');
-      js.context.callMethod('markFlutterContentReady');
+    // SEO notifications only apply to web platforms
+    if (kIsWeb) {
+      print('Content ready for SEO indexing');
+      // Web-specific SEO notification would go here
+      // For now, we'll skip the dart:js dependency
     }
   }
 

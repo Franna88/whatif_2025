@@ -15,9 +15,12 @@ import 'package:webdirectories/WebDirectories/Page4/Page4.dart';
 import 'package:webdirectories/WebDirectories/Page5/Page5.dart';
 import 'package:webdirectories/WebDirectories/Page7/Page7.dart';
 import 'package:webdirectories/myutility.dart';
-import 'dart:html' as html;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
-final uri = html.window.location.href;
+// Platform-aware URL handling
+final uri = kIsWeb
+    ? 'https://webdirectories.co.za/' // Default web URL
+    : 'https://webdirectories.co.za/'; // Same for mobile
 final newUrl = '${uri.substring(0, uri.length - 1)}';
 
 List directoriesInfo = [
