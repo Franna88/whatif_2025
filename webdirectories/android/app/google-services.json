@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "853657273198",
+    "project_id": "web-directories",
+    "storage_bucket": "web-directories.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853657273198:android:e9dae34a117aa40cff377f",
+        "android_client_info": {
+          "package_name": "com.webdirectories.whatif"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_2ydeX_dWape9kIlgkfoyHNCfnKs0uU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

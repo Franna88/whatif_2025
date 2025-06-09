@@ -45,17 +45,15 @@ class AddEditor extends StatelessWidget {
                 children: [
                   quill.QuillSimpleToolbar(
                     controller: _controller,
-                    configurations: quill.QuillSimpleToolbarConfigurations(
-                        showColorButton: true,
-                        buttonOptions: quill.QuillSimpleToolbarButtonOptions(),
-                        showBackgroundColorButton: true,
-                        showCodeBlock: false,
-                        showLink: false),
+                    config: const quill.QuillSimpleToolbarConfig(
+                      showCodeBlock: false,
+                      showLink: false,
+                    ),
                   ),
                   Expanded(
                     child: quill.QuillEditor.basic(
                       controller: _controller,
-                      configurations: quill.QuillEditorConfigurations(),
+                      config: const quill.QuillEditorConfig(),
                     ),
                   ),
                 ],
