@@ -1,11 +1,12 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.webdirectories.whatif">
     <!-- Location permissions for towing services -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     
     <application
-        android:label="webdirectories"
+        android:label="Whatif Directories"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         

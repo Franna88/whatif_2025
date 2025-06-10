@@ -13,4 +13,8 @@
 
 # Google Maps
 -keep class com.google.android.gms.maps.** { *; }
--keep interface com.google.android.gms.maps.** { *; } 
+-keep interface com.google.android.gms.maps.** { *; }
+
+# Google Play Core - Keep classes to prevent R8 from removing them
+-keep class com.google.android.play.core.** { *; }
+-dontwarn com.google.android.play.core.** 
