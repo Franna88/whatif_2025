@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: WatifRoutes.landing,
+      initialRoute: WatifRoutes.startup,
       onGenerateRoute: WatifRoutes.generateRoute,
       navigatorKey: GlobalKey<NavigatorState>(),
     );

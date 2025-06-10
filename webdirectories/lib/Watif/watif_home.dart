@@ -131,8 +131,7 @@ class _WatifHomeState extends State<WatifHome> with TickerProviderStateMixin {
         Navigator.pushNamed(context, WatifRoutes.profile);
         break;
       case 1: // Towing
-        // Add implementation when available
-        print("Towing directory navigation not implemented yet");
+        Navigator.pushNamed(context, WatifRoutes.towingDirectory);
         break;
       case 2: // Fuel
         Navigator.pushNamed(context, WatifRoutes.fuelDirectory);
@@ -141,7 +140,7 @@ class _WatifHomeState extends State<WatifHome> with TickerProviderStateMixin {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const MobileView(),
+            builder: (context) => MobileView(),
           ),
         );
         break;
@@ -150,6 +149,7 @@ class _WatifHomeState extends State<WatifHome> with TickerProviderStateMixin {
         print("Auto Repair directory navigation not implemented yet");
         break;
       default:
+        Navigator.pushNamed(context, WatifRoutes.fuelDirectory);
         break;
     }
   }

@@ -6,6 +6,7 @@ import 'package:webdirectories/Watif/WatifLoginPages/watif_loading.dart';
 import 'package:webdirectories/Watif/WatifRegisterPages/watif_register_email.dart';
 import 'package:webdirectories/Watif/watif_home.dart';
 import 'package:webdirectories/Watif/watif_routes.dart';
+import 'package:webdirectories/Watif/utils/watif_storage.dart';
 
 class WatifLogin extends StatefulWidget {
   final VoidCallback? onForgotPassword;
@@ -55,14 +56,24 @@ class _WatifLoginState extends State<WatifLogin> {
     return null;
   }
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
 
       // Simulate a network delay for login authentication
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 1), () async {
+        // Save login state with user email
+        await WatifStorage.saveLoginState(
+          email: _emailController.text.trim(),
+          displayName: _emailController.text
+              .trim()
+              .split('@')[0], // Use email prefix as display name
+        );
+
+        print('Login successful for: ${_emailController.text}');
+
         // Navigate to loading page using named route
         Navigator.pushReplacementNamed(context, WatifRoutes.loading);
       });

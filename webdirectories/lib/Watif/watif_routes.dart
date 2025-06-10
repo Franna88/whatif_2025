@@ -12,6 +12,7 @@ import 'package:webdirectories/Watif/watif_add_trailer.dart';
 import 'package:webdirectories/Watif/watif_add_motorcycle.dart';
 import 'package:webdirectories/Watif/watif_documents.dart';
 import 'package:webdirectories/Watif/watif_landing.dart';
+import 'package:webdirectories/Watif/watif_startup.dart';
 import 'package:webdirectories/Watif/WatifLoginPages/watif_login.dart';
 import 'package:webdirectories/Watif/WatifLoginPages/watif_forgot_password.dart';
 import 'package:webdirectories/Watif/WatifLoginPages/watif_loading.dart';
@@ -19,9 +20,11 @@ import 'package:webdirectories/Watif/WatifRegisterPages/watif_register_email.dar
 import 'package:webdirectories/Watif/WatifRegisterPages/watif_register_profile.dart';
 import 'package:webdirectories/Watif/WatifRegisterPages/watif_register_welcome.dart';
 import 'package:webdirectories/Watif/WatifDirectories/fuel_directory.dart';
+import 'package:webdirectories/Watif/WatifDirectories/towing_directory.dart';
 
 class WatifRoutes {
   // Define route names
+  static const String startup = '/watif/startup';
   static const String landing = '/watif/landing';
   static const String home = '/watif/home';
   static const String homeWithBiometric = '/watif/home/biometric';
@@ -44,12 +47,18 @@ class WatifRoutes {
   static const String registerProfile = '/watif/register_profile';
   static const String registerWelcome = '/watif/register_welcome';
   static const String fuelDirectory = '/watif/directories/fuel';
+  static const String towingDirectory = '/watif/directories/towing';
 
   // Route generator
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     print("Generating route for: ${routeSettings.name}");
 
     switch (routeSettings.name) {
+      case startup:
+        return MaterialPageRoute(
+          builder: (_) => const WatifStartup(),
+          settings: routeSettings,
+        );
       case register:
         print("Creating register route");
         return MaterialPageRoute(
@@ -160,6 +169,12 @@ class WatifRoutes {
         print("Creating fuel directory route");
         return MaterialPageRoute(
           builder: (_) => const FuelDirectory(),
+          settings: routeSettings,
+        );
+      case towingDirectory:
+        print("Creating towing directory route");
+        return MaterialPageRoute(
+          builder: (_) => const TowingDirectory(),
           settings: routeSettings,
         );
       case registerProfile:

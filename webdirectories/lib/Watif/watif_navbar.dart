@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:webdirectories/Watif/watif_routes.dart';
 import 'package:webdirectories/Watif/watif_home.dart';
+import 'package:webdirectories/Watif/watif_profile.dart';
 import 'package:webdirectories/Watif/watif_account.dart';
 import 'package:webdirectories/Watif/watif_settings.dart';
 import 'package:webdirectories/Watif/watif_help.dart';
 import 'package:webdirectories/Watif/watif_contact.dart';
 import 'package:webdirectories/Watif/watif_landing.dart';
+import 'package:webdirectories/Watif/utils/watif_storage.dart';
 
 class WatifNavbar extends StatelessWidget {
   const WatifNavbar({Key? key}) : super(key: key);
@@ -155,13 +158,16 @@ class WatifNavbar extends StatelessWidget {
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 // Close the dialog and drawer
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
 
-                // Perform logout actions - like clearing tokens/data etc.
-                // Then navigate to landing page
+                // Clear login state
+                await WatifStorage.logout();
+                print('User logout completed - login state cleared');
+
+                // Navigate to landing page
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                     builder: (context) => const WatifLanding(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webdirectories/PanelBeatersDirectory/desktop/components/myutility.dart';
 import 'package:webdirectories/Watif/watif_routes.dart';
 import 'package:webdirectories/Watif/WatifRegisterPages/watif_biometric_popup.dart';
+import 'package:webdirectories/Watif/utils/watif_storage.dart';
 
 class WatifRegisterWelcome extends StatefulWidget {
   final String displayName;
@@ -40,8 +41,22 @@ class _WatifRegisterWelcomeState extends State<WatifRegisterWelcome>
     _controller.forward();
 
     // Auto-navigate to home after a delay
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () async {
       if (mounted) {
+        // Save login state for newly registered user
+        await WatifStorage.saveLoginState(
+          email:
+              'new_user@watif.com', // You would get this from registration flow
+          displayName: widget.displayName,
+          additionalData: {
+            'isNewRegistration': true,
+            'registrationCompleted': DateTime.now().millisecondsSinceEpoch,
+          },
+        );
+
+        print(
+            'Registration completed and login state saved for: ${widget.displayName}');
+
         // Navigate to home page with biometric prompt and new registration flag
         Navigator.pushNamedAndRemoveUntil(
           context,
