@@ -3,8 +3,10 @@ import 'package:webdirectories/Watif/watif_navbar.dart';
 import 'package:webdirectories/Watif/watif_voice_search.dart';
 import 'package:webdirectories/Watif/watif_routes.dart';
 import 'package:webdirectories/Watif/watif_profile.dart';
-import 'package:webdirectories/Watif/components/fuel_directory_dial.dart';
+import 'package:webdirectories/Watif/components/interactive_watif_dial.dart';
 import 'package:webdirectories/Watif/WatifRegisterPages/watif_biometric_popup.dart';
+import 'package:webdirectories/myutility.dart';
+import 'package:webdirectories/PanelBeatersDirectory/mobile/mobileView.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:ui' as ui;
 
@@ -24,9 +26,12 @@ class WatifHome extends StatefulWidget {
 
 class _WatifHomeState extends State<WatifHome> with TickerProviderStateMixin {
   late AnimationController _blinkController;
+  late AnimationController _dialController; // Add dial controller
   late Animation<Color?> _blinkAnimation;
   int _selectedIndex = 0;
   int _selectedButton = 0; // Track which button is selected
+  int _menuIndex = 1; // Track dial menu index (start with fuel)
+  double _dialIndex = -0.15; // Track dial position
 
   @override
   void initState() {
@@ -37,6 +42,14 @@ class _WatifHomeState extends State<WatifHome> with TickerProviderStateMixin {
       duration: const Duration(seconds: 1),
       vsync: this,
     )..repeat(reverse: true);
+
+    // Dial animation controller
+    _dialController = AnimationController(
+      lowerBound: -0.6,
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
+    _dialController.animateTo(-0.15); // Start with fuel selected
 
     _blinkAnimation = ColorTween(
       begin: Colors.white,
@@ -64,6 +77,7 @@ class _WatifHomeState extends State<WatifHome> with TickerProviderStateMixin {
   @override
   void dispose() {
     _blinkController.dispose();
+    _dialController.dispose(); // Dispose dial controller
     super.dispose();
   }
 
@@ -81,8 +95,8 @@ class _WatifHomeState extends State<WatifHome> with TickerProviderStateMixin {
 
     // Handle button actions
     if (index == 0) {
-      // Navigate to directory page
-      Navigator.pushNamed(context, WatifRoutes.fuelDirectory);
+      // Navigate to directory page based on currently selected dial section
+      _handleDirectoryIconTap(_menuIndex);
     } else if (index == 1) {
       // Show voice search popup
       _showVoiceSearchPopup();
@@ -116,23 +130,121 @@ class _WatifHomeState extends State<WatifHome> with TickerProviderStateMixin {
       case 0: // Profile
         Navigator.pushNamed(context, WatifRoutes.profile);
         break;
-      case 1: // Fuel
-        Navigator.pushNamed(context, WatifRoutes.fuelDirectory);
-        break;
-      case 2: // Panel
-        // Add implementation when available
-        print("Panel directory navigation not implemented yet");
-        break;
-      case 3: // Towing
+      case 1: // Towing
         // Add implementation when available
         print("Towing directory navigation not implemented yet");
         break;
-      case 4: // Repair
+      case 2: // Fuel
+        Navigator.pushNamed(context, WatifRoutes.fuelDirectory);
+        break;
+      case 3: // Panel Beater - Navigate to mobile panelbeater directory
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MobileView(),
+          ),
+        );
+        break;
+      case 4: // Auto Repair
         // Add implementation when available
-        print("Repair directory navigation not implemented yet");
+        print("Auto Repair directory navigation not implemented yet");
         break;
       default:
         break;
+    }
+  }
+
+  // Update menu index method (used by the dial)
+  void _changeMenu(int value) {
+    print('Changing menu to: $value');
+    if (value >= 0 && value < 5) {
+      setState(() {
+        _menuIndex = value;
+      });
+
+      // Remove automatic navigation - only update visual state
+      // Navigation will happen only when "Navigate to Directory" button is pressed
+    }
+
+    // Update dial position based on selection
+    switch (value) {
+      case 0:
+        setState(() {
+          _dialIndex = -0.31;
+        });
+        break;
+      case 1:
+        setState(() {
+          _dialIndex = -0.15;
+        });
+        break;
+      case 2:
+        setState(() {
+          _dialIndex = 0.0;
+        });
+        break;
+      case 3:
+        setState(() {
+          _dialIndex = 0.17;
+        });
+        break;
+      case 4:
+        setState(() {
+          _dialIndex = 0.325;
+        });
+        break;
+    }
+  }
+
+  // Get directory name based on menu index
+  String _getDirectoryName(int index) {
+    switch (index) {
+      case 0:
+        return "My Profile";
+      case 1:
+        return "TOWING\nDirectory"; // Left position - towing truck icon
+      case 2:
+        return "FUEL\nDirectory"; // Top position - fuel pump icon
+      case 3:
+        return "PANEL BEATER\nDirectory"; // Top right position - hammer/panel beater icon
+      case 4:
+        return "AUTO REPAIR\nDirectory"; // Bottom right position - tools/repair icon
+      default:
+        return "FUEL\nDirectory";
+    }
+  }
+
+  // Build text spans for directory names with proper styling
+  List<TextSpan> _buildDirectoryTextSpans(String directoryName) {
+    if (directoryName.contains('\n')) {
+      List<String> parts = directoryName.split('\n');
+      return [
+        TextSpan(
+          text: parts[0],
+          style: TextStyle(
+            fontFamily: 'ralewaybold',
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        if (parts.length > 1)
+          TextSpan(
+            text: '\n${parts[1]}',
+            style: TextStyle(
+              fontFamily: 'raleway',
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+      ];
+    } else {
+      return [
+        TextSpan(
+          text: directoryName,
+          style: TextStyle(
+            fontFamily: 'ralewaybold',
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ];
     }
   }
 
@@ -221,13 +333,34 @@ class _WatifHomeState extends State<WatifHome> with TickerProviderStateMixin {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Replace the placeholder with the new FuelDirectoryDial widget
-                    FuelDirectoryDial(
-                      size: screenSize.width * 0.8,
-                      onIconTap: (index) {
-                        // Handle icon tap based on index
-                        _handleDirectoryIconTap(index);
-                      },
+                    // Add more top spacing
+                    SizedBox(height: screenSize.height * 0.05),
+
+                    // Replace the placeholder with the new InteractiveWatifDial widget
+                    InteractiveWatifDial(
+                      menuIndex: _menuIndex,
+                      changeMenu: _changeMenu,
+                      dialIndex: _dialIndex,
+                      animateController: _dialController,
+                    ),
+
+                    // Add directory name display below the dial
+                    SizedBox(height: screenSize.height * 0.03),
+                    SizedBox(
+                      width: screenSize.width / 1.15,
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontFamily: 'raleway',
+                            fontSize: screenSize.width * 0.10,
+                            color: Colors.white,
+                            height: 1.1,
+                          ),
+                          children: _buildDirectoryTextSpans(
+                              _getDirectoryName(_menuIndex)),
+                        ),
+                      ),
                     ),
                   ],
                 ),
